@@ -9,7 +9,7 @@
 <link href="presentacion_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.36">
 
-  <meta name="author" content="Andrés Felipe Florez Rivera">
+  <meta name="author" content="">
   <title>Bioestadística Fundamental</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -31,8 +31,77 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="presentacion_files/libs/revealjs/dist/theme/quarto-0427d8d92a431aa6a6430e53ec02a470.css">
+  <link rel="stylesheet" href="presentacion_files/libs/revealjs/dist/theme/quarto-8070ed4e816fb9563f66a1d38cfd6ef7.css">
+  <link rel="stylesheet" href="assets/syntax-highlight.css">
+  <link rel="stylesheet" href="assets/custom.css">
+  <link rel="stylesheet" href="assets/pacman.css">
   <link href="presentacion_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="presentacion_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="presentacion_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -124,6 +193,31 @@
       margin-right: 0; 
     }
   </style>
+  <script src="presentacion_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+  <link href="presentacion_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+  <script defer="" src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+  <script>
+  window.addEventListener('load', function() {
+    if (typeof Reveal === 'undefined') return;
+    function updateLogoVisibility() {
+      if (typeof Reveal.getCurrentSlide !== 'function') return;
+      var logos = document.querySelectorAll('.reveal .slide-logo');
+      if (!logos.length) return;
+      var current = Reveal.getCurrentSlide();
+      var isTitle = current && current.id === 'title-slide';
+      logos.forEach(function(logo) {
+        logo.style.display = isTitle ? 'none' : '';
+      });
+    }
+    // aplicar inmediatamente al cargar
+    updateLogoVisibility();
+    // y cada vez que se cambie de slide
+    Reveal.on('slidechanged', updateLogoVisibility);
+  });
+  </script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -135,93 +229,731 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Andrés Felipe Florez Rivera 
+ 
 </div>
-</div>
+        <p class="quarto-title-affiliation">
+            Departamento de Estadı́stica, Sede Bogotá
+          </p>
+    </div>
 </div>
 
 </section>
+<section id="andrés-felipe-flórez-rivera" class="slide level2">
+<h2>Andrés Felipe Flórez Rivera</h2>
+<div class="columns">
+<div class="column">
+<div style="font-size: 26px;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>Educación</strong></p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li><strong>Pregrado en Estadística</strong><br> Universidad Nacional de Colombia.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li><strong>Maestría en Estadística</strong><br> Universidad Nacional de Colombia.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<ul>
+<li><strong>Doctorado en Ciencias-Estadística</strong><br> Universidad de São Paulo, Brasil.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="5">
+<ul>
+<li><strong>Postdoctorado en Inteligencia Artificial</strong><br> Universidad de São Paulo, Brasil.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="6">
+<p><strong>Líneas de interés</strong></p>
+<ul>
+<li><strong>Estadística Bayesiana.</strong></li>
+<li><strong>Inteligencia Artificial.</strong><br>
+</li>
+</ul>
+</div>
+</div>
+</div><div class="column">
+<div style="font-size: 26px;">
+<div class="fragment" data-fragment-index="7">
+<p><strong>Experiencia profesional</strong></p>
+</div>
+<div class="fragment" data-fragment-index="8">
+<ul>
+<li><strong>Lead Data Scientist</strong> – Funcional Health Tech<br> Aug 2024 – Mar 2026 · São Paulo, Brasil</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="9">
+<ul>
+<li><strong>Data Science Specialist</strong> – Funcional Health Tech<br> Oct 2020 – Aug 2024 · São Paulo, Brasil</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="10">
+<ul>
+<li><strong>Data Analytics Consultant</strong> – Pronóstica SAS<br> Nov 2015 – Jan 2016 · Medellín, Colombia</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="11">
+<ul>
+<li><strong>Power User BO4-SAP</strong> – Grupo Empresarial Nutresa<br> Feb 2013 – Oct 2015 · Medellín, Colombia</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="12">
+<ul>
+<li><strong>Information Manager</strong> – UNE Telecomunicaciones<br> Mar 2011 – Feb 2013 · Medellín, Colombia</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="13">
+<ul>
+<li><strong>Statistics Trainee</strong> – Flores El Trigal<br> Feb 2010 – Aug 2010 · Rionegro, Colombia</li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
 <section id="pasos-y-tipo-de-investigación" class="slide level2">
 <h2>Pasos y tipo de investigación</h2>
-<p>¿Qué es la investigación?</p>
+<h3 id="qué-es-la-investigación">¿Qué es la investigación?</h3>
+<div class="fragment">
 <ul>
 <li>Es un proceso organizado que busca responder preguntas o resolver problemas mediante la recolección y análisis de datos.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
 <li>La investigación permite generar conocimiento y tomar decisiones en cualquier disciplina.</li>
 </ul>
+</div>
 </section>
-<section id="por-ejemplo" class="slide level2">
-<h2>Por ejemplo:</h2>
+<section id="características-de-la-investigación" class="slide level2">
+<h2>Características de la investigación</h2>
+<div class="fragment">
+<ul>
+<li>Es ordenada (sigue pasos).</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Es objetiva (se basa en datos, no en opiniones).</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Es verificable (otros pueden replicar el proceso).</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Busca resolver problemas o generar conocimiento.</li>
+</ul>
+</div>
+</section>
+<section id="pasos-y-tipo-de-investigación-1" class="slide level2">
+<h2>Pasos y tipo de investigación</h2>
+<h3 id="ejemplos">Ejemplos:</h3>
+<div class="fragment">
 <ul>
 <li>Agronomía: mejora de cultivos, suelos y producción.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
 <li>Biología: estudio de organismos y ecosistemas.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
 <li>Salud: desarrollo de tratamientos y medicamentos.</li>
-<li>Economía: análisis de mercados y producción.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Economía: análisis de mercados y producción.<br>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
 <li>Medio ambiente: evaluación del impacto ambiental.</li>
 </ul>
+</div>
 </section>
 <section id="pasos-de-la-investigación" class="slide level2">
 <h2>Pasos de la investigación</h2>
-<ol type="1">
-<li>Observación del problema.</li>
-<li>Planteamiento de la pregunta.</li>
-<li>Formulación de hipótesis.</li>
-<li>Experimentación.</li>
-<li>Análisis de datos.</li>
-<li>Conclusiones y toma de decisiones.</li>
-</ol>
+<div class="fragment">
+<ul>
+<li>Los pasos de la investigación son un conjunto de etapas organizadas y secuenciales que guían el proceso científico desde la identificación de un problema hasta la obtención de conclusiones basadas en datos.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Este proceso permite:</p>
+</div>
+<div class="fragment">
+<ul>
+<li>Garantizar orden y coherencia.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Obtener resultados confiables.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Generar conocimiento válido.</li>
+</ul>
+</div>
+</section>
+<section id="pasos-de-la-investigación-1" class="slide level2">
+<h2>Pasos de la investigación</h2>
+<h3 id="el-proceso-de-investigación-generalmente-sigue-estos-pasos">El proceso de investigación generalmente sigue estos pasos:</h3>
+<div class="fragment">
+<p><strong>1. Observación del problema.</strong></p>
+</div>
+<div class="fragment">
+<p>Se identifica una situación que requiere ser estudiada.</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Disminución de la producción agrícola.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Bajo rendimiento académico.</li>
+</ul>
+</div>
+</section>
+<section id="pasos-de-la-investigación-2" class="slide level2">
+<h2>Pasos de la investigación</h2>
+<h3 id="planteamiento-de-la-pregunta."><strong>2. Planteamiento de la pregunta.</strong></h3>
+<div class="fragment">
+<p>En este paso se formula claramente lo que se desea investigar.</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>¿Cómo influye el fertilizante en la producción?</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>¿Qué factores afectan el rendimiento académico?</li>
+</ul>
+</div>
+</section>
+<section id="pasos-de-la-investigación-3" class="slide level2">
+<h2>Pasos de la investigación</h2>
+<h3 id="formulación-de-hipótesis."><strong>3. Formulación de hipótesis.</strong></h3>
+<div class="fragment">
+<p>Se propone una explicación tentativa o una respuesta a la pregunta planteada.</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>El fertilizante aumenta la producción.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>El ambiente de estudio afecta el rendimiento académico.</li>
+</ul>
+</div>
+</section>
+<section id="pasos-de-la-investigación-4" class="slide level2">
+<h2>Pasos de la investigación</h2>
+<h3 id="experimentación."><strong>4. Experimentación.</strong></h3>
+<div class="fragment">
+<p>Se define cómo se obtendrá la información.</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Encuestas o experimentos.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Parcelas con diferentes tratamientos.</li>
+</ul>
+</div>
+</section>
+<section id="pasos-de-la-investigación-5" class="slide level2">
+<h2>Pasos de la investigación</h2>
+<h3 id="análisis-de-datos."><strong>5. Análisis de datos.</strong></h3>
+<div class="fragment">
+<p>Se organizan y estudian los datos recolectados.</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Tablas de frecuencia, gráficos, medidas estadísticas.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Comparación de rendimientos.</li>
+</ul>
+</div>
+</section>
+<section id="pasos-de-la-investigación-6" class="slide level2">
+<h2>Pasos de la investigación</h2>
+<h3 id="conclusiones-y-toma-de-decisiones."><strong>6. Conclusiones y toma de decisiones.</strong></h3>
+<div class="fragment">
+<p>Se interpretan los resultados y se responde la pregunta inicial.</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Se acepta o rechaza la hipótesis.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>El ambiente de estudio adecuado mejoró el rendimiento académico.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Se determina cual tratamiento es mejor para la producción.</li>
+</ul>
+</div>
+</section>
+<section id="pasos-de-la-investigación-7" class="slide level2">
+<h2>Pasos de la investigación</h2>
+<h3 id="ejemplo-completo">Ejemplo completo:</h3>
+<div class="fragment">
+<p><strong>Paso 1.</strong> Problema: baja producción de maíz</p>
+</div>
+<div class="fragment">
+<p><strong>Paso 2.</strong> Pregunta: ¿El fertilizante mejora la producción?</p>
+</div>
+<div class="fragment">
+<p><strong>Paso 3.</strong> Hipótesis: el fertilizante aumenta el rendimiento.</p>
+</div>
+<div class="fragment">
+<p><strong>Paso 4.</strong> Recolección: parcelas con y sin fertilizante.</p>
+</div>
+<div class="fragment">
+<p><strong>Paso 5.</strong> Análisis: comparación de producción.</p>
+</div>
+<div class="fragment">
+<p><strong>Paso 6.</strong> Conclusión: identificar el mejor tratamiento</p>
+</div>
+</section>
+<section id="investigación-según-enfoque" class="slide level2">
+<h2>Investigación según enfoque</h2>
+<div class="fragment">
+<ul>
+<li>La investigación según enfoque se refiere a la forma en que se recolectan, analizan e interpretan los datos para estudiar un fenómeno.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Es decir, indica cómo se realiza el estudio.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>El enfoque determina si la investigación:</p>
+</div>
+<div class="fragment">
+<ul>
+<li>Usa datos numéricos.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Usa descripciones.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Combina ambos (datos numéricos y descripciones).</li>
+</ul>
+</div>
 </section>
 <section id="tipos-de-investigación-según-enfoque" class="slide level2">
 <h2>Tipos de investigación según enfoque</h2>
+<h3 id="investigación-cuantitativa"><strong>Investigación cuantitativa</strong></h3>
+<div class="fragment">
 <ul>
-<li>Investigación cuantitativa<br>
-Se basa en datos numéricos y utiliza herramientas estadísticas para analizar resultados.<br>
-Ejemplo: medir el rendimiento de un cultivo en toneladas por hectáreas.</li>
+<li>Es un tipo de investigación que se basa en la recolección y análisis de datos numéricos para responder preguntas o comprobar hipótesis.</li>
 </ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Utiliza mediciones, cálculos y herramientas estadísticas.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplo:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li><strong>Pregunta:</strong> ¿El tiempo de estudio influye en las calificaciones?</li>
+<li><strong>Datos:</strong> horas de estudio y notas.</li>
+<li><strong>Análisis:</strong> comparación de promedios.</li>
+<li><strong>Resultado:</strong> se determina si existe relación entre ambas variables.</li>
+</ul>
+</div>
 </section>
 <section id="tipos-de-investigación-según-enfoque-1" class="slide level2">
 <h2>Tipos de investigación según enfoque</h2>
+<h3 id="investigación-cualitativa"><strong>Investigación cualitativa</strong></h3>
+<div class="fragment">
 <ul>
-<li><p>Investigación cualitativa<br>
-Se enfoca en descubrir características, comportamientos u opiniones.<br>
-Ejemplo: observar el estado de las plantas o la percepción de los agricultores.</p></li>
-<li><p>Investigación mixta<br>
-Combina datos numéricos y descriptivos para un análisis mas completo.<br>
-Ejemplo: medir producción y también evaluar calidad del cultivo.</p></li>
+<li>Es un tipo de investigación que se enfoca en describir y comprender fenómenos a partir de características, comportamientos o experiencias, sin usar datos numéricos.</li>
 </ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Observar el estado de las plantas.</li>
+<li>Analizar el tipo de suelo.</li>
+<li>Describir presencia de plagas.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-enfoque-2" class="slide level2">
+<h2>Tipos de investigación según enfoque</h2>
+<h3 id="investigación-mixta"><strong>Investigación mixta</strong></h3>
+<div class="fragment">
+<ul>
+<li>Es aquella que combina el enfoque cuantitativo y cualitativo, utilizando tanto datos numéricos como descriptivos para obtener un análisis más completo.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Medir la producción (cuantitativa)</li>
+<li>Evaluar calidad del cultivo (cualitativa).</li>
+<li>Estudiantes con mas horas de estudio (cuantitativa).</li>
+<li>Percepción de la calidad educativa (cualitativa).</li>
+</ul>
+</div>
 </section>
 <section id="tipos-de-investigación-según-alcance" class="slide level2">
 <h2>Tipos de investigación según alcance</h2>
+<div class="fragment">
 <ul>
-<li><p>Investigación descriptiva<br>
-Busca describir como es un fenómeno sin modificarlo.<br>
-Ejemplo: analizar las características de un suelo.</p></li>
-<li><p>Investigación experimental<br>
-Se manipulan variables para observar sus efectos.<br>
-Ejemplo: aplicar diferentes fertilizantes y comparar resultados.<br>
-</p></li>
-<li><p>Investigación correlacional<br>
-Analiza la relación entre dos variables.<br>
-Ejemplo: analizar la relación entre lluvia y producción agrícola.</p></li>
+<li>La investigación según alcance se refiere al nivel de profundidad o hasta dónde se quiere llegar en el estudio de un fenómeno.<br>
+Es decir, indica qué tanto se va a investigar o explicar.</li>
 </ul>
+</div>
+<div class="fragment">
+<p>El alcance determina si la investigación:</p>
+</div>
+<div class="fragment">
+<ul>
+<li>Solo explora un tema.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Describe sus características.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Relaciona variables.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Explica las causas.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-alcance-1" class="slide level2">
+<h2>Tipos de investigación según alcance</h2>
+<h3 id="investigación-exploratoria">Investigación exploratoria</h3>
+<div class="fragment">
+<ul>
+<li>La investigación exploratoria se realiza cuando el problema de estudio no ha sido suficientemente analizado o existe poca información disponible. Su propósito es familiarizar al investigador con el fenómeno, identificar variables relevantes y plantear posibles líneas de estudio futuras.<br>
+</li>
+<li>Este tipo de investigación no busca conclusiones definitivas, sino generar ideas, preguntas e hipótesis que puedan ser estudiadas posteriormente con mayor profundidad.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-alcance-2" class="slide level2">
+<h2>Tipos de investigación según alcance</h2>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Analizar el uso de nuevas tecnologías en estudiantes sin estudios previos.</li>
+<li>Investigar tendencias de consumo en un mercado emergente.</li>
+<li>Explorar hábitos de vida en una población poco estudiada.</li>
+<li>Estudiar un cultivo nuevo en una región.</li>
+<li>Identificar la presencia de una plaga desconocida.</li>
+<li>Explorar características de un suelo no analizado.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-alcance-3" class="slide level2">
+<h2>Tipos de investigación según alcance</h2>
+<h3 id="investigación-descriptiva">Investigación descriptiva</h3>
+<div class="fragment">
+<ul>
+<li>La investigación descriptiva tiene como objetivo detallar y caracterizar un fenómeno, identificando sus propiedades, características y comportamientos.<br>
+</li>
+<li>Se enfoca en responder preguntas como ¿cómo es?, ¿cómo se presenta?, ¿qué características tiene?, sin buscar explicar las causas del fenómeno.<br>
+</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-alcance-4" class="slide level2">
+<h2>Tipos de investigación según alcance</h2>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Describir el rendimiento académico de estudiantes.</li>
+<li>Analizar características demográficas de una población.</li>
+<li>Describir la producción de un cultivo en una zona.</li>
+<li>Analizar características del suelo (textura, humedad).</li>
+<li>Evaluar el estado de salud de las plantas.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-alcance-5" class="slide level2">
+<h2>Tipos de investigación según alcance</h2>
+<h3 id="investigación-correlacional">Investigación correlacional</h3>
+<div class="fragment">
+<ul>
+<li>La investigación correlacional busca identificar y medir la relación entre dos o más variables, determinando si estas cambian conjuntamente.</li>
+<li>Es importante destacar que no establece causa y efecto, solo indica si existe asociación.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-alcance-6" class="slide level2">
+<h2>Tipos de investigación según alcance</h2>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Relación entre horas de estudio y calificaciones.</li>
+<li>Relación entre ejercicio y salud.</li>
+<li>Relación entre lluvia y producción agrícola.</li>
+<li>Relación entre uso de fertilizante y crecimiento de plantas.</li>
+<li>Relación entre temperatura y desarrollo del cultivo.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-alcance-7" class="slide level2">
+<h2>Tipos de investigación según alcance</h2>
+<h3 id="investigación-explicativa">Investigación explicativa</h3>
+<div class="fragment">
+<ul>
+<li>La investigación explicativa tiene como objetivo identificar las causas de un fenómeno, es decir, explicar por qué ocurre y bajo qué condiciones.</li>
+<li>Es el nivel más profundo de investigación, ya que no solo describe o relaciona variables, sino que establece relaciones de causa y efecto, generalmente mediante experimentos o análisis más avanzados.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-según-alcance-8" class="slide level2">
+<h2>Tipos de investigación según alcance</h2>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Analizar por qué algunos estudiantes tienen bajo rendimiento.</li>
+<li>Estudiar las causas de una enfermedad.</li>
+<li>Determinar por qué aumenta el estrés en ciertas poblaciones.</li>
+<li>Determinar por qué un fertilizante aumenta la producción.</li>
+<li>Analizar las causas de una plaga en un cultivo.</li>
+<li>Evaluar el efecto del riego en el crecimiento de plantas.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación" class="slide level2">
+<h2>Tipos de investigación</h2>
+<div class="fragment">
+<ul>
+<li>Resumen de los tipos de investigación según enfoque y alcance.</li>
+</ul>
+</div>
+<div class="fragment">
+<table class="caption-top">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 16%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Enfoque</th>
+<th>Alcance</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cuantitativa</td>
+<td>Exploratoria</td>
+<td>Recolecta datos numéricos para familiarizarse con el fenómeno.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Descriptiva</td>
+<td>Detalla características de un fenómeno usando datos numéricos.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Correlacional</td>
+<td>Mide la relación entre variables numéricas sin establecer causa-efecto.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Explicativa</td>
+<td>Establece relaciones de causa-efecto usando datos numéricos.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="tipos-de-investigación-1" class="slide level2">
+<h2>Tipos de investigación</h2>
+<div class="fragment">
+<table class="caption-top">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 16%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Enfoque</th>
+<th>Alcance</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cualitativa</td>
+<td>Exploratoria</td>
+<td>Recolecta descripciones para familiarizarse con el fenómeno.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Descriptiva</td>
+<td>Detalla características de un fenómeno usando descripciones.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Correlacional</td>
+<td>Mide la relación entre variables descriptivas sin establecer causa-efecto.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Explicativa</td>
+<td>Establece relaciones de causa-efecto usando descripciones.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="tipos-de-investigación-2" class="slide level2">
+<h2>Tipos de investigación</h2>
+<h3 id="conclusiones">Conclusiones</h3>
+<div class="fragment">
+<ul>
+<li>La investigación es un proceso que permite generar conocimiento a partir del análisis de datos.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Según enfoque (cómo se investiga)</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Cuantitativo: mide fenómenos con datos numéricos.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Cualitativo: describe y comprende características.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Mixto: combina ambos enfoques</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-investigación-3" class="slide level2">
+<h2>Tipos de investigación</h2>
+<h3 id="conclusiones-1">Conclusiones</h3>
+<div class="fragment">
+<p><strong>Según alcance (hasta dónde se investiga)</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Exploratoria: permite conocer un problema.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Descriptiva: caracteriza un fenómeno.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Correlacional: relaciona variables.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Explicativa: identifica causas.</li>
+</ul>
+</div>
 </section>
 <section id="definiciones-iniciales-en-estadística" class="slide level2">
 <h2>Definiciones Iniciales en estadística</h2>
-<p>¿Que es la estadística?</p>
+<h3 id="que-es-la-estadística">¿Que es la estadística?</h3>
+<div class="fragment">
 <ul>
 <li>La estadística es una rama de las ciencias matemáticas que consiste en la recolección, análisis, presentación e interpretación de datos y por lo tanto, es importante en la mayoría de las actividades científicas.<br>
 </li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
 <li>Lo fundamental en estadística es el concepto en que se recopilan muestras y se calculan estadísticas para estimar poblaciones y sus parámetros.</li>
 </ul>
+</div>
 </section>
 <section id="definiciones-iniciales-en-estadística-1" class="slide level2">
 <h2>Definiciones Iniciales en estadística</h2>
 <ul>
 <li>Bioestadística<br>
 La bioestadística es una rama de la estadística aplicada a las ciencias de la salud y la biología.</li>
-<li>Población<br>
-La población es el conjunto completo de todos los elementos (puntuaciones, personas, mediciones y otros) que se someten a estudio.<br>
-El conjunto es completo porque incluye a todos los sujetos que se estudiarán.<br>
-Ejemplo: todas las plantas de arroz de una región, todos los habitantes de una ciudad, todos los estudiantes de una universidad.</li>
+<li>Población
+<p style="text-align: justify; font-size: 30px; line-height: 1.35; margin-bottom: 22px;">
+La población es el conjunto completo de todos los elementos (puntuaciones, personas, mediciones y otros) que se someten a estudio.
+</p>
+<strong>Ejemplo:</strong> todas las plantas de arroz de una región, todos los habitantes de una ciudad, todos los estudiantes de una universidad.</li>
 </ul>
 </section>
 <section id="definiciones-iniciales-en-estadística-2" class="slide level2">
@@ -369,9 +1101,8 @@ La escala de razón tiene cero real, mientras que la escala de intervalo no.</li
 7. Ingreso mensual<br>
 8. Dia del año</p>
 </section>
-<section id="bioestadística-fundamental" class="slide level2">
-<h2>Bioestadística Fundamental</h2>
-<p>Clase 2 Estadística descriptiva de una variable</p>
+<section id="clase-2" class="slide level2 center middle">
+<h2>Clase 2</h2>
 </section>
 <section id="estadística-descriptiva-de-una-variable" class="slide level2">
 <h2>Estadística descriptiva de una variable</h2>
@@ -379,7 +1110,11 @@ La escala de razón tiene cero real, mientras que la escala de intervalo no.</li
 </section>
 <section id="estadística-descriptiva-de-una-variable-1" class="slide level2">
 <h2>Estadística descriptiva de una variable</h2>
-<p>Las técnicas y métodos mas utilizados son: Tablas de frecuencia. Gráficos (barras, histogramas, gráficos circulares y otros). Medidas estadísticas como la media, mediana, moda, varianza y desviación estándar. Su objetivo principal es presentar la información de manera clara y comprensible, sin realizar inferencias o conclusiones más allá de los datos analizados.</p>
+<p>Las técnicas y métodos mas utilizados son:<br>
+- Tablas de frecuencia.<br>
+- Gráficos (barras, histogramas, gráficos circulares y otros).<br>
+- Medidas estadísticas como la media, mediana, moda, varianza y desviación estándar.<br>
+- Su objetivo principal es presentar la información de manera clara y comprensible, sin realizar inferencias o conclusiones más allá de los datos analizados.</p>
 </section>
 <section id="presentación-tabular-y-gráfica" class="slide level2">
 <h2>Presentación tabular y gráfica</h2>
@@ -391,27 +1126,241 @@ La escala de razón tiene cero real, mientras que la escala de intervalo no.</li
 </section>
 <section id="presentación-tabular-y-gráfica-2" class="slide level2">
 <h2>Presentación tabular y gráfica</h2>
-<p>Pasos para construir una tabla de frecuencias Los datos pueden agruparse en el numero de clases o intervalos que se desee; sin embargo es recomendable utilizar criterios como la raíz cuadrada del tamaño de la muestra o la formula de Sturges para definir una cantidad apropiada de intervalos. Formulas para determinar el numero de clases:</p>
-<p><span class="math inline">\(\sqrt{n}\)</span>, donde k es el numero de clases, n tamaño de muestra o numero de datos. $k=1+3.3322_{10}(n), donde k es el numero de clases, n tamaño de muestra o numero de datos.</p>
+<p>Pasos para construir una tabla de frecuencias<br>
+Los datos pueden agruparse en el numero de clases o intervalos que se desee; sin embargo es recomendable utilizar criterios como la raíz cuadrada del tamaño de la muestra o la formula de Sturges para definir una cantidad apropiada de intervalos.<br>
+Formulas para determinar el numero de clases:<br>
+- <span class="math inline">\(k=\sqrt{n}\)</span>, donde k es el numero de clases y n es el tamaño de la muestra o numero de datos.<br>
+- <span class="math inline">\(k=1+3.3322\log_{10}(n)\)</span>, donde k es el numero de clases y n es el tamaño de muestra o numero de datos.</p>
 </section>
 <section id="presentación-tabular-y-gráfica-3" class="slide level2">
 <h2>Presentación tabular y gráfica</h2>
-<p>Primer paso Determinar el numero de clases con las que se desea construir la tabla de frecuencias, ya sea arbitrariamente o por las formulas mencionadas anteriormente, un numero razonable de clases puede ser entre 5 y 20 clases, si el resultado al aplicar las formulas da un numero decimal se redondea al entero mayor mas cercano. Segundo paso Después de se tenga el numero de clases establecido, se procede a hallar el máximo y mínimo de los datos, para hallar el rango. El rango se calcula como: <span class="math display">\[ 𝑅𝑎𝑛𝑔𝑜:𝑅=𝑀𝑎𝑥𝑖𝑚𝑜−𝑚𝑖𝑛𝑖𝑚𝑜 \]</span></p>
+<ul>
+<li>Primer paso<br>
+Determinar el numero de clases con las que se desea construir la tabla de frecuencias, ya sea arbitrariamente o por las formulas mencionadas anteriormente, un numero razonable de clases puede ser entre 5 y 20 clases, si el resultado al aplicar las formulas da un numero decimal se redondea al entero mayor mas cercano.</li>
+</ul>
 </section>
 <section id="presentación-tabular-y-gráfica-4" class="slide level2">
 <h2>Presentación tabular y gráfica</h2>
-<p>Tercer paso Determinar la amplitud del intervalo. <span class="math display">\[ Amplitud: A= \frac{R}{k} \]</span> La amplitud de termina el ancho del intervalo donde van a ir las frecuencias en la tabla, por lo general se utilizan intervalos o clases de la misma longitud, aunque esto depende de la naturaleza de las variables que entran en el estudio. La amplitud del intervalo se puede redondear también si se desea.</p>
+<ul>
+<li>Segundo paso<br>
+Después de se tenga el numero de clases establecido, se procede a hallar el máximo y mínimo de los datos, para hallar el rango. El rango se calcula como: <span class="math display">\[ 𝑅𝑎𝑛𝑔𝑜:𝑅=𝑀𝑎𝑥𝑖𝑚𝑜−𝑚𝑖𝑛𝑖𝑚𝑜 \]</span></li>
+</ul>
 </section>
 <section id="presentación-tabular-y-gráfica-5" class="slide level2">
 <h2>Presentación tabular y gráfica</h2>
-<p>Cuarto paso Al mínimo de los datos se le suma la amplitud y se van armando las clases hasta cubrir el ultimo dato para ubicar las frecuencias. En una tabla de frecuencias se deben colocar los siguientes elementos: 1. Marca de clase: es el punto medio del intervalo, se calcula como la suma del valor mínimo mas el valor máximo de la clase y el resultado se divide por 2 y se hace para cada intervalo, normalmente se denota como 𝑥_𝑖en la tabla.</p>
+<ul>
+<li>Tercer paso<br>
+Determinar la amplitud del intervalo.<br>
+<span class="math display">\[ Amplitud: A= \frac{R}{k} \]</span> La amplitud determina el ancho del intervalo donde van a ir las frecuencias en la tabla, por lo general se utilizan intervalos o clases de la misma longitud, aunque esto depende de la naturaleza de las variables que entran en el estudio.<br>
+La amplitud del intervalo se puede redondear también si se desea.</li>
+</ul>
 </section>
-<section id="clase-2" class="slide level2 center middle">
-<h2>Clase 2</h2>
+<section id="presentación-tabular-y-gráfica-6" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ul>
+<li>Cuarto paso<br>
+Al mínimo de los datos se le suma la amplitud y se van armando las clases hasta cubrir el ultimo dato para ubicar las frecuencias.<br>
+En una tabla de frecuencias se deben colocar los siguientes elementos:<br>
+</li>
+</ul>
+<ol type="1">
+<li>Marca de clase: es el punto medio del intervalo, se calcula como la suma del valor mínimo mas el valor máximo de la clase y el resultado se divide por 2 y se hace para cada intervalo, normalmente se denota como <span class="math inline">\(𝑥_𝑖\)</span> en la tabla.</li>
+</ol>
+</section>
+<section id="presentación-tabular-y-gráfica-7" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ol start="2" type="1">
+<li>Frecuencia absoluta <span class="math inline">\(𝑓_𝑖\)</span> : es la cantidad de veces que un dato pertenece a un intervalo o una clase.<br>
+</li>
+<li>Frecuencia acumulada <span class="math inline">\(𝐹_𝑖\)</span>: es cuando se va sumando en cada clase la frecuencia absoluta, en el ultimo intervalo tiene que dar el numero total de datos.<br>
+</li>
+<li>Frecuencia relativa <span class="math inline">\(ℎ_𝑖\)</span>: se calcula como la fracción entre la frecuencia absoluta y el total de datos para cada intervalo.</li>
+</ol>
+</section>
+<section id="presentación-tabular-y-gráfica-8" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ol start="5" type="1">
+<li>Frecuencia relativa acumulada <span class="math inline">\(𝐻_𝑖\)</span>: se calcula como la suma parcial de las frecuencias relativas en cada intervalo, en el ultimo intervalo tiene que dar 1.<br>
+</li>
+<li>Porcentaje %: se calcula como la frecuencia relativa multiplicada por 100%.<br>
+</li>
+<li>% acumulado: es la suma parcial de los porcentajes en cada intervalo , en el ultimo intervalo tiene que dar el 100%.</li>
+</ol>
+</section>
+<section id="presentación-tabular-y-gráfica-9" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<p>Ejemplo1 (Variable cuantitativa discreta)<br>
+Se entrevistan 1.000 familias de la Ciudad de Buenos Aires, para saber cuántos hijos tiene cada familia. Nuestros datos son de la forma 0, 0, 3, 1, 1, 1, 2, 2, 2, 3, 1, 1, 2, 0, 0, 0, 2, 1, 8, 1, 1, 2, 3, 0, 0, 0…<br>
+Cada número es la cantidad de hijos de cada una de las familias entrevistadas.</p>
+</section>
+<section id="presentación-tabular-y-gráfica-10" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<p>Es necesario resumir la información: 250 familias no tienen hijos, 200 tienen 1 hijo, 300 tienen 2 hijos, 160 tienen 3 hijos, 50 tienen 4 hijos, 20 tienen 5 hijos, 10 tienen 6 hijos, 7 tienen 7 hijos, 2 familias tienen 8 hijos y una familia tiene 9 hijos.<br>
+Podemos presentar el resumen mediante la siguiente tabla de frecuencias</p>
+</section>
+<section id="presentación-tabular-y-gráfica-11" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co">#| echo: false</span></span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a href=""></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a>hijos <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span></span>
+<span id="cb1-7"><a href=""></a>fi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">160</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb1-8"><a href=""></a></span>
+<span id="cb1-9"><a href=""></a>Fi <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(fi)</span>
+<span id="cb1-10"><a href=""></a>hi <span class="ot">&lt;-</span> fi <span class="sc">/</span> <span class="fu">sum</span>(fi)</span>
+<span id="cb1-11"><a href=""></a>Hi <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(hi)</span>
+<span id="cb1-12"><a href=""></a>porcentaje <span class="ot">&lt;-</span> hi <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb1-13"><a href=""></a>porcentaje_acum <span class="ot">&lt;-</span> Hi <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb1-14"><a href=""></a></span>
+<span id="cb1-15"><a href=""></a>tabla <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-16"><a href=""></a>  <span class="st">"Cantidad de hijos"</span> <span class="ot">=</span> hijos,</span>
+<span id="cb1-17"><a href=""></a>  <span class="st">"Frecuencia fi"</span> <span class="ot">=</span> fi,</span>
+<span id="cb1-18"><a href=""></a>  <span class="st">"Frecuencia acumulada Fi"</span> <span class="ot">=</span> Fi,</span>
+<span id="cb1-19"><a href=""></a>  <span class="st">"Frecuencia relativa hi"</span> <span class="ot">=</span> <span class="fu">round</span>(hi,<span class="dv">3</span>),</span>
+<span id="cb1-20"><a href=""></a>  <span class="st">"Frecuencia relativa acumulada Hi"</span> <span class="ot">=</span> <span class="fu">round</span>(Hi,<span class="dv">3</span>),</span>
+<span id="cb1-21"><a href=""></a>  <span class="st">"Porcentaje %"</span> <span class="ot">=</span> <span class="fu">round</span>(porcentaje,<span class="dv">1</span>),</span>
+<span id="cb1-22"><a href=""></a>  <span class="st">"Porcentaje acumulado %"</span> <span class="ot">=</span> <span class="fu">round</span>(porcentaje_acum,<span class="dv">1</span>)</span>
+<span id="cb1-23"><a href=""></a>)</span>
+<span id="cb1-24"><a href=""></a></span>
+<span id="cb1-25"><a href=""></a><span class="fu">kable</span>(tabla, <span class="at">align =</span> <span class="st">"c"</span>, <span class="at">caption =</span> <span class="st">"Tabla de frecuencias"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-26"><a href=""></a>  <span class="fu">kable_styling</span>(</span>
+<span id="cb1-27"><a href=""></a>    <span class="at">full_width =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-28"><a href=""></a>    <span class="at">position =</span> <span class="st">"center"</span>,</span>
+<span id="cb1-29"><a href=""></a>    <span class="at">font_size =</span> <span class="dv">18</span></span>
+<span id="cb1-30"><a href=""></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-31"><a href=""></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">background =</span> <span class="st">"#2E7D32"</span>) <span class="sc">%&gt;%</span>  <span class="co"># encabezado verde elegante</span></span>
+<span id="cb1-32"><a href=""></a>  <span class="fu">kable_paper</span>(<span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span>  <span class="co"># filas alternadas</span></span>
+<span id="cb1-33"><a href=""></a>  <span class="fu">column_spec</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(tabla), <span class="at">width =</span> <span class="st">"3cm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="table lightable-paper lightable-striped caption-top" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Tabla de frecuencias</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Cantidad.de.hijos</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Frecuencia.fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Frecuencia.acumulada.Fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Frecuencia.relativa.hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Frecuencia.relativa.acumulada.Hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Porcentaje..</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Porcentaje.acumulado..</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">0</td>
+<td style="text-align: center; width: 3cm;">250</td>
+<td style="text-align: center; width: 3cm;">250</td>
+<td style="text-align: center; width: 3cm;">0.250</td>
+<td style="text-align: center; width: 3cm;">0.250</td>
+<td style="text-align: center; width: 3cm;">25.0</td>
+<td style="text-align: center; width: 3cm;">25.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">1</td>
+<td style="text-align: center; width: 3cm;">200</td>
+<td style="text-align: center; width: 3cm;">450</td>
+<td style="text-align: center; width: 3cm;">0.200</td>
+<td style="text-align: center; width: 3cm;">0.450</td>
+<td style="text-align: center; width: 3cm;">20.0</td>
+<td style="text-align: center; width: 3cm;">45.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">2</td>
+<td style="text-align: center; width: 3cm;">300</td>
+<td style="text-align: center; width: 3cm;">750</td>
+<td style="text-align: center; width: 3cm;">0.300</td>
+<td style="text-align: center; width: 3cm;">0.750</td>
+<td style="text-align: center; width: 3cm;">30.0</td>
+<td style="text-align: center; width: 3cm;">75.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">3</td>
+<td style="text-align: center; width: 3cm;">160</td>
+<td style="text-align: center; width: 3cm;">910</td>
+<td style="text-align: center; width: 3cm;">0.160</td>
+<td style="text-align: center; width: 3cm;">0.910</td>
+<td style="text-align: center; width: 3cm;">16.0</td>
+<td style="text-align: center; width: 3cm;">91.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">4</td>
+<td style="text-align: center; width: 3cm;">50</td>
+<td style="text-align: center; width: 3cm;">960</td>
+<td style="text-align: center; width: 3cm;">0.050</td>
+<td style="text-align: center; width: 3cm;">0.960</td>
+<td style="text-align: center; width: 3cm;">5.0</td>
+<td style="text-align: center; width: 3cm;">96.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">5</td>
+<td style="text-align: center; width: 3cm;">20</td>
+<td style="text-align: center; width: 3cm;">980</td>
+<td style="text-align: center; width: 3cm;">0.020</td>
+<td style="text-align: center; width: 3cm;">0.980</td>
+<td style="text-align: center; width: 3cm;">2.0</td>
+<td style="text-align: center; width: 3cm;">98.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">6</td>
+<td style="text-align: center; width: 3cm;">10</td>
+<td style="text-align: center; width: 3cm;">990</td>
+<td style="text-align: center; width: 3cm;">0.010</td>
+<td style="text-align: center; width: 3cm;">0.990</td>
+<td style="text-align: center; width: 3cm;">1.0</td>
+<td style="text-align: center; width: 3cm;">99.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">7</td>
+<td style="text-align: center; width: 3cm;">7</td>
+<td style="text-align: center; width: 3cm;">997</td>
+<td style="text-align: center; width: 3cm;">0.007</td>
+<td style="text-align: center; width: 3cm;">0.997</td>
+<td style="text-align: center; width: 3cm;">0.7</td>
+<td style="text-align: center; width: 3cm;">99.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">8</td>
+<td style="text-align: center; width: 3cm;">2</td>
+<td style="text-align: center; width: 3cm;">999</td>
+<td style="text-align: center; width: 3cm;">0.002</td>
+<td style="text-align: center; width: 3cm;">0.999</td>
+<td style="text-align: center; width: 3cm;">0.2</td>
+<td style="text-align: center; width: 3cm;">99.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">9</td>
+<td style="text-align: center; width: 3cm;">1</td>
+<td style="text-align: center; width: 3cm;">1000</td>
+<td style="text-align: center; width: 3cm;">0.001</td>
+<td style="text-align: center; width: 3cm;">1.000</td>
+<td style="text-align: center; width: 3cm;">0.1</td>
+<td style="text-align: center; width: 3cm;">100.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>  <span class="co"># Fila de totales</span></span>
+<span id="cb2-2"><a href=""></a>total_fila <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-3"><a href=""></a>  <span class="st">"Cantidad de hijos"</span> <span class="ot">=</span> <span class="st">"Total"</span>,</span>
+<span id="cb2-4"><a href=""></a>  <span class="st">"Frecuencia fi"</span> <span class="ot">=</span> <span class="fu">sum</span>(fi),</span>
+<span id="cb2-5"><a href=""></a>  <span class="st">"Frecuencia acumulada Fi"</span> <span class="ot">=</span> <span class="st">""</span>,</span>
+<span id="cb2-6"><a href=""></a>  <span class="st">"Frecuencia relativa hi"</span> <span class="ot">=</span> <span class="st">""</span>,</span>
+<span id="cb2-7"><a href=""></a>  <span class="st">"Frecuencia relativa acumulada Hi"</span> <span class="ot">=</span> <span class="st">""</span>,</span>
+<span id="cb2-8"><a href=""></a>  <span class="st">"Porcentaje %"</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sum</span>(porcentaje),<span class="dv">1</span>),</span>
+<span id="cb2-9"><a href=""></a>  <span class="st">"Porcentaje acumulado %"</span> <span class="ot">=</span> <span class="st">""</span></span>
+<span id="cb2-10"><a href=""></a>)</span>
+<span id="cb2-11"><a href=""></a></span>
+<span id="cb2-12"><a href=""></a><span class="co"># Unir con la tabla original</span></span>
+<span id="cb2-13"><a href=""></a>tabla <span class="ot">&lt;-</span> <span class="fu">rbind</span>(tabla, total_fila)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/logo_unal_3.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
@@ -424,6 +1373,8 @@ La escala de razón tiene cero real, mientras que la escala de intervalo no.</li
   <script src="presentacion_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="presentacion_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="presentacion_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="presentacion_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="presentacion_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
   <script src="presentacion_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -438,7 +1389,7 @@ La escala de razón tiene cero real, mientras que la escala de intervalo no.</li
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': true,
+'controlsAuto': false,
 'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
@@ -446,10 +1397,11 @@ La escala de razón tiene cero real, mientras que la escala de intervalo no.</li
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'multiplex': {"secret":null,"id":"97317a35fb0d13055f0c1ae52e6ef5bd70382590bf3edc9c36242c2cb319758d","url":"https://multiplex.up.railway.app/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
-        controls: false,
+        controls: true,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -591,9 +1543,9 @@ La escala de razón tiene cero real, mientras que la escala de intervalo no.</li
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1280,
 
-        height: 700,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -619,12 +1571,88 @@ La escala de razón tiene cero real, mientras que la escala de intervalo no.</li
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
 
           RevealMath,
-          RevealNotes,
+          
           RevealSearch,
           RevealZoom
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

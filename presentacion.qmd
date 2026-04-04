@@ -1,82 +1,554 @@
 ---
 title: "Bioestadística Fundamental"
-author: "Andrés Felipe Florez Rivera"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
 format: 
   revealjs:
-    theme: simple
+    #incremental: true
+    logo: images/logo_unal_3.png
+    #footer: "`emitanaka.org/slides/toronto2022`"
     slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, assets/monash.scss ]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [assets/syntax-highlight.css, assets/custom.css, assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        // aplicar inmediatamente al cargar
+        updateLogoVisibility();
+        // y cada vez que se cambie de slide
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+
 ---
 
+## Andrés Felipe Flórez Rivera
+
+::: columns
+
+::: column
+
+<div style="font-size: 26px;">
+
+::: {.fragment data-fragment-index="1"}
+**Educación**
+:::
+
+::: {.fragment data-fragment-index="2"}
+- **Pregrado en Estadística**<br>
+  Universidad Nacional de Colombia.
+:::
+
+::: {.fragment data-fragment-index="3"}
+- **Maestría en Estadística**<br>
+  Universidad Nacional de Colombia.
+:::
+
+::: {.fragment data-fragment-index="4"}
+- **Doctorado en Ciencias-Estadística**<br>
+  Universidad de São Paulo, Brasil.
+:::
+
+::: {.fragment data-fragment-index="5"}
+- **Postdoctorado en Inteligencia Artificial**<br>
+  Universidad de São Paulo, Brasil.
+:::
+
+::: {.fragment data-fragment-index="6"}
+**Líneas de interés**
+
+- **Estadística Bayesiana.**
+- **Inteligencia Artificial.**  
+:::
+</div>
+
+:::
+
+::: column
+
+<div style="font-size: 26px;">
+
+::: {.fragment data-fragment-index="7"}
+**Experiencia profesional**
+:::
+
+::: {.fragment data-fragment-index="8"}
+- **Lead Data Scientist** – Funcional Health Tech<br>
+  Aug 2024 – Mar 2026 · São Paulo, Brasil
+:::
+
+::: {.fragment data-fragment-index="9"}
+- **Data Science Specialist** – Funcional Health Tech<br>
+  Oct 2020 – Aug 2024 · São Paulo, Brasil
+:::
+
+::: {.fragment data-fragment-index="10"}
+- **Data Analytics Consultant** – Pronóstica SAS<br>
+  Nov 2015 – Jan 2016 · Medellín, Colombia
+:::
+
+::: {.fragment data-fragment-index="11"}
+- **Power User BO4-SAP** – Grupo Empresarial Nutresa<br>
+  Feb 2013 – Oct 2015 · Medellín, Colombia
+:::
+
+::: {.fragment data-fragment-index="12"}
+- **Information Manager** – UNE Telecomunicaciones<br>
+  Mar 2011 – Feb 2013 · Medellín, Colombia
+:::
+
+::: {.fragment data-fragment-index="13"}
+- **Statistics Trainee** – Flores El Trigal<br>
+  Feb 2010 – Aug 2010 · Rionegro, Colombia
+:::
+
+</div>
+
+:::
+
+:::
+
 ## Pasos y tipo de investigación
-
-¿Qué es la investigación?
-
+### ¿Qué es la investigación?
+::: {.fragment}
 - Es un proceso organizado que busca responder preguntas o resolver problemas mediante la recolección y análisis de datos. 
+:::
+::: {.fragment}
 - La investigación permite generar conocimiento y tomar decisiones en cualquier disciplina.
+:::
 
+## Características de la investigación
+::: {.fragment}
+- Es ordenada (sigue pasos).
+:::
+::: {.fragment}
+- Es objetiva (se basa en datos, no en opiniones).
+:::
+::: {.fragment}
+- Es verificable (otros pueden replicar el proceso).
+:::
+::: {.fragment}
+- Busca resolver problemas o generar conocimiento.
+:::
 
-## Por ejemplo:
-
+## Pasos y tipo de investigación
+### Ejemplos:
+::: {.fragment}
 - Agronomía: mejora de cultivos, suelos y producción.
+:::
+::: {.fragment}
 - Biología: estudio de organismos y ecosistemas.
+:::
+::: {.fragment} 
 - Salud: desarrollo de tratamientos y medicamentos.
-- Economía: análisis de mercados y producción.
+:::
+::: {.fragment} 
+- Economía: análisis de mercados y producción.  
+:::
+::: {.fragment}
 - Medio ambiente: evaluación del impacto ambiental.
-
+:::
 
 ## Pasos de la investigación
+::: {.fragment}
+- Los pasos de la investigación son un conjunto de etapas organizadas y secuenciales que guían el proceso científico desde la identificación de un problema hasta la obtención de conclusiones basadas en datos.
+:::
+::: {.fragment}
+Este proceso permite:
+:::
+::: {.fragment}
+- Garantizar orden y coherencia.
+:::
+::: {.fragment}
+- Obtener resultados confiables.
+:::
+::: {.fragment}
+- Generar conocimiento válido.
+:::
 
-1. Observación del problema.
-2. Planteamiento de la pregunta.
-3. Formulación de hipótesis.
-4. Experimentación.
-5. Análisis de datos.
-6. Conclusiones y toma de decisiones.
+## Pasos de la investigación
+### El proceso de investigación generalmente sigue estos pasos:
+::: {.fragment}
+**1. Observación del problema.**
+:::
+::: {.fragment}
+Se identifica una situación que requiere ser estudiada.
+:::
+::: {.fragment}
+**Ejemplos:**
+:::
+::: {.fragment}
+- Disminución de la producción agrícola.
+:::
+::: {.fragment}
+- Bajo rendimiento académico.
+:::
 
+## Pasos de la investigación
+### **2. Planteamiento de la pregunta.**
+::: {.fragment}
+En este paso se formula claramente lo que se desea investigar.
+:::
+::: {.fragment}
+**Ejemplos:**
+:::
+::: {.fragment}
+- ¿Cómo influye el fertilizante en la producción?
+:::
+::: {.fragment}
+- ¿Qué factores afectan el rendimiento académico?
+::: 
+
+## Pasos de la investigación
+### **3. Formulación de hipótesis.**
+::: {.fragment}
+Se propone una explicación tentativa o una respuesta a la pregunta planteada.
+:::
+::: {.fragment}
+**Ejemplos:**
+:::
+::: {.fragment}
+- El fertilizante aumenta la producción.
+:::
+::: {.fragment}
+- El ambiente de estudio afecta el rendimiento académico.
+:::
+
+## Pasos de la investigación
+### **4. Experimentación.**
+::: {.fragment}
+Se define cómo se obtendrá la información.
+:::
+::: {.fragment}
+**Ejemplos:**
+::: 
+::: {.fragment}
+- Encuestas o experimentos.
+:::
+::: {.fragment}
+- Parcelas con diferentes tratamientos.
+:::
+
+## Pasos de la investigación
+### **5. Análisis de datos.**
+::: {.fragment}
+Se organizan y estudian los datos recolectados.
+:::
+::: {.fragment}
+**Ejemplos:**
+:::
+::: {.fragment}
+- Tablas de frecuencia, gráficos, medidas estadísticas.
+:::
+::: {.fragment}
+- Comparación de rendimientos.
+::: 
+
+## Pasos de la investigación
+### **6. Conclusiones y toma de decisiones.**
+::: {.fragment}
+Se interpretan los resultados y se responde la pregunta inicial.
+:::
+::: {.fragment} 
+**Ejemplos:**
+::: 
+::: {.fragment}
+- Se acepta o rechaza la hipótesis.
+:::
+::: {.fragment}
+- El ambiente de estudio adecuado mejoró el rendimiento académico.
+:::
+::: {.fragment}
+- Se determina cual tratamiento es mejor para la producción.
+:::
+
+## Pasos de la investigación
+### Ejemplo completo:
+::: {.fragment}
+**Paso 1.** Problema: baja producción de maíz
+:::
+::: {.fragment}
+**Paso 2.** Pregunta: ¿El fertilizante mejora la producción?
+:::
+::: {.fragment} 
+**Paso 3.** Hipótesis: el fertilizante aumenta el rendimiento.
+:::
+::: {.fragment}
+**Paso 4.** Recolección: parcelas con y sin fertilizante.
+:::
+::: {.fragment} 
+**Paso 5.** Análisis: comparación de producción.
+:::
+::: {.fragment}
+**Paso 6.** Conclusión: identificar el mejor tratamiento
+:::
+
+## Investigación según enfoque
+::: {.fragment}
+- La investigación según enfoque se refiere a la forma en que se recolectan, analizan e interpretan los datos para estudiar un fenómeno.
+:::
+::: {.fragment}
+- Es decir, indica cómo se realiza el estudio.
+:::
+::: {.fragment}
+El enfoque determina si la investigación:
+::: 
+::: {.fragment}
+- Usa datos numéricos.
+:::
+::: {.fragment}
+- Usa descripciones.
+:::
+::: {.fragment}
+- Combina ambos (datos numéricos y descripciones).
+:::
 
 ## Tipos de investigación según enfoque
-
-- Investigación cuantitativa  
-Se basa en datos numéricos y utiliza herramientas estadísticas para analizar resultados.  
-Ejemplo: medir el rendimiento de un cultivo en toneladas por hectáreas.
-
+### **Investigación cuantitativa** 
+::: {.fragment}
+- Es un tipo de investigación que se basa en la recolección y análisis de datos numéricos para responder preguntas o comprobar hipótesis.
+::: 
+::: {.fragment}
+- Utiliza mediciones, cálculos y herramientas estadísticas.
+::: 
+::: {.fragment}
+**Ejemplo:** 
+::: 
+::: {.fragment}
+- **Pregunta:** ¿El tiempo de estudio influye en las calificaciones?
+- **Datos:** horas de estudio y notas.
+- **Análisis:** comparación de promedios.
+- **Resultado:** se determina si existe relación entre ambas variables.
+::: 
 
 ## Tipos de investigación según enfoque
+### **Investigación cualitativa**  
+::: {.fragment}
+- Es un tipo de investigación que se enfoca en describir y comprender fenómenos a partir de características, comportamientos o experiencias, sin usar datos numéricos. 
+::: 
+::: {.fragment}
+**Ejemplos:**
+:::
+::: {.fragment}
+- Observar el estado de las plantas.
+- Analizar el tipo de suelo.
+- Describir presencia de plagas.
+:::
 
-- Investigación cualitativa  
-Se enfoca en descubrir características, comportamientos u opiniones.  
-Ejemplo: observar el estado de las plantas o la percepción de los agricultores.
-
-- Investigación mixta  
-Combina datos numéricos y descriptivos para un análisis mas completo.  
-Ejemplo: medir producción y también evaluar calidad del cultivo.
+## Tipos de investigación según enfoque
+### **Investigación mixta**
+::: {.fragment}  
+- Es aquella que combina el enfoque cuantitativo y cualitativo, utilizando tanto datos numéricos como descriptivos para obtener un análisis más completo. 
+:::
+::: {.fragment}
+**Ejemplos:** 
+:::
+::: {.fragment}
+- Medir la producción (cuantitativa) 
+- Evaluar calidad del cultivo (cualitativa).
+- Estudiantes con mas horas de estudio (cuantitativa).
+- Percepción de la calidad educativa (cualitativa).
+:::
 
 ## Tipos de investigación según alcance
+::: {.fragment}
+- La investigación según alcance se refiere al nivel de profundidad o hasta dónde se quiere llegar en el estudio de un fenómeno.  
+Es decir, indica qué tanto se va a investigar o explicar.
+:::
+::: {.fragment}
+El alcance determina si la investigación:
+:::
+::: {.fragment}
+- Solo explora un tema.
+:::
+::: {.fragment}
+- Describe sus características.
+:::
+::: {.fragment}
+- Relaciona variables.
+:::
+::: {.fragment}
+- Explica las causas.
+:::
 
-- Investigación descriptiva  
-Busca describir como es un fenómeno sin modificarlo.  
-Ejemplo: analizar las características de un suelo.
+## Tipos de investigación según alcance
+### Investigación exploratoria
+::: {.fragment}
+- La investigación exploratoria se realiza cuando el problema de estudio no ha sido suficientemente analizado o existe poca información disponible. Su propósito es familiarizar al investigador con el fenómeno, identificar variables relevantes y plantear posibles líneas de estudio futuras.  
+- Este tipo de investigación no busca conclusiones definitivas, sino generar ideas, preguntas e hipótesis que puedan ser estudiadas posteriormente con mayor profundidad.
+:::
 
-- Investigación experimental  
-Se manipulan variables para observar sus efectos.  
-Ejemplo: aplicar diferentes fertilizantes y comparar resultados.  
-- Investigación correlacional  
-Analiza la relación entre dos variables.  
-Ejemplo: analizar la relación entre lluvia y producción agrícola.
+## Tipos de investigación según alcance
+::: {.fragment}
+**Ejemplos:** 
+:::
+::: {.fragment}
+- Analizar el uso de nuevas tecnologías en estudiantes sin estudios previos.
+- Investigar tendencias de consumo en un mercado emergente.
+- Explorar hábitos de vida en una población poco estudiada.
+- Estudiar un cultivo nuevo en una región.
+- Identificar la presencia de una plaga desconocida.
+- Explorar características de un suelo no analizado.
+:::
+
+## Tipos de investigación según alcance
+### Investigación descriptiva 
+::: {.fragment}
+- La investigación descriptiva tiene como objetivo detallar y caracterizar un fenómeno, identificando sus propiedades, características y comportamientos.  
+- Se enfoca en responder preguntas como ¿cómo es?, ¿cómo se presenta?, ¿qué características tiene?, sin buscar explicar las causas del fenómeno.  
+:::
+
+## Tipos de investigación según alcance
+::: {.fragment}
+**Ejemplos:** 
+:::
+::: {.fragment}
+- Describir el rendimiento académico de estudiantes.
+- Analizar características demográficas de una población.
+- Describir la producción de un cultivo en una zona.
+- Analizar características del suelo (textura, humedad).
+- Evaluar el estado de salud de las plantas.
+:::
+
+## Tipos de investigación según alcance
+### Investigación correlacional
+::: {.fragment}
+- La investigación correlacional busca identificar y medir la relación entre dos o más variables, determinando si estas cambian conjuntamente.
+- Es importante destacar que no establece causa y efecto, solo indica si existe asociación.
+:::
+
+## Tipos de investigación según alcance
+::: {.fragment}
+**Ejemplos:** 
+:::
+::: {.fragment} 
+- Relación entre horas de estudio y calificaciones.
+- Relación entre ejercicio y salud.
+- Relación entre lluvia y producción agrícola.
+- Relación entre uso de fertilizante y crecimiento de plantas.
+- Relación entre temperatura y desarrollo del cultivo.
+::: 
+
+## Tipos de investigación según alcance
+### Investigación explicativa
+::: {.fragment}
+- La investigación explicativa tiene como objetivo identificar las causas de un fenómeno, es decir, explicar por qué ocurre y bajo qué condiciones.
+- Es el nivel más profundo de investigación, ya que no solo describe o relaciona variables, sino que establece relaciones de causa y efecto, generalmente mediante experimentos o análisis más avanzados.
+:::
+
+## Tipos de investigación según alcance
+::: {.fragment}
+**Ejemplos:**
+:::
+::: {.fragment}
+- Analizar por qué algunos estudiantes tienen bajo rendimiento.
+- Estudiar las causas de una enfermedad.
+- Determinar por qué aumenta el estrés en ciertas poblaciones.
+- Determinar por qué un fertilizante aumenta la producción.
+- Analizar las causas de una plaga en un cultivo.
+- Evaluar el efecto del riego en el crecimiento de plantas.
+:::
+
+## Tipos de investigación
+::: {.fragment}
+- Resumen de los tipos de investigación según enfoque y alcance.
+::: 
+::: {.fragment}
+| Enfoque         | Alcance          | Descripción                                                                 |
+|-----------------|------------------|-----------------------------------------------------------------------------|
+| Cuantitativa    | Exploratoria     | Recolecta datos numéricos para familiarizarse con el fenómeno.               |
+|                 | Descriptiva      | Detalla características de un fenómeno usando datos numéricos.              |
+|                 | Correlacional    | Mide la relación entre variables numéricas sin establecer causa-efecto. |
+|                 | Explicativa      | Establece relaciones de causa-efecto usando datos numéricos.              |
+::: 
+
+## Tipos de investigación
+
+::: {.fragment}
+| Enfoque         | Alcance          | Descripción                                                                 |
+|-----------------|------------------|-----------------------------------------------------------------------------|
+| Cualitativa     | Exploratoria     | Recolecta descripciones para familiarizarse con el fenómeno.               |
+|                 | Descriptiva      | Detalla características de un fenómeno usando descripciones.              |
+|                 | Correlacional    | Mide la relación entre variables descriptivas sin establecer causa-efecto. |
+|                 | Explicativa      | Establece relaciones de causa-efecto usando descripciones.              |
+::: 
+
+## Tipos de investigación
+### Conclusiones
+::: {.fragment}
+- La investigación es un proceso que permite generar conocimiento a partir del análisis de datos.
+:::
+::: {.fragment} 
+**Según enfoque (cómo se investiga)**
+:::
+::: {.fragment}
+- Cuantitativo: mide fenómenos con datos numéricos.
+:::
+::: {.fragment}
+- Cualitativo: describe y comprende características.
+:::
+::: {.fragment}
+- Mixto: combina ambos enfoques
+::: 
+## Tipos de investigación
+### Conclusiones
+::: {.fragment}
+**Según alcance (hasta dónde se investiga)**
+:::
+::: {.fragment}
+- Exploratoria: permite conocer un problema.
+:::
+::: {.fragment}
+- Descriptiva: caracteriza un fenómeno.
+:::
+::: {.fragment}
+- Correlacional: relaciona variables.
+:::
+::: {.fragment}
+- Explicativa: identifica causas.
+:::
+
 
 ## Definiciones Iniciales en estadística
-¿Que es la estadística?
-
+### ¿Que es la estadística?
+::: {.fragment}
 - La estadística es una rama de las ciencias matemáticas que consiste en la recolección, análisis, presentación e interpretación de datos y por lo tanto, es importante en la mayoría de las actividades científicas.   
+:::
+::: {.fragment}
 - Lo fundamental en estadística es el concepto en que se recopilan muestras y se calculan estadísticas para estimar poblaciones y sus parámetros.
+:::
 
 ## Definiciones Iniciales en estadística
 - Bioestadística  
 La bioestadística es una rama de la estadística aplicada a las ciencias de la salud y la biología.
-- Población  
-La población es el conjunto completo de todos los elementos (puntuaciones, personas, mediciones y otros) que se someten a estudio.  
-El conjunto es completo porque incluye a todos los sujetos que se estudiarán.  
-Ejemplo: todas las plantas de arroz de una región, todos los habitantes de una ciudad, todos los estudiantes de una universidad.
+- Población
+<p style="text-align: justify; font-size: 30px; line-height: 1.35; margin-bottom: 22px;">
+La población es el conjunto completo de todos los elementos (puntuaciones, personas, mediciones y otros) que se someten a estudio.
+</p>
+**Ejemplo:** todas las plantas de arroz de una región, todos los habitantes de una ciudad, todos los estudiantes de una universidad.
 
 ## Definiciones Iniciales en estadística
 - Muestra  
@@ -178,73 +650,138 @@ Clasifique las siguientes variables según su escala de medición.
 8. Dia del año  
 
 
-
-## Bioestadística Fundamental
-Clase 2
-Estadística descriptiva de una variable
-
+## Clase 2 {.center .middle}
 
 
 ## Estadística descriptiva de una variable
 La estadística descriptiva de una variable es el conjunto de métodos y técnicas que permiten organizar, resumir y describir los datos obtenidos de una sola característica o variable, con el fin de facilitar su interpretación.
 
 
-
 ## Estadística descriptiva de una variable
-Las técnicas y métodos mas utilizados son:
-Tablas de frecuencia.
-Gráficos (barras, histogramas, gráficos circulares y otros).
-Medidas estadísticas como la media, mediana, moda, varianza y desviación estándar.
-Su objetivo principal es presentar la información de manera clara y comprensible, sin realizar inferencias o conclusiones más allá de los datos analizados.
+Las técnicas y métodos mas utilizados son:  
+- Tablas de frecuencia.  
+- Gráficos (barras, histogramas, gráficos circulares y otros).  
+- Medidas estadísticas como la media, mediana, moda, varianza y desviación estándar.  
+- Su objetivo principal es presentar la información de manera clara y comprensible, sin realizar inferencias o conclusiones más allá de los datos analizados.
 
 
 
-## Presentación tabular y gráfica
+## Presentación tabular y gráfica  
 Las tablas de frecuencias y los gráficos (circulares, de barras) permiten conocer la distribución (ya sea en una población o en una muestra) de los valores de una variable categórica. La distribución de los valores de la variable dentro de las diferentes categorías se puede expresar en cantidades, en proporciones o en porcentajes. 
 
 
-## Presentación tabular y gráfica
+## Presentación tabular y gráfica  
 Para representar gráficamente la distribución de los datos correspondientes a una variable numérica (discreta o continua) también se utilizan tablas de frecuencias y un gráfico.
 Aunque es posible hacer tablas de frecuencia y gráficos con pocos datos, su uso es mas recomendable cuando se tiene una mayor cantidad de información, ya que permite una mejor interpretación.
 
 
 ## Presentación tabular y gráfica
-Pasos para construir una tabla de frecuencias
-Los datos pueden agruparse en el numero de clases o intervalos que se desee; sin embargo es recomendable utilizar criterios como la raíz cuadrada del tamaño de la muestra o la formula de Sturges para definir una cantidad apropiada de intervalos.
-Formulas para determinar el numero de clases:
-
-$\sqrt{n}$, donde k es el numero de clases, n tamaño de muestra o numero de datos.
-$k=1+3.3322\log_{10}(n), donde k es el numero de clases, n tamaño de muestra o numero de datos.
+Pasos para construir una tabla de frecuencias  
+Los datos pueden agruparse en el numero de clases o intervalos que se desee; sin embargo es recomendable utilizar criterios como la raíz cuadrada del tamaño de la muestra o la formula de Sturges para definir una cantidad apropiada de intervalos.  
+Formulas para determinar el numero de clases:  
+- $k=\sqrt{n}$, donde k es el numero de clases y n es el tamaño de la muestra o numero de datos.  
+- $k=1+3.3322\log_{10}(n)$, donde k es el numero de clases y n es el tamaño de muestra o numero de datos.
 
 
 
 ## Presentación tabular y gráfica
-Primer paso
-Determinar el numero de clases con las que se desea construir la tabla de frecuencias, ya sea arbitrariamente o por las formulas mencionadas anteriormente, un numero razonable de clases puede ser entre 5 y 20 clases, si el resultado al aplicar las formulas da un numero decimal se redondea al entero mayor mas cercano.
-Segundo paso
+- Primer paso  
+Determinar el numero de clases con las que se desea construir la tabla de frecuencias, ya sea arbitrariamente o por las formulas mencionadas anteriormente, un numero razonable de clases puede ser entre 5 y 20 clases, si el resultado al aplicar las formulas da un numero decimal se redondea al entero mayor mas cercano.  
+
+## Presentación tabular y gráfica
+- Segundo paso  
 Después de se tenga el numero de clases establecido, se procede a hallar el máximo y mínimo de los datos, para hallar el rango.
 El rango se calcula como:
 $$ 𝑅𝑎𝑛𝑔𝑜:𝑅=𝑀𝑎𝑥𝑖𝑚𝑜−𝑚𝑖𝑛𝑖𝑚𝑜 $$
 
-
-
 ## Presentación tabular y gráfica
 
-Tercer paso
-Determinar la amplitud del intervalo.
+- Tercer paso  
+Determinar la amplitud del intervalo.  
 $$ Amplitud: A= \frac{R}{k} $$
-La amplitud de termina el ancho del intervalo donde van a ir las frecuencias en la tabla, por lo general se utilizan intervalos o clases de la misma longitud, aunque esto depende de la naturaleza de las variables que entran en el estudio.
+La amplitud determina el ancho del intervalo donde van a ir las frecuencias en la tabla, por lo general se utilizan intervalos o clases de la misma longitud, aunque esto depende de la naturaleza de las variables que entran en el estudio.  
 La amplitud del intervalo se puede redondear también si se desea.
 
 
 ## Presentación tabular y gráfica
-Cuarto paso
-Al mínimo de los datos se le suma la amplitud y se van armando las clases hasta cubrir el ultimo dato para ubicar las frecuencias.
-En una tabla de frecuencias se deben colocar los siguientes elementos:
-1. Marca de clase: es el punto medio del intervalo, se calcula como la suma del valor mínimo mas el valor máximo de la clase y el resultado se divide por 2 y se hace para cada intervalo, normalmente se denota como 𝑥_𝑖en la tabla.
+- Cuarto paso  
+Al mínimo de los datos se le suma la amplitud y se van armando las clases hasta cubrir el ultimo dato para ubicar las frecuencias.  
+En una tabla de frecuencias se deben colocar los siguientes elementos:  
+1. Marca de clase: es el punto medio del intervalo, se calcula como la suma del valor mínimo mas el valor máximo de la clase y el resultado se divide por 2 y se hace para cada intervalo, normalmente se denota como $𝑥_𝑖$ en la tabla.
+
+## Presentación tabular y gráfica  
+2. Frecuencia absoluta $𝑓_𝑖$ : es la cantidad de veces que un dato  pertenece a un intervalo o una clase.  
+3. Frecuencia acumulada $𝐹_𝑖$: es cuando se va sumando en cada clase la frecuencia absoluta, en el ultimo intervalo tiene que dar el numero total de datos.  
+4. Frecuencia relativa $ℎ_𝑖$: se calcula como la fracción entre la frecuencia absoluta y el total de datos para cada intervalo.  
+
+## Presentación tabular y gráfica  
+5. Frecuencia relativa acumulada $𝐻_𝑖$: se calcula como la suma parcial de las frecuencias relativas en cada intervalo, en el ultimo intervalo tiene que dar 1.  
+6. Porcentaje %: se calcula como la frecuencia relativa multiplicada por 100%.  
+7. % acumulado: es la suma parcial de los porcentajes en cada intervalo , en el ultimo intervalo tiene que dar el 100%.  
+
+## Presentación tabular y gráfica
+Ejemplo1 (Variable cuantitativa discreta)  
+Se entrevistan 1.000 familias de la Ciudad de Buenos Aires, para saber cuántos hijos tiene cada familia. Nuestros datos son de la forma 0, 0, 3, 1, 1, 1, 2, 2, 2, 3, 1, 1, 2, 0, 0, 0, 2, 1, 8, 1, 1, 2, 3, 0, 0, 0...  
+Cada número es la cantidad de hijos de cada una de las familias entrevistadas.   
+
+## Presentación tabular y gráfica  
+Es necesario resumir la información: 250 familias no tienen hijos, 200 tienen 1 hijo, 300 tienen 2 hijos, 160 tienen 3 hijos, 50 tienen 4 hijos, 20 tienen 5 hijos, 10 tienen 6 hijos, 7 tienen 7 hijos, 2 familias tienen 8 hijos y una familia tiene 9 hijos.  
+Podemos presentar el resumen mediante la siguiente tabla de frecuencias
+
+Presentación tabular y gráfica  
+---
+
+```{r}
+
+#| echo: false
+
+library(knitr)
+library(kableExtra)
+
+hijos <- 0:9
+fi <- c(250, 200, 300, 160, 50, 20, 10, 7, 2, 1)
+
+Fi <- cumsum(fi)
+hi <- fi / sum(fi)
+Hi <- cumsum(hi)
+porcentaje <- hi * 100
+porcentaje_acum <- Hi * 100
+
+tabla <- data.frame(
+  "Cantidad de hijos" = hijos,
+  "Frecuencia fi" = fi,
+  "Frecuencia acumulada Fi" = Fi,
+  "Frecuencia relativa hi" = round(hi,3),
+  "Frecuencia relativa acumulada Hi" = round(Hi,3),
+  "Porcentaje %" = round(porcentaje,1),
+  "Porcentaje acumulado %" = round(porcentaje_acum,1)
+)
+
+kable(tabla, align = "c", caption = "Tabla de frecuencias") %>%
+  kable_styling(
+    full_width = FALSE,
+    position = "center",
+    font_size = 18
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#2E7D32") %>%  # encabezado verde elegante
+  kable_paper("striped", full_width = FALSE) %>%  # filas alternadas
+  column_spec(1:ncol(tabla), width = "3cm")
+  # Fila de totales
+total_fila <- data.frame(
+  "Cantidad de hijos" = "Total",
+  "Frecuencia fi" = sum(fi),
+  "Frecuencia acumulada Fi" = "",
+  "Frecuencia relativa hi" = "",
+  "Frecuencia relativa acumulada Hi" = "",
+  "Porcentaje %" = round(sum(porcentaje),1),
+  "Porcentaje acumulado %" = ""
+)
+
+# Unir con la tabla original
+tabla <- rbind(tabla, total_fila)
 
 
-## Clase 2 {.center .middle}
+
 
 
 
