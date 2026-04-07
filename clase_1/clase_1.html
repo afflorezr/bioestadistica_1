@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="clase_1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="clase_1_files/libs/quarto-html/tabby.min.js"></script>
+<script src="clase_1_files/libs/quarto-html/popper.min.js"></script>
+<script src="clase_1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="clase_1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="clase_1_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="clase_1_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
+
+  <meta name="author" content="">
+  <title>Bioestadística Fundamental</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="clase_1_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="clase_1_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="clase_1_files/libs/revealjs/dist/theme/quarto-2b8bb4cf1a0c1391057f21b889322c19.css">
+  <link rel="stylesheet" href="assets/syntax-highlight.css">
+  <link rel="stylesheet" href="assets/custom.css">
+  <link rel="stylesheet" href="assets/pacman.css">
+  <link href="clase_1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="clase_1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="clase_1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="clase_1_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="clase_1_files/libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="clase_1_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+  <script defer="" src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+  <script>
+  window.addEventListener('load', function() {
+    if (typeof Reveal === 'undefined') return;
+    function updateLogoVisibility() {
+      if (typeof Reveal.getCurrentSlide !== 'function') return;
+      var logos = document.querySelectorAll('.reveal .slide-logo');
+      if (!logos.length) return;
+      var current = Reveal.getCurrentSlide();
+      var isTitle = current && current.id === 'title-slide';
+      logos.forEach(function(logo) {
+        logo.style.display = isTitle ? 'none' : '';
+      });
+    }
+    // aplicar inmediatamente al cargar
+    updateLogoVisibility();
+    // y cada vez que se cambie de slide
+    Reveal.on('slidechanged', updateLogoVisibility);
+  });
+  </script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Bioestadística Fundamental</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+ 
+</div>
+        <p class="quarto-title-affiliation">
+            Departamento de Estadı́stica, Sede Bogotá
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="andrés-felipe-flórez-rivera" class="slide level2">
+<h2>Andrés Felipe Flórez Rivera</h2>
+<div class="columns">
+<div class="column">
+<div style="font-size: 26px;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>Educación</strong></p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li><strong>Pregrado en Estadística</strong><br> Universidad Nacional de Colombia.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li><strong>Maestría en Estadística</strong><br> Universidad Nacional de Colombia.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<ul>
+<li><strong>Doctorado en Ciencias-Estadística</strong><br> Universidad de São Paulo, Brasil.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="5">
+<ul>
+<li><strong>Postdoctorado en Inteligencia Artificial</strong><br> Universidad de São Paulo, Brasil.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="6">
+<p><strong>Líneas de interés</strong></p>
+<ul>
+<li><strong>Estadística Bayesiana.</strong></li>
+<li><strong>Inteligencia Artificial.</strong><br>
+</li>
+</ul>
+</div>
+</div>
+</div><div class="column">
+<div style="font-size: 26px;">
+<div class="fragment" data-fragment-index="7">
+<p><strong>Experiencia profesional</strong></p>
+</div>
+<div class="fragment" data-fragment-index="8">
+<ul>
+<li><strong>Lead Data Scientist</strong> – Funcional Health Tech<br> Aug 2024 – Mar 2026 · São Paulo, Brasil</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="9">
+<ul>
+<li><strong>Data Science Specialist</strong> – Funcional Health Tech<br> Oct 2020 – Aug 2024 · São Paulo, Brasil</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="10">
+<ul>
+<li><strong>Data Analytics Consultant</strong> – Pronóstica SAS<br> Nov 2015 – Jan 2016 · Medellín, Colombia</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="11">
+<ul>
+<li><strong>Power User BO4-SAP</strong> – Grupo Empresarial Nutresa<br> Feb 2013 – Oct 2015 · Medellín, Colombia</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="12">
+<ul>
+<li><strong>Information Manager</strong> – UNE Telecomunicaciones<br> Mar 2011 – Feb 2013 · Medellín, Colombia</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="13">
+<ul>
+<li><strong>Statistics Trainee</strong> – Flores El Trigal<br> Feb 2010 – Aug 2010 · Rionegro, Colombia</li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
+<section id="pasos-y-tipo-de-investigación" class="slide level2">
+<h2>Pasos y tipo de investigación</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<h3 class="fragment fade-in" data-fragment-index="1">
+¿Qué es la investigación?
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+Es un proceso organizado que busca responder preguntas o resolver problemas mediante la recolección y análisis de datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify;">
+La investigación permite generar conocimiento y tomar decisiones en cualquier disciplina.
+</li>
+</ul>
+</div>
+</section>
+<section id="características-de-la-investigación" class="slide level2">
+<h2>Características de la investigación</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2">
+Es ordenada (sigue pasos).
+</li>
+<li class="fragment fade-up" data-fragment-index="3">
+Es objetiva (se basa en datos, no en opiniones).
+</li>
+<li class="fragment fade-up" data-fragment-index="4">
+Es verificable (otros pueden replicar el proceso).
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+Busca resolver problemas o generar conocimiento.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h3>
+Por ejemplo:
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+<strong>Agronomía</strong>: mejora de cultivos, suelos y producción.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px;">
+<strong>Biología</strong>: estudio de organismos y ecosistemas.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px;">
+<strong>Salud</strong>: desarrollo de tratamientos y medicamentos.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 30px;">
+<strong>Economía</strong>: análisis de mercados y producción.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 30px;">
+<strong>Medio ambiente</strong>: evaluación del impacto ambiental.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="pasos-de-la-investigación" class="slide level2">
+<h2>Pasos de la investigación</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p style="font-size: 32px; text-align: justify;">
+Los pasos de la investigación son un conjunto de etapas organizadas y secuenciales que guían el proceso científico desde la identificación de un problema hasta la obtención de conclusiones basadas en datos.
+</p>
+<br>
+<h3 class="fragment" style="font-size: 34px;" data-fragment-index="2">
+Este proceso permite:
+</h3>
+<ul style="padding-left: 30px;">
+<li class="fragment" style="font-size: 32px;" data-fragment-index="3">
+Garantizar orden y coherencia.
+</li>
+<li class="fragment" style="font-size: 32px;" data-fragment-index="4">
+Obtener resultados confiables.
+</li>
+<li class="fragment" style="font-size: 32px;" data-fragment-index="5">
+Generar conocimiento válido.
+</li>
+</ul>
+</div>
+<div class="container">
+<div class="fragment box-list" style="background: #a78bfa;" data-fragment-index="6">
+<ol type="1">
+<li>Observación del problema.</li>
+</ol>
+</div>
+<div class="fragment box-list" style="background: #3b82f6;" data-fragment-index="8">
+<ol start="2" type="1">
+<li>Planteamiento de la pregunta.<br>
+</li>
+</ol>
+</div>
+<div class="fragment box-list" style="background: #59A14F;" data-fragment-index="9">
+<ol start="3" type="1">
+<li>Formulación de hipótesis.</li>
+</ol>
+</div>
+<div class="fragment box-list" style="background: #F28E2B;" data-fragment-index="10">
+<ol start="4" type="1">
+<li>Experimentación.</li>
+</ol>
+</div>
+<div class="fragment box-list" style="background: #B07AA1;" data-fragment-index="11">
+<ol start="5" type="1">
+<li>Análisis de datos.</li>
+</ol>
+</div>
+<div class="fragment box-list" style="background: #76B7B2;" data-fragment-index="12">
+<ol start="6" type="1">
+<li>Toma de decisiones.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="observación-del-problema" class="slide level2">
+<h2>Observación del problema</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Es la identificación y <strong>descripción inicial</strong> de una situación, <strong>fenómeno</strong> o <strong>problema</strong> que requiere ser estudiado.
+</p>
+<p class="fragment" data-fragment-index="2" style="font-size: 34px; text-align: justify;">
+Implica <strong>observar la realidad de manera crítica</strong>, detectar patrones o cambios relevantes y <strong>delimitar qué aspecto específico se desea analizar</strong>, sirviendo como punto de partida para todo el proceso de investigación.
+</p>
+<br>
+<h4 class="fragment" data-fragment-index="3">
+Ejemplos:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="4">
+Disminución de la producción agrícola.
+</li>
+<li class="fragment" data-fragment-index="5">
+Bajo rendimiento académico.
+</li>
+<li class="fragment" data-fragment-index="6">
+Aumento de casos de una enfermedad en una población.
+</li>
+</ul>
+</section>
+<section id="planteamiento-de-la-pregunta" class="slide level2">
+<h2>Planteamiento de la pregunta</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Es el paso en el que se <strong>formula</strong> de manera clara, específica y medible lo que se <strong>desea investigar</strong>. Implica transformar el problema identificado en una <strong>pregunta concreta</strong>, delimitando:
+</p>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="2">
+la población o fenómeno de interés.
+</li>
+<li class="fragment" data-fragment-index="3">
+las variables involucradas.
+</li>
+<li class="fragment" data-fragment-index="4">
+el posible tipo de relación entre ellas.
+</li>
+</ul>
+<h4 class="fragment" data-fragment-index="5">
+Se pantean preguntas como:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="6">
+¿Cómo influye el fertilizante en la producción?
+</li>
+<li class="fragment" data-fragment-index="7">
+¿Qué factores afectan el rendimiento académico?
+</li>
+</ul>
+</section>
+<section id="formulación-de-hipótesis" class="slide level2">
+<h2>Formulación de hipótesis</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Es la propuesta de una explicación tentativa o posible respuesta a la pregunta de investigación.
+</p>
+<p class="fragment" data-fragment-index="2" style="font-size: 34px; text-align: justify;">
+Se basa en conocimientos previos, teoría o evidencia, y establece una relación esperada entre variables, que posteriormente será evaluada con datos permitiendo:
+</p>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="3">
+Orientar el diseño del estudio
+</li>
+<li class="fragment" data-fragment-index="4">
+Definir qué variables se deben medir
+</li>
+<li class="fragment" data-fragment-index="5">
+Permitir la verificación mediante análisis estadístico
+</li>
+</ul>
+<h4 class="fragment" data-fragment-index="6">
+Algunas hipótesis pueden ser:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="7">
+El fertilizante aumenta la producción.
+</li>
+<li class="fragment" data-fragment-index="8">
+Las horas luz aumentan en 5cm el crescimiento del tallo
+</li>
+</ul>
+</section>
+<section id="experimentación" class="slide level2">
+<h2>Experimentación</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Se define cómo se obtendrán los datos para evaluar la hipótesis. Implica diseñar un procedimiento sistemático para recolectar información, controlando las condiciones y asegurando que los datos sean válidos y confiables.
+</p>
+<h4 class="fragment" data-fragment-index="2">
+¿Qué implica?
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="3">
+Seleccionar el tipo de estudio (experimental u observacional)
+</li>
+<li class="fragment" data-fragment-index="4">
+Definir la población o muestra
+</li>
+<li class="fragment" data-fragment-index="5">
+Establecer las variables a medir
+</li>
+</ul>
+<h4 class="fragment" data-fragment-index="6">
+Ejemplos
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="7">
+Comparar el crecimiento de flores usando distintos tipos de fertilizante.
+</li>
+<li class="fragment" data-fragment-index="8">
+Evaluar el efecto de diferentes cantidades de luz en el crecimiento del tallo.
+</li>
+<li class="fragment" data-fragment-index="9">
+Evaluar el efecto de distintos tipos de suelo en el crecimiento de plantas.
+</li>
+</ul>
+</section>
+<section id="análisis-de-datos" class="slide level2">
+<h2>Análisis de datos</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Se organizan, procesan e interpretan los datos recolectados. Implica aplicar <strong>herramientas estadísticas</strong> para <strong>resumir</strong> la información, <strong>identificar</strong> patrones o tendencias, <strong>explorar</strong> relaciones entre variables y evaluar la hipótesis planteada.
+</p>
+<h4 class="fragment" data-fragment-index="2">
+Ejemplos
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="3">
+Elaborar tablas de frecuencia y gráficos.
+</li>
+<li class="fragment" data-fragment-index="4">
+Calcular medidas descriptivas.
+</li>
+<li class="fragment" data-fragment-index="5">
+Comparar rendimientos entre tratamientos.
+</li>
+</ul>
+</section>
+<section id="conclusiones-y-toma-de-decisiones" class="slide level2">
+<h2>Conclusiones y toma de decisiones</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Se interpretan los resultados obtenidos y se responde la pregunta de investigación. Se analiza la evidencia para aceptar o rechazar la hipótesis y tomar decisiones basadas en los datos.
+</p>
+<h4 class="fragment" data-fragment-index="2">
+¿Qué implica?
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;" <li="" class="fragment" data-fragment-index="3">Interpretar los resultados del análisis
+<li class="fragment" data-fragment-index="4">Evaluar si la hipótesis es consistente con los datos</li>
+<li class="fragment" data-fragment-index="5">Formular conclusiones claras y justificadas</li>
+<li class="fragment" data-fragment-index="6">Apoyar la toma de decisiones con evidencia</li>
+</ul>
+<h4 class="fragment" data-fragment-index="7">
+Ejemplos
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="8">
+El ambiente de estudio adecuado mejoró el rendimiento académico
+</li>
+<li class="fragment" data-fragment-index="9">
+Se determina cuál tratamiento es mejor para la producción
+</li>
+</ul>
+</section>
+<section id="ilustración" class="slide level2">
+<h2>Ilustración:</h2>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="1">
+Problema: baja producción de maíz
+</li>
+<li class="fragment" data-fragment-index="2">
+Pregunta: ¿El fertilizante mejora la producción?
+</li>
+<li class="fragment" data-fragment-index="3">
+<p>Hipótesis:</p>
+<div class="fragment" data-fragment-index="4">
+<p><span class="math display">\[H_{0}: \mu_{fertilizado} - \mu_{sin-fertilizar} = 0\]</span></p>
+</div>
+<div class="fragment" data-fragment-index="5">
+<p><span class="math display">\[H_{1}: \mu_{fertilizado} - \mu_{sin-fertilizar} &gt; 0\]</span></p>
+</div>
+</li>
+<li class="fragment" data-fragment-index="6">
+Experimentación: siembra en parcelas con y sin fertilizante.
+</li>
+<li class="fragment" data-fragment-index="7">
+Análisis: comparación de medias (ANOVA)
+</li>
+<li class="fragment" data-fragment-index="8">
+Conclusión: determinar si el fertilizante mejora la producción
+</li>
+</ul>
+</section>
+<section id="enfoque-y-alcance" class="slide level2">
+<h2>Enfoque y Alcance</h2>
+<div class="twocol" style="margin-top: 100px; align-items: stretch;">
+<div class="card fragment fade-up evolucion-card" data-fragment-index="1" style="background:#f8fafc; border:1px solid #e5e7eb; border-top: 6px solid #60a5fa; border-radius: 22px; padding: 26px 28px; box-shadow: 0 8px 22px rgba(0,0,0,0.05);">
+<h3 style="margin-bottom:16px; font-size: 1.35em;">
+Investigación según enfoque
+</h3>
+<p>La investigación según enfoque se refiere a <strong>la forma</strong> en que se <strong>recolectan</strong>, <strong>analizan </strong>e <strong>interpretan</strong> los <strong>datos</strong> para estudiar un fenómeno.</p>
+</div>
+<div class="card fragment fade-up autores-card" data-fragment-index="2" style="top:80; background:#fafaf9; border:1px solid #e5e7eb; border-top: 6px solid #34d399; border-radius: 22px; padding: 26px 28px; box-shadow: 0 8px 22px rgba(0,0,0,0.05);">
+<h3 style="margin-top:0; margin-bottom:16px; font-size: 1.35em;">
+Investigación según alcance
+</h3>
+<p>La investigación según alcance se refiere al <strong>nivel de profundidad</strong> o hasta dónde se quiere llegar <strong>en el estudio</strong> de un fenómeno. Es decir, indica qué tanto se va a investigar o explicar.</p>
+</div>
+</div>
+</section>
+<section id="investigación-según-enfoque" class="slide level2">
+<h2>Investigación según enfoque</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="1">
+Indica cómo se realiza el estudio. Es decir, el enfoque determina si la investigación:
+</p>
+<ul style="font-size: 36px; margin-left: 60px;">
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+<strong>Usa datos numéricos:</strong> Enfoque cuantitativo.
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify;">
+<strong>Usa descripciones:</strong> Enfoque cualitativo.
+</li>
+<li class="fragment fade-in" data-fragment-index="4" style="text-align: justify;">
+<strong>Combina ambos (datos numéricos y descripciones):</strong> Enfoque mixto.
+</li>
+</ul>
+</div>
+</section>
+<section id="según-enfoque-investigación-cuantitativa" class="slide level2">
+<h2>Según enfoque: investigación cuantitativa</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify; margin-top: 80px;">
+Es un tipo de investigación que se basa en la recolección y <strong>análisis de datos numéricos</strong> para responder preguntas o comprobar hipótesis. Utiliza mediciones, cálculos y herramientas estadísticas.
+</p>
+<h4 class="fragment" data-fragment-index="2">
+Ejemplo:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="3">
+<strong>Pregunta:</strong> ¿El tiempo de estudio influye en las calificaciones?
+</li>
+<li class="fragment" data-fragment-index="4">
+<strong>Datos:</strong> horas de estudio y notas.
+</li>
+<li class="fragment" data-fragment-index="5">
+<strong>Análisis:</strong> comparación de promedios.
+</li>
+<li class="fragment" data-fragment-index="6">
+<strong>Resultado:</strong> se determina si existe relación entre ambas variables.
+</li>
+</ul>
+</section>
+<section id="según-enfoque-investigación-cualitativa" class="slide level2">
+<h2>Según enfoque: investigación cualitativa</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify; margin-top: 80px;">
+Es un tipo de investigación que busca describir y comprender fenómenos a partir de observaciones, percepciones o experiencias, sin centrarse en mediciones numéricas.
+</p>
+<h4 class="fragment" data-fragment-index="2">
+Ejemplo:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="3">
+Describir el estado de las plantas (color, aspecto, daño)
+</li>
+<li class="fragment" data-fragment-index="4">
+Identificar tipos de suelo según sus características
+</li>
+<li class="fragment" data-fragment-index="5">
+Registrar la presencia de plagas y su comportamiento
+</li>
+</ul>
+<p class="fragment" data-fragment-index="6" style="font-size: 34px; text-align: justify;">
+<em>No busca medir cuánto, sino comprender cómo y por qué ocurre un fenómeno.</em>
+</p>
+</section>
+<section id="según-enfoque-investigación-mixta" class="slide level2">
+<h2>Según enfoque: Investigación mixta</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify; margin-top: 80px;">
+Es aquella que combina el enfoque cuantitativo y cualitativo, utilizando tanto datos numéricos como descriptivos para obtener un análisis más completo.
+</p>
+<h4 class="fragment" data-fragment-index="2">
+Ejemplo:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="3">
+Medir la producción del cultivo (cuantitativa).
+</li>
+<li class="fragment" data-fragment-index="4">
+Evaluar características del cultivo como color, tamaño o presencia de plagas (cualitativa).
+</li>
+<li class="fragment" data-fragment-index="5">
+Estudiantes con mas horas de estudio (cuantitativa).
+</li>
+<li class="fragment" data-fragment-index="6">
+Percepción de la calidad educativa (cualitativa).
+</li>
+</ul>
+<p class="fragment" data-fragment-index="7" style="font-size: 34px; text-align: justify;">
+<em>No es hacer dos estudios separados, sino integrar ambos en uno solo.</em>
+</p>
+</section>
+<section id="investigación-según-alcance" class="slide level2">
+<h2>Investigación según alcance</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="1">
+Se refiere al nivel de profundidad o hasta dónde se quiere llegar en el estudio de un fenómeno. Es decir, indica qué tanto se va a investigar o explicar, pudiendo ser:
+</p>
+<ul style="font-size: 36px; margin-left: 60px;">
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+<strong>Exploratoria</strong>: se aproxima al problema y lo reconoce.
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify;">
+<strong>Descriptiva</strong>: caracteriza el fenómeno.
+</li>
+<li class="fragment fade-in" data-fragment-index="4" style="text-align: justify;">
+<strong>Correlacional</strong>: analiza la relación entre variables.
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="text-align: justify;">
+<strong>Explicativa</strong>: identifica causas y efectos.
+</li>
+</ul>
+</div>
+</section>
+<section id="según-alcance-investigación-exploratoria" class="slide level2">
+<h2>Según alcance: investigación exploratoria</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Es un tipo de investigación que se realiza cuando el problema ha sido poco estudiado o existe escasa información. Su propósito es comprender el fenómeno, identificar variables relevantes y generar ideas para estudios posteriores. No busca conclusiones definitivas, sino:
+</p>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="2">
+Explorar el problema
+</li>
+<li class="fragment" data-fragment-index="3">
+Identificar posibles variables
+</li>
+<li class="fragment" data-fragment-index="4">
+Plantear preguntas e hipótesis iniciales
+</li>
+</ul>
+<h4 class="fragment" data-fragment-index="5">
+Algunos ejemplos:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="6">
+Investigar tendencias de consumo en un mercado emergente.
+</li>
+<li class="fragment" data-fragment-index="7">
+Explorar hábitos de vida en una población poco estudiada.
+</li>
+<li class="fragment" data-fragment-index="8">
+Identificar la presencia de una plaga desconocida.
+</li>
+</ul>
+</section>
+<section id="según-alcance-investigación-descriptiva" class="slide level2">
+<h2>Según alcance: investigación descriptiva</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Tiene como objetivo detallar y caracterizar un fenómeno, identificando sus propiedades, características y comportamientos. Se enfoca en responder preguntas como ¿<strong>cómo es</strong>?, ¿<strong>cómo se presenta</strong>? y ¿<strong>qué características tiene</strong>?, sin buscar explicar sus causas.
+</p>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="2">
+Se usa cuando el fenómeno ya es conocido
+</li>
+<li class="fragment" data-fragment-index="3">
+Busca detallar y caracterizar
+</li>
+<li class="fragment" data-fragment-index="4">
+Resultado: información organizada del fenómeno
+</li>
+</ul>
+<h4 class="fragment" data-fragment-index="5">
+Algunos ejemplos:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="6">
+Analizar características del suelo (textura, humedad).
+</li>
+<li class="fragment" data-fragment-index="7">
+Analizar características demográficas de una población.
+</li>
+<li class="fragment" data-fragment-index="8">
+Describir el rendimiento académico de estudiantes.
+</li>
+</ul>
+</section>
+<section id="según-alcance-investigación-correlacional" class="slide level2">
+<h2>Según alcance: investigación correlacional</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+La investigación correlacional tiene como objetivo <strong>identificar y medir la relación entre dos o más variables</strong>, evaluando si estas cambian de manera conjunta. Es importante destacar que <strong>no establece relaciones de causa y efecto</strong>, sino que únicamente indica la existencia de asociación entre ellas.
+</p>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="2">
+Analiza la relación entre variables
+</li>
+<li class="fragment" data-fragment-index="3">
+Evalúa si las variables cambian conjuntamente
+</li>
+<li class="fragment" data-fragment-index="4">
+Permite identificar asociaciones entre fenómenos
+</li>
+</ul>
+<h4 class="fragment" data-fragment-index="5">
+Algunos ejemplos:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="6">
+Relación entre lluvia y producción agrícola.
+</li>
+<li class="fragment" data-fragment-index="7">
+Relación entre uso de fertilizante y crecimiento de plantas.
+</li>
+<li class="fragment" data-fragment-index="8">
+Relación entre temperatura y desarrollo de la planta.
+</li>
+</ul>
+</section>
+<section id="según-alcance-investigación-explicativa" class="slide level2">
+<h2>Según alcance: investigación explicativa</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+La investigación explicativa busca <strong>identificar las causas de un fenómeno</strong>, explicando por qué ocurre y bajo qué condiciones, mediante el establecimiento de relaciones de causa y efecto.
+</p>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="2">
+Busca causas.
+</li>
+<li class="fragment" data-fragment-index="3">
+Responde por qué ocurre.
+</li>
+<li class="fragment" data-fragment-index="4">
+Suele implicar experimentos o diseños más rigurosos.
+</li>
+</ul>
+<h4 class="fragment" data-fragment-index="5">
+Algunos ejemplos:
+</h4>
+<ul style="font-size: 34px; margin-left: 60px;">
+<li class="fragment" data-fragment-index="10">
+Estudiar las causas de una enfermedad.
+</li>
+<li class="fragment" data-fragment-index="12">
+Determinar por qué un fertilizante aumenta la producción.
+</li>
+<li class="fragment" data-fragment-index="13">
+Analizar las causas de una plaga en un cultivo.
+</li>
+<li class="fragment" data-fragment-index="14">
+Evaluar el efecto del riego en el crecimiento de plantas.
+</li>
+</ul>
+</section>
+<section id="resumen-enfoque-cuantitativo" class="slide level2">
+<h2>Resumen enfoque cuantitativo</h2>
+<div style="text-align: center;">
+<p><img src="images/resumen_cuantitativo.png" style="width:82%;"></p>
+</div>
+</section>
+<section id="resumen-enfoque-cualitativo" class="slide level2">
+<h2>Resumen enfoque cualitativo</h2>
+<div style="text-align: center;">
+<p><img src="images/resumen_cualitativo.png" style="width:82%;"></p>
+</div>
+</section>
+<section id="conclusiones" class="slide level2">
+<h2>Conclusiones</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+La investigación es un proceso que permite generar conocimiento a partir del análisis de datos.
+</p>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4>
+Según enfoque (cómo se investiga)
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2">
+<strong>Cuantitativo</strong>: mide fenómenos con datos numéricos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3">
+<strong>Cualitativo</strong>: describe y comprende características.
+</li>
+<li class="fragment fade-up" data-fragment-index="4">
+Es verificable (otros pueden replicar el proceso).
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+<strong>Mixto</strong>: combina ambos enfoques
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4>
+Según alcance (hasta dónde se investiga)
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+Exploratoria: permite conocer un problema.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px;">
+Descriptiva: caracteriza un fenómeno.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px;">
+Correlacional: identifica relaciones entre variables.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 30px;">
+Explicativa: determina causas y efectos.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 30px;">
+Predictiva: anticipa resultados futuros.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="definiciones-iniciales-en-estadística" class="slide level2 center middle">
+<h2>Definiciones Iniciales en estadística</h2>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div style="margin-top: 150px;text-align:justify">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>¿Que es la estadística?</strong></p>
+</div>
+<div class="callout-content">
+<ul style="font-size: 34px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="1">
+Es una rama de las matemáticas que permite <strong>recolectar, analizar e interpretar datos</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="2">
+Es fundamental en la ciencia para <strong>tomar decisiones basadas en evidencia</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3">
+Se basa en el estudio de <strong>muestras</strong> para hacer inferncias sobre <strong>poblaciones</strong>.
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tipos-de-estadística" class="slide level2">
+<h2>Tipos de estadística</h2>
+<p>La estadística se divide en dos grandes ramas:</p>
+<div class="card-stack">
+<div class="card fragment fade-up evolucion-card" data-fragment-index="1" style="background:#f8fafc; border:1px solid #e5e7eb; border-top: 6px solid #60a5fa; border-radius: 22px; padding: 26px 28px; box-shadow: 0 8px 22px rgba(0,0,0,0.05);">
+<h4 style="margin-bottom:16px; font-size: 1.35em;">
+Estadística descriptiva
+</h4>
+<p class="fragment fade-in" style="font-size: 30px; text-align: justify;" data-fragment-index="1">
+La estadística descriptiva es la rama de la estadística que se encarga de <strong>organizar</strong>, <strong>resumir</strong> y <strong>presentar datos</strong>, utilizando <strong>tablas</strong>, <strong>gráficos</strong> y medidas numéricas como la <strong>media</strong>, <strong>mediana</strong>, <strong>moda</strong>, <strong>varianza</strong> y <strong>desviación estándar</strong>, con el fin de describir sus características sin realizar generalizaciones.
+</p>
+<ul style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2">
+<strong>Ejemplo:</strong> promedio de notas, histogramas, tablas de frecuencia.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up evolucion-card" data-fragment-index="3" style="background:#f8fafc; border:1px solid #e5e7eb; border-top: 6px solid #60a5fa; border-radius: 22px; padding: 26px 28px; box-shadow: 0 8px 22px rgba(0,0,0,0.08);">
+<h4 style="margin-bottom:16px; font-size: 1.35em;">
+Estadística inferencial
+</h4>
+<p class="fragment fade-in" style="font-size: 30px; text-align: justify;" data-fragment-index="3">
+la estadística inferencial es la rama de la estadística que permite obtener conclusiones y tomar decisiones sobre una población a partir de una muestra, mediante el uso de medidas como estimaciones, intervalos de confianza, pruebas de hipótesis y modelos probabilísticos.
+</p>
+<ul style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4">
+Estimar el promedio de estudiantes de toda una universidad.
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+Evaluar si un medicamento es efectivo.
+</li>
+<li class="fragment fade-up" data-fragment-index="6">
+Realizar una prueba de hipótesis.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="descriptiva-vs-inferencial" class="slide level2">
+<h2>Descriptiva vs Inferencial</h2>
+<p class="fragment" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
+Los tipos de Estadística, <strong>descriptiva</strong> e <strong>inferencial</strong>, son <strong>complementarios</strong> en el análisis de datos:
+</p>
+<ul style="font-size: 34px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2">
+La primera permite organizar, resumir y comprender la información mediante medidas numéricas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3">
+La segunda posibilita interpretar, generalizar resultados y tomar decisiones sobre una población.
+</li>
+</ul>
+<p class="fragment" data-fragment-index="4" style="font-size: 34px; text-align: justify;">
+La estadística descriptiva resume los datos, mientras que la inferencial permite sacar conclusiones y tomar decisiones, siendo ambas esenciales en el análisis cuantitativo.
+</p>
+</section>
+<section id="definiciones-iniciales-en-estadística-1" class="slide level2">
+<h2>Definiciones Iniciales en estadística</h2>
+<div class="card fragment fade-up" data-fragment-index="1" style="margin-top: 100px; background:#f8fafc; border:1px solid #e5e7eb; border-top: 6px solid #60a5fa; border-radius: 22px; padding: 26px 28px; box-shadow: 0 8px 22px rgba(0,0,0,0.05);">
+<h4 style="margin-bottom:16px; font-size: 1.35em;">
+Bioestadística
+</h4>
+<p class="fragment fade-in" style="font-size: 30px; text-align: justify;" data-fragment-index="1">
+Es una herramienta fundamental para el análisis de datos en las <strong>ciencias de la vida</strong>, ya que permite interpretar <strong>fenómenos biológicos</strong>, evaluar procesos de salud y optimizar la producción agrícola mediante el uso de métodos estadísticos. Su <strong>aplicación</strong> en áreas como la <strong>medicina</strong>, la <em>biología</em> y la <strong>Agronomía</strong> contribuye a la toma de decisiones basadas en evidencia y al desarrollo científico.
+</p>
+</div>
+</section>
+<section id="definiciones-iniciales-en-estadística-2" class="slide level2">
+<h2>Definiciones Iniciales en estadística</h2>
+<div class="card fragment fade-up" data-fragment-index="1" style="margin-top: 90px; background:#f8fafc; border:1px solid #e5e7eb; border-top: 6px solid #60a5fa; border-radius: 22px; padding: 26px 28px; box-shadow: 0 8px 22px rgba(0,0,0,0.05);">
+<h4 style="margin-bottom:16px; font-size: 1.35em;">
+Población
+</h4>
+<p class="fragment fade-in" style="font-size: 30px; text-align: justify;" data-fragment-index="1">
+Es el conjunto total de elementos, individuos o unidades de estudio que comparten una o varias características de interés dentro de una investigación. La población puede ser finita o infinita y constituye el universo sobre el cual se desean obtener conclusiones. A seguir algunos ejemplos:
+</p>
+<ul style="margin-left: 60px; font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2">
+Todos los estudiantes de una universidad.
+</li>
+<li class="fragment fade-up" data-fragment-index="3">
+Todos los cultivos de maíz en una finca.
+</li>
+<li class="fragment fade-up" data-fragment-index="4">
+Todos los pacientes de un hospital.
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+Todos los habitantes de una ciudad.
+</li>
+</ul>
+</div>
+</section>
+<section id="definiciones-iniciales-en-estadística-3" class="slide level2">
+<h2>Definiciones Iniciales en estadística</h2>
+<div class="card fragment fade-up" data-fragment-index="1" style="margin-top: 90px; background:#f8fafc; border:1px solid #e5e7eb; border-top: 6px solid #60a5fa; border-radius: 22px; padding: 26px 28px; box-shadow: 0 8px 22px rgba(0,0,0,0.05);">
+<h4 style="margin-bottom:16px; font-size: 1.35em;">
+Muestra
+</h4>
+<p class="fragment fade-in" style="font-size: 30px; text-align: justify;" data-fragment-index="1">
+Es un <strong>subconjunto</strong> representativo de la <strong>población</strong>, seleccionado con el propósito de <strong>analizar</strong> sus <strong>características</strong> y hacer <strong>inferencias</strong> sobre el total de la población, especialmente cuando no es posible estudiar todos sus elementos, por ejemplo:
+</p>
+<ul style="margin-left: 60px; font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2">
+100 estudiantes seleccionados.
+</li>
+<li class="fragment fade-up" data-fragment-index="3">
+20 parcelas de cultivo analizadas.
+</li>
+<li class="fragment fade-up" data-fragment-index="4">
+50 pacientes encuestados.
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+200 personas de una ciudad.
+</li>
+</ul>
+</div>
+</section>
+<section id="definiciones-iniciales-en-estadística-4" class="slide level2">
+<h2>Definiciones Iniciales en estadística</h2>
+<div class="fragment">
+<ul>
+<li><strong>Censo:</strong> un censo es un método de recolección de datos que consiste en estudiar y obtener información de todos los elementos que conforman una población, sin recurrir a muestras, con el fin de describir sus características de manera completa y precisa.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Contar todos los habitantes de un país.</li>
+<li>Registrar todos los estudiantes de una universidad.</li>
+<li>Evaluar todos los cultivos de una finca.</li>
+<li>Analizar todos los empleados de una empresa.</li>
+</ul>
+</div>
+</section>
+<section id="definiciones-iniciales-en-estadística-5" class="slide level2">
+<h2>Definiciones Iniciales en estadística</h2>
+<div class="fragment">
+<ul>
+<li><strong>Variable:</strong> es una característica o atributo que puede tomar diferentes valores en los elementos de una población o muestra. Las variables pueden ser cualitativas o cuantitativas, y son la base para el análisis estadístico.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Edad.</li>
+<li>Estatura.</li>
+<li>Tipo de cultivo.</li>
+<li>Nivel de ingreso.</li>
+</ul>
+</div>
+</section>
+<section id="definiciones-iniciales-en-estadística-6" class="slide level2">
+<h2>Definiciones Iniciales en estadística</h2>
+<div class="fragment">
+<ul>
+<li><strong>Dato:</strong> es el valor específico que toma una variable para un individuo o unidad de estudio. Los datos constituyen la materia prima del análisis estadístico y pueden presentarse en forma numérica o categórica.<br>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Edad = 21 años</li>
+<li>Estatura = 1.70 m</li>
+<li>Peso = 65 kg</li>
+<li>Cultivo = maíz</li>
+<li>Ingreso = $1.500.000</li>
+</ul>
+</div>
+</section>
+<section id="definiciones-iniciales-en-estadística-7" class="slide level2">
+<h2>Definiciones Iniciales en estadística</h2>
+<div class="fragment">
+<ul>
+<li><strong>Parámetro:</strong> Es una medida numérica que describe una característica de la población, como la media o la proporción, y generalmente es desconocida, por lo que se estima a partir de una muestra.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Promedio de edad de todos los estudiantes.</li>
+<li>Producción promedio de toda una finca.</li>
+<li>Porcentaje total de pacientes recuperados.</li>
+<li>Ingreso promedio de una ciudad.</li>
+</ul>
+</div>
+</section>
+<section id="definiciones-iniciales-en-estadística-8" class="slide level2">
+<h2>Definiciones Iniciales en estadística</h2>
+<div class="fragment">
+<ul>
+<li><strong>Estadístico:</strong> es una medida numérica calculada a partir de los datos de una muestra, utilizada para describirla y para estimar parámetros poblacionales.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Promedio de edad de 100 estudiantes.</li>
+<li>Producción promedio de 20 parcelas.</li>
+<li>Porcentaje de recuperación en 50 pacientes.</li>
+<li>Ingreso promedio de 200 personas.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-variables" class="slide level2">
+<h2>Tipos de variables</h2>
+<div class="fragment">
+<ul>
+<li>Las variables son características o atributos que pueden tomar diferentes valores en los elementos de una población o muestra, y son fundamentales para el análisis estadístico, ya que permiten describir, comparar y establecer relaciones entre los datos.</li>
+<li>Las variables pueden ser clasificadas en variables cuantitativas y variables cualitativas.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-variables-1" class="slide level2">
+<h2>Tipos de variables</h2>
+<div class="fragment">
+<ul>
+<li><strong>Variables cuantitativas:</strong> las variables cuantitativas se atribuyen a mediciones numéricas y se pueden clasificar en variables cuantitativas continuas y cuantitativas discretas.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Edad (años).</li>
+<li>Peso (kg).</li>
+<li>Número de hijos.</li>
+<li>Temperatura (°C).</li>
+<li>Número de estudiantes en un salón.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-variables-2" class="slide level2">
+<h2>Tipos de variables</h2>
+<div class="fragment">
+<ul>
+<li><strong>Variable cuantitativa continua: </strong> es una variable que puede tomar cualquier valor dentro de un intervalo de números reales, incluyendo valores decimales, ya que resulta de mediciones. Este tipo de variable se caracteriza por tener infinitos valores posibles entre dos puntos.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><strong>Ejemplos:</strong></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Peso.</li>
+<li>Promedio académico.</li>
+<li>Tiempo de estudio (horas).</li>
+<li>Producción de un cultivo (toneladas).</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-variables-3" class="slide level2">
+<h2>Tipos de variables</h2>
+<div class="fragment">
+<ul>
+<li><strong>Variable cuantitativa discreta:</strong> es aquella que toma valores numéricos enteros y contables, sin admitir valores intermedios o decimales, ya que resulta de un proceso de conteo.<br>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Número de hijos (0, 1, 2, 3…)</li>
+<li>Número de estudiantes en un salón.</li>
+<li>Cantidad de carros en un parqueadero.</li>
+<li>Número de llamadas recibidas.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-variables-4" class="slide level2">
+<h2>Tipos de variables</h2>
+<div class="fragment">
+<ul>
+<li><strong>Variables cualitativas:</strong> son variables que no toman valores numéricos sino que se refieren a atributos, clases o categorías y pueden clasificarse en nominales y ordinales.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Género (masculino, femenino, otro).</li>
+<li>Estado civil (soltero, casado, divorciado).</li>
+<li>Color de ojos (azul, café, verde).</li>
+<li>Nivel educativo (primaria, secundaria, universidad)</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-variables-5" class="slide level2">
+<h2>Tipos de variables</h2>
+<div class="fragment">
+<ul>
+<li><strong>Variable cualitativa nominal:</strong> son atributos que se clasifican en grupos, pero ninguno es mayor o mejor que otro.<br>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Color de ojos.</li>
+<li>Color de la flor.</li>
+<li>Género.</li>
+<li>Tipo de suelo.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-variables-6" class="slide level2">
+<h2>Tipos de variables</h2>
+<div class="fragment">
+<ul>
+<li><strong>Variable cualitativa ordinal:</strong> son variables donde la categoría tiene un orden o una jerarquía.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Nivel de calidad (bajo, medio, alto).</li>
+<li>Clasificaciones (oro, plata, bronce).</li>
+<li>Rendimiento académico (insuficiente, regular, bien, muy bien, excelente).</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-variables-7" class="slide level2">
+<h2>Tipos de variables</h2>
+<h3 id="ejercicio">Ejercicio</h3>
+<div class="fragment">
+<ul>
+<li>Clasifica las variables</li>
+</ul>
+</div>
+<div class="fragment">
+<ol type="1">
+<li>Peso del recién nacido.<br>
+</li>
+<li>Numero de hojas.<br>
+</li>
+<li>Altura de las plantas.<br>
+</li>
+<li>Color de ojos.<br>
+</li>
+<li>Nivel de satisfacción.<br>
+</li>
+<li>Peso del fruto.<br>
+</li>
+</ol>
+</div>
+</section>
+<section id="tipos-de-variables-8" class="slide level2">
+<h2>Tipos de variables</h2>
+<h3 id="solución">Solución</h3>
+<div class="fragment">
+<ol type="1">
+<li>Peso del recién nacido: variable cuantitativa continua.</li>
+<li>Numero de hojas: variable cuantitativa discreta.</li>
+<li>Altura de las plantas: variable cuantitativa continua.</li>
+<li>Color de ojos: variable cualitativa nominal.</li>
+<li>Nivel de satisfacción: variable cualitativa ordinal.</li>
+<li>Peso del fruto: variable cuantitativa continua.</li>
+</ol>
+</div>
+</section>
+<section id="escalas-de-medición" class="slide level2">
+<h2>Escalas de medición</h2>
+<div class="fragment">
+<ul>
+<li>Las escalas de medición son formas de clasificar y medir las variables según el tipo de información que representan.<br>
+Nos indican como podemos analizar los datos.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Las escalas de medición mas utilizadas son:</li>
+</ul>
+</div>
+<div class="fragment">
+<ol type="1">
+<li>Escala nominal.<br>
+</li>
+<li>Escala ordinal.<br>
+</li>
+<li>Escala de intervalo.<br>
+</li>
+<li>Escala de razón.<br>
+</li>
+</ol>
+</div>
+</section>
+<section id="escalas-de-medición-1" class="slide level2">
+<h2>Escalas de medición</h2>
+<div class="fragment">
+<ol type="1">
+<li><strong>Escala nominal</strong>: la escala nominal clasifica los datos en categorías sin un orden.<br>
+</li>
+</ol>
+</div>
+<div class="fragment">
+<p>Ejemplos:</p>
+</div>
+<div class="fragment">
+<ul>
+<li>Tipo de cultivo: maíz, arroz, café.<br>
+</li>
+<li>Presencia de plaga: si, no.</li>
+<li>Tipo de sangre: A, B, AB, O.<br>
+</li>
+</ul>
+</div>
+</section>
+<section id="escalas-de-medición-2" class="slide level2">
+<h2>Escalas de medición</h2>
+<div class="fragment">
+<ol start="2" type="1">
+<li><strong>Escala ordinal</strong>: la escala ordinal clasifica los datos en categorías con orden, pero sin medir la diferencia exacta entre ellas.<br>
+</li>
+</ol>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Nivel de calidad: bajo, medio, alto.<br>
+</li>
+<li>Clasificación: primer lugar, segundo lugar, tercer lugar.<br>
+</li>
+<li>Nivel de humedad: bajo, medio, alto.<br>
+</li>
+</ul>
+</div>
+</section>
+<section id="escalas-de-medición-3" class="slide level2">
+<h2>Escalas de medición</h2>
+<div class="fragment">
+<ol start="3" type="1">
+<li><strong>Escala de intervalo</strong>: la escala de intervalo permite medir diferencias entre valores, pero no tiene un cero real.<br>
+</li>
+</ol>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Temperatura en grados Celsius o Fahrenheit.<br>
+</li>
+<li>Años del calendario.<br>
+</li>
+<li>Hora del día.<br>
+<strong>El cero no significa ausencia total.</strong></li>
+</ul>
+</div>
+</section>
+<section id="escalas-de-medición-4" class="slide level2">
+<h2>Escalas de medición</h2>
+<div class="fragment">
+<ol start="4" type="1">
+<li><strong>Escala de razón</strong>: la escala de razón permite diferencias y además tiene un cero real (ausencia total).<br>
+</li>
+</ol>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong></p>
+</div>
+<div class="fragment">
+<ul>
+<li>Altura de plantas.<br>
+</li>
+<li>Ingresos.<br>
+</li>
+<li>Edad.<br>
+</li>
+<li>Peso.<br>
+<strong>La escala de razón tiene cero real, mientras que la escala de intervalo no.</strong></li>
+</ul>
+</div>
+</section>
+<section id="escalas-de-medición-5" class="slide level2">
+<h2>Escalas de medición</h2>
+<div class="fragment">
+<ul>
+<li>Clasifique las siguientes variables según su escala de medición.<br>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<ol type="1">
+<li>Color de ojos.<br>
+</li>
+<li>Nivel de satisfacción (bajo, medio, alto)<br>
+</li>
+<li>Temperatura (◦C)<br>
+</li>
+<li>Edad.</li>
+<li>Tipo de sangre.</li>
+<li>Puesto en una competencia.<br>
+</li>
+<li>Ingreso mensual.<br>
+</li>
+<li>Día del año.<br>
+</li>
+</ol>
+</div>
+</section>
+<section id="escalas-de-medición-6" class="slide level2">
+<h2>Escalas de medición</h2>
+<h3 id="solución-1">Solución</h3>
+<div class="fragment">
+<ol type="1">
+<li>Color de ojos: escala nominal.</li>
+<li>Nivel de satisfacción: escala ordinal.</li>
+<li>Temperatura: escala de intervalo.<br>
+</li>
+<li>Edad: escala de razón.</li>
+<li>Tipo de sangre: escala nominal.</li>
+<li>Puesto en una competencia: escala ordinal.</li>
+<li>Ingreso mensual: escala de razón.</li>
+<li>Día del año: escala de intervalo.</li>
+</ol>
+</div>
+</section>
+<section id="clase-2" class="slide level2 center middle">
+<h2>Clase 2</h2>
+</section>
+<section id="estadística-descriptiva-de-una-variable" class="slide level2">
+<h2>Estadística descriptiva de una variable</h2>
+<p>La estadística descriptiva de una variable es el conjunto de métodos y técnicas que permiten organizar, resumir y describir los datos obtenidos de una sola característica o variable, con el fin de facilitar su interpretación.</p>
+</section>
+<section id="estadística-descriptiva-de-una-variable-1" class="slide level2">
+<h2>Estadística descriptiva de una variable</h2>
+<p>Las técnicas y métodos mas utilizados son:<br>
+- Tablas de frecuencia.<br>
+- Gráficos (barras, histogramas, gráficos circulares y otros).<br>
+- Medidas estadísticas como la media, mediana, moda, varianza y desviación estándar.<br>
+- Su objetivo principal es presentar la información de manera clara y comprensible, sin realizar inferencias o conclusiones más allá de los datos analizados.</p>
+</section>
+<section id="presentación-tabular-y-gráfica" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<p>Las tablas de frecuencias y los gráficos (circulares, de barras) permiten conocer la distribución (ya sea en una población o en una muestra) de los valores de una variable categórica. La distribución de los valores de la variable dentro de las diferentes categorías se puede expresar en cantidades, en proporciones o en porcentajes.</p>
+</section>
+<section id="presentación-tabular-y-gráfica-1" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<p>Para representar gráficamente la distribución de los datos correspondientes a una variable numérica (discreta o continua) también se utilizan tablas de frecuencias y un gráfico. Aunque es posible hacer tablas de frecuencia y gráficos con pocos datos, su uso es mas recomendable cuando se tiene una mayor cantidad de información, ya que permite una mejor interpretación.</p>
+</section>
+<section id="presentación-tabular-y-gráfica-2" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<p>Pasos para construir una tabla de frecuencias<br>
+Los datos pueden agruparse en el numero de clases o intervalos que se desee; sin embargo es recomendable utilizar criterios como la raíz cuadrada del tamaño de la muestra o la formula de Sturges para definir una cantidad apropiada de intervalos.<br>
+Formulas para determinar el numero de clases:<br>
+- <span class="math inline">\(k=\sqrt{n}\)</span>, donde k es el numero de clases y n es el tamaño de la muestra o numero de datos.<br>
+- <span class="math inline">\(k=1+3.3322\log_{10}(n)\)</span>, donde k es el numero de clases y n es el tamaño de muestra o numero de datos.</p>
+</section>
+<section id="presentación-tabular-y-gráfica-3" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ul>
+<li>Primer paso<br>
+Determinar el numero de clases con las que se desea construir la tabla de frecuencias, ya sea arbitrariamente o por las formulas mencionadas anteriormente, un numero razonable de clases puede ser entre 5 y 20 clases, si el resultado al aplicar las formulas da un numero decimal se redondea al entero mayor mas cercano.</li>
+</ul>
+</section>
+<section id="presentación-tabular-y-gráfica-4" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ul>
+<li>Segundo paso<br>
+Después de se tenga el numero de clases establecido, se procede a hallar el máximo y mínimo de los datos, para hallar el rango. El rango se calcula como: <span class="math display">\[ 𝑅𝑎𝑛𝑔𝑜:𝑅=𝑀𝑎𝑥𝑖𝑚𝑜−𝑚𝑖𝑛𝑖𝑚𝑜 \]</span></li>
+</ul>
+</section>
+<section id="presentación-tabular-y-gráfica-5" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ul>
+<li>Tercer paso<br>
+Determinar la amplitud del intervalo.<br>
+<span class="math display">\[ Amplitud: A= \frac{R}{k} \]</span> La amplitud determina el ancho del intervalo donde van a ir las frecuencias en la tabla, por lo general se utilizan intervalos o clases de la misma longitud, aunque esto depende de la naturaleza de las variables que entran en el estudio.<br>
+La amplitud del intervalo se puede redondear también si se desea.</li>
+</ul>
+</section>
+<section id="presentación-tabular-y-gráfica-6" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ul>
+<li>Cuarto paso<br>
+Al mínimo de los datos se le suma la amplitud y se van armando las clases hasta cubrir el ultimo dato para ubicar las frecuencias.<br>
+En una tabla de frecuencias se deben colocar los siguientes elementos:<br>
+</li>
+</ul>
+<ol type="1">
+<li>Marca de clase: es el punto medio del intervalo, se calcula como la suma del valor mínimo mas el valor máximo de la clase y el resultado se divide por 2 y se hace para cada intervalo, normalmente se denota como <span class="math inline">\(𝑥_𝑖\)</span> en la tabla.</li>
+</ol>
+</section>
+<section id="presentación-tabular-y-gráfica-7" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ol start="2" type="1">
+<li>Frecuencia absoluta <span class="math inline">\(𝑓_𝑖\)</span> : es la cantidad de veces que un dato pertenece a un intervalo o una clase.<br>
+</li>
+<li>Frecuencia acumulada <span class="math inline">\(𝐹_𝑖\)</span>: es cuando se va sumando en cada clase la frecuencia absoluta, en el ultimo intervalo tiene que dar el numero total de datos.<br>
+</li>
+<li>Frecuencia relativa <span class="math inline">\(ℎ_𝑖\)</span>: se calcula como la fracción entre la frecuencia absoluta y el total de datos para cada intervalo.</li>
+</ol>
+</section>
+<section id="presentación-tabular-y-gráfica-8" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<ol start="5" type="1">
+<li>Frecuencia relativa acumulada <span class="math inline">\(𝐻_𝑖\)</span>: se calcula como la suma parcial de las frecuencias relativas en cada intervalo, en el ultimo intervalo tiene que dar 1.<br>
+</li>
+<li>Porcentaje %: se calcula como la frecuencia relativa multiplicada por 100%.<br>
+</li>
+<li>% acumulado: es la suma parcial de los porcentajes en cada intervalo , en el ultimo intervalo tiene que dar el 100%.</li>
+</ol>
+</section>
+<section id="presentación-tabular-y-gráfica-9" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<p>Ejemplo1 (Variable cuantitativa discreta)<br>
+Se entrevistan 1.000 familias de la Ciudad de Buenos Aires, para saber cuántos hijos tiene cada familia. Nuestros datos son de la forma 0, 0, 3, 1, 1, 1, 2, 2, 2, 3, 1, 1, 2, 0, 0, 0, 2, 1, 8, 1, 1, 2, 3, 0, 0, 0…<br>
+Cada número es la cantidad de hijos de cada una de las familias entrevistadas.</p>
+</section>
+<section id="presentación-tabular-y-gráfica-10" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<p>Es necesario resumir la información: 250 familias no tienen hijos, 200 tienen 1 hijo, 300 tienen 2 hijos, 160 tienen 3 hijos, 50 tienen 4 hijos, 20 tienen 5 hijos, 10 tienen 6 hijos, 7 tienen 7 hijos, 2 familias tienen 8 hijos y una familia tiene 9 hijos.<br>
+Podemos presentar el resumen mediante la siguiente tabla de frecuencias</p>
+</section>
+<section id="presentación-tabular-y-gráfica-11" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co">#| echo: false</span></span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a href=""></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a>hijos <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span></span>
+<span id="cb1-7"><a href=""></a>fi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">160</span>, <span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb1-8"><a href=""></a></span>
+<span id="cb1-9"><a href=""></a>Fi <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(fi)</span>
+<span id="cb1-10"><a href=""></a>hi <span class="ot">&lt;-</span> fi <span class="sc">/</span> <span class="fu">sum</span>(fi)</span>
+<span id="cb1-11"><a href=""></a>Hi <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(hi)</span>
+<span id="cb1-12"><a href=""></a>porcentaje <span class="ot">&lt;-</span> hi <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb1-13"><a href=""></a>porcentaje_acum <span class="ot">&lt;-</span> Hi <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb1-14"><a href=""></a></span>
+<span id="cb1-15"><a href=""></a>tabla <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-16"><a href=""></a>  <span class="st">"Cantidad de hijos"</span> <span class="ot">=</span> hijos,</span>
+<span id="cb1-17"><a href=""></a>  <span class="st">"Frecuencia fi"</span> <span class="ot">=</span> fi,</span>
+<span id="cb1-18"><a href=""></a>  <span class="st">"Frecuencia acumulada Fi"</span> <span class="ot">=</span> Fi,</span>
+<span id="cb1-19"><a href=""></a>  <span class="st">"Frecuencia relativa hi"</span> <span class="ot">=</span> <span class="fu">round</span>(hi,<span class="dv">3</span>),</span>
+<span id="cb1-20"><a href=""></a>  <span class="st">"Frecuencia relativa acumulada Hi"</span> <span class="ot">=</span> <span class="fu">round</span>(Hi,<span class="dv">3</span>),</span>
+<span id="cb1-21"><a href=""></a>  <span class="st">"Porcentaje %"</span> <span class="ot">=</span> <span class="fu">round</span>(porcentaje,<span class="dv">1</span>),</span>
+<span id="cb1-22"><a href=""></a>  <span class="st">"Porcentaje acumulado %"</span> <span class="ot">=</span> <span class="fu">round</span>(porcentaje_acum,<span class="dv">1</span>)</span>
+<span id="cb1-23"><a href=""></a>)</span>
+<span id="cb1-24"><a href=""></a></span>
+<span id="cb1-25"><a href=""></a><span class="fu">kable</span>(tabla, <span class="at">align =</span> <span class="st">"c"</span>, <span class="at">caption =</span> <span class="st">"Tabla de frecuencias"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-26"><a href=""></a>  <span class="fu">kable_styling</span>(</span>
+<span id="cb1-27"><a href=""></a>    <span class="at">full_width =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-28"><a href=""></a>    <span class="at">position =</span> <span class="st">"center"</span>,</span>
+<span id="cb1-29"><a href=""></a>    <span class="at">font_size =</span> <span class="dv">18</span></span>
+<span id="cb1-30"><a href=""></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-31"><a href=""></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">background =</span> <span class="st">"#2E7D32"</span>) <span class="sc">%&gt;%</span>  <span class="co"># encabezado verde elegante</span></span>
+<span id="cb1-32"><a href=""></a>  <span class="fu">kable_paper</span>(<span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span>  <span class="co"># filas alternadas</span></span>
+<span id="cb1-33"><a href=""></a>  <span class="fu">column_spec</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(tabla), <span class="at">width =</span> <span class="st">"3cm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="table lightable-paper lightable-striped caption-top" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Tabla de frecuencias</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Cantidad.de.hijos</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Frecuencia.fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Frecuencia.acumulada.Fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Frecuencia.relativa.hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Frecuencia.relativa.acumulada.Hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Porcentaje..</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(46, 125, 50, 255) !important;">Porcentaje.acumulado..</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">0</td>
+<td style="text-align: center; width: 3cm;">250</td>
+<td style="text-align: center; width: 3cm;">250</td>
+<td style="text-align: center; width: 3cm;">0.250</td>
+<td style="text-align: center; width: 3cm;">0.250</td>
+<td style="text-align: center; width: 3cm;">25.0</td>
+<td style="text-align: center; width: 3cm;">25.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">1</td>
+<td style="text-align: center; width: 3cm;">200</td>
+<td style="text-align: center; width: 3cm;">450</td>
+<td style="text-align: center; width: 3cm;">0.200</td>
+<td style="text-align: center; width: 3cm;">0.450</td>
+<td style="text-align: center; width: 3cm;">20.0</td>
+<td style="text-align: center; width: 3cm;">45.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">2</td>
+<td style="text-align: center; width: 3cm;">300</td>
+<td style="text-align: center; width: 3cm;">750</td>
+<td style="text-align: center; width: 3cm;">0.300</td>
+<td style="text-align: center; width: 3cm;">0.750</td>
+<td style="text-align: center; width: 3cm;">30.0</td>
+<td style="text-align: center; width: 3cm;">75.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">3</td>
+<td style="text-align: center; width: 3cm;">160</td>
+<td style="text-align: center; width: 3cm;">910</td>
+<td style="text-align: center; width: 3cm;">0.160</td>
+<td style="text-align: center; width: 3cm;">0.910</td>
+<td style="text-align: center; width: 3cm;">16.0</td>
+<td style="text-align: center; width: 3cm;">91.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">4</td>
+<td style="text-align: center; width: 3cm;">50</td>
+<td style="text-align: center; width: 3cm;">960</td>
+<td style="text-align: center; width: 3cm;">0.050</td>
+<td style="text-align: center; width: 3cm;">0.960</td>
+<td style="text-align: center; width: 3cm;">5.0</td>
+<td style="text-align: center; width: 3cm;">96.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">5</td>
+<td style="text-align: center; width: 3cm;">20</td>
+<td style="text-align: center; width: 3cm;">980</td>
+<td style="text-align: center; width: 3cm;">0.020</td>
+<td style="text-align: center; width: 3cm;">0.980</td>
+<td style="text-align: center; width: 3cm;">2.0</td>
+<td style="text-align: center; width: 3cm;">98.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">6</td>
+<td style="text-align: center; width: 3cm;">10</td>
+<td style="text-align: center; width: 3cm;">990</td>
+<td style="text-align: center; width: 3cm;">0.010</td>
+<td style="text-align: center; width: 3cm;">0.990</td>
+<td style="text-align: center; width: 3cm;">1.0</td>
+<td style="text-align: center; width: 3cm;">99.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">7</td>
+<td style="text-align: center; width: 3cm;">7</td>
+<td style="text-align: center; width: 3cm;">997</td>
+<td style="text-align: center; width: 3cm;">0.007</td>
+<td style="text-align: center; width: 3cm;">0.997</td>
+<td style="text-align: center; width: 3cm;">0.7</td>
+<td style="text-align: center; width: 3cm;">99.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 3cm;">8</td>
+<td style="text-align: center; width: 3cm;">2</td>
+<td style="text-align: center; width: 3cm;">999</td>
+<td style="text-align: center; width: 3cm;">0.002</td>
+<td style="text-align: center; width: 3cm;">0.999</td>
+<td style="text-align: center; width: 3cm;">0.2</td>
+<td style="text-align: center; width: 3cm;">99.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 3cm;">9</td>
+<td style="text-align: center; width: 3cm;">1</td>
+<td style="text-align: center; width: 3cm;">1000</td>
+<td style="text-align: center; width: 3cm;">0.001</td>
+<td style="text-align: center; width: 3cm;">1.000</td>
+<td style="text-align: center; width: 3cm;">0.1</td>
+<td style="text-align: center; width: 3cm;">100.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>  <span class="co"># Fila de totales</span></span>
+<span id="cb2-2"><a href=""></a>total_fila <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-3"><a href=""></a>  <span class="st">"Cantidad de hijos"</span> <span class="ot">=</span> <span class="st">"Total"</span>,</span>
+<span id="cb2-4"><a href=""></a>  <span class="st">"Frecuencia fi"</span> <span class="ot">=</span> <span class="fu">sum</span>(fi),</span>
+<span id="cb2-5"><a href=""></a>  <span class="st">"Frecuencia acumulada Fi"</span> <span class="ot">=</span> <span class="st">""</span>,</span>
+<span id="cb2-6"><a href=""></a>  <span class="st">"Frecuencia relativa hi"</span> <span class="ot">=</span> <span class="st">""</span>,</span>
+<span id="cb2-7"><a href=""></a>  <span class="st">"Frecuencia relativa acumulada Hi"</span> <span class="ot">=</span> <span class="st">""</span>,</span>
+<span id="cb2-8"><a href=""></a>  <span class="st">"Porcentaje %"</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sum</span>(porcentaje),<span class="dv">1</span>),</span>
+<span id="cb2-9"><a href=""></a>  <span class="st">"Porcentaje acumulado %"</span> <span class="ot">=</span> <span class="st">""</span></span>
+<span id="cb2-10"><a href=""></a>)</span>
+<span id="cb2-11"><a href=""></a></span>
+<span id="cb2-12"><a href=""></a><span class="co"># Unir con la tabla original</span></span>
+<span id="cb2-13"><a href=""></a>tabla <span class="ot">&lt;-</span> <span class="fu">rbind</span>(tabla, total_fila)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/logo_unal_3.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="clase_1_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="clase_1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="clase_1_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="clase_1_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'multiplex': {"secret":null,"id":"7c2b4e74855fb606b65a158018c2e8569e77839749c69c81d1189e60be0c8fe4","url":"https://multiplex.up.railway.app/"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
