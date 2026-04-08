@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="clase_2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="clase_2_files/libs/quarto-html/tabby.min.js"></script>
+<script src="clase_2_files/libs/quarto-html/popper.min.js"></script>
+<script src="clase_2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="clase_2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="clase_2_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="clase_2_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
+
+  <meta name="author" content="">
+  <title>Bioestadística Fundamental</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="clase_2_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="clase_2_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="clase_2_files/libs/revealjs/dist/theme/quarto-8070ed4e816fb9563f66a1d38cfd6ef7.css">
+  <link rel="stylesheet" href="assets/syntax-highlight.css">
+  <link rel="stylesheet" href="assets/custom.css">
+  <link rel="stylesheet" href="assets/pacman.css">
+  <link href="clase_2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="clase_2_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="clase_2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="clase_2_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="clase_2_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+  <link href="clase_2_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+  <script defer="" src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+  <script>
+  window.addEventListener('load', function() {
+    if (typeof Reveal === 'undefined') return;
+    function updateLogoVisibility() {
+      if (typeof Reveal.getCurrentSlide !== 'function') return;
+      var logos = document.querySelectorAll('.reveal .slide-logo');
+      if (!logos.length) return;
+      var current = Reveal.getCurrentSlide();
+      var isTitle = current && current.id === 'title-slide';
+      logos.forEach(function(logo) {
+        logo.style.display = isTitle ? 'none' : '';
+      });
+    }
+    // aplicar inmediatamente al cargar
+    updateLogoVisibility();
+    // y cada vez que se cambie de slide
+    Reveal.on('slidechanged', updateLogoVisibility);
+  });
+  </script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Bioestadística Fundamental</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+ 
+</div>
+        <p class="quarto-title-affiliation">
+            Departamento de Estadı́stica, Sede Bogotá
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="clase-2" class="slide level2 center middle">
+<h2>Clase 2</h2>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<h3 class="fragment fade-in" data-fragment-index="1">
+Estadística descriptiva de una variable
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+La estadística descriptiva de una variable es el conjunto de métodos y técnicas que permiten organizar, resumir y describir los datos obtenidos de una sola característica o variable, con el fin de facilitar su interpretación.
+</li>
+</ul>
+</div>
+</section>
+<section id="las-técnicas-y-métodos-mas-utilizados-son" class="slide level2">
+<h2>Las técnicas y métodos mas utilizados son:</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Tablas de frecuencias.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+Gráficos (barras, histogramas, gráficos circulares y otros).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">
+Medidas estadísticas como la media, mediana, moda, varianza y desviación estándar.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h3 style="font-size: 30px;">
+Su objetivo principal es:
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+<strong>Presentar</strong> la información de manera <strong>clara y comprensible</strong>, sin realizar inferencias o conclusiones más allá de los datos analizados.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="presentación-tabular-y-gráfica" class="slide level2">
+<h2>Presentación tabular y gráfica</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Las tablas de frecuencias y los gráficos (circulares, de barras) permiten conocer la distribución (ya sea en una población o en una muestra) de los valores de una variable categórica.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+La distribución de los valores de la variable dentro de las diferentes categorías se puede expresar en cantidades, en proporciones o en porcentajes.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+Para representar gráficamente la distribución de los datos correspondientes a una variable numérica (discreta o continua) también se utilizan tablas de frecuencias y un gráfico.
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+Aunque es posible hacer tablas de frecuencia y gráficos con pocos datos, su uso es más recomendable cuando se tiene una mayor cantidad de información, ya que permite una mejor interpretación.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="presentación-tabular" class="slide level2">
+<h2>Presentación tabular</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<h3 class="fragment fade-in" data-fragment-index="2" style="font-size: 30px;">
+<strong>Tabla de frecuencias</strong>
+</h3>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Una tabla de frecuencia es una representación tabular en la que se distribuyen los datos de una variable, indicando la frecuencia con la que aparece cada valor o intervalo de valores.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Su objetivo es simplificar grandes cantidades de información, permitiendo identificar patrones, tendencias y comportamientos dentro de los datos.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+<strong>Elementos principales de una tabla de frecuencias</strong>
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
+<strong>Datos o clases:</strong> valores individuales o intervalos.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
+<strong>Frecuencia absoluta (<span class="math inline">\(f_i\)</span>):</strong> número de veces que aparece un dato.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+<strong>Frecuencia acumulada (<span class="math inline">\(F_i\)</span>):</strong> suma progresiva de las frecuencias absolutas.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+<strong>Frecuencia relativa (<span class="math inline">\(h_i\)</span>):</strong> proporción o porcentaje respecto al total.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+<strong>Frecuencia relativa acumulada (<span class="math inline">\(H_i\)</span>):</strong> suma progresiva de las frecuencias relativas.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="pasos-para-construir-una-tabla-de-frecuencias" class="slide level2">
+<h2>Pasos para construir una tabla de frecuencias</h2>
+<ul>
+<li class="fragment" style="background: #a78bfa; color: white; font-size: 34px;">
+<ol type="1">
+<li>Determinar el número de clases o intervalos.</li>
+</ol>
+</li>
+<li class="fragment" style="background: #3b82f6; color: white; font-size: 34px;">
+<ol start="2" type="1">
+<li>Hallar el rango.</li>
+</ol>
+</li>
+<li class="fragment" style="background: #59A14F; color: white; font-size: 34px;">
+<ol start="3" type="1">
+<li>Determinar la amplitud del intervalo.</li>
+</ol>
+</li>
+<li class="fragment" style="background: #F28E2B; color: white; font-size: 34px;">
+<ol start="4" type="1">
+<li>Armar los intervalos</li>
+</ol>
+</li>
+<li class="fragment" style="background: #B07AA1; color: white; font-size: 34px;">
+<ol start="5" type="1">
+<li>Ubicar las frecuencias en los intervalos.</li>
+</ol>
+</li>
+<li class="fragment" style="background: #76B7B2; color: white; font-size: 34px;">
+<ol start="6" type="1">
+<li>Llenar la tabla de frecuencias.</li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="determinar-el-número-de-clases-o-intervalos" class="slide level2">
+<h2>1. Determinar el número de clases o intervalos</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Los datos pueden agruparse en el numero de clases o intervalos que se desee; sin embargo es recomendable utilizar criterios como la raíz cuadrada del tamaño de la muestra o la formula de Sturges para definir una cantidad apropiada de intervalos.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+<strong>Formulas para determinar el numero de clases:</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+<span class="math inline">\(k=\sqrt{n}\)</span>, donde <span class="math inline">\(k\)</span> es el numero de clases y <span class="math inline">\(n\)</span> es el tamaño de la muestra o numero de datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+<span class="math inline">\(k=1+3.3322\log_{10}(n)\)</span>, donde <span class="math inline">\(k\)</span> es el numero de clases y <span class="math inline">\(n\)</span> es el tamaño de la muestra o numero de datos.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Un numero razonable de clases puede ser entre 5 y 20 clases, si el resultado al aplicar las formulas da un numero decimal se redondea al entero mayor mas cercano.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="color: red;">
+Nota: Si el número de intervalos no hay que calcularlo, se procede al paso 5.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="hallar-el-rango" class="slide level2">
+<h2>2. Hallar el rango</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+Después de que se tenga el numero de clases establecido, se procede a hallar el máximo y mínimo de los datos, para hallar el rango.<br>
+El rango se calcula como: <span class="math display">\[ 𝑅𝑎𝑛𝑔𝑜:𝑅=𝑀𝑎𝑥𝑖𝑚𝑜−M𝑖𝑛𝑖𝑚𝑜 \]</span>
+</li>
+</ul>
+</div>
+</section>
+<section id="determinar-la-amplitud-del-intervalo" class="slide level2">
+<h2>3. Determinar la amplitud del intervalo</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+La amplitud determina el ancho del intervalo donde van a ir las frecuencias en la tabla, por lo general se utilizan intervalos o clases de la misma longitud.<br>
+La amplitud del intervalo se puede redondear también si se desea.<br>
+Con el rango y el numero de clases se puede determinar la amplitud del intervalo con la siguiente formula: <span class="math display">\[ Amplitud: A= \frac{R}{k} \]</span>
+</li>
+</ul>
+</div>
+</section>
+<section id="armar-los-intervalos" class="slide level2">
+<h2>4. Armar los intervalos</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+Para armar los intervalos se necesita el mínimo de los datos, la amplitud y el numero de clases, con esta información se pueden armar los intervalos.<br>
+El mínimo de los datos se toma como el límite inferior del primer intervalo, el límite superior se obtiene sumando el mínimo mas la amplitud, el segundo intervalo se obtiene sumando el límite superior del primer intervalo mas la amplitud y así sucesivamente hasta completar el numero de clases o intervalos establecidos.
+</li>
+</ul>
+</div>
+</section>
+<section id="ubicar-las-frecuencias-en-los-intervalos" class="slide level2">
+<h2>5. Ubicar las frecuencias en los intervalos</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+Ya con los intervalos armados, se procede a ubicar las frecuencias en cada intervalo, para esto se cuenta la cantidad de datos que pertenecen a cada intervalo y se coloca esa cantidad en la tabla de frecuencias.
+</li>
+</ul>
+</div>
+</section>
+<section id="llenar-la-tabla-de-frecuencias" class="slide level2">
+<h2>6. Llenar la tabla de frecuencias</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+Con los intervalos armados y las frecuencias ubicadas en cada intervalo, se procede a llenar la tabla de frecuencias en los elementos correspondientes de la tabla.
+</li>
+</ul>
+</div>
+</section>
+<section id="elementos-de-la-tabla-de-frecuencias" class="slide level2">
+<h2>Elementos de la tabla de frecuencias</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+<ol type="1">
+<li>Marca de clase <span class="math inline">\(𝑥_𝑖\)</span>: es el punto medio del intervalo.</li>
+</ol>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+Se calcula como la suma del valor mínimo mas el valor máximo de la clase y el resultado se divide por 2 y se hace para cada intervalo.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+<ol start="2" type="1">
+<li>Frecuencia absoluta <span class="math inline">\(𝑓_𝑖\)</span> : es la cantidad de veces que un dato pertenece a un intervalo o una clase.</li>
+</ol>
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+<ol start="3" type="1">
+<li>Frecuencia acumulada <span class="math inline">\(𝐹_𝑖\)</span>: es la suma progresiva de las frecuencias absolutas desde el primer valor o clase hasta el ultimo.</li>
+</ol>
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+En el ultimo intervalo tiene que dar el numero total de datos.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="elementos-de-la-tabla-de-frecuencias-1" class="slide level2">
+<h2>Elementos de la tabla de frecuencias</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+<ol start="4" type="1">
+<li>Frecuencia relativa <span class="math inline">\(ℎ_𝑖\)</span>: es la proporción o fracción que representa cuántas veces aparece un valor con respecto al total de datos.</li>
+</ol>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+Se obtiene dividiendo la frecuencia absoluta <span class="math inline">\(f_i\)</span> entre el número total de datos <span class="math inline">\(n\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">
+<ol start="5" type="1">
+<li>Frecuencia relativa acumulada <span class="math inline">\(𝐻_𝑖\)</span>: es la suma progresiva de las frecuencias relativas desde el primer valor o clase hasta el ultimo.</li>
+</ol>
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+En el ultimo intervalo tiene que dar 1.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+<ol start="6" type="1">
+<li>Porcentaje %: se calcula como la frecuencia relativa multiplicada por 100%.<br>
+</li>
+</ol>
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px;">
+<ol start="7" type="1">
+<li>% acumulado: es la suma progresiva de los porcentajes en cada intervalo.</li>
+</ol>
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px;">
+En el ultimo intervalo tiene que dar el 100%.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejemplo1-variable-cuantitativa-discreta" class="slide level2">
+<h2>Ejemplo1 (Variable cuantitativa discreta)</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+Se entrevistan 1.000 familias de la Ciudad de Buenos Aires, para saber cuántos hijos tiene cada familia.<br>
+Los datos son de la forma 0, 0, 3, 1, 1, 1, 2, 2, 2, 3, 1, 1, 2, 0, 0, 0, 2, 1, 8, 1, 1, 2, 3, 0, 0, 0…<br>
+Cada número es la cantidad de hijos de cada una de las familias entrevistadas.
+</li>
+</ul>
+</div>
+</section>
+<section id="resultados" class="slide level2">
+<h2>Resultados</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+Debido a que la muestra es grande, es necesario resumir la información:<br>
+250 familias no tienen hijos.<br>
+200 familias tienen 1 hijo.<br>
+300 familias tienen 2 hijos.<br>
+160 familias tienen 3 hijos.<br>
+50 familias tienen 4 hijos.<br>
+20 familias tienen 5 hijos.<br>
+10 familias tienen 6 hijos.<br>
+7 familias tienen 7 hijos.<br>
+2 familias tienen 8 hijos.<br>
+1 familia tiene 9 hijos.
+</li>
+</ul>
+</div>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+En este caso no es necesario determinar el número de clases o intervalos, ya que la variable es cuantitativa discreta y los datos se pueden agrupar por su valor individual.
+</li>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+Aplicando los pasos para construir la tabla de frecuencias, se obtiene la siguiente tabla:
+</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="cell-output-display">
+<table class="table lightable-paper lightable-striped caption-top" style="font-size: 26px; margin-left: auto; margin-right: auto; font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Tabla de frecuencias</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(27, 94, 32, 255) !important;">Cantidad.de.hijos</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(27, 94, 32, 255) !important;">fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(27, 94, 32, 255) !important;">Fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(27, 94, 32, 255) !important;">hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(27, 94, 32, 255) !important;">Hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(27, 94, 32, 255) !important;">Porcentaje..</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(27, 94, 32, 255) !important;">Porcentaje.acumulado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; font-weight: bold;">0</td>
+<td style="text-align: center; width: 4cm;">250</td>
+<td style="text-align: center; width: 4cm;">250</td>
+<td style="text-align: center; width: 4cm;">0.250</td>
+<td style="text-align: center; width: 4cm;">0.25</td>
+<td style="text-align: center; width: 4cm;">25.0</td>
+<td style="text-align: center; width: 4cm;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; font-weight: bold;">1</td>
+<td style="text-align: center; width: 4cm;">200</td>
+<td style="text-align: center; width: 4cm;">450</td>
+<td style="text-align: center; width: 4cm;">0.200</td>
+<td style="text-align: center; width: 4cm;">0.45</td>
+<td style="text-align: center; width: 4cm;">20.0</td>
+<td style="text-align: center; width: 4cm;">45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; font-weight: bold;">2</td>
+<td style="text-align: center; width: 4cm;">300</td>
+<td style="text-align: center; width: 4cm;">750</td>
+<td style="text-align: center; width: 4cm;">0.300</td>
+<td style="text-align: center; width: 4cm;">0.75</td>
+<td style="text-align: center; width: 4cm;">30.0</td>
+<td style="text-align: center; width: 4cm;">75</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; font-weight: bold;">3</td>
+<td style="text-align: center; width: 4cm;">160</td>
+<td style="text-align: center; width: 4cm;">910</td>
+<td style="text-align: center; width: 4cm;">0.160</td>
+<td style="text-align: center; width: 4cm;">0.91</td>
+<td style="text-align: center; width: 4cm;">16.0</td>
+<td style="text-align: center; width: 4cm;">91</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; font-weight: bold;">4</td>
+<td style="text-align: center; width: 4cm;">50</td>
+<td style="text-align: center; width: 4cm;">960</td>
+<td style="text-align: center; width: 4cm;">0.050</td>
+<td style="text-align: center; width: 4cm;">0.96</td>
+<td style="text-align: center; width: 4cm;">5.0</td>
+<td style="text-align: center; width: 4cm;">96</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; font-weight: bold;">5</td>
+<td style="text-align: center; width: 4cm;">20</td>
+<td style="text-align: center; width: 4cm;">980</td>
+<td style="text-align: center; width: 4cm;">0.020</td>
+<td style="text-align: center; width: 4cm;">0.98</td>
+<td style="text-align: center; width: 4cm;">2.0</td>
+<td style="text-align: center; width: 4cm;">98</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; font-weight: bold;">6</td>
+<td style="text-align: center; width: 4cm;">10</td>
+<td style="text-align: center; width: 4cm;">990</td>
+<td style="text-align: center; width: 4cm;">0.010</td>
+<td style="text-align: center; width: 4cm;">0.99</td>
+<td style="text-align: center; width: 4cm;">1.0</td>
+<td style="text-align: center; width: 4cm;">99</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; font-weight: bold;">7</td>
+<td style="text-align: center; width: 4cm;">7</td>
+<td style="text-align: center; width: 4cm;">997</td>
+<td style="text-align: center; width: 4cm;">0.007</td>
+<td style="text-align: center; width: 4cm;">0.997</td>
+<td style="text-align: center; width: 4cm;">0.7</td>
+<td style="text-align: center; width: 4cm;">99.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; font-weight: bold;">8</td>
+<td style="text-align: center; width: 4cm;">2</td>
+<td style="text-align: center; width: 4cm;">999</td>
+<td style="text-align: center; width: 4cm;">0.002</td>
+<td style="text-align: center; width: 4cm;">0.999</td>
+<td style="text-align: center; width: 4cm;">0.2</td>
+<td style="text-align: center; width: 4cm;">99.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; font-weight: bold;">9</td>
+<td style="text-align: center; width: 4cm;">1</td>
+<td style="text-align: center; width: 4cm;">1000</td>
+<td style="text-align: center; width: 4cm;">0.001</td>
+<td style="text-align: center; width: 4cm;">1</td>
+<td style="text-align: center; width: 4cm;">0.1</td>
+<td style="text-align: center; width: 4cm;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; font-weight: bold; background-color: rgba(165, 214, 167, 255) !important; font-weight: bold;">Total</td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(165, 214, 167, 255) !important; width: 4cm;">1000</td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(165, 214, 167, 255) !important; width: 4cm;"></td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(165, 214, 167, 255) !important; width: 4cm;">1.000</td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(165, 214, 167, 255) !important; width: 4cm;"></td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(165, 214, 167, 255) !important; width: 4cm;">100.0</td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(165, 214, 167, 255) !important; width: 4cm;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="hallazgos" class="slide level2">
+<h2>Hallazgos</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+El número de hijos más común es 2, con una frecuencia absoluta de 300 familias, lo que representa el 30% de la muestra, seguido por 0 hijos con 250 familias (25%) y 1 hijo con 200 familias (20%).
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 28px;">
+Sumando los primeros 4 primeros porcentajes, se obtiene que el 91% de las familias tienen entre 0 y 3 hijos y el 9% restante tienen entre 4 y 9 hijos.
+</li>
+<li class="fragment fade-in" data-fragment-index="4" style="text-align: justify; font-size: 28px;">
+Segun el estudio pocas familias tienen 4 o más hijos, lo que puede indicar una tendencia hacia familias más pequeñas en la Ciudad de Buenos Aires.
+</li>
+</ul>
+</div>
+</section>
+<section id="ejemplo-2-variable-cualitativa-nominal" class="slide level2">
+<h2>Ejemplo 2 (Variable cualitativa nominal)</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+Se hizo una encuesta a 200 estudiantes de la universidad nacional para conocer cual color de ojos era el mas predominante.<br>
+Los resultados fueron los siguientes:
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 28px;">
+Café: 90
+</li>
+<li class="fragment fade-in" data-fragment-index="4" style="text-align: justify; font-size: 28px;">
+Negro: 60
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="text-align:  justify; font-size: 28px;">
+Azul: 25
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="text-align: justify; font-size: 28px;">
+Verde: 15
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="text-align: justify; font-size: 28px;">
+Miel:10
+</li>
+</ul>
+</div>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 30px;">
+En este caso no es necesario determinar el número de clases o intervalos, ya que la variable es cualitativa nominal y los datos se pueden agrupar por categorías.
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 30px;">
+Aplicando los pasos para construir la tabla de frecuencias, se obtiene la siguiente tabla:
+</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top" style="font-size: 30px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(31, 90, 120, 255) !important;">Color.de.Ojos</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(31, 90, 120, 255) !important;">fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(31, 90, 120, 255) !important;">Fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(31, 90, 120, 255) !important;">hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(31, 90, 120, 255) !important;">Hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(31, 90, 120, 255) !important;">Porcentaje</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(31, 90, 120, 255) !important;">Porcentaje.Acumulado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important; font-weight: bold;">Café</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">90</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">90</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.450</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.450</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">45%</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">45%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important; font-weight: bold;">Negro</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">60</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">150</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.300</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.750</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">30%</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">75%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important; font-weight: bold;">Azul</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">25</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">175</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.125</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.875</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">12.5%</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">87.5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important; font-weight: bold;">Verde</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">15</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">190</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.075</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.950</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">7.5%</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">95%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important; font-weight: bold;">Miel</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">10</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">200</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">0.050</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">1.000</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">5%</td>
+<td style="text-align: center; background-color: rgba(229, 231, 233, 255) !important;">100%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; font-weight: bold; background-color: rgba(191, 201, 202, 255) !important; font-weight: bold;">Total</td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(191, 201, 202, 255) !important;">200</td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(191, 201, 202, 255) !important;"></td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(191, 201, 202, 255) !important;">1.000</td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(191, 201, 202, 255) !important;"></td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(191, 201, 202, 255) !important;">100%</td>
+<td style="text-align: center; font-weight: bold; background-color: rgba(191, 201, 202, 255) !important;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="hallazgos-1" class="slide level2">
+<h2>Hallazgos</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+El color de ojos más común entre los estudiantes encuestados es el café, con una frecuencia absoluta de 90 estudiantes, lo que representa el 45% de la muestra, seguido por el color negro con 60 estudiantes (30%), el azul con 25 estudiantes (12.5%), el verde con 15 estudiantes (7.5%) y el miel con 10 estudiantes (5%).
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 28px;">
+Los colores de ojos que mas predominaron fueron el café y el negro, con una participación del 75% en total.
+</li>
+</ul>
+</div>
+</section>
+<section id="ejemplo-3-variable-cuantitativa-continua" class="slide level2">
+<h2>Ejemplo 3 (Variable cuantitativa continua)</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Los siguientes datos corresponden a las alturas de plantas (en centímetros, con una aproximación de medio centímetro) de 100 cultivos de maíz evaluados por estudiantes de agronomía en un ensayo experimental.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+Las alturas son datos continuos, ya que la altura se mide y puede tomar cualquier valor dentro de un intervalo.
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+60 60,5 61 61 61,5 63,5 63,5 63,5 64 64 64 64 64 64 64 64,4 64,4 64,5 64,5 64,5 64,5 64,5 64,7 66 66 66 66 66 66 66 66 66 66 66,5 66,5 66,5 66,5 66,5 66,5 66,5 66,5 66,5 66,5 66,5 67 67 67 67 67 67 67 67 67 67 67 67 67,5 67,5 67,5 67,5 67,5 67,5 67,5 68 68 69 69 69 69 69 69 69 69 69 69 69,5 69,5 69,5 69,5 69,5 70 70 70 70 70 70 70,5 70,5 70,5 71 71 71 72 72 72 72,5 72,5 73 73,5 74.
+</li>
+</ul>
+</div>
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Para organizar y resumir esta información, se procede a construir una tabla de frecuencias agrupando las alturas en intervalos.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+Se determina el número de clases, el rango, la amplitud del intervalo, se arman los intervalos, se ubican las frecuencias en cada intervalo y se llena la tabla de frecuencias.
+</li>
+</ul>
+</div>
+</section>
+<section id="pasos-para-construir-la-tabla-de-frecuencias" class="slide level2">
+<h2>Pasos para construir la tabla de frecuencias</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Paso 1: Determinar el número de clases o intervalos.<br>
+En el caso de este ejemplo, <span class="math inline">\(𝑛=100\)</span><br>
+<span class="math inline">\(k=\sqrt{100}=10\)</span><br>
+<span class="math inline">\(k=1+3.3322\log_{10}(100)=7.644≈8\)</span> Tomaremos 8 intervalos para este ejemplo, por lo tanto <span class="math inline">\(k=8\)</span>.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+Paso 2: Hallar el rango.<br>
+El valor mínimo es 60 y el valor máximo es 74, por lo tanto el rango se calcula como:<br>
+<span class="math display">\[ 𝑅𝑎𝑛𝑔𝑜: R = 74 - 60 = 14 \]</span>
+</li>
+</ul>
+</div>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Paso 3: Determinar la amplitud del intervalo.<br>
+La amplitud se calcula como: <span class="math display">\[ A = \frac{R}{k} = \frac{14}{8} = 1.75 \]</span> Redondeando a un número más conveniente, se puede tomar una amplitud de 2 cm.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+Paso 4: Armar los intervalos.<br>
+El primer intervalo se establece desde el mínimo (60 cm) hasta el mínimo más la amplitud (62 cm), es decir, [60, 62).<br>
+El segundo intervalo será [62, 64), el tercero [64, 66), el cuarto [66, 68), el quinto [68, 70), el sexto [70, 72), el séptimo [72, 74) y el octavo [74, 76).
+</li>
+</ul>
+</div>
+</section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Paso 5: Ubicar las frecuencias en los intervalos.<br>
+Se cuenta cuántas alturas caen dentro de cada intervalo y se registra esa cantidad como la frecuencia absoluta <span class="math inline">\(f_i\)</span> para cada intervalo.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+Paso 6: Llenar la tabla de frecuencias.<br>
+Con los intervalos definidos y las frecuencias contadas, se completa la tabla de frecuencias con los elementos correspondientes (marca de clase, frecuencia absoluta, frecuencia acumulada, frecuencia relativa, etc.).
+</li>
+</ul>
+</div>
+</section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Al finalizar estos pasos, se obtiene una tabla de frecuencias que resume la distribución de las alturas de las plantas de maíz, facilitando su análisis e interpretación.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+Haciendo todos los cálculos la tabla de frecuencias queda de la siguiente forma:
+</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed caption-top" style="font-size: 26px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Tabla de Frecuencias</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important;">Intervalo</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important;">xi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important;">fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important;">Fi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important;">hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important;">Hi</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important;">Porcentaje</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important;">P.Acumulado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; width: 7em;">[60-62)</td>
+<td style="text-align: center; width: 5em;">61</td>
+<td style="text-align: center; width: 5em;">5</td>
+<td style="text-align: center; width: 5em;">5</td>
+<td style="text-align: center; width: 5em;">0.05</td>
+<td style="text-align: center; width: 5em;">0.05</td>
+<td style="text-align: center; width: 5em;">5%</td>
+<td style="text-align: center; width: 5em;">5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 7em;">[62-64)</td>
+<td style="text-align: center; width: 5em;">63</td>
+<td style="text-align: center; width: 5em;">3</td>
+<td style="text-align: center; width: 5em;">8</td>
+<td style="text-align: center; width: 5em;">0.03</td>
+<td style="text-align: center; width: 5em;">0.08</td>
+<td style="text-align: center; width: 5em;">3%</td>
+<td style="text-align: center; width: 5em;">8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 7em;">[64-66)</td>
+<td style="text-align: center; width: 5em;">65</td>
+<td style="text-align: center; width: 5em;">15</td>
+<td style="text-align: center; width: 5em;">23</td>
+<td style="text-align: center; width: 5em;">0.15</td>
+<td style="text-align: center; width: 5em;">0.23</td>
+<td style="text-align: center; width: 5em;">15%</td>
+<td style="text-align: center; width: 5em;">23%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 7em;">[66-68)</td>
+<td style="text-align: center; width: 5em;">67</td>
+<td style="text-align: center; width: 5em;">40</td>
+<td style="text-align: center; width: 5em;">63</td>
+<td style="text-align: center; width: 5em;">0.40</td>
+<td style="text-align: center; width: 5em;">0.63</td>
+<td style="text-align: center; width: 5em;">40%</td>
+<td style="text-align: center; width: 5em;">63%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 7em;">[68-70)</td>
+<td style="text-align: center; width: 5em;">69</td>
+<td style="text-align: center; width: 5em;">17</td>
+<td style="text-align: center; width: 5em;">80</td>
+<td style="text-align: center; width: 5em;">0.17</td>
+<td style="text-align: center; width: 5em;">0.8</td>
+<td style="text-align: center; width: 5em;">17%</td>
+<td style="text-align: center; width: 5em;">80%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 7em;">[70-72)</td>
+<td style="text-align: center; width: 5em;">71</td>
+<td style="text-align: center; width: 5em;">12</td>
+<td style="text-align: center; width: 5em;">92</td>
+<td style="text-align: center; width: 5em;">0.12</td>
+<td style="text-align: center; width: 5em;">0.92</td>
+<td style="text-align: center; width: 5em;">12%</td>
+<td style="text-align: center; width: 5em;">92%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; width: 7em;">[72-74)</td>
+<td style="text-align: center; width: 5em;">73</td>
+<td style="text-align: center; width: 5em;">7</td>
+<td style="text-align: center; width: 5em;">99</td>
+<td style="text-align: center; width: 5em;">0.07</td>
+<td style="text-align: center; width: 5em;">0.99</td>
+<td style="text-align: center; width: 5em;">7%</td>
+<td style="text-align: center; width: 5em;">99%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; width: 7em;">[74-76)</td>
+<td style="text-align: center; width: 5em;">75</td>
+<td style="text-align: center; width: 5em;">1</td>
+<td style="text-align: center; width: 5em;">100</td>
+<td style="text-align: center; width: 5em;">0.01</td>
+<td style="text-align: center; width: 5em;">1</td>
+<td style="text-align: center; width: 5em;">1%</td>
+<td style="text-align: center; width: 5em;">100%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important; width: 7em;">Total</td>
+<td style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important; width: 5em;"></td>
+<td style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important; width: 5em;">100</td>
+<td style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important; width: 5em;"></td>
+<td style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important; width: 5em;">1.00</td>
+<td style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important; width: 5em;"></td>
+<td style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important; width: 5em;">100%</td>
+<td style="text-align: center; font-weight: bold; color: white !important; background-color: rgba(11, 44, 107, 255) !important; width: 5em;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="hallazgos-2" class="slide level2">
+<h2>Hallazgos</h2>
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+El intervalo con la mayor frecuencia absoluta es [66-68), con 40 plantas de maíz, lo que representa el 40% de la muestra.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+El 80% de las plantas tienen alturas menores a 70 cm, mientras que el 20% restante tienen alturas mayores a 70 cm.
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+La distribución de las alturas muestra una mayor concentración en los intervalos [64-66), [66-68) y [68-70) indicando que la mayoría de las plantas se encuentran en esa franja de altura, con un 72%.
+</li>
+</ul>
+</div>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/logo_unal_3.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="clase_2_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="clase_2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="clase_2_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="clase_2_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'multiplex': {"secret":null,"id":"58eba50422ee7c5a58906de3f40ce5b917dbfa955f044aca047681d3265c973c","url":"https://multiplex.up.railway.app/"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

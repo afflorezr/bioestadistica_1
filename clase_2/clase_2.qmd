@@ -1,0 +1,693 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format: 
+  revealjs:
+    #incremental: true
+    logo: images/logo_unal_3.png
+    #footer: "`emitanaka.org/slides/toronto2022`"
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, assets/monash.scss ]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [assets/syntax-highlight.css, assets/custom.css, assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        // aplicar inmediatamente al cargar
+        updateLogoVisibility();
+        // y cada vez que se cambie de slide
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+
+---
+
+## Clase 2 {.center .middle}
+
+
+##  
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<h3 class="fragment fade-in" data-fragment-index="1">Estadística descriptiva de una variable</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+La estadística descriptiva de una variable es el conjunto de métodos y técnicas que permiten organizar, resumir y describir los datos obtenidos de una sola característica o variable, con el fin de facilitar su interpretación.
+</li>
+</ul >
+</div>
+
+## Las técnicas y métodos mas utilizados son:
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Tablas de frecuencias.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+Gráficos (barras, histogramas, gráficos circulares y otros).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">
+Medidas estadísticas como la media, mediana, moda, varianza y desviación estándar.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h3 style="font-size: 30px;">Su objetivo principal es:</h3>
+
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+<strong>Presentar</strong> la información de manera <strong>clara y comprensible</strong>, sin realizar inferencias o conclusiones más allá de los datos analizados.
+</li>
+</ul>
+</div>
+
+</div>
+## Presentación tabular y gráfica  
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Las tablas de frecuencias y los gráficos (circulares, de barras) permiten conocer la distribución (ya sea en una población o en una muestra) de los valores de una variable categórica.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+La distribución de los valores de la variable dentro de las diferentes categorías se puede expresar en cantidades, en proporciones o en porcentajes. 
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+Para representar gráficamente la distribución de los datos correspondientes a una variable numérica (discreta o continua) también se utilizan tablas de frecuencias y un gráfico.
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+Aunque es posible hacer tablas de frecuencia y gráficos con pocos datos, su uso es más recomendable cuando se tiene una mayor cantidad de información, ya que permite una mejor interpretación.
+</li>
+</ul>
+</div>
+</div>
+
+## Presentación tabular
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<h3 class="fragment fade-in" data-fragment-index="2" style="font-size: 30px;">
+<strong>Tabla de frecuencias</strong>
+</h3>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Una tabla de frecuencia es una representación tabular en la que se distribuyen los datos de una variable, indicando la frecuencia con la que aparece cada valor o intervalo de valores.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Su objetivo es simplificar grandes cantidades de información, permitiendo identificar patrones, tendencias y comportamientos dentro de los datos.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+<strong>Elementos principales de una tabla de frecuencias</strong>
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;"><strong>Datos o clases:</strong> valores individuales o intervalos.</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;"><strong>Frecuencia absoluta ($f_i$):</strong> número de veces que aparece un dato.</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;"><strong>Frecuencia acumulada ($F_i$):</strong> suma progresiva de las frecuencias absolutas.</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;"><strong>Frecuencia relativa ($h_i$):</strong> proporción o porcentaje respecto al total.</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;"><strong>Frecuencia relativa acumulada ($H_i$):</strong> suma progresiva de las frecuencias relativas.</li>
+</ul>
+</div>
+</div>
+
+
+## Pasos para construir una tabla de frecuencias 
+
+<ul>
+<li class="fragment" style="background: #a78bfa; color: white; font-size: 34px;">
+1. Determinar el número de clases o intervalos.
+</li>
+
+<li class="fragment" style="background: #3b82f6; color: white; font-size: 34px;">
+2. Hallar el rango.
+</li>
+
+<li class="fragment" style="background: #59A14F; color: white; font-size: 34px;">
+3. Determinar la amplitud del intervalo.
+</li>
+
+<li class="fragment" style="background: #F28E2B; color: white; font-size: 34px;">
+4. Armar los intervalos
+</li>
+
+<li class="fragment" style="background: #B07AA1; color: white; font-size: 34px;">
+5. Ubicar las frecuencias en los intervalos.
+</li>
+
+<li class="fragment" style="background: #76B7B2; color: white; font-size: 34px;">
+6. Llenar la tabla de frecuencias.
+</li>
+</ul>
+
+## 1. Determinar el número de clases o intervalos
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Los datos pueden agruparse en el numero de clases o intervalos que se desee; sin embargo es recomendable utilizar criterios como la raíz cuadrada del tamaño de la muestra o la formula de Sturges para definir una cantidad apropiada de intervalos.
+</li>
+
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+**Formulas para determinar el numero de clases:**  
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+$k=\sqrt{n}$, donde $k$ es el numero de clases y $n$ es el tamaño de la muestra o numero de datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+$k=1+3.3322\log_{10}(n)$, donde $k$ es el numero de clases y $n$ es el tamaño de la muestra o numero de datos.
+</li>
+</ul>
+</div>
+</div>
+
+## 
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Un numero razonable de clases puede ser entre 5 y 20 clases, si el resultado al aplicar las formulas da un numero decimal se redondea al entero mayor mas cercano.
+</li>
+
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="color: red;">
+Nota: Si el número de intervalos no hay que calcularlo, se procede al paso 5.
+</li>
+</ul>
+</div>
+</div>
+
+## 2. Hallar el rango
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+Después de que se tenga el numero de clases establecido, se procede a hallar el máximo y mínimo de los datos, para hallar el rango.  
+El rango se calcula como:
+$$ 𝑅𝑎𝑛𝑔𝑜:𝑅=𝑀𝑎𝑥𝑖𝑚𝑜−M𝑖𝑛𝑖𝑚𝑜 $$
+</li>
+</ul >
+</div>
+
+## 3. Determinar la amplitud del intervalo
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+La amplitud determina el ancho del intervalo donde van a ir las frecuencias en la tabla, por lo general se utilizan intervalos o clases de la misma longitud.  
+La amplitud del intervalo se puede redondear también si se desea.  
+Con el rango y el numero de clases se puede determinar la amplitud del intervalo con la siguiente formula:
+$$ Amplitud: A= \frac{R}{k} $$
+</li>
+</ul >
+</div>
+
+## 4. Armar los intervalos
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+Para armar los intervalos se necesita el mínimo de los datos, la amplitud y el numero de clases, con esta información se pueden armar los intervalos.  
+El mínimo de los datos se toma como el límite inferior del primer intervalo, el límite superior se obtiene sumando el mínimo mas la amplitud, el segundo intervalo se obtiene sumando el límite superior del primer intervalo mas la amplitud y así sucesivamente hasta completar el numero de clases o intervalos establecidos.
+</li>
+</ul >
+</div>
+
+
+## 5. Ubicar las frecuencias en los intervalos
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul> 
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+Ya con los intervalos armados, se procede a ubicar las frecuencias en cada intervalo, para esto se cuenta la cantidad de datos que pertenecen a cada intervalo y se coloca esa cantidad en la tabla de frecuencias.
+</li>
+</ul >  
+</div>
+
+## 6. Llenar la tabla de frecuencias
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>  
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+Con  los intervalos armados y las frecuencias ubicadas en cada intervalo, se procede a llenar la tabla de frecuencias en los elementos correspondientes de la tabla.
+</li>
+</ul >
+</div>
+
+## Elementos de la tabla de frecuencias
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+1. Marca de clase $𝑥_𝑖$: es el punto medio del intervalo. 
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+Se calcula como la suma del valor mínimo mas el valor máximo de la clase y el resultado se divide por 2 y se hace para cada intervalo.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+2. Frecuencia absoluta $𝑓_𝑖$ : es la cantidad de veces que un dato  pertenece a un intervalo o una clase. 
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+3. Frecuencia acumulada $𝐹_𝑖$: es la suma progresiva de las frecuencias absolutas desde el primer valor o clase hasta el ultimo.
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+En el ultimo intervalo tiene que dar el numero total de datos.
+</li> 
+</ul>
+</div>
+</div>
+
+## Elementos de la tabla de frecuencias
+  <div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+4. Frecuencia relativa $ℎ_𝑖$: es la proporción o fracción que representa cuántas veces aparece un valor con respecto al total de datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+Se obtiene dividiendo la frecuencia absoluta $f_i$ entre el número total de datos $n$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">
+5. Frecuencia relativa acumulada $𝐻_𝑖$: es la suma progresiva de las frecuencias relativas desde el primer valor o clase hasta el ultimo. 
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+En el ultimo intervalo tiene que dar 1.
+</li> 
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+6. Porcentaje %: se calcula como la frecuencia relativa multiplicada por 100%.  
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px;">
+7. % acumulado: es la suma progresiva de los porcentajes en cada intervalo.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px;">
+En el ultimo intervalo tiene que dar el 100%.
+</li> 
+</ul>
+</div>
+</div>
+
+## Ejemplo1 (Variable cuantitativa discreta)
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+Se entrevistan 1.000 familias de la Ciudad de Buenos Aires, para saber cuántos hijos tiene cada familia.  
+Los datos son de la forma 0, 0, 3, 1, 1, 1, 2, 2, 2, 3, 1, 1, 2, 0, 0, 0, 2, 1, 8, 1, 1, 2, 3, 0, 0, 0...  
+Cada número es la cantidad de hijos de cada una de las familias entrevistadas.   
+</li>
+</ul >
+</div>
+
+##  Resultados
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+Debido a que la muestra es grande, es necesario resumir la información:  
+250 familias no tienen hijos.  
+200 familias tienen 1 hijo.   
+300 familias tienen 2 hijos.   
+160 familias tienen 3 hijos.   
+50 familias tienen 4 hijos.   
+20 familias tienen 5 hijos.  
+10 familias tienen 6 hijos.  
+7 familias tienen 7 hijos.  
+2 familias tienen 8 hijos.  
+1 familia tiene 9 hijos.   
+</li>
+</ul >
+</div>
+
+## 
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+En este caso no es necesario determinar el número de clases o intervalos, ya que la variable es cuantitativa discreta y los datos se pueden agrupar por su valor individual.
+</li>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+Aplicando los pasos para construir la tabla de frecuencias, se obtiene la siguiente tabla:
+</li>
+</ul >
+</div>
+
+ 
+---
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+library(knitr)
+library(kableExtra)
+
+# Datos
+hijos <- 0:9
+fi <- c(250, 200, 300, 160, 50, 20, 10, 7, 2, 1)
+
+# Cálculos
+Fi <- cumsum(fi)
+hi <- fi / sum(fi)
+Hi <- cumsum(hi)
+porcentaje <- hi * 100
+porcentaje_acum <- Hi * 100
+
+# Tabla
+tabla <- data.frame(
+  "Cantidad de hijos" = hijos,
+  "fi" = fi,
+  "Fi" = Fi,
+  "hi" = round(hi,3),
+  "Hi" = round(Hi,3),
+  "Porcentaje %" = round(porcentaje,1),
+  "Porcentaje.acumulado" = round(porcentaje_acum,1)
+)
+
+# Fila total
+total_fila <- data.frame(
+  "Cantidad de hijos" = "Total",
+  "fi" = sum(fi),
+  "Fi" = "",
+  "hi" = 1,
+  "Hi" = "",
+  "Porcentaje %" = 100,
+  "Porcentaje.acumulado" = ""
+)
+
+tabla <- rbind(tabla, total_fila)
+
+# TABLA PRO 🔥
+kable(tabla, align = "c", caption = "Tabla de frecuencias") %>%
+  kable_styling(
+    full_width = TRUE,      # ocupa toda la diapositiva
+    position = "center",
+    font_size = 26          # tamaño ideal para presentación
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#1B5E20") %>%  # encabezado oscuro elegante
+  row_spec(nrow(tabla), bold = TRUE, background = "#A5D6A7") %>%         # fila total destacada
+  kable_paper("striped", full_width = TRUE) %>%                          # filas alternadas
+  column_spec(1, bold = TRUE) %>%                                        # primera columna resaltada
+  column_spec(2:ncol(tabla), width = "4cm")                              # columnas más anchas
+# Unir con la tabla original
+tabla <- rbind(tabla, total_fila)
+
+```
+## Hallazgos
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+El número de hijos más común es 2, con una frecuencia absoluta de 300 familias, lo que representa el 30% de la muestra, seguido por 0 hijos con 250 familias (25%) y 1 hijo con 200 familias (20%).
+</li> 
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 28px;">  
+Sumando los primeros 4 primeros porcentajes, se obtiene que el 91% de las familias tienen entre 0 y 3 hijos y el 9% restante tienen entre 4 y 9 hijos.
+</li>
+<li class="fragment fade-in" data-fragment-index="4" style="text-align: justify; font-size: 28px;">
+Segun el estudio pocas familias tienen 4 o más hijos, lo que puede indicar una tendencia hacia familias más pequeñas en la Ciudad de Buenos Aires.
+</li>
+</ul >
+</div>
+
+## Ejemplo 2 (Variable cualitativa nominal)
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify; font-size: 28px;">
+Se hizo una encuesta a 200 estudiantes de la universidad nacional  para conocer cual color de ojos era el mas predominante.  
+Los resultados fueron los siguientes:
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify; font-size: 28px;">
+Café: 90
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify; font-size: 28px;">
+Negro: 60
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align:  justify; font-size: 28px;" >
+Azul: 25
+</li>
+<li class="fragment fade-in" data-fragment-index="6"style="text-align: justify; font-size: 28px;">
+Verde: 15
+</li>
+<li class="fragment fade-in" data-fragment-index="7"style="text-align: justify; font-size: 28px;">
+Miel:10
+</li>
+</ul >
+</div>
+
+## 
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 30px;">
+En este caso no es necesario determinar el número de clases o intervalos, ya que la variable es cualitativa nominal y los datos se pueden agrupar por categorías.
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 30px;">
+Aplicando los pasos para construir la tabla de frecuencias, se obtiene la siguiente tabla:
+</li>
+</ul >
+</div>
+
+---
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+library(knitr)
+library(kableExtra)
+
+# Datos
+ojos <- c("Café", "Negro", "Azul", "Verde", "Miel")
+fi <- c(90, 60, 25, 15, 10)
+
+# Cálculos
+Fi <- cumsum(fi)
+hi <- fi / sum(fi)
+Hi <- cumsum(hi)
+porcentaje <- hi * 100
+porcentaje_acum <- Hi * 100
+
+# Tabla
+tabla <- data.frame(
+  "Color de Ojos" = ojos,
+  "fi" = fi,
+  "Fi" = Fi,
+  "hi" = sprintf("%.3f", hi),              # formato exacto
+  "Hi" = sprintf("%.3f", Hi),
+  "Porcentaje" = paste0(round(porcentaje,1), "%"),
+  "Porcentaje.Acumulado" = paste0(round(porcentaje_acum,1), "%")
+)
+
+# Fila total
+total_fila <- data.frame(
+  "Color de Ojos" = "Total",
+  "fi" = sum(fi),
+  "Fi" = "",
+  "hi" = "1.000",
+  "Hi" = "",
+  "Porcentaje" = "100%",
+  "Porcentaje.Acumulado" = ""
+)
+
+tabla <- rbind(tabla, total_fila)
+
+# TABLA ESTILO EXACTO 
+kable(tabla, align = "c") %>%
+  kable_styling(
+    full_width = TRUE,
+    position = "center",
+    font_size = 30
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#1F5A78") %>%  # azul encabezado
+  row_spec(1:(nrow(tabla)-1), background = "#E5E7E9") %>%                # gris claro uniforme
+  row_spec(nrow(tabla), bold = TRUE, background = "#BFC9CA") %>%         # total gris más fuerte
+  column_spec(1, bold = TRUE)       
+
+```
+
+## Hallazgos
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+El color de ojos más común entre los estudiantes encuestados es el café, con una frecuencia absoluta de 90 estudiantes, lo que representa el 45% de la muestra, seguido por el color negro con 60 estudiantes (30%), el azul con 25 estudiantes (12.5%), el verde con 15 estudiantes (7.5%) y el miel con 10 estudiantes (5%).
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 28px;">
+Los colores de ojos que mas predominaron fueron el café y el negro, con una participación del 75% en total.
+</li>
+</ul >
+</div>
+
+## Ejemplo 3 (Variable cuantitativa continua)
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+  <ul>
+    <li class="fragment fade-in" data-fragment-index="2">
+      Los siguientes datos corresponden a las alturas de plantas (en centímetros, con una aproximación de medio centímetro) de 100 cultivos de maíz evaluados por estudiantes de agronomía en un ensayo experimental.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="3">
+      Las alturas son datos continuos, ya que la altura se mide y puede tomar cualquier valor dentro de un intervalo.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="4">
+      60  60,5  61  61  61,5 63,5  63,5  63,5 64  64  64  64  64  64  64  64,4  64,4  64,5  64,5  64,5  64,5  64,5  64,7 66  66  66  66  66  66  66  66  66  66  66,5  66,5  66,5  66,5  66,5  66,5  66,5  66,5  66,5  66,5  66,5  67  67  67  67  67  67  67  67  67  67  67  67  67,5  67,5  67,5  67,5  67,5  67,5  67,5 68  68  69  69  69  69  69  69  69  69  69  69  69,5  69,5  69,5  69,5  69,5 70  70  70  70  70  70  70,5  70,5  70,5  71  71  71 72  72  72  72,5  72,5  73  73,5  74.
+    </li>
+  </ul>
+</div>
+
+## 
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+  <ul>
+    <li class="fragment fade-in" data-fragment-index="2">
+      Para organizar y resumir esta información, se procede a construir una tabla de frecuencias agrupando las alturas en intervalos.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="3">
+      Se determina el número de clases, el rango, la amplitud del intervalo, se arman los intervalos, se ubican las frecuencias en cada intervalo y se llena la tabla de frecuencias.
+    </li>
+  </ul>
+</div>
+
+## Pasos para construir la tabla de frecuencias
+  <div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+  <ul>
+    <li class="fragment fade-in" data-fragment-index="2">
+      Paso 1: Determinar el número de clases o intervalos.  
+      En el caso de este ejemplo, $𝑛=100$  
+          $k=\sqrt{100}=10$        
+          $k=1+3.3322\log_{10}(100)=7.644≈8$
+Tomaremos 8 intervalos para este ejemplo, por lo tanto $k=8$.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="3">
+      Paso 2: Hallar el rango.  
+      El valor mínimo es 60 y el valor máximo es 74, por lo tanto el rango se calcula como:  
+$$ 𝑅𝑎𝑛𝑔𝑜: R = 74 - 60 = 14 $$
+    </li>
+  </ul>
+</div>
+
+## 
+  <div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+  <ul>
+    <li class="fragment fade-in" data-fragment-index="2">
+      Paso 3: Determinar la amplitud del intervalo.  
+      La amplitud se calcula como:
+$$ A = \frac{R}{k} = \frac{14}{8} = 1.75 $$
+Redondeando a un número más conveniente, se puede tomar una amplitud de 2 cm.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="3"> 
+      Paso 4: Armar los intervalos.  
+      El primer intervalo se establece desde el mínimo (60 cm) hasta el mínimo más la amplitud (62 cm), es decir, [60, 62).  
+      El segundo intervalo será [62, 64), el tercero [64, 66), el cuarto [66, 68), el quinto [68, 70), el sexto [70, 72), el séptimo [72, 74) y el octavo [74, 76).
+    </li>
+  </ul>
+</div>
+
+##
+  <div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+  <ul>
+    <li class="fragment fade-in" data-fragment-index="2">
+      Paso 5: Ubicar las frecuencias en los intervalos.  
+      Se cuenta cuántas alturas caen dentro de cada intervalo y se registra esa cantidad como la frecuencia absoluta $f_i$ para cada intervalo.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="3">
+      Paso 6: Llenar la tabla de frecuencias.  
+      Con los intervalos definidos y las frecuencias contadas, se completa la tabla de frecuencias con los elementos correspondientes (marca de clase, frecuencia absoluta, frecuencia acumulada, frecuencia relativa, etc.).
+    </li>
+  </ul>
+</div>
+
+## 
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+  <ul>
+    <li class="fragment fade-in" data-fragment-index="2">
+      Al finalizar estos pasos, se obtiene una tabla de frecuencias que resume la distribución de las alturas de las plantas de maíz, facilitando su análisis e interpretación.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="3">
+      Haciendo todos los cálculos la tabla de frecuencias queda de la siguiente forma:
+    </li>
+  </ul> 
+</div>  
+
+---
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+library(kableExtra)
+tabla <- data.frame(
+  Intervalo = c("[60-62)", "[62-64)", "[64-66)", "[66-68)", "[68-70)", "[70-72)", "[72-74)", "[74-76)"),
+  xi = c(61, 63, 65, 67, 69, 71, 73, 75),
+  fi = c(5, 3, 15, 40, 17, 12, 7, 1),
+  Fi = c(5, 8, 23, 63, 80, 92, 99, 100),
+  hi = c(0.05, 0.03, 0.15, 0.40, 0.17, 0.12, 0.07, 0.01),
+  Hi = c(0.05, 0.08, 0.23, 0.63, 0.80, 0.92, 0.99, 1.00),
+  Porcentaje = c("5%", "3%", "15%", "40%", "17%", "12%", "7%", "1%"),
+  P.Acumulado = c("5%", "8%", "23%", "63%", "80%", "92%", "99%", "100%"),
+  stringsAsFactors = FALSE
+)
+
+# 🔹 Crear fila Total (sin dplyr)
+fila_total <- data.frame(
+  Intervalo = "Total",
+  xi = "",
+  fi = sum(tabla$fi),
+  Fi = "",
+  hi = sum(tabla$hi),
+  Hi = "",
+  Porcentaje = "100%",
+  P.Acumulado = "",
+  stringsAsFactors = FALSE
+)
+
+# 🔹 Unir tablas (base R)
+tabla_final <- rbind(tabla, fila_total)
+
+# 🔹 Mostrar tabla
+tabla_final %>%
+  kbl(align = "c", caption = "Tabla de Frecuencias") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    full_width = FALSE,
+    font_size = 26
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#0b2c6b", color = "white") %>%
+  row_spec(nrow(tabla_final), bold = TRUE, background = "#0b2c6b", color = "white") %>%
+  column_spec(1, width = "7em") %>%
+  column_spec(2:8, width = "5em")
+```
+## Hallazgos
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+  <ul>
+    <li class="fragment fade-in" data-fragment-index="2">
+      El intervalo con la mayor frecuencia absoluta es [66-68), con 40 plantas de maíz, lo que representa el 40% de la muestra.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="3">
+      El 80% de las plantas tienen alturas menores a 70 cm, mientras que el 20% restante tienen alturas mayores a 70 cm.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="4">
+      La distribución de las alturas muestra una mayor concentración en los intervalos [64-66), [66-68) y [68-70) indicando que la mayoría de las plantas se encuentran en esa franja de altura, con un 72%.
+    </li>
+  </ul>
+</div>
