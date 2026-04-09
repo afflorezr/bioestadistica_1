@@ -691,3 +691,599 @@ tabla_final %>%
     </li>
   </ul>
 </div>
+
+## Presentación gráfica
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+¿Qué es una gráfica en estadística?
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+Una gráfica es una representación visual de los datos que permite mostrar información de manera clara, resumida y comprensible, facilitando el análisis y la interpretación de los datos.
+</li>
+</ul >
+</div>
+
+## Objetivo de las gráficas
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<h3 class="fragment fade-in" data-fragment-index="2" style="font-size: 30px;">
+<strong>¿Cuál es el objetivo de una gráfica?</strong>
+</h3>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Facilitar la comprensión de grandes cantidades de datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Identificar patrones, tendencias y relaciones.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Comparar diferentes conjuntos de datos.  
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+Apoyar la toma de decisiones.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Comunicar información de manera visual y efectiva.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+<strong>Principales tipos de gráficas en estadística:</strong>
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
+<strong>Gráfico de barras</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
+<strong>Histograma</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+<strong>Polígono de frecuencias</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+<strong>Gráfico circular (pastel)</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+<strong>Gráfico de líneas</strong> 
+</li>
+
+</ul>
+</div>
+</div>
+
+## Gráfico de barras
+
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 25px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+El gráfico de barras representa datos mediante barras separadas, permitiendo comparar diferentes categorías.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Interpretación</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Permite comparar fácilmente las categorías y observar cuál tiene mayor o menor frecuencia.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Rendimiento de cultivos (ton/ha) en una finca.
+</li>
+
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=8
+fig.height=5
+cultivos <- c("Maíz", "Arroz", "Trigo", "Café")
+rendimiento <- c(4.5, 5.2, 3.8, 2.1)
+
+library(ggplot2)
+
+datos <- data.frame(
+  cultivo = cultivos,
+  rendimiento = rendimiento
+)
+
+ggplot(datos, aes(x = cultivo, y = rendimiento, fill = cultivo)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Rendimiento por cultivo",
+       x = "Cultivos",
+       y = "Toneladas por hectárea") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 16, face = "bold"))
+
+```
+
+</div>
+
+</div>
+
+## Histograma
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 25px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Representa la distribución de una variable cuantitativa continua mediante barras unidas.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Interpretación</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Permite observar la forma de la distribución (simétrica, sesgada, etc.) y ver que intervalo o categoría tiene mayor frecuencia.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Las calificaciones de 10 estudiantes en un examen final fueron:  
+60, 62, 65, 70, 72, 75, 78, 80, 85, 90.
+</li>
+
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=8
+fig.height=5
+datos <- c(60, 62, 65, 70, 72, 75, 78, 80, 85, 90)
+
+hist(datos,
+     col = "#66CDAA",
+     main = "Distribución de valores",
+     xlab = "Valores",
+     ylab = "Frecuencia",
+     breaks = 5,
+     border = "white",
+     cex.main = 1.5,
+     cex.lab = 1.2,
+     cex.axis = 1.1)
+
+```
+
+</div>
+
+</div>
+
+## Polígono de frecuencias
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+El polígono de frecuencias es una gráfica que se construye uniendo con líneas los puntos medios de los intervalos de una distribución de datos. 
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Interpretación</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Permite ver la forma, concentración y tendencia de los datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Altura de las plantas.
+</li>
+
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=10
+fig.height=7
+datos <- c(60, 62, 65, 70, 72, 73, 74, 75, 78, 80, 85, 90)
+
+# Crear histograma
+h <- hist(datos,
+          col = "lightgreen",
+          main = "Polígono de Frecuencias",
+          xlab = "Valores",
+          ylab = "Frecuencia",
+          breaks = 5,
+          border = "white")
+
+# Agregar polígono
+lines(h$mids, h$counts,
+      type = "o",
+      col = "darkgreen",
+      lwd = 2,
+      pch = 16)
+```
+
+</div>
+
+</div>
+
+## Gráfico circular
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Muestra proporciones o porcentajes de un total.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Interpretación</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Permite identificar qué categoría tiene mayor participación.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Uso del suelo
+</li>
+
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:90%" >
+```{r echo=FALSE, fig.width=8, fig.height=8}
+
+uso_suelo <- c(50, 30, 15, 5)
+tipos <- c("Cultivo", "Pastoreo", "Bosque", "Otros")
+
+colores <- c("#2E8B57", "#3CB371", "#66CDAA", "#20B2AA")
+
+pie(uso_suelo,
+    labels = paste(tipos, uso_suelo, "%"),
+    col = colores,
+    main = "Distribución del uso del suelo",
+    border = "white")
+```
+
+</div>
+
+</div>
+
+## Gráfico de líneas
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Se usa para mostrar tendencias a lo largo del tiempo.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Interpretación</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Permite analizar el comportamiento de los datos en el tiempo.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Producción anual de maíz.
+</li>
+
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=10
+fig.height=7
+años <- c(2018, 2019, 2020, 2021, 2022)
+produccion <- c(10, 12, 15, 14, 18)
+
+plot(años, produccion,
+     type = "o",
+     col = "#FF8C00",
+     pch = 16,
+     lwd = 2,
+     main = "Producción de maíz por año",
+     xlab = "Año",
+     ylab = "Toneladas",
+     ylim = c(0, 20))
+
+text(años, produccion,
+     labels = produccion,
+     pos = 3,
+     cex = 1.1)
+```
+
+</div>
+
+</div>
+
+## Conclusión
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+Las gráficas, tanto en contextos generales como en agronomía, permiten analizar datos de manera visual, identificar patrones importantes y apoyar la toma de decisiones en procesos productivos y científicos.
+</li>
+</ul >
+</div>
+
+## Interpretación de graficas
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+¿Cómo interpretar una gráfica?
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+Identificar la forma de la distribución.
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify;">
+Observar dónde se concentran los datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align: justify;">
+Observar dónde se concentran los datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="6"style="text-align: justify;">
+Detectar simetría o asimetría.
+</li>
+<li class="fragment fade-in" data-fragment-index="7"style="text-align: justify;">
+Analizar valores extremos.
+</li>
+<li class="fragment fade-in" data-fragment-index="7"style="text-align: justify;">
+Relacionar con el contexto del problema.
+</li>
+
+</ul >
+</div>
+
+## Tipos de distribuciones
+<div class="twocol">
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+<b>Distribución simétrica</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Características:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Forma de “campana”.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+Media ≈ mediana ≈ moda.
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Igual comportamiento a ambos lados.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7">
+<b>Ejemplo:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="8">
+Se mide la altura (en cm) de 100 plantas de maíz en condiciones uniformes de suelo, riego y fertilización.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="9" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=10
+fig.height=7
+set.seed(123)
+altura <- rnorm(100, mean = 150, sd = 10)
+
+hist(altura,
+     col = "lightgreen",
+     main = "Distribución de la altura de plantas de maíz",
+     xlab = "Altura (cm)",
+     breaks = 10,
+     border = "white")
+```
+
+</div>
+
+</div>
+
+## Interpretación
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+La mayoría de las plantas tienen alturas cercanas a 150 cm.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+La distribución es simétrica, indicando crecimiento uniforme.
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify;">
+Hay pocas plantas muy pequeñas o muy grandes.
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align: justify;">
+Esto sugiere que el cultivo está en condiciones homogéneas.
+</li>
+</ul >
+</div>
+
+## 
+<div class="twocol">
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+<b>Distribución asimétrica positiva</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="2">
+Los datos se concentran en las primeras categorías (valores bajos) y hay una “cola” hacia la derecha.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Características:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Cola hacia valores altos
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+Media > mediana.
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Pocos valores grandes influyen en el promedio.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7">
+<b>Ejemplo:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="8">
+Ingresos de una muestra de 80 personas de una empresa.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="9" style="margin-top:60px;width:140%" >
+```{r echo=FALSE}
+fig.width=10
+fig.height=7
+set.seed(123)
+
+# Datos concentrados + algunos valores altos (sin huecos grandes)
+ingresos <- c(rnorm(90, mean = 1000, sd = 150),
+              1500, 1800, 2000, 2500)
+
+hist(ingresos,
+     col = "lightblue",
+     main = "Distribución de ingresos",
+     xlab = "Ingresos",
+     breaks = 10,
+     border = "white")
+```
+
+</div>
+
+</div>
+
+## Interpretación
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+La mayoría de los datos se concentra en valores bajos y medios.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+Los valores disminuyen gradualmente hacia la derecha.
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify;">
+Se observa una cola hacia la derecha.
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align: justify;">
+La distribución presenta asimetría positiva.
+</li>
+</ul >
+</div>
+
+## 
+<div class="twocol">
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 25px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+<b>Distribución asimétrica negativa</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="2">
+La asimetría negativa ocurre cuando los datos se concentran en valores altos y presentan una cola hacia los valores bajos.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Características:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+La cola se extiende hacia la izquierda.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+Media < mediana.
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Existen pocos valores bajos que afectan la distribución.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7">
+<b>Ejemplo:</b>
+</li>
+<li class="fragment fade-in" data-fragment-index="8">
+Producción de un cultivo (toneladas por hectárea), donde la mayoría de los terrenos tiene alta producción, pero algunos presentan rendimientos bajos.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="9" style="margin-top:60px;width:140%" >
+```{r echo=FALSE}
+fig.width=10
+fig.height=7
+set.seed(123)
+
+produccion <- c(rnorm(90, mean = 20, sd = 2),
+                12, 10, 8, 6)
+
+hist(produccion,
+     col = "orange",
+     main = "Producción de cultivo",
+     xlab = "Toneladas",
+     breaks = 10,
+     border = "white")
+```
+
+</div>
+
+</div>
+
+## Interpretación
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+La mayoría de los valores se concentra en producciones altas.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+Existen pocos valores bajos que generan una cola hacia la izquierda.
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify;">
+La distribución presenta asimetría negativa.
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align: justify;">
+El gráfico indica que la mayoría de los cultivos tiene buen rendimiento, pero en algunos casos presentan bajo desempeño.
+</li>
+</ul >
+</div>
+
+## Conclusiones presentación gráfica
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+Las gráficas, tanto en contextos generales como en agronomía, permiten analizar datos de manera visual, identificar patrones importantes y apoyar la toma de decisiones en procesos productivos y científicos.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+La forma de una gráfica permite entender cómo se comportan los datos, identificar posibles problemas (valores atípicos) y tomar decisiones más informadas, especialmente en áreas como la agronomía donde la variabilidad es clave.
+</li>
+
+</ul >
+</div>
+
+## Conclusiones finales presentación tabular y gráfica
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+La presentación tabular permite organizar los datos de manera estructurada, facilitando su lectura y análisis detallado.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+La presentación gráfica complementa las tablas al representar la información de forma visual, permitiendo identificar patrones, tendencias y comportamientos de manera rápida.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">
+El uso conjunto de tablas y gráficas mejora la comprensión de los datos y facilita la interpretación de la información.
+</li>
+
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px;">
+Las gráficas permiten detectar características importantes como la simetría, la asimetría y la presencia de valores atípicos.
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+Una adecuada presentación de los datos es fundamental para apoyar la toma de decisiones en diferentes áreas, como la agronomía y otras disciplinas.
+</li>
+</ul>
+</div>
+</div>
