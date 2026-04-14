@@ -1,0 +1,1099 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format: 
+  revealjs:
+    #incremental: true
+    logo: images/logo_unal_3.png
+    #footer: "`emitanaka.org/slides/toronto2022`"
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, assets/monash.scss ]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [assets/syntax-highlight.css, assets/custom.css, assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        // aplicar inmediatamente al cargar
+        updateLogoVisibility();
+        // y cada vez que se cambie de slide
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+
+---
+
+## Clase 3 {.center .middle}
+
+## Tasas, razones y proporciones.
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+En la vida cotidiana y en muchas áreas del conocimiento como la agronomía, la economía, la salud y la ingeniería, es fundamental poder comparar cantidades, interpretar datos y tomar decisiones basadas en información numérica.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<ul>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">
+Constantemente nos enfrentamos a situaciones como:
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">
+🌱 Determinar cuántas plantas hay en un área determinada.
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
+💧 Calcular cuánta agua necesita un cultivo.
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
+🚜 Evaluar la producción por hectárea.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
+🚗 Calcular la velocidad de un vehículo.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+🛒 Comparar precios en el mercado (¿qué producto es más económico?).
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+🧑‍🤝‍🧑 Analizar proporciones en grupos de personas.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+🏥 Evaluar tasas en salud (ej: pacientes por día).
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## 
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+Para poder resolver este tipo de situaciones, las matemáticas nos proporcionan herramientas clave que facilitan el análisis y la comprensión de la información.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Entre estas herramientas se destacan tres conceptos fundamentales:
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Tasas: nos permiten relacionar magnitudes con diferentes unidades.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Razones: nos permiten comparar dos cantidades.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+Proporciones: nos ayudan a encontrar relaciones equivalentes.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<ul>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
+Estas herramientas no solo se utilizan en el ámbito académico, sino que tienen aplicaciones prácticas en la vida diaria. Por ejemplo, cuando se calcula la velocidad de un vehículo, el rendimiento de un cultivo, la relación entre precios o la cantidad de insumos necesarios para una producción.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+Comprender estos conceptos es importante porque permite:
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+Analizar información de manera más clara.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+Resolver problemas reales.
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
+Tomar decisiones más precisas.
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
+Interpretar datos en diferentes contextos.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Tasas
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+Una tasa es un tipo especial de razón que compara dos cantidades que tienen diferentes unidades de medida, permitiendo analizar cómo cambia una variable con respecto a otra. 
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Las tasas son fundamentales para medir rendimiento, velocidad, densidad, productividad o cualquier relación entre magnitudes distintas.  
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Se utilizan frecuentemente en contextos reales como producción agrícola, economía, transporte y ciencias.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">
+¿Para qué sirven las tasas?
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
+Medir rendimiento.
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
+Analizar producción.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
+Evaluar eficiencia.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+Comparar variables.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Ejemplos
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1" >
+<ul>  
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;" style="font-size: 25px;">
+120 km en 2 horas.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;" >
+Se puede expresar como:$120km/2h$
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify;" >
+Simplificando equivale a :$60km/h$, es decir 60 km por hora.
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align: justify;" >
+200 kg en 4 hectáreas.
+</li>
+<li class="fragment fade-in" data-fragment-index="6"style="text-align: justify;" >
+Se puede expresar como:$200kg/4ha$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7"style="text-align: justify;" >
+Simplificando equivale a :$50kg/ha$, es decir 50 kg por hectarea.
+</li>
+
+</ul >
+</div>
+
+## Ejercicios
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+Determine la tasa de:
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+400 km en 8 horas 
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+250 kg en 5 ha
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+180 kg en 6 ha
+</li>
+
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
+Soluciones:
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
+$50 km/h$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+$50 kg/ha$
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+$30 kg/ha$
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Conclusiones
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+1. Las tasas permiten comparar variables con diferentes unidades.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Las tasas relacionan magnitudes distintas (ej: kg/ha, km/h), lo que permite entender cómo cambia una variable respecto a otra.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+2. Son fundamentales en el análisis estadístico.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+En estadística, las tasas se utilizan para:
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+Analizar fenómenos en el tiempo.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Medir frecuencias relativas.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
+Comparar comportamientos entre grupos.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
+<ul>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+3. Permiten medir rendimiento y eficiencia
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+Las tasas ayudan a evaluar:
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
+Producción agrícola (kg/ha)
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
+Velocidad (km/h)
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
+Atención de servicios (personas/hora)
+</li>
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
+Son clave para la toma de decisiones.
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 28px;">
+4. Facilitan la interpretación de los datos
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 28px;">
+Una tasa resume información compleja en un solo valor, lo que hace más fácil:
+</li>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 28px;">
+Comparar resultados.
+</li>
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 28px;">
+Identificar patrones.
+</li>
+<li class="fragment fade-in" data-fragment-index="20" style="font-size: 28px;">
+Detectar problemas.
+</li>
+</ul>
+</div>
+
+</div>
+
+## 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+5. Permiten comparar en igualdad de condiciones
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Gracias a las tasas, se pueden comparar situaciones diferentes bajo una misma base.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Ejemplo:
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Dos fincas con distinto tamaño pueden compararse usando kg/ha.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+6. Son base para otros conceptos estadísticos
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Las tasas están relacionadas con:
+</li>
+
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
+Proporciones.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
+Porcentajes.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px;">
+Probabilidad.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px;">
+Indicadores estadísticos.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="13">
+<ul>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
+Las tasas son una herramienta fundamental en estadística porque permiten analizar, comparar e interpretar datos de manera clara, especialmente cuando se trabaja con variables que tienen diferentes unidades.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Razones
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+¿Qué es una Razón?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Una razón es una relación matemática que compara dos cantidades mediante una división, con el propósito de expresar cuántas veces una cantidad está contenida en otra o cómo se relacionan entre sí.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Las razones permiten analizar proporciones entre elementos de un mismo tipo o de contextos comparables, facilitando la interpretación de datos y la toma de decisiones. 
+</li>
+
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Se puede expresar como fracción (a/b), con dos puntos (a:b) o verbalmente ("a es a b").
+</li>
+
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Ejemplo: 60 plantas de maíz / 30 plantas de frijol = 2 = 2:1
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
+Se puede interpretar como: 2 plantas de maíz por cada 1 de frijol
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+¿Para qué sirven las razones?
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+Comparar cantidades.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+Analizar relaciones.
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
+Interpretar datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
+Tomar decisiones.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Ejercicios 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+Determine e interprete las siguientes razones:
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+En una finca hay 90 plantas de maíz y 30 plantas de frijol.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+En un cultivo se tienen 80 kg de fertilizante distribuidos en 40 sacos.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+En un salón hay 60 estudiantes, de los cuales 20 son mujeres.
+</li>
+
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
+Soluciones:
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+Razón: 90/30 ->dividiendo: 90/30= 3 = 3:1
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+Interpretación: Hay 3 plantas de maíz por cada 1 planta de frijol.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
+Razón = 80/40 ->dividiendo: 80/40 = 2 = 2:1
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
+Interpretación: Hay 2 kg de fertilizante por cada saco.
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 26px;">
+Razón = 60/20 ->dividiendo: 60/20 = 3 = 3:1
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 26px;">
+Interpretación: Hay 3 estudiantes en total por cada mujer (o 3 a 1).
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Conclusiones
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+1. Las razones permiten comparar cantidades.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Las razones son una herramienta básica que permite establecer relaciones entre dos cantidades, mostrando cuántas veces una está contenida en la otra.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+2. Son fundamentales en el análisis estadístico.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+En estadística, las razones ayudan a:
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+Comparar grupos.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Analizar relaciones entre variables.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
+Interpretar datos de forma más clara.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
+<ul>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+3. Facilitan la interpretación de datos
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+Una razón transforma datos en una forma más comprensible, permitiendo expresar relaciones como:
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
+2 a 1
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
+3 por cada…
+</li>
+
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
+4. Permiten identificar proporciones entre categorías
+</li>
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
+Las razones ayudan a entender la distribución de datos entre diferentes grupos o categorías dentro de una población o muestra.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+5. Son la base de otros conceptos
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Las razones son fundamentales para comprender:
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Proporciones.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Tasas.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+Porcentajes.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Probabilidad.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
+6. Tienen múltiples aplicaciones
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
+Se utilizan en:
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px;">
+Agronomía
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px;">
+Estadística.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px;">
+Economía.
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 28px;">
+Vida diaria.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="13">
+<ul>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
+Las razones son una herramienta esencial que permite comparar, analizar e interpretar datos, siendo la base para otros conceptos estadísticos y fundamentales en la toma de decisiones.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Proporciones
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+¿Qué es una Proporción?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Una proporción es una relación de igualdad entre dos razones, lo que indica que ambas representan la misma comparación aunque estén expresadas con números diferentes. 
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Este concepto permite establecer equivalencias y es fundamental para resolver problemas en los que se requiere encontrar un valor desconocido manteniendo una relación constante.
+</li>
+
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Las proporciones se utilizan ampliamente en situaciones de escalamiento, distribución y análisis de relaciones equivalentes.  
+$a/b = c/d$
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
+¿Para qué sirven las proporciones?
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+Encontrar valores desconocidos.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+Mantener relaciones equivalentes.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+Escalar cantidades.
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
+Resolver problemas reales.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Ejemplos
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;">
+En un cultivo, 4 kg de fertilizante se utilizan para 8 plantas.
+</li>
+
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;">
+¿Cuántos kg de fertilizante se necesitan para 20 plantas, manteniendo la misma proporción?
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
+Planteamiento:
+$$ 4kg ---> 8\, plantas $$
+   $$x  ---> 20\, plantas $$
+ 
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Solución  
+Del planteamiento salen las siguientes razones:
+$$\frac{4}{8}=\frac{x}{20}$$ 
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
+Procedimiento:
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+$$ 4 * 20 = 8x $$
+$$ 80 = 8x $$
+$$ x = 10 $$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+Respuesta: se necesitan 10 kg de fertilizante para 20 plantas
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
+Interpretación:
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
+Si aumenta el número de plantas, la cantidad de fertilizante también aumenta proporcionalmente.
+</li>
+
+
+</ul>
+</div>
+
+</div>
+
+## 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;">
+En una encuesta, 15 de cada 30 estudiantes aprueban un examen.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;">
+Si se mantiene la misma proporción, ¿cuántos estudiantes aprobarían en un grupo de 80?
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
+Planteamiento:
+$$ 15\,aprueban ---> 30\,estudiantes $$
+   $$x  ---> 80\,estudiantes$$
+ 
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Solución  
+Del planteamiento salen las siguientes razones:
+$$\frac{15}{30}=\frac{x}{80}$$ 
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
+Procedimiento:
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+$$ 15 * 80 = 30x $$
+$$ 1200 = 30x $$
+$$ x = 40 $$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+Respuesta: Aprobarían 40 estudiantes.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
+Interpretación:
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
+La mitad de los estudiantes aprueba, por lo tanto, en cualquier grupo se mantiene esa misma proporción.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Ejercicios
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+Hallar la $x$ en las siguientes relaciones. 
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+1. $$3 kg → 9\,plantas$$
+   $$x → 18\, plantas$$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+2. $$5 L → 10\,m²$$
+  $$x → 20\, m²$$
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
+Soluciones:
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
+1. $$\frac{3}{9}=\frac{x}{18}$$ 
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+$$ 3 * 18 = 9x $$
+$$ 54 = 9x $$
+$$ x = 6 $$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+2. $$\frac{5}{10}=\frac{x}{20}$$ 
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
+$$ 5 * 20 = 10x $$
+$$ 100 = 10x $$
+$$ x = 10 $$
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Relación entre Proporción y Porcentaje (En Estadística)
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+1. Proporción en estadística
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+En estadística, una proporción es la relación entre la frecuencia de una categoría y el total de datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Fórmula:
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+$$Proporción=\frac{frecuencia\,de\,la\,categoria​}{total\,de\,datos}$$
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+Toma valores entre 0 y 1.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Es una medida de frecuencia relativa.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
+2. Porcentaje en estadística
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+El porcentaje es la proporción expresada en base 100.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+Fórmula:
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
+$$Porcentaje=proporción\,×\,100$$
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
+Toma valores entre 0% y 100%.
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
+Es más fácil de interpretar.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Ejemplos
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+1. Se tiene la siguiente tabla de frecuencias de una muestra de 30 estudiantes:
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+<table border="1">
+  <tr>
+    <th>Aprobó</th>
+    <th>Frecuencia</th>
+  </tr>
+  <tr>
+    <td>Si</td>
+    <td>18</td>
+  </tr>
+  <tr>
+    <td>No</td>
+    <td>12</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td>30</td>
+  </tr>
+</table>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Cual fue el porcentaje de estudiantes que aprobaron?
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Solución:
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+<p>(18 / 30) × 100 = <strong>60%</strong></p>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+el 60% de los estudiantes aprobó.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
+2. En una muestra de cultivos se encontro que:
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
+Hubo 20 plantas sanas de 50.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+Cual fue el porcentaje de plantas sanas?
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
+Solución:
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
+Proporción  
+ $\frac{20}{50}=0.4$
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
+Porcentaje:
+<p>(20 / 50) × 100 = <strong>40%</strong></p>
+</li>
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
+El 40% de las plantas salieron sanas.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Conclusiones
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+1. Permiten mantener relaciones constantes
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+Las proporciones aseguran que dos razones sean equivalentes, lo que permite trabajar con cantidades que crecen o disminuyen de forma proporcional.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+2. Son clave para resolver problemas.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Facilitan el cálculo de valores desconocidos cuando existe una relación fija entre las variables.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+3. Permiten escalar cantidades.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Ajustar recetas.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
+Aumentar o reducir producción.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
+Trabajar con diferentes tamaños.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
+<ul>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
+4. Facilitan comparaciones
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
+Permiten comparar situaciones diferentes manteniendo una misma base de referencia.
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
+5. Son base de otros conceptos
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
+Las proporciones están directamente relacionadas con:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
+Razones. porcentajes y tasas.
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 28px;">
+Porcentajes.
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 28px;">
+Tasas.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Conclusiones proporciones (Estadística)
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+1. Representan frecuencias relativas
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+En estadística, las proporciones indican qué parte del total corresponde a una categoría.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+2. Permiten analizar la distribución de datos
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+Ayudan a entender cómo se distribuyen los datos dentro de una población o muestra.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+3. Facilitan la interpretación de resultados
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+Las proporciones permiten expresar resultados de forma clara, especialmente al compararlas entre grupos.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
+<ul>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
+4. Permiten comparar muestras de diferente tamaño
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 26px;">
+Son fundamentales cuando se analizan grupos con distintos tamaños, ya que eliminan el efecto del tamaño absoluto.
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 26px;">
+5. Son la base de los porcentajes
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 26px;">
+Toda proporción puede expresarse como porcentaje, lo que mejora la comunicación de los resultados.
+</li>
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 26px;">
+6. Son fundamentales en el análisis estadístico
+</li>
+
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 26px;">
+Se utilizan en:
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 26px;">
+Tablas de frecuencias.
+</li>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 26px;">
+Probabilidad
+</li>
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 26px;">
+Inferencia estadística.
+</li>
+<li class="fragment fade-in" data-fragment-index="20" style="font-size: 26px;">
+Análisis de datos.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## 
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+Las proporciones permiten entender cómo se relacionan las partes con el todo, siendo una herramienta fundamental en estadística para analizar, comparar e interpretar datos de manera clara y objetiva.
+</li>
+</ul >
+</div>
+
+## Conclusiones finales
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;">
+A lo largo de la clase se estudiaron las razones, proporciones y tasas como herramientas fundamentales para el análisis de datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;">
+Las tasas permiten relacionar magnitudes con diferentes unidades, siendo especialmente útiles para medir cambios, rendimiento y comportamiento de variables en contextos reales.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
+Las razones permiten comparar cantidades y entender la relación entre dos variables, facilitando la interpretación de información de manera simple.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px;">
+Las proporciones amplían este concepto al establecer igualdades entre razones, lo que permite mantener relaciones constantes y resolver problemas con valores desconocidos.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
+<ul>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 25px;">
+En el ámbito de la estadística, estos tres conceptos están estrechamente relacionados y cumplen un papel clave en:
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px;">
+El análisis de datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px;">
+La comparación de resultados.
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px;">
+La interpretación de frecuencias y distribuciones.
+</li>
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 25px;">
+La toma de decisiones informadas.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 25px;">
+En conjunto, las razones, proporciones y tasas permiten transformar datos en información útil, facilitando la comprensión de fenómenos tanto en la vida cotidiana como en áreas aplicadas como la agronomía.
+</li>
+
+
+</ul>
+</div>
+
+</div>
