@@ -1,0 +1,2952 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="clase_6_files/libs/clipboard/clipboard.min.js"></script>
+<script src="clase_6_files/libs/quarto-html/tabby.min.js"></script>
+<script src="clase_6_files/libs/quarto-html/popper.min.js"></script>
+<script src="clase_6_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="clase_6_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="clase_6_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="clase_6_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
+
+  <meta name="author" content="">
+  <title>Bioestadística Fundamental</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="clase_6_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="clase_6_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="clase_6_files/libs/revealjs/dist/theme/quarto-47de77ef8bb53eb6852bbbcd7cb73406.css">
+  <link rel="stylesheet" href="../assets/syntax-highlight.css">
+  <link rel="stylesheet" href="../assets/custom.css">
+  <link rel="stylesheet" href="../assets/pacman.css">
+  <link href="clase_6_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="clase_6_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="clase_6_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="clase_6_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+  <script defer="" src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+  <script>
+  window.addEventListener('load', function() {
+    if (typeof Reveal === 'undefined') return;
+    function updateLogoVisibility() {
+      if (typeof Reveal.getCurrentSlide !== 'function') return;
+      var logos = document.querySelectorAll('.reveal .slide-logo');
+      if (!logos.length) return;
+      var current = Reveal.getCurrentSlide();
+      var isTitle = current && current.id === 'title-slide';
+      logos.forEach(function(logo) {
+        logo.style.display = isTitle ? 'none' : '';
+      });
+    }
+    updateLogoVisibility();
+    Reveal.on('slidechanged', updateLogoVisibility);
+  });
+  </script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Bioestadística Fundamental</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+ 
+</div>
+        <p class="quarto-title-affiliation">
+            Departamento de Estadı́stica, Sede Bogotá
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="clase-6" class="slide level2 center middle">
+<h2>Clase 6</h2>
+</section>
+<section id="experimento-aleatorio-espacio-muestral-y-eventos" class="slide level2">
+<h2>Experimento aleatorio, espacio muestral y eventos</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+En la vida cotidiana nos enfrentamos constantemente a situaciones cuyo resultado no podemos predecir con certeza.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+¿Cuál será el resultado de lanzar una moneda?
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+¿Qué tipo de sangre tendrá el próximo donante?
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
+¿Cuántos días vivirá una nueva variedad de planta bajo ciertas condiciones?
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px; text-align: justify;">
+La <strong>probabilidad</strong> es la rama de las matemáticas que estudia y cuantifica la incertidumbre de estos fenómenos.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; text-align: justify;">
+Para construir ese lenguaje formal, necesitamos definir tres conceptos fundamentales:
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px;">
+🎲 <strong>Experimento aleatorio</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 30px;">
+📋 <strong>Espacio muestral</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 30px;">
+🎯 <strong>Eventos</strong>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="motivación" class="slide level2">
+<h2>Motivación</h2>
+<div style="text-align: center; margin-top: 60px;">
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 48px; font-weight: bold;">
+<p>¿<span style="color:#a78bfa;">Cara</span> o <span style="color:#3b82f6;">Sello</span>?</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 40px;">
+<p><img src="images/moneda.jpg" alt="Moneda" style="width: 35%; height: auto; border-radius: 12px;"></p>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; margin-top: 30px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
+<p>No podemos saber de antemano cuál será el resultado, pero sí podemos <strong>listar todos los resultados posibles</strong> y asignarles probabilidades.</p>
+</div>
+</div>
+</section>
+<section id="experimento-aleatorio" class="slide level2">
+<h2>Experimento aleatorio</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición
+</div>
+<div class="block-body">
+<p>
+Un <strong>experimento aleatorio</strong> es aquel que, aun siendo realizado bajo condiciones fijas y controladas, puede producir diferentes resultados y no es posible predecir con certeza cuál ocurrirá.
+</p>
+</div>
+</div>
+</section>
+<section id="características-del-experimento-aleatorio" class="slide level2">
+<h2>Características del experimento aleatorio</h2>
+<ul>
+<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 30px; margin-bottom: 8px;">
+Se puede repetir bajo las mismas condiciones.
+</li>
+<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 30px; margin-bottom: 8px;">
+El resultado de cada repetición es incierto.
+</li>
+<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 30px; margin-bottom: 8px;">
+El conjunto de todos los resultados posibles es conocido de antemano.
+</li>
+</ul>
+</section>
+<section id="ejemplos-de-experimentos-aleatorios" class="slide level2">
+<h2>Ejemplos de experimentos aleatorios</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+🪙 Lanzar una moneda y observar el resultado.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">
+🎲 Lanzar un dado y observar la cara superior.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">
+🩸 Seleccionar un donador de sangre y verificar su tipo sanguíneo.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px;">
+🎓 Sortear un estudiante y preguntarle sobre su hábito de fumar.
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+💡 Seleccionar una lámpara de un lote y medir su tiempo de vida.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px;">
+🌱 Plantar una semilla y registrar si germina o no.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="espacio-muestral" class="slide level2">
+<h2>Espacio muestral</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición
+</div>
+<div class="block-body">
+<p>
+El <strong>espacio muestral</strong> es el conjunto de <strong>todos los resultados posibles</strong> de un experimento aleatorio. Se denota por <span class="math inline">\(\Omega\)</span>.
+</p>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 30px; font-size: 26px; text-align: center;">
+<p>Cada elemento <span class="math inline">\(\omega \in \Omega\)</span> se denomina <strong>punto muestral</strong> o <strong>resultado elemental</strong>.</p>
+</div>
+</section>
+<section id="ejemplos-de-espacios-muestrales" class="slide level2">
+<h2>Ejemplos de espacios muestrales</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+🎲 <strong>Lanzar un dado</strong> y observar la cara superior: <span class="math display">\[\Omega = \{1, 2, 3, 4, 5, 6\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+🩸 <strong>Tipo sanguíneo</strong> de un donador: <span class="math display">\[\Omega = \{A, B, O, AB\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+🚬 <strong>Hábito de fumar</strong> de un estudiante: <span class="math display">\[\Omega = \{Sí, No\}\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
+💡 <strong>Tiempo de vida</strong> de una lámpara (en horas): <span class="math display">\[\Omega = \{t \in \mathbb{R} : t \geq 0\}\]</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Los espacios muestrales pueden ser <strong>discretos</strong> (finitos o contablemente infinitos) o <strong>continuos</strong> (no contables).
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-lanzar-una-moneda-dos-veces" class="slide level2">
+<h2>Ejercicio: lanzar una moneda dos veces</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Se lanza una moneda dos veces. Si <span class="math inline">\(C\)</span> indica cara y <span class="math inline">\(S\)</span> indica sello, ¿cuál es el espacio muestral?
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="5">
+Solución
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
+<span class="math display">\[\Omega = \{\omega_1, \omega_2, \omega_3, \omega_4\}\]</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
+donde:
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+<span class="math inline">\(\omega_1 = (C, C)\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+<span class="math inline">\(\omega_2 = (C, S)\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
+<span class="math inline">\(\omega_3 = (S, C)\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
+<span class="math inline">\(\omega_4 = (S, S)\)</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="eventos" class="slide level2">
+<h2>Eventos</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición
+</div>
+<div class="block-body">
+<p>
+Un <strong>evento</strong> (o suceso) es cualquier <strong>subconjunto</strong> del espacio muestral <span class="math inline">\(\Omega\)</span>.
+</p>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 30px;">
+<div class="card crispdm-card--gray" style="padding: 20px;">
+<ul>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">
+<strong>Notación:</strong> los eventos se denotan con letras mayúsculas <span class="math inline">\(A, B, C, \ldots\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">
+<strong>Evento imposible:</strong> <span class="math inline">\(\emptyset\)</span> (conjunto vacío — nunca ocurre).
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
+<strong>Evento seguro:</strong> <span class="math inline">\(\Omega\)</span> (espacio muestral completo — siempre ocurre).
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejemplos-de-eventos" class="slide level2">
+<h2>Ejemplos de eventos</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 26px;">
+Experimento: lanzar un dado. <span class="math inline">\(\Omega = \{1,2,3,4,5,6\}\)</span>
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(A\)</span>: que salga número par <span class="math display">\[A = \{2, 4, 6\} \subset \Omega\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(B\)</span>: que salga un número mayor que 3 <span class="math display">\[B = \{4, 5, 6\} \subset \Omega\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+<span class="math inline">\(C\)</span>: que salga exactamente 1 <span class="math display">\[C = \{1\} \subset \Omega\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
+Evento imposible y evento seguro
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+<span class="math inline">\(D\)</span>: que salga un número mayor que 10 <span class="math display">\[D = \emptyset \quad \text{(evento imposible)}\]</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+<span class="math inline">\(E\)</span>: que salga algún número entre 1 y 6 <span class="math display">\[E = \Omega \quad \text{(evento seguro)}\]</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-artículos-de-una-fábrica" class="slide level2">
+<h2>Ejercicio: artículos de una fábrica</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+De la línea de producción de una fábrica se retiran <strong>tres artículos</strong>, y cada uno es clasificado como <strong>Bueno (B)</strong> o <strong>Defectuoso (D)</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+¿Cuál es el espacio muestral? Describa el evento <span class="math inline">\(A\)</span>: “obtener exactamente dos artículos defectuosos”.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6">
+Solución
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 22px;">
+<span class="math display">\[\Omega = \{BBB,\; BBD,\; BDB,\; DBB,\; BDD,\; DBD,\; DDB,\; DDD\}\]</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+El evento <span class="math inline">\(A\)</span> (exactamente dos defectuosos): <span class="math display">\[A = \{BDD,\; DBD,\; DDB\}\]</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="operaciones-con-eventos" class="slide level2">
+<h2>Operaciones con eventos</h2>
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Por qué necesitamos operar con eventos?
+</div>
+<div class="block-body">
+<p>
+Al igual que con conjuntos, podemos combinar eventos para describir situaciones más complejas. Las operaciones fundamentales son: <strong>unión</strong>, <strong>intersección</strong>, <strong>complemento</strong> y <strong>diferencia</strong>.
+</p>
+</div>
+</div>
+</section>
+<section id="unión-de-eventos-a-cup-b" class="slide level2">
+<h2>Unión de eventos: <span class="math inline">\(A \cup B\)</span></h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Definición
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La <strong>unión</strong> <span class="math inline">\(A \cup B\)</span> representa la ocurrencia de <strong>al menos uno</strong> de los eventos <span class="math inline">\(A\)</span> o <span class="math inline">\(B\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+<span class="math display">\[A \cup B = \{\omega \in \Omega : \omega \in A \text{ o } \omega \in B\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Decimos que ocurre <span class="math inline">\(A \cup B\)</span> si ocurre <span class="math inline">\(A\)</span>, o ocurre <span class="math inline">\(B\)</span>, o ambos ocurren simultáneamente.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: center;">
+<p class="fragment fade-in" data-fragment-index="7" style="font-size: 24px; font-weight: bold;">
+Diagrama de Venn: <span class="math inline">\(A \cup B\)</span>
+</p>
+<p><img class="fragment fade-in" data-fragment-index="8" src="images/venn_union.png" alt="Unión de A y B" style="width: 70%; height: auto; margin-top: 10px;"></p>
+</div>
+</div>
+</section>
+<section id="unión-de-tres-eventos-a-cup-b-cup-c" class="slide level2">
+<h2>Unión de tres eventos: <span class="math inline">\(A \cup B \cup C\)</span></h2>
+<div style="text-align: center; margin-top: 20px;">
+<p class="fragment fade-in" data-fragment-index="1" style="font-size: 28px; font-weight: bold;">
+Diagrama de Venn: <span class="math inline">\(A \cup B \cup C\)</span>
+</p>
+<p><img class="fragment fade-in" data-fragment-index="2" src="images/union2.jpg" alt="Unión de tres eventos" style="width: 55%; height: auto; margin-top: 10px; border-radius: 8px;"></p>
+</div>
+</section>
+<section id="intersección-de-eventos-a-cap-b" class="slide level2">
+<h2>Intersección de eventos: <span class="math inline">\(A \cap B\)</span></h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Definición
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La <strong>intersección</strong> <span class="math inline">\(A \cap B\)</span> representa la ocurrencia <strong>simultánea</strong> de los eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+<span class="math display">\[A \cap B = \{\omega \in \Omega : \omega \in A \text{ y } \omega \in B\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Decimos que ocurre <span class="math inline">\(A \cap B\)</span> solo si ocurren <em>ambos</em> <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> al mismo tiempo.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: center;">
+<p class="fragment fade-in" data-fragment-index="7" style="font-size: 24px; font-weight: bold;">
+Diagrama de Venn: <span class="math inline">\(A \cap B\)</span>
+</p>
+<p><img class="fragment fade-in" data-fragment-index="8" src="images/venn_interseccion.png" alt="Intersección de A y B" style="width: 70%; height: auto; margin-top: 10px;"></p>
+</div>
+</div>
+</section>
+<section id="intersección-de-tres-eventos-a-cap-b-cap-c" class="slide level2">
+<h2>Intersección de tres eventos: <span class="math inline">\(A \cap B \cap C\)</span></h2>
+<div style="text-align: center; margin-top: 20px;">
+<p class="fragment fade-in" data-fragment-index="1" style="font-size: 28px; font-weight: bold;">
+Diagrama de Venn: <span class="math inline">\(A \cap B \cap C\)</span>
+</p>
+<p><img class="fragment fade-in" data-fragment-index="2" src="images/venn_interseccion3.png" alt="Intersección de tres eventos" style="width: 55%; height: auto; margin-top: 10px; border-radius: 8px;"></p>
+</div>
+</section>
+<section id="eventos-disjuntos-mutuamente-excluyentes" class="slide level2">
+<h2>Eventos disjuntos (mutuamente excluyentes)</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Definición
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son <strong>disjuntos</strong> (o mutuamente excluyentes) si no tienen elementos en común: <span class="math display">\[A \cap B = \emptyset\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Si ocurre <span class="math inline">\(A\)</span>, es imposible que ocurra <span class="math inline">\(B\)</span>, y viceversa.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+Ejemplo con un dado (<span class="math inline">\(\Omega = \{1,2,3,4,5,6\}\)</span>):<br> <span class="math inline">\(A = \{2, 4, 6\}\)</span> y <span class="math inline">\(C = \{1\}\)</span> son disjuntos porque <span class="math inline">\(A \cap C = \emptyset\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: center;">
+<p class="fragment fade-in" data-fragment-index="7" style="font-size: 24px; font-weight: bold;">
+Diagrama de Venn: eventos disjuntos
+</p>
+<p><img class="fragment fade-in" data-fragment-index="8" src="images/venn_disjuntos.jpg" alt="Eventos disjuntos" style="width: 70%; height: auto; margin-top: 10px;"></p>
+</div>
+</div>
+</section>
+<section id="complemento-de-un-evento-ac" class="slide level2">
+<h2>Complemento de un evento: <span class="math inline">\(A^c\)</span></h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Definición
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+El <strong>complemento</strong> de <span class="math inline">\(A\)</span>, denotado <span class="math inline">\(A^c\)</span> (o <span class="math inline">\(A'\)</span>), es el conjunto de todos los resultados de <span class="math inline">\(\Omega\)</span> que <strong>no</strong> pertenecen a <span class="math inline">\(A\)</span>: <span class="math display">\[A^c = \{\omega \in \Omega : \omega \notin A\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Se cumple siempre: <span class="math display">\[A \cup A^c = \Omega \qquad A \cap A^c = \emptyset\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+Ejemplo: <span class="math inline">\(A = \{2, 4, 6\}\)</span> <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(A^c = \{1, 3, 5\}\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: center;">
+<p class="fragment fade-in" data-fragment-index="7" style="font-size: 24px; font-weight: bold;">
+Diagrama de Venn: complemento <span class="math inline">\(A^c\)</span>
+</p>
+<p><img class="fragment fade-in" data-fragment-index="8" src="images/compl.jpg" alt="Complemento de A" style="width: 70%; height: auto; margin-top: 10px;"></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-operaciones-con-eventos" class="slide level2">
+<h2>Ejemplo: operaciones con eventos</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
+Dado: <span class="math inline">\(\Omega = \{1,2,3,4,5,6\}\)</span>, <span class="math inline">\(A = \{2,4,6\}\)</span>, <span class="math inline">\(B = \{4,5,6\}\)</span>, <span class="math inline">\(C = \{1\}\)</span>
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">
+Número par <strong>y</strong> mayor que 3: <span class="math display">\[A \cap B = \{4, 6\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+Número par <strong>e</strong> igual a 1: <span class="math display">\[A \cap C = \emptyset\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">
+Número par <strong>o</strong> mayor que 3: <span class="math display">\[A \cup B = \{2, 4, 5, 6\}\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
+Número par <strong>o</strong> igual a 1: <span class="math display">\[A \cup C = \{1, 2, 4, 6\}\]</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
+<strong>No</strong> salga un número par: <span class="math display">\[A^c = \{1, 3, 5\}\]</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
+Número <strong>no</strong> par <strong>y no</strong> mayor que 3: <span class="math display">\[(A \cup B)^c = \{1, 3\}\]</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="propiedades-de-las-operaciones-con-eventos" class="slide level2">
+<h2>Propiedades de las operaciones con eventos</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
+Propiedades de identidad
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">
+<span class="math inline">\(A \cup \emptyset = A\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+<span class="math inline">\(A \cup \Omega = \Omega\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">
+<span class="math inline">\(A \cap \Omega = A\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px;">
+<span class="math inline">\(A \cap \emptyset = \emptyset\)</span>
+</li>
+</ul>
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 24px; margin-top: 12px;">
+Propiedades de complemento
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">
+<span class="math inline">\(A \cup A^c = \Omega\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
+<span class="math inline">\(A \cap A^c = \emptyset\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;">
+<span class="math inline">\((A^c)^c = A\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="11">
+<h4 class="fragment fade-in" data-fragment-index="12" style="font-size: 24px;">
+Propiedades conmutativas y asociativas
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 24px;">
+<span class="math inline">\(A \cup B = B \cup A\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 24px;">
+<span class="math inline">\(A \cap B = B \cap A\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 24px;">
+<span class="math inline">\((A \cup B) \cup C = A \cup (B \cup C)\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 24px;">
+<span class="math inline">\((A \cap B) \cap C = A \cap (B \cap C)\)</span>
+</li>
+</ul>
+<h4 class="fragment fade-in" data-fragment-index="17" style="font-size: 24px; margin-top: 12px;">
+Propiedades distributivas
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 24px;">
+<span class="math inline">\(A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 24px;">
+<span class="math inline">\(A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\)</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="leyes-de-de-morgan" class="slide level2">
+<h2>Leyes de De Morgan</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Enunciado
+</div>
+<div class="block-body">
+<p>
+Las Leyes de De Morgan establecen cómo se calcula el complemento de una unión o intersección de eventos.
+</p>
+</div>
+</div>
+<div class="twocol" style="margin-top: 20px;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 26px;">
+Primera Ley
+</h4>
+<p class="fragment fade-in" data-fragment-index="5" style="font-size: 28px; text-align: center;">
+<span class="math display">\[(A \cup B)^c = A^c \cap B^c\]</span>
+</p>
+<p class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; text-align: justify;">
+El complemento de la unión es la intersección de los complementos.
+</p>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+Segunda Ley
+</h4>
+<p class="fragment fade-in" data-fragment-index="9" style="font-size: 28px; text-align: center;">
+<span class="math display">\[(A \cap B)^c = A^c \cup B^c\]</span>
+</p>
+<p class="fragment fade-in" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+El complemento de la intersección es la unión de los complementos.
+</p>
+</div>
+</div>
+</section>
+<section id="ejercicio-integrador" class="slide level2">
+<h2>Ejercicio integrador</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Se lanza un dado. Sean los eventos:
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(A = \{1, 2, 3\}\)</span> (número menor que 4)
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+<span class="math inline">\(B = \{2, 4, 6\}\)</span> (número par)
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Calcule: <span class="math inline">\(A \cup B\)</span>, <span class="math inline">\(A \cap B\)</span>, <span class="math inline">\(A^c\)</span>, <span class="math inline">\((A \cup B)^c\)</span> y verifique la primera Ley de De Morgan.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8">
+Solución
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
+<span class="math inline">\(A \cup B = \{1, 2, 3, 4, 6\}\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 24px;">
+<span class="math inline">\(A \cap B = \{2\}\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 24px;">
+<span class="math inline">\(A^c = \{4, 5, 6\}\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 24px;">
+<span class="math inline">\((A \cup B)^c = \{5\}\)</span>
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 24px;">
+<span class="math inline">\(A^c \cap B^c = \{4,5,6\} \cap \{1,3,5\} = \{5\}\)</span> ✓
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="resumen" class="slide level2">
+<h2>Resumen</h2>
+<ul>
+<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 28px; margin-bottom: 8px;">
+🎲 <strong>Experimento aleatorio:</strong> resultado incierto aun bajo condiciones fijas.
+</li>
+<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 28px; margin-bottom: 8px;">
+📋 <strong>Espacio muestral <span class="math inline">\(\Omega\)</span>:</strong> conjunto de todos los resultados posibles.
+</li>
+<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 28px; margin-bottom: 8px;">
+🎯 <strong>Evento:</strong> cualquier subconjunto de <span class="math inline">\(\Omega\)</span>.
+</li>
+<li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 28px; margin-bottom: 8px;">
+🔗 <strong>Unión <span class="math inline">\(A \cup B\)</span>:</strong> al menos uno de los eventos ocurre.
+</li>
+<li class="fragment fade-up" style="background: #B07AA1; color: white; font-size: 28px; margin-bottom: 8px;">
+🔀 <strong>Intersección <span class="math inline">\(A \cap B\)</span>:</strong> ambos eventos ocurren simultáneamente.
+</li>
+<li class="fragment fade-up" style="background: #76B7B2; color: white; font-size: 28px; margin-bottom: 8px;">
+🔄 <strong>Complemento <span class="math inline">\(A^c\)</span>:</strong> todo lo que no está en <span class="math inline">\(A\)</span>.
+</li>
+</ul>
+</section>
+<section id="diferencia-de-eventos-a-setminus-b" class="slide level2">
+<h2>Diferencia de eventos: <span class="math inline">\(A \setminus B\)</span></h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Definición
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La <strong>diferencia</strong> <span class="math inline">\(A \setminus B\)</span> (también escrita <span class="math inline">\(A - B\)</span>) es el conjunto de resultados que pertenecen a <span class="math inline">\(A\)</span> pero <strong>no</strong> pertenecen a <span class="math inline">\(B\)</span>: <span class="math display">\[A \setminus B = \{\omega \in \Omega : \omega \in A \text{ y } \omega \notin B\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Equivalentemente: <span class="math inline">\(A \setminus B = A \cap B^c\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+<strong>Ejemplo:</strong> <span class="math inline">\(\Omega = \{1,2,3,4,5,6\}\)</span>, <span class="math inline">\(A = \{2,4,6\}\)</span>, <span class="math inline">\(B = \{4,5,6\}\)</span> <span class="math display">\[A \setminus B = \{2\}\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: center;">
+<p class="fragment fade-in" data-fragment-index="7" style="font-size: 24px; font-weight: bold;">
+Diagrama de Venn: <span class="math inline">\(A \setminus B\)</span>
+</p>
+<img class="fragment fade-in" data-fragment-index="8" src="images/union5.jpg" alt="Diferencia A menos B" style="width: 70%; height: auto; margin-top: 10px; border-radius: 8px;">
+<p class="fragment fade-in" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+La región sombreada corresponde a los elementos de <span class="math inline">\(A\)</span> que no están en <span class="math inline">\(B\)</span>.
+</p>
+</div>
+</div>
+</section>
+<section id="diferencia-simétrica-a-triangle-b" class="slide level2">
+<h2>Diferencia simétrica: <span class="math inline">\(A \triangle B\)</span></h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Definición
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La <strong>diferencia simétrica</strong> <span class="math inline">\(A \triangle B\)</span> contiene los resultados que pertenecen a <em>exactamente uno</em> de los dos eventos, pero no a ambos: <span class="math display">\[A \triangle B = (A \setminus B) \cup (B \setminus A)\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+Equivalentemente: <span class="math display">\[A \triangle B = (A \cup B) \setminus (A \cap B)\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
+Ejemplo con un dado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(\Omega = \{1,2,3,4,5,6\}\)</span>, <span class="math inline">\(A = \{2,4,6\}\)</span>, <span class="math inline">\(B = \{4,5,6\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">
+<span class="math inline">\(A \setminus B = \{2\}\)</span>, <span class="math inline">\(\quad B \setminus A = \{5\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">
+<span class="math display">\[A \triangle B = \{2, 5\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+Interpretación: salir un número que es par <strong>o</strong> mayor que 3, pero <strong>no ambas</strong> cosas a la vez.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="partición-del-espacio-muestral" class="slide level2">
+<h2>Partición del espacio muestral</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición formal
+</div>
+<div class="block-body">
+<p>
+Una colección de eventos <span class="math inline">\(\{A_1, A_2, \ldots, A_n\}\)</span> forma una <strong>partición</strong> de <span class="math inline">\(\Omega\)</span> si:
+</p>
+<ul>
+<li>
+<strong>Mutuamente excluyentes:</strong> <span class="math inline">\(A_i \cap A_j = \emptyset\)</span> para todo <span class="math inline">\(i \neq j\)</span>
+</li>
+<li>
+<strong>Exhaustivos:</strong> <span class="math inline">\(A_1 \cup A_2 \cup \cdots \cup A_n = \Omega\)</span>
+</li>
+<li>
+<strong>No vacíos:</strong> <span class="math inline">\(A_i \neq \emptyset\)</span> para todo <span class="math inline">\(i\)</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="6" style="margin-top: 20px; padding: 16px; background: #f0fdf4; border-left: 4px solid #59A14F; border-radius: 6px;">
+<p style="font-size: 26px; text-align: justify;">
+<strong>Ejemplo agrícola (tipos de suelo):</strong> Al clasificar el suelo de una parcela, los eventos <span class="math inline">\(A_1 = \{\text{Arenoso}\}\)</span>, <span class="math inline">\(A_2 = \{\text{Arcilloso}\}\)</span>, <span class="math inline">\(A_3 = \{\text{Limoso}\}\)</span>, <span class="math inline">\(A_4 = \{\text{Franco}\}\)</span> forman una partición de <span class="math inline">\(\Omega\)</span> si cada parcela pertenece a exactamente una categoría.
+</p>
+</div>
+</section>
+<section id="partición-ejemplo-con-clima" class="slide level2">
+<h2>Partición — ejemplo con clima</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Experimento
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Se selecciona aleatoriamente una región cafetera de Colombia y se registra su <strong>tipo de clima</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+<span class="math display">\[\Omega = \{\text{Cálido}, \text{Templado}, \text{Frío}\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Definamos: <span class="math inline">\(A_1 = \{\text{Cálido}\}\)</span>, <span class="math inline">\(A_2 = \{\text{Templado}\}\)</span>, <span class="math inline">\(A_3 = \{\text{Frío}\}\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7">
+¿Es una partición?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">
+<span class="math inline">\(A_1 \cap A_2 = \emptyset\)</span>, <span class="math inline">\(A_1 \cap A_3 = \emptyset\)</span>, <span class="math inline">\(A_2 \cap A_3 = \emptyset\)</span> ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">
+<span class="math inline">\(A_1 \cup A_2 \cup A_3 = \Omega\)</span> ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px;">
+<span class="math inline">\(A_i \neq \emptyset\)</span> para <span class="math inline">\(i = 1, 2, 3\)</span> ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 26px; text-align: justify; color: #59A14F;">
+<strong>Conclusión:</strong> <span class="math inline">\(\{A_1, A_2, A_3\}\)</span> es una partición de <span class="math inline">\(\Omega\)</span>. Cada región pertenece a exactamente un tipo climático.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-cultivo-de-café" class="slide level2">
+<h2>Ejercicio: cultivo de café</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Se selecciona aleatoriamente una planta de un cafetal y se clasifica su <strong>estado fitosanitario</strong>: Sana (Sa), con Plaga (Pl), con Enfermedad (En) o con Deficiencia nutricional (De).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>a)</strong> Defina el espacio muestral <span class="math inline">\(\Omega\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<strong>b)</strong> Defina 4 eventos de interés agronómico y expréselos como subconjuntos de <span class="math inline">\(\Omega\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+<strong>c)</strong> ¿Forman los cuatro estados una partición de <span class="math inline">\(\Omega\)</span>?
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+Contexto agronómico
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
+En Colombia, el café (<em>Coffea arabica</em>) es el principal cultivo de exportación. El monitoreo fitosanitario en zonas cálidas-húmedas es esencial para detectar la broca y la roya del café.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+Este ejercicio ilustra cómo la probabilidad permite modelar la incertidumbre en diagnósticos de campo.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="solución-cultivo-de-café" class="slide level2">
+<h2>Solución: cultivo de café</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Espacio muestral y eventos
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math display">\[\Omega = \{\text{Sa}, \text{Pl}, \text{En}, \text{De}\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+<span class="math inline">\(A\)</span>: “la planta está sana” <span class="math inline">\(= \{\text{Sa}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">
+<span class="math inline">\(B\)</span>: “la planta tiene algún problema” <span class="math inline">\(= \{\text{Pl}, \text{En}, \text{De}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px;">
+<span class="math inline">\(C\)</span>: “la planta tiene plaga o enfermedad” <span class="math inline">\(= \{\text{Pl}, \text{En}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">
+<span class="math inline">\(D\)</span>: “la planta tiene deficiencia nutricional” <span class="math inline">\(= \{\text{De}\}\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<h4 class="fragment fade-in" data-fragment-index="9">
+¿Forman partición?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+Los cuatro estados elementales <span class="math inline">\(\{\text{Sa}\}\)</span>, <span class="math inline">\(\{\text{Pl}\}\)</span>, <span class="math inline">\(\{\text{En}\}\)</span>, <span class="math inline">\(\{\text{De}\}\)</span> sí forman una partición de <span class="math inline">\(\Omega\)</span>:
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px;">
+Son mutuamente excluyentes: <span class="math inline">\(\{\text{Sa}\} \cap \{\text{Pl}\} = \emptyset\)</span>, etc.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 24px;">
+Son exhaustivos: su unión es <span class="math inline">\(\Omega\)</span> ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 24px; text-align: justify;">
+Nótese que <span class="math inline">\(B = A^c\)</span>, es decir, “tener algún problema” es el complemento de “estar sana”.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-lanzar-dos-dados" class="slide level2">
+<h2>Ejercicio: lanzar dos dados</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Se lanzan dos dados distintos y se registra el par <span class="math inline">\((d_1, d_2)\)</span> de resultados.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<strong>a)</strong> ¿Cuántos elementos tiene <span class="math inline">\(\Omega\)</span>?
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+<strong>b)</strong> Defina <span class="math inline">\(A\)</span> = “la suma es 7”.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<strong>c)</strong> Defina <span class="math inline">\(B\)</span> = “ambos dados muestran número par”.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
+<strong>d)</strong> Calcule <span class="math inline">\(A \cap B\)</span> e interprete.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
+Tabla del espacio muestral (primeras filas)
+</h4>
+<div class="fragment fade-in" data-fragment-index="10" style="font-size: 20px; overflow-x: auto;">
+<table style="border-collapse: collapse; width: 100%; font-size: 19px;">
+<tbody><tr style="background:#a78bfa; color:white;">
+<th>
+<span class="math inline">\(d_1 \backslash d_2\)</span>
+</th>
+<th>
+1
+</th>
+<th>
+2
+</th>
+<th>
+3
+</th>
+<th>
+4
+</th>
+<th>
+5
+</th>
+<th>
+6
+</th>
+</tr>
+<tr>
+<td style="font-weight:bold;">
+1
+</td>
+<td>
+(1,1)
+</td>
+<td>
+(1,2)
+</td>
+<td>
+(1,3)
+</td>
+<td>
+(1,4)
+</td>
+<td>
+(1,5)
+</td>
+<td>
+(1,6)
+</td>
+</tr>
+<tr style="background:#f3f4f6;">
+<td style="font-weight:bold;">
+2
+</td>
+<td>
+(2,1)
+</td>
+<td>
+(2,2)
+</td>
+<td>
+(2,3)
+</td>
+<td>
+(2,4)
+</td>
+<td>
+(2,5)
+</td>
+<td>
+(2,6)
+</td>
+</tr>
+<tr>
+<td style="font-weight:bold;">
+3
+</td>
+<td>
+(3,1)
+</td>
+<td>
+(3,2)
+</td>
+<td>
+(3,3)
+</td>
+<td>
+(3,4)
+</td>
+<td>
+(3,5)
+</td>
+<td>
+(3,6)
+</td>
+</tr>
+<tr style="background:#f3f4f6;">
+<td style="font-weight:bold;">
+4
+</td>
+<td>
+(4,1)
+</td>
+<td>
+(4,2)
+</td>
+<td>
+(4,3)
+</td>
+<td>
+(4,4)
+</td>
+<td>
+(4,5)
+</td>
+<td>
+(4,6)
+</td>
+</tr>
+<tr>
+<td style="font-weight:bold;">
+5
+</td>
+<td>
+(5,1)
+</td>
+<td>
+(5,2)
+</td>
+<td>
+(5,3)
+</td>
+<td>
+(5,4)
+</td>
+<td>
+(5,5)
+</td>
+<td>
+(5,6)
+</td>
+</tr>
+<tr style="background:#f3f4f6;">
+<td style="font-weight:bold;">
+6
+</td>
+<td>
+(6,1)
+</td>
+<td>
+(6,2)
+</td>
+<td>
+(6,3)
+</td>
+<td>
+(6,4)
+</td>
+<td>
+(6,5)
+</td>
+<td>
+(6,6)
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</section>
+<section id="solución-lanzar-dos-dados" class="slide level2">
+<h2>Solución: lanzar dos dados</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Evento <span class="math inline">\(A\)</span>: “suma = 7”
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">
+<span class="math inline">\(|\Omega| = 6 \times 6 = 36\)</span> elementos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+<span class="math display">\[A = \{(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">
+<span class="math inline">\(|A| = 6\)</span>
+</li>
+</ul>
+<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; margin-top: 12px;">
+Evento <span class="math inline">\(B\)</span>: “ambos pares”
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">
+<span class="math display">\[B = \{(2,2),(2,4),(2,6),(4,2),(4,4),(4,6),(6,2),(6,4),(6,6)\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">
+<span class="math inline">\(|B| = 9\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
+<h4 class="fragment fade-in" data-fragment-index="10">
+Intersección <span class="math inline">\(A \cap B\)</span>
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px; text-align: justify;">
+Un resultado está en <span class="math inline">\(A \cap B\)</span> si la suma es 7 <strong>y</strong> ambos dados son pares.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 24px; text-align: justify;">
+La suma de dos números pares siempre es par, pero 7 es impar.
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 24px;">
+<span class="math display">\[A \cap B = \emptyset\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="14" style="font-size: 24px; color: #59A14F;">
+<strong>Conclusión:</strong> <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son eventos mutuamente excluyentes.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="espacio-muestral-continuo-en-agronomía" class="slide level2">
+<h2>Espacio muestral continuo en agronomía</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Ejemplo: maduración del mango
+</div>
+<div class="block-body">
+<p>
+En una finca de clima cálido del Tolima, se selecciona aleatoriamente un fruto de mango (<em>Mangifera indica</em>) y se registra su <strong>tiempo de maduración</strong> (en días) desde la floración.
+</p>
+</div>
+</div>
+<div class="twocol" style="margin-top: 20px;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<ul>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+El espacio muestral es un intervalo continuo: <span class="math display">\[\Omega = [60,\; 120] \subset \mathbb{R}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Cada valor <span class="math inline">\(\omega \in [60, 120]\)</span> representa un tiempo de maduración posible.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<span class="math inline">\(\Omega\)</span> contiene infinitos (no contables) puntos muestrales.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
+Eventos de interés
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
+<span class="math inline">\(A\)</span>: “maduración temprana” <span class="math inline">\(= [60, 80]\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;">
+<span class="math inline">\(B\)</span>: “maduración tardía” <span class="math inline">\(= (100, 120]\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px;">
+<span class="math inline">\(C\)</span>: “maduración normal” <span class="math inline">\(= (80, 100]\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 24px; text-align: justify;">
+Nótese que <span class="math inline">\(\{A, C, B\}\)</span> forma una <strong>partición</strong> de <span class="math inline">\(\Omega\)</span>, ya que son exhaustivos y mutuamente excluyentes.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-semillas-de-arroz-enunciado" class="slide level2">
+<h2>Ejercicio: semillas de arroz — enunciado</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+En un ensayo de laboratorio se seleccionan <strong>4 semillas de arroz</strong> (<em>Oryza sativa</em>) de un lote de clima cálido. Cada semilla se clasifica como <strong>Viable (V)</strong> o <strong>No viable (N)</strong> según prueba de germinación.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>a)</strong> Construya el espacio muestral <span class="math inline">\(\Omega\)</span> usando un árbol de posibilidades.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<strong>b)</strong> Defina el evento <span class="math inline">\(A\)</span> = “exactamente 2 semillas son viables” y liste sus elementos.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+<strong>c)</strong> Defina el evento <span class="math inline">\(B\)</span> = “al menos 3 semillas son viables” y liste sus elementos.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
+Contexto
+</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
+El arroz es el principal cereal de consumo en Colombia. El control de calidad de semillas es fundamental para garantizar buenos rendimientos en los Llanos Orientales y la Costa Atlántica.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+<span class="math inline">\(|\Omega| = 2^4 = 16\)</span> resultados posibles.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="solución-semillas-de-arroz" class="slide level2">
+<h2>Solución: semillas de arroz</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 22px;">
+Espacio muestral completo <span class="math inline">\(\Omega\)</span>
+</h4>
+<div class="fragment fade-in" data-fragment-index="3" style="font-size: 19px;">
+<p>
+<span class="math inline">\(\Omega = \{\)</span>VVVV, VVVN, VVNV, VVNN,
+</p>
+<p style="padding-left: 28px;">
+VNVV, VNVN, VNNV, VNNN,
+</p>
+<p style="padding-left: 28px;">
+NVVV, NVVN, NVNV, NVNN,
+</p>
+<p style="padding-left: 28px;">
+NNVV, NNVN, NNNV, NNNN<span class="math inline">\(\}\)</span>
+</p>
+</div>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="5" style="font-size: 24px;">
+Eventos
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">
+<strong><span class="math inline">\(A\)</span> (exactamente 2 viables):</strong> <span class="math display">\[A = \{\text{VVNN, VNVN, VNNV, NVVN, NVNV, NNVV}\}\]</span> <span class="math inline">\(|A| = \binom{4}{2} = 6\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;">
+<strong><span class="math inline">\(B\)</span> (al menos 3 viables):</strong> <span class="math display">\[B = \{\text{VVVN, VVNV, VNVV, NVVV, VVVV}\}\]</span> <span class="math inline">\(|B| = \binom{4}{3} + \binom{4}{4} = 4 + 1 = 5\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+<span class="math inline">\(A \cap B = \emptyset\)</span> ya que no es posible tener exactamente 2 viables y al menos 3 viables al mismo tiempo.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-temperaturas-en-cultivo-de-fresa" class="slide level2">
+<h2>Ejercicio: temperaturas en cultivo de fresa</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+En un cultivo de fresa (<em>Fragaria ananassa</em>) en la Sabana de Bogotá (clima frío, 2600 m.s.n.m.), se registra durante <strong>3 días consecutivos</strong> si ocurre helada: <strong>Sí (H)</strong> o <strong>No (N)</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>a)</strong> Defina el espacio muestral <span class="math inline">\(\Omega\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<strong>b)</strong> Defina <span class="math inline">\(A\)</span> = “ocurre helada al menos un día”.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+<strong>c)</strong> Defina <span class="math inline">\(B\)</span> = “no ocurre ninguna helada”.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+<strong>d)</strong> Verifique que <span class="math inline">\(B = A^c\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<h4 class="fragment fade-in" data-fragment-index="9">
+Solución
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;">
+<span class="math inline">\(|\Omega| = 2^3 = 8\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px;">
+<span class="math display">\[\Omega = \{\text{HHH, HHN, HNH, HNN, NHH, NHN, NNH, NNN}\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px;">
+<span class="math inline">\(B = \{\text{NNN}\}\)</span> (ninguna helada)
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 22px;">
+<span class="math inline">\(A = \Omega \setminus \{\text{NNN}\} = B^c\)</span> ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="14" style="font-size: 22px; text-align: justify; color: #3b82f6;">
+Las heladas son el principal riesgo climático para la fresa en la Sabana de Bogotá, lo que hace esencial modelar su probabilidad de ocurrencia.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="álgebra-de-eventos-resumen-gráfico" class="slide level2">
+<h2>Álgebra de eventos — resumen gráfico</h2>
+<div style="margin-top: 10px;">
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 22px; text-align: center; font-weight: bold; margin-bottom: 12px;">
+<p>Todas las operaciones fundamentales sobre eventos</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="2" style="width: 18%; padding: 10px; text-align: center;">
+<p style="font-size: 20px; font-weight: bold; color: #a78bfa;">
+<span class="math inline">\(A \cup B\)</span>
+</p>
+<p style="font-size: 18px;">
+Al menos uno ocurre
+</p>
+</div>
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="3" style="width: 18%; padding: 10px; text-align: center;">
+<p style="font-size: 20px; font-weight: bold; color: #3b82f6;">
+<span class="math inline">\(A \cap B\)</span>
+</p>
+<p style="font-size: 18px;">
+Ambos ocurren
+</p>
+</div>
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="4" style="width: 18%; padding: 10px; text-align: center;">
+<p style="font-size: 20px; font-weight: bold; color: #59A14F;">
+<span class="math inline">\(A^c\)</span>
+</p>
+<p style="font-size: 18px;">
+<span class="math inline">\(A\)</span> no ocurre
+</p>
+</div>
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="5" style="width: 18%; padding: 10px; text-align: center;">
+<p style="font-size: 20px; font-weight: bold; color: #F28E2B;">
+<span class="math inline">\(A \setminus B\)</span>
+</p>
+<p style="font-size: 18px;">
+<span class="math inline">\(A\)</span> pero no <span class="math inline">\(B\)</span>
+</p>
+</div>
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="6" style="width: 18%; padding: 10px; text-align: center;">
+<p style="font-size: 20px; font-weight: bold; color: #B07AA1;">
+<span class="math inline">\(A \triangle B\)</span>
+</p>
+<p style="font-size: 18px;">
+Exactamente uno
+</p>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="7" style="margin-top: 16px; padding: 12px; background: #faf5ff; border-left: 4px solid #a78bfa; border-radius: 6px; font-size: 22px; text-align: justify;">
+<p><strong>Recuerde:</strong> todas estas operaciones producen nuevos <em>subconjuntos</em> de <span class="math inline">\(\Omega\)</span>, es decir, nuevos eventos. La probabilidad se asigna a cada uno de estos subconjuntos.</p>
+</div>
+</div>
+</section>
+<section id="propiedades-de-de-morgan-demostración-visual" class="slide level2">
+<h2>Propiedades de De Morgan — demostración visual</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
+<span class="math inline">\((A \cup B)^c = A^c \cap B^c\)</span>
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Paso 1: <span class="math inline">\(A \cup B\)</span> cubre todo lo que está en <span class="math inline">\(A\)</span> <strong>o</strong> en <span class="math inline">\(B\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+Paso 2: <span class="math inline">\((A \cup B)^c\)</span> es lo que queda fuera de ambos = la zona exterior a los dos círculos en el diagrama de Venn.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+Paso 3: <span class="math inline">\(A^c \cap B^c\)</span> también es la zona exterior a ambos círculos. ✓
+</li>
+</ul>
+<div class="fragment fade-in" data-fragment-index="6" style="font-size: 20px; text-align: center; padding: 8px; background:#faf5ff; border-radius:4px; margin-top: 8px;">
+<p>Mnemotecnia: “el complemento de la unión es la intersección de los complementos”.</p>
+</div>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
+<span class="math inline">\((A \cap B)^c = A^c \cup B^c\)</span>
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+Paso 1: <span class="math inline">\(A \cap B\)</span> es solo la zona central (intersección) del diagrama de Venn.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+Paso 2: <span class="math inline">\((A \cap B)^c\)</span> cubre todo excepto esa zona central.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+Paso 3: <span class="math inline">\(A^c \cup B^c\)</span> incluye lo que no está en <span class="math inline">\(A\)</span> <strong>más</strong> lo que no está en <span class="math inline">\(B\)</span>, que es exactamente todo excepto la intersección. ✓
+</li>
+</ul>
+<div class="fragment fade-in" data-fragment-index="12" style="font-size: 20px; text-align: center; padding: 8px; background:#eff6ff; border-radius:4px; margin-top: 8px;">
+<p>Mnemotecnia: “el complemento de la intersección es la unión de los complementos”.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-de-morgan-en-cultivos" class="slide level2">
+<h2>Ejercicio De Morgan en cultivos</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Contexto agronómico
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+En un cultivo de maíz (<em>Zea mays</em>) de clima cálido en el Huila, se define:
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(A\)</span> = “la planta presenta plaga”
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+<span class="math inline">\(B\)</span> = “la planta está en estrés hídrico (sequía)”
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Interprete en contexto agronómico los eventos <span class="math inline">\((A \cup B)^c\)</span> y <span class="math inline">\((A \cap B)^c\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8">
+Interpretaciones (Leyes de De Morgan)
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
+<span class="math inline">\((A \cup B)^c = A^c \cap B^c\)</span>: la planta <strong>no tiene plaga</strong> <em>y</em> <strong>no tiene estrés hídrico</strong> — condición ideal de cultivo.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+<span class="math inline">\((A \cap B)^c = A^c \cup B^c\)</span>: la planta <strong>no sufre simultáneamente</strong> plaga y sequía — es decir, al menos uno de los dos problemas está ausente.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify; color: #59A14F;">
+<strong>Importancia:</strong> en manejo integrado de cultivos, identificar plantas libres de ambos estreses permite priorizar recursos de riego y control fitosanitario.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-final-integrador-cultivo-de-maíz-enunciado" class="slide level2">
+<h2>Ejercicio final integrador — cultivo de maíz (enunciado)</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Situación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Se clasifica el estado de una planta de maíz según <strong>dos criterios independientes</strong>: estado hídrico (Bien hidratada = H, Estresada = E) y estado fitosanitario (Sana = S, con Plaga = P, con Enfermedad = F).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+<strong>a)</strong> Construya el espacio muestral <span class="math inline">\(\Omega\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+<strong>b)</strong> Defina los 5 eventos: <span class="math inline">\(A\)</span>=“sana”, <span class="math inline">\(B\)</span>=“con plaga”, <span class="math inline">\(C\)</span>=“bien hidratada”, <span class="math inline">\(D\)</span>=“estresada con problema”, <span class="math inline">\(E\)</span>=“sana o hidratada”.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7">
+Eventos a calcular
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">
+<strong>c)</strong> <span class="math inline">\(A \cup C\)</span> (sana o bien hidratada)
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
+<strong>d)</strong> <span class="math inline">\(B \cap D\)</span> (con plaga y estresada)
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;">
+<strong>e)</strong> <span class="math inline">\(A^c\)</span> (no sana)
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px;">
+<strong>f)</strong> <span class="math inline">\((A \cup B)^c\)</span> (sin plaga y sin enfermedad… ¿es correcto esto?)
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 24px;">
+<strong>g)</strong> <span class="math inline">\(C \setminus B\)</span> (bien hidratada pero sin plaga)
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 24px;">
+<strong>h)</strong> <span class="math inline">\(A \triangle C\)</span> (sana o hidratada, pero no ambas)
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="solución-ejercicio-final-parte-1" class="slide level2">
+<h2>Solución ejercicio final — parte 1</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 22px;">
+Espacio muestral y eventos base
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px;">
+<span class="math inline">\(\Omega = \{(H,S),\,(H,P),\,(H,F),\,(E,S),\,(E,P),\,(E,F)\}\)</span>, <span class="math inline">\(|\Omega|=6\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px;">
+<span class="math inline">\(A = \{(H,S),(E,S)\}\)</span> (sana)
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px;">
+<span class="math inline">\(B = \{(H,P),(E,P)\}\)</span> (plaga)
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px;">
+<span class="math inline">\(C = \{(H,S),(H,P),(H,F)\}\)</span> (bien hidratada)
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px;">
+<span class="math inline">\(D = \{(E,P),(E,F)\}\)</span> (estresada con problema)
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px;">
+<span class="math inline">\(E = A \cup C = \{(H,S),(E,S),(H,P),(H,F)\}\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
+<h4 class="fragment fade-in" data-fragment-index="10" style="font-size: 22px;">
+Operaciones c), d), e)
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px;">
+<span class="math inline">\(A \cup C = \{(H,S),(E,S),(H,P),(H,F)\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px;">
+<span class="math inline">\(B \cap D = \{(E,P)\}\)</span> (plaga y estresada)
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 20px;">
+<span class="math inline">\(A^c = \{(H,P),(H,F),(E,P),(E,F)\}\)</span> (con plaga o enfermedad)
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="solución-ejercicio-final-parte-2" class="slide level2">
+<h2>Solución ejercicio final — parte 2</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 22px;">
+Operaciones f), g), h)
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px;">
+<span class="math inline">\(A \cup B = \{(H,S),(E,S),(H,P),(E,P)\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px;">
+<span class="math inline">\((A \cup B)^c = \{(H,F),(E,F)\}\)</span> (planta con enfermedad, sin ser sana ni tener plaga)
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px;">
+<span class="math inline">\(C \setminus B = \{(H,S),(H,F)\}\)</span> (bien hidratada pero sin plaga)
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px;">
+<span class="math inline">\(A \triangle C\)</span>: elementos en <span class="math inline">\(A\)</span> o <span class="math inline">\(C\)</span> pero no en ambos: <span class="math inline">\(A \setminus C = \{(E,S)\}\)</span>, <span class="math inline">\(\; C \setminus A = \{(H,P),(H,F)\}\)</span> <span class="math display">\[A \triangle C = \{(E,S),(H,P),(H,F)\}\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 22px;">
+Verificación De Morgan
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px;">
+<span class="math inline">\(A^c = \{(H,P),(H,F),(E,P),(E,F)\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px;">
+<span class="math inline">\(B^c = \{(H,S),(H,F),(E,S),(E,F)\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px;">
+<span class="math inline">\(A^c \cap B^c = \{(H,F),(E,F)\} = (A \cup B)^c\)</span> ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px; text-align: justify; color: #59A14F;">
+<strong>Verificado:</strong> la primera Ley de De Morgan se cumple en este espacio muestral.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="tipos-de-espacios-muestrales" class="slide level2">
+<h2>Tipos de espacios muestrales</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 10px; overflow-x: auto;">
+<table style="border-collapse: collapse; width: 100%; font-size: 22px;">
+<thead>
+<tr style="background: #a78bfa; color: white;">
+<th style="padding: 10px; text-align: left;">
+Tipo
+</th>
+<th style="padding: 10px; text-align: left;">
+Característica
+</th>
+<th style="padding: 10px; text-align: left;">
+Ejemplo agrícola
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2">
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-weight: bold; color: #3b82f6;">
+Discreto finito
+</td>
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">
+Número finito de resultados
+</td>
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">
+Estado fitosanitario del café: <span class="math inline">\(\{\)</span>Sana, Plaga, Enfermedad, Deficiencia<span class="math inline">\(\}\)</span>
+</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="3" style="background: #f9fafb;">
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-weight: bold; color: #59A14F;">
+Discreto infinito
+</td>
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">
+Contablemente infinito
+</td>
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">
+Número de riegos hasta que germina la semilla de papa: <span class="math inline">\(\{1,2,3,\ldots\}\)</span>
+</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4">
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-weight: bold; color: #F28E2B;">
+Continuo acotado
+</td>
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">
+Intervalo de la recta real
+</td>
+<td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">
+Tiempo de maduración del mango: <span class="math inline">\(\Omega = [60, 120]\)</span> días
+</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="5" style="background: #f9fafb;">
+<td style="padding: 10px; font-weight: bold; color: #B07AA1;">
+Continuo no acotado
+</td>
+<td style="padding: 10px;">
+Semirrecta o recta real
+</td>
+<td style="padding: 10px;">
+Producción de leche diaria en finca: <span class="math inline">\(\Omega = [0, +\infty)\)</span> litros
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="sigma-álgebra-introducción-conceptual" class="slide level2">
+<h2>Sigma-álgebra — introducción conceptual</h2>
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Qué es una <span class="math inline">\(\sigma\)</span>-álgebra?
+</div>
+<div class="block-body">
+<p>
+Una <strong><span class="math inline">\(\sigma\)</span>-álgebra</strong> <span class="math inline">\(\mathcal{F}\)</span> sobre <span class="math inline">\(\Omega\)</span> es una familia de subconjuntos de <span class="math inline">\(\Omega\)</span> que satisface tres condiciones básicas de cierre.
+</p>
+</div>
+</div>
+<div class="twocol" style="margin-top: 20px;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 24px;">
+Condiciones (intuitivas)
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+<strong>1.</strong> El espacio completo pertenece: <span class="math inline">\(\Omega \in \mathcal{F}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+<strong>2.</strong> Si un evento está en <span class="math inline">\(\mathcal{F}\)</span>, su complemento también: <span class="math inline">\(A \in \mathcal{F} \Rightarrow A^c \in \mathcal{F}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+<strong>3.</strong> Uniones contables de eventos en <span class="math inline">\(\mathcal{F}\)</span> también pertenecen a <span class="math inline">\(\mathcal{F}\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
+¿Por qué importa?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+La probabilidad se define formalmente sobre la pareja <span class="math inline">\((\Omega, \mathcal{F})\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+Garantiza que todas las operaciones con eventos (unión, intersección, complemento) produzcan eventos a los que se pueda asignar probabilidad.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px; text-align: justify;">
+Para espacios finitos (como los de esta clase), la <span class="math inline">\(\sigma\)</span>-álgebra más rica es el conjunto de partes <span class="math inline">\(\mathcal{P}(\Omega)\)</span>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="por-qué-importa-omega-en-investigación-biológica" class="slide level2">
+<h2>¿Por qué importa <span class="math inline">\(\Omega\)</span> en investigación biológica?</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
+Motivación aplicada
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Definir correctamente <span class="math inline">\(\Omega\)</span> es el <strong>primer paso indispensable</strong> en cualquier estudio probabilístico o estadístico.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+Un <span class="math inline">\(\Omega\)</span> mal definido conduce a probabilidades incorrectas, modelos inválidos y conclusiones erróneas.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+En agronomía, un <span class="math inline">\(\Omega\)</span> bien definido permite diseñar experimentos de campo con rigor estadístico.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
+Ejemplos de impacto
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+<strong>Ensayo de variedades de trigo</strong> (clima frío, Nariño): <span class="math inline">\(\Omega\)</span> = todas las combinaciones de rendimiento posibles por hectárea.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+<strong>Control de calidad de café</strong> (exportación): <span class="math inline">\(\Omega\)</span> = categorías de defectos según norma SCAA.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<strong>Epidemiología vegetal</strong>: <span class="math inline">\(\Omega\)</span> = conjunto de estados posibles de infección en una parcela.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify; color: #a78bfa;">
+Sin <span class="math inline">\(\Omega\)</span> no hay probabilidad. Sin probabilidad no hay inferencia estadística.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="conexión-con-probabilidad-anticipo" class="slide level2">
+<h2>Conexión con probabilidad — anticipo</h2>
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Qué viene en la Clase 7?
+</div>
+<div class="block-body">
+<p>
+Habiendo definido <span class="math inline">\(\Omega\)</span> y los eventos, el siguiente paso es <strong>asignar probabilidades</strong>. Formalmente, una función de probabilidad es una función <span class="math inline">\(P: \mathcal{F} \to [0,1]\)</span> que satisface los <em>axiomas de Kolmogórov</em>.
+</p>
+</div>
+</div>
+<div class="twocol" style="margin-top: 20px;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 24px;">
+Axiomas (anticipo)
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px;">
+<strong>K1:</strong> <span class="math inline">\(P(A) \geq 0\)</span> para todo evento <span class="math inline">\(A\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">
+<strong>K2:</strong> <span class="math inline">\(P(\Omega) = 1\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;">
+<strong>K3:</strong> Si <span class="math inline">\(A \cap B = \emptyset\)</span>, entonces <span class="math inline">\(P(A \cup B) = P(A) + P(B)\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
+Lo que ya tenemos (clase 6)
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+Sabemos definir <span class="math inline">\(\Omega\)</span> para experimentos discretos y continuos.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+Sabemos construir eventos y operar con ellos (unión, intersección, complemento, diferencia).
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px; text-align: justify; color: #3b82f6;">
+Estamos listos para asignar y calcular probabilidades sobre estos eventos.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-de-repaso-verdadero-o-falso" class="slide level2">
+<h2>Ejercicio de repaso — Verdadero o Falso</h2>
+<div style="margin-top: 10px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background: #a78bfa; color: white; font-size: 24px; margin-bottom: 10px; padding: 12px; border-radius: 6px;">
+<p><strong>1.</strong> Si <span class="math inline">\(A \subset B\)</span>, entonces <span class="math inline">\(A \cap B = A\)</span>. <span class="fragment fade-in" data-fragment-index="6" style="float: right; font-weight: bold;">✓ Verdadero</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background: #3b82f6; color: white; font-size: 24px; margin-bottom: 10px; padding: 12px; border-radius: 6px;">
+<p><strong>2.</strong> El evento vacío <span class="math inline">\(\emptyset\)</span> es imposible, por lo que no pertenece a <span class="math inline">\(\Omega\)</span>. <span class="fragment fade-in" data-fragment-index="7" style="float: right; font-weight: bold;">✗ Falso (<span class="math inline">\(\emptyset \subset \Omega\)</span>)</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background: #59A14F; color: white; font-size: 24px; margin-bottom: 10px; padding: 12px; border-radius: 6px;">
+<p><strong>3.</strong> Para cualquier evento <span class="math inline">\(A\)</span>: <span class="math inline">\((A^c)^c = A\)</span>. <span class="fragment fade-in" data-fragment-index="8" style="float: right; font-weight: bold;">✓ Verdadero</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background: #F28E2B; color: white; font-size: 24px; margin-bottom: 10px; padding: 12px; border-radius: 6px;">
+<p><strong>4.</strong> Si <span class="math inline">\(A \cap B = \emptyset\)</span>, entonces <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son complementarios. <span class="fragment fade-in" data-fragment-index="9" style="float: right; font-weight: bold;">✗ Falso (falta <span class="math inline">\(A \cup B = \Omega\)</span>)</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="5" style="background: #B07AA1; color: white; font-size: 24px; margin-bottom: 10px; padding: 12px; border-radius: 6px;">
+<p><strong>5.</strong> <span class="math inline">\((A \cup B)^c = A^c \cap B^c\)</span> es la primera Ley de De Morgan. <span class="fragment fade-in" data-fragment-index="10" style="float: right; font-weight: bold;">✓ Verdadero</span></p>
+</div>
+</div>
+</section>
+<section id="resumen-visual-conceptos-principales" class="slide level2">
+<h2>Resumen visual — conceptos principales</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 10px; overflow-x: auto;">
+<table style="border-collapse: collapse; width: 100%; font-size: 20px;">
+<thead>
+<tr style="background: #1e3a5f; color: white;">
+<th style="padding: 10px; text-align: left;">
+Concepto
+</th>
+<th style="padding: 10px; text-align: left;">
+Definición
+</th>
+<th style="padding: 10px; text-align: left;">
+Notación
+</th>
+<th style="padding: 10px; text-align: left;">
+Ejemplo (maíz, Huila)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2" style="background: #faf5ff;">
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold; color: #a78bfa;">
+Experimento aleatorio
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+Resultado incierto bajo condiciones fijas
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+—
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+Clasificar estado hídrico y sanitario
+</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="3">
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold; color: #3b82f6;">
+Espacio muestral
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+Todos los resultados posibles
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+<span class="math inline">\(\Omega\)</span>
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+<span class="math inline">\(\{(H,S),(H,P),(H,F),(E,S),(E,P),(E,F)\}\)</span>
+</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background: #f0fdf4;">
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold; color: #59A14F;">
+Evento
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+Subconjunto de <span class="math inline">\(\Omega\)</span>
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+<span class="math inline">\(A, B, \ldots\)</span>
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+“planta sana”: <span class="math inline">\(\{(H,S),(E,S)\}\)</span>
+</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="5">
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold; color: #F28E2B;">
+Unión
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+Al menos uno ocurre
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+<span class="math inline">\(A \cup B\)</span>
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+Sana o bien hidratada
+</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="6" style="background: #fdf2f8;">
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold; color: #B07AA1;">
+Intersección
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+Ambos ocurren
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+<span class="math inline">\(A \cap B\)</span>
+</td>
+<td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">
+Sana y bien hidratada
+</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="7" style="background: #f0f9ff;">
+<td style="padding: 8px; font-weight: bold; color: #76B7B2;">
+Complemento
+</td>
+<td style="padding: 8px;">
+Todo lo que no está en <span class="math inline">\(A\)</span>
+</td>
+<td style="padding: 8px;">
+<span class="math inline">\(A^c\)</span>
+</td>
+<td style="padding: 8px;">
+No sana = <span class="math inline">\(\{(H,P),(H,F),(E,P),(E,F)\}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="bibliografía-sugerida" class="slide level2">
+<h2>Bibliografía sugerida</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px; color: #a78bfa;">
+Textos principales
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+<strong>Walpole, R. E., Myers, R. H., &amp; Myers, S. L.</strong> (2012). <em>Probabilidad y estadística para ingeniería y ciencias</em> (9.ª ed.). Pearson. <br><span style="color:#59A14F; font-size: 20px;">Capítulos 2–3: fundamentos de probabilidad y espacio muestral.</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+<strong>Ross, S. M.</strong> (2014). <em>Introduction to Probability and Statistics for Engineers and Scientists</em> (5th ed.). Elsevier. <br><span style="color:#3b82f6; font-size: 20px;">Capítulo 3: axiomas de probabilidad y eventos.</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; color: #3b82f6;">
+Textos complementarios
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+<strong>Devore, J. L.</strong> (2016). <em>Probabilidad y estadística para ingeniería y ciencias</em> (9.ª ed.). Cengage Learning. <br><span style="color:#F28E2B; font-size: 20px;">Capítulo 2: probabilidad.</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+<strong>Montgomery, D. C., &amp; Runger, G. C.</strong> (2018). <em>Applied Statistics and Probability for Engineers</em> (7th ed.). Wiley. <br><span style="color:#B07AA1; font-size: 20px;">Excelente para aplicaciones en ingeniería y ciencias agrarias.</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px; text-align: justify; color: #76B7B2;">
+<strong>Material UNAL:</strong> notas de clase del Departamento de Estadística, Sede Bogotá.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="experimentos-aleatorios-en-agronomía-colombiana" class="slide level2">
+<h2>Experimentos aleatorios en agronomía colombiana</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
+Clima cálido
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+<strong>Café (Antioquia, Huila):</strong> clasificar calidad del grano: Supremo, Excelso, Pasilla. <span class="math display">\[\Omega = \{\text{Supremo}, \text{Excelso}, \text{Pasilla}\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+<strong>Mango (Tolima):</strong> medir el peso del fruto en gramos. <span class="math display">\[\Omega = (0, +\infty) \subset \mathbb{R}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+<strong>Maíz (Llanos Orientales):</strong> registrar si una mazorca supera 250 g. <span class="math display">\[\Omega = \{\text{Sí}, \text{No}\}\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
+Clima frío
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+<strong>Papa (Cundinamarca):</strong> seleccionar un tubérculo y clasificarlo: Primera, Segunda, Tercera. <span class="math display">\[\Omega = \{\text{Primera}, \text{Segunda}, \text{Tercera}\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+<strong>Trigo (Boyacá):</strong> medir altura de planta en cm al momento de cosecha. <span class="math display">\[\Omega = [60, 130] \subset \mathbb{R}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<strong>Fresa (Sabana de Bogotá):</strong> registrar días hasta primera cosecha. <span class="math display">\[\Omega = \{45, 46, 47, \ldots, 90\}\]</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="conteo-del-espacio-muestral-técnicas-básicas" class="slide level2">
+<h2>Conteo del espacio muestral — técnicas básicas</h2>
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Cuántos elementos tiene <span class="math inline">\(\Omega\)</span>?
+</div>
+<div class="block-body">
+<p>
+Para espacios discretos finitos, calcular <span class="math inline">\(|\Omega|\)</span> es esencial antes de enumerar los eventos.
+</p>
+</div>
+</div>
+<div class="twocol" style="margin-top: 16px;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 24px;">
+Regla de la multiplicación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+Si un experimento tiene <span class="math inline">\(k\)</span> etapas con <span class="math inline">\(n_1, n_2, \ldots, n_k\)</span> resultados respectivamente, el total de resultados es: <span class="math display">\[|\Omega| = n_1 \times n_2 \times \cdots \times n_k\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">
+<strong>Ejemplo:</strong> 4 semillas de arroz, cada una V o N: <span class="math display">\[|\Omega| = 2^4 = 16\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
+Ejemplos agrícolas
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+Clasificar 3 plantas de café (Sana/Problema): <span class="math inline">\(|\Omega| = 2^3 = 8\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+Registrar clima (3 tipos) y suelo (4 tipos) de una parcela: <span class="math inline">\(|\Omega| = 3 \times 4 = 12\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+Dos dados: <span class="math inline">\(|\Omega| = 6 \times 6 = 36\)</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="eventos-elementales-y-no-elementales" class="slide level2">
+<h2>Eventos elementales y no elementales</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Evento elemental
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Un <strong>evento elemental</strong> (o simple) contiene exactamente un punto muestral: <span class="math display">\[\{\omega\} \subset \Omega, \quad \omega \in \Omega\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<strong>Ejemplo:</strong> <span class="math inline">\(\Omega = \{1,2,3,4,5,6\}\)</span> <span class="math display">\[\{3\}, \{5\}, \{6\} \text{ son eventos elementales}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+Si <span class="math inline">\(|\Omega| = n\)</span>, hay exactamente <span class="math inline">\(n\)</span> eventos elementales.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7">
+Evento compuesto
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+Un <strong>evento compuesto</strong> contiene dos o más puntos muestrales.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">
+<strong>Ejemplo:</strong> “salir par” <span class="math inline">\(= \{2, 4, 6\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+Todo evento compuesto puede expresarse como unión de eventos elementales: <span class="math display">\[A = \{2,4,6\} = \{2\} \cup \{4\} \cup \{6\}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px; text-align: justify;">
+El número total de eventos posibles (incluyendo <span class="math inline">\(\emptyset\)</span> y <span class="math inline">\(\Omega\)</span>) en un espacio con <span class="math inline">\(n\)</span> elementos es <span class="math inline">\(2^n\)</span>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="subconjuntos-notables-de-omega" class="slide level2">
+<h2>Subconjuntos notables de <span class="math inline">\(\Omega\)</span></h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
+Número de subconjuntos
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Si <span class="math inline">\(|\Omega| = n\)</span>, entonces el número de posibles eventos (subconjuntos) es: <span class="math display">\[|\mathcal{P}(\Omega)| = 2^n\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+Para el dado: <span class="math inline">\(|\Omega| = 6 \Rightarrow 2^6 = 64\)</span> eventos posibles.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">
+Para 4 semillas de arroz: <span class="math inline">\(|\Omega| = 16 \Rightarrow 2^{16} = 65{,}536\)</span> eventos posibles.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
+Ejemplo: estado fitosanitario del café
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">
+<span class="math inline">\(\Omega = \{\text{Sa}, \text{Pl}, \text{En}, \text{De}\}\)</span>, <span class="math inline">\(|\Omega| = 4\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px;">
+Número de eventos posibles: <span class="math inline">\(2^4 = 16\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+Incluyen: <span class="math inline">\(\emptyset\)</span>, <span class="math inline">\(\{\text{Sa}\}\)</span>, <span class="math inline">\(\{\text{Pl}\}\)</span>, <span class="math inline">\(\{\text{En}\}\)</span>, <span class="math inline">\(\{\text{De}\}\)</span>, <span class="math inline">\(\{\text{Sa},\text{Pl}\}\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(\Omega\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify; color: #3b82f6;">
+En la práctica, el investigador define solo los eventos que tienen interpretación agronómica relevante.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="relación-de-contenencia-entre-eventos" class="slide level2">
+<h2>Relación de contenencia entre eventos</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Definición
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Decimos que <span class="math inline">\(A\)</span> está <strong>contenido</strong> en <span class="math inline">\(B\)</span> (se escribe <span class="math inline">\(A \subset B\)</span>) si todo resultado de <span class="math inline">\(A\)</span> también pertenece a <span class="math inline">\(B\)</span>: <span class="math display">\[A \subset B \iff (\omega \in A \Rightarrow \omega \in B)\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Si <span class="math inline">\(A \subset B\)</span>, entonces la ocurrencia de <span class="math inline">\(A\)</span> <strong>implica</strong> la ocurrencia de <span class="math inline">\(B\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px;">
+Ejemplo agronómico
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px; text-align: justify;">
+En el cultivo de papa (clima frío, Boyacá), <span class="math inline">\(\Omega = \{\text{Primera}, \text{Segunda}, \text{Tercera}\}\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">
+<span class="math inline">\(A = \{\text{Primera}\}\)</span>, <span class="math inline">\(\quad B = \{\text{Primera}, \text{Segunda}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
+<span class="math inline">\(A \subset B\)</span> porque Primera <span class="math inline">\(\in B\)</span> ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+Interpretación: si el tubérculo es de Primera calidad, entonces también satisface la condición de ser Primera o Segunda.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px;">
+Consecuencia útil: <span class="math inline">\(A \subset B \Rightarrow A \cap B = A\)</span> y <span class="math inline">\(A \cup B = B\)</span>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="igualdad-de-eventos" class="slide level2">
+<h2>Igualdad de eventos</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición
+</div>
+<div class="block-body">
+<p>
+Dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son <strong>iguales</strong> (<span class="math inline">\(A = B\)</span>) si y solo si <span class="math inline">\(A \subset B\)</span> y <span class="math inline">\(B \subset A\)</span>, es decir, si tienen exactamente los mismos elementos.
+</p>
+</div>
+</div>
+<div class="twocol" style="margin-top: 20px;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 24px;">
+Verificación mediante De Morgan
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+Para verificar que <span class="math inline">\((A \cup B)^c = A^c \cap B^c\)</span>, se puede mostrar que cada conjunto está contenido en el otro.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+<strong>Paso 1:</strong> <span class="math inline">\((A \cup B)^c \subset A^c \cap B^c\)</span>: si <span class="math inline">\(\omega \notin A \cup B\)</span>, entonces <span class="math inline">\(\omega \notin A\)</span> y <span class="math inline">\(\omega \notin B\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+<strong>Paso 2:</strong> <span class="math inline">\(A^c \cap B^c \subset (A \cup B)^c\)</span>: si <span class="math inline">\(\omega \notin A\)</span> y <span class="math inline">\(\omega \notin B\)</span>, entonces <span class="math inline">\(\omega \notin A \cup B\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
+Ejemplo numérico
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px;">
+<span class="math inline">\(\Omega = \{1,2,3,4,5,6\}\)</span>, <span class="math inline">\(A = \{1,2\}\)</span>, <span class="math inline">\(B = \{2,3\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px;">
+<span class="math inline">\(A \cup B = \{1,2,3\}\)</span>, <span class="math inline">\((A \cup B)^c = \{4,5,6\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px;">
+<span class="math inline">\(A^c = \{3,4,5,6\}\)</span>, <span class="math inline">\(B^c = \{1,4,5,6\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 22px;">
+<span class="math inline">\(A^c \cap B^c = \{4,5,6\} = (A \cup B)^c\)</span> ✓
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-cultivo-de-papa-en-boyacá" class="slide level2">
+<h2>Ejercicio: cultivo de papa en Boyacá</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+En un cultivo de papa (<em>Solanum tuberosum</em>) en clima frío de Boyacá, se seleccionan aleatoriamente <strong>dos tubérculos</strong> y se clasifica cada uno como: <strong>Primera (P)</strong>, <strong>Segunda (S)</strong> o <strong>Descarte (D)</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<strong>a)</strong> Construya <span class="math inline">\(\Omega\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+<strong>b)</strong> Defina <span class="math inline">\(A\)</span> = “al menos un tubérculo es Primera”.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<strong>c)</strong> Calcule <span class="math inline">\(A^c\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8">
+Solución
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px;">
+<span class="math inline">\(|\Omega| = 3^2 = 9\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px;">
+<span class="math inline">\(\Omega = \{(P,P),(P,S),(P,D),(S,P),(S,S),(S,D),(D,P),(D,S),(D,D)\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px;">
+<span class="math inline">\(A = \{(P,P),(P,S),(P,D),(S,P),(D,P)\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px;">
+<span class="math inline">\(A^c\)</span> = “ningún tubérculo es Primera”: <span class="math display">\[A^c = \{(S,S),(S,D),(D,S),(D,D)\}\]</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="propiedades-de-absorción-e-idempotencia" class="slide level2">
+<h2>Propiedades de absorción e idempotencia</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
+Leyes de idempotencia
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">
+<span class="math inline">\(A \cup A = A\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+<span class="math inline">\(A \cap A = A\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify; color: #59A14F;">
+Unir o intersectar un evento consigo mismo no cambia el evento.
+</li>
+</ul>
+<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; margin-top: 12px;">
+Leyes de absorción
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">
+Si <span class="math inline">\(A \subset B\)</span>: <span class="math inline">\(\quad A \cup B = B\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">
+Si <span class="math inline">\(A \subset B\)</span>: <span class="math inline">\(\quad A \cap B = A\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
+<h4 class="fragment fade-in" data-fragment-index="10" style="font-size: 24px;">
+Contexto: trigo en Boyacá
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+<span class="math inline">\(\Omega = \{\text{Alto rendimiento}, \text{Medio rendimiento}, \text{Bajo rendimiento}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px;">
+<span class="math inline">\(A = \{\text{Alto}\}\)</span>, <span class="math inline">\(\quad B = \{\text{Alto}, \text{Medio}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 22px;">
+<span class="math inline">\(A \subset B\)</span> <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(A \cup B = B = \{\text{Alto}, \text{Medio}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="14" style="font-size: 22px;">
+<span class="math inline">\(A \cap B = A = \{\text{Alto}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="15" style="font-size: 22px; text-align: justify; color: #3b82f6;">
+Cuando un evento implica al otro, las operaciones se simplifican elegantemente.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="aplicación-diseño-de-experimentos-en-campo" class="slide level2">
+<h2>Aplicación: diseño de experimentos en campo</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
+Del experimento al modelo probabilístico
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Todo <strong>diseño experimental</strong> en agronomía comienza con la definición precisa de:
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+<strong>1. El experimento aleatorio</strong> — ¿qué se observa o mide?
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+<strong>2. El espacio muestral</strong> <span class="math inline">\(\Omega\)</span> — ¿cuáles son todos los resultados posibles?
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+<strong>3. Los eventos de interés</strong> — ¿qué condiciones o resultados queremos estudiar?
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
+Ejemplo: ensayo de variedades de arroz
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+<strong>Experimento:</strong> sembrar 5 variedades de arroz en el Tolima y registrar cuál produce mayor rendimiento.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px;">
+<span class="math inline">\(\Omega = \{V_1, V_2, V_3, V_4, V_5\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px;">
+<span class="math inline">\(A\)</span> = “variedad mejorada gana” <span class="math inline">\(= \{V_3, V_4\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px; text-align: justify; color: #59A14F;">
+Con <span class="math inline">\(\Omega\)</span> y los eventos definidos, el paso siguiente es asignar probabilidades basadas en datos históricos o modelos.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="diferencia-de-eventos-ejemplo-con-cultivo-de-arroz" class="slide level2">
+<h2>Diferencia de eventos — ejemplo con cultivo de arroz</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Contexto
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+En un lote de arroz (clima cálido), se monitorean plantas para detectar dos problemas: <strong>Brusone</strong> (enfermedad fúngica) o <strong>Sogata</strong> (plaga de insecto).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(\Omega = \{\text{Sana}, \text{Brusone}, \text{Sogata}, \text{Ambos}\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+<span class="math inline">\(A = \{\text{Brusone}, \text{Ambos}\}\)</span> (tiene Brusone)
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<span class="math inline">\(B = \{\text{Sogata}, \text{Ambos}\}\)</span> (tiene Sogata)
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8">
+Operaciones
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
+<span class="math inline">\(A \setminus B = \{\text{Brusone}\}\)</span> — solo Brusone, sin Sogata
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;">
+<span class="math inline">\(B \setminus A = \{\text{Sogata}\}\)</span> — solo Sogata, sin Brusone
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px;">
+<span class="math inline">\(A \triangle B = \{\text{Brusone}, \text{Sogata}\}\)</span> — exactamente uno de los dos problemas
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 24px; text-align: justify; color: #59A14F;">
+<strong>Importancia:</strong> identificar plantas con exactamente un problema permite focalizar el tratamiento (fungicida vs.&nbsp;insecticida) sin aplicar ambos a la vez.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-de-verificación-propiedades-distributivas" class="slide level2">
+<h2>Ejercicio de verificación — propiedades distributivas</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">
+Enunciado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Sea <span class="math inline">\(\Omega = \{1,2,3,4,5,6,7,8\}\)</span> el espacio muestral de un experimento agronómico codificado. Defina:
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(A = \{1,2,3,4\}\)</span>, <span class="math inline">\(B = \{3,4,5,6\}\)</span>, <span class="math inline">\(C = \{5,6,7,8\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+Verifique: <span class="math inline">\(A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7">
+Solución
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">
+<span class="math inline">\(B \cup C = \{3,4,5,6,7,8\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px;">
+<span class="math inline">\(A \cap (B \cup C) = \{1,2,3,4\} \cap \{3,4,5,6,7,8\} = \{3,4\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px;">
+<span class="math inline">\(A \cap B = \{3,4\}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px;">
+<span class="math inline">\(A \cap C = \emptyset\)</span> (no comparten elementos)
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px;">
+<span class="math inline">\((A \cap B) \cup (A \cap C) = \{3,4\} \cup \emptyset = \{3,4\}\)</span> ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 22px; color: #59A14F;">
+La propiedad distributiva queda verificada.
+</li>
+</ul>
+</div>
+</div>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/logo_unal_3.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="clase_6_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="clase_6_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="clase_6_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="clase_6_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'multiplex': {"secret":null,"id":"0710b08a5ea0644371ebac6252a6ee6d0b2813a4a526ee9c3f841e28b16c1439","url":"https://multiplex.up.railway.app/"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

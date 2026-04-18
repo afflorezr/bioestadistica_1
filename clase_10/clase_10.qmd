@@ -1,0 +1,1007 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 10 {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Variables Aleatorias</p>
+<p style="font-size: 36px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Definición y tipos</p>
+<p style="font-size: 26px; color: #6b7280; margin-top: 20px;">Del espacio muestral a los números: cuantificando la incertidumbre</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental — Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## ¿Por qué necesitamos variables aleatorias?
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Los espacios muestrales pueden contener resultados no numéricos: <em>vive/muere</em>, <em>sano/enfermo</em>, <em>especie A/B/C</em>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Para aplicar herramientas matemáticas necesitamos <strong>asignar un número</strong> a cada resultado del experimento.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Una <strong>variable aleatoria</strong> es precisamente esa función: traduce los resultados del experimento al lenguaje de los números reales.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Con ello podemos calcular probabilidades, esperanzas, varianzas y mucho más de forma sistemática.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Ejemplo motivador: ensayo clínico
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Contexto:</strong> En un estudio sobre malaria en el Chocó, se aplica un tratamiento a 10 pacientes. Para cada paciente se registra si <em>se recupera</em> (R) o <em>no se recupera</em> (N).
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El espacio muestral $\Omega$ tiene $2^{10} = 1024$ posibles resultados: secuencias de R y N.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Si definimos $X = \text{número de pacientes que se recuperan}$, <strong>$X$ es una variable aleatoria</strong> con valores posibles $\{0, 1, 2, \ldots, 10\}$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+En lugar de trabajar con 1024 eventos, trabajamos con 11 valores numéricos. ¡Mucho más manejable!
+</li>
+</ul>
+
+## Definición formal
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Variable Aleatoria</div>
+  <div class="block-body">
+Una <strong>variable aleatoria</strong> $X$ es una función $X: \Omega \to \mathbb{R}$ que asigna a cada elemento $\omega \in \Omega$ del espacio muestral un número real $X(\omega)$.
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Formalmente, $X$ debe ser <em>medible</em>: para todo $x \in \mathbb{R}$, el conjunto $\{\omega \in \Omega : X(\omega) \leq x\}$ debe ser un evento (pertenecer a la sigma-álgebra).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+En la práctica de la bioestadística esta condición siempre se cumple con las variables que medimos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Convencionalmente usamos letras mayúsculas ($X$, $Y$, $Z$) para variables aleatorias y minúsculas ($x$, $y$, $z$) para sus valores observados.
+</li>
+</ul>
+
+## Dos grandes tipos de variables aleatorias
+
+<div class="twocol">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Variable Discreta</div>
+  <div class="block-body">
+$X$ es <strong>discreta</strong> si su conjunto de valores posibles es <em>finito o numerable</em>: $\{x_1, x_2, x_3, \ldots\}$.
+  </div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Variable Continua</div>
+  <div class="block-body">
+$X$ es <strong>continua</strong> si puede tomar cualquier valor en un intervalo (o unión de intervalos) de $\mathbb{R}$, es decir, su recorrido es no numerable.
+  </div>
+</div>
+
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La distinción determina qué herramienta matemática usamos: <strong>sumas</strong> para discretas, <strong>integrales</strong> para continuas.
+</li>
+</ul>
+
+## Ejemplos de variables discretas
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplos — Variables Discretas</div>
+  <div class="block-body">
+<ul>
+<li>Número de huevos de parásito <em>Fasciola hepatica</em> por campo microscópico: $X \in \{0, 1, 2, 3, \ldots\}$</li>
+<li>Número de plantas infectadas con mosca blanca en un lote de 50: $X \in \{0, 1, \ldots, 50\}$</li>
+<li>Número de episodios de fiebre amarilla reportados en una semana: $X \in \{0, 1, 2, \ldots\}$</li>
+</ul>
+  </div>
+</div>
+
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Nótese que los valores son <strong>enteros no negativos</strong> que se pueden contar uno a uno.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+El espacio de valores puede ser finito (lote de 50 plantas) o infinito numerable (conteos sin límite superior natural).
+</li>
+</ul>
+
+## Ejemplos de variables continuas
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplos — Variables Continuas</div>
+  <div class="block-body">
+<ul>
+<li>Peso de un neonato al nacer: $X \in (0, \infty)$ en gramos</li>
+<li>Concentración de nitratos en agua de río: $X \in [0, \infty)$ en mg/L</li>
+<li>Temperatura corporal de un bovino: $X \in \mathbb{R}^+$ en °C</li>
+<li>Tiempo hasta la muerte de una bacteria expuesta a antibiótico: $X \in (0, \infty)$ en horas</li>
+</ul>
+  </div>
+</div>
+
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Entre dos valores cualesquiera siempre existe otro valor posible — el recorrido no tiene "saltos".
+</li>
+</ul>
+
+## La función de distribución acumulada (FDA)
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Función de Distribución Acumulada</div>
+  <div class="block-body">
+La <strong>FDA</strong> (o CDF, del inglés) de una variable aleatoria $X$ se define como:
+$$F(x) = P(X \leq x), \quad x \in \mathbb{R}$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$F(x)$ mide la <strong>probabilidad acumulada</strong> hasta el valor $x$: la probabilidad de que $X$ no supere $x$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La FDA está definida para <em>todo</em> número real, tanto para variables discretas como continuas.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Es la herramienta unificadora: permite comparar variables discretas y continuas bajo el mismo marco.
+</li>
+</ul>
+
+## Propiedades de la FDA
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Propiedades de F(x)</div>
+  <div class="block-body">
+<ol>
+<li>$0 \leq F(x) \leq 1$ para todo $x \in \mathbb{R}$</li>
+<li>$F$ es no decreciente: si $a < b$ entonces $F(a) \leq F(b)$</li>
+<li>$\lim_{x \to -\infty} F(x) = 0$ y $\lim_{x \to +\infty} F(x) = 1$</li>
+<li>$F$ es continua por la derecha: $\lim_{h \to 0^+} F(x+h) = F(x)$</li>
+</ol>
+  </div>
+</div>
+
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+La propiedad 4 distingue la FDA de otras funciones: en variables discretas tiene <em>saltos</em>, pero siempre es continua por la derecha.
+</li>
+</ul>
+
+## FDA de una variable discreta — ejemplo
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 4.5
+# FDA de Binomial(3, 0.5)
+x_vals <- 0:3
+probs   <- dbinom(x_vals, 3, 0.5)
+cdf     <- pbinom(x_vals, 3, 0.5)
+
+par(mfrow = c(1,2), mar = c(4,4,2,1))
+barplot(probs, names.arg = x_vals, col = "#3b82f6", border = NA,
+        main = "Función de masa (FMP)", xlab = "x", ylab = "P(X=x)",
+        cex.lab = 1.3, cex.main = 1.3)
+plot(stepfun(x_vals, c(0, cdf)), do.points = TRUE, pch = 19, col = "#1b4d2e",
+     main = "FDA F(x)", xlab = "x", ylab = "F(x)", xlim = c(-0.5, 3.5),
+     cex.lab = 1.3, cex.main = 1.3)
+```
+
+<p class="fragment fade-up" style="font-size: 26px; text-align: center; margin-top: 5px;" data-fragment-index="1">
+$X \sim \text{Binomial}(3, 0.5)$: número de éxitos en 3 lanzamientos de moneda.
+</p>
+
+## FDA — propiedades para calcular probabilidades
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Cálculo de probabilidades con F(x)</div>
+  <div class="block-body">
+$$P(a < X \leq b) = F(b) - F(a)$$
+$$P(X > a) = 1 - F(a)$$
+$$P(X = a) = F(a) - F(a^-) \quad \text{(solo para discretas)}$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Donde $F(a^-) = \lim_{x \to a^-} F(x)$ es el límite por la izquierda en $a$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Para variables <strong>continuas</strong>: $P(X = a) = 0$ para todo $a$, y $F$ es diferenciable en casi todo punto.
+</li>
+</ul>
+
+## Variable aleatoria discreta — definición formal
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Variable Aleatoria Discreta</div>
+  <div class="block-body">
+$X$ es discreta si existe un conjunto contable $\{x_1, x_2, \ldots\}$ tal que $\sum_i P(X = x_i) = 1$. La función $p(x_i) = P(X = x_i)$ se denomina <strong>función de masa de probabilidad</strong> (FMP).
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+La FMP satisface: $p(x_i) \geq 0$ para todo $i$, y $\sum_{i} p(x_i) = 1$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La FDA se obtiene como $F(x) = \sum_{x_i \leq x} p(x_i)$, una suma acumulada.
+</li>
+</ul>
+
+## Variable aleatoria continua — definición formal
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Variable Aleatoria Continua</div>
+  <div class="block-body">
+$X$ es continua si existe una función $f(x) \geq 0$ tal que:
+$$F(x) = \int_{-\infty}^{x} f(t)\, dt \quad \text{para todo } x \in \mathbb{R}$$
+La función $f$ se llama <strong>función de densidad de probabilidad</strong> (FDP).
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+La FDP satisface: $f(x) \geq 0$ y $\int_{-\infty}^{\infty} f(x)\,dx = 1$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Para cualquier intervalo: $P(a \leq X \leq b) = \int_a^b f(x)\,dx$ — el área bajo la curva.
+</li>
+</ul>
+
+## Interpretación de la FDP
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$f(x)$ <strong>no es una probabilidad</strong>; puede ser mayor que 1.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$f(x)\,dx$ es la probabilidad infinitesimal de que $X$ caiga en el intervalo $(x, x+dx)$.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La probabilidad de un punto exacto es cero: $P(X = c) = 0$ para todo $c$.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Por eso en variables continuas $P(a < X < b) = P(a \leq X \leq b)$: los extremos no importan.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Gráfica de una FDP — Normal estándar
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 4.5
+x <- seq(-4, 4, length = 400)
+fx <- dnorm(x)
+plot(x, fx, type = "l", lwd = 3, col = "#006DAE",
+     main = "FDP: Normal estándar N(0,1)",
+     xlab = "x", ylab = "f(x)", cex.lab = 1.3, cex.main = 1.3)
+xi <- seq(-1, 1, length = 200)
+polygon(c(-1, xi, 1), c(0, dnorm(xi), 0), col = "#bfdbfe", border = NA)
+text(0, 0.15, paste0("P(-1 ≤ X ≤ 1) ≈ ", round(diff(pnorm(c(-1,1))),3)),
+     cex = 1.3, col = "#1a3a6b")
+abline(h = 0, col = "gray60")
+```
+
+## Soporte de una variable aleatoria
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Soporte</div>
+  <div class="block-body">
+El <strong>soporte</strong> de una variable aleatoria $X$ es el conjunto de valores $x$ donde $P(X = x) > 0$ (discreta) o $f(x) > 0$ (continua).
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El soporte define el <em>rango natural</em> de la variable: los valores que realmente pueden ocurrir.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Por ejemplo: número de parásitos en sangre $\Rightarrow$ soporte $\{0,1,2,\ldots\}$; temperatura corporal $\Rightarrow$ soporte $(35, 45)$ °C (en la práctica clínica).
+</li>
+</ul>
+
+## Variables aleatorias mixtas
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+Existen variables que son <strong>ni puramente discretas ni puramente continuas</strong>. Por ejemplo: el tiempo de supervivencia en un estudio cuando algunos pacientes no presentan el evento (se "censuran").
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Estas variables tienen una FDA con <em>saltos</em> en ciertos puntos y regiones <em>continuas</em> en otros.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+En Bioestadística Fundamental nos concentramos en los dos tipos puros: discreto y continuo.
+</li>
+</ul>
+
+## Transformaciones de variables aleatorias
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: Transformación monótona</div>
+  <div class="block-body">
+Si $X$ es una v.a. continua con FDP $f_X$ y $Y = g(X)$ donde $g$ es monótona diferenciable, entonces:
+$$f_Y(y) = f_X(g^{-1}(y)) \left|\frac{d}{dy} g^{-1}(y)\right|$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Este resultado es fundamental para construir nuevas distribuciones a partir de otras conocidas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Ejemplo: si $X \sim U(0,1)$ y $Y = -\ln(X)$, entonces $Y \sim \text{Exponencial}(1)$.
+</li>
+</ul>
+
+## Modelo probabilístico de una variable
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Modelo probabilístico</div>
+  <div class="block-body">
+Especificar el <strong>modelo probabilístico</strong> de $X$ es dar su FMP o FDP junto con el soporte. A menudo se escribe $X \sim \text{Nombre}(\theta)$ donde $\theta$ son los parámetros del modelo.
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Bernoulli}(p)$: número de éxitos en un solo ensayo con probabilidad de éxito $p$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Normal}(\mu, \sigma^2)$: variable continua con distribución en campana centrada en $\mu$ y varianza $\sigma^2$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Los parámetros $\theta$ resumen toda la información relevante del modelo.
+</li>
+</ul>
+
+## Bernoulli: el modelo más simple
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución de Bernoulli</div>
+  <div class="block-body">
+$X \sim \text{Bernoulli}(p)$ si $P(X=1) = p$ y $P(X=0) = 1-p$, con $0 < p < 1$. Su FMP es:
+$$p(x) = p^x (1-p)^{1-x}, \quad x \in \{0,1\}$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Modela experimentos con exactamente <strong>dos resultados</strong>: éxito ($X=1$) o fracaso ($X=0$).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Ejemplos: una semilla germina (sí/no), un paciente responde al tratamiento (sí/no), una vaca produce leche de alta calidad (sí/no).
+</li>
+</ul>
+
+## Distribución Binomial — construcción
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución Binomial</div>
+  <div class="block-body">
+Si $X_1, \ldots, X_n$ son independientes con $X_i \sim \text{Bernoulli}(p)$, entonces $X = \sum_{i=1}^n X_i \sim \text{Binomial}(n, p)$ con:
+$$p(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
+  </div>
+</div>
+
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X$ cuenta el <strong>número de éxitos</strong> en $n$ ensayos independientes con la misma probabilidad de éxito $p$.
+</li>
+</ul>
+
+## Distribución Binomial — visualización
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 4.5
+par(mfrow = c(1,3), mar = c(4,4,2,1))
+for(p in c(0.2, 0.5, 0.8)) {
+  k <- 0:20
+  pk <- dbinom(k, 20, p)
+  barplot(pk, names.arg = k, col = "#3b82f6", border = NA,
+          main = paste0("Bin(20, ", p, ")"),
+          xlab = "k", ylab = "P(X=k)", cex.lab = 1.1, cex.main = 1.2)
+}
+```
+
+<p class="fragment fade-up" style="font-size: 26px; text-align: center;" data-fragment-index="1">
+Para $p = 0.5$ la distribución es simétrica; para $p < 0.5$ sesgada a la derecha; para $p > 0.5$ a la izquierda.
+</p>
+
+## Distribución de Poisson
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución de Poisson</div>
+  <div class="block-body">
+$X \sim \text{Poisson}(\lambda)$, con $\lambda > 0$, si:
+$$p(k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Modela el <strong>número de eventos raros</strong> en un intervalo de tiempo o espacio fijo: casos de una enfermedad en un municipio por semana, bacterias en un ml de agua.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+El parámetro $\lambda$ es simultáneamente la media y la varianza de la distribución.
+</li>
+</ul>
+
+## Distribución Uniforme continua
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución Uniforme continua</div>
+  <div class="block-body">
+$X \sim U(a, b)$ si todos los valores en $(a,b)$ son igualmente probables:
+$$f(x) = \frac{1}{b-a}, \quad a < x < b$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Su FDA es $F(x) = \frac{x-a}{b-a}$ para $a \leq x \leq b$, una función lineal creciente.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Usada como <em>prior no informativa</em> en estadística bayesiana y para simular otras distribuciones.
+</li>
+</ul>
+
+## Distribución Normal
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución Normal</div>
+  <div class="block-body">
+$X \sim N(\mu, \sigma^2)$ si su FDP es:
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \mathbb{R}$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$\mu$ es la media (centro de la campana) y $\sigma^2$ es la varianza (anchura de la campana).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Aplicaciones en biología: peso corporal, talla, presión arterial, niveles séricos de glucosa.
+</li>
+</ul>
+
+## Normal estándar
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Normal estándar Z</div>
+  <div class="block-body">
+$Z \sim N(0,1)$ se denomina la <strong>normal estándar</strong>. Si $X \sim N(\mu, \sigma^2)$, entonces:
+$$Z = \frac{X - \mu}{\sigma} \sim N(0,1)$$
+Este proceso se llama <strong>estandarización</strong>.
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+La estandarización permite usar <strong>una única tabla</strong> (o función `pnorm` en R) para calcular probabilidades de cualquier normal.
+</li>
+</ul>
+
+## Distribución Exponencial
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución Exponencial</div>
+  <div class="block-body">
+$X \sim \text{Exp}(\lambda)$, con $\lambda > 0$, si:
+$$f(x) = \lambda e^{-\lambda x}, \quad x > 0$$
+Su FDA es $F(x) = 1 - e^{-\lambda x}$.
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Modela <strong>tiempos de espera</strong> entre eventos de Poisson: tiempo hasta la próxima infección, tiempo de vida de un organismo bajo condiciones constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Propiedad sin memoria: $P(X > s+t \mid X > s) = P(X > t)$.
+</li>
+</ul>
+
+## Propiedad de pérdida de memoria — ejemplo
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo — Sin memoria</div>
+  <div class="block-body">
+<p>Si el tiempo entre dos casos consecutivos de dengue en un barrio sigue una $\text{Exp}(\lambda)$, y ya han pasado 5 días sin un nuevo caso, la probabilidad de esperar al menos 3 días más es la <em>misma</em> que al inicio: $P(X > 3)$. El reloj se "reinicia" en cada momento.</p>
+  </div>
+</div>
+
+## Distribución Gamma
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución Gamma</div>
+  <div class="block-body">
+$X \sim \text{Gamma}(\alpha, \beta)$, con $\alpha, \beta > 0$, si:
+$$f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta}, \quad x > 0$$
+donde $\Gamma(\alpha) = \int_0^\infty t^{\alpha-1}e^{-t}dt$.
+  </div>
+</div>
+
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$\alpha$ es el parámetro de forma y $\beta$ es el parámetro de escala. La Exponencial es un caso especial con $\alpha=1$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Usada para modelar tiempos hasta el $k$-ésimo evento, tiempos de supervivencia, concentraciones.
+</li>
+</ul>
+
+## Tabla resumen — distribuciones discretas
+
+<div style="font-size: 26px; margin-top: 10px;">
+
+| Distribución | Parámetros | Soporte | Notación |
+|:---|:---:|:---:|:---:|
+| Bernoulli | $p \in (0,1)$ | $\{0,1\}$ | $\text{Ber}(p)$ |
+| Binomial | $n \in \mathbb{N}$, $p \in (0,1)$ | $\{0,1,\ldots,n\}$ | $\text{Bin}(n,p)$ |
+| Poisson | $\lambda > 0$ | $\{0,1,2,\ldots\}$ | $\text{Poi}(\lambda)$ |
+| Geométrica | $p \in (0,1)$ | $\{1,2,3,\ldots\}$ | $\text{Geo}(p)$ |
+| Hipergeométrica | $N,M,n$ | $\{0,\ldots,\min(n,M)\}$ | $\text{Hiper}(N,M,n)$ |
+
+</div>
+
+## Tabla resumen — distribuciones continuas
+
+<div style="font-size: 26px; margin-top: 10px;">
+
+| Distribución | Parámetros | Soporte | Notación |
+|:---|:---:|:---:|:---:|
+| Uniforme | $a < b$ | $(a,b)$ | $U(a,b)$ |
+| Normal | $\mu \in \mathbb{R}$, $\sigma^2 > 0$ | $\mathbb{R}$ | $N(\mu, \sigma^2)$ |
+| Exponencial | $\lambda > 0$ | $(0,\infty)$ | $\text{Exp}(\lambda)$ |
+| Gamma | $\alpha, \beta > 0$ | $(0,\infty)$ | $\text{Gamma}(\alpha,\beta)$ |
+| Beta | $\alpha, \beta > 0$ | $(0,1)$ | $\text{Beta}(\alpha,\beta)$ |
+
+</div>
+
+## Ejercicio 1: Identificar el tipo de variable
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejercicio — Clasifique cada variable</div>
+  <div class="block-body">
+<p>Para cada situación, indique si la variable es <strong>discreta</strong> o <strong>continua</strong> y proponga un modelo:</p>
+<ol>
+<li>Número de aves migratorias observadas en el humedal La Conejera en un día.</li>
+<li>Tiempo (en minutos) que tarda una larva de <em>Anopheles</em> en emerger.</li>
+<li>Proporción de parcelas con presencia de <em>Phytophthora infestans</em>.</li>
+<li>Número de lesiones precancerosas detectadas en un examen cervical.</li>
+</ol>
+  </div>
+</div>
+
+## Ejercicio 1: Solución
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+<ol>
+<li>Discreta — valores enteros $\geq 0$. Modelo: $\text{Poisson}(\lambda)$.</li>
+<li>Continua — tiempo en $(0,\infty)$. Modelo: $\text{Exp}(\lambda)$ o $\text{Gamma}(\alpha,\beta)$.</li>
+<li>Continua — valores en $(0,1)$. Modelo: $\text{Beta}(\alpha,\beta)$.</li>
+<li>Discreta — enteros $\geq 0$. Modelo: $\text{Poisson}(\lambda)$ o $\text{Binomial}(n,p)$.</li>
+</ol>
+  </div>
+</div>
+
+## Ejercicio 2: Calcular probabilidades con la FDA
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejercicio — FDA Binomial</div>
+  <div class="block-body">
+<p>En un estudio sobre anemia en niños de Boyacá, $X \sim \text{Bin}(8, 0.35)$ es el número de niños anémicos en un grupo de 8. Calcule:</p>
+<ol>
+<li>$P(X \leq 3)$</li>
+<li>$P(X = 2)$</li>
+<li>$P(X \geq 5)$</li>
+</ol>
+  </div>
+</div>
+
+## Ejercicio 2: Solución en R
+
+```{r}
+# X ~ Bin(8, 0.35)
+pbinom(3, 8, 0.35)          # P(X <= 3)
+dbinom(2, 8, 0.35)          # P(X = 2)
+1 - pbinom(4, 8, 0.35)      # P(X >= 5)
+```
+
+## Ejercicio 3: Variable continua y área bajo la curva
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejercicio — Distribución Exponencial</div>
+  <div class="block-body">
+<p>El tiempo (en días) entre brotes sucesivos de una enfermedad en un cultivo de papa sigue una distribución $\text{Exp}(\lambda = 0.1)$. Calcule la probabilidad de que el próximo brote ocurra:</p>
+<ol>
+<li>Antes de 7 días.</li>
+<li>Entre 5 y 15 días.</li>
+<li>Después de 20 días.</li>
+</ol>
+  </div>
+</div>
+
+## Ejercicio 3: Solución
+
+```{r}
+# X ~ Exp(0.1)  (media = 10 días)
+pexp(7,  0.1)                       # P(X < 7)
+pexp(15, 0.1) - pexp(5, 0.1)        # P(5 < X < 15)
+1 - pexp(20, 0.1)                   # P(X > 20)
+```
+
+## Simulación de variables aleatorias en R
+
+```{r}
+set.seed(2026)
+# Generar 1000 obs de distintas distribuciones
+x_bin  <- rbinom(1000, 10, 0.4)
+x_norm <- rnorm(1000, mean = 50, sd = 10)
+x_exp  <- rexp(1000, rate = 0.2)
+
+cat("Binomial   — Media:", round(mean(x_bin),2),
+    "  Var:", round(var(x_bin),2), "\n")
+cat("Normal     — Media:", round(mean(x_norm),2),
+    "  Var:", round(var(x_norm),2), "\n")
+cat("Exponencial— Media:", round(mean(x_exp),2),
+    "  Var:", round(var(x_exp),2), "\n")
+```
+
+## Visualización — simulaciones
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.5
+set.seed(2026)
+x_bin  <- rbinom(1000, 10, 0.4)
+x_norm <- rnorm(1000, mean = 50, sd = 10)
+x_exp  <- rexp(1000, rate = 0.2)
+par(mfrow = c(1,3), mar = c(4,4,2,1))
+hist(x_bin,  col = "#3b82f6", border = "white", main = "Bin(10, 0.4)",
+     xlab = "x", probability = TRUE, cex.main = 1.2)
+hist(x_norm, col = "#1b4d2e", border = "white", main = "N(50, 100)",
+     xlab = "x", probability = TRUE, cex.main = 1.2)
+hist(x_exp,  col = "#7a1515", border = "white", main = "Exp(0.2)",
+     xlab = "x", probability = TRUE, cex.main = 1.2)
+```
+
+## Verificar que una función es FMP válida
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejercicio — Verificación</div>
+  <div class="block-body">
+<p>Sea $p(k) = c \cdot (0.6)^k$ para $k = 0, 1, 2, \ldots$ Determine la constante $c$ para que $p$ sea una FMP válida.</p>
+  </div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+$$\sum_{k=0}^{\infty} c \cdot (0.6)^k = c \cdot \frac{1}{1-0.6} = \frac{c}{0.4} = 1 \implies c = 0.4$$
+Esta es una distribución Geométrica con $p = 0.4$.
+  </div>
+</div>
+
+## Verificar que una función es FDP válida
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejercicio — FDP válida</div>
+  <div class="block-body">
+<p>¿Es $f(x) = 3x^2$ para $0 < x < 1$ (y $f(x) = 0$ en otro caso) una FDP válida?</p>
+  </div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+$$\int_0^1 3x^2\, dx = \left[x^3\right]_0^1 = 1 \quad \checkmark$$
+Además $f(x) = 3x^2 \geq 0$ en $(0,1)$. Sí es una FDP válida. Esta es una $\text{Beta}(3,1)$.
+  </div>
+</div>
+
+## FDA de la distribución Beta(3,1)
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 4.5
+x <- seq(0, 1, length = 300)
+par(mfrow = c(1,2), mar = c(4,4,2,1))
+plot(x, 3*x^2, type = "l", lwd = 3, col = "#1b4d2e",
+     main = "FDP: Beta(3,1)", xlab = "x", ylab = "f(x)", cex.main = 1.3)
+polygon(c(0,x,1), c(0,3*x^2,0), col = "#bbf7d0", border = NA)
+lines(x, 3*x^2, lwd = 3, col = "#1b4d2e")
+plot(x, x^3, type = "l", lwd = 3, col = "#7a1515",
+     main = "FDA: Beta(3,1)", xlab = "x", ylab = "F(x)", cex.main = 1.3)
+```
+
+## Valor esperado — anticipando el tema
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+Conocido el modelo de $X$ (su FMP o FDP), la siguiente pregunta natural es: <strong>¿cuál es el valor "típico" de $X$?</strong>
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El <strong>valor esperado</strong> $E(X)$ cuantifica el centro de la distribución.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La <strong>varianza</strong> $\text{Var}(X)$ cuantifica la dispersión alrededor del centro.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Los <strong>percentiles</strong> indican qué porcentaje de la distribución queda por debajo de un valor dado.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Estos conceptos serán el tema central de las próximas clases.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+<div style="text-align: center; margin-top: 50px;">
+<p style="font-size: 42px; font-weight: bold; color: #1b4d2e;">Ejercicios para resolver en clase</p>
+<p style="font-size: 28px; color: #6b7280; margin-top: 20px;">Variables aleatorias — Definición y tipos</p>
+</div>
+
+## Taller 1: Construir una FMP
+
+<div class="block-example">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+<p>Un médico veterinario examina 4 cerdos de una granja del Meta para detectar fiebre aftosa. La probabilidad de que cada cerdo esté infectado es 0.25, independientemente. Sea $X$ = número de cerdos infectados.</p>
+<ol>
+<li>Escriba la FMP completa de $X$ (calcule $p(0), p(1), p(2), p(3), p(4)$).</li>
+<li>Verifique que $\sum p(x_i) = 1$.</li>
+<li>Calcule $P(X \geq 2)$.</li>
+<li>Grafique la FMP y la FDA en R.</li>
+</ol>
+  </div>
+</div>
+
+## Taller 1: Solución
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+$X \sim \text{Bin}(4, 0.25)$
+  </div>
+</div>
+
+```{r}
+#| class-source: fragment
+#| source-line-numbers: true
+#| data-fragment-index: 2
+# FMP completa
+k  <- 0:4
+pk <- dbinom(k, 4, 0.25)
+data.frame(x=k, p_x=round(pk,4), suma_acum=round(cumsum(pk),4))
+```
+
+```{r}
+#| class-source: fragment
+#| data-fragment-index: 3
+# P(X >= 2)
+1 - pbinom(1, 4, 0.25)
+```
+
+## Taller 2: ¿Es una FDP válida?
+
+<div class="block-example">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+<p>Para cada función, determine si puede ser una FDP válida. Si no lo es, explique por qué. Si lo es, encuentre la FDA $F(x)$.</p>
+<ol>
+<li>$f(x) = 2x$ para $0 < x < 1$, cero en otro caso.</li>
+<li>$f(x) = x - 1$ para $1 < x < 3$, cero en otro caso.</li>
+<li>$f(x) = \frac{1}{4}e^{-x/4}$ para $x > 0$, cero en otro caso.</li>
+</ol>
+  </div>
+</div>
+
+## Taller 2: Solución
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+<ol>
+<li>$\int_0^1 2x\,dx = [x^2]_0^1 = 1$ ✓, $f(x)\geq 0$ ✓. <strong>Válida.</strong> $F(x) = x^2$.</li>
+<li>$f(1)=0$, $f(2)=1$, pero $f(x)<0$ para $1<x<2$ es incorrecto — en realidad $f(x)\geq 0$, pero $\int_1^3(x-1)dx = 2 \neq 1$. <strong>No válida.</strong></li>
+<li>$\int_0^\infty \frac{1}{4}e^{-x/4}dx = 1$ ✓, $f(x)>0$ ✓. <strong>Válida.</strong> Es $\text{Exp}(\lambda=1/4)$.</li>
+</ol>
+  </div>
+</div>
+
+## Taller 3: Propiedades de la FDA
+
+<div class="block-example">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+<p>La concentración de arsénico (μg/L) en pozos artesianos del Cauca sigue la distribución con FDA:</p>
+$$F(x) = 1 - e^{-0.08x}, \quad x > 0$$
+<ol>
+<li>Identifique el modelo de distribución y su parámetro.</li>
+<li>¿Qué proporción de pozos supera el límite de 10 μg/L (OMS)?</li>
+<li>Encuentre el percentil 95: el nivel que supera al 95% de los pozos.</li>
+<li>Calcule $P(5 \leq X \leq 20)$.</li>
+</ol>
+  </div>
+</div>
+
+## Taller 3: Solución
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+$X \sim \text{Exp}(\lambda = 0.08)$
+  </div>
+</div>
+
+```{r}
+#| class-source: fragment
+#| data-fragment-index: 2
+lam <- 0.08
+# 1. Proporción que supera 10 μg/L
+cat("P(X>10) =", round(1 - pexp(10, lam), 4), "\n")
+# 2. Percentil 95
+cat("P95     =", round(qexp(0.95, lam), 2), "μg/L\n")
+# 3. P(5 ≤ X ≤ 20)
+cat("P(5≤X≤20)=", round(diff(pexp(c(5,20), lam)), 4), "\n")
+```
+
+## Taller 4: Seleccionar el modelo adecuado
+
+<div class="block-example">
+  <div class="block-title">Problema — ¿Qué distribución usar?</div>
+  <div class="block-body">
+<p>Justifique qué distribución usaría para modelar cada variable y especifique sus parámetros si es posible:</p>
+<ol>
+<li>Número de mosquitos <em>Aedes aegypti</em> capturados en una trampa en 24 horas (promedio histórico: 8 por trampa).</li>
+<li>Proporción de semillas de maíz que germinan en un ensayo de 200 semillas.</li>
+<li>Tiempo (días) hasta que aparecen síntomas de fiebre amarilla tras la picadura del vector (media: 5 días).</li>
+<li>Peso (kg) de una tortuga Podocnemis unifilis adulta muestreada aleatoriamente en el Amazonas.</li>
+</ol>
+  </div>
+</div>
+
+## Taller 4: Solución
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+<ol>
+<li><strong>Poisson(8)</strong>: conteo de eventos independientes en tiempo fijo con tasa constante.</li>
+<li><strong>Binomial(200, p)</strong>: número de éxitos en $n=200$ ensayos independientes con prob. constante $p$.</li>
+<li><strong>Exponencial($\lambda=0.2$)</strong>: tiempo de espera con $E(X)=5$ días, $\lambda=1/5$.</li>
+<li><strong>Normal($\mu, \sigma^2$)</strong>: medida morfológica continua en población biológica adulta.</li>
+</ol>
+  </div>
+</div>
+
+## Resumen de la clase
+
+<div class="twocol">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Conceptos clave</div>
+  <div class="block-body">
+<ul>
+<li><strong>Variable aleatoria</strong>: función $X:\Omega\to\mathbb{R}$</li>
+<li><strong>Discreta</strong>: soporte contable, FMP $p(x)$</li>
+<li><strong>Continua</strong>: soporte intervalar, FDP $f(x)$</li>
+<li><strong>FDA</strong>: $F(x) = P(X \leq x)$, herramienta unificadora</li>
+</ul>
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Distribuciones vistas</div>
+  <div class="block-body">
+<ul>
+<li>Bernoulli, Binomial, Poisson</li>
+<li>Uniforme, Normal, Exponencial, Gamma</li>
+<li>Notación $X \sim \text{Modelo}(\theta)$</li>
+<li>Funciones en R: <code>d-</code>, <code>p-</code>, <code>q-</code>, <code>r-</code></li>
+</ul>
+  </div>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div style="text-align: center; margin-top: 60px;">
+<p style="font-size: 40px; font-weight: bold; color: #006DAE;">Clase 11</p>
+<p style="font-size: 32px; color: #1b4d2e; margin-top: 15px; font-weight: 600;">Funciones de probabilidad y densidad</p>
+<p style="font-size: 26px; color: #6b7280; margin-top: 20px;">Propiedades, cálculos y distribuciones en profundidad</p>
+</div>

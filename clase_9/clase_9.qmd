@@ -1,0 +1,1638 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 9 {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Teorema de Bayes</p>
+<p style="font-size: 32px; color: #6b7280; margin-top: 20px;">Del resultado a la causa: razonamiento probabilístico inverso</p>
+<p style="font-size: 26px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental — Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## El problema inverso
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En probabilidad clásica preguntamos: <strong>dada una causa, ¿cuál es la probabilidad del efecto?</strong>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Por ejemplo: si una planta <em>es resistente</em> a una plaga, ¿cuál es la probabilidad de que la prueba de campo lo detecte?
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Sin embargo, en la práctica con frecuencia <strong>observamos el efecto</strong> y necesitamos inferir la causa más probable.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Esta lógica <strong>de efecto a causa</strong> se denomina el <em>problema inverso</em>.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+El <strong>Teorema de Bayes</strong> proporciona la herramienta matemática exacta para resolverlo.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+Permite actualizar nuestras creencias sobre una hipótesis a la luz de nueva evidencia observada.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Motivación: una prueba diagnóstica positiva
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Escenario:</strong> En un cultivo de café en el Huila, se aplica una prueba rápida para detectar la roya (<em>Hemileia vastatrix</em>). El resultado es <strong>positivo</strong>.
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 30px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+La pregunta que surge de inmediato: <strong>¿la planta realmente tiene roya?</strong>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Sabemos que ninguna prueba es perfecta: existe la posibilidad de <em>falsos positivos</em> y <em>falsos negativos</em>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+La respuesta depende de tres factores: la <strong>sensibilidad</strong> de la prueba, su <strong>especificidad</strong> y la <strong>prevalencia</strong> de la enfermedad en la zona.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+El Teorema de Bayes integra estos tres factores en un único cálculo coherente.
+</li>
+</ul>
+
+## Recordatorio: Ley de Probabilidad Total
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Ley de Probabilidad Total:</strong> Si $\{B_1, B_2, \ldots, B_k\}$ es una partición del espacio muestral $\Omega$ y $A$ es cualquier evento, entonces:
+$$P(A) = \sum_{i=1}^{k} P(A \mid B_i)\, P(B_i)$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Una <strong>partición</strong> es un conjunto de eventos mutuamente excluyentes y exhaustivos: $B_i \cap B_j = \emptyset$ y $\bigcup_{i} B_i = \Omega$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La probabilidad de $A$ se descompone según los distintos <em>caminos</em> que pueden llevar a $A$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Esta ley es el <strong>denominador</strong> del Teorema de Bayes — la recordaremos en el siguiente bloque.
+</li>
+</ul>
+
+## Thomas Bayes — Contexto histórico
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Thomas Bayes</strong> (1702–1761) fue un ministro presbiteriano y matemático inglés.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Su ensayo <em>"An Essay towards Solving a Problem in the Doctrine of Chances"</em> fue publicado póstumamente en 1763 por Richard Price.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Bayes planteó el problema de la inferencia inversa: actualizar probabilidades a partir de evidencia.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Pierre-Simon Laplace formalizó y generalizó el resultado en el siglo XIX, dándole su forma actual.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Hoy el <strong>enfoque bayesiano</strong> es una de las dos grandes corrientes de la estadística moderna, junto con la estadística frecuentista.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+Sus aplicaciones van desde diagnóstico médico hasta inteligencia artificial y modelos de cambio climático.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Punto de partida: Probabilidad Condicional
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Definición:</strong> La probabilidad condicional de $A$ dado $B$ es:
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+De modo simétrico: $P(B \mid A) = \dfrac{P(A \cap B)}{P(A)}$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Despejando $P(A \cap B)$ de ambas expresiones obtenemos la <strong>regla de la multiplicación</strong>:
+$$P(A \cap B) = P(A \mid B)\,P(B) = P(B \mid A)\,P(A)$$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Esta igualdad es el <em>núcleo algebraico</em> del Teorema de Bayes.
+</li>
+</ul>
+
+## Derivación del Teorema de Bayes
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+De la regla de multiplicación:
+$$P(A \cap B_i) = P(A \mid B_i)\,P(B_i) = P(B_i \mid A)\,P(A)$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Despejando $P(B_i \mid A)$:
+$$P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{P(A)}$$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Sustituimos $P(A)$ usando la <strong>ley de probabilidad total</strong>:
+$$P(A) = \sum_{j=1}^{k} P(A \mid B_j)\,P(B_j)$$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Obtenemos así la <strong>forma completa</strong> del Teorema de Bayes.
+</li>
+</ul>
+
+## Sustitución con la Ley de Probabilidad Total
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+$$\boxed{P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{\displaystyle\sum_{j=1}^{k} P(A \mid B_j)\,P(B_j)}}$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El <strong>numerador</strong> cuantifica cuánto contribuye la hipótesis $B_i$ a la ocurrencia del evento $A$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+El <strong>denominador</strong> normaliza: garantiza que la suma de todas las probabilidades a posteriori sea 1.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+La fórmula es válida para cualquier partición $\{B_1, \ldots, B_k\}$ del espacio muestral.
+</li>
+</ul>
+
+## Enunciado Formal del Teorema de Bayes
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Teorema de Bayes:</strong> Sea $\{B_1, B_2, \ldots, B_k\}$ una partición del espacio muestral $\Omega$ con $P(B_i) > 0$ para todo $i$. Sea $A$ un evento con $P(A) > 0$. Entonces, para cada $i = 1, 2, \ldots, k$:
+$$P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{\sum_{j=1}^{k} P(A \mid B_j)\,P(B_j)}$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Las hipótesis $B_1, \ldots, B_k$ son <strong>mutuamente excluyentes y exhaustivas</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+El evento $A$ es la <strong>evidencia observada</strong> que actualiza la probabilidad de cada hipótesis.
+</li>
+</ul>
+
+## Terminología Bayesiana
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong style="color: #a78bfa;">Probabilidad a priori</strong> $P(B_i)$: probabilidad de la hipótesis <em>antes</em> de observar la evidencia. Representa el conocimiento previo.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong style="color: #3b82f6;">Verosimilitud</strong> $P(A \mid B_i)$: probabilidad de observar la evidencia $A$ <em>si</em> la hipótesis $B_i$ es verdadera.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+<strong style="color: #59A14F;">Probabilidad a posteriori</strong> $P(B_i \mid A)$: probabilidad de la hipótesis <em>después</em> de observar la evidencia. Es la cantidad que calculamos con Bayes.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+<strong style="color: #F28E2B;">Evidencia marginal</strong> $P(A)$: constante de normalización que garantiza que las probabilidades sumen 1.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Representación con Árbol de Probabilidad
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
+El árbol de probabilidad organiza visualmente todos los términos del Teorema de Bayes.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Primer nivel:</strong> las ramas representan las hipótesis $B_1, \ldots, B_k$ con sus probabilidades a priori $P(B_i)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>Segundo nivel:</strong> desde cada $B_i$ salen ramas para $A$ y $A^c$ con las verosimilitudes $P(A \mid B_i)$ y $P(A^c \mid B_i)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>Probabilidades de caminos:</strong> el producto a lo largo de cada rama da $P(A \cap B_i) = P(A \mid B_i)\,P(B_i)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+<strong>Denominador:</strong> la suma de los caminos que llevan a $A$ da $P(A)$ (ley de probabilidad total).
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+<strong>Bayes:</strong> dividimos el camino de interés entre la suma total de caminos hacia $A$.
+</li>
+</ul>
+
+## Verificación: Suma de Probabilidades a Posteriori
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Propiedad:</strong> La suma de todas las probabilidades a posteriori es siempre igual a 1:
+$$\sum_{i=1}^{k} P(B_i \mid A) = 1$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Demostración:</strong> $\displaystyle\sum_{i=1}^{k} P(B_i \mid A) = \frac{\sum_{i=1}^{k} P(A \mid B_i)\,P(B_i)}{P(A)} = \frac{P(A)}{P(A)} = 1$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Esto confirma que las probabilidades a posteriori forman una <strong>distribución de probabilidad válida</strong> sobre las hipótesis.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Esta verificación sirve como <strong>chequeo aritmético</strong> al resolver problemas con múltiples hipótesis.
+</li>
+</ul>
+
+## Caso Especial: Dos Hipótesis ($B$ y $B^c$)
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+Cuando la partición es binaria — el evento $B$ y su complemento $B^c$ — el Teorema de Bayes toma la forma simplificada:
+$$P(B \mid A) = \frac{P(A \mid B)\,P(B)}{P(A \mid B)\,P(B) + P(A \mid B^c)\,P(B^c)}$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Aquí $P(B^c) = 1 - P(B)$, por lo que solo necesitamos tres parámetros: $P(B)$, $P(A|B)$ y $P(A|B^c)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Esta es la forma más usada en <strong>diagnóstico</strong>: $B$ = "tiene la enfermedad", $A$ = "prueba positiva".
+</li>
+</ul>
+
+## Forma Simplificada — Caso Binario
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+$$P(B \mid A) = \frac{P(A \mid B)\,P(B)}{P(A \mid B)\,P(B) + P(A \mid B^c)\,P(B^c)}$$
+</p>
+  </div>
+</div>
+
+<div class="twocol" style="margin-top: 20px;">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<p style="font-size: 26px; font-weight: bold; color: #a78bfa;">Términos del numerador</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+$P(B)$: prevalencia — probabilidad previa de que $B$ sea verdadera.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+$P(A \mid B)$: sensibilidad — probabilidad de observar $A$ cuando $B$ es verdadera.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<p style="font-size: 26px; font-weight: bold; color: #3b82f6;">Términos del denominador adicional</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+$P(B^c)$: probabilidad previa de que $B$ sea falsa.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+$P(A \mid B^c)$: tasa de falsos positivos — probabilidad de $A$ cuando $B$ es falsa.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Ejemplo 1: Prueba de Resistencia en Café
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Enunciado:</strong> En un cultivo de café en el Huila, se aplica una prueba para detectar resistencia genética a la roya. Se sabe que: <strong>20%</strong> de las plantas son resistentes (prevalencia). La prueba tiene <strong>sensibilidad del 90%</strong> y <strong>especificidad del 85%</strong>. Una planta muestra resultado positivo. ¿Cuál es la probabilidad de que sea realmente resistente?
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Sea $R$ = "planta resistente" y $T^+$ = "prueba positiva".
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Datos: $P(R) = 0{,}20$, $P(T^+ \mid R) = 0{,}90$, $P(T^- \mid R^c) = 0{,}85 \Rightarrow P(T^+ \mid R^c) = 0{,}15$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Queremos: $P(R \mid T^+) = ?$
+</li>
+</ul>
+
+## Datos del Ejemplo 1 — Tabla de Parámetros
+
+<div style="margin-top: 30px; text-align: center;">
+<table class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; margin: auto; border-collapse: collapse; width: 80%;">
+<thead>
+<tr style="background-color: #3b82f6; color: white;">
+<th style="padding: 10px; border: 1px solid #ccc;">Parámetro</th>
+<th style="padding: 10px; border: 1px solid #ccc;">Símbolo</th>
+<th style="padding: 10px; border: 1px solid #ccc;">Valor</th>
+<th style="padding: 10px; border: 1px solid #ccc;">Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #f0f9ff;">
+<td style="padding: 8px; border: 1px solid #ccc;">Prevalencia</td>
+<td style="padding: 8px; border: 1px solid #ccc;">$P(R)$</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,20</td>
+<td style="padding: 8px; border: 1px solid #ccc;">20% de plantas son resistentes</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;">
+<td style="padding: 8px; border: 1px solid #ccc;">No resistente</td>
+<td style="padding: 8px; border: 1px solid #ccc;">$P(R^c)$</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,80</td>
+<td style="padding: 8px; border: 1px solid #ccc;">80% de plantas no son resistentes</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #f0f9ff;">
+<td style="padding: 8px; border: 1px solid #ccc;">Sensibilidad</td>
+<td style="padding: 8px; border: 1px solid #ccc;">$P(T^+ \mid R)$</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,90</td>
+<td style="padding: 8px; border: 1px solid #ccc;">90% de resistentes dan positivo</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="5" style="background-color: white;">
+<td style="padding: 8px; border: 1px solid #ccc;">Tasa falso positivo</td>
+<td style="padding: 8px; border: 1px solid #ccc;">$P(T^+ \mid R^c)$</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,15</td>
+<td style="padding: 8px; border: 1px solid #ccc;">15% de no resistentes dan positivo</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+## Árbol del Ejemplo 1
+
+<div style="margin-top: 20px; font-size: 26px;" class="fragment fade-up" data-fragment-index="1">
+
+```
+                    ┌─ T⁺  P(R ∩ T⁺) = 0,20 × 0,90 = 0,1800
+         P(R)=0,20 ─┤
+                    └─ T⁻  P(R ∩ T⁻) = 0,20 × 0,10 = 0,0200
+Inicio ─┤
+                    ┌─ T⁺  P(Rᶜ ∩ T⁺) = 0,80 × 0,15 = 0,1200
+        P(Rᶜ)=0,80 ─┤
+                    └─ T⁻  P(Rᶜ ∩ T⁻) = 0,80 × 0,85 = 0,6800
+```
+
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>$P(T^+)$</strong> = suma de caminos hacia $T^+$ = $0{,}1800 + 0{,}1200 = 0{,}3000$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Verificación: $0{,}1800 + 0{,}0200 + 0{,}1200 + 0{,}6800 = 1{,}0000$ ✓
+</li>
+</ul>
+
+## Solución Paso a Paso — Ejemplo 1
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+Aplicamos el Teorema de Bayes:
+$$P(R \mid T^+) = \frac{P(T^+ \mid R)\,P(R)}{P(T^+ \mid R)\,P(R) + P(T^+ \mid R^c)\,P(R^c)}$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>Numerador:</strong> $P(T^+ \mid R)\,P(R) = 0{,}90 \times 0{,}20 = 0{,}1800$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Denominador:</strong> $P(T^+) = 0{,}1800 + 0{,}80 \times 0{,}15 = 0{,}1800 + 0{,}1200 = 0{,}3000$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>Resultado:</strong> $P(R \mid T^+) = \dfrac{0{,}1800}{0{,}3000} = 0{,}60$
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify; color: #059669;">
+Dado un resultado positivo, hay un <strong>60% de probabilidad</strong> de que la planta sea realmente resistente.
+</li>
+</ul>
+
+## Interpretación del Resultado del Ejemplo 1
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+A pesar de que la prueba tiene <strong>90% de sensibilidad</strong>, un resultado positivo solo indica resistencia con probabilidad <strong>60%</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Esto se debe a la <strong>baja prevalencia</strong> (20%): la mayoría de plantas no son resistentes, por lo que muchos positivos provienen de falsos positivos.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
+Este fenómeno se conoce como la <strong>paradoja de la prevalencia baja</strong>: las pruebas diagnósticas son menos informativas cuando la condición es rara.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 27px; text-align: justify;">
+En la práctica agronómica, conocer la prevalencia regional es tan importante como la calidad del instrumento de medición.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Efecto de la Prevalencia en el VPP
+
+<div style="margin-top: 20px; text-align: center;">
+<table class="fragment fade-up" data-fragment-index="1" style="font-size: 24px; margin: auto; border-collapse: collapse; width: 85%;">
+<thead>
+<tr style="background-color: #59A14F; color: white;">
+<th style="padding: 10px; border: 1px solid #ccc;">Prevalencia $P(R)$</th>
+<th style="padding: 10px; border: 1px solid #ccc;">Num. = $0{,}90 \times P(R)$</th>
+<th style="padding: 10px; border: 1px solid #ccc;">Den. = Num. + $0{,}15 \times P(R^c)$</th>
+<th style="padding: 10px; border: 1px solid #ccc;">$P(R \mid T^+)$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #f9fafb;">
+<td style="padding: 8px; border: 1px solid #ccc;">5%</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,0450</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,0450 + 0,1425 = 0,1875</td>
+<td style="padding: 8px; border: 1px solid #ccc; color: #dc2626;"><strong>24,0%</strong></td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;">
+<td style="padding: 8px; border: 1px solid #ccc;">20%</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,1800</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,1800 + 0,1200 = 0,3000</td>
+<td style="padding: 8px; border: 1px solid #ccc; color: #d97706;"><strong>60,0%</strong></td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #f9fafb;">
+<td style="padding: 8px; border: 1px solid #ccc;">50%</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,4500</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,4500 + 0,0750 = 0,5250</td>
+<td style="padding: 8px; border: 1px solid #ccc; color: #059669;"><strong>85,7%</strong></td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="5" style="background-color: white;">
+<td style="padding: 8px; border: 1px solid #ccc;">80%</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,7200</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,7200 + 0,0300 = 0,7500</td>
+<td style="padding: 8px; border: 1px solid #ccc; color: #1d4ed8;"><strong>96,0%</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+## Definición: Sensibilidad
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+$$\text{Sensibilidad} = P(\text{test}^+ \mid \text{enfermo}) = \frac{VP}{VP + FN}$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Mide la <strong>capacidad de la prueba para detectar casos verdaderos</strong> (enfermos o afectados).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$VP$ = Verdaderos Positivos; $FN$ = Falsos Negativos (enfermos no detectados).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Una prueba con alta sensibilidad tiene pocas <strong>pérdidas de casos reales</strong> — importante cuando el costo de no detectar es alto (p.ej., brotes de plaga).
+</li>
+</ul>
+
+## Definición: Especificidad
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+$$\text{Especificidad} = P(\text{test}^- \mid \text{sano}) = \frac{VN}{VN + FP}$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Mide la <strong>capacidad de la prueba para identificar correctamente los sanos</strong> (no afectados).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$VN$ = Verdaderos Negativos; $FP$ = Falsos Positivos (sanos que dan positivo).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Una prueba con alta especificidad tiene pocos <strong>falsos positivos</strong> — importante para evitar tratamientos innecesarios costosos.
+</li>
+</ul>
+
+## Definición: VPP y VPN
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p style="font-size: 26px; font-weight: bold; color: #a78bfa;">Valor Predictivo Positivo (VPP)</p>
+<p style="font-size: 26px;">
+$$\text{VPP} = P(\text{enfermo} \mid \text{test}^+) = \frac{VP}{VP + FP}$$
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+De todos los que dan positivo, ¿qué fracción está realmente enferma?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Es directamente la <strong>probabilidad a posteriori</strong> calculada con Bayes.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<p style="font-size: 26px; font-weight: bold; color: #3b82f6;">Valor Predictivo Negativo (VPN)</p>
+<p style="font-size: 26px;">
+$$\text{VPN} = P(\text{sano} \mid \text{test}^-) = \frac{VN}{VN + FN}$$
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+De todos los que dan negativo, ¿qué fracción está realmente sana?
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px; text-align: justify;">
+También se calcula con Bayes: $P(\text{sano} \mid T^-) = \frac{P(T^- \mid \text{sano})\,P(\text{sano})}{P(T^-)}$
+</li>
+</ul>
+</div>
+
+</div>
+
+## Tabla de Contingencia — Prueba Diagnóstica
+
+<div style="margin-top: 20px; text-align: center;" class="fragment fade-up" data-fragment-index="1">
+<table style="font-size: 24px; margin: auto; border-collapse: collapse; width: 80%;">
+<thead>
+<tr style="background-color: #1e3a8a; color: white;">
+<th style="padding: 10px; border: 2px solid #333;"> </th>
+<th style="padding: 10px; border: 2px solid #333;">Enfermo ($D^+$)</th>
+<th style="padding: 10px; border: 2px solid #333;">Sano ($D^-$)</th>
+<th style="padding: 10px; border: 2px solid #333;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #dbeafe;">
+<td style="padding: 10px; border: 2px solid #333; font-weight: bold;">Test $+$</td>
+<td style="padding: 10px; border: 2px solid #333; color: #059669;">VP (Verdadero Positivo)</td>
+<td style="padding: 10px; border: 2px solid #333; color: #dc2626;">FP (Falso Positivo)</td>
+<td style="padding: 10px; border: 2px solid #333;">VP + FP</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;">
+<td style="padding: 10px; border: 2px solid #333; font-weight: bold;">Test $-$</td>
+<td style="padding: 10px; border: 2px solid #333; color: #dc2626;">FN (Falso Negativo)</td>
+<td style="padding: 10px; border: 2px solid #333; color: #059669;">VN (Verdadero Negativo)</td>
+<td style="padding: 10px; border: 2px solid #333;">FN + VN</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #f3f4f6;">
+<td style="padding: 10px; border: 2px solid #333; font-weight: bold;">Total</td>
+<td style="padding: 10px; border: 2px solid #333;">VP + FN</td>
+<td style="padding: 10px; border: 2px solid #333;">FP + VN</td>
+<td style="padding: 10px; border: 2px solid #333;">$n$</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: center; margin-top: 20px; color: #4b5563;">
+Sensibilidad $= VP/(VP+FN)$ · Especificidad $= VN/(VN+FP)$ · VPP $= VP/(VP+FP)$ · VPN $= VN/(VN+FN)$
+</p>
+
+## Relación entre VPP y el Teorema de Bayes
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+El VPP es exactamente la probabilidad a posteriori de estar enfermo dado un resultado positivo:
+$$\text{VPP} = P(D^+ \mid T^+) = \frac{P(T^+ \mid D^+)\,P(D^+)}{P(T^+ \mid D^+)\,P(D^+) + P(T^+ \mid D^-)\,P(D^-)}$$
+donde $P(T^+ \mid D^+) = \text{Sensibilidad}$ y $P(T^+ \mid D^-) = 1 - \text{Especificidad}$.
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+El VPN es la probabilidad a posteriori de estar sano dado resultado negativo: $P(D^- \mid T^-)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Ambos dependen de la <strong>prevalencia</strong> $P(D^+)$, que actúa como probabilidad a priori.
+</li>
+</ul>
+
+## Ejemplo: Prueba de Hongos en Cultivo de Maíz
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Enunciado:</strong> En una región cálida del Tolima con cultivo de maíz, la prevalencia de <em>Aspergillus</em> (hongo) es del <strong>30%</strong>. Se usa una prueba rápida con sensibilidad <strong>88%</strong> y especificidad <strong>80%</strong>. Calcular VPP y VPN.
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+Sea $H$ = "planta infectada", $T^+$ = "prueba positiva".
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+$P(H) = 0{,}30$, $P(T^+ \mid H) = 0{,}88$, $P(T^- \mid H^c) = 0{,}80 \Rightarrow P(T^+ \mid H^c) = 0{,}20$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+<strong>VPP:</strong> $\dfrac{0{,}88 \times 0{,}30}{0{,}88 \times 0{,}30 + 0{,}20 \times 0{,}70} = \dfrac{0{,}264}{0{,}264 + 0{,}140} = \dfrac{0{,}264}{0{,}404} \approx 0{,}653$
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+<strong>VPN:</strong> $\dfrac{0{,}80 \times 0{,}70}{0{,}80 \times 0{,}70 + 0{,}12 \times 0{,}30} = \dfrac{0{,}560}{0{,}560 + 0{,}036} = \dfrac{0{,}560}{0{,}596} \approx 0{,}940$
+</li>
+</ul>
+
+## Cálculo Completo VPP y VPN — Maíz
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p style="font-size: 24px; font-weight: bold; color: #a78bfa;">Interpretación VPP = 65,3%</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px; text-align: justify;">
+De cada 100 plantas con prueba positiva, aproximadamente <strong>65</strong> están realmente infectadas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px; text-align: justify;">
+El 35% restante son <strong>falsos positivos</strong>: plantas sanas que arrojaron positivo.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px; text-align: justify;">
+Recomendación: confirmar con una segunda prueba antes de aplicar fungicida.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<p style="font-size: 24px; font-weight: bold; color: #3b82f6;">Interpretación VPN = 94,0%</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px; text-align: justify;">
+De cada 100 plantas con prueba negativa, aproximadamente <strong>94</strong> están realmente sanas.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px; text-align: justify;">
+Un resultado negativo es muy confiable — pocas plantas infectadas pasarán desapercibidas.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px; text-align: justify;">
+El VPN es alto en parte porque la prevalencia (30%) no es extremadamente alta.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Generalización a $k$ Hipótesis
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+Para una partición $\{B_1, B_2, \ldots, B_k\}$ con $k > 2$:
+$$P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{\displaystyle\sum_{j=1}^{k} P(A \mid B_j)\,P(B_j)}, \quad i = 1, 2, \ldots, k$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Las hipótesis pueden representar: <strong>orígenes diferentes</strong> de una muestra, <strong>variedades</strong> de una especie, <strong>regiones</strong> de producción, etc.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+El cálculo es idéntico para cada hipótesis, solo cambia el numerador.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>Verificación:</strong> $\sum_{i=1}^k P(B_i \mid A) = 1$ — siempre debemos comprobarlo.
+</li>
+</ul>
+
+## Ejemplo 2: Origen del Lote de Semillas de Papa
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Enunciado:</strong> Un lote de semillas de papa puede provenir de tres proveedores: $B_1$ (Cundinamarca), $B_2$ (Boyacá) y $B_3$ (Nariño). Se selecciona una semilla al azar y <strong>germina</strong> (evento $A$). ¿Cuál proveedor es más probable?
+</p>
+  </div>
+</div>
+
+<div style="margin-top: 15px; text-align: center;">
+<table class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; margin: auto; border-collapse: collapse; width: 75%;">
+<thead>
+<tr style="background-color: #59A14F; color: white;">
+<th style="padding: 8px; border: 1px solid #ccc;">Proveedor</th>
+<th style="padding: 8px; border: 1px solid #ccc;">$P(B_i)$ — participación</th>
+<th style="padding: 8px; border: 1px solid #ccc;">$P(A \mid B_i)$ — tasa germinación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color: #f0fdf4;">
+<td style="padding: 8px; border: 1px solid #ccc;">$B_1$ Cundinamarca</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,50</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,80</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color: white;">
+<td style="padding: 8px; border: 1px solid #ccc;">$B_2$ Boyacá</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,30</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,70</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="5" style="background-color: #f0fdf4;">
+<td style="padding: 8px; border: 1px solid #ccc;">$B_3$ Nariño</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,20</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,60</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+## Construcción del Árbol — Ejemplo 2 (Papa)
+
+<div style="margin-top: 10px; font-size: 24px;" class="fragment fade-up" data-fragment-index="1">
+
+```
+                   ┌─ Germina (A):  0,50 × 0,80 = 0,4000
+P(B₁)=0,50 ────────┤
+                   └─ No germina:  0,50 × 0,20 = 0,1000
+
+                   ┌─ Germina (A):  0,30 × 0,70 = 0,2100
+P(B₂)=0,30 ────────┤
+                   └─ No germina:  0,30 × 0,30 = 0,0900
+
+                   ┌─ Germina (A):  0,20 × 0,60 = 0,1200
+P(B₃)=0,20 ────────┤
+                   └─ No germina:  0,20 × 0,40 = 0,0800
+```
+
+</div>
+
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: center; margin-top: 10px;">
+Suma total = $0{,}4000 + 0{,}1000 + 0{,}2100 + 0{,}0900 + 0{,}1200 + 0{,}0800 = 1{,}0000$ ✓
+</p>
+
+## Denominador — Ley de Probabilidad Total (Papa)
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+$$P(A) = \sum_{j=1}^{3} P(A \mid B_j)\,P(B_j)$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+$P(A \mid B_1)\,P(B_1) = 0{,}80 \times 0{,}50 = 0{,}4000$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+$P(A \mid B_2)\,P(B_2) = 0{,}70 \times 0{,}30 = 0{,}2100$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+$P(A \mid B_3)\,P(B_3) = 0{,}60 \times 0{,}20 = 0{,}1200$
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify; color: #1e40af;">
+$\therefore P(A) = 0{,}4000 + 0{,}2100 + 0{,}1200 = \mathbf{0{,}7300}$
+</li>
+</ul>
+
+## Cálculo de $P(B_i \mid A)$ — Ejemplo 2
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+$$P(B_1 \mid A) = \frac{0{,}4000}{0{,}7300} \approx 0{,}5479$$
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+$$P(B_2 \mid A) = \frac{0{,}2100}{0{,}7300} \approx 0{,}2877$$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+$$P(B_3 \mid A) = \frac{0{,}1200}{0{,}7300} \approx 0{,}1644$$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify; color: #059669;">
+<strong>Verificación:</strong> $0{,}5479 + 0{,}2877 + 0{,}1644 = 1{,}0000$ ✓
+</li>
+</ul>
+
+## Verificación y Tabla de Resultados — Papa
+
+<div style="margin-top: 20px; text-align: center;">
+<table class="fragment fade-up" data-fragment-index="1" style="font-size: 24px; margin: auto; border-collapse: collapse; width: 80%;">
+<thead>
+<tr style="background-color: #F28E2B; color: white;">
+<th style="padding: 10px; border: 1px solid #ccc;">Proveedor</th>
+<th style="padding: 10px; border: 1px solid #ccc;">A priori $P(B_i)$</th>
+<th style="padding: 10px; border: 1px solid #ccc;">Verosimilitud $P(A|B_i)$</th>
+<th style="padding: 10px; border: 1px solid #ccc;">Producto</th>
+<th style="padding: 10px; border: 1px solid #ccc;">A posteriori $P(B_i|A)$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #fff7ed;">
+<td style="padding: 8px; border: 1px solid #ccc;">$B_1$ Cundinamarca</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,50</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,80</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,4000</td>
+<td style="padding: 8px; border: 1px solid #ccc; font-weight: bold;">54,79%</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;">
+<td style="padding: 8px; border: 1px solid #ccc;">$B_2$ Boyacá</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,30</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,70</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,2100</td>
+<td style="padding: 8px; border: 1px solid #ccc; font-weight: bold;">28,77%</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #fff7ed;">
+<td style="padding: 8px; border: 1px solid #ccc;">$B_3$ Nariño</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,20</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,60</td>
+<td style="padding: 8px; border: 1px solid #ccc;">0,1200</td>
+<td style="padding: 8px; border: 1px solid #ccc; font-weight: bold;">16,44%</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="5" style="background-color: #fef3c7;">
+<td style="padding: 8px; border: 1px solid #ccc; font-weight: bold;">Total</td>
+<td style="padding: 8px; border: 1px solid #ccc; font-weight: bold;">1,00</td>
+<td style="padding: 8px; border: 1px solid #ccc;">—</td>
+<td style="padding: 8px; border: 1px solid #ccc; font-weight: bold;">0,7300</td>
+<td style="padding: 8px; border: 1px solid #ccc; font-weight: bold; color: #059669;">100,00% ✓</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+## Interpretación del Ejemplo 2 — Papa
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+A priori, el proveedor $B_1$ (Cundinamarca) tenía <strong>50% de probabilidad</strong> de ser el origen, mientras que $B_3$ (Nariño) solo tenía <strong>20%</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Al observar que la semilla <strong>germinó</strong>, las probabilidades se actualizan: $B_1$ sube a <strong>54,8%</strong>.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+La germinación es más evidencia a favor de $B_1$ porque tiene la mayor tasa de germinación (80%) y la mayor participación (50%).
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+<strong>Conclusión práctica:</strong> Dado que la semilla germinó, es más probable que provenga de Cundinamarca; la probabilidad de Nariño disminuye ligeramente.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Ejercicio Propuesto: Zonas de Cultivo de Arroz
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Enunciado:</strong> Se monitorean cuatro zonas arroceras del Tolima y Meta. Se selecciona aleatoriamente una planta que muestra <strong>síntomas de piricularia</strong> (hongo). ¿De qué zona proviene con mayor probabilidad?
+</p>
+  </div>
+</div>
+
+<div style="margin-top: 15px; text-align: center;">
+<table class="fragment fade-up" data-fragment-index="2" style="font-size: 23px; margin: auto; border-collapse: collapse; width: 78%;">
+<thead>
+<tr style="background-color: #76B7B2; color: white;">
+<th style="padding: 8px; border: 1px solid #ccc;">Zona</th>
+<th style="padding: 8px; border: 1px solid #ccc;">$P(Z_i)$</th>
+<th style="padding: 8px; border: 1px solid #ccc;">$P(\text{piricularia} \mid Z_i)$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="3"><td style="padding: 7px; border: 1px solid #ccc;">$Z_1$ Espinal</td><td style="padding: 7px; border: 1px solid #ccc;">0,35</td><td style="padding: 7px; border: 1px solid #ccc;">0,12</td></tr>
+<tr class="fragment fade-up" data-fragment-index="4"><td style="padding: 7px; border: 1px solid #ccc;">$Z_2$ Purificación</td><td style="padding: 7px; border: 1px solid #ccc;">0,25</td><td style="padding: 7px; border: 1px solid #ccc;">0,18</td></tr>
+<tr class="fragment fade-up" data-fragment-index="5"><td style="padding: 7px; border: 1px solid #ccc;">$Z_3$ Villavicencio</td><td style="padding: 7px; border: 1px solid #ccc;">0,25</td><td style="padding: 7px; border: 1px solid #ccc;">0,22</td></tr>
+<tr class="fragment fade-up" data-fragment-index="6"><td style="padding: 7px; border: 1px solid #ccc;">$Z_4$ Granada</td><td style="padding: 7px; border: 1px solid #ccc;">0,15</td><td style="padding: 7px; border: 1px solid #ccc;">0,25</td></tr>
+</tbody>
+</table>
+</div>
+
+## Solución Ejercicio — Múltiples Hipótesis (Arroz)
+
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 24px; text-align: justify;">
+<strong>Denominador</strong> $P(A)$: $0{,}35(0{,}12)+0{,}25(0{,}18)+0{,}25(0{,}22)+0{,}15(0{,}25)$
+$= 0{,}0420+0{,}0450+0{,}0550+0{,}0375 = 0{,}1795$
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+$P(Z_1 \mid A) = 0{,}0420/0{,}1795 \approx 23{,}4\%$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+$P(Z_2 \mid A) = 0{,}0450/0{,}1795 \approx 25{,}1\%$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+$P(Z_3 \mid A) = 0{,}0550/0{,}1795 \approx 30{,}6\%$
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+$P(Z_4 \mid A) = 0{,}0375/0{,}1795 \approx 20{,}9\%$ — Suma = 100% ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px; text-align: justify; color: #059669;">
+<strong>Conclusión:</strong> Dado que la planta presenta piricularia, la zona más probable es <strong>Villavicencio ($Z_3$)</strong> con ~30,6%, a pesar de que $Z_1$ era la de mayor participación a priori.
+</li>
+</ul>
+
+## Concepto de Actualización Bayesiana Secuencial
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+El Teorema de Bayes puede aplicarse de forma <strong>iterativa</strong>: la probabilidad a posteriori del primer análisis se convierte en la probabilidad a priori del segundo.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Principio: <strong>"la posteriori de hoy es la priori de mañana"</strong>.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Cada nueva observación (prueba, experimento, medición) <strong>refina</strong> la distribución de probabilidad sobre las hipótesis.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Con suficientes observaciones, las probabilidades a posteriori convergen hacia la hipótesis verdadera, independientemente de la priori inicial.
+</li>
+</ul>
+</div>
+
+</div>
+
+## La Posteriori de Hoy es la Priori de Mañana
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Principio fundamental de la actualización secuencial:</strong>
+$$P_{\text{nueva priori}}(B_i) \leftarrow P(B_i \mid A_1) \quad \Rightarrow \quad P(B_i \mid A_1, A_2) = \frac{P(A_2 \mid B_i)\,P(B_i \mid A_1)}{\sum_j P(A_2 \mid B_j)\,P(B_j \mid A_1)}$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Las observaciones $A_1$ y $A_2$ deben ser <strong>condicionalmente independientes</strong> dado cada $B_i$ para que la actualización sea válida.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+En diagnóstico de cultivos, dos pruebas realizadas en días distintos sobre la misma planta pueden cumplir este supuesto si los factores ambientales no correlacionan los errores.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+La actualización secuencial es <strong>equivalente</strong> a aplicar Bayes una sola vez con toda la evidencia simultánea.
+</li>
+</ul>
+
+## Ejemplo: Dos Pruebas en Secuencia sobre un Cultivo
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Contexto:</strong> En un cultivo de fresa en Cundinamarca, se sospecha infección por <em>Botrytis cinerea</em> (moho gris). La prevalencia regional es 25%. Se dispone de dos pruebas independientes, cada una con sensibilidad 85% y especificidad 90%. Ambas dan resultado positivo. Calcular la probabilidad de infección.
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+<strong>Paso 1</strong> — Priori inicial: $P(I) = 0{,}25$, $P(T_1^+ \mid I) = 0{,}85$, $P(T_1^+ \mid I^c) = 0{,}10$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Denominador: $0{,}85 \times 0{,}25 + 0{,}10 \times 0{,}75 = 0{,}2125 + 0{,}0750 = 0{,}2875$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+<strong>Posteriori 1:</strong> $P(I \mid T_1^+) = 0{,}2125 / 0{,}2875 \approx 0{,}7391$
+</li>
+</ul>
+
+## Solución Actualización Secuencial — Fresa
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+<strong>Paso 2</strong> — Nueva priori: $P'(I) = 0{,}7391$ (posteriori del paso 1).
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Nueva denominador: $0{,}85 \times 0{,}7391 + 0{,}10 \times 0{,}2609 = 0{,}6282 + 0{,}0261 = 0{,}6543$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Posteriori 2:</strong> $P(I \mid T_1^+, T_2^+) = 0{,}6282 / 0{,}6543 \approx 0{,}9601$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify; color: #059669;">
+<strong>Interpretación:</strong> Después de dos pruebas positivas, la probabilidad de infección sube de 25% a 96%, mostrando el poder acumulativo de la evidencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Resumen: $P(I) = 25\% \xrightarrow{T_1^+} 73{,}9\% \xrightarrow{T_2^+} 96{,}0\%$
+</li>
+</ul>
+
+## Ventaja del Enfoque Bayesiano
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p style="font-size: 24px; font-weight: bold; color: #a78bfa;">Incorporar conocimiento previo</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px; text-align: justify;">
+La probabilidad a priori permite integrar <strong>datos históricos, experimentos anteriores o conocimiento experto</strong> en el análisis.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px; text-align: justify;">
+En agronomía: tasas de incidencia históricas de plagas, resultados de temporadas anteriores, datos de otras regiones similares.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<p style="font-size: 24px; font-weight: bold; color: #3b82f6;">Aprendizaje continuo</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px; text-align: justify;">
+La actualización secuencial permite <strong>aprender a medida que llegan nuevos datos</strong> sin necesidad de reiniciar el análisis.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px; text-align: justify;">
+Esto es útil en monitoreo continuo de cultivos, ensayos adaptativos y sistemas de alerta temprana.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Razón de Verosimilitudes — Perspectiva Alternativa
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Forma de cuotas (odds form) del Teorema de Bayes:</strong>
+$$\underbrace{\frac{P(B \mid A)}{P(B^c \mid A)}}_{\text{Cuota a posteriori}} = \underbrace{\frac{P(A \mid B)}{P(A \mid B^c)}}_{\text{Razón de verosimilitudes (LR)}} \times \underbrace{\frac{P(B)}{P(B^c)}}_{\text{Cuota a priori}}$$
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+La <strong>razón de verosimilitudes (LR)</strong> mide cuánto cambia la cuota de una hipótesis al observar $A$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+LR $> 1$: la evidencia favorece $B$. LR $= 1$: la evidencia no aporta. LR $< 1$: la evidencia favorece $B^c$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Para el ejemplo del café: LR $= 0{,}90 / 0{,}15 = 6{,}0$ — la prueba positiva multiplica por 6 las cuotas de que la planta sea resistente.
+</li>
+</ul>
+
+## Diagnóstico de Enfermedades en Cultivos
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Aplicación directa:</strong> El VPP y el VPN calculados con el Teorema de Bayes orientan la toma de decisiones en campo.
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>Café (clima cálido):</strong> roya (<em>Hemileia vastatrix</em>), antracnosis (<em>Colletotrichum</em>): pruebas moleculares o visuales.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Arroz (clima cálido):</strong> piricularia, pudrición de vaina: la prevalencia varía mucho entre variedades y regiones.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>Papa / Fresa (clima frío):</strong> <em>Phytophthora</em>, <em>Botrytis</em>: baja temperatura aumenta el riesgo — prevalencia mayor en épocas lluviosas.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+El conocimiento de la prevalencia regional es el dato más crítico para el cálculo bayesiano correcto.
+</li>
+</ul>
+
+## Control de Calidad en Lotes de Semillas
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+En certificación de semillas de papa, trigo o maíz, se muestrea una fracción del lote y se prueba germinación o presencia de patógenos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Bayes permite estimar la probabilidad de que <strong>el lote completo sea de alta calidad</strong> dado el resultado de la muestra.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Las hipótesis corresponden al <strong>porcentaje de semillas defectuosas</strong>: bajo, medio o alto.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+La evidencia es el número de semillas defectuosas encontradas en la muestra.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+Las probabilidades a priori pueden fijarse con base en el historial de cada proveedor certificado.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Estimación de Prevalencia de Plagas por Zona Climática
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
+Las plagas como el <em>gusano cogollero</em> (<em>Spodoptera frugiperda</em>) en maíz tienen prevalencias que varían con la altitud y temperatura.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Zonas cálidas (< 1000 m.s.n.m.) como el Tolima presentan mayor presión de plaga que zonas frías (> 2000 m.s.n.m.) como Nariño.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Incorporar la zona climática como variable en la probabilidad a priori <strong>mejora sustancialmente</strong> la exactitud diagnóstica.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Esto se implementa como un modelo bayesiano jerárquico en estudios epidemiológicos agrícolas modernos.
+</li>
+</ul>
+
+## Selección de Tratamientos Fitosanitarios
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+El razonamiento bayesiano guía la <strong>toma de decisiones bajo incertidumbre</strong>:
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+$H_1$ = "el patógeno es hongo"; $H_2$ = "el patógeno es bacteria"; $H_3$ = "el patógeno es virus".
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Observamos síntomas en el cultivo de mango (manchas foliares): calculamos $P(H_i \mid \text{síntomas})$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Seleccionamos el tratamiento (fungicida, bactericida o control de vectores) que maximiza la probabilidad de éxito dado el diagnóstico más probable.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Con nueva evidencia (laboratorio, evolución de síntomas) se actualiza el diagnóstico y se ajusta el tratamiento.
+</li>
+</ul>
+
+## Bayes en Investigación: Ensayos y Experimentos de Campo
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p style="font-size: 24px; font-weight: bold; color: #B07AA1;">Ensayos clínicos (adaptación a biología)</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px; text-align: justify;">
+Los ensayos adaptativos usan la actualización bayesiana para modificar la asignación de tratamientos a medida que se acumulan datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px; text-align: justify;">
+Permite detener el ensayo antes de lo planeado si un tratamiento es claramente superior o inferior.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<p style="font-size: 24px; font-weight: bold; color: #76B7B2;">Experimentos de campo</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px; text-align: justify;">
+Al evaluar variedades de café resistentes, la priori puede construirse con datos de experimentos previos en zonas similares.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px; text-align: justify;">
+Cada temporada de cultivo aporta nueva evidencia que refina la estimación de la efectividad de la variedad.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Limitaciones del Teorema de Bayes
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Advertencia:</strong> El teorema es matemáticamente exacto, pero sus resultados son tan buenos como la calidad de los datos de entrada.
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>Sensibilidad y especificidad incorrectas:</strong> si los parámetros de la prueba son imprecisos o corresponden a otra población, el resultado es erróneo.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Prevalencia desactualizada:</strong> cambios estacionales o por nuevas variedades de patógeno pueden hacer que la priori sea obsoleta.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>Partición incompleta:</strong> si no se consideran todas las hipótesis posibles, el denominador es incorrecto.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<strong>Subjetividad de la priori:</strong> distintos expertos pueden asignar probabilidades a priori diferentes, llevando a conclusiones distintas con los mismos datos.
+</li>
+</ul>
+
+## Ejercicio Integrador 1: Cultivo de Mora
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Enunciado:</strong> En un cultivo de mora en clima frío (Cundinamarca, 2500 m.s.n.m.), la prevalencia de <em>Botrytis</em> es del <strong>15%</strong>. La prueba disponible tiene sensibilidad <strong>88%</strong> y especificidad <strong>92%</strong>. Una planta arroja resultado positivo.
+<br><br>
+<strong>Calcular:</strong> VPP, VPN e interpretar los resultados en contexto agronómico.
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+Sea $B$ = "planta infectada con <em>Botrytis</em>", $T^+$ = "prueba positiva".
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Datos: $P(B)=0{,}15$, $P(T^+|B)=0{,}88$, $P(T^-|B^c)=0{,}92 \Rightarrow P(T^+|B^c)=0{,}08$.
+</li>
+</ul>
+
+## Solución Ejercicio 1 — Mora Paso a Paso
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 25px; text-align: justify;">
+<strong>Denominador:</strong> $P(T^+) = 0{,}88 \times 0{,}15 + 0{,}08 \times 0{,}85 = 0{,}1320 + 0{,}0680 = 0{,}2000$
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
+<strong>VPP:</strong> $P(B|T^+) = 0{,}1320/0{,}2000 = \mathbf{0{,}660}$ — 66% de probabilidad de infección dado positivo.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+<strong>Para VPN:</strong> $P(T^-) = 1 - 0{,}2000 = 0{,}8000$. Numerador: $P(T^-|B^c)\,P(B^c) = 0{,}92 \times 0{,}85 = 0{,}7820$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+<strong>VPN:</strong> $P(B^c|T^-) = 0{,}7820/0{,}8000 = \mathbf{0{,}9775}$ — 97,8% de confianza de que una planta negativa está sana.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify; color: #059669;">
+<strong>Interpretación:</strong> El VPN alto implica que un resultado negativo descarta infección con alta confiabilidad. El VPP moderado sugiere confirmar positivos antes de aplicar fungicida.
+</li>
+</ul>
+
+## Ejercicio Integrador 2: Tres Variedades de Trigo
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Enunciado:</strong> Un molino del altiplano boyacense recibe trigo de tres variedades: $V_1$ (ICA Chía, 40%), $V_2$ (Yema de Huevo, 35%) y $V_3$ (Nóbsa, 25%). La probabilidad de obtener grano de baja calidad (proteína < 10%) es 5%, 12% y 8% respectivamente. Se selecciona un lote y el grano resulta de baja calidad. ¿Qué variedad es más probable?
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px; text-align: justify;">
+$P(A) = 0{,}05\times0{,}40 + 0{,}12\times0{,}35 + 0{,}08\times0{,}25 = 0{,}0200+0{,}0420+0{,}0200 = 0{,}0820$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px; text-align: justify;">
+$P(V_1|A)=0{,}0200/0{,}0820\approx24{,}4\%$ · $P(V_2|A)=0{,}0420/0{,}0820\approx51{,}2\%$ · $P(V_3|A)=0{,}0200/0{,}0820\approx24{,}4\%$
+</li>
+</ul>
+
+## Solución Ejercicio 2 — Variedades de Trigo
+
+<div style="margin-top: 20px; text-align: center;">
+<table class="fragment fade-up" data-fragment-index="1" style="font-size: 23px; margin: auto; border-collapse: collapse; width: 82%;">
+<thead>
+<tr style="background-color: #B07AA1; color: white;">
+<th style="padding: 8px; border: 1px solid #ccc;">Variedad</th>
+<th style="padding: 8px; border: 1px solid #ccc;">$P(V_i)$</th>
+<th style="padding: 8px; border: 1px solid #ccc;">$P(A|V_i)$</th>
+<th style="padding: 8px; border: 1px solid #ccc;">Producto</th>
+<th style="padding: 8px; border: 1px solid #ccc;">A posteriori</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #fdf4ff;">
+<td style="padding: 7px; border: 1px solid #ccc;">$V_1$ ICA Chía</td><td style="padding: 7px; border: 1px solid #ccc;">0,40</td><td style="padding: 7px; border: 1px solid #ccc;">0,05</td><td style="padding: 7px; border: 1px solid #ccc;">0,0200</td><td style="padding: 7px; border: 1px solid #ccc; font-weight: bold;">24,4%</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;">
+<td style="padding: 7px; border: 1px solid #ccc;">$V_2$ Yema de Huevo</td><td style="padding: 7px; border: 1px solid #ccc;">0,35</td><td style="padding: 7px; border: 1px solid #ccc;">0,12</td><td style="padding: 7px; border: 1px solid #ccc;">0,0420</td><td style="padding: 7px; border: 1px solid #ccc; font-weight: bold; color: #dc2626;">51,2%</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #fdf4ff;">
+<td style="padding: 7px; border: 1px solid #ccc;">$V_3$ Nóbsa</td><td style="padding: 7px; border: 1px solid #ccc;">0,25</td><td style="padding: 7px; border: 1px solid #ccc;">0,08</td><td style="padding: 7px; border: 1px solid #ccc;">0,0200</td><td style="padding: 7px; border: 1px solid #ccc; font-weight: bold;">24,4%</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="5" style="background-color: #fce7f3;">
+<td style="padding: 7px; border: 1px solid #ccc; font-weight: bold;">Total</td><td style="padding: 7px; border: 1px solid #ccc;">1,00</td><td style="padding: 7px; border: 1px solid #ccc;">—</td><td style="padding: 7px; border: 1px solid #ccc;">0,0820</td><td style="padding: 7px; border: 1px solid #ccc; font-weight: bold; color: #059669;">100% ✓</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: center; color: #1e40af; margin-top: 10px;">
+<strong>Conclusión:</strong> La variedad Yema de Huevo ($V_2$) es la más probable con 51,2%, a pesar de no ser la más frecuente a priori.
+</p>
+
+## Ejercicio Integrador 3: Dos Invernaderos
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Enunciado:</strong> Una empresa productora de flores tiene dos invernaderos: $I_1$ (cálido, 60% de producción) e $I_2$ (frío, 40% de producción). La probabilidad de que una planta presente deficiencia nutricional es 7% en $I_1$ y 15% en $I_2$. Se selecciona aleatoriamente una planta con deficiencia nutricional. ¿De qué invernadero proviene con mayor probabilidad?
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 15px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+Sea $D$ = "deficiencia nutricional", $I_1$ e $I_2$ son las hipótesis.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+$P(D) = 0{,}07 \times 0{,}60 + 0{,}15 \times 0{,}40 = 0{,}0420 + 0{,}0600 = 0{,}1020$
+</li>
+</ul>
+
+## Solución Ejercicio 3 — Invernaderos
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+$$P(I_1 \mid D) = \frac{0{,}07 \times 0{,}60}{0{,}1020} = \frac{0{,}0420}{0{,}1020} \approx 0{,}4118$$
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+$$P(I_2 \mid D) = \frac{0{,}15 \times 0{,}40}{0{,}1020} = \frac{0{,}0600}{0{,}1020} \approx 0{,}5882$$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify; color: #059669;">
+<strong>Verificación:</strong> $0{,}4118 + 0{,}5882 = 1{,}0000$ ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify; color: #1e40af;">
+<strong>Conclusión:</strong> A pesar de que el invernadero cálido ($I_1$) produce el 60% de las plantas, una planta con deficiencia nutricional tiene mayor probabilidad (58,8%) de provenir del invernadero frío ($I_2$), que tiene mayor tasa de deficiencia.
+</li>
+</ul>
+
+## Comparación: A Priori vs A Posteriori
+
+<div style="margin-top: 15px; text-align: center;">
+<table class="fragment fade-up" data-fragment-index="1" style="font-size: 22px; margin: auto; border-collapse: collapse; width: 90%;">
+<thead>
+<tr style="background-color: #1e3a8a; color: white;">
+<th style="padding: 8px; border: 1px solid #ccc;">Ejercicio</th>
+<th style="padding: 8px; border: 1px solid #ccc;">Hipótesis más probable a priori</th>
+<th style="padding: 8px; border: 1px solid #ccc;">P(a priori)</th>
+<th style="padding: 8px; border: 1px solid #ccc;">Hipótesis más probable a posteriori</th>
+<th style="padding: 8px; border: 1px solid #ccc;">P(a posteriori)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #eff6ff;">
+<td style="padding: 7px; border: 1px solid #ccc;">Mora (Ej. 1)</td>
+<td style="padding: 7px; border: 1px solid #ccc;">Planta sana</td>
+<td style="padding: 7px; border: 1px solid #ccc;">85%</td>
+<td style="padding: 7px; border: 1px solid #ccc;">Planta infectada</td>
+<td style="padding: 7px; border: 1px solid #ccc; font-weight: bold; color: #dc2626;">66%</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;">
+<td style="padding: 7px; border: 1px solid #ccc;">Trigo (Ej. 2)</td>
+<td style="padding: 7px; border: 1px solid #ccc;">$V_1$ ICA Chía</td>
+<td style="padding: 7px; border: 1px solid #ccc;">40%</td>
+<td style="padding: 7px; border: 1px solid #ccc;">$V_2$ Yema de Huevo</td>
+<td style="padding: 7px; border: 1px solid #ccc; font-weight: bold; color: #dc2626;">51,2%</td>
+</tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #eff6ff;">
+<td style="padding: 7px; border: 1px solid #ccc;">Invernaderos (Ej. 3)</td>
+<td style="padding: 7px; border: 1px solid #ccc;">$I_1$ Cálido</td>
+<td style="padding: 7px; border: 1px solid #ccc;">60%</td>
+<td style="padding: 7px; border: 1px solid #ccc;">$I_2$ Frío</td>
+<td style="padding: 7px; border: 1px solid #ccc; font-weight: bold; color: #dc2626;">58,8%</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: center; color: #4b5563; margin-top: 15px;">
+En todos los casos, la evidencia observada <strong>cambió el orden de probabilidades</strong> respecto a la situación inicial.
+</p>
+
+## Tabla Resumen de Ejercicios
+
+<div style="margin-top: 15px; text-align: center;">
+<table class="fragment fade-up" data-fragment-index="1" style="font-size: 21px; margin: auto; border-collapse: collapse; width: 92%;">
+<thead>
+<tr style="background-color: #059669; color: white;">
+<th style="padding: 7px; border: 1px solid #ccc;">Ejercicio</th>
+<th style="padding: 7px; border: 1px solid #ccc;">Cultivo</th>
+<th style="padding: 7px; border: 1px solid #ccc;">Tipo de problema</th>
+<th style="padding: 7px; border: 1px solid #ccc;"># Hipótesis</th>
+<th style="padding: 7px; border: 1px solid #ccc;">VPP / P(más probable)</th>
+<th style="padding: 7px; border: 1px solid #ccc;">Clima</th>
+</tr>
+</thead>
+<tbody>
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #f0fdf4;"><td style="padding: 6px; border: 1px solid #ccc;">Café — Roya</td><td style="padding: 6px; border: 1px solid #ccc;">Café</td><td style="padding: 6px; border: 1px solid #ccc;">Binario (diagnóstico)</td><td style="padding: 6px; border: 1px solid #ccc;">2</td><td style="padding: 6px; border: 1px solid #ccc;">60%</td><td style="padding: 6px; border: 1px solid #ccc;">Cálido</td></tr>
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;"><td style="padding: 6px; border: 1px solid #ccc;">Maíz — Hongo</td><td style="padding: 6px; border: 1px solid #ccc;">Maíz</td><td style="padding: 6px; border: 1px solid #ccc;">Binario (VPP/VPN)</td><td style="padding: 6px; border: 1px solid #ccc;">2</td><td style="padding: 6px; border: 1px solid #ccc;">65,3% / 94,0%</td><td style="padding: 6px; border: 1px solid #ccc;">Cálido</td></tr>
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #f0fdf4;"><td style="padding: 6px; border: 1px solid #ccc;">Papa — Origen</td><td style="padding: 6px; border: 1px solid #ccc;">Papa</td><td style="padding: 6px; border: 1px solid #ccc;">Múltiples hipótesis</td><td style="padding: 6px; border: 1px solid #ccc;">3</td><td style="padding: 6px; border: 1px solid #ccc;">54,8% (B₁)</td><td style="padding: 6px; border: 1px solid #ccc;">Frío</td></tr>
+<tr class="fragment fade-up" data-fragment-index="5" style="background-color: white;"><td style="padding: 6px; border: 1px solid #ccc;">Mora — Botrytis</td><td style="padding: 6px; border: 1px solid #ccc;">Mora</td><td style="padding: 6px; border: 1px solid #ccc;">Binario (VPP/VPN)</td><td style="padding: 6px; border: 1px solid #ccc;">2</td><td style="padding: 6px; border: 1px solid #ccc;">66% / 97,8%</td><td style="padding: 6px; border: 1px solid #ccc;">Frío</td></tr>
+<tr class="fragment fade-up" data-fragment-index="6" style="background-color: #f0fdf4;"><td style="padding: 6px; border: 1px solid #ccc;">Trigo — Calidad</td><td style="padding: 6px; border: 1px solid #ccc;">Trigo</td><td style="padding: 6px; border: 1px solid #ccc;">Múltiples hipótesis</td><td style="padding: 6px; border: 1px solid #ccc;">3</td><td style="padding: 6px; border: 1px solid #ccc;">51,2% (V₂)</td><td style="padding: 6px; border: 1px solid #ccc;">Frío</td></tr>
+<tr class="fragment fade-up" data-fragment-index="7" style="background-color: white;"><td style="padding: 6px; border: 1px solid #ccc;">Invernaderos</td><td style="padding: 6px; border: 1px solid #ccc;">Flores</td><td style="padding: 6px; border: 1px solid #ccc;">Binario</td><td style="padding: 6px; border: 1px solid #ccc;">2</td><td style="padding: 6px; border: 1px solid #ccc;">58,8% (I₂)</td><td style="padding: 6px; border: 1px solid #ccc;">Cálido/Frío</td></tr>
+</tbody>
+</table>
+</div>
+
+## Bayes vs Frecuentismo — Diferencias Conceptuales
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 6px solid #3b82f6;">
+<p style="font-size: 24px; font-weight: bold; color: #3b82f6;">Enfoque Frecuentista</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; text-align: justify;">
+La probabilidad es la <strong>frecuencia relativa</strong> de un evento a largo plazo en repeticiones del experimento.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Los parámetros son fijos pero desconocidos — <strong>no tienen distribución de probabilidad</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+El conocimiento previo no entra formalmente en el análisis estadístico.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5" style="border-left: 6px solid #a78bfa;">
+<p style="font-size: 24px; font-weight: bold; color: #a78bfa;">Enfoque Bayesiano</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+La probabilidad representa <strong>grado de creencia</strong> sobre la veracidad de una hipótesis.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+Los parámetros tienen <strong>distribuciones de probabilidad</strong> que se actualizan con los datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+El conocimiento previo se incorpora explícitamente a través de la distribución a priori.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Resumen Visual — Fórmulas y Conceptos Clave
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 6px solid #a78bfa;">
+<p style="font-size: 22px; font-weight: bold; color: #a78bfa;">Teorema de Bayes</p>
+<p style="font-size: 20px;">
+$$P(B_i|A) = \frac{P(A|B_i)P(B_i)}{\sum_j P(A|B_j)P(B_j)}$$
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 20px;">$P(B_i)$ — a priori</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px;">$P(A|B_i)$ — verosimilitud</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px;">$P(B_i|A)$ — a posteriori</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5" style="border-left: 6px solid #3b82f6;">
+<p style="font-size: 22px; font-weight: bold; color: #3b82f6;">Diagnóstico y Valores Predictivos</p>
+<p style="font-size: 19px;">
+$$\text{VPP} = \frac{\text{Sensib} \times P(D)}{\text{Sensib} \times P(D) + (1-\text{Espec}) \times P(D^c)}$$
+$$\text{VPN} = \frac{\text{Espec} \times P(D^c)}{\text{Espec} \times P(D^c) + (1-\text{Sensib}) \times P(D)}$$
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 19px;">VPP y VPN dependen de la prevalencia</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 19px;">Actualización secuencial: posteriori → nueva priori</li>
+</ul>
+</div>
+
+</div>
+
+## El Ciclo Bayesiano — Esquema General
+
+<div style="margin-top: 20px; text-align: center;" class="fragment fade-up" data-fragment-index="1">
+<p style="font-size: 28px; font-weight: bold; color: #1e3a8a;">Ciclo de aprendizaje bayesiano</p>
+<p style="font-size: 26px; margin-top: 20px;">
+$\underbrace{P(B_i)}_{\text{Conocimiento previo}} \xrightarrow{\text{Nueva evidencia } A} \underbrace{P(B_i \mid A)}_{\text{Conocimiento actualizado}} \xrightarrow{\text{Nueva evidencia } A'} \underbrace{P(B_i \mid A, A')}_{\text{Conocimiento refinado}} \xrightarrow{\cdots}$
+</p>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong style="color: #59A14F;">Inicio:</strong> definir las hipótesis y asignar probabilidades a priori basadas en conocimiento previo o datos históricos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong style="color: #F28E2B;">Observación:</strong> recopilar datos o resultados de pruebas y calcular las verosimilitudes.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong style="color: #B07AA1;">Actualización:</strong> aplicar el Teorema de Bayes para obtener la distribución a posteriori.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<strong style="color: #76B7B2;">Decisión:</strong> usar la distribución a posteriori para tomar decisiones agronómicas informadas y planificar la siguiente observación.
+</li>
+</ul>
+
+## Conexión con Distribuciones de Probabilidad
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+<strong>Próximas clases:</strong> Las distribuciones de probabilidad (Bernoulli, Binomial, Poisson, Normal) proporcionan modelos para calcular las verosimilitudes $P(A \mid B_i)$ de forma sistemática.
+</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong style="color: #59A14F;">Distribución Binomial:</strong> número de plantas enfermas en una muestra, dado que cada planta tiene probabilidad $p$ de estar enferma.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong style="color: #F28E2B;">Distribución Poisson:</strong> número de insectos plaga por unidad de área en un cultivo.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong style="color: #B07AA1;">Distribución Normal:</strong> medidas continuas como rendimiento por hectárea — permite calcular verosimilitudes para hipótesis sobre la media del cultivo.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+En cada caso, el Teorema de Bayes sigue siendo el <strong>puente entre los datos y las conclusiones sobre las hipótesis</strong>.
+</li>
+</ul>
