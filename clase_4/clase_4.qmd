@@ -1,0 +1,1511 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format: 
+  revealjs:
+    #incremental: true
+    logo: images/logo_unal_3.png
+    #footer: "`emitanaka.org/slides/toronto2022`"
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, assets/monash.scss ]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [assets/syntax-highlight.css, assets/custom.css, assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        // aplicar inmediatamente al cargar
+        updateLogoVisibility();
+        // y cada vez que se cambie de slide
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+
+---
+
+## Clase 4 {.center .middle}
+
+##
+
+<section>
+
+<h2>Medidas de dispersión</h2>
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
+Las medidas de dispersión son herramientas estadísticas que permiten cuantificar el grado de variabilidad o dispersión de un conjunto de datos con respecto a un valor central, generalmente la media.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+Estas medidas permiten analizar qué tan homogéneos o heterogéneos son los datos, proporcionando información complementaria que no puede observarse únicamente a través de las medidas de tendencia central.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
+Son fundamentales en estadística descriptiva, ya que permiten comprender la estructura interna de los datos y evaluar su comportamiento en diferentes contextos.
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+¿Para qué sirven?
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
+Determinar el nivel de variabilidad de los datos.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
+Comparar la dispersión entre diferentes conjuntos de datos.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
+Identificar la presencia de valores atípicos.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
+Apoyar procesos de análisis, inferencia y toma de decisiones.
+</li>
+
+</ul>
+</div>
+
+</div>
+
+</section>
+
+
+## Rango
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+El rango es la medida de dispersión más sencilla y se define como la diferencia entre el valor máximo y el valor mínimo de un conjunto de datos.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+Permite identificar la amplitud total de los datos, aunque no proporciona información sobre la distribución interna de los valores.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
+Ejemplo 
+</li>
+
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
+Datos: 5, 8, 10, 12, 13, 9, 15
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px; text-align: justify;">
+$R = 15 - 5 = 10$
+</li>
+
+</ul>
+</div>
+
+</div>
+
+## Varianza
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
+La varianza es una medida de dispersión que cuantifica el promedio de los cuadrados de las diferencias entre cada dato y la media del conjunto.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+Esta medida permite evaluar qué tan alejados se encuentran los datos respecto al valor promedio, considerando todos los valores del conjunto.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+El uso del cuadrado evita que las diferencias negativas y positivas se cancelen entre sí.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+Tipos de varianza (datos sin agrupar):
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
+Varianza poblacional $\sigma^2$
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
+Fórmula:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;list-style: none;">
+$\sigma^2 = \frac{\sum_{i=1}^{N}(x_i - \mu)^2}{N}=\frac{(x_1 - \mu)^2}{N}+\frac{(x_2 - \mu)^2}{N}+...+\frac{(x_N - \mu)^2}{N}$
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
+Donde:
+</li>
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
+$\mu$: es la media poblacional y $N$: es el tamaño de la población.
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
+Varianza muestral $s^2$
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
+Fórmula:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px; text-align: justify;list-style: none;">
+
+ $s^2 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}=\frac{(x_1 - \bar{x})^2}{n-1}+\frac{(x_2 - \bar{x})^2}{n-1}+...+\frac{(x_n - \bar{x})^2}{n-1}$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 25px; text-align: justify;">
+Donde:
+</li>
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 25px; text-align: justify;">
+$\bar{x}$: es la media muestral y $n$: es el tamaño de la muestra.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 25px; text-align: justify;">
+La corrección $(n - 1)$  es un ajuste que mejora la estimación de la población.
+</li>
+
+
+</ul>
+</div>
+
+</div>
+
+## Varianza para datos agrupados
+
+<div class="twocol">
+
+<!-- DEFINICION -->
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul style="list-style: none; padding-left: 0;">
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: left;">
+En datos agrupados, la varianza se calcula utilizando las marcas de clase o valores de $x_i$ agrupados y sus respectivas frecuencias.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: left;">
+La dispersión se mide considerando la distancia de cada marca de clase respecto a la media, ponderada por su frecuencia.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: left;">
+El total de datos se obtiene como la suma de las frecuencias.
+</li>
+
+</ul>
+</div>
+
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;list-style: none;">
+Fórmulas:
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;list-style: none;">
+$\sigma^2 = \frac{\sum_{i=1}^{k}f_i(x_i - \mu)^2}{N}$ Cuando es poblacional
+</li>
+
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;list-style: none;">
+$s^2 = \frac{\sum_{i=1}^{k} f_i(x_i- \bar{x})^2}{n - 1}$ Cuando es muestral
+</li>
+
+<p class="fragment" data-fragment-index="9" style="font-size: 24px; text-align: left;">
+Donde:
+</p>
+
+<ul style="list-style: none; padding-left: 0;">
+
+<li class="fragment" data-fragment-index="10" style="font-size: 24px; text-align: left;">
+$f_i$: frecuencia en el intervalo o el valor de $x_i$.
+</li>
+
+<li class="fragment" data-fragment-index="11" style="font-size: 24px; text-align: left;">
+$x_i$: marca de clase o valor de la categoría.
+</li>
+<li class="fragment" data-fragment-index="12" style="font-size: 24px; text-align: left;">
+$k$: número de clases o intervalos.
+</li>
+
+<li class="fragment" data-fragment-index="13" style="font-size: 24px; text-align: left;">
+$N=\sum_{i=1}^{k} f_i$: total de datos poblacionales.  
+$n=\sum_{i=1}^{k} f_i$: total de datos muestrales.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<!-- ACLARACION -->
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="14" style="margin-top: 20px;">
+
+<p class="fragment" data-fragment-index="15" style="font-size: 26px; text-align: left;">
+<b>Aclaración importante:</b>
+</p>
+
+<p class="fragment" data-fragment-index="16" style="font-size: 25px; text-align: left;">
+El uso de $( n - 1 )$ no depende de si los datos están agrupados o no, sino de si se está trabajando con una muestra.
+</p>
+
+<p class="fragment" data-fragment-index="17" style="font-size: 25px; text-align: left;">
+Cuando el tamaño de la muestra es grande, la diferencia entre usar $n$ y $( n - 1 )$ es mínima, pero teóricamente se debe usar $( n - 1 )$.
+</p>
+
+</div>
+
+## Desviación Estándar
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; text-align: justify;">
+La desviación estándar es una medida de dispersión que representa la raíz cuadrada de la varianza y cuantifica el grado de alejamiento promedio de los datos respecto a la media.
+</li>
+
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Esta medida permite evaluar cómo se distribuyen los datos alrededor del valor central, indicando si estos se concentran cerca de la media o si presentan una mayor dispersión.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+A diferencia de la varianza, la desviación estándar se expresa en las mismas unidades que los datos originales, lo que facilita su interpretación en contextos reales.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+Desde un punto de vista práctico, indica cuánto se desvían en promedio los valores individuales respecto a la media del conjunto.
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+Al aplicar la raíz cuadrada, se elimina el efecto de las unidades al cuadrado, permitiendo una interpretación directa.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+Es ampliamente utilizada en análisis estadístico, control de calidad, finanzas, ciencias sociales, ciencias naturales y agronomía entre otros.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+Fórmulas:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 22px; text-align: justify;list-style: none;">
+$\sigma=\sqrt{\sigma^2}$, poblacional.
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 22px; text-align: justify;list-style: none;">
+$s=\sqrt{s^2}$, muestral
+</li>
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 22px; text-align: justify;list-style: none;">
+**Si la desviación es pequeña:**
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 22px; text-align: justify;">
+Los datos están cerca de la media.  
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 22px; text-align: justify;">
+Hay poca variabilidad.  
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 22px; text-align: justify;">
+El fenómeno es más homogéneo.  
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 22px; text-align: justify;">
+**Si la desviación es grande:**
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 22px; text-align: justify;">
+Los datos están muy dispersos.
+</li>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 22px; text-align: justify;">
+Hay alta variabilidad.
+</li>
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 22px; text-align: justify;">
+El fenómeno es menos uniforme.
+</li>
+</li>
+</ul>
+</div>
+</div>
+
+## Ejemplos
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; text-align: justify;">
+Ejemplo 1 (datos poblacionales no agrupados)
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Se tienen los siguientes datos: 10, 12, 13, 16, 9, 8, 12, 8, 6, 16, 7, 9.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+partiendo de que son de una población, hallar el rango, varianza y desviación estándar.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+Solución.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+$Rango: Máximo - Mínimo = 16-6=10$
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+Para hallar la varianza se debe primero hallar la media aritmética, en este caso $N=12$.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+$Media: \mu= \frac{\sum_{i=1}^{12}x_i}{12}=\frac{10+12+13+......+7+9}{12}=\frac{126}{12}=10,5$
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+Con el valor de la media $\mu=10,5$ se procede a hallar la varianza.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
+<ul>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+$Varianza: \sigma^2 = \frac{\sum_{i=1}^{12}(x_i - 10,5)^2}{12}
+\\=\frac{( 10 - 10,5)^2}{12}+\frac{(12 - 10,5)^2}{12}+...+\frac{( 9- 10,5)^2}{12}
+\\=\frac{121}{12}=10,083$
+</li>
+
+
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 22px; text-align: justify;">
+Ya conociendo el valor de la varianza se procede a hallar la desviación estándar.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 22px; text-align: justify;">
+Se tiene que $\sigma^2=10,083$
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 22px; text-align: justify;">
+Por lo tanto la desviación estándar es:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 22px; text-align: justify;list-style: none;">
+$\sigma=\sqrt{\sigma^2}=\sqrt{10,083}=3,175$
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 22px; text-align: justify;list-style: none;">
+Los datos se desvían en promedio de su media 3,175 unidades.
+</li>
+</ul>
+</div>
+</div>
+
+## 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
+Ejemplo 2 (datos muestrales no agrupados)
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+Se tomó una muestra de plantas de un cultivo para medir su altura (cm).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+Datos: 12, 15, 14, 10, 9, 13, 11
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
+Hallar la varianza y la desviación estándar muestrales
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+Solución
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
+Para hallar la varianza se debe primero hallar la media aritmética, en este caso $n=7$.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
+$Media: \bar{x}= \frac{\sum_{i=1}^{7}x_i}{7}=\frac{12+15+14+10+9+13+11}{7}=\frac{84}{7}=12$
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
+Con el valor de la media $\bar{x}=12$ se procede a hallar la varianza.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
+<ul>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
+$Varianza: s^2 = \frac{\sum_{i=1}^{7}(x_i - 12)^2}{(7-1)}
+\\=\frac{( 12 - 12)^2}{6}+\frac{(15 - 12)^2}{6}+...+\frac{( 11- 12)^2}{6}
+\\=\frac{28}{6}=4,67$
+</li>
+
+
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
+Ya conociendo el valor de la varianza se procede a hallar la desviación estándar.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
+Se tiene que $s^2=4,67$
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px; text-align: justify;">
+Por lo tanto la desviación estándar es:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 25px; text-align: justify;list-style: none;">
+$s=\sqrt{s^2}=\sqrt{4,67}=2,16$
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 25px; text-align: justify;list-style: none;">
+Los datos se desvían en promedio de su media 2,16 unidades.
+</li>
+</ul>
+</div>
+</div>
+
+## 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; text-align: justify;">
+Ejemplo 3 (datos agrupados)
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Se registraron las edades de personas en años en una comunidad rural.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+Los datos resultados fueron recopilados en la siguiente tabla:
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;justify;list-style: none;">
+<table style="width: 100%; border-collapse: collapse; font-size: 22px; text-align: center;">
+
+<thead>
+<tr style="background-color: #2c3e50; color: white;">
+<th>Intervalo</th>
+<th>$x_i$</th>
+<th>$f_i$</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr><td>10–19</td><td>14.5</td><td>5</td></tr>
+<tr style="background-color: #ecf0f1;"><td>19–28</td><td>23.5</td><td>11</td></tr>
+<tr><td>28–37</td><td>32.5</td><td>8</td></tr>
+<tr style="background-color: #ecf0f1;"><td>37–46</td><td>41.5</td><td>5</td></tr>
+<tr><td>46–55</td><td>50.5</td><td>8</td></tr>
+<tr style="background-color: #ecf0f1;"><td>55–64</td><td>59.5</td><td>6</td></tr>
+<tr><td>64–73</td><td>68.5</td><td>7</td></tr>
+
+</tbody>
+
+<tfoot>
+<tr style="background-color: #34495e; color: white;">
+<td>Total</td>
+<td>-</td>
+<td>50</td>
+</tr>
+</tfoot>
+
+</table>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+Con estos datos hallar la varianza y la desviación estándar, asumiendo datos muestrales y poblacionales.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
+<ul>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+Solución
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 22px; text-align: justify;">
+Primero que todo se debe completar la tabla de frecuencias para calcular los estadísticos que se requieren.
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 22px; text-align: justify;">
+¿Qué necesitamos para calcular?
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 22px; text-align: justify;">
+Para la media: 
+</li>
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 22px; text-align: justify;">
+Se requiere la columna del producto entre las frecuencias absolutas y marcas de clase $f_i\cdot x_i$ 
+</li>
+
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 22px; text-align: justify;">
+Para la varianza: Se requieren las siguientes columnas:
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 22px; text-align: justify;">
+Diferencia de cada marca de clase con la media: $(x_i - \bar{x})$
+</li>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 22px; text-align: justify;">
+Diferencia de cada marca de clase con la media al cuadrado: $(x_i - \bar{x})^2$
+</li>
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 22px; text-align: justify;">
+Producto entre cada frecuencia absoluta y la diferencia entre cada marca de clase con la media al cuadrado: $f_i\cdot (x_i - \bar{x})^2$
+</li>
+<li class="fragment fade-in" data-fragment-index="20" style="font-size: 22px; text-align: justify;">
+Estas columnas permiten transformar los datos agrupados en cálculos numéricos.
+</li>
+<li class="fragment fade-in" data-fragment-index="21" style="font-size: 22px; text-align: justify;">
+Sin ellas, no es posible calcular correctamente la media ni la varianza.
+</li>
+</ul>
+</div>
+</div>
+
+## 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 20px; text-align: justify;">
+Tabla de frecuencias completa
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px; text-align: justify;">
+<table style="width: 90%; margin: auto; font-size: 18px;">
+
+<thead>
+<tr style="background-color: #2c3e50; color: white;">
+<th>Intervalo</th>
+<th>$x_i$</th>
+<th>$f_i$</th>
+<th>$(f_i\cdot x_i)$</th>
+<th>$(x_i - \bar{x})$</th>
+<th>$(x_i - \bar{x})^2$</th>
+<th>$f_i\cdot (x_i - \bar{x})^2$</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>10–19</td><td>14,5</td><td>5</td><td>72,5</td><td>-26,28</td><td>690,64</td><td>3.453,20</td>
+</tr>
+
+<tr style="background-color: #ecf0f1;">
+<td>19–28</td><td>23,5</td><td>11</td><td>258,5</td><td>-17,28</td><td>298,60</td><td>3.284,60</td>
+</tr>
+
+<tr>
+<td>28–37</td><td>32,5</td><td>8</td><td>260,0</td><td>-8,28</td><td>68,57</td><td>548,56</td>
+</tr>
+
+<tr style="background-color: #ecf0f1;">
+<td>37–46</td><td>41,5</td><td>5</td><td>207,5</td><td>0,72</td><td>0,52</td><td>2,60</td>
+</tr>
+
+<tr>
+<td>46–55</td><td>50,5</td><td>8</td><td>404,0</td><td>9,72</td><td>94,53</td><td>756,24</td>
+</tr>
+
+<tr style="background-color: #ecf0f1;">
+<td>55–64</td><td>59,5</td><td>6</td><td>357,0</td><td>18,72</td><td>350,44</td><td>2.102,64</td>
+</tr>
+
+<tr>
+<td>64–73</td><td>68,5</td><td>7</td><td>479,5</td><td>27,72</td><td>768,40</td><td>5.378,80</td>
+</tr>
+
+</tbody>
+
+<tfoot>
+<tr style="background-color: #34495e; color: white; font-weight: bold;">
+<td>Total</td>
+<td>-</td>
+<td>50</td>
+<td>2.039</td>
+<td>-</td>
+<td>-</td>
+<td>15.526,64</td>
+</tr>
+</tfoot>
+
+</table>
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
+Con la tabla de frecuencias se procede a hacer los cálculos.
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
+Media: $\bar{x}= \frac{\sum_{i=1}^{7}f_ix_i}{50}=\frac{2.039}{50}=40,78$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
+El promedio de edad de la comunidad es aproximadamente 41 años.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
+Varianza y desviación estándar muestral
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
+Para la varianza muestral aplicamos la siguiente fórmula:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 20px; text-align: justify;list-style: none;">
+$s^2 = \frac{\sum_{i=1}^{k} f_i(x_i- \bar{x})^2}{n - 1}$
+</li>
+
+
+
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 20px; text-align: justify;">
+Reemplazando con los valores de la tabla se tiene que:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 20px; text-align: justify;list-style: none;">
+$s^2 = \frac{\sum_{i=1}^{7} f_i(x_i- \bar{x})^2}{(50 - 1)}=\frac{15.526,64}{49}=316,87$
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 20px; text-align: justify;">
+Con la varianza se procede a hallar la desviación estándar.
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 20px; text-align: justify;list-style: none;">
+$s=\sqrt{s^2}=\sqrt{316,87}=17,8$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 20px; text-align: justify;">
+Varianza Muestral: $s^2=316,87$ 
+</li>
+
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 20px; text-align: justify;">
+Desviación estándar muestral: $s=17,8$
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 20px; text-align: justify;">
+Si los datos fueran poblacionales.
+</li>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 20px; text-align: justify;">
+Varianza Poblacional: se calcula con la siguiente fórmula:
+</li>
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 20px; text-align: justify;list-style: none;">
+$\sigma^2 = \frac{\sum_{i=1}^{k} f_i(x_i- \bar{x})^2}{N}$
+</li>
+<li class="fragment fade-in" data-fragment-index="20" style="font-size: 20px; text-align: justify;">
+Reemplazando con los datos de la tabla:
+</li>
+<li class="fragment fade-in" data-fragment-index="21" style="font-size: 20px; text-align: justify;list-style: none;">
+$\sigma^2 = \frac{\sum_{i=1}^{7} f_i(x_i- \bar{x})^2}{50}=\frac{15.526,64}{50}=310,533$
+</li>
+<li class="fragment fade-in" data-fragment-index="22" style="font-size: 20px; text-align: justify;">
+Con la varianza se calcula la desviación estándar
+</li>
+<li class="fragment fade-in" data-fragment-index="22" style="font-size: 20px; text-align: justify;list-style: none;">
+$\sigma=\sqrt{\sigma^2}=\sqrt{310,533}=17,62$
+</li>
+<li class="fragment fade-in" data-fragment-index="23" style="font-size: 20px; text-align: justify;">
+Varianza poblacional: $\sigma^2=310,533$ 
+</li>
+
+<li class="fragment fade-in" data-fragment-index="24" style="font-size: 20px; text-align: justify;">
+Desviación estándar poblacional: $\sigma=17,62$
+</li>
+</ul>
+</div>
+
+</div>
+
+## Coeficiente de variación
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El coeficiente de variación es una medida relativa de dispersión que expresa la desviación estándar en relación con la media.
+</li>
+
+
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Permite comparar la variabilidad entre diferentes conjuntos de datos, incluso cuando presentan distintas unidades o escalas.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Se expresa generalmente en porcentaje, lo que facilita su interpretación.
+</li>
+
+</ul>
+
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Se expresa generalmente en porcentaje, lo que facilita su interpretación.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Se calcula como:
+</li>
+
+<p class="fragment" data-fragment-index="8" style="font-size: 28px; text-align: center;">
+Para la poblacion: $CV = \frac{\sigma}{\left| \mu \right|} \times 100\%$ 
+</p>
+
+<p class="fragment" data-fragment-index="9" style="font-size: 28px; text-align: center;">
+Para la muestra: $CV = \frac{s}{\left| \bar{x} \right|} \times 100\%$
+</p>
+
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
+El coeficiente de variación es útil para comparar la dispersión de diferentes conjuntos de datos que pueden
+tener diferentes unidades o escalas.
+</li>
+
+</ul>
+</div>
+</div>
+
+## Interpretación del coeficiente de variación
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
+CV bajo → alta homogeneidad (datos consistentes)
+</li>
+
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+CV alto → alta variabilidad (datos dispersos)
+</li>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+Permite evaluar la estabilidad de un proceso o fenómeno.
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
+Una alta variabilidad hace que los sean más dispersos. Esto significa que los datos están más separados entre sí, lo que puede indicar que no hay una tendencia clara o que los datos pueden ser más difíciles de predecir, mientras que una menor variabilidad hace que los datos sean mas confiables y menos complejos para predecir. 
+</li>
+
+</ul>
+
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<ul style="list-style: none; padding-left: 0; font-size: 28px; text-align: left;">
+
+<li class="fragment" data-fragment-index="6"><b>Valores de referencia:</b></li>
+
+<li class="fragment" data-fragment-index="7">CV &lt; 10% → Muy homogéneo</li>
+
+<li class="fragment" data-fragment-index="8">10% – 20% → Homogeneidad moderada</li>
+
+<li class="fragment" data-fragment-index="9">20% – 30% → Variabilidad considerable</li>
+
+<li class="fragment" data-fragment-index="10">CV &gt; 30% → Alta variabilidad</li>
+
+</ul>
+
+</ul>
+</div>
+</div>
+
+## Ejemplos
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; text-align: justify;">
+Ejemplo 1 (CV para un solo conjunto de datos muestrales)
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Se analiza la producción de maíz en una parcela.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+Datos ya calculados:
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+Media: $\bar{x} = 10,8 kg$
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+Desviación estándar: $s = 1,40 kg$
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+Halle el CV e interprete.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+$CV=\frac{s}{|\bar{x}|}\cdot 100\%=\frac{1,40}{|10,8|}\cdot 100\%=\frac{1,40}{10,8}\cdot 100\%=12,96\%$
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+$CV=12,96\%$, esto significa que el coeficiente de variación indica una homogeneidad moderada, lo que sugiere que el cultivo presenta un comportamiento uniforme.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
+<ul>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+Ejemplo 2 (CV para un solo conjunto de datos poblacionales)
+</li>
+
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 22px; text-align: justify;">
+Se registran las calificaciones finales de todos los estudiantes de un curso (escala 0–100).
+</li>
+
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 22px; text-align: justify;">
+Datos ya calculados:
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 22px; text-align: justify;">
+Media: $\mu = 70$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 22px; text-align: justify;list-style: none;">
+Desviación: $\sigma= 13,1$
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 22px; text-align: justify;list-style: none;">
+Halle el CV e interprete.
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 22px; text-align: justify;list-style: none;">
+$CV=\frac{\sigma}{|\mu|}\cdot 100\%=\frac{13,1}{|70|}\cdot 100\%=\frac{13,1}{70}\cdot 100\%=18,71\%$
+</li>
+<li class="fragment fade-up" data-fragment-index="18" style="font-size: 22px; text-align: justify;">
+$CV=18,71\%$, esto significa que el coeficiente de variación indica una homogeneidad moderada, el desempeño de todo el curso es estable.
+</li>
+
+</ul>
+</div>
+</div>
+
+## 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; text-align: justify;">
+Ejemplo 3 (CV para comparación de muestras)
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Se comparan los tiempos de entrega (minutos) de dos empresas de mensajería, de cada empresa se tomó una muestra de datos.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+Determinar cual de las dos empresas es mejor usando el coeficiente de variación.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+Empresa A
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+Datos:
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+Media: $\bar{x}_A=20\,minutos$
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+Desviación Estandar: $s_A=1,58$
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+Empresa B
+</li>
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+Datos:
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+Media: $\bar{x}_B=38\,minutos$
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px; text-align: justify;">
+Desviación Estandar: $s_B=10,37$
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="13">
+<ul>
+<li class="fragment fade-up" data-fragment-index="14" style="font-size: 22px; text-align: justify;">
+Se procede a hallar los dos coeficientes de variación, no es necesario colocar valor absoluto ya que ambas medias son positivas.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 22px; text-align: justify;">
+$CV_A=\frac{s_A}{\bar{x}_A}\cdot 100\%=\frac{1,58}{20}\cdot 100\%=7,9\%$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 22px; text-align: justify;">
+$CV_B=\frac{s_B}{\bar{x}_B}\cdot 100\%=\frac{10,37}{38}\cdot 100\%=27,29\%$
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 22px; text-align: justify;">
+Comparando los dos CV, se tiene que:
+</li>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 22px; text-align: justify;">
+La empresa A es preferible porque no solo presenta menor tiempo promedio de entrega, sino también menor variabilidad, lo que garantiza un servicio más rápido y consistente.
+</li>
+
+</ul>
+</div>
+</div>
+
+## Medidas de posición
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Las medidas de posición son estadísticos que permiten dividir un conjunto de datos ordenados en partes iguales.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Indican la ubicación relativa de los datos dentro de la distribución.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Permiten analizar cómo se distribuyen los valores en diferentes niveles.
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px; text-align: justify;list-style: none;">
+Se basan en:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Ordenamiento de los datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+División en partes iguales.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+Interpretación porcentual.
+</li>
+</ul>
+
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
+
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
+¿Para qué sirven?
+</li>
+
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px; text-align: justify;">
+Identificar la posición relativa de un dato.
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px; text-align: justify;">
+Analizar la distribución de los datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px; text-align: justify;">
+Comparar conjuntos de datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px; text-align: justify;">
+Detectar concentración y dispersión.
+</li>
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px; text-align: justify;">
+Apoyar la toma de decisiones.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 28px; text-align: justify;list-style: none;">
+Las medidas de posición mas conocidas son:
+</li>
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 28px; text-align: justify;list-style: none;">
+1. Cuartiles.
+</li>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 28px; text-align: justify;list-style: none;">
+2. Deciles.
+</li>
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 28px; text-align: justify;list-style: none;">
+3. Percentiles.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+## 1. Cuartiles
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Los cuartiles son medidas de posición que dividen un conjunto de datos ordenados en cuatro partes iguales.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Cada cuartil representa el 25% de la distribución total, permitiendo analizar cómo se concentran los datos en distintos niveles.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Se utilizan para describir la distribución, identificar la dispersión de los datos y detectar posibles asimetrías.
+</li>
+
+</ul>
+
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+Orden de los cuartiles:
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+<b>Q1 (primer cuartil):</b> deja por debajo el 25% de los datos.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+<b>Q1 (primer cuartil):</b> deja por debajo el 25% de los datos.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+<b>Q2 (segundo cuartil):</b> corresponde a la mediana (50%).
+</li>
+
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
+<b>Q3 (tercer cuartil):</b> deja por debajo el 75% de los datos.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
+Son fundamentales en la construcción del gráfico de caja y bigotes.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+## Fórmulas
+
+<div class="twocol">
+
+<div class="card fragment fade-up" data-fragment-index="1">
+
+<ul style="list-style: none; padding-left: 0;">
+
+<li class="fragment" data-fragment-index="2" style="font-size: 25px; text-align: left;">
+Cuartiles (datos no agrupados)
+</li>
+
+<li class="fragment" data-fragment-index="2" style="font-size: 25px; text-align: left;">
+Primero se deben ordenar los datos de menor a mayor.
+</li>
+
+<li class="fragment" data-fragment-index="3" style="font-size: 25px; text-align: left;">
+Luego se calcula la posición del cuartil.
+</li>
+
+<li class="fragment" data-fragment-index="4" style="font-size: 25px; text-align: left;">
+Se identifica el valor correspondiente.
+</li>
+<p class="fragment" data-fragment-index="5" style="text-align: center; font-size: 25px;">
+$Q_k = \frac{k(n+1)}{4}$
+</p>
+
+<li class="fragment" data-fragment-index="7" style="font-size: 25px;">
+$k = 1,2,3$
+</li>
+
+<li class="fragment" data-fragment-index="8" style="font-size: 25px;">
+$n$: número de datos
+</li>
+
+<li class="fragment" data-fragment-index="9" style="font-size: 25px;">
+Si la posición no es entera, se interpola.
+</li>
+
+</ul>
+
+</div>
+
+<div class="card fragment fade-up" data-fragment-index="10">
+<ul style="list-style: none; padding-left: 0;">
+<li class="fragment" data-fragment-index="11" style="font-size: 20px; text-align: left;">
+Cuartiles (datos agrupados)
+</li>
+<li class="fragment" data-fragment-index="12" style="font-size: 20px; text-align: left;">
+Primero se calcula el valor $\frac{kN}{4}$ y se busca en las frecuencias acumuladas de la tabla.
+</li>
+<li class="fragment" data-fragment-index="13" style="font-size: 20px; text-align: left;">
+Donde: $N$= numero de datos y $k=1, 2, 3.$ 
+</li>
+<li class="fragment" data-fragment-index="14" style="font-size: 20px; text-align: left;">
+Si $k=1$ entonces se busca el cuartil 1: $Q_1$.
+</li>
+<li class="fragment" data-fragment-index="15" style="font-size: 20px; text-align: left;">
+Si $k=2$ entonces se busca el cuartil 2: $Q_2$.
+</li>
+<li class="fragment" data-fragment-index="16" style="font-size: 20px; text-align: left;">
+Si $k=3$ entonces se busca el cuartil 3: $Q_3$.
+</li>
+
+<li class="fragment" data-fragment-index="17" style="font-size: 20px; text-align: left;">
+Fórmula:
+</li>
+
+<li class="fragment" data-fragment-index="18" style="font-size: 20px; text-align: left;">
+$Q_k = L_i + \left(\frac{\frac{kN}{4} - F_{i-1}}{f_i}\right)A$
+</li>
+
+<li class="fragment" data-fragment-index="19" style="font-size: 20px; text-align: left;">
+Donde:
+</li>
+
+<li class="fragment" data-fragment-index="20" style="font-size: 20px; text-align: left;">
+$L_i$: límite inferior de la clase del cuartil.
+</li>
+
+<li class="fragment" data-fragment-index="21" style="font-size: 20px; text-align: left;">
+$N$: total de datos.
+</li>
+
+<li class="fragment" data-fragment-index="22" style="font-size: 20px; text-align: left;">
+$F_{i-1}$: frecuencia acumulada anterior.
+</li>
+
+<li class="fragment" data-fragment-index="23" style="font-size: 20px; text-align: left;">
+$f_i$: frecuencia de la clase.
+</li>
+
+<li class="fragment" data-fragment-index="24" style="font-size: 20px; text-align: left;">
+$A$: amplitud del intervalo.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+## Ejemplos
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 20px; text-align: justify;">
+Ejemplo 1 (datos sin agrupar)
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px; text-align: justify;">
+Se tienen los siguientes datos:
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
+ 6, 10, 12, 3, 5, 14, 15, 17, 18, 7, 8, 9, 20, 21, 22
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
+Hallar los cuartiles del anterior conjunto de datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
+Solución
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
+Primero se ordenan los datos en orden ascendente:
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
+3, 5, 6, 7, 8, 9, 10, 12, 14, 15, 17, 18, 20, 21, 22
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px; text-align: justify;">
+Formula:
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px; text-align: justify;">
+$Q_k = \frac{k(n+1)}{4}$
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px; text-align: justify;">
+Cuartil 1
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px; text-align: justify;">
+Para el cuartil 1 se tiene que $n=15$ y $k=1$ , reemplazando se tiene que:
+</li>
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 20px; text-align: justify;">
+$Q_1 = \frac{1\cdot (15+1)}{4}=\frac{1\cdot (16)}{4}=\frac{16}{4}=4$
+</li>
+<li class="fragment fade-up" data-fragment-index="14" style="font-size: 20px; text-align: justify;">
+Con $Q_1=4$ se busca el valor correspondiente a la posición 4 en los datos ordenados.
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="15">
+<ul>
+
+
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 20px; text-align: justify;">
+El valor que corresponde a esa posición es: $x_4 = 7$ y por lo tanto el $Q_1=7$.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 20px; text-align: justify;">
+Cuartil 2 (mediana)
+</li>
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 20px; text-align: justify;">
+$n=15$ y $k=2$ , Reemplazando:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 20px; text-align: justify;">
+$Q_2 = \frac{2\cdot (15+1)}{4}=\frac{2\cdot (16)}{4}=\frac{32}{4}=8$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="20" style="font-size: 20px; text-align: justify;">
+$Q_2=8$, el dato correspondiente a la posición 8 es: $x_8=12$ y por lo tanto el $Q_2=12$.
+</li>
+<li class="fragment fade-in" data-fragment-index="21" style="font-size: 20px; text-align: justify;">
+Cuartil 3
+</li>
+<li class="fragment fade-in" data-fragment-index="22" style="font-size: 20px; text-align: justify;">
+$n=15$ y $k=3$ , Reemplazando:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="23" style="font-size: 20px; text-align: justify;">
+$Q_3 = \frac{3\cdot (15+1)}{4}=\frac{3\cdot (16)}{4}=\frac{48}{4}=12$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="24" style="font-size: 20px; text-align: justify;">
+$Q_3=12$, el dato correspondiente a la posición 12 es: $x_{12}=18$ y por lo tanto el $Q_3=18$.
+</li>
+<li class="fragment fade-in" data-fragment-index="24" style="font-size: 20px; text-align: justify;">
+Interpretación:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="25" style="font-size: 20px; text-align: justify;">
+El 25% de los datos está por debajo de 7
+</li>
+
+<li class="fragment fade-in" data-fragment-index="26" style="font-size: 20px; text-align: justify;">
+El 50% está por debajo de 12
+</li>
+
+<li class="fragment fade-in" data-fragment-index="27" style="font-size: 20px; text-align: justify;">
+El 75% está por debajo de 18
+</li>
+
+</ul>
+</div>
+</div>
+
+## 
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; text-align: justify;">
+Ejemplo 2 (datos agrupados)
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+Se tiene la siguiente tabla de frecuencias:
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+<table style="width:100%; font-size:23px; text-align:center; border-collapse: collapse;" border="1">
+<tr>
+<th>Intervalo</th>
+<th>fi</th>
+<th>Fi</th>
+</tr>
+
+<tr><td>0 - 10</td><td>6</td><td>6</td></tr>
+<tr><td>10 - 20</td><td>10</td><td>16</td></tr>
+<tr><td>20 - 30</td><td>14</td><td>30</td></tr>
+<tr><td>30 - 40</td><td>12</td><td>42</td></tr>
+<tr><td>40 - 50</td><td>8</td><td>50</td></tr>
+
+<tr style="font-weight: bold; background-color: #f2f2f2;">
+<td>Total</td>
+<td>50</td>
+<td>50</td>
+</tr>
+
+</table>
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
+Hallar los cuartiles de la anterior tabla de frecuencias.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
+Solución
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
+Para una tabla de frecuencias se utiliza la siguiente fórmula:
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
+$Q_k = L_i + \left(\frac{\frac{kN}{4} - F_{i-1}}{f_i}\right)A$
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px; text-align: justify;">
+Para hallar el cuartil 1, $k=1$, $N=50$
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px; text-align: justify;">
+Entonces: $\frac{kN}{4}=\frac{1\cdot 50}{4}=\frac{50}{4}=12,5$
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px; text-align: justify;">
+Se busca el valor $12,5$ en las frecuencias acumuladas.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px; text-align: justify;">
+La frecuencia acumulada donde se encuentra $12,5$ es en $16$ correspondiente al intervalo [10 - 20]
+</li>
+
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="13">
+<ul>
+
+
+<li class="fragment fade-in" data-fragment-index="14" style="font-size: 22px; text-align: justify;">
+Entonces los valores que se necesitan para calcular el cuartil 1 son:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="15" style="font-size: 22px; text-align: justify;">
+$L_i=10$, $\frac{kN}{4}=12,5$, $F_{i-1}=6$, $f_i=10$ y $A=10$
+</li>
+<li class="fragment fade-in" data-fragment-index="16" style="font-size: 22px; text-align: justify;">
+Reemplazando:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="17" style="font-size: 22px; text-align: justify;">
+$Q_1 = 10 + \left(\frac{12,5 - 6}{10}\right)10=16,5$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="18" style="font-size: 22px; text-align: justify;">
+Cuartil 2 (mediana)
+</li>
+<li class="fragment fade-in" data-fragment-index="19" style="font-size: 22px; text-align: justify;">
+Para hallar el cuartil 2, $k=2$, $N=50$. 
+</li>
+<li class="fragment fade-in" data-fragment-index="20" style="font-size: 22px; text-align: justify;">
+Entonces $\frac{kN}{4}=\frac{2\cdot 50}{4}=\frac{100}{4}=25$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="21" style="font-size: 22px; text-align: justify;">
+Este valor se encuentra en la Frecuencia acumulada 30 correspondiente al intervalo [20 - 30]
+</li>
+
+<li class="fragment fade-in" data-fragment-index="22" style="font-size: 22px; text-align: justify;">
+Los valores para hallar el cuartil 2 son: $L_i=20$, $\frac{kN}{4}=25$, $F_{i-1}=16$, $f_i=14$ y $A=10$ .
+</li>
+<li class="fragment fade-in" data-fragment-index="23" style="font-size: 22px; text-align: justify;">
+Reemplazando:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="24" style="font-size: 22px; text-align: justify;">
+$Q_2 = 20 + \left(\frac{25 - 16}{14}\right)10=26,43$
+</li>
+
+
+</ul>
+
+</div>
+</div>
+
+## 
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="2" style="font-size: 23px; text-align: justify;">
+Cuartil 3
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 23px; text-align: justify;">
+Para hallar el cuartil 3, $k=3$, $N=50$. 
+</li>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 23px; text-align: justify;">
+Entonces $\frac{kN}{4}=\frac{3\cdot 50}{4}=\frac{150}{4}=37,5$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 23px; text-align: justify;">
+Este valor se encuentra en la Frecuencia acumulada 42 correspondiente al intervalo [30 - 40]
+</li>
+
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 23px; text-align: justify;">
+Los valores para hallar el cuartil 3 son: 
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 23px; text-align: justify;list-style: none;">
+$L_i=30$  
+$\frac{kN}{4}=37,5$   
+$F_{i-1}=30$  
+$f_i=12$  
+$A=10$  
+</li>
+
+
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 23px; text-align: justify;">
+Reemplazando:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 23px; text-align: justify;">
+$Q_3 = 30 + \left(\frac{37,5 - 30}{12}\right)10=36,25$
+</li>
+
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 23px; text-align: justify;">
+Interpretación:
+</li>
+
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 23px; text-align: justify;">
+El 25% de los datos está por debajo de $16,5$.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 23px; text-align: justify;">
+El 50% está por debajo de $26,43$.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 23px; text-align: justify;">
+El 75% está por debajo de $36,25$.
+</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
