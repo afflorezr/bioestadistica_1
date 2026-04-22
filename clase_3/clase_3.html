@@ -31,6 +31,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="clase_3_files/libs/revealjs/dist/theme/quarto-47de77ef8bb53eb6852bbbcd7cb73406.css">
   <link rel="stylesheet" href="../assets/syntax-highlight.css">
@@ -142,9 +208,7 @@
         logo.style.display = isTitle ? 'none' : '';
       });
     }
-    // aplicar inmediatamente al cargar
     updateLogoVisibility();
-    // y cada vez que se cambie de slide
     Reveal.on('slidechanged', updateLogoVisibility);
   });
   </script>
@@ -170,1234 +234,667 @@
 </section>
 <section id="clase-3" class="slide level2 center middle">
 <h2>Clase 3</h2>
-</section>
-<section id="tasas-razones-y-proporciones." class="slide level2">
-<h2>Tasas, razones y proporciones.</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
-En la vida cotidiana y en muchas áreas del conocimiento como la agronomía, la economía, la salud y la ingeniería, es fundamental poder comparar cantidades, interpretar datos y tomar decisiones basadas en información numérica.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">
-Constantemente nos enfrentamos a situaciones como:
-</li>
-<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">
-🌱 Determinar cuántas plantas hay en un área determinada.
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
-💧 Calcular cuánta agua necesita un cultivo.
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
-🚜 Evaluar la producción por hectárea.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
-🚗 Calcular la velocidad de un vehículo.
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
-🛒 Comparar precios en el mercado (¿qué producto es más económico?).
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-🧑‍🤝‍🧑 Analizar proporciones en grupos de personas.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-🏥 Evaluar tasas en salud (ej: pacientes por día).
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="section" class="slide level2">
-<h2></h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-Para poder resolver este tipo de situaciones, las matemáticas nos proporcionan herramientas clave que facilitan el análisis y la comprensión de la información.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Entre estas herramientas se destacan tres conceptos fundamentales:
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-Tasas: nos permiten relacionar magnitudes con diferentes unidades.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Razones: nos permiten comparar dos cantidades.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-Proporciones: nos ayudan a encontrar relaciones equivalentes.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
-Estas herramientas no solo se utilizan en el ámbito académico, sino que tienen aplicaciones prácticas en la vida diaria. Por ejemplo, cuando se calcula la velocidad de un vehículo, el rendimiento de un cultivo, la relación entre precios o la cantidad de insumos necesarios para una producción.
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
-Comprender estos conceptos es importante porque permite:
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-Analizar información de manera más clara.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-Resolver problemas reales.
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
-Tomar decisiones más precisas.
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
-Interpretar datos en diferentes contextos.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="tasas" class="slide level2">
-<h2>Tasas</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-Una tasa es un tipo especial de razón que compara dos cantidades que tienen diferentes unidades de medida, permitiendo analizar cómo cambia una variable con respecto a otra.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Las tasas son fundamentales para medir rendimiento, velocidad, densidad, productividad o cualquier relación entre magnitudes distintas.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-Se utilizan frecuentemente en contextos reales como producción agrícola, economía, transporte y ciencias.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">
-¿Para qué sirven las tasas?
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
-Medir rendimiento.
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
-Analizar producción.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
-Evaluar eficiencia.
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
-Comparar variables.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejemplos" class="slide level2">
-<h2>Ejemplos</h2>
-<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
-<ul>
-<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
-120 km en 2 horas.
-</li>
-<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify;">
-Se puede expresar como:<span class="math inline">\(120km/2h\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="4" style="text-align: justify;">
-Simplificando equivale a :<span class="math inline">\(60km/h\)</span>, es decir 60 km por hora.
-</li>
-<li class="fragment fade-in" data-fragment-index="5" style="text-align: justify;">
-200 kg en 4 hectáreas.
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="text-align: justify;">
-Se puede expresar como:<span class="math inline">\(200kg/4ha\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="text-align: justify;">
-Simplificando equivale a :<span class="math inline">\(50kg/ha\)</span>, es decir 50 kg por hectarea.
-</li>
-</ul>
-</div>
-</section>
-<section id="ejercicios" class="slide level2">
-<h2>Ejercicios</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-Determine la tasa de:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-400 km en 8 horas
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-250 kg en 5 ha
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-180 kg en 6 ha
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
-Soluciones:
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
-<span class="math inline">\(50 km/h\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
-<span class="math inline">\(50 kg/ha\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-<span class="math inline">\(30 kg/ha\)</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="conclusiones" class="slide level2">
-<h2>Conclusiones</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-<ol type="1">
-<li>Las tasas permiten comparar variables con diferentes unidades.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Las tasas relacionan magnitudes distintas (ej: kg/ha, km/h), lo que permite entender cómo cambia una variable respecto a otra.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-<ol start="2" type="1">
-<li>Son fundamentales en el análisis estadístico.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-En estadística, las tasas se utilizan para:
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-Analizar fenómenos en el tiempo.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Medir frecuencias relativas.
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
-Comparar comportamientos entre grupos.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-<ol start="3" type="1">
-<li>Permiten medir rendimiento y eficiencia</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-Las tasas ayudan a evaluar:
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
-Producción agrícola (kg/ha)
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
-Velocidad (km/h)
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
-Atención de servicios (personas/hora)
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
-Son clave para la toma de decisiones.
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 28px;">
-<ol start="4" type="1">
-<li>Facilitan la interpretación de los datos</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="17" style="font-size: 28px;">
-Una tasa resume información compleja en un solo valor, lo que hace más fácil:
-</li>
-<li class="fragment fade-in" data-fragment-index="18" style="font-size: 28px;">
-Comparar resultados.
-</li>
-<li class="fragment fade-in" data-fragment-index="19" style="font-size: 28px;">
-Identificar patrones.
-</li>
-<li class="fragment fade-in" data-fragment-index="20" style="font-size: 28px;">
-Detectar problemas.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-<ol start="5" type="1">
-<li>Permiten comparar en igualdad de condiciones</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Gracias a las tasas, se pueden comparar situaciones diferentes bajo una misma base.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-Ejemplo:
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Dos fincas con distinto tamaño pueden compararse usando kg/ha.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-<ol start="6" type="1">
-<li>Son base para otros conceptos estadísticos</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Las tasas están relacionadas con:
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
-Proporciones.
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
-Porcentajes.
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px;">
-Probabilidad.
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px;">
-Indicadores estadísticos.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="13" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
-Las tasas son una herramienta fundamental en estadística porque permiten analizar, comparar e interpretar datos de manera clara, especialmente cuando se trabaja con variables que tienen diferentes unidades.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="razones" class="slide level2">
-<h2>Razones</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-¿Qué es una Razón?
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Una razón es una relación matemática que compara dos cantidades mediante una división, con el propósito de expresar cuántas veces una cantidad está contenida en otra o cómo se relacionan entre sí.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-Las razones permiten analizar proporciones entre elementos de un mismo tipo o de contextos comparables, facilitando la interpretación de datos y la toma de decisiones.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Se puede expresar como fracción (a/b), con dos puntos (a:b) o verbalmente (“a es a b”).
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Ejemplo: 60 plantas de maíz / 30 plantas de frijol = 2 = 2:1
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
-Se puede interpretar como: 2 plantas de maíz por cada 1 de frijol
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
-¿Para qué sirven las razones?
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-Comparar cantidades.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-Analizar relaciones.
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
-Interpretar datos.
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
-Tomar decisiones.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicios-1" class="slide level2">
-<h2>Ejercicios</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-Determine e interprete las siguientes razones:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-En una finca hay 90 plantas de maíz y 30 plantas de frijol.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-En un cultivo se tienen 80 kg de fertilizante distribuidos en 40 sacos.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-En un salón hay 60 estudiantes, de los cuales 20 son mujeres.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
-Soluciones:
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-Razón: 90/30 -&gt;dividiendo: 90/30= 3 = 3:1
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
-Interpretación: Hay 3 plantas de maíz por cada 1 planta de frijol.
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
-Razón = 80/40 -&gt;dividiendo: 80/40 = 2 = 2:1
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
-Interpretación: Hay 2 kg de fertilizante por cada saco.
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 26px;">
-Razón = 60/20 -&gt;dividiendo: 60/20 = 3 = 3:1
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 26px;">
-Interpretación: Hay 3 estudiantes en total por cada mujer (o 3 a 1).
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="conclusiones-1" class="slide level2">
-<h2>Conclusiones</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-<ol type="1">
-<li>Las razones permiten comparar cantidades.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Las razones son una herramienta básica que permite establecer relaciones entre dos cantidades, mostrando cuántas veces una está contenida en la otra.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-<ol start="2" type="1">
-<li>Son fundamentales en el análisis estadístico.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-En estadística, las razones ayudan a:
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-Comparar grupos.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Analizar relaciones entre variables.
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
-Interpretar datos de forma más clara.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-<ol start="3" type="1">
-<li>Facilitan la interpretación de datos</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-Una razón transforma datos en una forma más comprensible, permitiendo expresar relaciones como:
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
-2 a 1
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
-3 por cada…
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
-<ol start="4" type="1">
-<li>Permiten identificar proporciones entre categorías</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
-Las razones ayudan a entender la distribución de datos entre diferentes grupos o categorías dentro de una población o muestra.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="section-2" class="slide level2">
-<h2></h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-<ol start="5" type="1">
-<li>Son la base de otros conceptos</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Las razones son fundamentales para comprender:
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-Proporciones.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Tasas.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-Porcentajes.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Probabilidad.
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
-<ol start="6" type="1">
-<li>Tienen múltiples aplicaciones</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
-Se utilizan en:
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px;">
-Agronomía
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px;">
-Estadística.
-</li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px;">
-Economía.
-</li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 28px;">
-Vida diaria.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="14" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
-Las razones son una herramienta esencial que permite comparar, analizar e interpretar datos, siendo la base para otros conceptos estadísticos y fundamentales en la toma de decisiones.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="proporciones" class="slide level2">
-<h2>Proporciones</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-¿Qué es una Proporción?
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Una proporción es una relación de igualdad entre dos razones, lo que indica que ambas representan la misma comparación aunque estén expresadas con números diferentes.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-Este concepto permite establecer equivalencias y es fundamental para resolver problemas en los que se requiere encontrar un valor desconocido manteniendo una relación constante.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Las proporciones se utilizan ampliamente en situaciones de escalamiento, distribución y análisis de relaciones equivalentes.<br>
-<span class="math inline">\(a/b = c/d\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">
-¿Para qué sirven las proporciones?
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
-Encontrar valores desconocidos.
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-Mantener relaciones equivalentes.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-Escalar cantidades.
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
-Resolver problemas reales.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejemplos-1" class="slide level2">
-<h2>Ejemplos</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;">
-En un cultivo, 4 kg de fertilizante se utilizan para 8 plantas.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;">
-¿Cuántos kg de fertilizante se necesitan para 20 plantas, manteniendo la misma proporción?
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-<p>Planteamiento: <span class="math display">\[ 4kg ---&gt; 8\, plantas \]</span> <span class="math display">\[x  ---&gt; 20\, plantas \]</span></p>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Solución<br>
-Del planteamiento salen las siguientes razones: <span class="math display">\[\frac{4}{8}=\frac{x}{20}\]</span>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
-Procedimiento:
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-<span class="math display">\[ 4 * 20 = 8x \]</span> <span class="math display">\[ 80 = 8x \]</span> <span class="math display">\[ x = 10 \]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
-Respuesta: se necesitan 10 kg de fertilizante para 20 plantas
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
-Interpretación:
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
-Si aumenta el número de plantas, la cantidad de fertilizante también aumenta proporcionalmente.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="section-3" class="slide level2">
-<h2></h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;">
-En una encuesta, 15 de cada 30 estudiantes aprueban un examen.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;">
-Si se mantiene la misma proporción, ¿cuántos estudiantes aprobarían en un grupo de 80?
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-<p>Planteamiento: <span class="math display">\[ 15\,aprueban ---&gt; 30\,estudiantes \]</span> <span class="math display">\[x  ---&gt; 80\,estudiantes\]</span></p>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Solución<br>
-Del planteamiento salen las siguientes razones: <span class="math display">\[\frac{15}{30}=\frac{x}{80}\]</span>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
-Procedimiento:
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-<span class="math display">\[ 15 * 80 = 30x \]</span> <span class="math display">\[ 1200 = 30x \]</span> <span class="math display">\[ x = 40 \]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
-Respuesta: Aprobarían 40 estudiantes.
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
-Interpretación:
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
-La mitad de los estudiantes aprueba, por lo tanto, en cualquier grupo se mantiene esa misma proporción.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicios-2" class="slide level2">
-<h2>Ejercicios</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-Hallar la <span class="math inline">\(x\)</span> en las siguientes relaciones.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-<ol type="1">
-<li><span class="math display">\[3 kg → 9\,plantas\]</span> <span class="math display">\[x → 18\, plantas\]</span></li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-<ol start="2" type="1">
-<li><span class="math display">\[5 L → 10\,m²\]</span> <span class="math display">\[x → 20\, m²\]</span></li>
-</ol>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
-Soluciones:
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
-<ol type="1">
-<li><span class="math display">\[\frac{3}{9}=\frac{x}{18}\]</span></li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-<span class="math display">\[ 3 * 18 = 9x \]</span> <span class="math display">\[ 54 = 9x \]</span> <span class="math display">\[ x = 6 \]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
-<ol start="2" type="1">
-<li><span class="math display">\[\frac{5}{10}=\frac{x}{20}\]</span></li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px;">
-<span class="math display">\[ 5 * 20 = 10x \]</span> <span class="math display">\[ 100 = 10x \]</span> <span class="math display">\[ x = 10 \]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="relación-entre-proporción-y-porcentaje-en-estadística" class="slide level2">
-<h2>Relación entre Proporción y Porcentaje (En Estadística)</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-<ol type="1">
-<li>Proporción en estadística</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-En estadística, una proporción es la relación entre la frecuencia de una categoría y el total de datos.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-Fórmula:
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-<span class="math display">\[Proporción=\frac{frecuencia\,de\,la\,categoria​}{total\,de\,datos}\]</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-Toma valores entre 0 y 1.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Es una medida de frecuencia relativa.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
-<ol start="2" type="1">
-<li>Porcentaje en estadística</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-El porcentaje es la proporción expresada en base 100.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-Fórmula:
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
-<span class="math display">\[Porcentaje=proporción\,×\,100\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
-Toma valores entre 0% y 100%.
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
-Es más fácil de interpretar.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejemplos-2" class="slide level2">
-<h2>Ejemplos</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-<ol type="1">
-<li>Se tiene la siguiente tabla de frecuencias de una muestra de 30 estudiantes:</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-<table border="1">
-<tbody><tr>
-<th>
-Aprobó
-</th>
-<th>
-Frecuencia
-</th>
-</tr>
-<tr>
-<td>
-Si
-</td>
-<td>
-18
-</td>
-</tr>
-<tr>
-<td>
-No
-</td>
-<td>
-12
-</td>
-</tr>
-<tr>
-<td>
-Total
-</td>
-<td>
-30
-</td>
-</tr>
-</tbody></table>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-Cual fue el porcentaje de estudiantes que aprobaron?
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Solución:
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-<p>
-(18 / 30) × 100 = <strong>60%</strong>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Tasas, Razones, Proporciones
 </p>
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-el 60% de los estudiantes aprobó.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
-<ol start="2" type="1">
-<li>En una muestra de cultivos se encontro que:</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">
-Hubo 20 plantas sanas de 50.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-Cual fue el porcentaje de plantas sanas?
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
-Solución:
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
-Proporción<br>
-<span class="math inline">\(\frac{20}{50}=0.4\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
-Porcentaje:
-<p>
-(20 / 50) × 100 = <strong>40%</strong>
+<p style="font-size: 36px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+y Medidas de Tendencia Central
 </p>
+<p style="font-size: 26px; color: #6b7280; margin-top: 20px;">
+Herramientas esenciales para resumir y comparar datos
+</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">
+Bioestadística Fundamental — Departamento de Estadística, UNAL Bogotá
+</p>
+</div>
+</section>
+<section id="contenido" class="slide level2">
+<h2>Contenido</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">
+Parte I: Comparación de cantidades
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Tasas: relacionar magnitudes con unidades distintas.
 </li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
-El 40% de las plantas salieron sanas.
+<li class="fragment fade-in" data-fragment-index="3">
+Razones: comparar dos cantidades de la misma clase.
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Proporciones: igualdad entre razones.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+Proporción estadística y porcentaje.
+</li>
+</ul>
+</div>
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">
+Parte II: Medidas de tendencia central
+</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">
+Media aritmética: el promedio.
+</li>
+<li class="fragment fade-in" data-fragment-index="8">
+Mediana: el valor central.
+</li>
+<li class="fragment fade-in" data-fragment-index="9">
+Moda: el valor más frecuente.
+</li>
+<li class="fragment fade-in" data-fragment-index="10">
+¿Cuándo usar cada medida?
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="conclusiones-2" class="slide level2">
-<h2>Conclusiones</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-<ol type="1">
-<li>Permiten mantener relaciones constantes</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-Las proporciones aseguran que dos razones sean equivalentes, lo que permite trabajar con cantidades que crecen o disminuyen de forma proporcional.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-<ol start="2" type="1">
-<li>Son clave para resolver problemas.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Facilitan el cálculo de valores desconocidos cuando existe una relación fija entre las variables.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-<ol start="3" type="1">
-<li>Permiten escalar cantidades.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Ajustar recetas.
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
-Aumentar o reducir producción.
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
-Trabajar con diferentes tamaños.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-<ol start="4" type="1">
-<li>Facilitan comparaciones</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px;">
-Permiten comparar situaciones diferentes manteniendo una misma base de referencia.
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px;">
-<ol start="5" type="1">
-<li>Son base de otros conceptos</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 28px;">
-Las proporciones están directamente relacionadas con:
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 28px;">
-Razones. porcentajes y tasas.
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 28px;">
-Porcentajes.
-</li>
-<li class="fragment fade-in" data-fragment-index="17" style="font-size: 28px;">
-Tasas.
-</li>
-</ul>
-</div>
+<section id="parte-i" class="slide level2 center middle">
+<h2>Parte I</h2>
+<div style="text-align: center; margin-top: 60px;">
+<p style="font-size: 44px; font-weight: bold; color: #1b4d2e;">
+Tasas, Razones y Proporciones
+</p>
+<p style="font-size: 28px; color: #6b7280; margin-top: 20px;">
+Herramientas para comparar e interpretar cantidades
+</p>
 </div>
 </section>
-<section id="conclusiones-proporciones-estadística" class="slide level2">
-<h2>Conclusiones proporciones (Estadística)</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
-<ol type="1">
-<li>Representan frecuencias relativas</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
-En estadística, las proporciones indican qué parte del total corresponde a una categoría.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-<ol start="2" type="1">
-<li>Permiten analizar la distribución de datos</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
-Ayudan a entender cómo se distribuyen los datos dentro de una población o muestra.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
-<ol start="3" type="1">
-<li>Facilitan la interpretación de resultados</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
-Las proporciones permiten expresar resultados de forma clara, especialmente al compararlas entre grupos.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px;">
-<ol start="4" type="1">
-<li>Permiten comparar muestras de diferente tamaño</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 26px;">
-Son fundamentales cuando se analizan grupos con distintos tamaños, ya que eliminan el efecto del tamaño absoluto.
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 26px;">
-<ol start="5" type="1">
-<li>Son la base de los porcentajes</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 26px;">
-Toda proporción puede expresarse como porcentaje, lo que mejora la comunicación de los resultados.
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 26px;">
-<ol start="6" type="1">
-<li>Son fundamentales en el análisis estadístico</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 26px;">
-Se utilizan en:
-</li>
-<li class="fragment fade-in" data-fragment-index="17" style="font-size: 26px;">
-Tablas de frecuencias.
-</li>
-<li class="fragment fade-in" data-fragment-index="18" style="font-size: 26px;">
-Probabilidad
-</li>
-<li class="fragment fade-in" data-fragment-index="19" style="font-size: 26px;">
-Inferencia estadística.
-</li>
-<li class="fragment fade-in" data-fragment-index="20" style="font-size: 26px;">
-Análisis de datos.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="section-4" class="slide level2">
-<h2></h2>
-<div class="fragment fade-up info-box" style="margin-top: 100px;" data-fragment-index="1">
-<ul>
-<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
-Las proporciones permiten entender cómo se relacionan las partes con el todo, siendo una herramienta fundamental en estadística para analizar, comparar e interpretar datos de manera clara y objetiva.
-</li>
-</ul>
-</div>
-</section>
-<section id="conclusiones-finales" class="slide level2">
-<h2>Conclusiones finales</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="text-align: justify;">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;">
-A lo largo de la clase se estudiaron las razones, proporciones y tasas como herramientas fundamentales para el análisis de datos.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;">
-Las tasas permiten relacionar magnitudes con diferentes unidades, siendo especialmente útiles para medir cambios, rendimiento y comportamiento de variables en contextos reales.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-Las razones permiten comparar cantidades y entender la relación entre dos variables, facilitando la interpretación de información de manera simple.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px;">
-Las proporciones amplían este concepto al establecer igualdades entre razones, lo que permite mantener relaciones constantes y resolver problemas con valores desconocidos.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10" style="text-align: justify;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 25px;">
-En el ámbito de la estadística, estos tres conceptos están estrechamente relacionados y cumplen un papel clave en:
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px;">
-El análisis de datos.
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px;">
-La comparación de resultados.
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px;">
-La interpretación de frecuencias y distribuciones.
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 25px;">
-La toma de decisiones informadas.
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 25px;">
-En conjunto, las razones, proporciones y tasas permiten transformar datos en información útil, facilitando la comprensión de fenómenos tanto en la vida cotidiana como en áreas aplicadas como la agronomía.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="medidas-de-tendencia-central" class="slide level2">
-<h2>Medidas de tendencia central</h2>
+<section id="por-qué-necesitamos-estas-herramientas" class="slide level2">
+<h2>¿Por qué necesitamos estas herramientas?</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
-Las medidas de tendencia central son herramientas estadísticas que permiten identificar el valor alrededor del cual se concentran los datos de un conjunto.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En agronomía, salud, economía e ingeniería es fundamental <strong>comparar cantidades e interpretar datos</strong> para tomar decisiones acertadas.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-Estas medidas resumen la información en un solo número representativo, facilitando el análisis, la comparación y la interpretación de los datos tanto en contextos teóricos como aplicados.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
-Se utilizan ampliamente en estadística descriptiva para describir el comportamiento general de una variable y constituyen el punto de partida para análisis más avanzados.
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Las matemáticas proveen tres herramientas clave para este propósito: <strong>tasas</strong>, <strong>razones</strong> y <strong>proporciones</strong>.
 </li>
 </ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
 <ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
-¿Para qué sirven?
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Situaciones cotidianas que requieren estas herramientas:
 </li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px; text-align: justify;">
-Resumir grandes cantidades de datos.
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Determinar la producción por hectárea en un cultivo.
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; text-align: justify;">
-Identificar el comportamiento típico.
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Evaluar la tasa de incidencia de una enfermedad en una región.
 </li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px; text-align: justify;">
-Comparar conjuntos de datos.
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+Calcular cuánto insumo se necesita al escalar una producción.
 </li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 30px; text-align: justify;">
-Apoyar la toma de decisiones.
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
+Comparar el rendimiento entre dos fincas de distinto tamaño.
 </li>
-
+</ul>
+</div>
+</div>
+</section>
+<section id="tasas-definición" class="slide level2">
+<h2>Tasas: Definición</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición: Tasa
+</div>
+<div class="block-body">
+Una <strong>tasa</strong> es una razón que compara dos cantidades con <em>unidades de medida diferentes</em>. Expresa cuántas unidades de la primera magnitud corresponden a una unidad de la segunda. <span class="math display">\[\text{Tasa} = \frac{\text{cantidad}_A \text{ [unidad}_A\text{]}}{\text{cantidad}_B \text{ [unidad}_B\text{]}}\]</span>
+</div>
+</div>
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Las unidades de la tasa resultan de combinar las unidades de ambas magnitudes: km/h, kg/ha, casos/100 000 hab.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Las tasas permiten <strong>comparar en igualdad de condiciones</strong> situaciones que tienen distinto tamaño o duración.
+</li>
+</ul>
+</section>
+<section id="tasas-características-y-usos" class="slide level2">
+<h2>Tasas: Características y usos</h2>
+<div class="twocol">
+<div class="block-theorem fragment fade-up" data-fragment-index="1" style="margin-top:100px">
+<div class="block-title">
+Características
+</div>
+<div class="block-body">
+<ul>
+<li>
+Relacionan <strong>magnitudes con unidades distintas</strong>.
+</li>
+<li>
+Se expresan con unidades compuestas (km/h, mg/L, kg/ha).
+</li>
+<li>
+Permiten medir <strong>velocidad, rendimiento y densidad</strong>.
+</li>
+<li>
+Son la base de los indicadores estadísticos.
+</li>
+</ul>
+</div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="2" style="margin-top:100px">
+<div class="block-title">
+Aplicaciones
+</div>
+<div class="block-body">
+<ul>
+<li>
+<strong>Agronomía:</strong> producción (kg/ha), consumo de agua (L/planta/día).
+</li>
+<li>
+<strong>Salud pública:</strong> incidencia (casos/100 000 hab), mortalidad (muertes/1 000 hab).
+</li>
+<li>
+<strong>Transporte:</strong> velocidad (km/h), consumo (L/100 km).
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="tasas-ejemplos" class="slide level2">
+<h2>Tasas: ejemplos</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Ejemplo 1: Velocidad
+</div>
+<div class="block-body">
+Un vehículo recorre 120 km en 2 horas. ¿Cuál es su velocidad? <span class="math display">\[\text{Tasa} = \frac{120\,\text{km}}{2\,\text{h}} = 60\,\text{km/h}\]</span> Interpretación: el vehículo avanza <strong>60 km por cada hora</strong>.
+</div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Ejemplo 2: Rendimiento agrícola
+</div>
+<div class="block-body">
+En un cultivo de maíz se producen 800 kg en 4 hectáreas. ¿Cuál es el rendimiento? <span class="math display">\[\text{Tasa} = \frac{800\,\text{kg}}{4\,\text{ha}} = 200\,\text{kg/ha}\]</span> Interpretación: se producen <strong>200 kg por hectárea</strong>.
+</div>
+</div>
+</section>
+<section id="tasas-en-salud-pública" class="slide level2">
+<h2>Tasas en salud pública</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Tasas epidemiológicas
+</div>
+<div class="block-body">
+En epidemiología, las tasas miden la frecuencia de eventos de salud en una población: <span class="math display">\[\text{Tasa de incidencia} = \frac{\text{casos nuevos en un período}}{\text{población en riesgo}} \times 100\,000\]</span>
+</div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Ejemplo: Dengue en el Tolima
+</div>
+<div class="block-body">
+En un municipio de 50 000 habitantes se registraron 75 casos nuevos de dengue en un mes. <span class="math display">\[\text{Tasa de incidencia} = \frac{75}{50\,000} \times 100\,000 = 150\text{ casos por cada 100 000 hab}\]</span>
+</div>
+</div>
+</section>
+<section id="ejercicios-tasas" class="slide level2">
+<h2>Ejercicios: Tasas</h2>
+<div class="block-example">
+<div class="block-title">
+Ejercicios
+</div>
+<div class="block-body">
+<p>
+Calcule e interprete cada tasa:
+</p>
+<ol>
+<li>
+Un agricultor recorre 400 km en 8 horas. ¿Cuál es su velocidad?
+</li>
+<li>
+En un cultivo de papa se aplican 250 kg de abono en 5 ha. ¿Cuánto abono se usa por hectárea?
+</li>
+<li>
+En una vereda con 2 000 habitantes se reportaron 12 casos de malaria en un mes. ¿Cuál es la tasa de incidencia por 1 000 habitantes?
+</li>
+</ol>
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Soluciones
+</div>
+<div class="block-body">
+<ol>
+<li>
+<span class="math inline">\(400\,\text{km} / 8\,\text{h} = \mathbf{50\,\text{km/h}}\)</span>.
+</li>
+<li>
+<span class="math inline">\(250\,\text{kg} / 5\,\text{ha} = \mathbf{50\,\text{kg/ha}}\)</span>.
+</li>
+<li>
+<span class="math inline">\((12 / 2\,000) \times 1\,000 = \mathbf{6\text{ casos por cada 1 000 hab}}\)</span>.
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="razones-definición" class="slide level2">
+<h2>Razones: Definición</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición: Razón
+</div>
+<div class="block-body">
+Una <strong>razón</strong> es una relación matemática que compara dos cantidades <strong>de la misma clase</strong> mediante una división, expresando cuántas veces una cantidad está contenida en la otra. <span class="math display">\[\text{Razón} = \frac{a}{b} = a : b \quad (b \neq 0)\]</span>
+</div>
+</div>
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+A diferencia de la tasa, en una razón ambas cantidades tienen las <strong>mismas unidades</strong>, las cuales se cancelan y el resultado es adimensional.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Se puede leer como <em>“a por cada b”</em> o <em>“a es a b”</em>.
+</li>
+</ul>
+</section>
+<section id="razones-ejemplos-resueltos" class="slide level2">
+<h2>Razones: Ejemplos resueltos</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Ejemplo 1: Cultivo mixto
+</div>
+<div class="block-body">
+En una finca hay 60 plantas de maíz y 30 plantas de fríjol. <span class="math display">\[\text{Razón} = \frac{60}{30} = 2 \quad \Leftrightarrow \quad 2:1\]</span> Interpretación: hay <strong>2 plantas de maíz por cada 1 planta de fríjol</strong>.
+</div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Ejemplo 2: Sexo en un grupo
+</div>
+<div class="block-body">
+En un grupo de 60 estudiantes, 40 son hombres y 20 son mujeres. <span class="math display">\[\text{Razón hombres:mujeres} = \frac{40}{20} = 2 \quad \Leftrightarrow \quad 2:1\]</span> Interpretación: hay <strong>2 hombres por cada mujer</strong> en el grupo.
+</div>
+</div>
+</section>
+<section id="ejercicios-razones" class="slide level2">
+<h2>Ejercicios: Razones</h2>
+<div class="block-example">
+<div class="block-title">
+Ejercicios
+</div>
+<div class="block-body">
+<p>
+Calcule e interprete cada razón:
+</p>
+<ol>
+<li>
+En una finca hay 90 plantas de maíz y 30 plantas de fríjol.
+</li>
+<li>
+Un bulto de fertilizante de 80 kg se distribuye en 40 sacos iguales. ¿Cuántos kg hay por saco?
+</li>
+<li>
+En un salón hay 60 estudiantes, 20 de ellos son mujeres. ¿Cuál es la razón mujeres:hombres?
+</li>
+</ol>
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Soluciones
+</div>
+<div class="block-body">
+<ol>
+<li>
+<span class="math inline">\(90/30 = 3:1\)</span> — hay 3 plantas de maíz por cada planta de fríjol.
+</li>
+<li>
+<span class="math inline">\(80/40 = 2\)</span> — hay 2 kg de fertilizante por saco.
+</li>
+<li>
+Mujeres: 20, Hombres: 40. Razón <span class="math inline">\(= 20/40 = 1:2\)</span> — hay 1 mujer por cada 2 hombres.
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="proporciones-definición" class="slide level2">
+<h2>Proporciones: Definición</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición: Proporción
+</div>
+<div class="block-body">
+Una <strong>proporción</strong> es una <em>igualdad entre dos razones</em>: <span class="math display">\[\frac{a}{b} = \frac{c}{d} \quad \Leftrightarrow \quad a \cdot d = b \cdot c\]</span> La segunda igualdad se denomina <strong>propiedad de los productos cruzados</strong> y es la clave para encontrar valores desconocidos.
+</div>
+</div>
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Las proporciones se usan para <strong>escalar cantidades</strong> manteniendo una relación constante.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Son fundamentales en agronomía (ajustar dosis), nutrición (escalar recetas) y planificación (distribuir recursos).
+</li>
+</ul>
+</section>
+<section id="proporciones-ejemplo-1" class="slide level2">
+<h2>Proporciones: Ejemplo 1</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Problema — Fertilizante y plantas
+</div>
+<div class="block-body">
+<p>
+En un cultivo, 4 kg de fertilizante son suficientes para 8 plantas. ¿Cuántos kg se necesitan para 20 plantas, manteniendo la misma proporción?
+</p>
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Solución
+</div>
+<div class="block-body">
+Planteamiento: <span class="math display">\[\frac{4\,\text{kg}}{8\,\text{plantas}} = \frac{x}{20\,\text{plantas}}\]</span> Productos cruzados: <span class="math display">\[4 \times 20 = 8x \implies 80 = 8x \implies x = 10\,\text{kg}\]</span> Se necesitan <strong>10 kg de fertilizante</strong> para 20 plantas.
+</div>
+</div>
+</section>
+<section id="proporciones-ejemplo-2" class="slide level2">
+<h2>Proporciones: Ejemplo 2</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Problema — Estudiantes que aprueban
+</div>
+<div class="block-body">
+<p>
+En una encuesta, 15 de cada 30 estudiantes aprueban un examen. Si se mantiene la misma proporción, ¿cuántos aprobarían en un grupo de 80?
+</p>
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Solución
+</div>
+<div class="block-body">
+<span class="math display">\[\frac{15}{30} = \frac{x}{80}\]</span> <span class="math display">\[15 \times 80 = 30x \implies 1\,200 = 30x \implies x = 40\,\text{estudiantes}\]</span> Aprobarían <strong>40 estudiantes</strong>. La razón de aprobación es constante: <span class="math inline">\(1/2\)</span>.
+</div>
+</div>
+</section>
+<section id="ejercicios-proporciones" class="slide level2">
+<h2>Ejercicios: Proporciones</h2>
+<div class="block-example">
+<div class="block-title">
+Ejercicios — Halle el valor de <span class="math inline">\(x\)</span>
+</div>
+<div class="block-body">
+<ol>
+<li>
+<span class="math display">\[3\,\text{kg} \longrightarrow 9\,\text{plantas}, \quad x \longrightarrow 18\,\text{plantas}\]</span>
+</li>
+<li>
+<span class="math display">\[5\,\text{L} \longrightarrow 10\,\text{m}^2, \quad x \longrightarrow 20\,\text{m}^2\]</span>
+</li>
+<li>
+En un lote de 200 aves, 30 presentan una enfermedad. ¿Cuántas aves enfermas se esperan en un lote de 500?
+</li>
+</ol>
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Soluciones
+</div>
+<div class="block-body">
+<ol>
+<li>
+<span class="math inline">\(\frac{3}{9} = \frac{x}{18} \implies x = 6\,\text{kg}\)</span>.
+</li>
+<li>
+<span class="math inline">\(\frac{5}{10} = \frac{x}{20} \implies x = 10\,\text{L}\)</span>.
+</li>
+<li>
+<span class="math inline">\(\frac{30}{200} = \frac{x}{500} \implies x = 75\,\text{aves enfermas}\)</span>.
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="proporción-estadística-y-porcentaje" class="slide level2">
+<h2>Proporción estadística y porcentaje</h2>
+<div class="twocol">
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="display: flex;
+flex-direction: column; margin-top:95px">
+<div class="block-title">
+Proporción estadística
+</div>
+<div class="block-body" style="flex: 1;">
+En estadística, la proporción de una categoría es: <span class="math display">\[p = \frac{f_i}{n}\]</span> donde <span class="math inline">\(f_i\)</span> es la frecuencia de esa categoría y <span class="math inline">\(n\)</span> el total. Toma valores en <span class="math inline">\([0, 1]\)</span>.
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="2" style="margin-top:95px">
+<div class="block-title">
+Porcentaje
+</div>
+<div class="block-body">
+El porcentaje es la proporción expresada en base 100: <span class="math display">\[\% = p \times 100 = \frac{f_i}{n} \times 100\]</span> Toma valores en <span class="math inline">\([0\%, 100\%]\)</span> y es más fácil de comunicar.
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplos-proporción-y-porcentaje" class="slide level2">
+<h2>Ejemplos: proporción y porcentaje</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Ejemplo 1: aprobación en un examen
+</div>
+<div class="block-body">
+De 30 estudiantes, 18 aprobaron. <span class="math display">\[p = \frac{18}{30} = 0{,}60 \qquad \% = 0{,}60 \times 100 = 60\%\]</span> El <strong>60 %</strong> de los estudiantes aprobó el examen.
+</div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Ejemplo 2: plantas sanas
+</div>
+<div class="block-body">
+En un cultivo se inspeccionan 50 plantas; 20 resultan sanas. <span class="math display">\[p = \frac{20}{50} = 0{,}40 \qquad \% = 40\%\]</span> El <strong>40 %</strong> de las plantas se encontró en buen estado fitosanitario.
+</div>
+</div>
+</section>
+<section id="tabla-comparativa-tasa-razón-y-proporción" class="slide level2">
+<h2>Tabla comparativa: tasa, razón y proporción</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; margin-top: 30px;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 29%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Concepto</th>
+<th style="text-align: left;">Definición</th>
+<th style="text-align: center;">Unidades</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Tasa</strong></td>
+<td style="text-align: left;">Razón entre magnitudes con unidades distintas</td>
+<td style="text-align: center;">Compuestas (km/h)</td>
+<td style="text-align: left;">200 kg/ha</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Razón</strong></td>
+<td style="text-align: left;">Comparación entre cantidades de la misma clase</td>
+<td style="text-align: center;">Adimensional</td>
+<td style="text-align: left;">3:1 (maíz:fríjol)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Proporción</strong></td>
+<td style="text-align: left;">Igualdad entre dos razones</td>
+<td style="text-align: center;">Adimensional (0 a 1)</td>
+<td style="text-align: left;"><span class="math inline">\(p = 18/30 = 0{,}6\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Porcentaje</strong></td>
+<td style="text-align: left;">Proporción expresada en base 100</td>
+<td style="text-align: center;">%</td>
+<td style="text-align: left;">60 %</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="2">
+<div class="block-body">
+<p>
+Las <strong>tasas</strong> responden a “¿cuánto X por unidad de Y?”; las <strong>razones</strong> responden a “¿cuántas veces?”; las <strong>proporciones</strong> responden a “¿qué parte del total?”
+</p>
+</div>
+</div>
+</section>
+<section id="parte-ii" class="slide level2 center middle">
+<h2>Parte II</h2>
+<div style="text-align: center; margin-top: 60px;">
+<p style="font-size: 44px; font-weight: bold; color: #1a3a6b;">
+Medidas de Tendencia Central
+</p>
+<p style="font-size: 28px; color: #6b7280; margin-top: 20px;">
+Media, mediana y moda
+</p>
+</div>
+</section>
+<section id="qué-son-las-medidas-de-tendencia-central" class="slide level2">
+<h2>¿Qué son las medidas de tendencia central?</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 100px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Las <strong>medidas de tendencia central</strong> son valores numéricos que representan el centro o valor típico de un conjunto de datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Permiten resumir grandes volúmenes de datos en un solo número representativo, facilitando la comparación entre grupos.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4" style="margin-top: 100px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Las tres principales son:
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+<strong>Media aritmética (<span class="math inline">\(\bar{x}\)</span>):</strong> promedio de todos los datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+<strong>Mediana (<span class="math inline">\(Me\)</span>):</strong> valor que ocupa la posición central.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+<strong>Moda (<span class="math inline">\(Mo\)</span>):</strong> valor que se repite con mayor frecuencia.
+</li>
 </ul>
 </div>
 </div>
 </section>
 <section id="media-aritmética" class="slide level2">
 <h2>Media aritmética</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La media aritmética o promedio es el valor que se obtiene al sumar todos los datos de un conjunto y dividirlos entre el número total de observaciones.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Representa el “punto de equilibrio” de los datos, es decir, el valor donde la suma de las desviaciones positivas y negativas es igual a cero.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-La media indica el valor promedio o típico del conjunto de datos.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-Se denota como <span class="math inline">\(\mu\)</span> para la media poblacional y <span class="math inline">\(\bar{x}\)</span> para la media muestral.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-La media muestral <span class="math inline">\(\bar{x}\)</span> es el mejor estimador de la media poblacional.
-</li>
-</ul>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición: Media aritmética
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<ul>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+<div class="block-body" style="font-size:34px">
+La <strong>media aritmética</strong> <span class="math inline">\(\bar{x}\)</span> es el cociente entre la suma de todos los valores y el número total de observaciones. Representa el <strong>punto de equilibrio</strong> de los datos.
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Propiedades
+</div>
+<div class="block-body">
+<ul style="font-size:34px">
+<li class="fragment fade-up" data-fragment-index="3">
+<strong>Única:</strong> para un conjunto de datos existe una sola media.
 </li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
-Es única: para un conjunto de datos existe una sola media.
+<li class="fragment fade-up" data-fragment-index="4">
+<strong>Usa todos los datos:</strong> considera cada observación.
 </li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
-Usa toda la información: tiene en cuenta todos los valores del conjunto de datos.
+<li class="fragment fade-up" data-fragment-index="5">
+<strong>Sensible a valores extremos:</strong> se ve afectada por datos atípicos.
 </li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px; text-align: justify;">
-Es sensible a valores extremos: cambia significativamente si hay datos muy grandes o muy pequeños (outliers).
+<li class="fragment fade-up" data-fragment-index="6">
+<strong>Algebraica:</strong> <span class="math inline">\(\sum_{i=1}^n (x_i - \bar{x}) = 0\)</span> (suma de desviaciones = 0).
 </li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px; text-align: justify;">
-Propiedad algebraica: la suma de las desviaciones respecto a la media es cero.
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 28px; text-align: justify;">
-Facilita cálculos posteriores: es fundamental para varianza, desviación estándar y otros análisis.
-</li>
-
 </ul>
 </div>
 </div>
 </section>
-<section id="formulas-para-calcular-la-media-aritmética" class="slide level2">
-<h2>Formulas para calcular la media aritmética</h2>
+<section id="media-fórmulas" class="slide level2">
+<h2>Media: fórmulas</h2>
 <div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
-Datos sin agrupar:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-<span class="math display">\[
-\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}=\frac{x_1+x_2+...x_n}{n}
-\]</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
-Donde:
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
-<span class="math inline">\(x_i\)</span>: son las observaciones o datos, para <span class="math inline">\(i\)</span> desde <span class="math inline">\(1\)</span> hasta <span class="math inline">\(n\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
-<span class="math inline">\(n\)</span>: es el numero total de observaciones o datos.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify;">
-<span class="math inline">\({\sum_{i=1}^{n} x_i}\)</span>: es la suma de todos los datos.
-</li>
-</ul>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="display: flex;
+flex-direction: column; margin-top:95px;">
+<div class="block-title">
+Datos sin agrupar
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<ul>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Datos agrupados:
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-<span class="math display">\[
-\bar{x} = \frac{\sum_{i=1}^{k} f_i x_i}{\sum_{i=1}^{k} f_i}=\frac{\sum_{i=1}^{k} f_i x_i}{n}
-\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
-Donde:
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(k\)</span>: es el numero de clases o intervalos
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(f_i\)</span>: es la frecuencia absoluta del i-ésimo intervalo o categoría, <span class="math inline">\(para\,i=1,..k\)</span>.
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(x_i\)</span>: valor o marca de clase, <span class="math inline">\(para\,i=1,..k\)</span>.
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(\sum_{i=1}^{k} f_i x_i\)</span>= es la suma entre cada producto de cada marca de clase o valor con su frecuencia absoluta.
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(\sum_{i=1}^{k} f_i\)</span>: es la suma de todas las frecuencias, por lo tanto equivale a <span class="math inline">\(n\)</span> que es el número total de observaciones o datos.
-</li>
-</ul>
+<div class="block-body" style="flex:1;">
+<span class="math display">\[\bar{x} = \frac{\displaystyle\sum_{i=1}^{n} x_i}{n} = \frac{x_1 + x_2 + \cdots + x_n}{n}\]</span> Donde <span class="math inline">\(x_i\)</span> son las observaciones y <span class="math inline">\(n\)</span> el número total de datos.
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="2" style="margin-top:95px;">
+<div class="block-title">
+Datos agrupados
+</div>
+<div class="block-body">
+<span class="math display">\[\bar{x} = \frac{\displaystyle\sum_{i=1}^{k} f_i x_i}{\displaystyle\sum_{i=1}^{k} f_i} = \frac{\displaystyle\sum_{i=1}^{k} f_i x_i}{n}\]</span> Donde <span class="math inline">\(f_i\)</span> es la frecuencia absoluta y <span class="math inline">\(x_i\)</span> el valor o marca de clase del <span class="math inline">\(i\)</span>-ésimo grupo.
+</div>
 </div>
 </div>
 </section>
 <section id="ejemplo-1-datos-sin-agrupar" class="slide level2">
-<h2>Ejemplo 1 (datos sin agrupar)</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
-Se registran las edades en años de 15 personas en un grupo. Estas son:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-18, 20, 19, 19, 21, 22, 20, 23, 21, 24, 19, 20, 22, 21, 24.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
-Calcule la edad promedio de las 15 personas.
-</li>
-</ul>
+<h2>Ejemplo 1: datos sin agrupar</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Problema — Edades de un grupo
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+<div class="block-body">
+<p>
+Se registraron las edades (años) de 15 personas:
+</p>
+<p style="text-align: center; font-size: 28px;">
+<code>18, 20, 19, 19, 21, 22, 20, 23, 21, 24, 19, 20, 22, 21, 24</code>
+</p>
+<p>
+Calcule la edad promedio del grupo.
+</p>
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Solución
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-Para calcular la edad promedio, equivale a hallar la media aritmética para datos no agrupados, en este caso <span class="math inline">\(n=15\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-<span class="math display">\[
-\bar{x} = \frac{\sum_{i=1}^{15} x_i}{15}=\frac{18+20+19+...+ 21+24}{15}=\frac{313}{15}=20,86≈21
-\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-El promedio de edad del grupo es aproximadamente de 21 años.
-</li>
-</ul>
+</div>
+<div class="block-body">
+Con <span class="math inline">\(n = 15\)</span>: <span class="math display">\[\bar{x} = \frac{18 + 20 + 19 + \cdots + 21 + 24}{15} = \frac{313}{15} \approx 20{,}87\,\text{años}\]</span> La edad promedio del grupo es aproximadamente <strong>21 años</strong>.
 </div>
 </div>
 </section>
-<section id="ejemplo-2-datos-agrupados" class="slide level2">
-<h2>Ejemplo 2 (datos agrupados)</h2>
+<section id="ejemplo-2-datos-agrupados-sin-intervalos" class="slide level2">
+<h2>Ejemplo 2: datos agrupados sin intervalos</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Se les preguntó a cincuenta estudiantes de Estadística cuánto tiempo (en horas) dormían en la noche (redondeado a la hora más cercana). Los resultados fueron:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-<table style="width: 60%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
+<p style="font-size: 26px; text-align: justify;">
+A 50 estudiantes se les preguntó cuántas horas dormían por noche. Los resultados se agruparon así:
+</p>
+<table style="width: 90%; border-collapse: collapse; margin: auto; font-size: 22px; text-align: center;">
+<tbody><tr style="background-color: #1a3a6b; color: white;">
 <th>
-xi (horas)
+<span class="math inline">\(x_i\)</span> (horas)
 </th>
 <th>
-fi
+<span class="math inline">\(f_i\)</span>
 </th>
 <th>
-fi·xi
+<span class="math inline">\(f_i x_i\)</span>
 </th>
 </tr>
 <tr style="background-color: #EAF2F8;">
@@ -1477,7 +974,7 @@ fi·xi
 30
 </td>
 </tr>
-<tr style="background-color: #1F618D; color: white; font-weight: bold;">
+<tr style="background-color: #1a3a6b; color: white; font-weight: bold;">
 <td>
 Total
 </td>
@@ -1489,48 +986,37 @@ Total
 </td>
 </tr>
 </tbody></table>
-</li>
-</ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
-¿En promedio cuantas horas duermen los 50 estudiantes?.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Solución
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-En este caso se utiliza la fórmula para la media de datos agrupados:
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-Se tiene que: <span class="math inline">\(k=7\)</span>, <span class="math inline">\(n=50\)</span>, <span class="math inline">\(\sum_{i=1}^{7} f_i x_i=364\)</span> y reemplazando: <span class="math display">\[
-\bar{x} =\frac{\sum_{i=1}^{7} f_i x_i}{n}=\frac{364}{50}=7,28
-\]</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-En promedio los 50 estudiantes de estadística duermen aproximadamente 7 horas en la noche.
-</li>
-</ul>
+</div>
+<div class="block-body">
+Con <span class="math inline">\(k = 7\)</span>, <span class="math inline">\(n = 50\)</span> y <span class="math inline">\(\sum f_i x_i = 364\)</span>: <span class="math display">\[\bar{x} = \frac{364}{50} = 7{,}28\,\text{horas}\]</span> En promedio, los estudiantes duermen aproximadamente <strong>7 horas y 17 minutos</strong> por noche.
+</div>
 </div>
 </div>
 </section>
-<section id="ejemplo-3-datos-agrupados-con-intervalos" class="slide level2">
-<h2>Ejemplo 3 (datos agrupados con intervalos)</h2>
+<section id="ejemplo-3-datos-con-intervalos" class="slide level2">
+<h2>Ejemplo 3: datos con intervalos</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Se registró el peso (kg) de un grupo de animales.Los resultados fueron:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-<table style="width: 60%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
+<p style="font-size: 24px; text-align: justify;">
+Se registró el peso (kg) de 20 animales en intervalos:
+</p>
+<table style="width: 100%; border-collapse: collapse; margin: auto; font-size: 21px; text-align: center;">
+<tbody><tr style="background-color: #1a3a6b; color: white;">
 <th>
 Intervalo (kg)
 </th>
 <th>
-fi
+<span class="math inline">\(x_i\)</span> (marca)
+</th>
+<th>
+<span class="math inline">\(f_i\)</span>
+</th>
+<th>
+<span class="math inline">\(f_i x_i\)</span>
 </th>
 </tr>
 <tr style="background-color: #EAF2F8;">
@@ -1538,7 +1024,13 @@ fi
 50 – 60
 </td>
 <td>
+55
+</td>
+<td>
 4
+</td>
+<td>
+220
 </td>
 </tr>
 <tr style="background-color: #FFFFFF;">
@@ -1546,7 +1038,13 @@ fi
 60 – 70
 </td>
 <td>
+65
+</td>
+<td>
 6
+</td>
+<td>
+390
 </td>
 </tr>
 <tr style="background-color: #EAF2F8;">
@@ -1554,7 +1052,13 @@ fi
 70 – 80
 </td>
 <td>
+75
+</td>
+<td>
 5
+</td>
+<td>
+375
 </td>
 </tr>
 <tr style="background-color: #FFFFFF;">
@@ -1562,7 +1066,13 @@ fi
 80 – 90
 </td>
 <td>
+85
+</td>
+<td>
 3
+</td>
+<td>
+255
 </td>
 </tr>
 <tr style="background-color: #EAF2F8;">
@@ -1570,174 +1080,6 @@ fi
 90 – 100
 </td>
 <td>
-2
-</td>
-</tr>
-</tbody></table>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-¿Cual es la media del peso de los animales?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-Solución
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-Para este caso primero se halla la marca de clase:
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-<table style="width: 70%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
-<th>
-Intervalo
-</th>
-<th>
-fi
-</th>
-<th>
-xi
-</th>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-50–60
-</td>
-<td>
-4
-</td>
-<td>
-55
-</td>
-</tr>
-<tr style="background-color: #FFFFFF;">
-<td>
-60–70
-</td>
-<td>
-6
-</td>
-<td>
-65
-</td>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-70–80
-</td>
-<td>
-5
-</td>
-<td>
-75
-</td>
-</tr>
-<tr style="background-color: #FFFFFF;">
-<td>
-80–90
-</td>
-<td>
-3
-</td>
-<td>
-85
-</td>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-90–100
-</td>
-<td>
-2
-</td>
-<td>
-95
-</td>
-</tr>
-</tbody></table>
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Luego se halla el producto entre las marcas de clase y las frecuencias absolutas
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-<table style="width: 80%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
-<th>
-Intervalo (kg)
-</th>
-<th>
-xi
-</th>
-<th>
-fi
-</th>
-<th>
-fi·xi
-</th>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-50–60
-</td>
-<td>
-55
-</td>
-<td>
-4
-</td>
-<td>
-220
-</td>
-</tr>
-<tr style="background-color: #FFFFFF;">
-<td>
-60–70
-</td>
-<td>
-65
-</td>
-<td>
-6
-</td>
-<td>
-390
-</td>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-70–80
-</td>
-<td>
-75
-</td>
-<td>
-5
-</td>
-<td>
-375
-</td>
-</tr>
-<tr style="background-color: #FFFFFF;">
-<td>
-80–90
-</td>
-<td>
-85
-</td>
-<td>
-3
-</td>
-<td>
-255
-</td>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-90–100
-</td>
-<td>
 95
 </td>
 <td>
@@ -1747,107 +1089,7 @@ fi·xi
 190
 </td>
 </tr>
-</tbody></table>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="section-5" class="slide level2">
-<h2></h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-finalmente la tabla de frecuencias quedó:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-<table style="width: 80%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
-<th>
-Intervalo (kg)
-</th>
-<th>
-xi
-</th>
-<th>
-fi
-</th>
-<th>
-fi·xi
-</th>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-50–60
-</td>
-<td>
-55
-</td>
-<td>
-4
-</td>
-<td>
-220
-</td>
-</tr>
-<tr style="background-color: #FFFFFF;">
-<td>
-60–70
-</td>
-<td>
-65
-</td>
-<td>
-6
-</td>
-<td>
-390
-</td>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-70–80
-</td>
-<td>
-75
-</td>
-<td>
-5
-</td>
-<td>
-375
-</td>
-</tr>
-<tr style="background-color: #FFFFFF;">
-<td>
-80–90
-</td>
-<td>
-85
-</td>
-<td>
-3
-</td>
-<td>
-255
-</td>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-90–100
-</td>
-<td>
-95
-</td>
-<td>
-2
-</td>
-<td>
-190
-</td>
-</tr>
-<tr style="background-color: #1F618D; color: white; font-weight: bold;">
+<tr style="background-color: #1a3a6b; color: white; font-weight: bold;">
 <td>
 Total
 </td>
@@ -1858,349 +1100,181 @@ Total
 20
 </td>
 <td>
-1430
+1 430
 </td>
 </tr>
 </tbody></table>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-con esta información se procede a hallar la media.
-</li>
-</ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-Se tiene que: <span class="math inline">\(k=5\)</span>,<span class="math inline">\(n=20\)</span> y <span class="math inline">\(\sum_{i=1}^{5} f_i x_i=1430\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-Reemplazando estos valores en la formula da:
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-<span class="math display">\[
-\bar{x} =\frac{\sum_{i=1}^{5} f_i x_i}{20}=\frac{1430}{20}=71,5
-\]</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Por lo tanto <span class="math inline">\(\bar{x}=71,5kg\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-La media del peso de los animales es de <span class="math inline">\(71,5kg\)</span>
-</li>
-</ul>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Solución
+</div>
+<div class="block-body">
+La marca de clase es el punto medio de cada intervalo: <span class="math inline">\(x_i = (L_{inf} + L_{sup})/2\)</span>. <span class="math display">\[\bar{x} = \frac{\sum f_i x_i}{n} = \frac{1\,430}{20} = 71{,}5\,\text{kg}\]</span> El peso promedio de los animales es <strong>71,5 kg</strong>.
+</div>
+</div>
+</div>
+</section>
+<section id="media-en-r" class="slide level2">
+<h2>Media en R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Ejemplo 1: datos sin agrupar</span></span>
+<span id="cb1-2"><a href=""></a>edades <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">19</span>,<span class="dv">19</span>,<span class="dv">21</span>,<span class="dv">22</span>,<span class="dv">20</span>,<span class="dv">23</span>,<span class="dv">21</span>,<span class="dv">24</span>,<span class="dv">19</span>,<span class="dv">20</span>,<span class="dv">22</span>,<span class="dv">21</span>,<span class="dv">24</span>)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">mean</span>(edades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20.86667</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># Ejemplo 2: datos agrupados (media ponderada)</span></span>
+<span id="cb3-2"><a href=""></a>xi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
+<span id="cb3-3"><a href=""></a>fi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">7</span>,<span class="dv">12</span>,<span class="dv">14</span>, <span class="dv">7</span>,  <span class="dv">3</span>)</span>
+<span id="cb3-4"><a href=""></a><span class="fu">sum</span>(fi <span class="sc">*</span> xi) <span class="sc">/</span> <span class="fu">sum</span>(fi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.28</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Ejemplo 3: datos con intervalos</span></span>
+<span id="cb5-2"><a href=""></a>xi_int <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">65</span>, <span class="dv">75</span>, <span class="dv">85</span>, <span class="dv">95</span>)</span>
+<span id="cb5-3"><a href=""></a>fi_int <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb5-4"><a href=""></a><span class="fu">sum</span>(fi_int <span class="sc">*</span> xi_int) <span class="sc">/</span> <span class="fu">sum</span>(fi_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 71.5</code></pre>
 </div>
 </div>
 </section>
 <section id="mediana" class="slide level2">
 <h2>Mediana</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La mediana es el valor que ocupa la posición central cuando los datos se ordenan de menor a mayor. Divide el conjunto de datos en dos partes iguales: el 50% de los valores queda por debajo y el otro 50% por encima.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Se denota como <span class="math inline">\(Me\)</span>.
-</li>
-</ul>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="font-size:30px;">
+<div class="block-title">
+Definición: Mediana
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<ul>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+<div class="block-body">
+La <strong>mediana</strong> (<span class="math inline">\(Me\)</span>) es el valor que ocupa la posición central cuando los datos se <strong>ordenan de menor a mayor</strong>, dividiendo el conjunto en dos mitades iguales: 50 % de los valores queda por debajo y 50 % por encima.
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="2" style="font-size:30px;">
+<div class="block-title">
 Propiedades
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
-Es un valor posicional: depende del orden de los datos, no de su magnitud.
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
-No se ve afectada por valores extremos: es resistente a datos atípicos.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px; text-align: justify;">
-Divide el conjunto en dos partes iguales: 50% inferior y 50% superior.
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px; text-align: justify;">
-Es útil en datos sesgados: representa mejor el centro cuando hay asimetría.
-</li>
-
-</ul>
 </div>
-</div>
-</section>
-<section id="formulas-para-calcular-la-mediana" class="slide level2">
-<h2>Formulas para calcular la mediana</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<div class="block-body">
 <ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Datos sin agrupar:
+<li class="fragment fade-up" data-fragment-index="3">
+<strong>Posicional:</strong> depende del orden, no de la magnitud de los datos.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-<b>Para los datos sin agrupar es clave ordenar de menor a mayor</b>.
+<li class="fragment fade-up" data-fragment-index="4">
+<strong>Robusta:</strong> no se afecta por valores extremos (atípicos).
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-Suponga que se tiene el siguiente conjunto de datos <span class="math inline">\(X_1,X_2,...,X_n\)</span> ya ordenados de menor a mayor se obtiene la sucesión <span class="math inline">\(X_\left(1\right),X_\left(2\right),...,X_\left(n\right)\)</span>. La mediana se calcula por medio de dos formulas:
+<li class="fragment fade-up" data-fragment-index="5">
+<strong>Única</strong> (aunque puede requerir promediar dos valores centrales).
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
-Cuando <span class="math inline">\(n\)</span> es impar:
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-<span class="math display">\[  
-Me=x_{\left(\frac{n+1}{2}\right)}
-\]</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-Se toma el valor que está en esa posición como la mediana.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<ul>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-cuando <span class="math inline">\(n\)</span> es par:
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-<span class="math display">\[
-Me = \frac{x_{\left(\frac{n}{2}\right)} + x_{\left(\frac{n}{2} + 1\right)}}{2}
-\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
-Esto equivale a promediar los valores en las posiciones <span class="math inline">\(\frac{n}{2}\)</span> y <span class="math inline">\(\frac{n}{2}+1\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
-El valor promedio de esos dos valores será la mediana de los datos.
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
-en conclusión: Si hay un número impar de datos, hay un centro exacto; si hay un número par, hay dos centros y se deben promediar.
+<li class="fragment fade-up" data-fragment-index="6">
+<strong>Preferida</strong> cuando la distribución es asimétrica.
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="mediana-para-datos-agrupados-sin-intervalos" class="slide level2">
-<h2>Mediana para datos agrupados (sin intervalos)</h2>
+<section id="fórmulas-para-datos-sin-agrupar" class="slide level2">
+<h2>Fórmulas para datos sin agrupar</h2>
 <div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Para datos agrupados hay dos metodos:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-cuando la tabla de frecuencias no tiene intervalos, se halla el valor del medio dependiendo del numero de datos si es par o impar.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-en caso de que <span class="math inline">\(N\)</span> sea impar se halla el valor <span class="math inline">\(\frac{N+1}{2}\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
-Luego este valor se busca en la frecuencias acumuladas <span class="math inline">\(F_i\)</span> donde da igual o da el mas cercano por encima.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-Finalmente el valor de <span class="math inline">\(x_i\)</span> que corresponde a la frecuencia acumulada que cumplió las condiciones será la mediana.
-</li>
-</ul>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top:100px; display: flex; flex-direction: column;">
+<div class="block-title">
+<span class="math inline">\(n\)</span> impar
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<ul>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-cuando <span class="math inline">\(N\)</span> es par:
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-Se calculan los valores <span class="math inline">\(\frac{N}{2}\)</span> y <span class="math inline">\(\frac{N}{2}+1\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
-Se buscan los valores <span class="math inline">\(x_i\)</span> correspondientes las frecuencias acumuladas y se promedian, ese resultado será la mediana.
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
-Si los valores <span class="math inline">\(x_i\)</span> quedaron en la misma frecuencia acumulada, no es necesario promediar, el <span class="math inline">\(x_i\)</span> correspondiente a la frecuencia acumulada será la mediana.
-</li>
-</ul>
+<div class="block-body" style="flex=1; height:100%">
+Hay un valor exactamente en el centro: <span class="math display">\[Me = x_{\left(\frac{n+1}{2}\right)}\]</span> Se toma el dato ubicado en la posición <span class="math inline">\(\frac{n+1}{2}\)</span> de la serie ordenada.
 </div>
 </div>
+<div class="block-theorem fragment fade-up" data-fragment-index="2" style="margin-top:100px;">
+<div class="block-title">
+<span class="math inline">\(n\)</span> par
+</div>
+<div class="block-body" style="height:100%;">
+Hay dos valores centrales que se promedian: <span class="math display">\[Me = \frac{x_{\left(\frac{n}{2}\right)} + x_{\left(\frac{n}{2}+1\right)}}{2}\]</span> Se promedian los datos en las posiciones <span class="math inline">\(\frac{n}{2}\)</span> y <span class="math inline">\(\frac{n}{2}+1\)</span>.
+</div>
+</div>
+</div>
+<p class="fragment fade-up" style="font-size: 26px; text-align: center; margin-top: 15px;" data-fragment-index="3">
+<strong>Paso previo indispensable:</strong> ordenar los datos de menor a mayor.
+</p>
 </section>
-<section id="mediana-para-datos-agrupados-con-intervalos" class="slide level2">
-<h2>Mediana para datos agrupados (con intervalos)</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-primero se calcula el valor <span class="math inline">\(\frac{N}{2}\)</span> y se busca la frecuencia acumulada <span class="math inline">\(F_i\)</span> donde es igual o pasa inmediatamente este valor.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Despues de ubicar el intervalo se aplica la siguiente fórmula:
-</li>
-<li class="fragment fade-in" data-fragment-index="4" style="font-size: 25px;">
-<span class="math display">\[
-Me = L_i + \left( \frac{\frac{N}{2} - F_\left(i-1\right)}{f_i} \right) \cdot A
-\]</span>
-</li>
-</ul>
+<section id="ejemplo-1-n-impar-sin-agrupar" class="slide level2">
+<h2>Ejemplo 1: <span class="math inline">\(n\)</span> impar, sin agrupar</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Horas de estudio de 13 estudiantes
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-Donde:
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(L_i\)</span>: es el limite inferior del intervalo donde se encuentra la mediana.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(F_\left(i-1\right)\)</span>: es la frecuencia acumulada anterior a la frecuencia acumulada donde se encuentra la mediana
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(f_i\)</span>: es la frecuencia absoluta del intervalo donde se encuentra la mediana.
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(A\)</span>: es la amplitud del intervalo donde se encuentra la mediana.
-</li>
-</ul>
+<div class="block-body">
+<p>
+Datos: 4, 6, 5, 7, 3, 8, 6, 5, 9, 7, 4, 6, 10. Calcule la mediana.
+</p>
 </div>
 </div>
-</section>
-<section id="ejemplo-1-datos-sin-agrupar-con-n-impar" class="slide level2">
-<h2>Ejemplo 1 (datos sin agrupar con n impar)</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Se registraron las horas de estudio de 13 estudiantes: Estas son:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-4, 6, 5, 7, 3, 8, 6, 5, 9, 7, 4, 6, 10
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-Calcule e interprete la mediana de las horas de estudio de los 13 estudiantes.
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Solución
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-Primero que todo se ordenan los datos de menor a mayor.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-3, 4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 9, 10
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-En este caso <span class="math inline">\(n=13\)</span> , por lo tanto <span class="math inline">\(n\)</span> es impar y se aplica la siguiente fórmula:
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(Me=x_{\left(\frac{n+1}{2}\right)}\)</span>
-</li>
-</ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="11">
-<ul>
-
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
-Reemplazando <span class="math inline">\(n=13\)</span>, se tiene que:
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(Me=x_{\left(\frac{13+1}{2}\right)}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(Me=x_{\left(\frac{14}{2}\right)}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(Me=x_{\left(7\right)}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 25px; text-align: justify;">
-Con <span class="math inline">\(Me=x_{\left(7\right)}\)</span>, se busca el dato ubicado en la séptima posición en los datos ordenados.
-</li>
-<li class="fragment fade-in" data-fragment-index="17" style="font-size: 25px; text-align: justify;">
-el cual es: <span class="math inline">\(x_{\left(7\right)}=6\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="18" style="font-size: 25px; text-align: justify;">
-Respuesta: la mediana de estos datos es <span class="math inline">\(6\,horas\)</span>.
-</li>
-<li class="fragment fade-in" data-fragment-index="19" style="font-size: 25px; text-align: justify;">
-Interpretación: El 50% de los estudiantes estudió <span class="math inline">\(6\)</span> horas o menos, y el otro 50% <span class="math inline">\(6\)</span> horas o más.
-</li>
-</ul>
+<div class="block-body">
+Datos ordenados: 3, 4, 4, 5, 5, 6, <strong>6</strong>, 6, 7, 7, 8, 9, 10. Con <span class="math inline">\(n=13\)</span> (impar): <span class="math display">\[Me = x_{\left(\frac{13+1}{2}\right)} = x_{(7)} = 6\,\text{horas}\]</span> El 50 % de los estudiantes estudia <strong>6 horas o menos</strong>, y el otro 50 % estudia 6 horas o más.
 </div>
 </div>
 </section>
-<section id="ejemplo-2-datos-sin-agrupar-con-n-par" class="slide level2">
-<h2>Ejemplo 2 (datos sin agrupar con n par)</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Se registró la producción (kg) en 14 parcelas agrícolas: Estas fueron:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-12, 15, 18, 20, 14, 16, 19, 17, 13, 21, 22, 11, 23, 24
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-Calcule e interprete la mediana de la producción de las 14 parcelas.
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+<section id="ejemplo-2-n-par-sin-agrupar" class="slide level2">
+<h2>Ejemplo 2: <span class="math inline">\(n\)</span> par, sin agrupar</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Producción de 14 parcelas agrícolas (kg)
+</div>
+<div class="block-body">
+<p>
+Datos: 12, 15, 18, 20, 14, 16, 19, 17, 13, 21, 22, 11, 23, 24. Calcule la mediana.
+</p>
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Solución
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-Primero que todo se ordenan los datos de menor a mayor.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-En este caso <span class="math inline">\(n=14\)</span> , por lo tanto <span class="math inline">\(n\)</span> es par y se buscan los valores del medio en los datos ordenados:
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(x_\left(\frac{n}{2}\right)\)</span> y <span class="math inline">\(x_{\left(\frac{n}{2} + 1\right)}\)</span>
-</li>
-</ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="11">
-<ul>
-
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
-Reemplazando <span class="math inline">\(n=14\)</span>, se tiene que:
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(x_\left(\frac{14}{2}\right)\)</span> y <span class="math inline">\(x_{\left(\frac{14}{2} + 1\right)}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(x_\left(7\right)\)</span> y <span class="math inline">\(x_\left(8\right)\)</span>, se buscan los valores en las posiciones 7 y 8 en los datos ordenados.
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px; text-align: justify;">
-Los cuales son <span class="math inline">\(x_\left(7\right)=17\)</span> y <span class="math inline">\(x_\left(8\right)=18\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 25px; text-align: justify;">
-Entonces la mediana se calcula como:
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(Me=\frac{x_\left(7\right)+x_\left(8\right)}{2}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="17" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(Me=\frac{17+18}{2}=\frac{35}{2}=17,5\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="18" style="font-size: 25px; text-align: justify;">
-Respuesta: la mediana de estos datos es <span class="math inline">\(17,5kg\)</span>.
-</li>
-<li class="fragment fade-in" data-fragment-index="19" style="font-size: 25px; text-align: justify;">
-Interpretación: La mitad de las parcelas produce <span class="math inline">\(17,5\)</span> kg o menos, y la otra mitad <span class="math inline">\(17,5\)</span> kg o más.
-</li>
-</ul>
+<div class="block-body">
+Datos ordenados: 11, 12, 13, 14, 15, 16, <strong>17</strong>, <strong>18</strong>, 19, 20, 21, 22, 23, 24. Con <span class="math inline">\(n=14\)</span> (par): <span class="math display">\[Me = \frac{x_{(7)} + x_{(8)}}{2} = \frac{17 + 18}{2} = 17{,}5\,\text{kg}\]</span> La mitad de las parcelas produce <strong>17,5 kg o menos</strong> y la otra mitad produce 17,5 kg o más.
 </div>
 </div>
 </section>
-<section id="ejemplo-3-datos-agrupados-sin-intervalos-con-n-impar" class="slide level2">
-<h2>Ejemplo 3 (datos agrupados sin intervalos con n impar)</h2>
+<section id="datos-agrupados-sin-intervalos" class="slide level2">
+<h2>Datos agrupados sin intervalos</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p style="font-size: 24px; text-align: justify; font-weight: 600; margin-bottom: 8px;">
+Procedimiento:
+</p>
 <ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Se registró el número de frutos por planta en un cultivo, los datos se agruparon en la siguiente tabla de frecuencias:
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+Calcule <span class="math inline">\(\frac{N+1}{2}\)</span> (si <span class="math inline">\(N\)</span> es impar) o <span class="math inline">\(\frac{N}{2}\)</span> y <span class="math inline">\(\frac{N}{2}+1\)</span> (si <span class="math inline">\(N\)</span> es par).
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-<table style="width: 60%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Busque esa(s) posición(es) en la columna de frecuencias acumuladas <span class="math inline">\(F_i\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+El valor <span class="math inline">\(x_i\)</span> que corresponde a la <span class="math inline">\(F_i\)</span> donde se alcanza o supera la posición buscada es la mediana.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+Si los dos valores centrales (caso par) caen en la misma <span class="math inline">\(F_i\)</span>, no se promedia: ese <span class="math inline">\(x_i\)</span> es la mediana.
+</li>
+</ul>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="6">
+<div class="block-title">
+Ejemplo: frutos por planta (<span class="math inline">\(N=13\)</span>, impar)
+</div>
+<div class="block-body">
+<table style="width: 90%; border-collapse: collapse; margin: auto; font-size: 21px; text-align: center;">
+<tbody><tr style="background-color: #1a3a6b; color: white;">
 <th>
-xi
+<span class="math inline">\(x_i\)</span>
 </th>
 <th>
-fi
+<span class="math inline">\(f_i\)</span>
 </th>
 <th>
-Fi
+<span class="math inline">\(F_i\)</span>
 </th>
 </tr>
 <tr style="background-color: #EAF2F8;">
@@ -2225,7 +1299,7 @@ Fi
 5
 </td>
 </tr>
-<tr style="background-color: #EAF2F8;">
+<tr style="background-color: #bfdbfe; font-weight: bold;">
 <td>
 4
 </td>
@@ -2269,202 +1343,45 @@ Fi
 13
 </td>
 </tr>
-<tr style="background-color: #1F618D; color: white; font-weight: bold;">
-<td>
-Total
-</td>
-<td>
-13
-</td>
-<td>
-—
-</td>
-</tr>
 </tbody></table>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-Hallar e interpretar la mediana de estos datos.
-</li>
-</ul>
+<span class="math inline">\(\frac{13+1}{2}=7\)</span>; la posición 7 cae en <span class="math inline">\(F_i=9\)</span>, que corresponde a <span class="math inline">\(x_i=4\)</span>. <strong><span class="math inline">\(Me = 4\)</span> frutos.</strong>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-Solución
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-En este caso <span class="math inline">\(N=13\)</span>, es impar.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-Se busca el valor <span class="math inline">\(\frac{N+1}{2}\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-Se tiene que: <span class="math inline">\(N=13\)</span> y reemplazando:
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(\frac{13+1}{2}=\frac{14}{2}=7\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-Se busca este valor en las frecuencias acumuladas de la tabla de frecuencias donde de igual o se pase de <span class="math inline">\(7\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
-La frecuencia acumulada donde cumple esta condición es <span class="math inline">\(9\)</span> y pertenece al <span class="math inline">\(x_i=4\)</span>, entonces <span class="math inline">\(Me=4\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
-Por lo tanto la mediana de estos datos es <span class="math inline">\(4\)</span> frutos.
-</li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
-Interpretación: La mitad de las plantas tiene <span class="math inline">\(4\)</span> frutos o menos, y la otra mitad <span class="math inline">\(4\)</span> o más.
-</li>
-</ul>
 </div>
 </div>
 </section>
-<section id="ejemplo-4-datos-agrupados-sin-intervalos-con-n-par" class="slide level2">
-<h2>Ejemplo 4 (datos agrupados sin intervalos con n par)</h2>
+<section id="datos-agrupados-con-intervalos" class="slide level2">
+<h2>Datos agrupados con intervalos</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Fórmula de la mediana interpolada
+</div>
+<div class="block-body">
+<span class="math display">\[Me = L_i + \left(\frac{\dfrac{N}{2} - F_{i-1}}{f_i}\right) \cdot A\]</span> Donde: <span class="math inline">\(L_i\)</span> = límite inferior del intervalo mediano; <span class="math inline">\(F_{i-1}\)</span> = frecuencia acumulada anterior; <span class="math inline">\(f_i\)</span> = frecuencia absoluta del intervalo; <span class="math inline">\(A\)</span> = amplitud del intervalo.
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+El <strong>intervalo mediano</strong> es aquel donde la frecuencia acumulada <span class="math inline">\(F_i\)</span> alcanza o supera <span class="math inline">\(N/2\)</span> por primera vez.
+</li>
+</ul>
+</section>
+<section id="mediana-con-intervalos" class="slide level2">
+<h2>Mediana con intervalos</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Se registró el número de errores cometidos por estudiantes en un examen, los datos se agruparon en la siguiente tabla de frecuencias:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-<table style="width: 60%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
+<p style="font-size: 23px; text-align: justify;">
+Tiempo (min) en completar una rutina de ejercicio (<span class="math inline">\(N=30\)</span>):
+</p>
+<table style="width: 100%; border-collapse: collapse; margin: auto; font-size: 21px; text-align: center;">
+<tbody><tr style="background-color: #1a3a6b; color: white;">
 <th>
-Errores (xi)
+Intervalo
 </th>
 <th>
-fi
+<span class="math inline">\(f_i\)</span>
 </th>
 <th>
-Fi
-</th>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-1
-</td>
-<td>
-2
-</td>
-<td>
-2
-</td>
-</tr>
-<tr style="background-color: #FFFFFF;">
-<td>
-2
-</td>
-<td>
-4
-</td>
-<td>
-6
-</td>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-3
-</td>
-<td>
-3
-</td>
-<td>
-9
-</td>
-</tr>
-<tr style="background-color: #FFFFFF;">
-<td>
-4
-</td>
-<td>
-5
-</td>
-<td>
-14
-</td>
-</tr>
-<tr style="background-color: #EAF2F8;">
-<td>
-5
-</td>
-<td>
-2
-</td>
-<td>
-16
-</td>
-</tr>
-<tr style="background-color: #1F618D; color: white; font-weight: bold;">
-<td>
-Total
-</td>
-<td>
-16
-</td>
-<td>
-—
-</td>
-</tr>
-</tbody></table>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-Hallar e interpretar la mediana de estos datos.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-Solución
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(N=16\)</span>, es par.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
-Se buscan los valores del centro: <span class="math inline">\(\frac{N}{2}\)</span> y <span class="math inline">\(\frac{N}{2}+1\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
-Reemplazando:
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(\frac{16}{2}=8\,y\, \frac{16}{2}+1=9\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px; text-align: justify;">
-Se buscan estos valores en las frecuencias acumuladas de la tabla de frecuencias se encuentren o se pasen.
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px; text-align: justify;">
-Estos valores intermedios se encuentran en la frecuencia acumulada <span class="math inline">\(F_i=9\)</span>, que corresponde al <span class="math inline">\(x_i=3\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px; text-align: justify;">
-Como no hay cambios de una frecuencia acumulada a otra, no es necesario promediar y <span class="math inline">\(Me=3\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 20px; text-align: justify;">
-Interpretación: el 50% de los estudiantes cometió 3 errores o menos en el examen, mientras que el otro 50% cometió 3 errores o más.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejemplo-5-datos-agrupados-con-intervalos" class="slide level2">
-<h2>Ejemplo 5 (datos agrupados con intervalos)</h2>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Se registraron los tiempos (en minutos) que tardan varias personas en completar una rutina de ejercicio, los datos quedaron en la siguiente tabla de frecuencias.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-<table style="width: 70%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
-<th>
-Tiempo (min)
-</th>
-<th>
-fi
-</th>
-<th>
-Fi
+<span class="math inline">\(F_i\)</span>
 </th>
 </tr>
 <tr style="background-color: #EAF2F8;">
@@ -2489,7 +1406,7 @@ Fi
 8
 </td>
 </tr>
-<tr style="background-color: #EAF2F8;">
+<tr style="background-color: #bfdbfe; font-weight: bold;">
 <td>
 20 – 30
 </td>
@@ -2522,230 +1439,131 @@ Fi
 30
 </td>
 </tr>
-<tr style="background-color: #1F618D; color: white; font-weight: bold;">
-<td>
-Total
-</td>
-<td>
-30
-</td>
-<td>
-—
-</td>
-</tr>
 </tbody></table>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-Hallar e interpretar la mediana de los tiempos de rutina de ejercicio .
-</li>
-</ul>
+<p style="font-size: 22px; margin-top: 8px;">
+<span class="math inline">\(N/2 = 15\)</span>. La posición 15 cae en el intervalo <strong>[20 – 30]</strong> (donde <span class="math inline">\(F_i=17\)</span>).
+</p>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Solución
+</div>
+<div class="block-body">
+<span class="math inline">\(L_i = 20\)</span>, <span class="math inline">\(F_{i-1} = 8\)</span>, <span class="math inline">\(f_i = 9\)</span>, <span class="math inline">\(A = 10\)</span>: <span class="math display">\[Me = 20 + \left(\frac{15 - 8}{9}\right) \times 10 = 20 + 7{,}78 \approx 27{,}8\,\text{min}\]</span> La mitad de las personas completa la rutina en <strong>menos de 27 minutos y 47 segundos</strong>.
+</div>
+</div>
 </div>
 </section>
-<section id="solución" class="slide level2">
-<h2>Solución</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 20px; text-align: justify;">
-Primero se calcula <span class="math inline">\(\frac{N}{2}\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px; text-align: justify;">
-con <span class="math inline">\(N=30\)</span> , <span class="math inline">\(\frac{30}{2}=15\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
-Se busca el <span class="math inline">\(15\)</span> en la tabla de frecuencias.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
-El 15 cae en la frecuencia acumulada donde marca 17 y esta pertenece al intervalo [20-30]
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
-Para hallar la mediana se utiliza la siguiente fórmula:
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
-<span class="math display">\[
-Me = L_i + \left( \frac{\frac{N}{2} - F_\left(i-1\right)}{f_i} \right) \cdot A
-\]</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
-Donde:
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(\frac{N}{2}=15\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(L_i=20\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(F_\left(i-1\right)=8\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(f_i=9\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(A=10\)</span>
-</li>
-</ul>
+<section id="mediana-en-r" class="slide level2">
+<h2>Mediana en R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Ejemplo 1: n impar</span></span>
+<span id="cb7-2"><a href=""></a>horas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">10</span>)</span>
+<span id="cb7-3"><a href=""></a><span class="fu">sort</span>(horas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  3  4  4  5  5  6  6  6  7  7  8  9 10</code></pre>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="14">
-<ul>
-<li class="fragment fade-up" data-fragment-index="15" style="font-size: 25px; text-align: justify;">
-Reemplazando estos valores se tiene que:
-</li>
-<li class="fragment fade-up" data-fragment-index="16" style="font-size: 25px; text-align: justify;">
-<span class="math display">\[
-Me = 20 + \left( \frac{15 - 8}{9} \right) \cdot 10=27,78\,minutos
-\]</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="17" style="font-size: 25px; text-align: justify;">
-Convirtiendo este valor a minutos y segundos queda 27 minutos y 47 segundos.
-</li>
-<li class="fragment fade-up" data-fragment-index="18" style="font-size: 25px; text-align: justify;">
-Por lo tanto <span class="math inline">\(Me=27\,min\; 47\,seg\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="19" style="font-size: 25px; text-align: justify;">
-Interpretacion: La mitad de las personas tarda aproximadamente 27 minutos y 47 segundos o menos, y la otra mitad tarda más.
-</li>
-</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">median</span>(horas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Ejemplo 2: n par</span></span>
+<span id="cb11-2"><a href=""></a>parcelas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">15</span>,<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">19</span>,<span class="dv">17</span>,<span class="dv">13</span>,<span class="dv">21</span>,<span class="dv">22</span>,<span class="dv">11</span>,<span class="dv">23</span>,<span class="dv">24</span>)</span>
+<span id="cb11-3"><a href=""></a><span class="fu">median</span>(parcelas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.5</code></pre>
 </div>
 </div>
 </section>
 <section id="moda" class="slide level2">
 <h2>Moda</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La moda es el valor que aparece con mayor frecuencia en un conjunto de datos. Puede haber una moda (unimodal), dos (bimodal) o más (multimodal), e incluso no existir si todos los valores son diferentes.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Se denota como <span class="math inline">\(Mo\)</span>.
-</li>
-</ul>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición: Moda
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+<div class="block-body">
+La <strong>moda</strong> (<span class="math inline">\(Mo\)</span>) es el valor o categoría que aparece con <strong>mayor frecuencia</strong> en un conjunto de datos. Puede haber una sola moda (unimodal), dos (bimodal), varias (multimodal) o ninguna.
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Propiedades
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-Puede no ser única: puede haber varias modas o ninguna.
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
-No usa todos los datos: Solo depende de la frecuencia.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
-No se afecta por valores extremos: Es completamente independiente de ellos.
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
-Representa el valor más común: Es útil para identificar patrones frecuentes.
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
-Se puede usar en datos cualitativos: Es la única medida que aplica a variables categóricas.
-</li>
-
-</ul>
 </div>
-</div>
-</section>
-<section id="fórmulas-para-hallar-la-moda" class="slide level2">
-<h2>Fórmulas para hallar la moda</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<div class="block-body">
 <ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Para datos no agrupados: la moda es simplemente el dato o registro que más se presenta.
+<li class="fragment fade-up" data-fragment-index="3">
+<strong>No única:</strong> puede haber varias modas o ninguna.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Datos agrupados sin intervalos: la moda es la categoría o valor <span class="math inline">\(x_i\)</span> con la mayor frecuencia absoluta.
+<li class="fragment fade-up" data-fragment-index="4">
+<strong>No usa toda la información:</strong> solo depende de la frecuencia.
 </li>
-<li class="fragment fade-in" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-Datos agrupados con intervalos:
+<li class="fragment fade-up" data-fragment-index="5">
+<strong>Robusta ante atípicos:</strong> no se ve afectada por valores extremos.
 </li>
-<li class="fragment fade-in" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
-Primero se ubica el intervalo donde se encuentra la mayor frecuencia absoluta <span class="math inline">\(f_i\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-Ya con el intervalo modal ubicado, la moda se calcula con la siguiente fórmula:
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-<span class="math display">\[
-Mo = L_i + \left( \frac{f_i - f_\left(i-1\right)}{(f_i - f_\left(i-1\right)) + (f_i - f_\left(i+1\right))} \right) \cdot A
-\]</span>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<ul>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Donde:
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(L_i\)</span>: es el límite inferior del intervalo donde se encuentra la moda.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(f_i\)</span>: es la frecuencia absoluta mayor o frecuencia modal.
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(f_\left(i-1\right)\)</span>: es la frecuencia absoluta anterior a la frecuencia modal.
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(f_\left(i+1\right)\)</span>: es la frecuencia absoluta siguiente a la frecuencia modal.
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px; text-align: justify;">
-<span class="math inline">\(A\)</span>: es la amplitud del intervalo donde se encuentra la moda.
+<li class="fragment fade-up" data-fragment-index="6">
+<strong>Aplica a variables cualitativas:</strong> es la única medida válida para datos categóricos.
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="ejemplos-3" class="slide level2">
-<h2>Ejemplos</h2>
+<section id="fórmulas" class="slide level2">
+<h2>Fórmulas</h2>
 <div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-Ejemplo 1 (datos sin agrupar)
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Se registraron las edades de un grupo 15 de personas:
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-18, 20, 22, 20, 19, 21, 20, 22, 23, 20, 24, 21, 25, 27, 20
-</li>
-<li class="fragment fade-in" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
-Hallar la moda para la edad de este grupo.
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Sin agrupar / agrupados sin intervalos
+</div>
+<div class="block-body" style="height:100%">
+La moda es el dato o categoría con la <strong>mayor frecuencia absoluta</strong>. No requiere fórmula; basta con identificar el valor más repetido.
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Agrupados con intervalos (Czuber)
+</div>
+<div class="block-body">
+<span class="math display">\[Mo = L_i + \left(\frac{f_i - f_{i-1}}{(f_i - f_{i-1}) + (f_i - f_{i+1})}\right) \cdot A\]</span> Donde <span class="math inline">\(L_i\)</span> es el límite inferior del intervalo modal, <span class="math inline">\(f_{i-1}\)</span> y <span class="math inline">\(f_{i+1}\)</span> las frecuencias adyacentes, y <span class="math inline">\(A\)</span> la amplitud.
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-datos-sin-agrupar-1" class="slide level2">
+<h2>Ejemplo 1: datos sin agrupar</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Edades de 15 personas
+</div>
+<div class="block-body">
+<p>
+Datos: 18, 20, 22, 20, 19, 21, 20, 22, 23, 20, 24, 21, 25, 27, 20
+</p>
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Solución
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
-Se pueden ordenar los datos de menor a mayor
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-18, 19, 20, 20, 20, 20, 20, 21, 21, 22, 22, 23, 24, 25, 27
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-La edad que más se repite es 20, por lo tanto, la moda es <span class="math inline">\(Mo=20\,años\)</span>
-</li>
-</ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="10">
-<ul>
-
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
-Ejemplo 2 (datos agrupados sin intervalos)
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
-Se registró los trabajos recibidos de 16 estudiantes, los resultados fueron los siguientes:
-</li>
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 25px; text-align: justify;">
-<table style="width: 50%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
+<div class="block-body">
+<p>Datos ordenados: 18, 19, <strong>20, 20, 20, 20, 20</strong>, 21, 21, 22, 22, 23, 24, 25, 27.</p>
+El valor 20 aparece <strong>5 veces</strong> — es el de mayor frecuencia. <span class="math display">\[Mo = 20\,\text{años}\]</span> La edad más frecuente en el grupo es 20 años.
+</div>
+</div>
+</section>
+<section id="ejemplo-2-datos-agrupados-sin-intervalos-1" class="slide level2">
+<h2>Ejemplo 2: datos agrupados sin intervalos</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p style="font-size: 25px; text-align: justify;">
+Número de trabajos entregados por 16 estudiantes:
+</p>
+<table style="width: 80%; border-collapse: collapse; margin: auto; font-size: 22px; text-align: center;">
+<tbody><tr style="background-color: #1a3a6b; color: white;">
 <th>
-xi
+<span class="math inline">\(x_i\)</span>
 </th>
 <th>
-fi
+<span class="math inline">\(f_i\)</span>
 </th>
 </tr>
 <tr style="background-color: #EAF2F8;">
@@ -2764,7 +1582,7 @@ fi
 4
 </td>
 </tr>
-<tr style="background-color: #EAF2F8;">
+<tr style="background-color: #bfdbfe; font-weight: bold;">
 <td>
 3
 </td>
@@ -2788,7 +1606,7 @@ fi
 1
 </td>
 </tr>
-<tr style="background-color: #1F618D; color: white; font-weight: bold;">
+<tr style="background-color: #1a3a6b; color: white; font-weight: bold;">
 <td>
 Total
 </td>
@@ -2797,45 +1615,31 @@ Total
 </td>
 </tr>
 </tbody></table>
-</li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 25px; text-align: justify;">
-¿Cual es la moda?
-</li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 25px; text-align: justify;">
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Solución
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 25px; text-align: justify;">
-De acuerdo a la tabla de frecuencias la mayor frecuencia es 6 y pertenece a 3 trabajos presentados por los estudiantes.
-</li>
-<li class="fragment fade-in" data-fragment-index="17" style="font-size: 25px; text-align: justify;">
-Por lo tanto la moda es <span class="math inline">\(Mo=3\)</span> trabajos.
-</li>
-</ul>
+</div>
+<div class="block-body">
+La mayor frecuencia absoluta es <span class="math inline">\(f = 6\)</span>, que corresponde a <span class="math inline">\(x_i = 3\)</span> trabajos. <span class="math display">\[Mo = 3\,\text{trabajos}\]</span> Los estudiantes entregan, con mayor frecuencia, <strong>3 trabajos</strong>.
+</div>
 </div>
 </div>
 </section>
-<section id="section-6" class="slide level2">
-<h2></h2>
+<section id="ejemplo-3-datos-con-intervalos-1" class="slide level2">
+<h2>Ejemplo 3 datos con intervalos</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 20px; text-align: justify;">
-Ejemplo 3 (datos agrupados con intervalos)
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px; text-align: justify;">
-Se registró el gasto semanal (en miles de pesos) de un grupo de estudiantes.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
-Los datos se recopilaron en la siguiente tabla de frecuencias.
-</li>
-<li class="fragment fade-in" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
-<table style="width: 60%; border-collapse: collapse; margin: auto; font-size: 20px; text-align: center;">
-<tbody><tr style="background-color: #0B3C49; color: white;">
+<p style="font-size: 23px; text-align: justify;">
+Gasto semanal (miles de pesos) de 35 estudiantes:
+</p>
+<table style="width: 100%; border-collapse: collapse; margin: auto; font-size: 21px; text-align: center;">
+<tbody><tr style="background-color: #1a3a6b; color: white;">
 <th>
-Gasto (miles $)
+Gasto (<span class="math inline">\(×10^3\)</span>)
 </th>
 <th>
-fi
+<span class="math inline">\(f_i\)</span>
 </th>
 </tr>
 <tr style="background-color: #EAF2F8;">
@@ -2854,7 +1658,7 @@ fi
 6
 </td>
 </tr>
-<tr style="background-color: #EAF2F8;">
+<tr style="background-color: #bfdbfe; font-weight: bold;">
 <td>
 40 – 60
 </td>
@@ -2878,78 +1682,215 @@ fi
 5
 </td>
 </tr>
-<tr style="background-color: #1F618D; color: white; font-weight: bold;">
-<td>
-Total
-</td>
-<td>
-35
-</td>
-</tr>
 </tbody></table>
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
-Hallar la moda para el gasto semanal.
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
+<p style="font-size: 22px; margin-top: 6px;">
+Intervalo modal: <strong>[40 – 60]</strong> (mayor frecuencia: 12).
+</p>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
 Solución
+</div>
+<div class="block-body">
+<span class="math inline">\(L_i=40\)</span>, <span class="math inline">\(f_i=12\)</span>, <span class="math inline">\(f_{i-1}=6\)</span>, <span class="math inline">\(f_{i+1}=8\)</span>, <span class="math inline">\(A=20\)</span>: <span class="math display">\[Mo = 40 + \frac{12-6}{(12-6)+(12-8)} \times 20 = 40 + \frac{6}{10} \times 20 = 52\]</span> El gasto más frecuente es aproximadamente <strong>52 000 pesos semanales</strong>.
+</div>
+</div>
+</div>
+</section>
+<section id="moda-en-r" class="slide level2">
+<h2>Moda en R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># R no tiene función nativa para la moda; se calcula así:</span></span>
+<span id="cb13-2"><a href=""></a>edades <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">22</span>,<span class="dv">20</span>,<span class="dv">19</span>,<span class="dv">21</span>,<span class="dv">20</span>,<span class="dv">22</span>,<span class="dv">23</span>,<span class="dv">20</span>,<span class="dv">24</span>,<span class="dv">21</span>,<span class="dv">25</span>,<span class="dv">27</span>,<span class="dv">20</span>)</span>
+<span id="cb13-3"><a href=""></a>tabla  <span class="ot">&lt;-</span> <span class="fu">table</span>(edades)</span>
+<span id="cb13-4"><a href=""></a>tabla</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>edades
+18 19 20 21 22 23 24 25 27 
+ 1  1  5  2  2  1  1  1  1 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Valor con mayor frecuencia:</span></span>
+<span id="cb15-2"><a href=""></a><span class="fu">names</span>(tabla)[<span class="fu">which.max</span>(tabla)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "20"</code></pre>
+</div>
+</div>
+</section>
+<section id="cuándo-usar-cada-medida" class="slide level2">
+<h2>¿Cuándo usar cada medida?</h2>
+<div style="font-size: 26px; margin-top: 20px;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Medida</th>
+<th style="text-align: left;">Mejor cuando…</th>
+<th style="text-align: left;">Evitar cuando…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Media</strong></td>
+<td style="text-align: left;">Distribución simétrica, sin valores atípicos.</td>
+<td style="text-align: left;">Hay valores extremos que distorsionan el promedio.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Mediana</strong></td>
+<td style="text-align: left;">Distribución asimétrica o con atípicos.</td>
+<td style="text-align: left;">Se necesita una medida algebraicamente tratable.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Moda</strong></td>
+<td style="text-align: left;">Datos cualitativos o cuando interesa el valor más típico.</td>
+<td style="text-align: left;">Los datos tienen pocas repeticiones (puede ser poco informativa).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-body">
+<p>
+En una distribución <strong>simétrica</strong> (como la normal): media = mediana = moda. Cuando hay <strong>sesgo positivo</strong>: media &gt; mediana &gt; moda. Cuando hay <strong>sesgo negativo</strong>: media &lt; mediana &lt; moda.
+</p>
+</div>
+</div>
+</section>
+<section id="efecto-de-los-valores-atípicos" class="slide level2">
+<h2>Efecto de los valores atípicos</h2>
+
+<img data-src="clase_3_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><p class="fragment fade-up" style="font-size: 24px; text-align: center;" data-fragment-index="1">
+Un solo valor atípico puede desplazar significativamente la media, mientras la mediana permanece casi estable.
+</p>
+</section>
+<section id="comparación-de-las-tres-medidas-en-r" class="slide level2">
+<h2>Comparación de las tres medidas en R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>datos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">15</span>,<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">19</span>,<span class="dv">17</span>,<span class="dv">13</span>,<span class="dv">21</span>,<span class="dv">22</span>,<span class="dv">11</span>,<span class="dv">23</span>,<span class="dv">24</span>,<span class="dv">16</span>,<span class="dv">16</span>)</span>
+<span id="cb17-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"Media   :"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(datos), <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Media   : 17.31 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Mediana :"</span>, <span class="fu">median</span>(datos), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mediana : 16.5 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>tabla_moda <span class="ot">&lt;-</span> <span class="fu">table</span>(datos)</span>
+<span id="cb21-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"Moda    :"</span>, <span class="fu">names</span>(tabla_moda)[<span class="fu">which.max</span>(tabla_moda)], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Moda    : 16 </code></pre>
+</div>
+</div>
+
+<img data-src="clase_3_files/figure-revealjs/unnamed-chunk-6-1.png" width="864" class="r-stretch"></section>
+<section id="resumen-de-la-clase" class="slide level2">
+<h2>Resumen de la clase</h2>
+<div class="twocol">
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Parte I
+</div>
+<div class="block-body">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2">
+<strong>Tasa:</strong> razón entre magnitudes con unidades distintas (kg/ha, km/h).
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
-Primero se busca el intervalo donde se encuentra la mayor frecuencia, la cual es 12 y corresponde al intervalo [40-60]
+<li class="fragment fade-up" data-fragment-index="3">
+<strong>Razón:</strong> comparación adimensional entre cantidades de la misma clase.
 </li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 20px; text-align: justify;">
-Luego hallar la moda se utiliza la siguiente fórmula:
+<li class="fragment fade-up" data-fragment-index="4">
+<strong>Proporción:</strong> igualdad entre dos razones; permite encontrar valores desconocidos con productos cruzados.
 </li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 20px; text-align: justify;">
-<span class="math display">\[
-Mo = L_i + \left( \frac{f_i - f_\left(i-1\right)}{(f_i - f_\left(i-1\right)) + (f_i - f_\left(i+1\right))} \right) \cdot A
-\]</span>
+<li class="fragment fade-up" data-fragment-index="5">
+<strong>Porcentaje:</strong> proporción estadística en base 100.
 </li>
 </ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="11">
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="6">
+<div class="block-title">
+Parte II
+</div>
+<div class="block-body" style="height:100%">
 <ul>
-
-
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 20px; text-align: justify;">
-Donde:
+<li class="fragment fade-up" data-fragment-index="7">
+<strong>Media <span class="math inline">\(\bar{x}\)</span>:</strong> promedio; sensible a atípicos.
 </li>
-
-<li class="fragment fade-in" data-fragment-index="13" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(L_i=40\)</span>
+<li class="fragment fade-up" data-fragment-index="8">
+<strong>Mediana <span class="math inline">\(Me\)</span>:</strong> valor central; robusta ante atípicos.
 </li>
-<li class="fragment fade-in" data-fragment-index="14" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(f_i=12\)</span>
+<li class="fragment fade-up" data-fragment-index="9">
+<strong>Moda <span class="math inline">\(Mo\)</span>:</strong> valor más frecuente; única medida para datos cualitativos.
 </li>
-<li class="fragment fade-in" data-fragment-index="15" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(f_\left(i-1\right)=6\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="16" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(f_\left(i+1\right)=8\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="17" style="font-size: 20px; text-align: justify;">
-<span class="math inline">\(A=20\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="18" style="font-size: 20px; text-align: justify;">
-Reemplazando estos valores en la formula se tiene que:
-</li>
-<li class="fragment fade-in" data-fragment-index="19" style="font-size: 20px; text-align: justify;">
-<span class="math display">\[
-Mo = 40 + \left( \frac{12-6}{(12 - 6) + (12 - 8)} \right) \cdot 20
-\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="20" style="font-size: 20px; text-align: justify;">
-<span class="math display">\[
-Mo = 40 + \left( \frac{6}{(6) + (4)} \right) \cdot 20=40 + \left( \frac{6}{10} \right) \cdot 20=52
-\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="21" style="font-size: 20px; text-align: justify;">
-En este caso <span class="math inline">\(Mo=52\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="22" style="font-size: 20px; text-align: justify;">
-El gasto más frecuente de los estudiantes está alrededor de 52 mil pesos semanales.
+<li class="fragment fade-up" data-fragment-index="10">
+En distribuciones simétricas: <span class="math inline">\(\bar{x} = Me = Mo\)</span>.
 </li>
 </ul>
+</div>
+</div>
+</div>
+</section>
+<section id="taller-en-clase" class="slide level2 center middle">
+<h2>Taller en clase</h2>
+<div style="text-align: center; margin-top: 50px;">
+<p style="font-size: 42px; font-weight: bold; color: #1b4d2e;">
+Ejercicios para resolver en clase
+</p>
+<p style="font-size: 28px; color: #6b7280; margin-top: 20px;">
+Tasas, razones, proporciones y medidas de tendencia central
+</p>
+</div>
+</section>
+<section id="ejercicio-cacao-en-santander" class="slide level2">
+<h2>Ejercicio: cacao en Santander</h2>
+<div class="block-example">
+<div class="block-title">
+Situación
+</div>
+<div class="block-body">
+<p style="text-align: justify;">
+En una finca cacaotera del Magdalena Medio santandereano se recolectó información durante una jornada de cosecha.
+</p>
+<ul>
+<li>
+En 7 hectáreas se obtuvieron <strong>1 260 kg de cacao fresco</strong> en <strong>9 días</strong>.
+</li>
+<li>
+En el lote hay <strong>420 plantas productivas</strong> y <strong>140 plantas jóvenes</strong>.
+</li>
+<li>
+De <strong>280 mazorcas</strong> revisadas, <strong>196 estaban sanas</strong> y <strong>84 presentaban daño leve por insectos</strong>.
+</li>
+</ul>
+<p style="text-align: justify;">
+Además, se seleccionaron 20 mazorcas y se registró su <strong>peso en gramos</strong>:
+</p>
+<p style="text-align: center; font-size: 24px;">
+<code>410, 425, 438, 442, 447, 452, 455, 458, 460, 462, 465, 468, 470, 472, 475, 478, 480, 485, 490, 498</code>
+</p>
+<ol>
+<li>
+Calcule una <strong>tasa</strong> de producción en kg/ha y una tasa en kg/día.
+</li>
+<li>
+Calcule la <strong>razón</strong> entre plantas productivas y plantas jóvenes.
+</li>
+<li>
+Calcule la <strong>proporción</strong> de mazorcas sanas y exprésela también en porcentaje.
+</li>
+<li>
+Construya una <strong>tabla de frecuencias agrupada</strong> para el peso de las mazorcas.
+</li>
+<li>
+A partir de esa tabla, calcule la <strong>media, mediana y moda</strong> para datos agrupados.
+</li>
+<li>
+Interprete cuál es el peso típico de las mazorcas en esta muestra.
+</li>
+</ol>
 </div>
 </div>
 
@@ -3173,6 +2114,44 @@ El gasto más frecuente de los estudiantes está alrededor de 52 mil pesos seman
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

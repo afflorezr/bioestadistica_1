@@ -61,3 +61,38 @@ install.packages(c("knitr", "kableExtra", "ggplot2"))
 - Font size is set inline (`style="font-size: 30px;"`) rather than via CSS classes
 - Math is written in LaTeX: `$f_i$`, `$\bar{x}$`, etc.
 - The logo is hidden on the title slide via an inline `<script>` block in the YAML header (do not remove it)
+
+## Block color convention
+
+All blocks follow the Beamer-style pattern defined in `assets/monash.scss`. Each block has a `.block-title` header and a `.block-body` content area. Structure:
+
+```html
+<div class="block-TIPO fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Etiqueta: Nombre</div>
+  <div class="block-body">
+    Contenido del bloque...
+  </div>
+</div>
+```
+
+### Color assignments
+
+| Clase CSS | Color | Usar para |
+|---|---|---|
+| `block-theorem` | **Azul** (`#1a3a6b` título, `#dce9f7` cuerpo) | Teoremas |
+| `block-lemma` | **Azul** (igual que teorema) | Lemas |
+| `block-corollary` | **Azul** (igual que teorema) | Corolarios |
+| `block-proposition` | **Azul** (igual que teorema) | Proposiciones |
+| `block-definition` | **Verde** (`#1b4d2e` título, `#d6f0dd` cuerpo) | Definiciones |
+| `block-example` | **Verde claro** (variante más clara que definición) | Ejemplos prácticos |
+| `block-alert` / `block-warning` | **Rojo** (`#7a1515` título, `#fad8d8` cuerpo) | Advertencias, conceptos clave |
+| `block-proof` | **Gris** (`#374151` título, `#f3f4f6` cuerpo) | Demostraciones (agrega ∎ al final automáticamente) |
+| `block-note` | **Azul UNAL** (borde izquierdo `#006DAE`, fondo `#e8f4f8`) | Notas y observaciones sin título |
+
+### Regla mnemotécnica
+
+- **Azul** → resultados formales (teoremas, lemas, corolarios, proposiciones)
+- **Verde** → definiciones y ejemplos
+- **Rojo** → alertas y advertencias
+- **Gris** → demostraciones
+- **Azul UNAL** → notas y observaciones informales

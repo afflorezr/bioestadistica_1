@@ -1,0 +1,851 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    logo: images/logo_unal_3.png
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+
+---
+
+## Clase 5 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px;">Tablas y gráficos bivariados</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Tablas de contingencia.</li>
+<li class="fragment fade-in" data-fragment-index="3">Porcentajes por fila y columna.</li>
+<li class="fragment fade-in" data-fragment-index="4">Barras agrupadas, apiladas y mosaicos.</li>
+<li class="fragment fade-in" data-fragment-index="5">Diagramas de dispersión y boxplots.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px;">Medidas de asociación</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Covarianza.</li>
+<li class="fragment fade-in" data-fragment-index="8">Correlación de Pearson.</li>
+<li class="fragment fade-in" data-fragment-index="9">Correlación de Spearman.</li>
+<li class="fragment fade-in" data-fragment-index="10">Interpretación y limitaciones.</li>
+</ul>
+</div>
+</div>
+
+## ¿Qué estudia la estadística descriptiva bivariada?
+
+<div class="fragment fade-up info-box" style="margin-top: 90px; padding-right: 40px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 30px;">
+Es el conjunto de técnicas que permiten <strong>organizar, resumir y visualizar de manera conjunta</strong> dos variables observadas en los mismos individuos, unidades experimentales o elementos de estudio.
+</p>
+<p class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 28px;">
+Su propósito es describir si existe relación, cómo es esa relación y qué tan fuerte parece ser.
+</p>
+</div>
+
+## ¿Por qué estudiar dos variables al mismo tiempo?
+
+<ul>
+<li class="fragment" style="background: #a78bfa; color: white; font-size: 32px;">
+Porque una variable puede ayudar a explicar el comportamiento de otra.
+</li>
+<li class="fragment" style="background: #3b82f6; color: white; font-size: 32px;">
+Porque permite comparar subgrupos dentro de una población.
+</li>
+<li class="fragment" style="background: #59A14F; color: white; font-size: 32px;">
+Porque ayuda a detectar asociaciones útiles en investigación y toma de decisiones.
+</li>
+<li class="fragment" style="background: #F28E2B; color: white; font-size: 32px;">
+Porque resume mejor la información que analizar variables por separado.
+</li>
+</ul>
+
+## Tipos de análisis bivariado según las variables
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 29px;">
+<strong>Cualitativa + cualitativa</strong>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 29px;">
+Se usan tablas de contingencia y gráficos de barras o mosaicos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 29px;">
+Ejemplo: sexo y hábito de fumar.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 29px;">
+<strong>Cuantitativa + cualitativa</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 29px;">
+Se usan resúmenes por grupo y boxplots.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 29px;">
+Ejemplo: rendimiento según fertilizante.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 29px;">
+<strong>Cuantitativa + cuantitativa</strong>: dispersión y correlación.
+</li>
+</ul>
+</div>
+</div>
+
+## Tabla de contingencia
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición</div>
+  <div class="block-body">
+<p>
+Una <strong>tabla de contingencia</strong> es una tabla de doble entrada que resume la distribución conjunta de dos variables cualitativas mediante frecuencias absolutas o relativas.
+</p>
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 25px; font-size: 28px; text-align: center;">
+Cada celda representa la frecuencia correspondiente a una combinación específica de categorías.
+</div>
+
+## Elementos de una tabla de contingencia
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Filas: categorías de una variable.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Columnas: categorías de la otra variable.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Celdas internas: frecuencias conjuntas.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">Totales por fila: frecuencias marginales.</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">Totales por columna: frecuencias marginales.</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Total general: tamaño de la muestra.</li>
+</ul>
+</div>
+</div>
+
+## Ejemplo: actividad física y calidad del sueño
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 55px;">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+En una muestra de 120 estudiantes se registran dos variables:
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 30px;">Actividad física semanal: <strong>Baja</strong>, <strong>Media</strong>, <strong>Alta</strong>.</li>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 30px;">Calidad del sueño: <strong>Mala</strong>, <strong>Regular</strong>, <strong>Buena</strong>.</li>
+</ul>
+<p class="fragment fade-in" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Queremos describir si ambas variables parecen estar asociadas.
+</p>
+</div>
+
+## Tabla de contingencia: frecuencias absolutas
+
+| Actividad física | Mala | Regular | Buena | Total |
+|---|---:|---:|---:|---:|
+| Baja | 18 | 12 | 6 | 36 |
+| Media | 10 | 18 | 14 | 42 |
+| Alta | 4 | 12 | 26 | 42 |
+| **Total** | **32** | **42** | **46** | **120** |
+
+## Porcentajes por fila
+
+| Actividad física | Mala | Regular | Buena | Total |
+|---|---:|---:|---:|---:|
+| Baja | 50.0% | 33.3% | 16.7% | 100% |
+| Media | 23.8% | 42.9% | 33.3% | 100% |
+| Alta | 9.5% | 28.6% | 61.9% | 100% |
+
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 16px; font-size: 27px; text-align: justify;">
+Comparan la calidad del sueño <strong>dentro de cada nivel</strong> de actividad física.
+</div>
+
+## Interpretación de porcentajes por fila
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px;">
+Entre quienes tienen actividad física baja, la mitad reporta sueño malo.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">
+Entre quienes tienen actividad física alta, 61.9% reporta sueño bueno.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+Esto sugiere una asociación positiva entre mayor actividad física y mejor calidad del sueño.
+</li>
+</ul>
+
+## Porcentajes por columna
+
+| Calidad del sueño | Baja | Media | Alta | Total |
+|---|---:|---:|---:|---:|
+| Mala | 56.3% | 31.3% | 12.5% | 100% |
+| Regular | 28.6% | 42.9% | 28.6% | 100% |
+| Buena | 13.0% | 30.4% | 56.5% | 100% |
+
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 16px; font-size: 27px; text-align: justify;">
+Comparan los niveles de actividad física <strong>dentro de cada categoría</strong> de calidad del sueño.
+</div>
+
+## ¿Por qué no basta con los totales?
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 55px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 29px; text-align: justify;">
+Los totales marginales muestran cuánto hay de cada categoría por separado.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 29px; text-align: justify;">
+Pero la <strong>asociación</strong> entre variables aparece en la comparación de las frecuencias conjuntas.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 29px; text-align: justify;">
+Dos tablas pueden tener los mismos marginales y, sin embargo, relaciones internas muy diferentes.
+</li>
+</ul>
+</div>
+
+## Barras agrupadas
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Comparan categorías lado a lado.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Son útiles para contrastar frecuencias o porcentajes.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Facilitan ver diferencias entre grupos.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<p class="fragment fade-in" data-fragment-index="6" style="font-size: 29px; text-align: justify;">
+Ejemplo: para cada nivel de actividad física se dibujan tres barras: sueño malo, regular y bueno.
+</p>
+</div>
+</div>
+
+## Barras apiladas
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Muestran la composición interna de cada grupo.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Son útiles cuando interesa comparar proporciones.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Conviene usar barras de igual altura cuando se comparan porcentajes.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<p class="fragment fade-in" data-fragment-index="6" style="font-size: 29px; text-align: justify;">
+Permiten ver rápidamente si cambia la distribución de una variable de acuerdo con la otra.
+</p>
+</div>
+</div>
+
+## Gráfico mosaico
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Idea central</div>
+  <div class="block-body">
+<p>
+El gráfico mosaico representa las categorías de dos variables cualitativas usando rectángulos cuya <strong>área es proporcional a la frecuencia conjunta</strong>.
+</p>
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 20px; font-size: 28px; text-align: justify;">
+Es especialmente útil para ver simultáneamente tamaño de grupos y composición interna.
+</div>
+
+## ¿Cuándo usar cada gráfico?
+
+| Objetivo | Recurso recomendado |
+|---|---|
+| Comparar categorías lado a lado | Barras agrupadas |
+| Ver composición interna | Barras apiladas |
+| Ver frecuencia conjunta y marginal al mismo tiempo | Mosaico |
+| Resumir tablas pequeñas | Tabla de contingencia |
+
+## Una variable cuantitativa y otra cualitativa
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Interesa comparar una medición numérica entre grupos.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Se calculan medias, medianas y dispersión por categoría.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Ejemplo: presión arterial según dieta.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">También pueden compararse mínimos, máximos y rango intercuartílico.</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">Gráficamente, el boxplot es uno de los recursos más usados.</li>
+</ul>
+</div>
+</div>
+
+## Tabla resumen por grupo
+
+| Tratamiento | n | Media de peso (kg) | Mediana | DE |
+|---|---:|---:|---:|---:|
+| A | 12 | 48.2 | 48.0 | 3.1 |
+| B | 12 | 52.6 | 52.1 | 2.8 |
+| C | 12 | 55.4 | 55.0 | 4.0 |
+
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 14px; font-size: 27px;">
+La tabla permite comparar tendencia central y variabilidad entre tratamientos.
+</div>
+
+## Gráficos recomendados para cuantitativa vs cualitativa
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 40px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">Boxplot: compara medianas, cuartiles y atípicos.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">Diagrama de puntos: útil en muestras pequeñas.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">Violín o densidad por grupo: útil si se quiere ver la forma de la distribución.</li>
+</ul>
+</div>
+
+## ¿Qué muestra un boxplot?
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Mediana.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Cuartil 1 y cuartil 3.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Rango intercuartílico.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">Bigotes.</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">Valores extremos o atípicos.</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Posibles diferencias en simetría entre grupos.</li>
+</ul>
+</div>
+</div>
+
+## Dos variables cuantitativas
+
+<div class="fragment fade-up info-box" style="margin-top: 95px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+Cuando ambas variables son cuantitativas, el interés principal suele ser describir si existe una <strong>relación entre sus valores</strong>, si dicha relación es positiva o negativa, y si parece lineal o no lineal.
+</p>
+</div>
+
+## Diagrama de dispersión
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición</div>
+  <div class="block-body">
+<p>
+El <strong>diagrama de dispersión</strong> representa cada individuo mediante un punto cuyas coordenadas corresponden a los valores observados en las dos variables cuantitativas.
+</p>
+  </div>
+</div>
+
+## Elementos del diagrama de dispersión
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px;">Eje horizontal: valores de la variable X.</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">Eje vertical: valores de la variable Y.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">Cada punto representa una observación.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">La nube de puntos sugiere dirección, forma e intensidad.</li>
+</ul>
+
+## Patrones que puede mostrar la nube de puntos
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Asociación positiva.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Asociación negativa.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Ausencia aparente de asociación.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">Relación lineal.</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">Relación curva o no lineal.</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Presencia de subgrupos o atípicos.</li>
+</ul>
+</div>
+</div>
+
+## Dirección de la relación
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">Positiva</h4>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Al aumentar X, Y tiende a aumentar.
+</p>
+<p class="fragment fade-in" data-fragment-index="4" style="font-size: 26px;">
+Ejemplo: talla y peso.
+</p>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6">Negativa</h4>
+<p class="fragment fade-in" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Al aumentar X, Y tiende a disminuir.
+</p>
+<p class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+Ejemplo: dosis de plaga efectiva y número de insectos sobrevivientes.
+</p>
+</div>
+</div>
+
+## Forma de la relación
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px;">Si los puntos siguen aproximadamente una recta, la relación es lineal.</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">Si los puntos forman una curva, la relación es no lineal.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">La correlación de Pearson describe bien relaciones lineales, no relaciones curvas complejas.</li>
+</ul>
+
+## Valores atípicos
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Un punto aislado puede cambiar fuertemente la correlación.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Siempre conviene revisar el gráfico antes de resumir numéricamente.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">Un valor extremo puede ser un error o una observación real importante.</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">Describirlo forma parte del análisis exploratorio.</li>
+</ul>
+</div>
+</div>
+
+## Medidas numéricas de asociación
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 55px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">La <strong>covarianza</strong> indica si dos variables tienden a moverse en el mismo sentido o en sentido opuesto.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">La <strong>correlación</strong> resume dirección e intensidad de la relación lineal.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">Estas medidas complementan, pero no sustituyen, el gráfico de dispersión.</li>
+</ul>
+</div>
+
+## Covarianza
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición</div>
+  <div class="block-body">
+<p>
+La covarianza mide la variación conjunta de dos variables cuantitativas con respecto a sus medias.
+</p>
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 20px; font-size: 28px; text-align: justify;">
+Su signo indica la dirección de la relación lineal.
+</div>
+
+## Fórmula de la covarianza muestral
+
+<div class="fragment fade-up info-box" style="margin-top: 80px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 34px; text-align: center;">
+$$
+s_{xy}=\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{n-1}
+$$
+</p>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Si los productos tienden a ser positivos, la covarianza será positiva. Si tienden a ser negativos, será negativa.
+</p>
+</div>
+
+## Interpretación de la covarianza
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px;">Covarianza positiva: ambas variables tienden a aumentar o disminuir juntas.</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">Covarianza negativa: cuando una aumenta, la otra tiende a disminuir.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">Covarianza cercana a cero: poca asociación lineal aparente.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">Su magnitud depende de las unidades, por eso no es fácil compararla entre estudios.</li>
+</ul>
+
+## Correlación de Pearson
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición</div>
+  <div class="block-body">
+<p>
+La correlación de Pearson estandariza la covarianza y produce una medida sin unidades que resume la <strong>dirección e intensidad de la asociación lineal</strong> entre dos variables cuantitativas.
+</p>
+  </div>
+</div>
+
+## Fórmula de Pearson
+
+<div class="fragment fade-up info-box" style="margin-top: 80px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 34px; text-align: center;">
+$$
+r=\frac{s_{xy}}{s_xs_y}
+$$
+</p>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+También puede verse como la covarianza dividida por el producto de las desviaciones estándar de X y Y.
+</p>
+</div>
+
+## Rango de la correlación de Pearson
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 70px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px;">$-1 \leq r \leq 1$</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">$r=1$: asociación lineal positiva perfecta.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">$r=-1$: asociación lineal negativa perfecta.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px;">$r\approx 0$: ausencia de asociación lineal fuerte.</li>
+</ul>
+</div>
+
+## Interpretación usual de la magnitud
+
+| Valor absoluto de \(r\) | Interpretación aproximada |
+|---|---|
+| 0.00 a 0.19 | Muy débil |
+| 0.20 a 0.39 | Débil |
+| 0.40 a 0.59 | Moderada |
+| 0.60 a 0.79 | Fuerte |
+| 0.80 a 1.00 | Muy fuerte |
+
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 14px; font-size: 25px;">
+Estas categorías son orientativas; siempre deben leerse junto con el contexto y el gráfico.
+</div>
+
+## Correlación de Spearman
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 60px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 29px;">Se basa en los rangos de los datos, no en los valores originales.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 29px;">Es útil cuando la relación es monótona pero no estrictamente lineal.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 29px;">También es útil con datos ordinales o cuando hay menor confianza en la normalidad.</li>
+</ul>
+</div>
+
+## Pearson vs Spearman
+
+| Característica | Pearson | Spearman |
+|---|---|---|
+| Tipo de relación | Lineal | Monótona |
+| Usa valores originales | Sí | No |
+| Datos ordinales | No es el más apropiado | Sí |
+| Sensibilidad a atípicos | Mayor | Menor |
+
+## Ejemplo numérico
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">
+Supongamos cinco plantas donde se mide:
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 28px;">X = horas de luz: 4, 5, 6, 7, 8</li>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">Y = altura (cm): 10, 12, 13, 15, 18</li>
+</ul>
+<p class="fragment fade-in" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
+La nube de puntos sugiere una relación positiva: a mayor luz, mayor altura.
+</p>
+</div>
+
+## Paso 1: calcular las medias
+
+<div class="fragment fade-up info-box" style="margin-top: 70px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 32px; text-align: center;">
+$$
+\bar{x}=6 \qquad \bar{y}=13.6
+$$
+</p>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Las desviaciones de cada dato se obtienen restando su media correspondiente.
+</p>
+</div>
+
+## Paso 2: productos de desviaciones
+
+| \(x_i\) | \(y_i\) | \(x_i-\bar{x}\) | \(y_i-\bar{y}\) | Producto |
+|---:|---:|---:|---:|---:|
+| 4 | 10 | -2 | -3.6 | 7.2 |
+| 5 | 12 | -1 | -1.6 | 1.6 |
+| 6 | 13 | 0 | -0.6 | 0.0 |
+| 7 | 15 | 1 | 1.4 | 1.4 |
+| 8 | 18 | 2 | 4.4 | 8.8 |
+
+## Resultado e interpretación
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 55px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 29px;">La suma de productos es positiva, por lo que la covarianza es positiva.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 29px;">Al estandarizar, se obtiene una correlación positiva alta.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 29px;">La descripción correcta sería: existe una asociación lineal positiva fuerte entre horas de luz y altura.</li>
+</ul>
+</div>
+
+## Correlación no implica causalidad
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Que dos variables estén correlacionadas no demuestra que una cause a la otra.
+</p>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<p class="fragment fade-in" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Puede existir una tercera variable que influya sobre ambas o una coincidencia estructural del conjunto de datos.
+</p>
+</div>
+</div>
+
+## Correlación espuria y variables de confusión
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px;">Una correlación espuria aparece sin una relación sustantiva real.</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">Una variable de confusión afecta simultáneamente a X y Y.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">Por eso el análisis descriptivo debe acompañarse de conocimiento del contexto.</li>
+</ul>
+
+## Subgrupos ocultos
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 60px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 29px;">A veces la nube global oculta grupos con comportamientos distintos.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 29px;">Conviene identificar si existen tratamientos, sedes, sexos o estratos que deban analizarse por separado.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 29px;">La descripción global puede ser engañosa si mezcla poblaciones diferentes.</li>
+</ul>
+</div>
+
+## Buenas prácticas en análisis bivariado
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 29px;">Empezar por el tipo de variables.</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 29px;">Usar primero tablas o gráficos, luego medidas numéricas.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 29px;">Interpretar porcentajes con claridad: por fila, por columna o totales.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 29px;">No confundir asociación con causalidad.</li>
+</ul>
+
+## Esquema de trabajo recomendado
+
+| Tipo de variables | Recurso principal | Medida complementaria |
+|---|---|---|
+| Cualitativa + cualitativa | Tabla de contingencia | Porcentajes |
+| Cuantitativa + cualitativa | Tabla resumen / boxplot | Media, mediana, DE |
+| Cuantitativa + cuantitativa | Dispersión | Covarianza, correlación |
+
+## Ejercicio 1: tabla bivariada
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 29px; text-align: justify;">
+En 80 pacientes se observa:
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 29px;">40 mujeres y 40 hombres.</li>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 29px;">Entre las mujeres, 12 tienen presión alta.</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 29px;">Entre los hombres, 20 tienen presión alta.</li>
+</ul>
+<p class="fragment fade-in" data-fragment-index="6" style="font-size: 27px;">
+Construya la tabla 2x2 de frecuencias absolutas.
+</p>
+</div>
+
+## Solución ejercicio 1
+
+| Sexo | Presión alta | Presión normal | Total |
+|---|---:|---:|---:|
+| Mujeres | 12 | 28 | 40 |
+| Hombres | 20 | 20 | 40 |
+| **Total** | **32** | **48** | **80** |
+
+## Ejercicio 2: interpretación de porcentajes
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 29px; text-align: justify;">
+Con la tabla anterior, interprete los porcentajes por fila.
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 29px;">¿Qué porcentaje de mujeres tiene presión alta?</li>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 29px;">¿Qué porcentaje de hombres tiene presión alta?</li>
+</ul>
+</div>
+
+## Solución ejercicio 2
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px;">Mujeres con presión alta: \(12/40 = 30\%\).</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">Hombres con presión alta: \(20/40 = 50\%\).</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+La presión alta es relativamente más frecuente en hombres dentro de esta muestra.
+</li>
+</ul>
+
+## Ejercicio 3: correlación
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 29px; text-align: justify;">
+Si la correlación entre horas de estudio y nota final es \(r=0.72\), describa:
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 29px;">la dirección,</li>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 29px;">la intensidad,</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 29px;">y una precaución sobre causalidad.</li>
+</ul>
+</div>
+
+## Solución ejercicio 3
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px;">Dirección: positiva.</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">Intensidad: fuerte.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">Precaución: la correlación no demuestra que estudiar más sea la única causa de una mejor nota.</li>
+</ul>
+
+## Verdadero o falso
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Si \(r=0\), entonces no existe ninguna relación entre X y Y.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">La covarianza depende de las unidades de medición.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Una tabla de contingencia se usa para dos variables cualitativas.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">Un outlier puede modificar la correlación.</li>
+</ul>
+</div>
+
+## Respuestas
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px;"><strong>Falso:</strong> \(r=0\) solo indica ausencia de relación lineal fuerte.</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;"><strong>Verdadero:</strong> la covarianza conserva unidades.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;"><strong>Verdadero:</strong> resume frecuencias conjuntas.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;"><strong>Verdadero:</strong> por eso primero se inspecciona el gráfico.</li>
+</ul>
+
+## Ideas clave
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 45px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 29px;">El recurso descriptivo depende del tipo de variables.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 29px;">Las tablas y gráficos muestran patrones; las medidas numéricas los resumen.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 29px;">La correlación describe asociación lineal, no causalidad.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 29px;">Siempre debe revisarse el contexto y la visualización antes de concluir.</li>
+</ul>
+</div>
+
+## Resumen visual
+
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 35px;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="font-size: 28px;">Cualitativa + cualitativa</h4>
+<p style="font-size: 24px;">Tabla de contingencia, porcentajes, barras, mosaico.</p>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<h4 style="font-size: 28px;">Cuantitativa + cualitativa</h4>
+<p style="font-size: 24px;">Resumen por grupo, boxplot, comparación de medias y medianas.</p>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<h4 style="font-size: 28px;">Cuantitativa + cuantitativa</h4>
+<p style="font-size: 24px;">Dispersión, covarianza, Pearson y Spearman.</p>
+</div>
+</div>
+
+## Conexión con inferencia
+
+<div class="fragment fade-up info-box" style="margin-top: 90px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+La descripción bivariada es el punto de partida para técnicas inferenciales como prueba chi-cuadrado, comparación de medias, regresión lineal y análisis de asociación.
+</p>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Antes de inferir, primero hay que describir bien los datos.
+</p>
+</div>
+
+## Trabajo en clase
+
+<div class="fragment fade-up info-box" style="margin-top: 110px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 34px; text-align: center;">
+Ahora apliquemos lo visto sobre
+</p>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 38px; text-align: center;">
+<strong>tablas bivariadas, porcentajes e interpretación de asociación</strong>
+</p>
+</div>
+
+## Ejercicio para trabajar en clase
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 30px;">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En una muestra de <strong>100 estudiantes</strong> se registraron dos variables:
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="3" style="font-size: 28px;"><strong>Consumo de café al día:</strong> Bajo, Medio, Alto.</li>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;"><strong>Nivel de estrés:</strong> Bajo, Medio, Alto.</li>
+</ul>
+
+<table style="font-size: 24px; margin-top: 12px;">
+<thead>
+<tr>
+<th>Consumo de café</th>
+<th>Estrés bajo</th>
+<th>Estrés medio</th>
+<th>Estrés alto</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Bajo</td><td>18</td><td>10</td><td>2</td><td>30</td></tr>
+<tr><td>Medio</td><td>12</td><td>20</td><td>8</td><td>40</td></tr>
+<tr><td>Alto</td><td>4</td><td>10</td><td>16</td><td>30</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5" style="margin-top: 24px;">
+<ol style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-in" data-fragment-index="6">Calcule los porcentajes por fila.</li>
+<li class="fragment fade-in" data-fragment-index="7">Describa si parece existir asociación entre consumo de café y nivel de estrés.</li>
+<li class="fragment fade-in" data-fragment-index="8">Indique qué gráfico bivariado usaría para presentar estos datos y justifique.</li>
+</ol>
+</div>
