@@ -4,3 +4,87 @@
   display: block;
   margin-top: 0.5em;
 }
+
+/* ────────────────────────────────────────────
+   Tablas de presentación (.slide-table)
+   Elimina el bloque style="" repetitivo en cada <table>.
+   Sobreescribir sólo las propiedades únicas por tabla
+   (font-size, max-width, margin-top) con style inline.
+   ──────────────────────────────────────────── */
+.slide-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.slide-table thead tr {
+  background-color: #2f4aa0;
+  color: white;
+}
+
+.slide-table thead th {
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.slide-table tbody td {
+  padding: 12px;
+  text-align: center;
+}
+
+.slide-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.slide-table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+/* Fila de totales: aplicar class="total-row" al <tr> */
+.slide-table .total-row {
+  background-color: #dbeafe;
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+/* Primera columna alineada a la izquierda */
+.slide-table td:first-child,
+.slide-table th:first-child {
+  text-align: left;
+  padding-left: 14px;
+}
+
+/* ────────────────────────────────────────────
+   Bullets con fondo de color (listas motivacionales)
+   Usar: <li class="fragment bullet-purple">
+   ──────────────────────────────────────────── */
+li.bullet-purple,
+li.bullet-blue,
+li.bullet-green,
+li.bullet-orange {
+  list-style: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  color: white;
+  font-size: 30px;
+}
+
+li.bullet-purple { background: #a78bfa; }
+li.bullet-blue   { background: #3b82f6; }
+li.bullet-green  { background: #59A14F; }
+li.bullet-orange { background: #F28E2B; }
+
+/* ────────────────────────────────────────────
+   info-box: bloque de introducción de sección
+   Uso: <div class="fragment fade-up info-box">
+   ──────────────────────────────────────────── */
+.info-box {
+  background: #f0f7ff;
+  border-left: 5px solid #2563eb;
+  border-radius: 8px;
+  padding: 20px 28px;
+}

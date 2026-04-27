@@ -53,6 +53,41 @@ Slides embed R code chunks. Packages in use: `knitr`, `kableExtra`, `ggplot2`. I
 install.packages(c("knitr", "kableExtra", "ggplot2"))
 ```
 
+## Slide de Contenido (obligatorio)
+
+**Toda clase debe tener un slide de Contenido inmediatamente después del slide de título.** El slide usa un grid de dos columnas con los temas de la clase, animados con `fragment fade-in`. Estructura exacta:
+
+```html
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Nombre de la parte</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Tema 1.</li>
+<li class="fragment fade-in" data-fragment-index="3">Tema 2.</li>
+<li class="fragment fade-in" data-fragment-index="4">Tema 3.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="5" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Nombre de la parte</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="6">Tema 4.</li>
+<li class="fragment fade-in" data-fragment-index="7">Tema 5.</li>
+<li class="fragment fade-in" data-fragment-index="8">Tema 6.</li>
+</ul>
+</div>
+</div>
+```
+
+Reglas:
+- El encabezado es siempre `## Contenido` (sin clases adicionales).
+- El grid es siempre `1fr 1fr` con `gap: 42px`, `margin-top: 20px`, `font-size: 30px`, `align-items: start`.
+- Los `<h3>` usan `font-size: 34px` y `margin-bottom: 14px`. Color verde `#1b4d2e` para la primera columna, azul `#1a3a6b` para la segunda.
+- Si la clase tiene una sola parte temática, se puede usar una sola columna (pero se mantiene el mismo `<div>` externo con el `display: grid`).
+- Los `data-fragment-index` son consecutivos de 1 en adelante.
+
 ## Slide authoring patterns
 
 - Slides use raw HTML extensively for layout (`<div class="twocol">`, `<div class="card ...">`)
@@ -61,6 +96,8 @@ install.packages(c("knitr", "kableExtra", "ggplot2"))
 - Font size is set inline (`style="font-size: 30px;"`) rather than via CSS classes
 - Math is written in LaTeX: `$f_i$`, `$\bar{x}$`, etc.
 - The logo is hidden on the title slide via an inline `<script>` block in the YAML header (do not remove it)
+- **Slide titles NEVER use hyphens (`-`) or em dashes (`—`) to separate words or phrases.** Use a colon (`:`) or restructure the title. Correct: `## Ejemplo: Boxplot`. Wrong: `## Ejemplo — Boxplot` or `## Ejemplo - Boxplot`.
+- Slide titles must always be non-empty (`##` with no text is forbidden). Every slide needs a descriptive `## Título` heading.
 
 ## Block color convention
 
