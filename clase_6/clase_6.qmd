@@ -1,12 +1,13 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
   revealjs:
     #incremental: true
+    embed-resources: true
     logo: images/logo_unal_3.png
     slide-number: true
     title-slide: false
@@ -18,8 +19,8 @@ format:
     height: 720
     css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
     header-includes: |
-      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
-      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
       <script>
       window.addEventListener('load', function() {
         if (typeof Reveal === 'undefined') return;
@@ -44,26 +45,70 @@ execute:
 
 ## Clase 6 {.center .middle}
 
+## Recordatorio: Clase 5
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 10px; font-size: 28px; align-items: start;">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 26px; color: #1b4d2e;">Experimento aleatorio y espacio muestral</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Un <strong>experimento aleatorio</strong> produce resultados que no pueden predecirse con certeza, aunque las condiciones se repitan.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+El <strong>espacio muestral</strong> $\Omega$ es el conjunto de todos los resultados posibles. Puede ser discreto (finito o infinito) o continuo.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">
+<strong>Ejemplo:</strong> clasificar el estado de una planta de café:
+$$\Omega = \{\text{Sana}, \text{Plaga}, \text{Enfermedad}, \text{Deficiencia}\}$$
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 26px; color: #1a3a6b;">Eventos y operaciones</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px; text-align: justify;">
+Un <strong>evento</strong> $A$ es cualquier subconjunto de $\Omega$. Cuando el experimento ocurre, $A$ <em>ocurre</em> si el resultado pertenece a $A$.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
+<strong>Unión</strong> $A \cup B$: al menos uno de los dos ocurre.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;">
+<strong>Intersección</strong> $A \cap B$: ambos ocurren simultáneamente.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px;">
+<strong>Complemento</strong> $A^c$: $A$ no ocurre; $\;A \cup A^c = \Omega$, $\;A \cap A^c = \emptyset$.
+</li>
+</ul>
+</div>
+
+</div>
+
+<div class="fragment fade-in" data-fragment-index="12" style="margin-top: 14px; padding: 10px 18px; background: #f0fdf4; border-left: 4px solid #1b4d2e; border-radius: 6px; font-size: 26px;">
+<strong>Hoy continuamos</strong> desde estas bases: diferencia de eventos, leyes de De Morgan, partición del espacio muestral y los fundamentos de la probabilidad.
+</div>
+
 ## Contenido
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px;">Conceptos fundamentales</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Espacio muestral y eventos</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Experimento aleatorio.</li>
-<li class="fragment fade-in" data-fragment-index="3">Espacio muestral.</li>
-<li class="fragment fade-in" data-fragment-index="4">Eventos y tipos de eventos.</li>
-<li class="fragment fade-in" data-fragment-index="5">Espacios discretos y continuos.</li>
+<li class="fragment fade-in" data-fragment-index="2">Experimento aleatorio y espacio muestral.</li>
+<li class="fragment fade-in" data-fragment-index="3">Eventos elementales, compuestos y tipos especiales.</li>
+<li class="fragment fade-in" data-fragment-index="4">Operaciones: unión, intersección, complemento, diferencia y diferencia simétrica.</li>
+<li class="fragment fade-in" data-fragment-index="5">Leyes de De Morgan, partición, $\sigma$-álgebra y tipos de espacios muestrales.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px;">Álgebra de eventos</h3>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Probabilidad</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Unión, intersección y complemento.</li>
-<li class="fragment fade-in" data-fragment-index="8">Diferencia y diferencia simétrica.</li>
-<li class="fragment fade-in" data-fragment-index="9">Leyes de De Morgan y propiedades.</li>
-<li class="fragment fade-in" data-fragment-index="10">Ejercicios integradores.</li>
+<li class="fragment fade-in" data-fragment-index="7">Propiedades del álgebra de eventos: contenencia, absorción e idempotencia.</li>
+<li class="fragment fade-in" data-fragment-index="8">Enfoques clásico (Laplace) y frecuentista.</li>
+<li class="fragment fade-in" data-fragment-index="9">Axiomas de Kolmogórov y espacio de probabilidad $(\Omega, \mathcal{F}, P)$.</li>
+<li class="fragment fade-in" data-fragment-index="10">Propiedades y regla de adición general.</li>
 </ul>
 </div>
 </div>
@@ -103,7 +148,7 @@ El complemento de la intersección es la unión de los complementos.
 
 </div>
 
-## Ejercicio integrador
+## Ejercicio
 
 <div class="twocol">
 
@@ -147,31 +192,6 @@ $A^c \cap B^c = \{4,5,6\} \cap \{1,3,5\} = \{5\}$ ✓
 </div>
 
 </div>
-
-## Resumen
-
-<ul>
-<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 28px; margin-bottom: 8px;">
-🎲 <strong>Experimento aleatorio:</strong> resultado incierto aun bajo condiciones fijas.
-</li>
-<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 28px; margin-bottom: 8px;">
-📋 <strong>Espacio muestral $\Omega$:</strong> conjunto de todos los resultados posibles.
-</li>
-<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 28px; margin-bottom: 8px;">
-🎯 <strong>Evento:</strong> cualquier subconjunto de $\Omega$.
-</li>
-<li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 28px; margin-bottom: 8px;">
-🔗 <strong>Unión $A \cup B$:</strong> al menos uno de los eventos ocurre.
-</li>
-<li class="fragment fade-up" style="background: #B07AA1; color: white; font-size: 28px; margin-bottom: 8px;">
-🔀 <strong>Intersección $A \cap B$:</strong> ambos eventos ocurren simultáneamente.
-</li>
-<li class="fragment fade-up" style="background: #76B7B2; color: white; font-size: 28px; margin-bottom: 8px;">
-🔄 <strong>Complemento $A^c$:</strong> todo lo que no está en $A$.
-</li>
-</ul>
-
----
 
 ## Diferencia de eventos: $A \setminus B$
 
@@ -266,24 +286,24 @@ Una colección de eventos $\{A_1, A_2, \ldots, A_n\}$ forma una <strong>partici�
 
 <div class="fragment fade-in" data-fragment-index="6" style="margin-top: 20px; padding: 16px; background: #f0fdf4; border-left: 4px solid #59A14F; border-radius: 6px;">
 <p style="font-size: 26px; text-align: justify;">
-<strong>Ejemplo agrícola (tipos de suelo):</strong> Al clasificar el suelo de una parcela, los eventos $A_1 = \{\text{Arenoso}\}$, $A_2 = \{\text{Arcilloso}\}$, $A_3 = \{\text{Limoso}\}$, $A_4 = \{\text{Franco}\}$ forman una partición de $\Omega$ si cada parcela pertenece a exactamente una categoría.
+<strong>Ejemplo:</strong> Al clasificar el suelo de una parcela, los eventos $A_1 = \{\text{Arenoso}\}$, $A_2 = \{\text{Arcilloso}\}$, $A_3 = \{\text{Limoso}\}$, $A_4 = \{\text{Franco}\}$ forman una partición de $\Omega$ si cada parcela pertenece a exactamente una categoría.
 </p>
 </div>
 
-## Partición — ejemplo con clima
+## Ejemplo
 
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <h4 class="fragment fade-in" data-fragment-index="2">Experimento</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: left;">
 Se selecciona aleatoriamente una región cafetera de Colombia y se registra su <strong>tipo de clima</strong>.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
-$$\Omega = \{\text{Cálido}, \text{Templado}, \text{Frío}\}$$
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: left;">
+$\Omega = \{\text{Cálido}, \text{Templado}, \text{Frío}\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;text-align: left;">
 Definamos: $A_1 = \{\text{Cálido}\}$, $A_2 = \{\text{Templado}\}$, $A_3 = \{\text{Frío}\}$
 </li>
 </ul>
@@ -309,7 +329,7 @@ $A_i \neq \emptyset$ para $i = 1, 2, 3$ ✓
 
 </div>
 
-## Ejercicio: cultivo de café
+## Cultivo de café
 
 <div class="twocol">
 
@@ -332,7 +352,7 @@ Se selecciona aleatoriamente una planta de un cafetal y se clasifica su <strong>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">Contexto agronómico</h4>
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Contexto agronómico</h4>
 <ul>
 <li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
 En Colombia, el café (<em>Coffea arabica</em>) es el principal cultivo de exportación. El monitoreo fitosanitario en zonas cálidas-húmedas es esencial para detectar la broca y la roya del café.
@@ -345,7 +365,7 @@ Este ejercicio ilustra cómo la probabilidad permite modelar la incertidumbre en
 
 </div>
 
-## Solución: cultivo de café
+## Cultivo de café
 
 <div class="twocol">
 
@@ -353,7 +373,7 @@ Este ejercicio ilustra cómo la probabilidad permite modelar la incertidumbre en
 <h4 class="fragment fade-in" data-fragment-index="2">Espacio muestral y eventos</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
-$$\Omega = \{\text{Sa}, \text{Pl}, \text{En}, \text{De}\}$$
+$\Omega = \{\text{Sa}, \text{Pl}, \text{En}, \text{De}\}$
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
 $A$: "la planta está sana" $= \{\text{Sa}\}$
@@ -416,7 +436,7 @@ Se lanzan dos dados distintos y se registra el par $(d_1, d_2)$ de resultados.
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">Tabla del espacio muestral (primeras filas)</h4>
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">Tabla del espacio muestral (primeras filas)</h4>
 <div class="fragment fade-in" data-fragment-index="10" style="font-size: 20px; overflow-x: auto;">
 <table style="border-collapse: collapse; width: 100%; font-size: 19px;">
 <tr style="background:#a78bfa; color:white;"><th>$d_1 \backslash d_2$</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
@@ -449,7 +469,7 @@ $$A = \{(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)\}$$
 $|A| = 6$
 </li>
 </ul>
-<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; margin-top: 12px;">Evento $B$: "ambos pares"</h4>
+<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 28px; margin-top: 12px;">Evento $B$: "ambos pares"</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">
 $$B = \{(2,2),(2,4),(2,6),(4,2),(4,4),(4,6),(6,2),(6,4),(6,6)\}$$
@@ -480,7 +500,7 @@ $$A \cap B = \emptyset$$
 
 </div>
 
-## Espacio muestral continuo en agronomía
+## Espacio muestral continuo
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-title">Ejemplo: maduración del mango</div>
@@ -509,7 +529,7 @@ $\Omega$ contiene infinitos (no contables) puntos muestrales.
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">Eventos de interés</h4>
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Eventos de interés</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
 $A$: "maduración temprana" $= [60, 80]$
@@ -528,7 +548,7 @@ Nótese que $\{A, C, B\}$ forma una <strong>partición</strong> de $\Omega$, ya 
 
 </div>
 
-## Ejercicio: semillas de arroz — enunciado
+## Ejercicio
 
 <div class="twocol">
 
@@ -551,7 +571,7 @@ En un ensayo de laboratorio se seleccionan <strong>4 semillas de arroz</strong> 
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">Contexto</h4>
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Contexto</h4>
 <ul>
 <li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
 El arroz es el principal cereal de consumo en Colombia. El control de calidad de semillas es fundamental para garantizar buenos rendimientos en los Llanos Orientales y la Costa Atlántica.
@@ -564,12 +584,11 @@ $|\Omega| = 2^4 = 16$ resultados posibles.
 
 </div>
 
-## Solución: semillas de arroz
-
+## Solución
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 22px;">Espacio muestral completo $\Omega$</h4>
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">Espacio muestral completo $\Omega$</h4>
 <div class="fragment fade-in" data-fragment-index="3" style="font-size: 19px;">
 <p>$\Omega = \{$VVVV, VVVN, VVNV, VVNN,</p>
 <p style="padding-left: 28px;">VNVV, VNVN, VNNV, VNNN,</p>
@@ -579,7 +598,7 @@ $|\Omega| = 2^4 = 16$ resultados posibles.
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5" style="font-size: 24px;">Eventos</h4>
+<h4 class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">Eventos</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">
 <strong>$A$ (exactamente 2 viables):</strong>
@@ -599,7 +618,7 @@ $A \cap B = \emptyset$ ya que no es posible tener exactamente 2 viables y al men
 
 </div>
 
-## Ejercicio: temperaturas en cultivo de fresa
+## Ejercicio
 
 <div class="twocol">
 
@@ -639,7 +658,7 @@ $B = \{\text{NNN}\}$ (ninguna helada)
 <li class="fragment fade-up" data-fragment-index="13" style="font-size: 22px;">
 $A = \Omega \setminus \{\text{NNN}\} = B^c$ ✓
 </li>
-<li class="fragment fade-up" data-fragment-index="14" style="font-size: 22px; text-align: justify; color: #3b82f6;">
+<li class="fragment fade-up" data-fragment-index="14" style="font-size: 28px; text-align: justify; color: #3b82f6;">
 Las heladas son el principal riesgo climático para la fresa en la Sabana de Bogotá, lo que hace esencial modelar su probabilidad de ocurrencia.
 </li>
 </ul>
@@ -647,85 +666,85 @@ Las heladas son el principal riesgo climático para la fresa en la Sabana de Bog
 
 </div>
 
-## Álgebra de eventos — resumen gráfico
+## Álgebra de eventos
 
 <div style="margin-top: 10px;">
 
-<div class="fragment fade-in" data-fragment-index="1" style="font-size: 22px; text-align: center; font-weight: bold; margin-bottom: 12px;">
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 28px; text-align: center; font-weight: bold; margin-bottom: 12px;">
 Todas las operaciones fundamentales sobre eventos
 </div>
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
 
-<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="2" style="width: 18%; padding: 10px; text-align: center;">
-<p style="font-size: 20px; font-weight: bold; color: #a78bfa;">$A \cup B$</p>
-<p style="font-size: 18px;">Al menos uno ocurre</p>
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="2" style="width: 25%; padding: 10px; text-align: center;">
+<p style="font-size: 28px; font-weight: bold; color: #a78bfa;">$A \cup B$</p>
+<p style="font-size: 28px;">Al menos uno ocurre</p>
 </div>
 
-<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="3" style="width: 18%; padding: 10px; text-align: center;">
-<p style="font-size: 20px; font-weight: bold; color: #3b82f6;">$A \cap B$</p>
-<p style="font-size: 18px;">Ambos ocurren</p>
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="3" style="width: 25%; padding: 10px; text-align: center;">
+<p style="font-size: 28px; font-weight: bold; color: #3b82f6;">$A \cap B$</p>
+<p style="font-size: 28px;">Ambos ocurren</p>
 </div>
 
-<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="4" style="width: 18%; padding: 10px; text-align: center;">
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="4" style="width: 25%; padding: 10px; text-align: center;">
 <p style="font-size: 20px; font-weight: bold; color: #59A14F;">$A^c$</p>
 <p style="font-size: 18px;">$A$ no ocurre</p>
 </div>
 
-<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="5" style="width: 18%; padding: 10px; text-align: center;">
-<p style="font-size: 20px; font-weight: bold; color: #F28E2B;">$A \setminus B$</p>
-<p style="font-size: 18px;">$A$ pero no $B$</p>
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="5" style="width: 25%; padding: 10px; text-align: center;">
+<p style="font-size: 28px; font-weight: bold; color: #F28E2B;">$A \setminus B$</p>
+<p style="font-size: 28px;">$A$ pero no $B$</p>
 </div>
 
-<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="6" style="width: 18%; padding: 10px; text-align: center;">
-<p style="font-size: 20px; font-weight: bold; color: #B07AA1;">$A \triangle B$</p>
-<p style="font-size: 18px;">Exactamente uno</p>
+<div class="fragment fade-up crispdm-card--gray card" data-fragment-index="6" style="width: 28%; padding: 10px; text-align: center;">
+<p style="font-size: 28px; font-weight: bold; color: #B07AA1;">$A \triangle B$</p>
+<p style="font-size: 28px;">Exactamente uno</p>
 </div>
 
 </div>
 
-<div class="fragment fade-in" data-fragment-index="7" style="margin-top: 16px; padding: 12px; background: #faf5ff; border-left: 4px solid #a78bfa; border-radius: 6px; font-size: 22px; text-align: justify;">
+<div class="fragment fade-in" data-fragment-index="7" style="margin-top: 16px; padding: 12px; background: #faf5ff; border-left: 4px solid #a78bfa; border-radius: 6px; font-size: 28px; text-align: justify;">
 <strong>Recuerde:</strong> todas estas operaciones producen nuevos <em>subconjuntos</em> de $\Omega$, es decir, nuevos eventos. La probabilidad se asigna a cada uno de estos subconjuntos.
 </div>
 
 </div>
 
-## Propiedades de De Morgan — demostración visual
+## Propiedades de De Morgan
 
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">$(A \cup B)^c = A^c \cap B^c$</h4>
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">$(A \cup B)^c = A^c \cap B^c$</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
 Paso 1: $A \cup B$ cubre todo lo que está en $A$ <strong>o</strong> en $B$.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
 Paso 2: $(A \cup B)^c$ es lo que queda fuera de ambos = la zona exterior a los dos círculos en el diagrama de Venn.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
 Paso 3: $A^c \cap B^c$ también es la zona exterior a ambos círculos. ✓
 </li>
 </ul>
-<div class="fragment fade-in" data-fragment-index="6" style="font-size: 20px; text-align: center; padding: 8px; background:#faf5ff; border-radius:4px; margin-top: 8px;">
+<div class="fragment fade-in" data-fragment-index="6" style="font-size: 28px; text-align: center; padding: 8px; background:#faf5ff; border-radius:4px; margin-top: 8px;">
 Mnemotecnia: "el complemento de la unión es la intersección de los complementos".
 </div>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">$(A \cap B)^c = A^c \cup B^c$</h4>
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">$(A \cap B)^c = A^c \cup B^c$</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
 Paso 1: $A \cap B$ es solo la zona central (intersección) del diagrama de Venn.
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 Paso 2: $(A \cap B)^c$ cubre todo excepto esa zona central.
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify;">
 Paso 3: $A^c \cup B^c$ incluye lo que no está en $A$ <strong>más</strong> lo que no está en $B$, que es exactamente todo excepto la intersección. ✓
 </li>
 </ul>
-<div class="fragment fade-in" data-fragment-index="12" style="font-size: 20px; text-align: center; padding: 8px; background:#eff6ff; border-radius:4px; margin-top: 8px;">
+<div class="fragment fade-in" data-fragment-index="12" style="font-size: 28px; text-align: center; padding: 8px; background:#eff6ff; border-radius:4px; margin-top: 8px;">
 Mnemotecnia: "el complemento de la intersección es la unión de los complementos".
 </div>
 </div>
@@ -755,15 +774,15 @@ Interprete en contexto agronómico los eventos $(A \cup B)^c$ y $(A \cap B)^c$.
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8">Interpretaciones (Leyes de De Morgan)</h4>
+<h4 class="fragment fade-in" data-fragment-index="8">Leyes de De Morgan</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
-$(A \cup B)^c = A^c \cap B^c$: la planta <strong>no tiene plaga</strong> <em>y</em> <strong>no tiene estrés hídrico</strong> — condición ideal de cultivo.
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
+$(A \cup B)^c = A^c \cap B^c$: la planta <strong>no tiene plaga</strong> <em>y</em> <strong>no tiene estrés hídrico</strong>, condición ideal de cultivo.
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
-$(A \cap B)^c = A^c \cup B^c$: la planta <strong>no sufre simultáneamente</strong> plaga y sequía — es decir, al menos uno de los dos problemas está ausente.
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
+$(A \cap B)^c = A^c \cup B^c$: la planta <strong>no sufre simultáneamente</strong> plaga y sequía, es decir, al menos uno de los dos problemas está ausente.
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify; color: #59A14F;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify; color: #59A14F;">
 <strong>Importancia:</strong> en manejo integrado de cultivos, identificar plantas libres de ambos estreses permite priorizar recursos de riego y control fitosanitario.
 </li>
 </ul>
@@ -771,7 +790,7 @@ $(A \cap B)^c = A^c \cup B^c$: la planta <strong>no sufre simultáneamente</stro
 
 </div>
 
-## Ejercicio final integrador — cultivo de maíz (enunciado)
+## Ejercicio
 
 <div class="twocol">
 
@@ -816,44 +835,44 @@ Se clasifica el estado de una planta de maíz según <strong>dos criterios indep
 
 </div>
 
-## Solución ejercicio final — parte 1
+## Solución
 
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 22px;">Espacio muestral y eventos base</h4>
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">Espacio muestral y eventos base</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
 $\Omega = \{(H,S),\,(H,P),\,(H,F),\,(E,S),\,(E,P),\,(E,F)\}$, $|\Omega|=6$
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
 $A = \{(H,S),(E,S)\}$ (sana)
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
 $B = \{(H,P),(E,P)\}$ (plaga)
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
 $C = \{(H,S),(H,P),(H,F)\}$ (bien hidratada)
 </li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
 $D = \{(E,P),(E,F)\}$ (estresada con problema)
 </li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">
 $E = A \cup C = \{(H,S),(E,S),(H,P),(H,F)\}$
 </li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
-<h4 class="fragment fade-in" data-fragment-index="10" style="font-size: 22px;">Operaciones c), d), e)</h4>
+<h4 class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">Operaciones c), d), e)</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 26px;">
 $A \cup C = \{(H,S),(E,S),(H,P),(H,F)\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 26px;">
 $B \cap D = \{(E,P)\}$ (plaga y estresada)
 </li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 26px;">
 $A^c = \{(H,P),(H,F),(E,P),(E,F)\}$ (con plaga o enfermedad)
 </li>
 </ul>
@@ -861,23 +880,23 @@ $A^c = \{(H,P),(H,F),(E,P),(E,F)\}$ (con plaga o enfermedad)
 
 </div>
 
-## Solución ejercicio final — parte 2
+## Solución
 
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 22px;">Operaciones f), g), h)</h4>
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">Operaciones f), g), h)</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
 $A \cup B = \{(H,S),(E,S),(H,P),(E,P)\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
 $(A \cup B)^c = \{(H,F),(E,F)\}$ (planta con enfermedad, sin ser sana ni tener plaga)
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
 $C \setminus B = \{(H,S),(H,F)\}$ (bien hidratada pero sin plaga)
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
 $A \triangle C$: elementos en $A$ o $C$ pero no en ambos:
 $A \setminus C = \{(E,S)\}$, $\; C \setminus A = \{(H,P),(H,F)\}$
 $$A \triangle C = \{(E,S),(H,P),(H,F)\}$$
@@ -886,18 +905,18 @@ $$A \triangle C = \{(E,S),(H,P),(H,F)\}$$
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 22px;">Verificación De Morgan</h4>
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Verificación De Morgan</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">
 $A^c = \{(H,P),(H,F),(E,P),(E,F)\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px;">
 $B^c = \{(H,S),(H,F),(E,S),(E,F)\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 26px;">
 $A^c \cap B^c = \{(H,F),(E,F)\} = (A \cup B)^c$ ✓
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px; text-align: justify; color: #59A14F;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 26px; text-align: justify; color: #59A14F;">
 <strong>Verificado:</strong> la primera Ley de De Morgan se cumple en este espacio muestral.
 </li>
 </ul>
@@ -907,13 +926,13 @@ $A^c \cap B^c = \{(H,F),(E,F)\} = (A \cup B)^c$ ✓
 
 ## Tipos de espacios muestrales
 
-<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 10px; overflow-x: auto;">
-<table style="border-collapse: collapse; width: 100%; font-size: 22px;">
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 50px; overflow-x: auto;">
+<table style="border-collapse: collapse; width: 100%; font-size: 28px;">
 <thead>
 <tr style="background: #a78bfa; color: white;">
 <th style="padding: 10px; text-align: left;">Tipo</th>
 <th style="padding: 10px; text-align: left;">Característica</th>
-<th style="padding: 10px; text-align: left;">Ejemplo agrícola</th>
+<th style="padding: 10px; text-align: left;">Ejemplo</th>
 </tr>
 </thead>
 <tbody>
@@ -941,10 +960,10 @@ $A^c \cap B^c = \{(H,F),(E,F)\} = (A \cup B)^c$ ✓
 </table>
 </div>
 
-## Sigma-álgebra — introducción conceptual
+## Sigma-álgebra
 
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-title">¿Qué es una $\sigma$-álgebra?</div>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: $\sigma$-álgebra</div>
   <div class="block-body">
 <p>
 Una <strong>$\sigma$-álgebra</strong> $\mathcal{F}$ sobre $\Omega$ es una familia de subconjuntos de $\Omega$ que satisface tres condiciones básicas de cierre.
@@ -955,30 +974,30 @@ Una <strong>$\sigma$-álgebra</strong> $\mathcal{F}$ sobre $\Omega$ es una famil
 <div class="twocol" style="margin-top: 20px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
-<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 24px;">Condiciones (intuitivas)</h4>
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">Condiciones (intuitivas)</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
 <strong>1.</strong> El espacio completo pertenece: $\Omega \in \mathcal{F}$
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
 <strong>2.</strong> Si un evento está en $\mathcal{F}$, su complemento también: $A \in \mathcal{F} \Rightarrow A^c \in \mathcal{F}$
 </li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
 <strong>3.</strong> Uniones contables de eventos en $\mathcal{F}$ también pertenecen a $\mathcal{F}$
 </li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">¿Por qué importa?</h4>
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">¿Por qué importa?</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 La probabilidad se define formalmente sobre la pareja $(\Omega, \mathcal{F})$.
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify;">
 Garantiza que todas las operaciones con eventos (unión, intersección, complemento) produzcan eventos a los que se pueda asignar probabilidad.
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px; text-align: justify;">
 Para espacios finitos (como los de esta clase), la $\sigma$-álgebra más rica es el conjunto de partes $\mathcal{P}(\Omega)$.
 </li>
 </ul>
@@ -991,33 +1010,33 @@ Para espacios finitos (como los de esta clase), la $\sigma$-álgebra más rica e
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">Motivación aplicada</h4>
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">Motivación aplicada</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
 Definir correctamente $\Omega$ es el <strong>primer paso indispensable</strong> en cualquier estudio probabilístico o estadístico.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
 Un $\Omega$ mal definido conduce a probabilidades incorrectas, modelos inválidos y conclusiones erróneas.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
 En agronomía, un $\Omega$ bien definido permite diseñar experimentos de campo con rigor estadístico.
 </li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">Ejemplos de impacto</h4>
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">Ejemplos de impacto</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
 <strong>Ensayo de variedades de trigo</strong> (clima frío, Nariño): $\Omega$ = todas las combinaciones de rendimiento posibles por hectárea.
 </li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
 <strong>Control de calidad de café</strong> (exportación): $\Omega$ = categorías de defectos según norma SCAA.
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 <strong>Epidemiología vegetal</strong>: $\Omega$ = conjunto de estados posibles de infección en una parcela.
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify; color: #a78bfa;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify; color: #a78bfa;">
 Sin $\Omega$ no hay probabilidad. Sin probabilidad no hay inferencia estadística.
 </li>
 </ul>
@@ -1025,10 +1044,9 @@ Sin $\Omega$ no hay probabilidad. Sin probabilidad no hay inferencia estadístic
 
 </div>
 
-## Conexión con probabilidad — anticipo
+## Conexión con probabilidad
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-title">¿Qué viene en la Clase 7?</div>
   <div class="block-body">
 <p>
 Habiendo definido $\Omega$ y los eventos, el siguiente paso es <strong>asignar probabilidades</strong>. Formalmente, una función de probabilidad es una función $P: \mathcal{F} \to [0,1]$ que satisface los <em>axiomas de Kolmogórov</em>.
@@ -1039,30 +1057,30 @@ Habiendo definido $\Omega$ y los eventos, el siguiente paso es <strong>asignar p
 <div class="twocol" style="margin-top: 20px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
-<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 24px;">Axiomas (anticipo)</h4>
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">Axiomas (anticipo)</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
 <strong>K1:</strong> $P(A) \geq 0$ para todo evento $A$
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
 <strong>K2:</strong> $P(\Omega) = 1$
 </li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
 <strong>K3:</strong> Si $A \cap B = \emptyset$, entonces $P(A \cup B) = P(A) + P(B)$
 </li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">Lo que ya tenemos (clase 6)</h4>
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">Lo que ya tenemos</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 Sabemos definir $\Omega$ para experimentos discretos y continuos.
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify;">
 Sabemos construir eventos y operar con ellos (unión, intersección, complemento, diferencia).
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px; text-align: justify; color: #3b82f6;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px; text-align: justify; color: #3b82f6;">
 Estamos listos para asignar y calcular probabilidades sobre estos eventos.
 </li>
 </ul>
@@ -1070,7 +1088,7 @@ Estamos listos para asignar y calcular probabilidades sobre estos eventos.
 
 </div>
 
-## Ejercicio de repaso — Verdadero o Falso
+## Ejercicio
 
 <div style="margin-top: 10px;">
 
@@ -1096,10 +1114,10 @@ Estamos listos para asignar y calcular probabilidades sobre estos eventos.
 
 </div>
 
-## Resumen visual — conceptos principales
+## Conceptos principales
 
-<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 10px; overflow-x: auto;">
-<table style="border-collapse: collapse; width: 100%; font-size: 20px;">
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top: 50px; overflow-x: auto;">
+<table style="border-collapse: collapse; width: 100%; font-size: 28px;">
 <thead>
 <tr style="background: #1e3a5f; color: white;">
 <th style="padding: 10px; text-align: left;">Concepto</th>
@@ -1149,43 +1167,6 @@ Estamos listos para asignar y calcular probabilidades sobre estos eventos.
 </table>
 </div>
 
-## Bibliografía sugerida
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px; color: #a78bfa;">Textos principales</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
-<strong>Walpole, R. E., Myers, R. H., & Myers, S. L.</strong> (2012). <em>Probabilidad y estadística para ingeniería y ciencias</em> (9.ª ed.). Pearson.
-<br><span style="color:#59A14F; font-size: 20px;">Capítulos 2–3: fundamentos de probabilidad y espacio muestral.</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
-<strong>Ross, S. M.</strong> (2014). <em>Introduction to Probability and Statistics for Engineers and Scientists</em> (5th ed.). Elsevier.
-<br><span style="color:#3b82f6; font-size: 20px;">Capítulo 3: axiomas de probabilidad y eventos.</span>
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; color: #3b82f6;">Textos complementarios</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
-<strong>Devore, J. L.</strong> (2016). <em>Probabilidad y estadística para ingeniería y ciencias</em> (9.ª ed.). Cengage Learning.
-<br><span style="color:#F28E2B; font-size: 20px;">Capítulo 2: probabilidad.</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
-<strong>Montgomery, D. C., & Runger, G. C.</strong> (2018). <em>Applied Statistics and Probability for Engineers</em> (7th ed.). Wiley.
-<br><span style="color:#B07AA1; font-size: 20px;">Excelente para aplicaciones en ingeniería y ciencias agrarias.</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px; text-align: justify; color: #76B7B2;">
-<strong>Material UNAL:</strong> notas de clase del Departamento de Estadística, Sede Bogotá.
-</li>
-</ul>
-</div>
-
-</div>
-
 ## Experimentos aleatorios en agronomía colombiana
 
 <div class="twocol">
@@ -1228,13 +1209,12 @@ $$\Omega = \{45, 46, 47, \ldots, 90\}$$
 
 </div>
 
-## Conteo del espacio muestral — técnicas básicas
+## Conteo del espacio muestral
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-title">¿Cuántos elementos tiene $\Omega$?</div>
   <div class="block-body">
 <p>
-Para espacios discretos finitos, calcular $|\Omega|$ es esencial antes de enumerar los eventos.
+<strong>¿Cuántos elementos tiene $\Omega$?</strong> Para espacios discretos finitos, calcular $|\Omega|$ es esencial antes de enumerar los eventos.
 </p>
   </div>
 </div>
@@ -1242,13 +1222,13 @@ Para espacios discretos finitos, calcular $|\Omega|$ es esencial antes de enumer
 <div class="twocol" style="margin-top: 16px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
-<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 24px;">Regla de la multiplicación</h4>
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">Regla de la multiplicación</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
 Si un experimento tiene $k$ etapas con $n_1, n_2, \ldots, n_k$ resultados respectivamente, el total de resultados es:
 $$|\Omega| = n_1 \times n_2 \times \cdots \times n_k$$
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
 <strong>Ejemplo:</strong> 4 semillas de arroz, cada una V o N:
 $$|\Omega| = 2^4 = 16$$
 </li>
@@ -1256,16 +1236,13 @@ $$|\Omega| = 2^4 = 16$$
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">Ejemplos agrícolas</h4>
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Ejemplos agrícolas</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
 Clasificar 3 plantas de café (Sana/Problema): $|\Omega| = 2^3 = 8$
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 Registrar clima (3 tipos) y suelo (4 tipos) de una parcela: $|\Omega| = 3 \times 4 = 12$
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
-Dos dados: $|\Omega| = 6 \times 6 = 36$
 </li>
 </ul>
 </div>
@@ -1279,15 +1256,15 @@ Dos dados: $|\Omega| = 6 \times 6 = 36$
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <h4 class="fragment fade-in" data-fragment-index="2">Evento elemental</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
 Un <strong>evento elemental</strong> (o simple) contiene exactamente un punto muestral:
 $$\{\omega\} \subset \Omega, \quad \omega \in \Omega$$
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
 <strong>Ejemplo:</strong> $\Omega = \{1,2,3,4,5,6\}$
 $$\{3\}, \{5\}, \{6\} \text{ son eventos elementales}$$
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
 Si $|\Omega| = n$, hay exactamente $n$ eventos elementales.
 </li>
 </ul>
@@ -1296,17 +1273,17 @@ Si $|\Omega| = n$, hay exactamente $n$ eventos elementales.
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
 <h4 class="fragment fade-in" data-fragment-index="7">Evento compuesto</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
 Un <strong>evento compuesto</strong> contiene dos o más puntos muestrales.
 </li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
 <strong>Ejemplo:</strong> "salir par" $= \{2, 4, 6\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 Todo evento compuesto puede expresarse como unión de eventos elementales:
 $$A = \{2,4,6\} = \{2\} \cup \{4\} \cup \{6\}$$
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify;">
 El número total de eventos posibles (incluyendo $\emptyset$ y $\Omega$) en un espacio con $n$ elementos es $2^n$.
 </li>
 </ul>
@@ -1319,34 +1296,34 @@ El número total de eventos posibles (incluyendo $\emptyset$ y $\Omega$) en un e
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">Número de subconjuntos</h4>
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">Número de subconjuntos</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
 Si $|\Omega| = n$, entonces el número de posibles eventos (subconjuntos) es:
 $$|\mathcal{P}(\Omega)| = 2^n$$
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
 Para el dado: $|\Omega| = 6 \Rightarrow 2^6 = 64$ eventos posibles.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
 Para 4 semillas de arroz: $|\Omega| = 16 \Rightarrow 2^{16} = 65{,}536$ eventos posibles.
 </li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">Ejemplo: estado fitosanitario del café</h4>
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">Ejemplo: estado fitosanitario del café</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
 $\Omega = \{\text{Sa}, \text{Pl}, \text{En}, \text{De}\}$, $|\Omega| = 4$
 </li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
 Número de eventos posibles: $2^4 = 16$
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 Incluyen: $\emptyset$, $\{\text{Sa}\}$, $\{\text{Pl}\}$, $\{\text{En}\}$, $\{\text{De}\}$, $\{\text{Sa},\text{Pl}\}$, $\ldots$, $\Omega$
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify; color: #3b82f6;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify; color: #3b82f6;">
 En la práctica, el investigador define solo los eventos que tienen interpretación agronómica relevante.
 </li>
 </ul>
@@ -1361,32 +1338,32 @@ En la práctica, el investigador define solo los eventos que tienen interpretaci
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <h4 class="fragment fade-in" data-fragment-index="2">Definición</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
 Decimos que $A$ está <strong>contenido</strong> en $B$ (se escribe $A \subset B$) si todo resultado de $A$ también pertenece a $B$:
 $$A \subset B \iff (\omega \in A \Rightarrow \omega \in B)$$
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
 Si $A \subset B$, entonces la ocurrencia de $A$ <strong>implica</strong> la ocurrencia de $B$.
 </li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px;">Ejemplo agronómico</h4>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">Ejemplo</h3>
 <ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
 En el cultivo de papa (clima frío, Boyacá), $\Omega = \{\text{Primera}, \text{Segunda}, \text{Tercera}\}$.
 </li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
 $A = \{\text{Primera}\}$, $\quad B = \{\text{Primera}, \text{Segunda}\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
 $A \subset B$ porque Primera $\in B$ ✓
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 Interpretación: si el tubérculo es de Primera calidad, entonces también satisface la condición de ser Primera o Segunda.
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px;">
 Consecuencia útil: $A \subset B \Rightarrow A \cap B = A$ y $A \cup B = B$.
 </li>
 </ul>
@@ -1408,33 +1385,33 @@ Dos eventos $A$ y $B$ son <strong>iguales</strong> ($A = B$) si y solo si $A \su
 <div class="twocol" style="margin-top: 20px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
-<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 24px;">Verificación mediante De Morgan</h4>
+<h4 class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">Verificación mediante De Morgan</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
 Para verificar que $(A \cup B)^c = A^c \cap B^c$, se puede mostrar que cada conjunto está contenido en el otro.
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
 <strong>Paso 1:</strong> $(A \cup B)^c \subset A^c \cap B^c$: si $\omega \notin A \cup B$, entonces $\omega \notin A$ y $\omega \notin B$.
 </li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
 <strong>Paso 2:</strong> $A^c \cap B^c \subset (A \cup B)^c$: si $\omega \notin A$ y $\omega \notin B$, entonces $\omega \notin A \cup B$.
 </li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">Ejemplo numérico</h4>
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">Ejemplo numérico</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px;">
 $\Omega = \{1,2,3,4,5,6\}$, $A = \{1,2\}$, $B = \{2,3\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px;">
 $A \cup B = \{1,2,3\}$, $(A \cup B)^c = \{4,5,6\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px;">
 $A^c = \{3,4,5,6\}$, $B^c = \{1,4,5,6\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 28px;">
 $A^c \cap B^c = \{4,5,6\} = (A \cup B)^c$ ✓
 </li>
 </ul>
@@ -1467,16 +1444,16 @@ En un cultivo de papa (<em>Solanum tuberosum</em>) en clima frío de Boyacá, se
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
 <h4 class="fragment fade-in" data-fragment-index="8">Solución</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
 $|\Omega| = 3^2 = 9$
 </li>
 <li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px;">
 $\Omega = \{(P,P),(P,S),(P,D),(S,P),(S,S),(S,D),(D,P),(D,S),(D,D)\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px;">
 $A = \{(P,P),(P,S),(P,D),(S,P),(D,P)\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 20px;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px;">
 $A^c$ = "ningún tubérculo es Primera":
 $$A^c = \{(S,S),(S,D),(D,S),(D,D)\}$$
 </li>
@@ -1490,45 +1467,45 @@ $$A^c = \{(S,S),(S,D),(D,S),(D,D)\}$$
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">Leyes de idempotencia</h4>
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">Leyes de idempotencia</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
 $A \cup A = A$
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
 $A \cap A = A$
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify; color: #59A14F;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify; color: #59A14F;">
 Unir o intersectar un evento consigo mismo no cambia el evento.
 </li>
 </ul>
-<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; margin-top: 12px;">Leyes de absorción</h4>
+<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 28px; margin-top: 12px;">Leyes de absorción</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
 Si $A \subset B$: $\quad A \cup B = B$
 </li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px;">
 Si $A \subset B$: $\quad A \cap B = A$
 </li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
-<h4 class="fragment fade-in" data-fragment-index="10" style="font-size: 24px;">Contexto: trigo en Boyacá</h4>
+<h4 class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;">Contexto: trigo en Boyacá</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
 $\Omega = \{\text{Alto rendimiento}, \text{Medio rendimiento}, \text{Bajo rendimiento}\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 26px;">
 $A = \{\text{Alto}\}$, $\quad B = \{\text{Alto}, \text{Medio}\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="13" style="font-size: 26px;">
 $A \subset B$ $\Rightarrow$ $A \cup B = B = \{\text{Alto}, \text{Medio}\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="14" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="14" style="font-size: 26px;">
 $A \cap B = A = \{\text{Alto}\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="15" style="font-size: 22px; text-align: justify; color: #3b82f6;">
+<li class="fragment fade-up" data-fragment-index="15" style="font-size: 26px; text-align: justify; color: #3b82f6;">
 Cuando un evento implica al otro, las operaciones se simplifican elegantemente.
 </li>
 </ul>
@@ -1536,41 +1513,42 @@ Cuando un evento implica al otro, las operaciones se simplifican elegantemente.
 
 </div>
 
-## Aplicación: diseño de experimentos en campo
+## Diseño de experimentos en campo
 
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">Del experimento al modelo probabilístico</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 28px;">Del experimento al modelo probabilístico</h4>
+
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
 Todo <strong>diseño experimental</strong> en agronomía comienza con la definición precisa de:
+</p>
+<ol>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>El experimento aleatorio</strong>: ¿qué se observa o mide?
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
-<strong>1. El experimento aleatorio</strong> — ¿qué se observa o mide?
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+<strong>El espacio muestral</strong> $\Omega$: ¿cuáles son todos los resultados posibles?
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
-<strong>2. El espacio muestral</strong> $\Omega$ — ¿cuáles son todos los resultados posibles?
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+<strong>Los eventos de interés</strong>: ¿qué condiciones o resultados queremos estudiar?
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
-<strong>3. Los eventos de interés</strong> — ¿qué condiciones o resultados queremos estudiar?
-</li>
-</ul>
+</ol>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">Ejemplo: ensayo de variedades de arroz</h4>
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Ensayo de variedades de arroz</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
-<strong>Experimento:</strong> sembrar 5 variedades de arroz en el Tolima y registrar cuál produce mayor rendimiento.
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify;">
+<strong>Experimento:</strong> sembrar 5 variedades de arroz y registrar cuál produce mayor rendimiento.
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px;">
 $\Omega = \{V_1, V_2, V_3, V_4, V_5\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px;">
 $A$ = "variedad mejorada gana" $= \{V_3, V_4\}$
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 22px; text-align: justify; color: #59A14F;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px; text-align: justify; color: #59A14F;">
 Con $\Omega$ y los eventos definidos, el paso siguiente es asignar probabilidades basadas en datos históricos o modelos.
 </li>
 </ul>
@@ -1578,7 +1556,7 @@ Con $\Omega$ y los eventos definidos, el paso siguiente es asignar probabilidade
 
 </div>
 
-## Diferencia de eventos — ejemplo con cultivo de arroz
+## Diferencia de eventos
 
 <div class="twocol">
 
@@ -1586,7 +1564,7 @@ Con $\Omega$ y los eventos definidos, el paso siguiente es asignar probabilidade
 <h4 class="fragment fade-in" data-fragment-index="2">Contexto</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-En un lote de arroz (clima cálido), se monitorean plantas para detectar dos problemas: <strong>Brusone</strong> (enfermedad fúngica) o <strong>Sogata</strong> (plaga de insecto).
+En un lote de arroz, se monitorean plantas para detectar dos problemas: <strong>Brusone</strong> (enfermedad fúngica) o <strong>Sogata</strong> (plaga de insecto).
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
 $\Omega = \{\text{Sana}, \text{Brusone}, \text{Sogata}, \text{Ambos}\}$
@@ -1603,16 +1581,16 @@ $B = \{\text{Sogata}, \text{Ambos}\}$ (tiene Sogata)
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
 <h4 class="fragment fade-in" data-fragment-index="8">Operaciones</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">
-$A \setminus B = \{\text{Brusone}\}$ — solo Brusone, sin Sogata
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px;">
+$A \setminus B = \{\text{Brusone}\}$, solo Brusone, sin Sogata
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;">
-$B \setminus A = \{\text{Sogata}\}$ — solo Sogata, sin Brusone
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px;">
+$B \setminus A = \{\text{Sogata}\}$, solo Sogata, sin Brusone
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px;">
-$A \triangle B = \{\text{Brusone}, \text{Sogata}\}$ — exactamente uno de los dos problemas
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px;">
+$A \triangle B = \{\text{Brusone}, \text{Sogata}\}$, exactamente uno de los dos problemas
 </li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 24px; text-align: justify; color: #59A14F;">
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px; text-align: justify; color: #59A14F;">
 <strong>Importancia:</strong> identificar plantas con exactamente un problema permite focalizar el tratamiento (fungicida vs. insecticida) sin aplicar ambos a la vez.
 </li>
 </ul>
@@ -1620,7 +1598,7 @@ $A \triangle B = \{\text{Brusone}, \text{Sogata}\}$ — exactamente uno de los d
 
 </div>
 
-## Ejercicio de verificación — propiedades distributivas
+## Propiedades distributivas
 
 <div class="twocol">
 
@@ -1659,6 +1637,704 @@ $(A \cap B) \cup (A \cap C) = \{3,4\} \cup \emptyset = \{3,4\}$ ✓
 </li>
 <li class="fragment fade-up" data-fragment-index="13" style="font-size: 22px; color: #59A14F;">
 La propiedad distributiva queda verificada.
+</li>
+</ul>
+</div>
+
+</div>
+
+
+## Probabilidad, propiedades y reglas de conteo
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top:50px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+Hasta aquí hemos definido los conceptos de experimento aleatorio, espacio muestral y eventos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+Ahora necesitamos <strong>asignar un número</strong> a cada evento que mida qué tan probable es que ocurra.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+Ese número es la <strong>probabilidad</strong>.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5" style="margin-top:50px;">
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
+Existen tres enfoques para definir la probabilidad:
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
+<strong>Enfoque clásico</strong> (Laplace)
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px;">
+<strong>Enfoque frecuentista</strong>
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px;">
+<strong>Enfoque axiomático</strong> (Kolmogórov)
+</li>
+</ul>
+</div>
+
+</div>
+
+## ¿Qué es la probabilidad?
+
+<div style="text-align: center; margin-top: 40px;">
+
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 32px; font-weight: bold; color: #a78bfa;">
+¿Cuál es la probabilidad de que una planta de café seleccionada al azar tenga plaga?
+</div>
+
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 30px; font-size: 32px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
+La <strong>probabilidad</strong> es una medida numérica entre 0 y 1 que cuantifica la posibilidad de que ocurra un evento en un experimento aleatorio.
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 30px; font-size: 32px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
+Un valor cercano a <strong>0</strong> indica que el evento es muy poco probable; cercano a <strong>1</strong>, que es muy probable.
+</div>
+
+</div>
+
+## Enfoque clásico (Laplace)
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición</div>
+  <div class="block-body">
+<p>
+Si $\Omega$ tiene $N$ resultados <strong>igualmente posibles</strong> y el evento $A$ contiene $n_A$ de ellos, entonces:
+$$P(A) = \frac{n_A}{N} = \frac{|A|}{|\Omega|}$$
+</p>
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 32px; font-size: 26px; text-align: center;">
+Este enfoque requiere que todos los resultados elementales sean <strong>equiprobables</strong>.
+</div>
+
+## Supuestos del enfoque clásico
+
+<ul>
+<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 28px; margin-bottom: 10px; padding: 8px;">
+El espacio muestral debe ser <strong>finito</strong>.
+</li>
+<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 28px; margin-bottom: 10px; padding: 8px;">
+Todos los resultados elementales deben ser <strong>igualmente posibles</strong>.
+</li>
+<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 28px; margin-bottom: 10px; padding: 8px;">
+Se puede contar el número de resultados favorables al evento.
+</li>
+<li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 28px; margin-bottom: 10px; padding: 8px;">
+No requiere experimentación: basta con el análisis lógico del experimento.
+</li>
+</ul>
+
+## Ejemplo: lote de plantas de café
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Un lote de <strong>20 plantas de café</strong> contiene 12 plantas sanas y 8 con plaga.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+Se selecciona una planta al azar. Calcule:
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px;">
+$A$: probabilidad de que sea sana.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 27px;">
+$B$: probabilidad de que tenga plaga.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8">Solución</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 27px;">
+$|\Omega| = 20$, $|A| = 12$, $|B| = 8$
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 27px;">
+$$P(A) = \frac{12}{20} = 0.60$$
+</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 27px;">
+$$P(B) = \frac{8}{20} = 0.40$$
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 26px;">
+Verificación: $P(A) + P(B) = 1$ ✓
+</li>
+</ul>
+</div>
+
+</div>
+
+## Variedades de semillas de maíz
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Un almacén de insumos agrícolas tiene 5 variedades de semillas de maíz: V1, V2, V3, V4, V5.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+Se elige una variedad al azar para un ensayo de campo. ¿Cuál es la probabilidad de elegir V3?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6">Solución</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
+$\Omega = \{V1, V2, V3, V4, V5\}$, $|\Omega| = 5$
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
+$A = \{V3\}$, $|A| = 1$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
+$$P(A) = \frac{1}{5} = 0.20$$
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px; text-align: justify;">
+Cada variedad tiene la misma probabilidad de ser elegida.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Limitaciones del enfoque clásico
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="color: #e11d48;">Problemas</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+No aplica cuando los resultados <strong>no son equiprobables</strong>. Ejemplo: una moneda cargada.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+No aplica cuando $|\Omega| = \infty$ (tiempo de maduración de un fruto).
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
+La definición es <strong>circular</strong>: "igualmente posible" ya presupone la idea de probabilidad.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7" style="color: #059669;">Cuándo sí aplica</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px; text-align: justify;">
+Experimentos con simetría natural: dado, moneda, sorteos.
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 27px; text-align: justify;">
+Muestras aleatorias simples de poblaciones finitas.
+</li>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 27px; text-align: justify;">
+Selección aleatoria de plantas, parcelas o unidades experimentales.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Enfoque frecuentista
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición</div>
+  <div class="block-body">
+<p>
+Si el experimento se repite $n$ veces bajo las mismas condiciones y el evento $A$ ocurre $f_A$ veces, entonces:
+$$P(A) = \lim_{n \to \infty} \frac{f_A}{n}$$
+La probabilidad es el <strong>límite de la frecuencia relativa</strong> cuando $n \to \infty$.
+</p>
+  </div>
+</div>
+
+## Germinación de trigo
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">Experimento</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Se plantan semillas de trigo y se registra si germinan o no. Se repite el experimento $n$ veces.
+</li>
+</ul>
+<table class="fragment fade-in" data-fragment-index="4" style="font-size: 23px; width: 100%; margin-top: 10px;">
+<tr style="background:#a78bfa; color:white;"><th>$n$</th><th>Germinan $f_A$</th><th>$f_A/n$</th></tr>
+<tr class="fragment fade-in" data-fragment-index="5"><td>10</td><td>7</td><td>0.700</td></tr>
+<tr class="fragment fade-in" data-fragment-index="6"><td>50</td><td>36</td><td>0.720</td></tr>
+<tr class="fragment fade-in" data-fragment-index="7"><td>100</td><td>74</td><td>0.740</td></tr>
+<tr class="fragment fade-in" data-fragment-index="8"><td>500</td><td>376</td><td>0.752</td></tr>
+<tr class="fragment fade-in" data-fragment-index="9"><td>1000</td><td>751</td><td>0.751</td></tr>
+</table>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="10">Interpretación</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 27px; text-align: justify;">
+La frecuencia relativa <strong>converge</strong> hacia un valor estable: $P(\text{germina}) \approx 0.75$.
+</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 27px; text-align: justify;">
+Con muestras pequeñas hay variación; con $n$ grande la estimación se estabiliza.
+</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 27px; text-align: justify;">
+Este enfoque es la base del <strong>análisis estadístico aplicado</strong> en agronomía.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Limitaciones del enfoque frecuentista
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="color: #e11d48;">Problemas</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Requiere que el experimento sea <strong>repetible</strong> en condiciones idénticas.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+No define la probabilidad de eventos únicos o irrepetibles.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
+El límite $n \to \infty$ nunca se alcanza en la práctica.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7">Comparación de enfoques</h4>
+<table class="fragment fade-in" data-fragment-index="8" style="font-size: 22px; width: 100%;">
+<tr style="background:#3b82f6; color:white;"><th>Aspecto</th><th>Clásico</th><th>Frecuentista</th></tr>
+<tr><td>Requiere experimento</td><td>No</td><td>Sí</td></tr>
+<tr><td>Equiprobabilidad</td><td>Necesaria</td><td>No necesaria</td></tr>
+<tr><td>$|\Omega|$ infinito</td><td>No aplica</td><td>Aplica</td></tr>
+<tr><td>Base</td><td>Lógica</td><td>Datos observados</td></tr>
+</table>
+</div>
+
+</div>
+
+## Necesidad de un enfoque axiomático
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>
+Para construir una teoría matemática rigurosa y consistente de la probabilidad, Andrei Nikolaevich Kolmogórov propuso en 1933 una definición basada en <strong>tres axiomas</strong> que cualquier función de probabilidad debe satisfacer.
+</p>
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 26px; text-align: center;">
+Los enfoques clásico y frecuentista son <strong>casos especiales</strong> compatibles con estos axiomas.
+</div>
+
+## Los tres axiomas de Kolmogórov
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="color: #a78bfa;">Axioma 1: No negatividad</h4>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: center;">
+$$P(A) \geq 0 \quad \text{para todo evento } A$$
+</p>
+<h4 class="fragment fade-in" data-fragment-index="4" style="color: #3b82f6; margin-top: 20px;">Axioma 2: Normalización</h4>
+<p class="fragment fade-in" data-fragment-index="5" style="font-size: 28px; text-align: center;">
+$$P(\Omega) = 1$$
+</p>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="7" style="color: #59A14F;">Axioma 3: Aditividad</h4>
+<p class="fragment fade-in" data-fragment-index="8" style="font-size: 27px; text-align: justify;">
+Si $A$ y $B$ son eventos <strong>mutuamente excluyentes</strong> ($A \cap B = \emptyset$):
+$$P(A \cup B) = P(A) + P(B)$$
+</p>
+<p class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
+Extensión: para $A_1, A_2, \ldots$ eventos disjuntos:
+$$P\!\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)$$
+</p>
+</div>
+
+</div>
+
+## Verificación de axiomas: cultivo de arroz
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">Ejemplo</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Un lote de semillas de arroz tiene cuatro categorías: $\Omega = \{E, B, R, D\}$ (Excelente, Buena, Regular, Deficiente).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px;">
+$P(E) = 0.40$, $P(B) = 0.35$, $P(R) = 0.15$, $P(D) = 0.10$
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6">Verificación</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
+Axioma 1: $0.40, 0.35, 0.15, 0.10 \geq 0$ ✓
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
+Axioma 2: $0.40 + 0.35 + 0.15 + 0.10 = 1$ ✓
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 27px;">
+Axioma 3: $P(E \cup D) = P(E) + P(D) = 0.50$ ✓
+</li>
+</ul>
+</div>
+
+</div>
+
+## Espacio de probabilidad
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición formal</div>
+  <div class="block-body">
+<p>
+Un <strong>espacio de probabilidad</strong> es una terna $(\Omega, \mathcal{F}, P)$ donde:
+</p>
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px;">
+<div class="card crispdm-card--gray" style="padding: 20px;">
+<ul>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">
+$\Omega$: espacio muestral (todos los resultados posibles).
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">
+$\mathcal{F}$: colección de eventos (subconjuntos de $\Omega$) a los que se les puede asignar probabilidad.
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
+$P$: función de probabilidad que cumple los tres axiomas de Kolmogórov.
+</li>
+</ul>
+</div>
+</div>
+
+## Probabilidad del evento imposible
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: center;">
+$$P(\emptyset) = 0$$
+</p>
+<p class="fragment fade-in" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+El evento imposible tiene probabilidad cero.
+</p>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6">Demostración</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+$\Omega$ y $\emptyset$ son disjuntos, y $\Omega \cup \emptyset = \Omega$.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+Por el Axioma 3: $P(\Omega) = P(\Omega) + P(\emptyset)$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+Por el Axioma 2: $1 = 1 + P(\emptyset)$, luego $P(\emptyset) = 0$ ✓
+</li>
+</ul>
+</div>
+
+</div>
+
+## Complemento
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: center;">
+$$P(A^c) = 1 - P(A)$$
+</p>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="5">Ejemplo:</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 27px; text-align: justify;">
+La probabilidad de que una planta de papa tenga plaga es $P(A) = 0.30$.
+</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
+$$P(A^c) = P(\text{sin plaga}) = 1 - 0.30 = 0.70$$
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+Es más fácil calcular $P(A^c)$ cuando $P(A)$ es conocido y $A^c$ es complejo.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Monotonía
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Si $A \subset B$, entonces:
+$$P(A) \leq P(B)$$
+</p>
+<p class="fragment fade-in" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Un subconjunto no puede tener mayor probabilidad que el conjunto que lo contiene.
+</p>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6">Ejemplo:</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+$A$: fruto con defecto grave $\subset$ $B$: fruto defectuoso.
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+$P(A) = 0.05$, $P(B) = 0.18$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+$P(A) \leq P(B)$: $0.05 \leq 0.18$ ✓
+</li>
+</ul>
+</div>
+
+</div>
+
+## Regla de la adición general
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Enunciado</div>
+  <div class="block-body">
+<p>
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+</p>
+<p class="fragment fade-up" data-fragment-index="2">
+Se resta $P(A \cap B)$ porque al sumar $P(A) + P(B)$, la intersección se cuenta dos veces.
+</p>
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 15px; font-size: 26px; text-align: center;">
+Para eventos disjuntos ($A \cap B = \emptyset$): $\quad P(A \cup B) = P(A) + P(B)$
+</div>
+
+## Ejemplo
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+En un cultivo de mango, la probabilidad de que un fruto tenga enfermedad es $0.25$, de que tenga plaga es $0.15$, y de que tenga ambas es $0.08$. ¿Cuál es la probabilidad de que tenga al menos uno de los dos problemas?
+</p>
+
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6">Solución</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
+$P(E) = 0.25$, $P(P) = 0.15$, $P(E \cap P) = 0.08$
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
+$$P(E \cup P) = 0.25 + 0.15 - 0.08 = 0.32$$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
+$P(\text{sin problemas}) = 1 - 0.32 = 0.68$
+</li>
+</ul>
+</div>
+
+</div>
+
+## Regla de adición para tres eventos
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Inclusión-Exclusión</div>
+  <div class="block-body">
+<p>
+$$P(A \cup B \cup C) = P(A) + P(B) + P(C)$$
+$$- P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)$$
+</p>
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 26px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
+Se suman las probabilidades individuales, se restan las intersecciones de pares, y se suma la intersección triple para no restar de más.
+</div>
+
+## Ejercicio
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: left;">
+En un invernadero de fresa tenemos que: $P(\text{helada}) = 0.20$, $P(\text{plaga}) = 0.35$, $P(\text{helada} \cap \text{plaga}) = 0.10$. Calcule: 
+</p>
+<ul class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: left;">
+<li>$P(\text{sin helada})$,</li>
+<li> $P(\text{helada} \cup \text{plaga})$,</li>
+<li>$P(\text{sin helada ni plaga})$.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6">Solución</h4>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
+$P(\text{sin helada}) = 1 - 0.20 = 0.80$
+</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px;">
+$P(\text{helada} \cup \text{plaga}) = 0.20 + 0.35 - 0.10 = 0.45$
+</li>
+<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px;">
+$P(\text{sin helada ni plaga}) = 1 - 0.45 = 0.55$
+</li>
+</ul>
+</div>
+
+</div>
+
+## Resumen de propiedades básicas
+
+<ul>
+<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
+$P(\emptyset) = 0$ y $P(\Omega) = 1$
+</li>
+<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
+$0 \leq P(A) \leq 1$ para todo evento $A$
+</li>
+<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
+$P(A^c) = 1 - P(A)$
+</li>
+<li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
+Si $A \subset B$, entonces $P(A) \leq P(B)$
+</li>
+<li class="fragment fade-up" style="background: #B07AA1; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
+$P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+</li>
+<li class="fragment fade-up" style="background: #76B7B2; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
+Si $A \cap B = \emptyset$: $P(A \cup B) = P(A) + P(B)$
+</li>
+</ul>
+
+## Ejercicios en clase
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 14px; font-size: 26px; align-items: start;">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 26px; color: #1b4d2e;">Ejercicio 1</h4>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 23px; text-align: justify;">
+En un lote de <strong>palmas de aceite</strong> (<em>Elaeis guineensis</em>) del Meta, cada planta se clasifica como: Sana (S), con Pudrición de cogollo (P) o con Marchitez letal (M). Se seleccionan aleatoriamente <strong>2 plantas</strong>.
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 22px;"><strong>a)</strong> Construya $\Omega$ y calcule $|\Omega|$.</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 22px;"><strong>b)</strong> Defina $A$ = "al menos una planta está sana" y liste $A$.</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 22px;"><strong>c)</strong> Calcule $A^c$ e interprételo agronómicamente.</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 22px;"><strong>d)</strong> ¿Forman los tres estados una partición de $\Omega$? Justifique.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
+<h4 class="fragment fade-in" data-fragment-index="9" style="font-size: 26px; color: #1b4d2e;">Ejercicio 2</h4>
+<p class="fragment fade-in" data-fragment-index="10" style="font-size: 23px; text-align: justify;">
+En un invernadero de <strong>claveles</strong> (<em>Dianthus caryophyllus</em>) en la Sabana de Bogotá, se registra si cada flor presenta: defecto de color (C) o defecto de forma (F). Para una flor elegida al azar se sabe que $P(C) = 0.18$, $P(F) = 0.12$ y $P(C \cap F) = 0.05$.
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 22px;"><strong>a)</strong> Calcule $P(C \cup F)$.</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 22px;"><strong>b)</strong> Calcule $P((C \cup F)^c)$ e interprete.</li>
+<li class="fragment fade-in" data-fragment-index="13" style="font-size: 22px;"><strong>c)</strong> Verifique la primera Ley de De Morgan numéricamente.</li>
+</ul>
+</div>
+
+</div>
+
+## Ejercicios en clase
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 14px; font-size: 26px; align-items: start;">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 26px; color: #1a3a6b;">Ejercicio 3</h4>
+<p class="fragment fade-in" data-fragment-index="3" style="font-size: 23px; text-align: justify;">
+En un ensayo de <strong>tres variedades de quinua</strong> (<em>Chenopodium quinoa</em>) en Nariño, se selecciona aleatoriamente una planta. Sea $\Omega = \{V_1, V_2, V_3\}$ con probabilidades $P(V_1) = 0.50$, $P(V_2) = 0.30$, $P(V_3) = 0.20$.
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 22px;"><strong>a)</strong> Verifique que se cumplen los tres axiomas de Kolmogórov.</li>
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 22px;"><strong>b)</strong> Defina $A$ = "variedad con mayor adopción" $= \{V_1, V_2\}$ y calcule $P(A)$.</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 22px;"><strong>c)</strong> Calcule $P(A^c)$ usando la regla del complemento.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
+<h4 class="fragment fade-in" data-fragment-index="8" style="font-size: 26px; color: #1a3a6b;">Ejercicio 4</h4>
+<p class="fragment fade-in" data-fragment-index="9" style="font-size: 23px; text-align: justify;">
+En un cultivo de <strong>cacao</strong> (<em>Theobroma cacao</em>) del Huila, se monitorea si una mazorca presenta: Monilia (M), Fitophthora (F) o ninguna (N). Se define $\Omega = \{M, F, N\}$ y los eventos $A = \{M, F\}$, $B = \{F, N\}$.
+</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 22px;"><strong>a)</strong> Calcule $A \cup B$, $A \cap B$ y $A \setminus B$.</li>
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 22px;"><strong>b)</strong> Calcule $A \triangle B$ e interprételo.</li>
+<li class="fragment fade-in" data-fragment-index="12" style="font-size: 22px;"><strong>c)</strong> Si $P(M) = 0.30$, $P(F) = 0.45$, $P(N) = 0.25$, calcule $P(A \cup B)$ usando la regla de adición general.</li>
+</ul>
+</div>
+
+</div>
+
+## Bibliografía sugerida
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px; color: #a78bfa;">Textos principales</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+<strong>Walpole, R. E., Myers, R. H., & Myers, S. L.</strong> (2012). <em>Probabilidad y estadística para ingeniería y ciencias</em> (9.ª ed.). Pearson.
+<br><span style="color:#59A14F; font-size: 20px;">Capítulos 2–3: fundamentos de probabilidad y espacio muestral.</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+<strong>Ross, S. M.</strong> (2014). <em>Introduction to Probability and Statistics for Engineers and Scientists</em> (5th ed.). Elsevier.
+<br><span style="color:#3b82f6; font-size: 20px;">Capítulo 3: axiomas de probabilidad y eventos.</span>
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; color: #3b82f6;">Textos complementarios</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+<strong>Devore, J. L.</strong> (2016). <em>Probabilidad y estadística para ingeniería y ciencias</em> (9.ª ed.). Cengage Learning.
+<br><span style="color:#F28E2B; font-size: 20px;">Capítulo 2: probabilidad.</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+<strong>Montgomery, D. C., & Runger, G. C.</strong> (2018). <em>Applied Statistics and Probability for Engineers</em> (7th ed.). Wiley.
+<br><span style="color:#B07AA1; font-size: 20px;">Excelente para aplicaciones en ingeniería y ciencias agrarias.</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px; text-align: justify; color: #76B7B2;">
+<strong>Material UNAL:</strong> notas de clase del Departamento de Estadística, Sede Bogotá.
 </li>
 </ul>
 </div>

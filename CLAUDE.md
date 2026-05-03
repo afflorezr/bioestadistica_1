@@ -20,13 +20,40 @@ quarto preview clase_2/clase_2.qmd
 
 Replace `clase_2/clase_2.qmd` with any `.qmd` file path. The rendered HTML and a `-speaker.html` (presenter notes view) are output in the same directory.
 
-## Repository structure
+## Repository Structure
 
-- `presentacion.qmd` / `clase_1/presentacion.qmd` — instructor introduction slide deck
-- `clase_1/clase_1.qmd`, `clase_2/clase_2.qmd`, `clase_3/clase_3.qmd` — per-class lecture decks
-- `clases_estefa/` — supplementary materials (PDFs, LaTeX, images) from a co-instructor; not rendered by Quarto
-- Each `clase_N/` directory is self-contained with its own `assets/`, `images/`, `referencias.bib`, and `ieee.csl`
-- Root-level `assets/` and per-class `assets/` share the same structure (SCSS theme, CSS, FontAwesome)
+```text
+bioestadistica_1/              # Course materials for Bioestadistica Fundamental
+├── CLAUDE.md                  # Guidance for Claude Code when editing this repo
+├── presentacion.qmd           # Instructor introduction slide deck
+├── presentacion.html          # Rendered introduction deck
+├── referencias.bib            # Shared bibliography
+├── ieee.csl                   # Shared citation style
+├── plan_asignatura.pdf        # Official course plan
+├── assets/                    # Shared RevealJS/Quarto theme assets
+│   ├── custom.css             # Custom slide layout and component styles
+│   ├── monash.scss            # Main RevealJS theme
+│   ├── kdd.scss               # Alternate RevealJS theme
+│   ├── pacman.css             # Extra CSS utilities
+│   ├── syntax-highlight.css   # Code highlighting styles
+│   └── fontawesome-free-6.1.1-web/ # Font Awesome vendor files
+├── images/                    # Shared logos and course graphics
+├── clase_N/                   # One directory per class session (N = 1..11)
+│   ├── clase_N.qmd            # Main Quarto RevealJS slide deck
+│   ├── clase_N.html           # Rendered student-facing slides
+│   ├── clase_N-speaker.html   # Rendered presenter notes view
+│   ├── clase_N_files/         # Quarto generated assets for rendered slides
+│   ├── images/                # Class-specific figures and logos
+│   ├── assets/                # Class-local style/vendor assets when needed
+│   ├── referencias.bib        # Class-local bibliography
+│   └── ieee.csl               # Class-local citation style
+├── clases_estefa/             # Supplementary co-instructor materials, use this book as knowledge source
+│   ├── clase_*/               # Legacy LaTeX/PDF class files and figures
+│   └── talleres/              # Practice workshop materials
+├── libro_inferencia/          # Quarto book project for inference notes, use this book as knowledge source
+├── prob_inf/                  # External probability and inference Quarto book, use this book as knowledge source
+└── .claude/                   # Local Claude settings
+```
 
 ## Quarto front matter conventions
 
@@ -48,10 +75,22 @@ csl: ieee.csl
 
 ## R packages used
 
-Slides embed R code chunks. Packages in use: `knitr`, `kableExtra`, `ggplot2`. Install with:
+Slides embed R code chunks. Packages in use: `knitr`, `kableExtra`, `ggplot2`,`tidyverse`. Install with:
 ```r
-install.packages(c("knitr", "kableExtra", "ggplot2"))
+install.packages(c("knitr", "kableExtra", "ggplot2","tidyverse"))
 ```
+
+### Mandatory Slide Structure
+
+Each class must include:
+
+1. Motivation / problem context
+2. Conceptual explanation (intuitive)
+3. Applied example in colombian agricultural field (realistic dataset or scenario)
+4. Code implementation (Python and/or R when appropriate)
+5. Interpretation of results
+6. Common mistakes
+7. Practice exercise
 
 ## Slide de Contenido (obligatorio)
 
@@ -133,3 +172,10 @@ All blocks follow the Beamer-style pattern defined in `assets/monash.scss`. Each
 - **Rojo** → alertas y advertencias
 - **Gris** → demostraciones
 - **Azul UNAL** → notas y observaciones informales
+
+### Style Constraints
+
+- Write in Spanish
+- Use clear, concise academic language
+- Avoid verbosity
+- Prioritize clarity over completeness

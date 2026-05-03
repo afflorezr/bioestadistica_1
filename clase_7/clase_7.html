@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="clase_7_files/libs/clipboard/clipboard.min.js"></script>
-<script src="clase_7_files/libs/quarto-html/tabby.min.js"></script>
-<script src="clase_7_files/libs/quarto-html/popper.min.js"></script>
-<script src="clase_7_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="clase_7_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="clase_7_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="clase_7_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="clase_8_files/libs/clipboard/clipboard.min.js"></script>
+<script src="clase_8_files/libs/quarto-html/tabby.min.js"></script>
+<script src="clase_8_files/libs/quarto-html/popper.min.js"></script>
+<script src="clase_8_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="clase_8_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="clase_8_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="clase_8_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.36">
 
   <meta name="author" content="">
@@ -14,8 +14,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="clase_7_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="clase_7_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="clase_8_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="clase_8_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -31,15 +31,34 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
-  <link rel="stylesheet" href="clase_7_files/libs/revealjs/dist/theme/quarto-47de77ef8bb53eb6852bbbcd7cb73406.css">
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="clase_8_files/libs/revealjs/dist/theme/quarto-47de77ef8bb53eb6852bbbcd7cb73406.css">
   <link rel="stylesheet" href="../assets/syntax-highlight.css">
   <link rel="stylesheet" href="../assets/custom.css">
   <link rel="stylesheet" href="../assets/pacman.css">
-  <link href="clase_7_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="clase_7_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="clase_7_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="clase_7_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="clase_8_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="clase_8_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="clase_8_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="clase_8_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -166,674 +185,1613 @@
 </div>
 
 </section>
-<section id="clase-7" class="slide level2 center middle">
-<h2>Clase 7</h2>
+<section id="clase-8" class="slide level2 center middle">
+<h2>Clase 8</h2>
 </section>
-<section id="definición-de-probabilidad-propiedades-y-reglas-de-conteo" class="slide level2">
-<h2>Definición de probabilidad, propiedades y reglas de conteo</h2>
+<section id="motivación-cambia-la-probabilidad-con-información-adicional" class="slide level2">
+<h2>Motivación: ¿cambia la probabilidad con información adicional?</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
-En la clase anterior definimos los conceptos de experimento aleatorio, espacio muestral y eventos.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En un cultivo de papa en clima frío, se sabe que hay riesgo de <strong>helada</strong> y de <strong>lluvia excesiva</strong>.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-Ahora necesitamos <strong>asignar un número</strong> a cada evento que mida qué tan probable es que ocurra.
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Sin información adicional, la probabilidad de que ocurra una helada es del 20%.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
-Ese número es la <strong>probabilidad</strong>.
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Pero si <strong>ya sabemos que llovió intensamente</strong>, ¿sigue siendo el 20%?
 </li>
 </ul>
 </div>
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
 <ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
-Existen tres enfoques para definir la probabilidad:
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+La <strong>probabilidad condicional</strong> responde exactamente esta pregunta: ¿cómo cambia la probabilidad de un evento cuando ya conocemos que otro ocurrió?
 </li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;">
-🎲 <strong>Enfoque clásico</strong> (Laplace)
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px;">
-📊 <strong>Enfoque frecuentista</strong>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px;">
-📐 <strong>Enfoque axiomático</strong> (Kolmogorov)
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Este concepto es fundamental para el análisis de datos en agricultura, epidemiología vegetal y genética.
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="qué-es-la-probabilidad" class="slide level2">
-<h2>¿Qué es la probabilidad?</h2>
-<div style="text-align: center; margin-top: 40px;">
-<div class="fragment fade-in" data-fragment-index="1" style="font-size: 32px; font-weight: bold; color: #a78bfa;">
-<p>¿Cuál es la probabilidad de que una planta de café seleccionada al azar tenga plaga?</p>
+<section id="recordatorio-partición-del-espacio-muestral" class="slide level2">
+<h2>Recordatorio: partición del espacio muestral</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición (Clase 6)
 </div>
-<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 30px; font-size: 28px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
-<p>La <strong>probabilidad</strong> es una medida numérica entre 0 y 1 que cuantifica la posibilidad de que ocurra un evento en un experimento aleatorio.</p>
+<div class="block-body">
+<p>
+Una colección de eventos <span class="math inline">\(\{B_1, B_2, \ldots, B_k\}\)</span> forma una <strong>partición</strong> del espacio muestral <span class="math inline">\(\Omega\)</span> si:
+</p>
 </div>
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 30px; font-size: 26px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
-<p>Un valor cercano a <strong>0</strong> indica que el evento es muy poco probable; cercano a <strong>1</strong>, que es muy probable.</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Los eventos son <strong>mutuamente excluyentes</strong>: <span class="math inline">\(B_i \cap B_j = \emptyset\)</span> para todo <span class="math inline">\(i \neq j\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Los eventos son <strong>exhaustivos</strong>: <span class="math inline">\(B_1 \cup B_2 \cup \cdots \cup B_k = \Omega\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Ejemplo: en un lote de café, los tipos de suelo {arcilloso, arenoso, franco} forman una partición del espacio de tipos de suelo.
+</li>
+</ul>
+</section>
+<section id="recordatorio-propiedades-de-la-probabilidad" class="slide level2">
+<h2>Recordatorio: propiedades de la probabilidad</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#a78bfa;">
+Axiomas de Kolmogórov (Clase 7)
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>A1:</strong> <span class="math inline">\(P(A) \geq 0\)</span> para todo evento <span class="math inline">\(A\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>A2:</strong> <span class="math inline">\(P(\Omega) = 1\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>A3:</strong> Si <span class="math inline">\(A_1, A_2, \ldots\)</span> son mutuamente excluyentes: <span class="math inline">\(P\!\left(\bigcup_{i} A_i\right) = \sum_{i} P(A_i)\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#3b82f6;">
+Propiedades derivadas
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(A^c) = 1 - P(A)\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(\emptyset) = 0\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px; text-align: justify;">
+Si <span class="math inline">\(A \subseteq B\)</span>, entonces <span class="math inline">\(P(A) \leq P(B)\)</span>.
+</li>
+</ul>
 </div>
 </div>
 </section>
-<section id="enfoque-clásico-laplace" class="slide level2">
-<h2>Enfoque clásico (Laplace)</h2>
+<section id="probabilidad-condicional-definición" class="slide level2">
+<h2>Probabilidad condicional: definición</h2>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
 Definición
 </div>
 <div class="block-body">
 <p>
-Si <span class="math inline">\(\Omega\)</span> tiene <span class="math inline">\(N\)</span> resultados <strong>igualmente posibles</strong> y el evento <span class="math inline">\(A\)</span> contiene <span class="math inline">\(n_A\)</span> de ellos, entonces: <span class="math display">\[P(A) = \frac{n_A}{N} = \frac{|A|}{|\Omega|}\]</span>
+Sea <span class="math inline">\(B\)</span> un evento con <span class="math inline">\(P(B) &gt; 0\)</span>. La <strong>probabilidad condicional</strong> de <span class="math inline">\(A\)</span> dado <span class="math inline">\(B\)</span> se define como: <span class="math display">\[P(A \mid B) = \frac{P(A \cap B)}{P(B)}\]</span>
 </p>
 </div>
 </div>
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 26px; text-align: center;">
-<p>Este enfoque requiere que todos los resultados elementales sean <strong>equiprobables</strong>.</p>
-</div>
-</section>
-<section id="supuestos-del-enfoque-clásico" class="slide level2">
-<h2>Supuestos del enfoque clásico</h2>
 <ul>
-<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 28px; margin-bottom: 10px; padding: 8px;">
-El espacio muestral debe ser <strong>finito</strong>.
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Se lee: «probabilidad de <span class="math inline">\(A\)</span> <em>dado</em> <span class="math inline">\(B\)</span>» o «probabilidad de <span class="math inline">\(A\)</span> <em>sabiendo que</em> <span class="math inline">\(B\)</span> ocurrió».
 </li>
-<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 28px; margin-bottom: 10px; padding: 8px;">
-Todos los resultados elementales deben ser <strong>igualmente posibles</strong>.
-</li>
-<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 28px; margin-bottom: 10px; padding: 8px;">
-Se puede contar el número de resultados favorables al evento.
-</li>
-<li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 28px; margin-bottom: 10px; padding: 8px;">
-No requiere experimentación: basta con el análisis lógico del experimento.
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+La condición <span class="math inline">\(P(B) &gt; 0\)</span> garantiza que la división esté bien definida.
 </li>
 </ul>
 </section>
-<section id="ejemplo-lote-de-plantas-de-café" class="slide level2">
-<h2>Ejemplo: lote de plantas de café</h2>
+<section id="interpretación-reducción-del-espacio-muestral" class="slide level2">
+<h2>Interpretación: reducción del espacio muestral</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Un lote de <strong>20 plantas de café</strong> (clima cálido) contiene 12 plantas sanas y 8 con plaga.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Al condicionar en <span class="math inline">\(B\)</span>, <strong>reducimos</strong> el espacio muestral de <span class="math inline">\(\Omega\)</span> a <span class="math inline">\(B\)</span>.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-Se selecciona una planta al azar. Calcule:
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Solo nos interesan los resultados que pertenecen a <span class="math inline">\(B\)</span>.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px;">
-<span class="math inline">\(A\)</span>: probabilidad de que sea sana.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 27px;">
-<span class="math inline">\(B\)</span>: probabilidad de que tenga plaga.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7">
-<h4 class="fragment fade-in" data-fragment-index="8">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 27px;">
-<span class="math inline">\(|\Omega| = 20\)</span>, <span class="math inline">\(|A| = 12\)</span>, <span class="math inline">\(|B| = 8\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 27px;">
-<span class="math display">\[P(A) = \frac{12}{20} = 0.60\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 27px;">
-<span class="math display">\[P(B) = \frac{8}{20} = 0.40\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 26px;">
-Verificación: <span class="math inline">\(P(A) + P(B) = 1\)</span> ✓
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejemplo-variedades-de-semillas-de-maíz" class="slide level2">
-<h2>Ejemplo: variedades de semillas de maíz</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Un almacén de insumos agrícolas tiene 5 variedades de semillas de maíz (clima cálido): V1, V2, V3, V4, V5.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-Se elige una variedad al azar para un ensayo de campo. ¿Cuál es la probabilidad de elegir V3?
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Dentro de ese nuevo espacio, medimos qué proporción corresponde también a <span class="math inline">\(A\)</span>, es decir, <span class="math inline">\(A \cap B\)</span>.
 </li>
 </ul>
 </div>
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Solución
-</h4>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-<span class="math inline">\(\Omega = \{V1, V2, V3, V4, V5\}\)</span>, <span class="math inline">\(|\Omega| = 5\)</span>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+<strong>Analógicamente:</strong> si en un lote de 100 plantas de papa solo miramos las 40 que están en clima frío (evento <span class="math inline">\(B\)</span>), la probabilidad de helada se calcula sobre esas 40, no sobre las 100.
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-<span class="math inline">\(A = \{V3\}\)</span>, <span class="math inline">\(|A| = 1\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 28px;">
-<span class="math display">\[P(A) = \frac{1}{5} = 0.20\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px; text-align: justify;">
-Cada variedad tiene la misma probabilidad de ser elegida.
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+<span class="math display">\[P(A \mid B) = \frac{\#(A \cap B)}{\#B} \quad \text{(espacio equiprobable)}\]</span>
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="limitaciones-del-enfoque-clásico" class="slide level2">
-<h2>Limitaciones del enfoque clásico</h2>
+<section id="interpretación-geométrica-diagrama-de-venn" class="slide level2">
+<h2>Interpretación geométrica: diagrama de Venn</h2>
+<div style="text-align: center; margin-top: 30px;">
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; max-width: 1000px; margin: 0 auto 20px auto;">
+<p>Imaginemos el rectángulo <span class="math inline">\(\Omega\)</span> dividido en regiones. El evento <span class="math inline">\(B\)</span> es un óvalo más pequeño dentro de <span class="math inline">\(\Omega\)</span>, y <span class="math inline">\(A \cap B\)</span> es la parte donde los dos óvalos se superponen.</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="font-size: 26px; text-align: justify; max-width: 1000px; margin: 0 auto 20px auto;">
+<p>Al condicionar en <span class="math inline">\(B\)</span>, «recortamos» <span class="math inline">\(\Omega\)</span> al óvalo <span class="math inline">\(B\)</span>: ese óvalo se convierte en el nuevo universo de referencia.</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="font-size: 26px; text-align: justify; max-width: 1000px; margin: 0 auto 20px auto;">
+<p><span class="math inline">\(P(A \mid B)\)</span> mide qué fracción del área de <span class="math inline">\(B\)</span> está también cubierta por <span class="math inline">\(A\)</span>: es el cociente <span class="math inline">\(\dfrac{\text{área}(A \cap B)}{\text{área}(B)}\)</span>.</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="4" style="background:#a78bfa; color:white; border-radius:10px; padding:16px; font-size:26px; max-width:700px; margin: 0 auto;">
+<p><strong>Clave:</strong> la información reduce el universo de análisis de <span class="math inline">\(\Omega\)</span> a <span class="math inline">\(B\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-lote-de-50-plantas-de-café" class="slide level2">
+<h2>Ejemplo: lote de 50 plantas de café</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 20px;">
+<p>Se inspeccionan 50 plantas de café. Se registra si presentan <strong>plaga</strong> y el <strong>clima</strong> de la zona (cálido o frío).</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><strong>Con plaga</strong></th>
+<th style="text-align: center;"><strong>Sin plaga</strong></th>
+<th style="text-align: center;"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Clima cálido</strong></td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr class="even">
+<td><strong>Clima frío</strong></td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">26</td>
+<td style="text-align: center;">50</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Definamos: <span class="math inline">\(A\)</span> = «la planta tiene plaga» y <span class="math inline">\(B\)</span> = «la planta está en clima cálido».
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(A) = \dfrac{24}{50} = 0.48\)</span>, <span class="math inline">\(\quad P(B) = \dfrac{30}{50} = 0.60\)</span>, <span class="math inline">\(\quad P(A \cap B) = \dfrac{18}{50} = 0.36\)</span>.
+</li>
+</ul>
+</section>
+<section id="cálculo-ptextplaga-mid-textclima-cálido" class="slide level2">
+<h2>Cálculo <span class="math inline">\(P(\text{plaga} \mid \text{clima cálido})\)</span></h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="color: #e11d48;">
-Problemas
+<h4 class="fragment fade-in" data-fragment-index="1">
+Aplicando la definición
 </h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-No aplica cuando los resultados <strong>no son equiprobables</strong>. Ejemplo: una moneda cargada.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<span class="math display">\[P(\text{plaga} \mid \text{cálido}) = \frac{P(\text{plaga} \cap \text{cálido})}{P(\text{cálido})}\]</span>
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-No aplica cuando <span class="math inline">\(|\Omega| = \infty\)</span> (tiempo de maduración de un fruto).
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
-La definición es <strong>circular</strong>: “igualmente posible” ya presupone la idea de probabilidad.
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<span class="math display">\[= \frac{18/50}{30/50} = \frac{18}{30} = 0.60\]</span>
 </li>
 </ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 class="fragment fade-in" data-fragment-index="7" style="color: #059669;">
-Cuándo sí aplica
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px; text-align: justify;">
-Experimentos con simetría natural: dado, moneda, sorteos.
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 27px; text-align: justify;">
-Muestras aleatorias simples de poblaciones finitas.
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 27px; text-align: justify;">
-Selección aleatoria de plantas, parcelas o unidades experimentales.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="enfoque-frecuentista" class="slide level2">
-<h2>Enfoque frecuentista</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición
-</div>
-<div class="block-body">
-<p>
-Si el experimento se repite <span class="math inline">\(n\)</span> veces bajo las mismas condiciones y el evento <span class="math inline">\(A\)</span> ocurre <span class="math inline">\(f_A\)</span> veces, entonces: <span class="math display">\[P(A) = \lim_{n \to \infty} \frac{f_A}{n}\]</span> La probabilidad es el <strong>límite de la frecuencia relativa</strong> cuando <span class="math inline">\(n \to \infty\)</span>.
-</p>
-</div>
-</div>
-</section>
-<section id="ejemplo-frecuentista-germinación-de-trigo" class="slide level2">
-<h2>Ejemplo frecuentista: germinación de trigo</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Experimento
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Se plantan semillas de trigo (clima frío) y se registra si germinan o no. Se repite el experimento <span class="math inline">\(n\)</span> veces.
-</li>
-</ul>
-<table class="fragment fade-in" data-fragment-index="4" style="font-size: 23px; width: 100%; margin-top: 10px;">
-<tbody><tr style="background:#a78bfa; color:white;">
-<th>
-<span class="math inline">\(n\)</span>
-</th>
-<th>
-Germinan <span class="math inline">\(f_A\)</span>
-</th>
-<th>
-<span class="math inline">\(f_A/n\)</span>
-</th>
-</tr>
-<tr>
-<td>
-10
-</td>
-<td>
-7
-</td>
-<td>
-0.700
-</td>
-</tr>
-<tr>
-<td>
-50
-</td>
-<td>
-36
-</td>
-<td>
-0.720
-</td>
-</tr>
-<tr>
-<td>
-100
-</td>
-<td>
-74
-</td>
-<td>
-0.740
-</td>
-</tr>
-<tr>
-<td>
-500
-</td>
-<td>
-376
-</td>
-<td>
-0.752
-</td>
-</tr>
-<tr>
-<td>
-1000
-</td>
-<td>
-751
-</td>
-<td>
-0.751
-</td>
-</tr>
-</tbody></table>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4">
 Interpretación
 </h4>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px; text-align: justify;">
-La frecuencia relativa <strong>converge</strong> hacia un valor estable: <span class="math inline">\(P(\text{germina}) \approx 0.75\)</span>.
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Entre las plantas de clima cálido, el <strong>60%</strong> tiene plaga.
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px; text-align: justify;">
-Con muestras pequeñas hay variación; con <span class="math inline">\(n\)</span> grande la estimación se estabiliza.
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Sin la información del clima, la probabilidad de plaga era solo el 48%.
 </li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 27px; text-align: justify;">
-Este enfoque es la base del <strong>análisis estadístico aplicado</strong> en agronomía.
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+El clima cálido <strong>incrementa</strong> la probabilidad de presencia de plaga.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="cálculo-ptextclima-frío-mid-textsin-plaga" class="slide level2">
+<h2>Cálculo <span class="math inline">\(P(\text{clima frío} \mid \text{sin plaga})\)</span></h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+Aplicando la definición
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<span class="math display">\[P(\text{frío} \mid \text{sin plaga}) = \frac{P(\text{frío} \cap \text{sin plaga})}{P(\text{sin plaga})}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<span class="math display">\[= \frac{14/50}{26/50} = \frac{14}{26} \approx 0.538\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4">
+Interpretación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Entre las plantas sin plaga, aproximadamente el <strong>53.8%</strong> proviene de clima frío.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+El clima frío está asociado con menor presencia de plagas.
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="limitaciones-del-enfoque-frecuentista" class="slide level2">
-<h2>Limitaciones del enfoque frecuentista</h2>
+<section id="propiedades-de-la-probabilidad-condicional" class="slide level2">
+<h2>Propiedades de la probabilidad condicional</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; margin-bottom: 10px;">
+<p>Dado <span class="math inline">\(B\)</span> con <span class="math inline">\(P(B)&gt;0\)</span>, la función <span class="math inline">\(P(\cdot \mid B)\)</span> satisface los mismos axiomas de Kolmogórov:</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="background: #a78bfa; color: white; font-size: 26px; margin-bottom: 8px; padding: 6px 12px; border-radius:6px;">
+<span class="math inline">\(P(A \mid B) \geq 0\)</span> para todo evento <span class="math inline">\(A\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="background: #3b82f6; color: white; font-size: 26px; margin-bottom: 8px; padding: 6px 12px; border-radius:6px;">
+<span class="math inline">\(P(\Omega \mid B) = 1\)</span> y <span class="math inline">\(P(B \mid B) = 1\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="background: #59A14F; color: white; font-size: 26px; margin-bottom: 8px; padding: 6px 12px; border-radius:6px;">
+Si <span class="math inline">\(A_1, A_2, \ldots\)</span> son mutuamente excluyentes: <span class="math inline">\(P\!\left(\bigcup_i A_i \mid B\right) = \sum_i P(A_i \mid B)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="background: #F28E2B; color: white; font-size: 26px; margin-bottom: 8px; padding: 6px 12px; border-radius:6px;">
+<span class="math inline">\(P(A^c \mid B) = 1 - P(A \mid B)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="background: #B07AA1; color: white; font-size: 26px; margin-bottom: 8px; padding: 6px 12px; border-radius:6px;">
+<span class="math inline">\(P(A \cup C \mid B) = P(A\mid B) + P(C\mid B) - P(A \cap C \mid B)\)</span>.
+</li>
+</ul>
+</section>
+<section id="ejemplo-con-dados-ptextpar-mid-textmayor-que-3" class="slide level2">
+<h2>Ejemplo con dados: <span class="math inline">\(P(\text{par} \mid \text{mayor que } 3)\)</span></h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="color: #e11d48;">
-Problemas
+<h4 class="fragment fade-in" data-fragment-index="1">
+Planteamiento
 </h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Requiere que el experimento sea <strong>repetible</strong> en condiciones idénticas.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Se lanza un dado equilibrado. <span class="math inline">\(\Omega = \{1,2,3,4,5,6\}\)</span>.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-No define la probabilidad de eventos únicos o irrepetibles.
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+<span class="math inline">\(A\)</span> = «resultado par» <span class="math inline">\(= \{2,4,6\}\)</span>.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
-El límite <span class="math inline">\(n \to \infty\)</span> nunca se alcanza en la práctica.
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+<span class="math inline">\(B\)</span> = «resultado mayor que 3» <span class="math inline">\(= \{4,5,6\}\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;">
+<span class="math inline">\(A \cap B = \{4,6\}\)</span>.
 </li>
 </ul>
 </div>
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 class="fragment fade-in" data-fragment-index="7">
-Comparación de enfoques
-</h4>
-<table class="fragment fade-in" data-fragment-index="8" style="font-size: 22px; width: 100%;">
-<tbody><tr style="background:#3b82f6; color:white;">
-<th>
-Aspecto
-</th>
-<th>
-Clásico
-</th>
-<th>
-Frecuentista
-</th>
-</tr>
-<tr>
-<td>
-Requiere experimento
-</td>
-<td>
-No
-</td>
-<td>
-Sí
-</td>
-</tr>
-<tr>
-<td>
-Equiprobabilidad
-</td>
-<td>
-Necesaria
-</td>
-<td>
-No necesaria
-</td>
-</tr>
-<tr>
-<td>
-<span class="math inline">\(|\Omega|\)</span> infinito
-</td>
-<td>
-No aplica
-</td>
-<td>
-Aplica
-</td>
-</tr>
-<tr>
-<td>
-Base
-</td>
-<td>
-Lógica
-</td>
-<td>
-Datos observados
-</td>
-</tr>
-</tbody></table>
-</div>
-</div>
-</section>
-<section id="necesidad-de-un-enfoque-axiomático" class="slide level2">
-<h2>Necesidad de un enfoque axiomático</h2>
-<div class="block-note fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Motivación
-</div>
-<div class="block-body">
-<p>
-Para construir una teoría matemática rigurosa y consistente de la probabilidad, Andrei Nikolaevich Kolmogorov propuso en 1933 una definición basada en <strong>tres axiomas</strong> que cualquier función de probabilidad debe satisfacer.
-</p>
-</div>
-</div>
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 26px; text-align: center;">
-<p>Los enfoques clásico y frecuentista son <strong>casos especiales</strong> compatibles con estos axiomas.</p>
-</div>
-</section>
-<section id="los-tres-axiomas-de-kolmogorov" class="slide level2">
-<h2>Los tres axiomas de Kolmogorov</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="color: #a78bfa;">
-Axioma 1: No negatividad
-</h4>
-<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: center;">
-<span class="math display">\[P(A) \geq 0 \quad \text{para todo evento } A\]</span>
-</p>
-<h4 class="fragment fade-in" data-fragment-index="4" style="color: #3b82f6; margin-top: 20px;">
-Axioma 2: Normalización
-</h4>
-<p class="fragment fade-in" data-fragment-index="5" style="font-size: 28px; text-align: center;">
-<span class="math display">\[P(\Omega) = 1\]</span>
-</p>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 class="fragment fade-in" data-fragment-index="7" style="color: #59A14F;">
-Axioma 3: Aditividad
-</h4>
-<p class="fragment fade-in" data-fragment-index="8" style="font-size: 27px; text-align: justify;">
-Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son eventos <strong>mutuamente excluyentes</strong> (<span class="math inline">\(A \cap B = \emptyset\)</span>): <span class="math display">\[P(A \cup B) = P(A) + P(B)\]</span>
-</p>
-<p class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Extensión: para <span class="math inline">\(A_1, A_2, \ldots\)</span> eventos disjuntos: <span class="math display">\[P\!\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)\]</span>
-</p>
-</div>
-</div>
-</section>
-<section id="verificación-de-axiomas-cultivo-de-arroz" class="slide level2">
-<h2>Verificación de axiomas: cultivo de arroz</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Ejemplo
+<h4 class="fragment fade-in" data-fragment-index="6">
+Cálculo
 </h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Un lote de semillas de arroz tiene cuatro categorías: <span class="math inline">\(\Omega = \{E, B, R, D\}\)</span> (Excelente, Buena, Regular, Deficiente).
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;">
+<span class="math display">\[P(A \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{2/6}{3/6} = \frac{2}{3}\]</span>
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px;">
-<span class="math inline">\(P(E) = 0.40\)</span>, <span class="math inline">\(P(B) = 0.35\)</span>, <span class="math inline">\(P(R) = 0.15\)</span>, <span class="math inline">\(P(D) = 0.10\)</span>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+Saber que el resultado es mayor que 3 aumenta la probabilidad de par de <span class="math inline">\(1/2\)</span> a <span class="math inline">\(2/3\)</span>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-cultivo-de-arroz" class="slide level2">
+<h2>Ejercicio: cultivo de arroz</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 16px;">
+<p>Se inspeccionan 60 plantas de arroz (clima cálido). Se registra la <strong>variedad</strong> (A o B) y la <strong>calidad del grano</strong> (alta o baja).</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><strong>Calidad alta</strong></th>
+<th style="text-align: center;"><strong>Calidad baja</strong></th>
+<th style="text-align: center;"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Variedad A</strong></td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr class="even">
+<td><strong>Variedad B</strong></td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">60</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Calcule: (1) <span class="math inline">\(P(\text{calidad alta} \mid \text{variedad A})\)</span>, (2) <span class="math inline">\(P(\text{variedad B} \mid \text{calidad baja})\)</span>.
+</li>
+</ul>
+</section>
+<section id="solución-ejercicio-arroz-parte-1" class="slide level2">
+<h2>Solución ejercicio arroz — parte 1</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+<span class="math inline">\(P(\text{calidad alta} \mid \text{variedad A})\)</span>
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+<span class="math inline">\(P(\text{alta} \cap \text{var A}) = \dfrac{20}{60}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+<span class="math inline">\(P(\text{var A}) = \dfrac{30}{60}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+<span class="math display">\[P(\text{alta} \mid \text{var A}) = \frac{20/60}{30/60} = \frac{20}{30} \approx 0.667\]</span>
 </li>
 </ul>
 </div>
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="5">
+Interpretación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+El <strong>66.7%</strong> de las plantas de variedad A producen grano de calidad alta.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Sin condicionamiento, <span class="math inline">\(P(\text{alta}) = 32/60 \approx 0.533\)</span>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="solución-ejercicio-arroz-parte-2" class="slide level2">
+<h2>Solución ejercicio arroz — parte 2</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+<span class="math inline">\(P(\text{variedad B} \mid \text{calidad baja})\)</span>
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+<span class="math inline">\(P(\text{var B} \cap \text{baja}) = \dfrac{18}{60}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">
+<span class="math inline">\(P(\text{baja}) = \dfrac{28}{60}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">
+<span class="math display">\[P(\text{var B} \mid \text{baja}) = \frac{18/60}{28/60} = \frac{18}{28} \approx 0.643\]</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5">
+Interpretación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+El <strong>64.3%</strong> de los granos de baja calidad provienen de la variedad B.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+La variedad B está más asociada con baja calidad que la variedad A.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="pa-mid-b-vs-pb-mid-a-no-son-iguales" class="slide level2">
+<h2><span class="math inline">\(P(A \mid B)\)</span> vs <span class="math inline">\(P(B \mid A)\)</span> — no son iguales</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#F28E2B;">
+Error frecuente
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En general: <span class="math inline">\(P(A \mid B) \neq P(B \mid A)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+En el ejemplo del café: <span class="math inline">\(P(\text{plaga} \mid \text{cálido}) = 0.60\)</span> pero <span class="math inline">\(P(\text{cálido} \mid \text{plaga}) = \dfrac{18}{24} = 0.75\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#3b82f6;">
+Regla de simetría
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La relación entre ambas es precisamente el <strong>Teorema de Bayes</strong>: <span class="math display">\[P(B \mid A) = \frac{P(A \mid B) \cdot P(B)}{P(A)}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Este teorema será el tema central de la <strong>Clase 9</strong>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="regla-de-la-multiplicación-derivación" class="slide level2">
+<h2>Regla de la multiplicación: derivación</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Regla de la multiplicación
+</div>
+<div class="block-body">
+<p>
+Despejando <span class="math inline">\(P(A \cap B)\)</span> de la definición de probabilidad condicional: <span class="math display">\[P(A \cap B) = P(A \mid B) \cdot P(B) = P(B \mid A) \cdot P(A)\]</span>
+</p>
+</div>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Permite calcular la probabilidad de que <strong>dos eventos ocurran juntos</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Es válida siempre que <span class="math inline">\(P(B) &gt; 0\)</span> o <span class="math inline">\(P(A) &gt; 0\)</span> respectivamente.
+</li>
+</ul>
+</section>
+<section id="extensión-a-tres-eventos" class="slide level2">
+<h2>Extensión a tres eventos</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Para tres eventos <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>
+</div>
+<div class="block-body">
+<p>
+<span class="math display">\[P(A \cap B \cap C) = P(A \mid B \cap C) \cdot P(B \mid C) \cdot P(C)\]</span>
+</p>
+</div>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+En general, para <span class="math inline">\(n\)</span> eventos: <span class="math display">\[P(A_1 \cap A_2 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Esta regla es especialmente útil cuando los eventos ocurren en <strong>etapas secuenciales</strong>.
+</li>
+</ul>
+</section>
+<section id="ejemplo-seleccionar-2-plantas-sin-reposición" class="slide level2">
+<h2>Ejemplo: seleccionar 2 plantas sin reposición</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+Planteamiento
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Un lote tiene 10 plantas de mango: 7 sanas y 3 con enfermedad.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Se seleccionan 2 plantas al azar <strong>sin reposición</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(A\)</span> = «1ª planta sana», <span class="math inline">\(B\)</span> = «2ª planta sana».
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5">
+Cálculo
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<span class="math inline">\(P(A) = \dfrac{7}{10}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
+<span class="math inline">\(P(B \mid A) = \dfrac{6}{9} = \dfrac{2}{3}\)</span> (quedan 6 sanas de 9)
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">
+<span class="math display">\[P(A \cap B) = \frac{7}{10} \times \frac{6}{9} = \frac{42}{90} \approx 0.467\]</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejemplo-3-etapas-de-control-fitosanitario-en-mango" class="slide level2">
+<h2>Ejemplo: 3 etapas de control fitosanitario en mango</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>Un cultivo de mango pasa por 3 etapas de control: fumigación (<span class="math inline">\(F\)</span>), riego controlado (<span class="math inline">\(R\)</span>) y poda sanitaria (<span class="math inline">\(P\)</span>). La probabilidad de que cada etapa se aplique correctamente depende de las anteriores.</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(F) = 0.90\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(R \mid F) = 0.85\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(P \mid F \cap R) = 0.80\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<span class="math display">\[P(F \cap R \cap P) = 0.90 \times 0.85 \times 0.80 = 0.612\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Hay un <strong>61.2%</strong> de probabilidad de que las 3 etapas se apliquen correctamente.
+</li>
+</ul>
+</section>
+<section id="ejercicio-selección-de-semillas-en-2-pasos" class="slide level2">
+<h2>Ejercicio: selección de semillas en 2 pasos</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>Una caja contiene 8 semillas de maíz: 5 de alta germinación (AG) y 3 de baja germinación (BG). Se seleccionan 2 semillas sin reposición. Calcule la probabilidad de que:</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<ol type="a">
+<li>Ambas semillas sean de alta germinación.</li>
+</ol>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<ol start="2" type="a">
+<li>La primera sea AG y la segunda BG.</li>
+</ol>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<ol start="3" type="a">
+<li>Al menos una sea AG.</li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="solución-selección-de-semillas" class="slide level2">
+<h2>Solución: selección de semillas</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>(a)</strong> <span class="math inline">\(P(\text{AG}_1 \cap \text{AG}_2) = \dfrac{5}{8} \times \dfrac{4}{7} = \dfrac{20}{56} \approx 0.357\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>(b)</strong> <span class="math inline">\(P(\text{AG}_1 \cap \text{BG}_2) = \dfrac{5}{8} \times \dfrac{3}{7} = \dfrac{15}{56} \approx 0.268\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<strong>(c)</strong> <span class="math inline">\(P(\text{al menos una AG}) = 1 - P(\text{BG}_1 \cap \text{BG}_2)\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(= 1 - \dfrac{3}{8} \times \dfrac{2}{7} = 1 - \dfrac{6}{56} = \dfrac{50}{56} \approx 0.893\)</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="independencia-de-eventos-definición" class="slide level2">
+<h2>Independencia de eventos: definición</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición
+</div>
+<div class="block-body">
+<p>
+Dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son <strong>estadísticamente independientes</strong> si y solo si: <span class="math display">\[P(A \cap B) = P(A) \cdot P(B)\]</span>
+</p>
+</div>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La ocurrencia de uno <strong>no afecta</strong> la probabilidad del otro.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Esta definición no requiere que <span class="math inline">\(P(A) &gt; 0\)</span> ni <span class="math inline">\(P(B) &gt; 0\)</span>.
+</li>
+</ul>
+</section>
+<section id="equivalencias-de-la-independencia" class="slide level2">
+<h2>Equivalencias de la independencia</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; margin-bottom: 14px;">
+<p>Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes y <span class="math inline">\(P(B) &gt; 0\)</span>, entonces:</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="background: #3b82f6; color: white; font-size: 26px; margin-bottom: 8px; padding: 6px 12px; border-radius:6px;">
+<span class="math inline">\(P(A \mid B) = P(A)\)</span> — conocer <span class="math inline">\(B\)</span> no cambia la probabilidad de <span class="math inline">\(A\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="background: #59A14F; color: white; font-size: 26px; margin-bottom: 8px; padding: 6px 12px; border-radius:6px;">
+<span class="math inline">\(P(B \mid A) = P(B)\)</span> — conocer <span class="math inline">\(A\)</span> no cambia la probabilidad de <span class="math inline">\(B\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="background: #a78bfa; color: white; font-size: 26px; margin-bottom: 8px; padding: 6px 12px; border-radius:6px;">
+<span class="math inline">\(A\)</span> y <span class="math inline">\(A^c\)</span> son independientes de <span class="math inline">\(B\)</span> (y de <span class="math inline">\(B^c\)</span>).
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Las tres condiciones son equivalentes y pueden usarse indistintamente para <strong>verificar independencia</strong>.
+</li>
+</ul>
+</section>
+<section id="independencia-no-implica-disjunción" class="slide level2">
+<h2>Independencia NO implica disjunción</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#F28E2B;">
+Aclaración importante
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Dos eventos <strong>disjuntos</strong> (<span class="math inline">\(A \cap B = \emptyset\)</span>) con <span class="math inline">\(P(A)&gt;0\)</span> y <span class="math inline">\(P(B)&gt;0\)</span> son <strong>dependientes</strong>, no independientes.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Si <span class="math inline">\(A\)</span> ocurre, sabemos que <span class="math inline">\(B\)</span> no puede ocurrir, por lo que <span class="math inline">\(P(B \mid A) = 0 \neq P(B)\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#B07AA1;">
+Resumen
+</h4>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><span class="math inline">\(A \cap B = \emptyset\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(A \cap B \neq \emptyset\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Independientes</strong></td>
+<td style="text-align: center;">No (salvo <span class="math inline">\(P=0\)</span>)</td>
+<td style="text-align: center;">Posible</td>
+</tr>
+<tr class="even">
+<td><strong>Dependientes</strong></td>
+<td style="text-align: center;">Sí</td>
+<td style="text-align: center;">Posible</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="ejemplo-lluvia-en-dos-fincas-distantes" class="slide level2">
+<h2>Ejemplo: lluvia en dos fincas distantes</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+Planteamiento
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Finca 1 (Huila) y Finca 2 (Cesar) están a 700 km de distancia.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(P(\text{lluvia en F1}) = 0.30\)</span>, <span class="math inline">\(P(\text{lluvia en F2}) = 0.40\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(P(\text{lluvia en F1 y F2}) = 0.12\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5">
 Verificación
 </h4>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-Axioma 1: <span class="math inline">\(0.40, 0.35, 0.15, 0.10 \geq 0\)</span> ✓
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<span class="math inline">\(P(F_1) \cdot P(F_2) = 0.30 \times 0.40 = 0.12\)</span>
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-Axioma 2: <span class="math inline">\(0.40 + 0.35 + 0.15 + 0.10 = 1\)</span> ✓
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
+<span class="math inline">\(P(F_1 \cap F_2) = 0.12\)</span> ✓
 </li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 27px;">
-Axioma 3: <span class="math inline">\(P(E \cup D) = P(E) + P(D) = 0.50\)</span> ✓
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="espacio-de-probabilidad" class="slide level2">
-<h2>Espacio de probabilidad</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición formal
-</div>
-<div class="block-body">
-<p>
-Un <strong>espacio de probabilidad</strong> es una terna <span class="math inline">\((\Omega, \mathcal{F}, P)\)</span> donde:
-</p>
-</div>
-</div>
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px;">
-<div class="card crispdm-card--gray" style="padding: 20px;">
-<ul>
-<li class="fragment fade-in" data-fragment-index="4" style="font-size: 28px;">
-<span class="math inline">\(\Omega\)</span>: espacio muestral (todos los resultados posibles).
-</li>
-<li class="fragment fade-in" data-fragment-index="5" style="font-size: 28px;">
-<span class="math inline">\(\mathcal{F}\)</span>: colección de eventos (subconjuntos de <span class="math inline">\(\Omega\)</span>) a los que se les puede asignar probabilidad.
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">
-<span class="math inline">\(P\)</span>: función de probabilidad que cumple los tres axiomas de Kolmogorov.
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+Conclusión: los eventos son <strong>independientes</strong>. La lluvia en una finca no influye en la otra.
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="propiedad-probabilidad-del-evento-imposible" class="slide level2">
-<h2>Propiedad: probabilidad del evento imposible</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: center;">
-<span class="math display">\[P(\emptyset) = 0\]</span>
-</p>
-<p class="fragment fade-in" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-El evento imposible tiene probabilidad cero.
-</p>
+<section id="ejemplo-plagas-en-cultivos-de-clima-cálido-vs-frío" class="slide level2">
+<h2>Ejemplo: plagas en cultivos de clima cálido vs frío</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>En el ejemplo del café (lote de 50 plantas), verifiquemos si «plaga» y «clima cálido» son independientes.</p>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Demostración
-</h4>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
-<span class="math inline">\(\Omega\)</span> y <span class="math inline">\(\emptyset\)</span> son disjuntos, y <span class="math inline">\(\Omega \cup \emptyset = \Omega\)</span>.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+<span class="math inline">\(P(\text{plaga}) = 24/50 = 0.48\)</span>
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-Por el Axioma 3: <span class="math inline">\(P(\Omega) = P(\Omega) + P(\emptyset)\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
-Por el Axioma 2: <span class="math inline">\(1 = 1 + P(\emptyset)\)</span>, luego <span class="math inline">\(P(\emptyset) = 0\)</span> ✓
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="propiedad-complemento" class="slide level2">
-<h2>Propiedad: complemento</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: center;">
-<span class="math display">\[P(A^c) = 1 - P(A)\]</span>
-</p>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Ejemplo: papa en clima frío
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 27px; text-align: justify;">
-La probabilidad de que una planta de papa tenga plaga es <span class="math inline">\(P(A) = 0.30\)</span>.
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-<span class="math display">\[P(A^c) = P(\text{sin plaga}) = 1 - 0.30 = 0.70\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
-Es más fácil calcular <span class="math inline">\(P(A^c)\)</span> cuando <span class="math inline">\(P(A)\)</span> es conocido y <span class="math inline">\(A^c\)</span> es complejo.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="propiedad-monotonía" class="slide level2">
-<h2>Propiedad: monotonía</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<p class="fragment fade-in" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Si <span class="math inline">\(A \subset B\)</span>, entonces: <span class="math display">\[P(A) \leq P(B)\]</span>
-</p>
-<p class="fragment fade-in" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-Un subconjunto no puede tener mayor probabilidad que el conjunto que lo contiene.
-</p>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Ejemplo con cultivo de mango
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
-<span class="math inline">\(A\)</span>: fruto con defecto grave <span class="math inline">\(\subset\)</span> <span class="math inline">\(B\)</span>: fruto defectuoso.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-<span class="math inline">\(P(A) = 0.05\)</span>, <span class="math inline">\(P(B) = 0.18\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
-<span class="math inline">\(P(A) \leq P(B)\)</span>: <span class="math inline">\(0.05 \leq 0.18\)</span> ✓
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="regla-de-la-adición-general" class="slide level2">
-<h2>Regla de la adición general</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Enunciado
-</div>
-<div class="block-body">
-<p>
-<span class="math display">\[P(A \cup B) = P(A) + P(B) - P(A \cap B)\]</span>
-</p>
-<p>
-Se resta <span class="math inline">\(P(A \cap B)\)</span> porque al sumar <span class="math inline">\(P(A) + P(B)\)</span>, la intersección se cuenta dos veces.
-</p>
-</div>
-</div>
-<div class="fragment fade-in" data-fragment-index="4" style="margin-top: 15px; font-size: 26px; text-align: center;">
-<p>Para eventos disjuntos (<span class="math inline">\(A \cap B = \emptyset\)</span>): <span class="math inline">\(\quad P(A \cup B) = P(A) + P(B)\)</span></p>
-</div>
-</section>
-<section id="ejemplo-regla-de-adición-en-cultivo-de-mango" class="slide level2">
-<h2>Ejemplo: regla de adición en cultivo de mango</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-En un cultivo de mango (clima cálido), la probabilidad de que un fruto tenga enfermedad es <span class="math inline">\(0.25\)</span>, de que tenga plaga es <span class="math inline">\(0.15\)</span>, y de que tenga ambas es <span class="math inline">\(0.08\)</span>.
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(P(\text{cálido}) = 30/50 = 0.60\)</span>
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
-¿Cuál es la probabilidad de que tenga al menos uno de los dos problemas?
+<span class="math inline">\(P(\text{plaga}) \cdot P(\text{cálido}) = 0.48 \times 0.60 = 0.288\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+<span class="math inline">\(P(\text{plaga} \cap \text{cálido}) = 18/50 = 0.360\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Como <span class="math inline">\(0.360 \neq 0.288\)</span>, los eventos <strong>no son independientes</strong>: el clima cálido está asociado con mayor presencia de plaga.
+</li>
+</ul>
+</section>
+<section id="independencia-mutua-de-n-eventos" class="slide level2">
+<h2>Independencia mutua de <span class="math inline">\(n\)</span> eventos</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición
+</div>
+<div class="block-body">
+<p>
+Los eventos <span class="math inline">\(A_1, A_2, \ldots, A_n\)</span> son <strong>mutuamente independientes</strong> si para todo subconjunto <span class="math inline">\(\{i_1, i_2, \ldots, i_k\} \subseteq \{1,\ldots,n\}\)</span>: <span class="math display">\[P(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = P(A_{i_1}) \cdot P(A_{i_2}) \cdots P(A_{i_k})\]</span>
+</p>
+</div>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Para <span class="math inline">\(n\)</span> eventos se requieren <span class="math inline">\(2^n - n - 1\)</span> condiciones en total.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+La independencia mutua implica independencia por pares, pero <strong>no al revés</strong>.
+</li>
+</ul>
+</section>
+<section id="independencia-a-pares-vs-independencia-mutua" class="slide level2">
+<h2>Independencia a pares vs independencia mutua</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#a78bfa;">
+Independencia a pares
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(A_i \cap A_j) = P(A_i) \cdot P(A_j)\)</span> para todo <span class="math inline">\(i \neq j\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+No garantiza que los tres eventos sean mutuamente independientes.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#3b82f6;">
+Independencia mutua
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Requiere además: <span class="math inline">\(P(A_1 \cap A_2 \cap A_3) = P(A_1) \cdot P(A_2) \cdot P(A_3)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Es la condición más fuerte y la que se usa en práctica para procesos secuenciales.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejemplo-3-condiciones-ambientales-en-invernadero" class="slide level2">
+<h2>Ejemplo: 3 condiciones ambientales en invernadero</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>En un invernadero de fresa, tres sistemas funcionan de forma independiente: ventilación (<span class="math inline">\(V\)</span>), riego (<span class="math inline">\(R\)</span>) y control de temperatura (<span class="math inline">\(T\)</span>). Sus probabilidades de fallo en un día son: <span class="math inline">\(P(V) = 0.05\)</span>, <span class="math inline">\(P(R) = 0.03\)</span>, <span class="math inline">\(P(T) = 0.02\)</span>.</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(\text{los 3 fallan}) = P(V) \cdot P(R) \cdot P(T) = 0.05 \times 0.03 \times 0.02 = 0.00003\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(\text{ninguno falla}) = (1-0.05)(1-0.03)(1-0.02) = 0.95 \times 0.97 \times 0.98 \approx 0.903\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(\text{al menos uno falla}) = 1 - 0.903 = 0.097 \approx 9.7\%\)</span>
+</li>
+</ul>
+</section>
+<section id="ejercicio-germinación-de-semillas-de-trigo" class="slide level2">
+<h2>Ejercicio: germinación de semillas de trigo</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>Se siembran 4 semillas de trigo de forma independiente. La probabilidad de germinación de cada semilla es <span class="math inline">\(p = 0.75\)</span>.</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Calcule la probabilidad de que <strong>al menos una semilla germine</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Calcule también la probabilidad de que <strong>exactamente 3 germinen</strong>.
+</li>
+</ul>
+</section>
+<section id="solución-germinación-de-semillas-de-trigo" class="slide level2">
+<h2>Solución: germinación de semillas de trigo</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+Al menos una germina
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Complemento: ninguna germina.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(P(\text{ninguna}) = (0.25)^4 = 0.0039\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(P(\geq 1) = 1 - 0.0039 = \mathbf{0.9961}\)</span>
 </li>
 </ul>
 </div>
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Solución
+<h4 class="fragment fade-in" data-fragment-index="5">
+Exactamente 3 germinan
 </h4>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
-<span class="math inline">\(P(E) = 0.25\)</span>, <span class="math inline">\(P(P) = 0.15\)</span>, <span class="math inline">\(P(E \cap P) = 0.08\)</span>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<span class="math inline">\(P(X=3) = \binom{4}{3}(0.75)^3(0.25)^1\)</span>
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-<span class="math display">\[P(E \cup P) = 0.25 + 0.15 - 0.08 = 0.32\]</span>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
+<span class="math inline">\(= 4 \times 0.4219 \times 0.25 = \mathbf{0.4219}\)</span>
 </li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 26px;">
-<span class="math inline">\(P(\text{sin problemas}) = 1 - 0.32 = 0.68\)</span>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+Hay un 42.2% de probabilidad de que exactamente 3 de las 4 semillas germinen.
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="regla-de-adición-para-tres-eventos" class="slide level2">
-<h2>Regla de adición para tres eventos</h2>
+<section id="ley-de-la-probabilidad-total-motivación" class="slide level2">
+<h2>Ley de la probabilidad total: motivación</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+A veces <strong>no conocemos directamente</strong> <span class="math inline">\(P(A)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Sin embargo, sí conocemos <span class="math inline">\(P(A \mid B_i)\)</span> para cada elemento de una partición <span class="math inline">\(\{B_1, \ldots, B_k\}\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Ejemplo: queremos saber <span class="math inline">\(P(\text{enfermedad en maíz})\)</span>, pero solo conocemos la probabilidad de enfermedad según el <strong>tipo de suelo</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+La ley de probabilidad total nos permite <strong>combinar</strong> estas probabilidades condicionales.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="partición-del-espacio-muestral-recordatorio" class="slide level2">
+<h2>Partición del espacio muestral (recordatorio)</h2>
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Inclusión-Exclusión
+Partición <span class="math inline">\(\{B_1, B_2, \ldots, B_k\}\)</span>
 </div>
 <div class="block-body">
 <p>
-<span class="math display">\[P(A \cup B \cup C) = P(A) + P(B) + P(C)\]</span> <span class="math display">\[- P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)\]</span>
+Los <span class="math inline">\(B_i\)</span> son mutuamente excluyentes (<span class="math inline">\(B_i \cap B_j = \emptyset\)</span>, <span class="math inline">\(i \neq j\)</span>) y exhaustivos (<span class="math inline">\(\bigcup_{i=1}^k B_i = \Omega\)</span>).
 </p>
 </div>
 </div>
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 26px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
-<p>Se suman las probabilidades individuales, se restan las intersecciones de pares, y se suma la intersección triple para no restar de más.</p>
+<div class="fragment fade-in" data-fragment-index="3" style="font-size: 26px; margin-top: 20px; text-align: center;">
+<p>Todo evento <span class="math inline">\(A\)</span> se puede descomponer como: <span class="math display">\[A = (A \cap B_1) \cup (A \cap B_2) \cup \cdots \cup (A \cap B_k)\]</span> donde los conjuntos <span class="math inline">\((A \cap B_i)\)</span> son <strong>disjuntos entre sí</strong>.</p>
 </div>
 </section>
-<section id="ejercicio-propiedades-en-cultivo-de-fresa" class="slide level2">
-<h2>Ejercicio: propiedades en cultivo de fresa</h2>
+<section id="ley-de-la-probabilidad-total-enunciado" class="slide level2">
+<h2>Ley de la probabilidad total: enunciado</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Teorema
+</div>
+<div class="block-body">
+<p>
+Si <span class="math inline">\(\{B_1, B_2, \ldots, B_k\}\)</span> es una partición de <span class="math inline">\(\Omega\)</span> y <span class="math inline">\(P(B_i) &gt; 0\)</span> para todo <span class="math inline">\(i\)</span>, entonces para cualquier evento <span class="math inline">\(A\)</span>: <span class="math display">\[P(A) = \sum_{i=1}^{k} P(A \mid B_i) \cdot P(B_i)\]</span>
+</p>
+</div>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+La probabilidad total de <span class="math inline">\(A\)</span> es el <strong>promedio ponderado</strong> de las probabilidades condicionales, con pesos <span class="math inline">\(P(B_i)\)</span>.
+</li>
+</ul>
+</section>
+<section id="demostración-de-la-ley-de-probabilidad-total" class="slide level2">
+<h2>Demostración de la ley de probabilidad total</h2>
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+Como <span class="math inline">\(\{B_i\}\)</span> es partición: <span class="math inline">\(A = \bigcup_{i=1}^k (A \cap B_i)\)</span> con <span class="math inline">\((A \cap B_i)\)</span> disjuntos.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Por aditividad (Axioma A3): <span class="math display">\[P(A) = \sum_{i=1}^k P(A \cap B_i)\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Por la regla de la multiplicación: <span class="math inline">\(P(A \cap B_i) = P(A \mid B_i) \cdot P(B_i)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Sustituyendo: <span class="math display">\[P(A) = \sum_{i=1}^k P(A \mid B_i) \cdot P(B_i) \qquad \blacksquare\]</span>
+</li>
+</ul>
+</section>
+<section id="ejemplo-1-tipo-de-suelo-y-enfermedad-en-maíz" class="slide level2">
+<h2>Ejemplo 1: tipo de suelo y enfermedad en maíz</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>En un cultivo de maíz (clima cálido), el tipo de suelo se clasifica en arcilloso, arenoso y franco. La presencia de enfermedad varía según el tipo de suelo.</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th><strong>Tipo de suelo</strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(P(B_i)\)</span></strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(P(\text{enf.} \mid B_i)\)</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Arcilloso (<span class="math inline">\(B_1\)</span>)</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">0.30</td>
+</tr>
+<tr class="even">
+<td>Arenoso (<span class="math inline">\(B_2\)</span>)</td>
+<td style="text-align: center;">0.35</td>
+<td style="text-align: center;">0.15</td>
+</tr>
+<tr class="odd">
+<td>Franco (<span class="math inline">\(B_3\)</span>)</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">0.10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+¿Cuál es la probabilidad de que una planta elegida al azar tenga enfermedad?
+</li>
+</ul>
+</section>
+<section id="cálculo-ptextenfermedad-con-la-ley-de-probabilidad-total" class="slide level2">
+<h2>Cálculo <span class="math inline">\(P(\text{enfermedad})\)</span> con la ley de probabilidad total</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+Aplicando la fórmula
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(E) = P(E \mid B_1) \cdot P(B_1) + P(E \mid B_2) \cdot P(B_2) + P(E \mid B_3) \cdot P(B_3)\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(= 0.30 \times 0.40 + 0.15 \times 0.35 + 0.10 \times 0.25\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(= 0.120 + 0.0525 + 0.025 = \mathbf{0.1975}\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5">
+Interpretación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+El <strong>19.75%</strong> de las plantas de maíz presentan enfermedad, considerando la distribución de tipos de suelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+El suelo arcilloso contribuye más a la enfermedad por su mayor prevalencia y mayor probabilidad condicional.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejemplo-2-proveedores-de-semillas-de-papa" class="slide level2">
+<h2>Ejemplo 2: proveedores de semillas de papa</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>Una empresa compra semillas de papa de 3 proveedores: Proveedor A (50%), B (30%) y C (20%). La probabilidad de que una semilla sea defectuosa es 0.02, 0.05 y 0.08 respectivamente.</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(\text{defect.}) = P(D \mid A) \cdot P(A) + P(D \mid B) \cdot P(B) + P(D \mid C) \cdot P(C)\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(= 0.02 \times 0.50 + 0.05 \times 0.30 + 0.08 \times 0.20\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(= 0.010 + 0.015 + 0.016 = \mathbf{0.041}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+El <strong>4.1%</strong> de las semillas son defectuosas en promedio ponderado.
+</li>
+</ul>
+</section>
+<section id="ejercicio-propuesto-zonas-climáticas-y-rendimiento-de-mora" class="slide level2">
+<h2>Ejercicio propuesto: zonas climáticas y rendimiento de mora</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>Un agricultor cultiva mora en tres zonas climáticas con las siguientes proporciones y probabilidades de rendimiento alto:</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th><strong>Zona</strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(P(Z_i)\)</span></strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(P(\text{rendimiento alto} \mid Z_i)\)</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Zona fría alta (<span class="math inline">\(Z_1\)</span>)</td>
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">0.70</td>
+</tr>
+<tr class="even">
+<td>Zona fría media (<span class="math inline">\(Z_2\)</span>)</td>
+<td style="text-align: center;">0.30</td>
+<td style="text-align: center;">0.55</td>
+</tr>
+<tr class="odd">
+<td>Zona templada (<span class="math inline">\(Z_3\)</span>)</td>
+<td style="text-align: center;">0.20</td>
+<td style="text-align: center;">0.35</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Calcule <span class="math inline">\(P(\text{rendimiento alto})\)</span> usando la ley de probabilidad total.
+</li>
+</ul>
+</section>
+<section id="ejercicio-integrador-1-cultivo-de-fresa" class="slide level2">
+<h2>Ejercicio integrador 1: cultivo de fresa</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 25px; text-align: justify; margin-bottom: 10px;">
+<p>En un lote de 80 plantas de fresa (clima frío), se registra la presencia de <strong>hongo</strong> y si recibieron <strong>tratamiento preventivo</strong>:</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;"><strong>Con hongo</strong></th>
+<th style="text-align: center;"><strong>Sin hongo</strong></th>
+<th style="text-align: center;"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Con tratamiento</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">40</td>
+</tr>
+<tr class="even">
+<td><strong>Sin tratamiento</strong></td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">40</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">80</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">
+<ol type="1">
+<li><span class="math inline">\(P(\text{hongo} \mid \text{con tratamiento})\)</span> &nbsp; (2) <span class="math inline">\(P(\text{hongo} \mid \text{sin tratamiento})\)</span></li>
+</ol>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
+<ol start="3" type="1">
+<li><span class="math inline">\(P(\text{con tratamiento} \mid \text{hongo})\)</span> &nbsp; (4) <span class="math inline">\(P(\text{sin tratamiento} \mid \text{sin hongo})\)</span></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="solución-ejercicio-integrador-1-parte-1" class="slide level2">
+<h2>Solución ejercicio integrador 1 — parte 1</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#59A14F;">
+Probabilidades condicionadas al tratamiento
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+<span class="math inline">\(P(\text{hongo} \mid \text{c/trat}) = \dfrac{8}{40} = 0.20\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(P(\text{hongo} \mid \text{s/trat}) = \dfrac{22}{40} = 0.55\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+El tratamiento <strong>reduce el riesgo</strong> de hongo de 55% a 20%.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#a78bfa;">
+Verificación de independencia
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<span class="math inline">\(P(\text{hongo}) = 30/80 = 0.375\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(\text{hongo} \mid \text{c/trat}) = 0.20 \neq 0.375\)</span>: los eventos <strong>no son independientes</strong>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="solución-ejercicio-integrador-1-parte-2" class="slide level2">
+<h2>Solución ejercicio integrador 1 — parte 2</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#F28E2B;">
+Condicionadas al resultado de salud
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+<span class="math inline">\(P(\text{c/trat} \mid \text{hongo}) = \dfrac{8}{30} \approx 0.267\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(P(\text{s/trat} \mid \text{s/hongo}) = \dfrac{18}{50} = 0.36\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#76B7B2;">
+Conclusión
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+De las plantas con hongo, solo el 26.7% había recibido tratamiento preventivo.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+El tratamiento es efectivo para reducir la aparición de hongos en fresa.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-integrador-2-germinación-en-dos-etapas" class="slide level2">
+<h2>Ejercicio integrador 2: germinación en dos etapas</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>Se realiza un proceso de germinación en dos etapas para semillas de mora. En la primera etapa, el 70% de las semillas pasa a la segunda. De las que pasan, el 80% germina exitosamente. De las que no pasan la primera etapa, el 20% igual logra germinar.</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Sea <span class="math inline">\(E_1\)</span> = «pasa primera etapa» y <span class="math inline">\(G\)</span> = «germina».
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(P(E_1) = 0.70\)</span>, <span class="math inline">\(P(E_1^c) = 0.30\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(P(G \mid E_1) = 0.80\)</span>, <span class="math inline">\(P(G \mid E_1^c) = 0.20\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+¿Cuál es <span class="math inline">\(P(G)\)</span>?
+</li>
+</ul>
+</section>
+<section id="solución-árbol-de-probabilidad-ejercicio-2" class="slide level2">
+<h2>Solución árbol de probabilidad — ejercicio 2</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+Árbol de probabilidad
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+Rama 1: <span class="math inline">\(E_1 \cap G\)</span>: <span class="math inline">\(0.70 \times 0.80 = 0.560\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+Rama 2: <span class="math inline">\(E_1 \cap G^c\)</span>: <span class="math inline">\(0.70 \times 0.20 = 0.140\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+Rama 3: <span class="math inline">\(E_1^c \cap G\)</span>: <span class="math inline">\(0.30 \times 0.20 = 0.060\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+Rama 4: <span class="math inline">\(E_1^c \cap G^c\)</span>: <span class="math inline">\(0.30 \times 0.80 = 0.240\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="6">
+Resultado
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
+<span class="math inline">\(P(G) = 0.560 + 0.060 = \mathbf{0.620}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+El <strong>62%</strong> de las semillas de mora germina exitosamente en este proceso de dos etapas.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-integrador-3-independencia-en-plaguicidas" class="slide level2">
+<h2>Ejercicio integrador 3: independencia en plaguicidas</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 14px;">
+<p>En un experimento con cultivo de trigo, se aplican dos plaguicidas de forma independiente: plaguicida <span class="math inline">\(X\)</span> con efectividad del 85% y plaguicida <span class="math inline">\(Y\)</span> con efectividad del 70%. Se dice que la plaga es controlada si al menos uno de los dos plaguicidas es efectivo.</p>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Sea <span class="math inline">\(X\)</span> = «plaguicida X es efectivo» y <span class="math inline">\(Y\)</span> = «plaguicida Y es efectivo».
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(P(X) = 0.85\)</span>, <span class="math inline">\(P(Y) = 0.70\)</span>, <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> son independientes.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+¿Cuál es <span class="math inline">\(P(\text{plaga controlada})\)</span>?
+</li>
+</ul>
+</section>
+<section id="solución-ejercicio-integrador-3" class="slide level2">
+<h2>Solución ejercicio integrador 3</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">
+Usando el complemento
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(\text{ninguno efectivo}) = P(X^c) \cdot P(Y^c)\)</span> (por independencia)
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+<span class="math inline">\(= 0.15 \times 0.30 = 0.045\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+<span class="math inline">\(P(\text{controlada}) = 1 - 0.045 = \mathbf{0.955}\)</span>
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5">
+Verificación directa
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+<span class="math inline">\(P(X \cup Y) = P(X) + P(Y) - P(X \cap Y)\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
+<span class="math inline">\(= 0.85 + 0.70 - (0.85 \times 0.70)\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">
+<span class="math inline">\(= 1.55 - 0.595 = \mathbf{0.955}\)</span> ✓
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="comparación-con-información-vs-sin-información" class="slide level2">
+<h2>Comparación: con información vs sin información</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; margin-bottom: 14px;">
+<p>Tabla resumen del impacto de la información (cultivo de fresa):</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2">
+<table class="caption-top">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Probabilidad</strong></th>
+<th style="text-align: center;"><strong>Sin información</strong></th>
+<th style="text-align: center;"><strong>Con información</strong></th>
+<th style="text-align: center;"><strong>Diferencia</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(P(\text{hongo})\)</span></td>
+<td style="text-align: center;">0.375</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(P(\text{hongo} \mid \text{c/trat.})\)</span></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">0.200</td>
+<td style="text-align: center;">−46.7%</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(P(\text{hongo} \mid \text{s/trat.})\)</span></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">0.550</td>
+<td style="text-align: center;">+46.7%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+La información sobre el tratamiento <strong>modifica sustancialmente</strong> la estimación de riesgo.
+</li>
+</ul>
+</section>
+<section id="errores-comunes-en-probabilidad-condicional" class="slide level2">
+<h2>Errores comunes en probabilidad condicional</h2>
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="background: #F28E2B; color: white; font-size: 26px; margin-bottom: 10px; padding: 8px 14px; border-radius:6px;">
+<strong>Error 1:</strong> Confundir <span class="math inline">\(P(A \mid B)\)</span> con <span class="math inline">\(P(B \mid A)\)</span> — son distintas en general.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="background: #B07AA1; color: white; font-size: 26px; margin-bottom: 10px; padding: 8px 14px; border-radius:6px;">
+<strong>Error 2:</strong> Asumir independencia sin verificarla — siempre comprobar <span class="math inline">\(P(A \cap B) = P(A) \cdot P(B)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="background: #a78bfa; color: white; font-size: 26px; margin-bottom: 10px; padding: 8px 14px; border-radius:6px;">
+<strong>Error 3:</strong> Confundir eventos disjuntos con eventos independientes — son conceptos opuestos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="background: #3b82f6; color: white; font-size: 26px; margin-bottom: 10px; padding: 8px 14px; border-radius:6px;">
+<strong>Error 4:</strong> Olvidar que <span class="math inline">\(P(B) &gt; 0\)</span> es requisito para <span class="math inline">\(P(A \mid B)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="background: #59A14F; color: white; font-size: 26px; margin-bottom: 10px; padding: 8px 14px; border-radius:6px;">
+<strong>Error 5:</strong> No usar el complemento para simplificar cálculos de «al menos uno».
+</li>
+</ul>
+</section>
+<section id="aplicaciones-en-investigación-agrícola-síntesis" class="slide level2">
+<h2>Aplicaciones en investigación agrícola — síntesis</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#59A14F;">
+Epidemiología vegetal
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+$P( ) $ para modelar propagación de plagas en cultivos de mango y maíz.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Identificar factores de riesgo condicionados al clima.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#3b82f6;">
+Mejoramiento genético
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<span class="math inline">\(P(\text{alto rendimiento} \mid \text{genotipo})\)</span> para seleccionar variedades de papa, fresa y trigo.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Ley de probabilidad total para combinar efectos de múltiples factores.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="tabla-resumen-fórmulas-clave-de-la-clase" class="slide level2">
+<h2>Tabla resumen: fórmulas clave de la clase</h2>
+<div class="fragment fade-in" data-fragment-index="1">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th><strong>Concepto</strong></th>
+<th><strong>Fórmula</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prob. condicional</td>
+<td><span class="math inline">\(P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}\)</span></td>
+</tr>
+<tr class="even">
+<td>Regla de multiplicación</td>
+<td><span class="math inline">\(P(A \cap B) = P(A \mid B) \cdot P(B)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Independencia</td>
+<td><span class="math inline">\(P(A \cap B) = P(A) \cdot P(B)\)</span></td>
+</tr>
+<tr class="even">
+<td>Prob. total</td>
+<td><span class="math inline">\(P(A) = \sum_i P(A \mid B_i) \cdot P(B_i)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify; margin-top: 10px;">
+Todas las fórmulas se derivan de los axiomas de Kolmogórov estudiados en la Clase 7.
+</li>
+</ul>
+</section>
+<section id="mapa-conceptual-de-relaciones-entre-conceptos" class="slide level2">
+<h2>Mapa conceptual de relaciones entre conceptos</h2>
+<div style="text-align:center; margin-top: 20px;">
+<div class="fragment fade-in" data-fragment-index="1" style="display:inline-block; background:#a78bfa; color:white; border-radius:10px; padding:10px 20px; font-size:22px; margin:4px;">
+Probabilidad <span class="math inline">\(P(A)\)</span>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="font-size:22px; margin:2px;">
+↓
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="display:inline-block; background:#3b82f6; color:white; border-radius:10px; padding:10px 20px; font-size:22px; margin:4px;">
+Información nueva <span class="math inline">\(B\)</span>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="font-size:22px; margin:2px;">
+↓
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="display:inline-block; background:#59A14F; color:white; border-radius:10px; padding:10px 20px; font-size:22px; margin:4px;">
+Prob. condicional <span class="math inline">\(P(A \mid B)\)</span>
+</div>
+<div class="fragment fade-in" data-fragment-index="4" style="display:flex; justify-content:center; gap:20px; margin-top:20px; flex-wrap:wrap;">
+<div style="background:#F28E2B; color:white; border-radius:10px; padding:10px 16px; font-size:20px;">
+Regla de multiplicación
+</div>
+<div style="background:#B07AA1; color:white; border-radius:10px; padding:10px 16px; font-size:20px;">
+Independencia
+</div>
+<div style="background:#76B7B2; color:white; border-radius:10px; padding:10px 16px; font-size:20px;">
+Ley prob. total
+</div>
+<div style="background:#a78bfa; color:white; border-radius:10px; padding:10px 16px; font-size:20px;">
+Teorema de Bayes (Clase 9)
+</div>
+</div>
+</div>
+</section>
+<section id="verificación-cuándo-usar-cada-herramienta" class="slide level2">
+<h2>Verificación: ¿cuándo usar cada herramienta?</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#3b82f6;">
+Probabilidad condicional
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+Cuando conocemos que un evento <span class="math inline">\(B\)</span> ya ocurrió y queremos actualizar la probabilidad de <span class="math inline">\(A\)</span>.
+</li>
+</ul>
+<h4 class="fragment fade-in" data-fragment-index="3" style="color:#59A14F;">
+Regla de multiplicación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+Cuando necesitamos calcular <span class="math inline">\(P(A \cap B)\)</span> y conocemos probabilidades condicionales.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#F28E2B;">
+Independencia
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px; text-align: justify;">
+Cuando el contexto sugiere que los eventos no se influyen (distancia geográfica, procesos separados).
+</li>
+</ul>
+<h4 class="fragment fade-in" data-fragment-index="7" style="color:#B07AA1;">
+Ley de probabilidad total
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px; text-align: justify;">
+Cuando se conoce <span class="math inline">\(P(A \mid B_i)\)</span> para cada elemento de una partición y se quiere <span class="math inline">\(P(A)\)</span>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ejercicio-de-repaso-verdadero-o-falso" class="slide level2">
+<h2>Ejercicio de repaso: verdadero o falso</h2>
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify; margin-bottom: 12px;">
+<strong>1.</strong> Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son mutuamente excluyentes, entonces son independientes. <span class="fragment fade-in" data-fragment-index="5" style="color:#F28E2B;"><strong>FALSO</strong></span>
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify; margin-bottom: 12px;">
+<strong>2.</strong> <span class="math inline">\(P(A \mid B) + P(A^c \mid B) = 1\)</span>. <span class="fragment fade-in" data-fragment-index="6" style="color:#59A14F;"><strong>VERDADERO</strong></span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify; margin-bottom: 12px;">
+<strong>3.</strong> Si <span class="math inline">\(P(A \mid B) = P(A)\)</span>, entonces <span class="math inline">\(P(B \mid A) = P(B)\)</span>. <span class="fragment fade-in" data-fragment-index="7" style="color:#59A14F;"><strong>VERDADERO</strong></span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify; margin-bottom: 12px;">
+<strong>4.</strong> La ley de probabilidad total requiere que los <span class="math inline">\(B_i\)</span> sean equiprobables. <span class="fragment fade-in" data-fragment-index="8" style="color:#F28E2B;"><strong>FALSO</strong></span>
+</li>
+</ul>
+</section>
+<section id="conexión-con-el-teorema-de-bayes-clase-9" class="slide level2">
+<h2>Conexión con el Teorema de Bayes (Clase 9)</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#a78bfa;">
+Lo que ya sabemos
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Probabilidad condicional: <span class="math inline">\(P(A \mid B)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Ley de probabilidad total: <span class="math inline">\(P(A) = \sum_i P(A \mid B_i) P(B_i)\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#3b82f6;">
+Lo que viene
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+El <strong>Teorema de Bayes</strong> combina ambas herramientas para calcular probabilidades «inversas»: <span class="math display">\[P(B_i \mid A) = \frac{P(A \mid B_i) \cdot P(B_i)}{P(A)}\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Aplicaciones: diagnóstico de enfermedades en cultivos, clasificación de semillas por origen.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="resumen-visual-de-la-clase" class="slide level2">
+<h2>Resumen visual de la clase</h2>
+<div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:20px;">
+<div class="fragment fade-in" data-fragment-index="1" style="background:#a78bfa; color:white; border-radius:12px; padding:16px 20px; font-size:22px; width:280px; text-align:center;">
+<p><strong>Prob. Condicional</strong><br> <span class="math inline">\(P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}\)</span><br> <em>Reduce el espacio muestral</em></p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="background:#3b82f6; color:white; border-radius:12px; padding:16px 20px; font-size:22px; width:280px; text-align:center;">
+<p><strong>Regla Multiplicación</strong><br> <span class="math inline">\(P(A \cap B) = P(A\mid B)\cdot P(B)\)</span><br> <em>Eventos secuenciales</em></p>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="background:#59A14F; color:white; border-radius:12px; padding:16px 20px; font-size:22px; width:280px; text-align:center;">
+<p><strong>Independencia</strong><br> <span class="math inline">\(P(A \cap B) = P(A)\cdot P(B)\)</span><br> <em>Sin influencia mutua</em></p>
+</div>
+<div class="fragment fade-in" data-fragment-index="4" style="background:#F28E2B; color:white; border-radius:12px; padding:16px 20px; font-size:22px; width:280px; text-align:center;">
+<p><strong>Prob. Total</strong><br> <span class="math inline">\(P(A) = \sum_i P(A\mid B_i)P(B_i)\)</span><br> <em>Combinar particiones</em></p>
+</div>
+</div>
+</section>
+<section id="bibliografía" class="slide level2 smaller scrollable">
+<h2>Bibliografía</h2>
+<div id="refs" role="list">
+
+</div>
+</section>
+<section id="ejercicio-adicional-ley-de-probabilidad-total-en-cultivo-de-mora" class="slide level2">
+<h2>Ejercicio adicional: ley de probabilidad total en cultivo de mora</h2>
 <div class="twocol">
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <h4 class="fragment fade-in" data-fragment-index="2">
@@ -841,1277 +1799,105 @@ Enunciado
 </h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-En un invernadero de fresa (clima frío): <span class="math inline">\(P(\text{helada}) = 0.20\)</span>, <span class="math inline">\(P(\text{plaga}) = 0.35\)</span>, <span class="math inline">\(P(\text{helada} \cap \text{plaga}) = 0.10\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-Calcule: a) <span class="math inline">\(P(\text{sin helada})\)</span>, b) <span class="math inline">\(P(\text{helada} \cup \text{plaga})\)</span>, c) <span class="math inline">\(P(\text{sin helada ni plaga})\)</span>.
+Las moras provienen de 3 zonas: Z1 (clima frío alto, 50%), Z2 (clima frío medio, 30%), Z3 (clima templado, 20%). La probabilidad de que una mora tenga hongos es: <span class="math inline">\(P(H|Z1)=0.05\)</span>, <span class="math inline">\(P(H|Z2)=0.10\)</span>, <span class="math inline">\(P(H|Z3)=0.15\)</span>. ¿Cuál es <span class="math inline">\(P(H)\)</span>?
 </li>
 </ul>
 </div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="5">
 Solución
 </h4>
 <ul>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px;">
+<span class="math inline">\(P(H) = P(H|Z1)P(Z1) + P(H|Z2)P(Z2) + P(H|Z3)P(Z3)\)</span>
+</li>
 <li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-<ol type="a">
-<li><span class="math inline">\(P(\text{sin helada}) = 1 - 0.20 = 0.80\)</span></li>
-</ol>
+<span class="math inline">\(= 0.05(0.50) + 0.10(0.30) + 0.15(0.20)\)</span>
 </li>
 <li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px;">
-<ol start="2" type="a">
-<li><span class="math inline">\(P(\text{helada} \cup \text{plaga}) = 0.20 + 0.35 - 0.10 = 0.45\)</span></li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px;">
-<ol start="3" type="a">
-<li><span class="math inline">\(P(\text{sin helada ni plaga}) = 1 - 0.45 = 0.55\)</span></li>
-</ol>
+<span class="math inline">\(= 0.025 + 0.030 + 0.030 = 0.085\)</span>
 </li>
 </ul>
 </div>
 </div>
 </section>
-<section id="resumen-de-propiedades-básicas" class="slide level2">
-<h2>Resumen de propiedades básicas</h2>
-<ul>
-<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<span class="math inline">\(P(\emptyset) = 0\)</span> y <span class="math inline">\(P(\Omega) = 1\)</span>
-</li>
-<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<span class="math inline">\(0 \leq P(A) \leq 1\)</span> para todo evento <span class="math inline">\(A\)</span>
-</li>
-<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<span class="math inline">\(P(A^c) = 1 - P(A)\)</span>
-</li>
-<li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-Si <span class="math inline">\(A \subset B\)</span>, entonces <span class="math inline">\(P(A) \leq P(B)\)</span>
-</li>
-<li class="fragment fade-up" style="background: #B07AA1; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>
-</li>
-<li class="fragment fade-up" style="background: #76B7B2; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-Si <span class="math inline">\(A \cap B = \emptyset\)</span>: <span class="math inline">\(P(A \cup B) = P(A) + P(B)\)</span>
-</li>
-</ul>
-</section>
-<section id="reglas-de-conteo-motivación" class="slide level2">
-<h2>Reglas de conteo: motivación</h2>
-<div class="block-note fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-¿Por qué contar?
-</div>
-<div class="block-body">
-<p>
-Para aplicar la probabilidad clásica <span class="math inline">\(P(A) = \frac{|A|}{|\Omega|}\)</span>, necesitamos <strong>contar</strong> el número de resultados posibles. Las reglas de conteo son herramientas sistemáticas para hacer esto sin listar cada elemento.
-</p>
-</div>
-</div>
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 26px; text-align: center;">
-<p>Tres herramientas fundamentales: <strong>principio multiplicativo</strong>, <strong>permutaciones</strong> y <strong>combinaciones</strong>.</p>
-</div>
-</section>
-<section id="principio-fundamental-del-conteo" class="slide level2">
-<h2>Principio fundamental del conteo</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Regla del producto
-</div>
-<div class="block-body">
-<p>
-Si un experimento tiene <strong><span class="math inline">\(k\)</span> etapas</strong> con <span class="math inline">\(n_1, n_2, \ldots, n_k\)</span> opciones respectivamente, el número total de resultados posibles es: <span class="math display">\[N = n_1 \times n_2 \times \cdots \times n_k\]</span>
-</p>
-</div>
-</div>
-</section>
-<section id="ejemplo-variedad-riego-suelo" class="slide level2">
-<h2>Ejemplo: variedad × riego × suelo</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Un agricultor de maíz (clima cálido) debe elegir:
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px;">
-🌽 <strong>3 variedades</strong>: V1, V2, V3
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px;">
-💧 <strong>2 sistemas de riego</strong>: goteo, aspersión
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 27px;">
-🌱 <strong>4 tipos de suelo</strong>: arcilloso, arenoso, franco, limoso
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
-¿Cuántas combinaciones de tratamiento posibles hay?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
-<h4 class="fragment fade-in" data-fragment-index="9">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 27px;">
-<span class="math inline">\(n_1 = 3\)</span>, <span class="math inline">\(n_2 = 2\)</span>, <span class="math inline">\(n_3 = 4\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;">
-<span class="math display">\[N = 3 \times 2 \times 4 = 24 \text{ combinaciones}\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 26px; text-align: justify;">
-Cada uno de los 24 tratamientos es un resultado elemental del espacio muestral.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="diagrama-de-árbol-variedad-riego" class="slide level2">
-<h2>Diagrama de árbol: variedad × riego</h2>
-<div style="text-align: center; margin-top: 10px;">
-<p class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; font-weight: bold;">
-Árbol para 3 variedades × 2 sistemas de riego (primeras dos etapas)
-</p>
-</div>
-<div class="twocol" style="margin-top: 10px;">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
-<ul>
-<li class="fragment fade-in" data-fragment-index="3" style="font-size: 26px;">
-V1 → Goteo → (V1, G)
-</li>
-<li class="fragment fade-in" data-fragment-index="4" style="font-size: 26px;">
-V1 → Aspersión → (V1, A)
-</li>
-<li class="fragment fade-in" data-fragment-index="5" style="font-size: 26px;">
-V2 → Goteo → (V2, G)
-</li>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
-V2 → Aspersión → (V2, A)
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
-V3 → Goteo → (V3, G)
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-V3 → Aspersión → (V3, A)
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9">
-<ul>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 26px; text-align: justify;">
-El árbol muestra <span class="math inline">\(3 \times 2 = 6\)</span> combinaciones en dos etapas.
-</li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 26px; text-align: justify;">
-Al agregar la tercera etapa (4 suelos), cada rama se multiplica por 4: <span class="math inline">\(6 \times 4 = 24\)</span>.
-</li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 26px; text-align: justify;">
-Los árboles son útiles para visualizar; el principio multiplicativo es más eficiente para contar.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="permutaciones-definición" class="slide level2">
-<h2>Permutaciones: definición</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición
-</div>
-<div class="block-body">
-<p>
-Una <strong>permutación</strong> es un arreglo <strong>ordenado</strong> de objetos. El <strong>orden importa</strong>: dos arreglos con los mismos elementos en distinto orden son permutaciones diferentes.
-</p>
-</div>
-</div>
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px;">
-<div class="card crispdm-card--gray" style="padding: 20px;">
-<p class="fragment fade-in" data-fragment-index="4" style="font-size: 27px; text-align: center;">
-Número de permutaciones de <span class="math inline">\(n\)</span> objetos distintos: <span class="math display">\[P_n = n! = n \times (n-1) \times \cdots \times 2 \times 1\]</span>
-</p>
-</div>
-</div>
-</section>
-<section id="ejemplo-ordenar-variedades-de-arroz" class="slide level2">
-<h2>Ejemplo: ordenar variedades de arroz</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Un investigador tiene 4 variedades de arroz: IR8, FEDEARROZ, ORYZICA, COLOMBIA. Desea ordenarlas en una hilera de ensayo. ¿De cuántas formas puede hacerlo?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 27px;">
-<span class="math inline">\(n = 4\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">
-<span class="math display">\[P_4 = 4! = 4 \times 3 \times 2 \times 1 = 24 \text{ formas}\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
-Cada orden produce una configuración experimental diferente.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="permutaciones-de-r-de-n-elementos" class="slide level2">
-<h2>Permutaciones de <span class="math inline">\(r\)</span> de <span class="math inline">\(n\)</span> elementos</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Fórmula <span class="math inline">\(P(n, r)\)</span>
-</div>
-<div class="block-body">
-<p>
-<span class="math display">\[P(n, r) = \frac{n!}{(n-r)!}\]</span>
-</p>
-<p>
-Número de formas de seleccionar y <strong>ordenar</strong> <span class="math inline">\(r\)</span> objetos de un conjunto de <span class="math inline">\(n\)</span> objetos distintos.
-</p>
-</div>
-</div>
-</section>
-<section id="ejemplo-pnr-asignación-de-parcelas" class="slide level2">
-<h2>Ejemplo <span class="math inline">\(P(n,r)\)</span>: asignación de parcelas</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Hay 8 parcelas disponibles y se deben asignar 3 tratamientos distintos (T1, T2, T3), uno a cada parcela, en un orden específico. ¿De cuántas maneras se puede hacer?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
-<span class="math inline">\(n = 8\)</span>, <span class="math inline">\(r = 3\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-<span class="math display">\[P(8,3) = \frac{8!}{(8-3)!} = \frac{8!}{5!} = 8 \times 7 \times 6 = 336\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
-Hay 336 formas distintas de asignar los 3 tratamientos ordenadamente.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="permutaciones-con-repetición" class="slide level2">
-<h2>Permutaciones con repetición</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Fórmula
-</div>
-<div class="block-body">
-<p>
-Si se tienen <span class="math inline">\(n\)</span> objetos donde hay <span class="math inline">\(n_1\)</span> iguales del tipo 1, <span class="math inline">\(n_2\)</span> del tipo 2, …, <span class="math inline">\(n_k\)</span> del tipo <span class="math inline">\(k\)</span>, con <span class="math inline">\(n_1 + n_2 + \cdots + n_k = n\)</span>: <span class="math display">\[P = \frac{n!}{n_1!\, n_2!\, \cdots\, n_k!}\]</span>
-</p>
-</div>
-</div>
-</section>
-<section id="ejemplo-organizar-plantas-en-hilera" class="slide level2">
-<h2>Ejemplo: organizar plantas en hilera</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Se tienen 7 plantas: 3 Sanas (S), 2 con plaga (P) y 2 con deficiencia (D). Se organizan en una hilera. ¿Cuántos arreglos distintos existen?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
-<span class="math inline">\(n = 7\)</span>, <span class="math inline">\(n_1 = 3\)</span> (S), <span class="math inline">\(n_2 = 2\)</span> (P), <span class="math inline">\(n_3 = 2\)</span> (D)
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-<span class="math display">\[P = \frac{7!}{3!\,2!\,2!} = \frac{5040}{6 \times 2 \times 2} = \frac{5040}{24} = 210\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-Existen 210 arreglos distintos en la hilera.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="combinaciones-definición" class="slide level2">
-<h2>Combinaciones: definición</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición
-</div>
-<div class="block-body">
-<p>
-Una <strong>combinación</strong> es una selección de <span class="math inline">\(r\)</span> objetos de un conjunto de <span class="math inline">\(n\)</span>, donde el <strong>orden NO importa</strong>. Dos selecciones con los mismos elementos en distinto orden son la misma combinación. <span class="math display">\[\binom{n}{r} = \frac{n!}{r!\,(n-r)!}\]</span>
-</p>
-</div>
-</div>
-</section>
-<section id="permutaciones-vs-combinaciones" class="slide level2">
-<h2>Permutaciones vs Combinaciones</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="color: #a78bfa;">
-Permutaciones (orden importa)
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
-<span class="math inline">\(\{A, B, C\}\)</span> y <span class="math inline">\(\{B, A, C\}\)</span> son <strong>diferentes</strong>.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-Ejemplo: asignar el <em>primer</em>, <em>segundo</em> y <em>tercer</em> lugar en un concurso de variedades.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6" style="color: #3b82f6;">
-Combinaciones (orden no importa)
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">
-<span class="math inline">\(\{A, B, C\}\)</span> y <span class="math inline">\(\{B, A, C\}\)</span> son <strong>iguales</strong>.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
-Ejemplo: elegir 3 variedades de 8 para incluir en un ensayo (sin importar el orden).
-</li>
-</ul>
-</div>
-</div>
-<div class="fragment fade-in" data-fragment-index="9" style="margin-top: 15px; font-size: 25px; text-align: center;">
-<p>Relación: <span class="math inline">\(P(n,r) = \binom{n}{r} \times r!\)</span></p>
-</div>
-</section>
-<section id="propiedades-del-coeficiente-binomial" class="slide level2">
-<h2>Propiedades del coeficiente binomial</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px;">
-<span class="math inline">\(\displaystyle\binom{n}{0} = 1\)</span> y <span class="math inline">\(\displaystyle\binom{n}{n} = 1\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px;">
-<span class="math inline">\(\displaystyle\binom{n}{r} = \binom{n}{n-r}\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px;">
-<span class="math inline">\(\displaystyle\binom{n}{1} = n\)</span>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6" style="font-size: 24px;">
-Identidad de Pascal
-</h4>
-<p class="fragment fade-in" data-fragment-index="7" style="font-size: 27px; text-align: center;">
-<span class="math display">\[\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}\]</span>
-</p>
-<p class="fragment fade-in" data-fragment-index="8" style="font-size: 24px; text-align: justify;">
-Útil para calcular sin usar factoriales grandes.
-</p>
-</div>
-</div>
-</section>
-<section id="ejemplo-combinaciones-análisis-foliar" class="slide level2">
-<h2>Ejemplo combinaciones: análisis foliar</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-De un lote de 10 plantas de café (clima cálido), se seleccionan 3 para análisis foliar. ¿De cuántas formas puede hacerse la selección?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
-<span class="math inline">\(n = 10\)</span>, <span class="math inline">\(r = 3\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-<span class="math display">\[\binom{10}{3} = \frac{10!}{3!\,7!} = \frac{10 \times 9 \times 8}{3 \times 2 \times 1} = 120\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-Hay 120 grupos posibles de 3 plantas.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejemplo-parcelas-en-clima-cálido" class="slide level2">
-<h2>Ejemplo: parcelas en clima cálido</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Un experimento dispone de 12 parcelas en zona de clima cálido. Se deben elegir 4 para aplicar un nuevo fertilizante. ¿Cuántas selecciones posibles existen?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
-<span class="math inline">\(n = 12\)</span>, <span class="math inline">\(r = 4\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-<span class="math display">\[\binom{12}{4} = \frac{12!}{4!\,8!} = \frac{12 \times 11 \times 10 \times 9}{4!} = 495\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
-Existen 495 maneras distintas de seleccionar las 4 parcelas.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="combinaciones-aplicadas-a-probabilidad-clásica" class="slide level2">
-<h2>Combinaciones aplicadas a probabilidad clásica</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Conexión
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Cuando los elementos se seleccionan sin orden, usamos combinaciones en el numerador y denominador de <span class="math inline">\(P(A) = \frac{|A|}{|\Omega|}\)</span>.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Ejemplo
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
-Del lote de 10 plantas de café (7 sanas, 3 con plaga), seleccionar 3 al azar. ¿Cuál es la probabilidad de que las 3 sean sanas?
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-<span class="math display">\[P(\text{3 sanas}) = \frac{\binom{7}{3}}{\binom{10}{3}} = \frac{35}{120} \approx 0.292\]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicio-muestrear-plantas-de-arroz" class="slide level2">
-<h2>Ejercicio: muestrear plantas de arroz</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Un lote de 20 plantas de arroz contiene 14 sanas y 6 con enfermedad. Se seleccionan 5 plantas al azar para inspección.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-Calcule: a) número total de selecciones posibles, b) <span class="math inline">\(P(\text{exactamente 2 enfermas})\)</span>.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-<ol type="a">
-<li><span class="math inline">\(|\Omega| = \binom{20}{5} = 15504\)</span></li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px;">
-<ol start="2" type="a">
-<li>Seleccionar 2 enfermas de 6 y 3 sanas de 14: <span class="math display">\[|A| = \binom{6}{2} \times \binom{14}{3} = 15 \times 364 = 5460\]</span></li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px;">
-<span class="math display">\[P(A) = \frac{5460}{15504} \approx 0.352\]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicio-integrador-1-lote-de-maíz" class="slide level2">
-<h2>Ejercicio integrador 1: lote de maíz</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-Un lote de 15 plantas de maíz (clima cálido) tiene: 8 sanas, 4 con plaga, 3 con deficiencia nutricional. Se seleccionan 3 al azar.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
-Calcule: <span class="math inline">\(P(\text{al menos 2 sanas})\)</span>.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-<span class="math inline">\(|\Omega| = \binom{15}{3} = 455\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
-<span class="math inline">\(P(\text{exactamente 2 sanas}) = \frac{\binom{8}{2}\binom{7}{1}}{455} = \frac{28 \times 7}{455} = \frac{196}{455}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
-<span class="math inline">\(P(\text{exactamente 3 sanas}) = \frac{\binom{8}{3}}{455} = \frac{56}{455}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 24px;">
-<span class="math inline">\(P(\text{al menos 2 sanas}) = \frac{196 + 56}{455} = \frac{252}{455} \approx 0.554\)</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicio-integrador-2-zonas-climáticas" class="slide level2">
-<h2>Ejercicio integrador 2: zonas climáticas</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-Un investigador dispone de 6 parcelas en clima frío (papa, mora) y 5 en clima cálido (mango, maíz). Selecciona 4 parcelas al azar.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
-¿Cuál es la probabilidad de que exactamente 2 sean de clima frío?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-<span class="math inline">\(|\Omega| = \binom{11}{4} = 330\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
-<span class="math inline">\(|A| = \binom{6}{2} \times \binom{5}{2} = 15 \times 10 = 150\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
-<span class="math display">\[P(A) = \frac{150}{330} \approx 0.455\]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="tabla-comparativa-tres-enfoques-de-probabilidad" class="slide level2">
-<h2>Tabla comparativa: tres enfoques de probabilidad</h2>
+<section id="tabla-resumen-fórmulas-clave-de-la-clase-1" class="slide level2">
+<h2>Tabla resumen: fórmulas clave de la clase</h2>
 <div style="margin-top: 20px;">
 <table class="fragment fade-in" data-fragment-index="1" style="font-size: 22px; width: 100%; border-collapse: collapse;">
 <tbody><tr style="background:#a78bfa; color:white;">
 <th style="padding:8px;">
-Enfoque
-</th>
-<th style="padding:8px;">
-Definición
-</th>
-<th style="padding:8px;">
-Requiere
-</th>
-<th style="padding:8px;">
-Limitación
-</th>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">
-<strong>Clásico</strong>
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(|A|/|\Omega|\)</span>
-</td>
-<td style="padding:8px;">
-Equiprobabilidad
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(\Omega\)</span> finito
-</td>
-</tr>
-<tr>
-<td style="padding:8px;">
-<strong>Frecuentista</strong>
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(\lim f_A/n\)</span>
-</td>
-<td style="padding:8px;">
-Repetición
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(n \to \infty\)</span> irreal
-</td>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">
-<strong>Axiomático</strong>
-</td>
-<td style="padding:8px;">
-3 axiomas
-</td>
-<td style="padding:8px;">
-Consistencia formal
-</td>
-<td style="padding:8px;">
-No asigna valores
-</td>
-</tr>
-</tbody></table>
-</div>
-</section>
-<section id="resumen-propiedades-de-probabilidad" class="slide level2">
-<h2>Resumen: propiedades de probabilidad</h2>
-<ul>
-<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<span class="math inline">\(0 \leq P(A) \leq 1\)</span>, <span class="math inline">\(P(\Omega)=1\)</span>, <span class="math inline">\(P(\emptyset)=0\)</span>
-</li>
-<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<span class="math inline">\(P(A^c) = 1 - P(A)\)</span>
-</li>
-<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>
-</li>
-<li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-Si <span class="math inline">\(A \subset B\)</span>: <span class="math inline">\(P(A) \leq P(B)\)</span>
-</li>
-</ul>
-</section>
-<section id="resumen-reglas-de-conteo" class="slide level2">
-<h2>Resumen: reglas de conteo</h2>
-<ul>
-<li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 25px; margin-bottom: 8px; padding: 8px;">
-🔢 <strong>Principio multiplicativo:</strong> <span class="math inline">\(N = n_1 \times n_2 \times \cdots \times n_k\)</span>
-</li>
-<li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 25px; margin-bottom: 8px; padding: 8px;">
-🔁 <strong>Permutaciones (todo):</strong> <span class="math inline">\(P_n = n!\)</span> — orden importa
-</li>
-<li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 25px; margin-bottom: 8px; padding: 8px;">
-🔁 <strong>Permutaciones (<span class="math inline">\(r\)</span> de <span class="math inline">\(n\)</span>):</strong> <span class="math inline">\(P(n,r) = \frac{n!}{(n-r)!}\)</span>
-</li>
-<li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 25px; margin-bottom: 8px; padding: 8px;">
-🔁 <strong>Permutaciones con repetición:</strong> <span class="math inline">\(\frac{n!}{n_1!\cdots n_k!}\)</span>
-</li>
-<li class="fragment fade-up" style="background: #B07AA1; color: white; font-size: 25px; margin-bottom: 8px; padding: 8px;">
-🎯 <strong>Combinaciones:</strong> <span class="math inline">\(\binom{n}{r} = \frac{n!}{r!(n-r)!}\)</span> — orden no importa
-</li>
-</ul>
-</section>
-<section id="ejercicio-semillas-de-café-conteo-y-probabilidad" class="slide level2">
-<h2>Ejercicio: semillas de café — conteo y probabilidad</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Un vivero de café (clima cálido) tiene 5 variedades: Castillo, Colombia, Cenicafé 1, Tabi, Bourbon. Se deben elegir 2 variedades para un ensayo comparativo.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-<ol type="a">
-<li>¿Cuántas selecciones posibles hay?</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px;">
-<ol start="2" type="a">
-<li>Si se elige al azar, ¿cuál es la probabilidad de que Castillo quede incluida?</li>
-</ol>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 class="fragment fade-in" data-fragment-index="7">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px;">
-<ol type="a">
-<li><span class="math inline">\(\binom{5}{2} = \frac{5!}{2!\,3!} = 10\)</span> selecciones posibles.</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px;">
-<ol start="2" type="a">
-<li>Si Castillo queda fija, elegimos 1 de las 4 restantes: <span class="math inline">\(\binom{4}{1} = 4\)</span> casos favorables.</li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px;">
-<span class="math display">\[P(\text{Castillo incluida}) = \frac{4}{10} = 0.40\]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicio-secuencia-de-tratamientos-en-trigo" class="slide level2">
-<h2>Ejercicio: secuencia de tratamientos en trigo</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-En un ensayo de trigo (clima frío), hay 6 tratamientos de fertilización. Se van a aplicar 3 de ellos en secuencia (el orden de aplicación importa).
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-¿Cuántas secuencias distintas son posibles?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-El orden importa → usar permutaciones.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-<span class="math display">\[P(6, 3) = \frac{6!}{3!} = 6 \times 5 \times 4 = 120\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Hay 120 secuencias distintas de 3 tratamientos elegidos de 6.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicio-clasificación-de-frutos-de-mora" class="slide level2">
-<h2>Ejercicio: clasificación de frutos de mora</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Se tienen 9 frutos de mora (clima frío): 4 maduros (M) y 5 verdes (V). Se organizan en fila para inspección.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-¿Cuántos arreglos distintos existen en la fila?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-Permutaciones con repetición: <span class="math inline">\(n=9\)</span>, <span class="math inline">\(n_1=4\)</span> (M), <span class="math inline">\(n_2=5\)</span> (V).
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-<span class="math display">\[P = \frac{9!}{4!\,5!} = \binom{9}{4} = 126\]</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Existen 126 arreglos distintos. Nota: <span class="math inline">\(\binom{9}{4} = \binom{9}{5}\)</span>.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejemplo-probabilidad-con-principio-multiplicativo" class="slide level2">
-<h2>Ejemplo: probabilidad con principio multiplicativo</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Un investigador crea códigos de identificación para parcelas de arroz usando: 1 letra (A, B, C) seguida de 2 dígitos (0–9). ¿Cuántos códigos hay? Si elige uno al azar, ¿cuál es la probabilidad de que empiece con B?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px;">
-Total: <span class="math inline">\(3 \times 10 \times 10 = 300\)</span> códigos.
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-Códigos con B: <span class="math inline">\(1 \times 10 \times 10 = 100\)</span>.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-<span class="math display">\[P(\text{empieza con B}) = \frac{100}{300} = \frac{1}{3} \approx 0.333\]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="cuándo-usar-cada-herramienta-de-conteo" class="slide level2">
-<h2>Cuándo usar cada herramienta de conteo</h2>
-<div style="margin-top: 20px;">
-<table class="fragment fade-in" data-fragment-index="1" style="font-size: 23px; width: 100%; border-collapse: collapse;">
-<tbody><tr style="background:#3b82f6; color:white;">
-<th style="padding:8px;">
-Situación
-</th>
-<th style="padding:8px;">
-¿Orden importa?
-</th>
-<th style="padding:8px;">
-¿Repetición?
-</th>
-<th style="padding:8px;">
-Herramienta
-</th>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">
-Ordenar <span class="math inline">\(n\)</span> objetos distintos
-</td>
-<td style="padding:8px;">
-Sí
-</td>
-<td style="padding:8px;">
-No
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(n!\)</span>
-</td>
-</tr>
-<tr>
-<td style="padding:8px;">
-Elegir y ordenar <span class="math inline">\(r\)</span> de <span class="math inline">\(n\)</span>
-</td>
-<td style="padding:8px;">
-Sí
-</td>
-<td style="padding:8px;">
-No
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(P(n,r)\)</span>
-</td>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">
-Ordenar con grupos repetidos
-</td>
-<td style="padding:8px;">
-Sí
-</td>
-<td style="padding:8px;">
-Sí
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(\frac{n!}{n_1!\cdots n_k!}\)</span>
-</td>
-</tr>
-<tr>
-<td style="padding:8px;">
-Elegir <span class="math inline">\(r\)</span> de <span class="math inline">\(n\)</span> sin orden
-</td>
-<td style="padding:8px;">
-No
-</td>
-<td style="padding:8px;">
-No
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(\binom{n}{r}\)</span>
-</td>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">
-Etapas independientes
-</td>
-<td style="padding:8px;">
-—
-</td>
-<td style="padding:8px;">
-—
-</td>
-<td style="padding:8px;">
-Principio multiplicativo
-</td>
-</tr>
-</tbody></table>
-</div>
-</section>
-<section id="ejercicio-de-repaso-verdadero-o-falso" class="slide level2">
-<h2>Ejercicio de repaso — Verdadero o Falso</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
-<ol type="1">
-<li><span class="math inline">\(P(A) = 1.2\)</span> es un valor de probabilidad válido. <span class="fragment fade-in" data-fragment-index="6" style="color:red;"><strong>Falso</strong></span></li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-<ol start="2" type="1">
-<li>Si <span class="math inline">\(P(A) = 0\)</span>, entonces <span class="math inline">\(A = \emptyset\)</span>. <span class="fragment fade-in" data-fragment-index="7" style="color:red;"><strong>Falso</strong></span></li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-<ol start="3" type="1">
-<li><span class="math inline">\(\binom{8}{3} = \binom{8}{5}\)</span>. <span class="fragment fade-in" data-fragment-index="8" style="color:green;"><strong>Verdadero</strong></span></li>
-</ol>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-<ol start="4" type="1">
-<li><span class="math inline">\(P(3,2) = \binom{3}{2}\)</span>. <span class="fragment fade-in" data-fragment-index="11" style="color:red;"><strong>Falso</strong> (<span class="math inline">\(P(3,2)=6\)</span>, <span class="math inline">\(\binom{3}{2}=3\)</span>)</span></li>
-</ol>
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-<ol start="5" type="1">
-<li>Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son disjuntos: <span class="math inline">\(P(A \cup B) = P(A) + P(B)\)</span>. <span class="fragment fade-in" data-fragment-index="12" style="color:green;"><strong>Verdadero</strong></span></li>
-</ol>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicio-integrador-3-diseño-experimental-en-papa" class="slide level2">
-<h2>Ejercicio integrador 3: diseño experimental en papa</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-Un investigador de papa (clima frío) dispone de 4 fungicidas (F1, F2, F3, F4) y 3 niveles de fertilización (N1, N2, N3). Diseña un experimento eligiendo 2 fungicidas y 2 niveles.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
-¿Cuántos diseños distintos puede armar?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-Elegir 2 fungicidas de 4: <span class="math inline">\(\binom{4}{2} = 6\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
-Elegir 2 niveles de 3: <span class="math inline">\(\binom{3}{2} = 3\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
-Por el principio multiplicativo: <span class="math display">\[6 \times 3 = 18 \text{ diseños distintos}\]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicio-integrador-4-inspección-de-calidad-en-mango" class="slide level2">
-<h2>Ejercicio integrador 4: inspección de calidad en mango</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-Un lote de exportación tiene 18 mangos: 13 de primera calidad y 5 de segunda. El inspector elige 4 al azar. ¿Cuál es la probabilidad de que al menos 3 sean de primera calidad?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 23px;">
-<span class="math inline">\(|\Omega| = \binom{18}{4} = 3060\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 23px;">
-<span class="math inline">\(P(\text{exactamente 3}) = \frac{\binom{13}{3}\binom{5}{1}}{3060} = \frac{286 \times 5}{3060} = \frac{1430}{3060}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 23px;">
-<span class="math inline">\(P(\text{exactamente 4}) = \frac{\binom{13}{4}\binom{5}{0}}{3060} = \frac{715}{3060}\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 23px;">
-<span class="math inline">\(P(\text{al menos 3}) = \frac{1430+715}{3060} = \frac{2145}{3060} \approx 0.701\)</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="aplicaciones-en-biología-y-agronomía" class="slide level2">
-<h2>Aplicaciones en biología y agronomía</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2" style="font-size: 24px;">
-Conteo en investigación agrícola
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-🌿 Diseño de experimentos: cuántas combinaciones de tratamientos son posibles.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
-🧪 Muestreo: ¿de cuántas formas puedo tomar una muestra representativa?
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
-📊 Control de calidad: probabilidad de encontrar defectos en una muestra.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-Probabilidad en genética vegetal
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
-🧬 Cruzamiento de variedades: contar genotipos posibles.
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-🌱 Herencia mendeliana: probabilidad de obtener cierto fenotipo.
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
-🔬 Selección de individuos para cruzamiento: combinaciones relevantes.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="conexión-con-la-siguiente-clase" class="slide level2">
-<h2>Conexión con la siguiente clase</h2>
-<div style="text-align: center; margin-top: 50px;">
-<div class="fragment fade-in" data-fragment-index="1" style="font-size: 32px; font-weight: bold; color: #a78bfa;">
-<p>Clase 8: Probabilidad Condicional e Independencia</p>
-</div>
-<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 30px; font-size: 28px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
-<p>¿Cambia la probabilidad de una plaga en el cultivo si ya sabemos que hubo lluvia? ¿La enfermedad en una planta afecta la probabilidad de enfermedad en la planta vecina?</p>
-</div>
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 30px; font-size: 26px;">
-<p>Responderemos estas preguntas con el concepto de <strong>probabilidad condicional</strong>.</p>
-</div>
-</div>
-</section>
-<section id="ejemplo-probabilidad-clásica-con-combinaciones-semillas-de-papa" class="slide level2">
-<h2>Ejemplo: probabilidad clásica con combinaciones — semillas de papa</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Un lote de 12 semillas de papa (clima frío) tiene 9 de alta pureza y 3 contaminadas. Se toman 4 al azar. ¿Cuál es la probabilidad de que ninguna sea contaminada?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px;">
-<span class="math inline">\(|\Omega| = \binom{12}{4} = 495\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-<span class="math inline">\(|A| = \binom{9}{4} = 126\)</span> (elegir 4 de las 9 puras)
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-<span class="math display">\[P(A) = \frac{126}{495} \approx 0.255\]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="verificación-suma-de-probabilidades-de-una-partición" class="slide level2">
-<h2>Verificación: suma de probabilidades de una partición</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Principio
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Si <span class="math inline">\(A_1, A_2, \ldots, A_k\)</span> forman una <strong>partición</strong> de <span class="math inline">\(\Omega\)</span> (disjuntos y su unión es <span class="math inline">\(\Omega\)</span>), entonces: <span class="math display">\[\sum_{i=1}^{k} P(A_i) = 1\]</span>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Ejemplo: calidad de cosecha de arroz
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px;">
-Categorías: Extra (E), Estándar (S), Inferior (I).
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-<span class="math inline">\(P(E)=0.45\)</span>, <span class="math inline">\(P(S)=0.40\)</span>, <span class="math inline">\(P(I)=0.15\)</span>
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px;">
-<span class="math inline">\(P(E)+P(S)+P(I) = 0.45+0.40+0.15 = 1\)</span> ✓
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejercicio-integrador-5-ensayo-con-variedades-de-maíz" class="slide level2">
-<h2>Ejercicio integrador 5: ensayo con variedades de maíz</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Enunciado
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-En un ensayo con 7 variedades de maíz (clima cálido), se eligen al azar 3 para la fase de campo. ¿De cuántas formas se puede hacer? Si se sabe que la variedad V1 es la más prometedora, ¿cuál es la probabilidad de que quede incluida?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Solución
-</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 24px;">
-Total: <span class="math inline">\(\binom{7}{3} = 35\)</span> selecciones.
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-Con V1 fija: <span class="math inline">\(\binom{6}{2} = 15\)</span> selecciones favorables.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-<span class="math display">\[P(\text{V1 incluida}) = \frac{15}{35} = \frac{3}{7} \approx 0.429\]</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="resumen-general-de-la-clase" class="slide level2">
-<h2>Resumen general de la clase</h2>
-<div style="margin-top: 10px;">
-<table class="fragment fade-in" data-fragment-index="1" style="font-size: 22px; width: 100%; border-collapse: collapse;">
-<tbody><tr style="background:#59A14F; color:white;">
-<th style="padding:8px;">
-Tema
-</th>
-<th style="padding:8px;">
-Concepto clave
+Concepto
 </th>
 <th style="padding:8px;">
 Fórmula
 </th>
+<th style="padding:8px;">
+Condición
+</th>
 </tr>
 <tr style="background:#f3f4f6;">
 <td style="padding:8px;">
-Enfoque clásico
+Probabilidad condicional
 </td>
 <td style="padding:8px;">
-Resultados equiprobables
+<span class="math inline">\(P(A|B) = \frac{P(A \cap B)}{P(B)}\)</span>
 </td>
 <td style="padding:8px;">
-<span class="math inline">\(P(A)=|A|/|\Omega|\)</span>
+<span class="math inline">\(P(B)&gt;0\)</span>
 </td>
 </tr>
 <tr>
 <td style="padding:8px;">
-Axiomas
+Regla de multiplicación
 </td>
 <td style="padding:8px;">
-No negatividad, normalización, aditividad
+<span class="math inline">\(P(A \cap B) = P(A|B)P(B)\)</span>
 </td>
 <td style="padding:8px;">
-<span class="math inline">\(P(\Omega)=1\)</span>
-</td>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">
-Complemento
-</td>
-<td style="padding:8px;">
-Lo que no está en <span class="math inline">\(A\)</span>
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(P(A^c)=1-P(A)\)</span>
-</td>
-</tr>
-<tr>
-<td style="padding:8px;">
-Adición
-</td>
-<td style="padding:8px;">
-Al menos uno de dos eventos
-</td>
-<td style="padding:8px;">
-<span class="math inline">\(P(A\cup B)=P(A)+P(B)-P(A\cap B)\)</span>
+—
 </td>
 </tr>
 <tr style="background:#f3f4f6;">
 <td style="padding:8px;">
-Permutaciones
+Independencia
 </td>
 <td style="padding:8px;">
-Orden importa
+<span class="math inline">\(P(A \cap B) = P(A)P(B)\)</span>
 </td>
 <td style="padding:8px;">
-<span class="math inline">\(P(n,r)=n!/(n-r)!\)</span>
+—
 </td>
 </tr>
 <tr>
 <td style="padding:8px;">
-Combinaciones
+Prob. total
 </td>
 <td style="padding:8px;">
-Orden no importa
+<span class="math inline">\(P(A) = \sum_i P(A|B_i)P(B_i)\)</span>
 </td>
 <td style="padding:8px;">
-<span class="math inline">\(\binom{n}{r}=n!/[r!(n-r)!]\)</span>
+<span class="math inline">\(\{B_i\}\)</span> partición
 </td>
 </tr>
 </tbody></table>
 </div>
 </section>
-<section id="bibliografía-sugerida" class="slide level2">
-<h2>Bibliografía sugerida</h2>
-<div class="card fragment fade-up crispdm-card--gray" style="margin-top: 40px; padding: 20px;">
-<ul>
-<li class="fragment fade-up" style="font-size: 26px; text-align: justify;">
-Walpole, R. E., Myers, R. H., Myers, S. L. y Ye, K. (2012). <em>Probabilidad y Estadística para Ingeniería y Ciencias</em>, 9ª ed.&nbsp;Pearson. Capítulos 2 y 3.
-</li>
-<li class="fragment fade-up" style="font-size: 26px; text-align: justify; margin-top: 10px;">
-Devore, J. L. (2016). <em>Probabilidad y Estadística para Ingeniería y Ciencias</em>, 9ª ed.&nbsp;Cengage. Capítulo 2.
-</li>
-<li class="fragment fade-up" style="font-size: 26px; text-align: justify; margin-top: 10px;">
-Ross, S. M. (2014). <em>Introducción a la Probabilidad y la Estadística para Ingenieros y Científicos</em>, 4ª ed.&nbsp;Academic Press. Capítulos 2 y 3.
-</li>
-</ul>
+<section id="section" class="slide level2 center middle">
+<h2></h2>
+<div style="text-align: center; margin-top: 60px;">
+<div style="font-size: 52px; font-weight: bold; color: #a78bfa;">
+<p>¡Gracias!</p>
+</div>
+<div style="font-size: 30px; margin-top: 30px; color: #3b82f6;">
+<p>Clase 8 — Probabilidad condicional e independencia</p>
+</div>
+<div style="font-size: 24px; margin-top: 20px; color: #59A14F;">
+<p>Bioestadística Fundamental · Universidad Nacional de Colombia</p>
+</div>
+<div style="font-size: 22px; margin-top: 20px; color: #555;">
+<p>Próxima clase: <strong>Teorema de Bayes</strong></p>
+</div>
 </div>
 
 </section>
@@ -2124,21 +1910,21 @@ Ross, S. M. (2014). <em>Introducción a la Probabilidad y la Estadística para I
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="clase_7_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="clase_8_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="clase_7_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="clase_7_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="clase_7_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="clase_8_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -2154,7 +1940,7 @@ Ross, S. M. (2014). <em>Introducción a la Probabilidad y la Estadística para I
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'multiplex': {"secret":null,"id":"8eddae1c088a3bbddc3c55eb9b0d4b77b9df31ab457f2534d745691eeb7217e5","url":"https://multiplex.up.railway.app/"},
+'multiplex': {"secret":null,"id":"e73bf65d28273485df0391498ba358403836485b8a7fe642cdd1db11e26f843c","url":"https://multiplex.up.railway.app/"},
 'smaller': false,
  
         // Display controls in the bottom right corner

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="clase_10_files/libs/clipboard/clipboard.min.js"></script>
-<script src="clase_10_files/libs/quarto-html/tabby.min.js"></script>
-<script src="clase_10_files/libs/quarto-html/popper.min.js"></script>
-<script src="clase_10_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="clase_10_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="clase_10_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="clase_10_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="clase_11_files/libs/clipboard/clipboard.min.js"></script>
+<script src="clase_11_files/libs/quarto-html/tabby.min.js"></script>
+<script src="clase_11_files/libs/quarto-html/popper.min.js"></script>
+<script src="clase_11_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="clase_11_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="clase_11_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="clase_11_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.36">
 
   <meta name="author" content="">
@@ -14,8 +14,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="clase_10_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="clase_10_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="clase_11_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="clase_11_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -98,14 +98,14 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="clase_10_files/libs/revealjs/dist/theme/quarto-47de77ef8bb53eb6852bbbcd7cb73406.css">
+  <link rel="stylesheet" href="clase_11_files/libs/revealjs/dist/theme/quarto-47de77ef8bb53eb6852bbbcd7cb73406.css">
   <link rel="stylesheet" href="../assets/syntax-highlight.css">
   <link rel="stylesheet" href="../assets/custom.css">
   <link rel="stylesheet" href="../assets/pacman.css">
-  <link href="clase_10_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="clase_10_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="clase_10_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="clase_10_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="clase_11_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="clase_11_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="clase_11_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="clase_11_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -232,100 +232,32 @@
 </div>
 
 </section>
-<section id="clase-10" class="slide level2 center middle">
-<h2>Clase 10</h2>
+<section id="clase-11" class="slide level2 center middle">
+<h2>Clase 11</h2>
 <div style="text-align: center; margin-top: 40px;">
 <p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
-Variables Aleatorias
+Funciones de Probabilidad y Densidad
 </p>
-<p style="font-size: 36px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
-Definición y tipos
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+FMP, FDP y distribuciones en profundidad
 </p>
 <p style="font-size: 26px; color: #6b7280; margin-top: 20px;">
-Del espacio muestral a los números: cuantificando la incertidumbre
+Herramientas matemáticas para cuantificar la incertidumbre
 </p>
 <p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">
 Bioestadística Fundamental — Departamento de Estadística, UNAL Bogotá
 </p>
 </div>
 </section>
-<section id="por-qué-necesitamos-variables-aleatorias" class="slide level2">
-<h2>¿Por qué necesitamos variables aleatorias?</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Los espacios muestrales pueden contener resultados no numéricos: <em>vive/muere</em>, <em>sano/enfermo</em>, <em>especie A/B/C</em>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Para aplicar herramientas matemáticas necesitamos <strong>asignar un número</strong> a cada resultado del experimento.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-Una <strong>variable aleatoria</strong> es precisamente esa función: traduce los resultados del experimento al lenguaje de los números reales.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-Con ello podemos calcular probabilidades, esperanzas, varianzas y mucho más de forma sistemática.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="ejemplo-motivador-ensayo-clínico" class="slide level2">
-<h2>Ejemplo motivador: ensayo clínico</h2>
-<div class="block-note fragment fade-up" data-fragment-index="1">
-<div class="block-body">
-<p>
-<strong>Contexto:</strong> En un estudio sobre malaria en el Chocó, se aplica un tratamiento a 10 pacientes. Para cada paciente se registra si <em>se recupera</em> (R) o <em>no se recupera</em> (N).
-</p>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El espacio muestral <span class="math inline">\(\Omega\)</span> tiene <span class="math inline">\(2^{10} = 1024\)</span> posibles resultados: secuencias de R y N.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Si definimos <span class="math inline">\(X = \text{número de pacientes que se recuperan}\)</span>, <strong><span class="math inline">\(X\)</span> es una variable aleatoria</strong> con valores posibles <span class="math inline">\(\{0, 1, 2, \ldots, 10\}\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-En lugar de trabajar con 1024 eventos, trabajamos con 11 valores numéricos. ¡Mucho más manejable!
-</li>
-</ul>
-</section>
-<section id="definición-formal" class="slide level2">
-<h2>Definición formal</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición: Variable Aleatoria
-</div>
-<div class="block-body">
-Una <strong>variable aleatoria</strong> <span class="math inline">\(X\)</span> es una función <span class="math inline">\(X: \Omega \to \mathbb{R}\)</span> que asigna a cada elemento <span class="math inline">\(\omega \in \Omega\)</span> del espacio muestral un número real <span class="math inline">\(X(\omega)\)</span>.
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Formalmente, <span class="math inline">\(X\)</span> debe ser <em>medible</em>: para todo <span class="math inline">\(x \in \mathbb{R}\)</span>, el conjunto <span class="math inline">\(\{\omega \in \Omega : X(\omega) \leq x\}\)</span> debe ser un evento (pertenecer a la sigma-álgebra).
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-En la práctica de la bioestadística esta condición siempre se cumple con las variables que medimos.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-Convencionalmente usamos letras mayúsculas (<span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, <span class="math inline">\(Z\)</span>) para variables aleatorias y minúsculas (<span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>) para sus valores observados.
-</li>
-</ul>
-</section>
-<section id="dos-grandes-tipos-de-variables-aleatorias" class="slide level2">
-<h2>Dos grandes tipos de variables aleatorias</h2>
+<section id="repaso-dos-tipos-de-variables" class="slide level2">
+<h2>Repaso: dos tipos de variables</h2>
 <div class="twocol">
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
 Variable Discreta
 </div>
 <div class="block-body">
-<span class="math inline">\(X\)</span> es <strong>discreta</strong> si su conjunto de valores posibles es <em>finito o numerable</em>: <span class="math inline">\(\{x_1, x_2, x_3, \ldots\}\)</span>.
+Soporte contable <span class="math inline">\(\{x_1, x_2, \ldots\}\)</span>. Se describe con la <strong>función de masa de probabilidad</strong> (FMP): <span class="math display">\[p(x) = P(X = x) \geq 0, \quad \sum_x p(x) = 1\]</span>
 </div>
 </div>
 <div class="block-theorem fragment fade-up" data-fragment-index="2">
@@ -333,742 +265,621 @@ Variable Discreta
 Variable Continua
 </div>
 <div class="block-body">
-<span class="math inline">\(X\)</span> es <strong>continua</strong> si puede tomar cualquier valor en un intervalo (o unión de intervalos) de <span class="math inline">\(\mathbb{R}\)</span>, es decir, su recorrido es no numerable.
+Soporte intervalar. Se describe con la <strong>función de densidad de probabilidad</strong> (FDP): <span class="math display">\[f(x) \geq 0, \quad \int_{-\infty}^{\infty} f(x)\,dx = 1\]</span>
 </div>
 </div>
 </div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-La distinción determina qué herramienta matemática usamos: <strong>sumas</strong> para discretas, <strong>integrales</strong> para continuas.
-</li>
-</ul>
 </section>
-<section id="ejemplos-de-variables-discretas" class="slide level2">
-<h2>Ejemplos de variables discretas</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Ejemplos — Variables Discretas
-</div>
-<div class="block-body">
-<ul>
-<li>
-Número de huevos de parásito <em>Fasciola hepatica</em> por campo microscópico: <span class="math inline">\(X \in \{0, 1, 2, 3, \ldots\}\)</span>
-</li>
-<li>
-Número de plantas infectadas con mosca blanca en un lote de 50: <span class="math inline">\(X \in \{0, 1, \ldots, 50\}\)</span>
-</li>
-<li>
-Número de episodios de fiebre amarilla reportados en una semana: <span class="math inline">\(X \in \{0, 1, 2, \ldots\}\)</span>
-</li>
-</ul>
-</div>
-</div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Nótese que los valores son <strong>enteros no negativos</strong> que se pueden contar uno a uno.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-El espacio de valores puede ser finito (lote de 50 plantas) o infinito numerable (conteos sin límite superior natural).
-</li>
-</ul>
-</section>
-<section id="ejemplos-de-variables-continuas" class="slide level2">
-<h2>Ejemplos de variables continuas</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Ejemplos — Variables Continuas
-</div>
-<div class="block-body">
-<ul>
-<li>
-Peso de un neonato al nacer: <span class="math inline">\(X \in (0, \infty)\)</span> en gramos
-</li>
-<li>
-Concentración de nitratos en agua de río: <span class="math inline">\(X \in [0, \infty)\)</span> en mg/L
-</li>
-<li>
-Temperatura corporal de un bovino: <span class="math inline">\(X \in \mathbb{R}^+\)</span> en °C
-</li>
-<li>
-Tiempo hasta la muerte de una bacteria expuesta a antibiótico: <span class="math inline">\(X \in (0, \infty)\)</span> en horas
-</li>
-</ul>
-</div>
-</div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Entre dos valores cualesquiera siempre existe otro valor posible — el recorrido no tiene “saltos”.
-</li>
-</ul>
-</section>
-<section id="la-función-de-distribución-acumulada-fda" class="slide level2">
-<h2>La función de distribución acumulada (FDA)</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición: Función de Distribución Acumulada
-</div>
-<div class="block-body">
-La <strong>FDA</strong> (o CDF, del inglés) de una variable aleatoria <span class="math inline">\(X\)</span> se define como: <span class="math display">\[F(x) = P(X \leq x), \quad x \in \mathbb{R}\]</span>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(F(x)\)</span> mide la <strong>probabilidad acumulada</strong> hasta el valor <span class="math inline">\(x\)</span>: la probabilidad de que <span class="math inline">\(X\)</span> no supere <span class="math inline">\(x\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-La FDA está definida para <em>todo</em> número real, tanto para variables discretas como continuas.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-Es la herramienta unificadora: permite comparar variables discretas y continuas bajo el mismo marco.
-</li>
-</ul>
-</section>
-<section id="propiedades-de-la-fda" class="slide level2">
-<h2>Propiedades de la FDA</h2>
+<section id="función-de-masa-de-probabilidad-propiedades" class="slide level2">
+<h2>Función de masa de probabilidad — propiedades</h2>
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Propiedades de F(x)
+Propiedades de la FMP
 </div>
 <div class="block-body">
+Una función <span class="math inline">\(p: \mathbb{R} \to [0,1]\)</span> es una FMP si y solo si:
 <ol>
 <li>
-<span class="math inline">\(0 \leq F(x) \leq 1\)</span> para todo <span class="math inline">\(x \in \mathbb{R}\)</span>
+<span class="math inline">\(p(x) \geq 0\)</span> para todo <span class="math inline">\(x\)</span>
 </li>
 <li>
-<span class="math inline">\(F\)</span> es no decreciente: si <span class="math inline">\(a &lt; b\)</span> entonces <span class="math inline">\(F(a) \leq F(b)\)</span>
+<span class="math inline">\(p(x) = 0\)</span> fuera del soporte
 </li>
 <li>
-<span class="math inline">\(\lim_{x \to -\infty} F(x) = 0\)</span> y <span class="math inline">\(\lim_{x \to +\infty} F(x) = 1\)</span>
-</li>
-<li>
-<span class="math inline">\(F\)</span> es continua por la derecha: <span class="math inline">\(\lim_{h \to 0^+} F(x+h) = F(x)\)</span>
+<span class="math inline">\(\displaystyle\sum_{x \in \text{soporte}} p(x) = 1\)</span>
 </li>
 </ol>
 </div>
 </div>
 <ul style="margin-top: 10px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La propiedad 4 distingue la FDA de otras funciones: en variables discretas tiene <em>saltos</em>, pero siempre es continua por la derecha.
-</li>
-</ul>
-</section>
-<section id="fda-de-una-variable-discreta-ejemplo" class="slide level2">
-<h2>FDA de una variable discreta — ejemplo</h2>
-
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-1-1.png" width="864" class="r-stretch"><p class="fragment fade-up" style="font-size: 26px; text-align: center; margin-top: 5px;" data-fragment-index="1">
-<span class="math inline">\(X \sim \text{Binomial}(3, 0.5)\)</span>: número de éxitos en 3 lanzamientos de moneda.
-</p>
-</section>
-<section id="fda-propiedades-para-calcular-probabilidades" class="slide level2">
-<h2>FDA — propiedades para calcular probabilidades</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Cálculo de probabilidades con F(x)
-</div>
-<div class="block-body">
-<span class="math display">\[P(a &lt; X \leq b) = F(b) - F(a)\]</span> <span class="math display">\[P(X &gt; a) = 1 - F(a)\]</span> <span class="math display">\[P(X = a) = F(a) - F(a^-) \quad \text{(solo para discretas)}\]</span>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Donde <span class="math inline">\(F(a^-) = \lim_{x \to a^-} F(x)\)</span> es el límite por la izquierda en <span class="math inline">\(a\)</span>.
+Cada valor del soporte tiene una probabilidad positiva asignada.
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Para variables <strong>continuas</strong>: <span class="math inline">\(P(X = a) = 0\)</span> para todo <span class="math inline">\(a\)</span>, y <span class="math inline">\(F\)</span> es diferenciable en casi todo punto.
+La suma de todas las probabilidades debe ser exactamente 1 (certeza total).
 </li>
 </ul>
 </section>
-<section id="variable-aleatoria-discreta-definición-formal" class="slide level2">
-<h2>Variable aleatoria discreta — definición formal</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Variable Aleatoria Discreta
-</div>
-<div class="block-body">
-<span class="math inline">\(X\)</span> es discreta si existe un conjunto contable <span class="math inline">\(\{x_1, x_2, \ldots\}\)</span> tal que <span class="math inline">\(\sum_i P(X = x_i) = 1\)</span>. La función <span class="math inline">\(p(x_i) = P(X = x_i)\)</span> se denomina <strong>función de masa de probabilidad</strong> (FMP).
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La FMP satisface: <span class="math inline">\(p(x_i) \geq 0\)</span> para todo <span class="math inline">\(i\)</span>, y <span class="math inline">\(\sum_{i} p(x_i) = 1\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-La FDA se obtiene como <span class="math inline">\(F(x) = \sum_{x_i \leq x} p(x_i)\)</span>, una suma acumulada.
-</li>
-</ul>
-</section>
-<section id="variable-aleatoria-continua-definición-formal" class="slide level2">
-<h2>Variable aleatoria continua — definición formal</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Variable Aleatoria Continua
-</div>
-<div class="block-body">
-<span class="math inline">\(X\)</span> es continua si existe una función <span class="math inline">\(f(x) \geq 0\)</span> tal que: <span class="math display">\[F(x) = \int_{-\infty}^{x} f(t)\, dt \quad \text{para todo } x \in \mathbb{R}\]</span> La función <span class="math inline">\(f\)</span> se llama <strong>función de densidad de probabilidad</strong> (FDP).
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La FDP satisface: <span class="math inline">\(f(x) \geq 0\)</span> y <span class="math inline">\(\int_{-\infty}^{\infty} f(x)\,dx = 1\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Para cualquier intervalo: <span class="math inline">\(P(a \leq X \leq b) = \int_a^b f(x)\,dx\)</span> — el área bajo la curva.
-</li>
-</ul>
-</section>
-<section id="interpretación-de-la-fdp" class="slide level2">
-<h2>Interpretación de la FDP</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(f(x)\)</span> <strong>no es una probabilidad</strong>; puede ser mayor que 1.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(f(x)\,dx\)</span> es la probabilidad infinitesimal de que <span class="math inline">\(X\)</span> caiga en el intervalo <span class="math inline">\((x, x+dx)\)</span>.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-La probabilidad de un punto exacto es cero: <span class="math inline">\(P(X = c) = 0\)</span> para todo <span class="math inline">\(c\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-Por eso en variables continuas <span class="math inline">\(P(a &lt; X &lt; b) = P(a \leq X \leq b)\)</span>: los extremos no importan.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="gráfica-de-una-fdp-normal-estándar" class="slide level2">
-<h2>Gráfica de una FDP — Normal estándar</h2>
-
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-2-1.png" width="864" class="r-stretch"></section>
-<section id="soporte-de-una-variable-aleatoria" class="slide level2">
-<h2>Soporte de una variable aleatoria</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición: Soporte
-</div>
-<div class="block-body">
-El <strong>soporte</strong> de una variable aleatoria <span class="math inline">\(X\)</span> es el conjunto de valores <span class="math inline">\(x\)</span> donde <span class="math inline">\(P(X = x) &gt; 0\)</span> (discreta) o <span class="math inline">\(f(x) &gt; 0\)</span> (continua).
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El soporte define el <em>rango natural</em> de la variable: los valores que realmente pueden ocurrir.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Por ejemplo: número de parásitos en sangre <span class="math inline">\(\Rightarrow\)</span> soporte <span class="math inline">\(\{0,1,2,\ldots\}\)</span>; temperatura corporal <span class="math inline">\(\Rightarrow\)</span> soporte <span class="math inline">\((35, 45)\)</span> °C (en la práctica clínica).
-</li>
-</ul>
-</section>
-<section id="variables-aleatorias-mixtas" class="slide level2">
-<h2>Variables aleatorias mixtas</h2>
-<div class="block-note fragment fade-up" data-fragment-index="1">
-<div class="block-body">
-<p>
-Existen variables que son <strong>ni puramente discretas ni puramente continuas</strong>. Por ejemplo: el tiempo de supervivencia en un estudio cuando algunos pacientes no presentan el evento (se “censuran”).
-</p>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Estas variables tienen una FDA con <em>saltos</em> en ciertos puntos y regiones <em>continuas</em> en otros.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-En Bioestadística Fundamental nos concentramos en los dos tipos puros: discreto y continuo.
-</li>
-</ul>
-</section>
-<section id="transformaciones-de-variables-aleatorias" class="slide level2">
-<h2>Transformaciones de variables aleatorias</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Teorema: Transformación monótona
-</div>
-<div class="block-body">
-Si <span class="math inline">\(X\)</span> es una v.a. continua con FDP <span class="math inline">\(f_X\)</span> y <span class="math inline">\(Y = g(X)\)</span> donde <span class="math inline">\(g\)</span> es monótona diferenciable, entonces: <span class="math display">\[f_Y(y) = f_X(g^{-1}(y)) \left|\frac{d}{dy} g^{-1}(y)\right|\]</span>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Este resultado es fundamental para construir nuevas distribuciones a partir de otras conocidas.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Ejemplo: si <span class="math inline">\(X \sim U(0,1)\)</span> y <span class="math inline">\(Y = -\ln(X)\)</span>, entonces <span class="math inline">\(Y \sim \text{Exponencial}(1)\)</span>.
-</li>
-</ul>
-</section>
-<section id="modelo-probabilístico-de-una-variable" class="slide level2">
-<h2>Modelo probabilístico de una variable</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Modelo probabilístico
-</div>
-<div class="block-body">
-Especificar el <strong>modelo probabilístico</strong> de <span class="math inline">\(X\)</span> es dar su FMP o FDP junto con el soporte. A menudo se escribe <span class="math inline">\(X \sim \text{Nombre}(\theta)\)</span> donde <span class="math inline">\(\theta\)</span> son los parámetros del modelo.
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>: número de éxitos en un solo ensayo con probabilidad de éxito <span class="math inline">\(p\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(X \sim \text{Normal}(\mu, \sigma^2)\)</span>: variable continua con distribución en campana centrada en <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-Los parámetros <span class="math inline">\(\theta\)</span> resumen toda la información relevante del modelo.
-</li>
-</ul>
-</section>
-<section id="bernoulli-el-modelo-más-simple" class="slide level2">
-<h2>Bernoulli: el modelo más simple</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Distribución de Bernoulli
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span> si <span class="math inline">\(P(X=1) = p\)</span> y <span class="math inline">\(P(X=0) = 1-p\)</span>, con <span class="math inline">\(0 &lt; p &lt; 1\)</span>. Su FMP es: <span class="math display">\[p(x) = p^x (1-p)^{1-x}, \quad x \in \{0,1\}\]</span>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Modela experimentos con exactamente <strong>dos resultados</strong>: éxito (<span class="math inline">\(X=1\)</span>) o fracaso (<span class="math inline">\(X=0\)</span>).
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Ejemplos: una semilla germina (sí/no), un paciente responde al tratamiento (sí/no), una vaca produce leche de alta calidad (sí/no).
-</li>
-</ul>
-</section>
-<section id="distribución-binomial-construcción" class="slide level2">
-<h2>Distribución Binomial — construcción</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Distribución Binomial
-</div>
-<div class="block-body">
-Si <span class="math inline">\(X_1, \ldots, X_n\)</span> son independientes con <span class="math inline">\(X_i \sim \text{Bernoulli}(p)\)</span>, entonces <span class="math inline">\(X = \sum_{i=1}^n X_i \sim \text{Binomial}(n, p)\)</span> con: <span class="math display">\[p(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n\]</span>
-</div>
-</div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(X\)</span> cuenta el <strong>número de éxitos</strong> en <span class="math inline">\(n\)</span> ensayos independientes con la misma probabilidad de éxito <span class="math inline">\(p\)</span>.
-</li>
-</ul>
-</section>
-<section id="distribución-binomial-visualización" class="slide level2">
-<h2>Distribución Binomial — visualización</h2>
-
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-3-1.png" width="864" class="r-stretch"><p class="fragment fade-up" style="font-size: 26px; text-align: center;" data-fragment-index="1">
-Para <span class="math inline">\(p = 0.5\)</span> la distribución es simétrica; para <span class="math inline">\(p &lt; 0.5\)</span> sesgada a la derecha; para <span class="math inline">\(p &gt; 0.5\)</span> a la izquierda.
-</p>
-</section>
-<section id="distribución-de-poisson" class="slide level2">
-<h2>Distribución de Poisson</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Distribución de Poisson
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Poisson}(\lambda)\)</span>, con <span class="math inline">\(\lambda &gt; 0\)</span>, si: <span class="math display">\[p(k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots\]</span>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Modela el <strong>número de eventos raros</strong> en un intervalo de tiempo o espacio fijo: casos de una enfermedad en un municipio por semana, bacterias en un ml de agua.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-El parámetro <span class="math inline">\(\lambda\)</span> es simultáneamente la media y la varianza de la distribución.
-</li>
-</ul>
-</section>
-<section id="distribución-uniforme-continua" class="slide level2">
-<h2>Distribución Uniforme continua</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Distribución Uniforme continua
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim U(a, b)\)</span> si todos los valores en <span class="math inline">\((a,b)\)</span> son igualmente probables: <span class="math display">\[f(x) = \frac{1}{b-a}, \quad a &lt; x &lt; b\]</span>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Su FDA es <span class="math inline">\(F(x) = \frac{x-a}{b-a}\)</span> para <span class="math inline">\(a \leq x \leq b\)</span>, una función lineal creciente.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Usada como <em>prior no informativa</em> en estadística bayesiana y para simular otras distribuciones.
-</li>
-</ul>
-</section>
-<section id="distribución-normal" class="slide level2">
-<h2>Distribución Normal</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Distribución Normal
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> si su FDP es: <span class="math display">\[f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \mathbb{R}\]</span>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(\mu\)</span> es la media (centro de la campana) y <span class="math inline">\(\sigma^2\)</span> es la varianza (anchura de la campana).
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Aplicaciones en biología: peso corporal, talla, presión arterial, niveles séricos de glucosa.
-</li>
-</ul>
-</section>
-<section id="normal-estándar" class="slide level2">
-<h2>Normal estándar</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Normal estándar Z
-</div>
-<div class="block-body">
-<span class="math inline">\(Z \sim N(0,1)\)</span> se denomina la <strong>normal estándar</strong>. Si <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, entonces: <span class="math display">\[Z = \frac{X - \mu}{\sigma} \sim N(0,1)\]</span> Este proceso se llama <strong>estandarización</strong>.
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La estandarización permite usar <strong>una única tabla</strong> (o función <code>pnorm</code> en R) para calcular probabilidades de cualquier normal.
-</li>
-</ul>
-</section>
-<section id="distribución-exponencial" class="slide level2">
-<h2>Distribución Exponencial</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Distribución Exponencial
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, con <span class="math inline">\(\lambda &gt; 0\)</span>, si: <span class="math display">\[f(x) = \lambda e^{-\lambda x}, \quad x &gt; 0\]</span> Su FDA es <span class="math inline">\(F(x) = 1 - e^{-\lambda x}\)</span>.
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Modela <strong>tiempos de espera</strong> entre eventos de Poisson: tiempo hasta la próxima infección, tiempo de vida de un organismo bajo condiciones constantes.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Propiedad sin memoria: <span class="math inline">\(P(X &gt; s+t \mid X &gt; s) = P(X &gt; t)\)</span>.
-</li>
-</ul>
-</section>
-<section id="propiedad-de-pérdida-de-memoria-ejemplo" class="slide level2">
-<h2>Propiedad de pérdida de memoria — ejemplo</h2>
+<section id="construcción-de-una-fmp-ejemplo-agrícola" class="slide level2">
+<h2>Construcción de una FMP — ejemplo agrícola</h2>
 <div class="block-example fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Ejemplo — Sin memoria
+Ejemplo — Inspección fitosanitaria
 </div>
 <div class="block-body">
 <p>
-Si el tiempo entre dos casos consecutivos de dengue en un barrio sigue una <span class="math inline">\(\text{Exp}(\lambda)\)</span>, y ya han pasado 5 días sin un nuevo caso, la probabilidad de esperar al menos 3 días más es la <em>misma</em> que al inicio: <span class="math inline">\(P(X &gt; 3)\)</span>. El reloj se “reinicia” en cada momento.
+Se inspeccionan 3 plantas de cacao en Tumaco. Cada planta tiene probabilidad <span class="math inline">\(p = 0.4\)</span> de presentar moniliasis, independientemente. Sea <span class="math inline">\(X\)</span> = número de plantas infectadas.
 </p>
-</div>
-</div>
-</section>
-<section id="distribución-gamma" class="slide level2">
-<h2>Distribución Gamma</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Distribución Gamma
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Gamma}(\alpha, \beta)\)</span>, con <span class="math inline">\(\alpha, \beta &gt; 0\)</span>, si: <span class="math display">\[f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta}, \quad x &gt; 0\]</span> donde <span class="math inline">\(\Gamma(\alpha) = \int_0^\infty t^{\alpha-1}e^{-t}dt\)</span>.
 </div>
 </div>
 <ul style="margin-top: 10px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(\alpha\)</span> es el parámetro de forma y <span class="math inline">\(\beta\)</span> es el parámetro de escala. La Exponencial es un caso especial con <span class="math inline">\(\alpha=1\)</span>.
+<span class="math inline">\(X \sim \text{Bin}(3, 0.4)\)</span>: los valores posibles son <span class="math inline">\(\{0, 1, 2, 3\}\)</span>.
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Usada para modelar tiempos hasta el <span class="math inline">\(k\)</span>-ésimo evento, tiempos de supervivencia, concentraciones.
+<span class="math inline">\(p(0) = (0.6)^3 = 0.216\)</span>, <span class="math inline">\(p(1) = 3(0.4)(0.6)^2 = 0.432\)</span>, <span class="math inline">\(p(2) = 3(0.4)^2(0.6) = 0.288\)</span>, <span class="math inline">\(p(3) = (0.4)^3 = 0.064\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Verificación: <span class="math inline">\(0.216 + 0.432 + 0.288 + 0.064 = 1\)</span> ✓
 </li>
 </ul>
 </section>
-<section id="tabla-resumen-distribuciones-discretas" class="slide level2">
-<h2>Tabla resumen — distribuciones discretas</h2>
-<div style="font-size: 26px; margin-top: 10px;">
+<section id="gráfica-de-la-fmp-binomial3-0.4" class="slide level2">
+<h2>Gráfica de la FMP Binomial(3, 0.4)</h2>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-1-1.png" width="864" class="r-stretch"></section>
+<section id="distribución-bernoulli-fmp-y-propiedades" class="slide level2">
+<h2>Distribución Bernoulli — FMP y propiedades</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución Bernoulli
+</div>
+<div class="block-body">
+<span class="math inline">\(X \sim \text{Ber}(p)\)</span>: <span class="math display">\[p(x) = p^x(1-p)^{1-x}, \quad x \in \{0,1\}\]</span> Parámetro: <span class="math inline">\(p = P(X=1)\)</span>, probabilidad de éxito.
+</div>
+</div>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-2-1.png" width="768" class="r-stretch"></section>
+<section id="distribución-binomial-fmp" class="slide level2">
+<h2>Distribución Binomial — FMP</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+FMP Binomial
+</div>
+<div class="block-body">
+<span class="math inline">\(X \sim \text{Bin}(n, p)\)</span>: <span class="math display">\[p(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n\]</span> El coeficiente <span class="math inline">\(\binom{n}{k}\)</span> cuenta el número de formas de elegir <span class="math inline">\(k\)</span> éxitos de <span class="math inline">\(n\)</span> ensayos.
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Supuestos: ensayos <strong>independientes</strong>, probabilidad de éxito <strong>constante</strong> <span class="math inline">\(p\)</span>, número de ensayos <strong>fijo</strong> <span class="math inline">\(n\)</span>.
+</li>
+</ul>
+</section>
+<section id="binomial-efecto-de-los-parámetros" class="slide level2">
+<h2>Binomial — efecto de los parámetros</h2>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
+<section id="distribución-poisson-fmp" class="slide level2">
+<h2>Distribución Poisson — FMP</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+FMP Poisson
+</div>
+<div class="block-body">
+<span class="math inline">\(X \sim \text{Poi}(\lambda)\)</span>, <span class="math inline">\(\lambda &gt; 0\)</span>: <span class="math display">\[p(k) = \frac{e^{-\lambda}\lambda^k}{k!}, \quad k = 0, 1, 2, \ldots\]</span> <span class="math inline">\(\lambda\)</span> representa el <strong>número promedio de eventos</strong> por unidad de tiempo/espacio.
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Condiciones de validez: eventos <strong>independientes</strong>, tasa <strong>constante</strong>, dos eventos no pueden ocurrir <em>simultáneamente</em>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Aproximación: <span class="math inline">\(\text{Bin}(n,p) \approx \text{Poi}(np)\)</span> cuando <span class="math inline">\(n\)</span> grande, <span class="math inline">\(p\)</span> pequeño.
+</li>
+</ul>
+</section>
+<section id="poisson-efecto-de-λ" class="slide level2">
+<h2>Poisson — efecto de λ</h2>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><p class="fragment fade-up" style="font-size: 26px; text-align: center;" data-fragment-index="1">
+Para <span class="math inline">\(\lambda\)</span> grande, la Poisson se aproxima a una distribución Normal.
+</p>
+</section>
+<section id="distribución-geométrica" class="slide level2">
+<h2>Distribución Geométrica</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución Geométrica
+</div>
+<div class="block-body">
+<span class="math inline">\(X \sim \text{Geo}(p)\)</span>: número de ensayos hasta el <strong>primer éxito</strong>: <span class="math display">\[p(k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots\]</span>
+</div>
+</div>
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Ejemplo: número de cultivos inspeccionados hasta encontrar el primer positivo a <em>Salmonella</em>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+También tiene propiedad sin memoria: el historial de fracasos no afecta la probabilidad de éxito futuro.
+</li>
+</ul>
+</section>
+<section id="distribución-hipergeométrica" class="slide level2">
+<h2>Distribución Hipergeométrica</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución Hipergeométrica
+</div>
+<div class="block-body">
+Población de <span class="math inline">\(N\)</span> elementos: <span class="math inline">\(M\)</span> “éxitos” y <span class="math inline">\(N-M\)</span> “fracasos”. Se extrae una muestra sin reemplazo de tamaño <span class="math inline">\(n\)</span>. Entonces <span class="math inline">\(X\)</span> = número de éxitos tiene FMP: <span class="math display">\[p(k) = \frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}, \quad k = 0,\ldots,\min(n,M)\]</span>
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Diferencia clave con Binomial: el muestreo es <strong>sin reemplazo</strong>, por lo que los ensayos no son independientes.
+</li>
+</ul>
+</section>
+<section id="función-de-densidad-de-probabilidad-propiedades" class="slide level2">
+<h2>Función de densidad de probabilidad — propiedades</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Propiedades de la FDP
+</div>
+<div class="block-body">
+Una función <span class="math inline">\(f: \mathbb{R} \to \mathbb{R}\)</span> es una FDP si y solo si:
+<ol>
+<li>
+<span class="math inline">\(f(x) \geq 0\)</span> para todo <span class="math inline">\(x\)</span>
+</li>
+<li>
+<span class="math inline">\(\displaystyle\int_{-\infty}^{\infty} f(x)\,dx = 1\)</span>
+</li>
+</ol>
+Para cualquier intervalo <span class="math inline">\((a,b)\)</span>: <span class="math inline">\(P(a \leq X \leq b) = \int_a^b f(x)\,dx\)</span>
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+A diferencia de la FMP, <span class="math inline">\(f(x)\)</span> puede tomar valores mayores que 1 (no es una probabilidad directa).
+</li>
+</ul>
+</section>
+<section id="fdp-y-fda-relación-diferencial" class="slide level2">
+<h2>FDP y FDA — relación diferencial</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Relación entre FDP y FDA
+</div>
+<div class="block-body">
+Si <span class="math inline">\(X\)</span> es continua con FDP <span class="math inline">\(f\)</span> y FDA <span class="math inline">\(F\)</span>: <span class="math display">\[F(x) = \int_{-\infty}^{x} f(t)\,dt\]</span> <span class="math display">\[f(x) = F'(x) \quad \text{(donde existe la derivada)}\]</span>
+</div>
+</div>
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+La FDP es la <strong>derivada</strong> de la FDA: mide la densidad de probabilidad en cada punto.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Las zonas donde <span class="math inline">\(f(x)\)</span> es alta concentran mayor probabilidad.
+</li>
+</ul>
+</section>
+<section id="distribución-uniforme-fdp-y-fda" class="slide level2">
+<h2>Distribución Uniforme — FDP y FDA</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución Uniforme U(a,b)
+</div>
+<div class="block-body">
+<span class="math display">\[f(x) = \frac{1}{b-a}, \quad a &lt; x &lt; b\]</span> <span class="math display">\[F(x) = \begin{cases} 0 &amp; x &lt; a \\ \frac{x-a}{b-a} &amp; a \leq x \leq b \\ 1 &amp; x &gt; b \end{cases}\]</span>
+</div>
+</div>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-5-1.png" width="864" class="r-stretch"></section>
+<section id="distribución-normal-fdp" class="slide level2">
+<h2>Distribución Normal — FDP</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+FDP Normal N(μ, σ²)
+</div>
+<div class="block-body">
+<span class="math display">\[f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \mathbb{R}\]</span> Parámetros: <span class="math inline">\(\mu \in \mathbb{R}\)</span> (media), <span class="math inline">\(\sigma^2 &gt; 0\)</span> (varianza).
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+La curva es <strong>simétrica</strong> alrededor de <span class="math inline">\(\mu\)</span> y tiene forma de campana.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Los puntos de inflexión se ubican en <span class="math inline">\(\mu \pm \sigma\)</span>.
+</li>
+</ul>
+</section>
+<section id="efecto-de-μ-y-σ-en-la-normal" class="slide level2">
+<h2>Efecto de μ y σ en la Normal</h2>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="la-regla-68-95-99.7" class="slide level2">
+<h2>La regla 68-95-99.7</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Regla empírica de la Normal
+</div>
+<div class="block-body">
+Para <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>: <span class="math display">\[P(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0.6827\]</span> <span class="math display">\[P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) \approx 0.9545\]</span> <span class="math display">\[P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) \approx 0.9973\]</span>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))), <span class="dv">4</span>)    <span class="co"># ±1σ</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6827</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>))), <span class="dv">4</span>)    <span class="co"># ±2σ</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9545</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>))), <span class="dv">4</span>)    <span class="co"># ±3σ</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9973</code></pre>
+</div>
+</div>
+</section>
+<section id="normal-cálculo-de-probabilidades" class="slide level2">
+<h2>Normal — cálculo de probabilidades</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Ejemplo — Peso de neonatos
+</div>
+<div class="block-body">
+<p>
+El peso de neonatos a término en un hospital de Medellín sigue <span class="math inline">\(X \sim N(3200, 400^2)\)</span> gramos. Calcule:
+</p>
+<ol>
+<li>
+<span class="math inline">\(P(2800 \leq X \leq 3600)\)</span>
+</li>
+<li>
+<span class="math inline">\(P(X &lt; 2500)\)</span> (bajo peso)
+</li>
+<li>
+<span class="math inline">\(P(X &gt; 4000)\)</span> (macrosomía)
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="normal-solución" class="slide level2">
+<h2>Normal — solución</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>mu <span class="ot">&lt;-</span> <span class="dv">3200</span>; sigma <span class="ot">&lt;-</span> <span class="dv">400</span></span>
+<span id="cb7-2"><a href=""></a><span class="co"># 1. P(2800 &lt;= X &lt;= 3600)</span></span>
+<span id="cb7-3"><a href=""></a><span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="dv">2800</span>, <span class="dv">3600</span>), mu, sigma))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6826895</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># 2. P(X &lt; 2500)</span></span>
+<span id="cb9-2"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">2500</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04005916</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># 3. P(X &gt; 4000)</span></span>
+<span id="cb11-2"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">4000</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02275013</code></pre>
+</div>
+</div>
+</section>
+<section id="estandarización-uso-de-la-tabla-z" class="slide level2">
+<h2>Estandarización — uso de la tabla Z</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Estandarización
+</div>
+<div class="block-body">
+Si <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, entonces <span class="math inline">\(Z = \frac{X-\mu}{\sigma} \sim N(0,1)\)</span>. Por lo tanto: <span class="math display">\[P(X \leq x) = P\!\left(Z \leq \frac{x-\mu}{\sigma}\right) = \Phi\!\left(\frac{x-\mu}{\sigma}\right)\]</span> donde <span class="math inline">\(\Phi\)</span> es la FDA de la normal estándar.
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El <strong>puntaje Z</strong> indica cuántas desviaciones estándar se aleja <span class="math inline">\(x\)</span> de la media.
+</li>
+</ul>
+</section>
+<section id="distribución-exponencial-fdp-y-fda" class="slide level2">
+<h2>Distribución Exponencial — FDP y FDA</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución Exponencial Exp(λ)
+</div>
+<div class="block-body">
+<span class="math display">\[f(x) = \lambda e^{-\lambda x}, \quad x &gt; 0\]</span> <span class="math display">\[F(x) = 1 - e^{-\lambda x}, \quad x &gt; 0\]</span> Parámetro: <span class="math inline">\(\lambda &gt; 0\)</span> (tasa de ocurrencia).
+</div>
+</div>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-9-1.png" width="864" class="r-stretch"></section>
+<section id="propiedad-sin-memoria-de-la-exponencial" class="slide level2">
+<h2>Propiedad sin memoria de la Exponencial</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Teorema: Propiedad sin memoria
+</div>
+<div class="block-body">
+Si <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, entonces para todo <span class="math inline">\(s, t &gt; 0\)</span>: <span class="math display">\[P(X &gt; s + t \mid X &gt; s) = P(X &gt; t) = e^{-\lambda t}\]</span> La Exponencial es la <em>única</em> distribución continua con esta propiedad.
+</div>
+</div>
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Demostración
+</div>
+<div class="block-body">
+<span class="math display">\[P(X &gt; s+t \mid X &gt; s) = \frac{P(X &gt; s+t)}{P(X &gt; s)} = \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(X &gt; t) \quad \square\]</span>
+</div>
+</div>
+</section>
+<section id="distribución-gamma-fdp" class="slide level2">
+<h2>Distribución Gamma — FDP</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución Gamma(α, β)
+</div>
+<div class="block-body">
+<span class="math display">\[f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta}, \quad x &gt; 0\]</span> Parámetros: <span class="math inline">\(\alpha &gt; 0\)</span> (forma), <span class="math inline">\(\beta &gt; 0\)</span> (escala). <span class="math inline">\(\Gamma(\alpha) = \int_0^\infty t^{\alpha-1}e^{-t}dt\)</span>, con <span class="math inline">\(\Gamma(n) = (n-1)!\)</span> para <span class="math inline">\(n \in \mathbb{N}\)</span>.
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Casos especiales: <span class="math inline">\(\text{Gamma}(1,\beta) = \text{Exp}(1/\beta)\)</span> y <span class="math inline">\(\text{Gamma}(n/2, 2) = \chi^2_n\)</span>.
+</li>
+</ul>
+</section>
+<section id="gamma-efecto-de-los-parámetros" class="slide level2">
+<h2>Gamma — efecto de los parámetros</h2>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section id="distribución-beta-fdp" class="slide level2">
+<h2>Distribución Beta — FDP</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución Beta(α, β)
+</div>
+<div class="block-body">
+<span class="math display">\[f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}, \quad 0 &lt; x &lt; 1\]</span> donde <span class="math inline">\(B(\alpha,\beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}\)</span>.
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Usada para modelar <strong>proporciones</strong> y <strong>probabilidades</strong>: prevalencia de una enfermedad, porcentaje de germinación, eficacia de un tratamiento.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Muy flexible: puede ser uniforme (<span class="math inline">\(\alpha=\beta=1\)</span>), en U, en J, unimodal simétrica o asimétrica.
+</li>
+</ul>
+</section>
+<section id="beta-formas-según-parámetros" class="slide level2">
+<h2>Beta — formas según parámetros</h2>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="distribución-chi-cuadrado" class="slide level2">
+<h2>Distribución Chi-cuadrado</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución Chi-cuadrado χ²(ν)
+</div>
+<div class="block-body">
+Si <span class="math inline">\(Z_1, \ldots, Z_\nu\)</span> son independientes con <span class="math inline">\(Z_i \sim N(0,1)\)</span>, entonces: <span class="math display">\[Q = Z_1^2 + \cdots + Z_\nu^2 \sim \chi^2(\nu)\]</span> Es un caso especial de <span class="math inline">\(\text{Gamma}(\nu/2, 2)\)</span>. Su soporte es <span class="math inline">\((0, \infty)\)</span>.
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Fundamental en inferencia: aparece en pruebas de bondad de ajuste y en la estimación de la varianza poblacional.
+</li>
+</ul>
+</section>
+<section id="distribución-t-de-student" class="slide level2">
+<h2>Distribución t de Student</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución t(ν)
+</div>
+<div class="block-body">
+Si <span class="math inline">\(Z \sim N(0,1)\)</span> y <span class="math inline">\(Q \sim \chi^2(\nu)\)</span> son independientes: <span class="math display">\[T = \frac{Z}{\sqrt{Q/\nu}} \sim t(\nu)\]</span>
+</div>
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Simétrica alrededor de 0, con colas más pesadas que la normal. A medida que <span class="math inline">\(\nu \to \infty\)</span>, <span class="math inline">\(t(\nu) \to N(0,1)\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Usada en intervalos de confianza y pruebas de hipótesis sobre medias con varianza desconocida.
+</li>
+</ul>
+</section>
+<section id="funciones-r-para-distribuciones" class="slide level2">
+<h2>Funciones R para distribuciones</h2>
+<div style="font-size: 24px; margin-top: 20px;">
 <table class="caption-top">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 26%">
-<col style="width: 26%">
-<col style="width: 26%">
+<col style="width: 38%">
+<col style="width: 30%">
+<col style="width: 30%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Distribución</th>
-<th style="text-align: center;">Parámetros</th>
-<th style="text-align: center;">Soporte</th>
-<th style="text-align: center;">Notación</th>
+<th style="text-align: center;">Prefijo</th>
+<th style="text-align: left;">Significado</th>
+<th style="text-align: left;">Ejemplo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Bernoulli</td>
-<td style="text-align: center;"><span class="math inline">\(p \in (0,1)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{Ber}(p)\)</span></td>
+<td style="text-align: center;"><code>d</code></td>
+<td style="text-align: left;">FMP / FDP</td>
+<td style="text-align: left;"><code>dnorm(x, 0, 1)</code> — valor de la FDP en <span class="math inline">\(x\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Binomial</td>
-<td style="text-align: center;"><span class="math inline">\(n \in \mathbb{N}\)</span>, <span class="math inline">\(p \in (0,1)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\{0,1,\ldots,n\}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{Bin}(n,p)\)</span></td>
+<td style="text-align: center;"><code>p</code></td>
+<td style="text-align: left;">FDA</td>
+<td style="text-align: left;"><code>pnorm(1.96)</code> — <span class="math inline">\(P(Z \leq 1.96)\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Poisson</td>
-<td style="text-align: center;"><span class="math inline">\(\lambda &gt; 0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\{0,1,2,\ldots\}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{Poi}(\lambda)\)</span></td>
+<td style="text-align: center;"><code>q</code></td>
+<td style="text-align: left;">Cuantil (inversa FDA)</td>
+<td style="text-align: left;"><code>qnorm(0.975)</code> — valor tal que <span class="math inline">\(\Phi(x) = 0.975\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Geométrica</td>
-<td style="text-align: center;"><span class="math inline">\(p \in (0,1)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\{1,2,3,\ldots\}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{Geo}(p)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hipergeométrica</td>
-<td style="text-align: center;"><span class="math inline">\(N,M,n\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\{0,\ldots,\min(n,M)\}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{Hiper}(N,M,n)\)</span></td>
+<td style="text-align: center;"><code>r</code></td>
+<td style="text-align: left;">Simulación aleatoria</td>
+<td style="text-align: left;"><code>rnorm(100, 50, 10)</code> — 100 obs de <span class="math inline">\(N(50,100)\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p class="fragment fade-up" style="font-size: 26px; text-align: center; margin-top: 10px;" data-fragment-index="1">
+El mismo esquema aplica a todas las distribuciones: <code>dbinom</code>, <code>pbinom</code>, <code>qbinom</code>, <code>rbinom</code>; <code>dpois</code>, <code>ppois</code>; etc.
+</p>
 </section>
-<section id="tabla-resumen-distribuciones-continuas" class="slide level2">
-<h2>Tabla resumen — distribuciones continuas</h2>
-<div style="font-size: 26px; margin-top: 10px;">
-<table class="caption-top">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 26%">
-<col style="width: 26%">
-<col style="width: 26%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Distribución</th>
-<th style="text-align: center;">Parámetros</th>
-<th style="text-align: center;">Soporte</th>
-<th style="text-align: center;">Notación</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Uniforme</td>
-<td style="text-align: center;"><span class="math inline">\(a &lt; b\)</span></td>
-<td style="text-align: center;"><span class="math inline">\((a,b)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(U(a,b)\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Normal</td>
-<td style="text-align: center;"><span class="math inline">\(\mu \in \mathbb{R}\)</span>, <span class="math inline">\(\sigma^2 &gt; 0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\mathbb{R}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(N(\mu, \sigma^2)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Exponencial</td>
-<td style="text-align: center;"><span class="math inline">\(\lambda &gt; 0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\((0,\infty)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{Exp}(\lambda)\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Gamma</td>
-<td style="text-align: center;"><span class="math inline">\(\alpha, \beta &gt; 0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\((0,\infty)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{Gamma}(\alpha,\beta)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Beta</td>
-<td style="text-align: center;"><span class="math inline">\(\alpha, \beta &gt; 0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{Beta}(\alpha,\beta)\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="ejercicio-1-identificar-el-tipo-de-variable" class="slide level2">
-<h2>Ejercicio 1: Identificar el tipo de variable</h2>
+<section id="ejercicio-poisson-en-epidemiología" class="slide level2">
+<h2>Ejercicio: Poisson en epidemiología</h2>
 <div class="block-example fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Ejercicio — Clasifique cada variable
+Ejercicio — Casos de leptospirosis
 </div>
 <div class="block-body">
 <p>
-Para cada situación, indique si la variable es <strong>discreta</strong> o <strong>continua</strong> y proponga un modelo:
+En un municipio de la Orinoquia, el número de casos semanales de leptospirosis sigue una <span class="math inline">\(\text{Poi}(\lambda = 3)\)</span>. Calcule:
 </p>
 <ol>
 <li>
-Número de aves migratorias observadas en el humedal La Conejera en un día.
+<span class="math inline">\(P(X = 0)\)</span>: ningún caso esta semana.
 </li>
 <li>
-Tiempo (en minutos) que tarda una larva de <em>Anopheles</em> en emerger.
+<span class="math inline">\(P(X \geq 5)\)</span>: al menos 5 casos.
 </li>
 <li>
-Proporción de parcelas con presencia de <em>Phytophthora infestans</em>.
-</li>
-<li>
-Número de lesiones precancerosas detectadas en un examen cervical.
+<span class="math inline">\(P(2 \leq X \leq 4)\)</span>: entre 2 y 4 casos.
 </li>
 </ol>
 </div>
 </div>
 </section>
-<section id="ejercicio-1-solución" class="slide level2">
-<h2>Ejercicio 1: Solución</h2>
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Solución
+<section id="ejercicio-poisson-solución" class="slide level2">
+<h2>Ejercicio: Poisson — solución</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># X ~ Poi(3)</span></span>
+<span id="cb13-2"><a href=""></a><span class="fu">dpois</span>(<span class="dv">0</span>, <span class="dv">3</span>)                       <span class="co"># P(X = 0)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04978707</code></pre>
 </div>
-<div class="block-body">
-<ol>
-<li>
-Discreta — valores enteros <span class="math inline">\(\geq 0\)</span>. Modelo: <span class="math inline">\(\text{Poisson}(\lambda)\)</span>.
-</li>
-<li>
-Continua — tiempo en <span class="math inline">\((0,\infty)\)</span>. Modelo: <span class="math inline">\(\text{Exp}(\lambda)\)</span> o <span class="math inline">\(\text{Gamma}(\alpha,\beta)\)</span>.
-</li>
-<li>
-Continua — valores en <span class="math inline">\((0,1)\)</span>. Modelo: <span class="math inline">\(\text{Beta}(\alpha,\beta)\)</span>.
-</li>
-<li>
-Discreta — enteros <span class="math inline">\(\geq 0\)</span>. Modelo: <span class="math inline">\(\text{Poisson}(\lambda)\)</span> o <span class="math inline">\(\text{Binomial}(n,p)\)</span>.
-</li>
-</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">4</span>, <span class="dv">3</span>)                   <span class="co"># P(X &gt;= 5)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1847368</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">ppois</span>(<span class="dv">4</span>, <span class="dv">3</span>) <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">1</span>, <span class="dv">3</span>)         <span class="co"># P(2 &lt;= X &lt;= 4)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.616115</code></pre>
 </div>
 </div>
 </section>
-<section id="ejercicio-2-calcular-probabilidades-con-la-fda" class="slide level2">
-<h2>Ejercicio 2: Calcular probabilidades con la FDA</h2>
+<section id="ejercicio-normal-en-nutrición" class="slide level2">
+<h2>Ejercicio: Normal en nutrición</h2>
 <div class="block-example fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Ejercicio — FDA Binomial
+Ejercicio — IMC en adultos
 </div>
 <div class="block-body">
 <p>
-En un estudio sobre anemia en niños de Boyacá, <span class="math inline">\(X \sim \text{Bin}(8, 0.35)\)</span> es el número de niños anémicos en un grupo de 8. Calcule:
+El IMC de adultos en una ciudad colombiana se distribuye aproximadamente <span class="math inline">\(N(\mu=26.5,\, \sigma^2=4^2)\)</span>. Calcule:
 </p>
 <ol>
 <li>
-<span class="math inline">\(P(X \leq 3)\)</span>
+Proporción con IMC entre 18.5 y 24.9 (peso normal).
 </li>
 <li>
-<span class="math inline">\(P(X = 2)\)</span>
+Proporción con IMC <span class="math inline">\(&gt; 30\)</span> (obesidad).
 </li>
 <li>
-<span class="math inline">\(P(X \geq 5)\)</span>
+El IMC que supera el 90% de la población.
 </li>
 </ol>
 </div>
 </div>
 </section>
-<section id="ejercicio-2-solución-en-r" class="slide level2">
-<h2>Ejercicio 2: Solución en R</h2>
+<section id="ejercicio-normal-solución" class="slide level2">
+<h2>Ejercicio: Normal — solución</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># X ~ Bin(8, 0.35)</span></span>
-<span id="cb1-2"><a href=""></a><span class="fu">pbinom</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="fl">0.35</span>)          <span class="co"># P(X &lt;= 3)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>mu <span class="ot">&lt;-</span> <span class="fl">26.5</span>; sigma <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb19-2"><a href=""></a><span class="co"># Peso normal: IMC entre 18.5 y 24.9</span></span>
+<span id="cb19-3"><a href=""></a><span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">24.9</span>), mu, sigma))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7063994</code></pre>
+<pre><code>[1] 0.3218281</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">dbinom</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="fl">0.35</span>)          <span class="co"># P(X = 2)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># Obesidad: IMC &gt; 30</span></span>
+<span id="cb21-2"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">30</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2586868</code></pre>
+<pre><code>[1] 0.190787</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="fl">0.35</span>)      <span class="co"># P(X &gt;= 5)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># Percentil 90</span></span>
+<span id="cb23-2"><a href=""></a><span class="fu">qnorm</span>(<span class="fl">0.90</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1060909</code></pre>
+<pre><code>[1] 31.62621</code></pre>
 </div>
 </div>
 </section>
-<section id="ejercicio-3-variable-continua-y-área-bajo-la-curva" class="slide level2">
-<h2>Ejercicio 3: Variable continua y área bajo la curva</h2>
+<section id="ejercicio-exponencial-en-ecología" class="slide level2">
+<h2>Ejercicio: Exponencial en ecología</h2>
 <div class="block-example fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Ejercicio — Distribución Exponencial
+Ejercicio — Tiempo de vida de parásito
 </div>
 <div class="block-body">
 <p>
-El tiempo (en días) entre brotes sucesivos de una enfermedad en un cultivo de papa sigue una distribución <span class="math inline">\(\text{Exp}(\lambda = 0.1)\)</span>. Calcule la probabilidad de que el próximo brote ocurra:
+El tiempo de vida (en horas) de un parásito fuera del huésped sigue <span class="math inline">\(\text{Exp}(\lambda = 0.25)\)</span>. Determine:
 </p>
 <ol>
 <li>
-Antes de 7 días.
+<span class="math inline">\(P(X &gt; 6)\)</span>: sobrevive más de 6 horas.
 </li>
 <li>
-Entre 5 y 15 días.
+<span class="math inline">\(P(2 &lt; X &lt; 8)\)</span>: muere entre 2 y 8 horas.
 </li>
 <li>
-Después de 20 días.
+El tiempo mediano de supervivencia.
 </li>
 </ol>
 </div>
 </div>
 </section>
-<section id="ejercicio-3-solución" class="slide level2">
-<h2>Ejercicio 3: Solución</h2>
+<section id="ejercicio-exponencial-solución" class="slide level2">
+<h2>Ejercicio: Exponencial — solución</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># X ~ Exp(0.1)  (media = 10 días)</span></span>
-<span id="cb7-2"><a href=""></a><span class="fu">pexp</span>(<span class="dv">7</span>,  <span class="fl">0.1</span>)                       <span class="co"># P(X &lt; 7)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>lam <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb25-2"><a href=""></a><span class="co"># P(X &gt; 6)</span></span>
+<span id="cb25-3"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">6</span>, lam)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5034147</code></pre>
+<pre><code>[1] 0.2231302</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">pexp</span>(<span class="dv">15</span>, <span class="fl">0.1</span>) <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">5</span>, <span class="fl">0.1</span>)        <span class="co"># P(5 &lt; X &lt; 15)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="co"># P(2 &lt; X &lt; 8)</span></span>
+<span id="cb27-2"><a href=""></a><span class="fu">diff</span>(<span class="fu">pexp</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>), lam))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3834005</code></pre>
+<pre><code>[1] 0.4711954</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">20</span>, <span class="fl">0.1</span>)                   <span class="co"># P(X &gt; 20)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="co"># Mediana: F(m) = 0.5 =&gt; m = -ln(0.5)/lambda</span></span>
+<span id="cb29-2"><a href=""></a><span class="fu">qexp</span>(<span class="fl">0.5</span>, lam)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1353353</code></pre>
+<pre><code>[1] 2.772589</code></pre>
 </div>
 </div>
 </section>
-<section id="simulación-de-variables-aleatorias-en-r" class="slide level2">
-<h2>Simulación de variables aleatorias en R</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb13-2"><a href=""></a><span class="co"># Generar 1000 obs de distintas distribuciones</span></span>
-<span id="cb13-3"><a href=""></a>x_bin  <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1000</span>, <span class="dv">10</span>, <span class="fl">0.4</span>)</span>
-<span id="cb13-4"><a href=""></a>x_norm <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
-<span id="cb13-5"><a href=""></a>x_exp  <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">1000</span>, <span class="at">rate =</span> <span class="fl">0.2</span>)</span>
-<span id="cb13-6"><a href=""></a></span>
-<span id="cb13-7"><a href=""></a><span class="fu">cat</span>(<span class="st">"Binomial   — Media:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(x_bin),<span class="dv">2</span>),</span>
-<span id="cb13-8"><a href=""></a>    <span class="st">"  Var:"</span>, <span class="fu">round</span>(<span class="fu">var</span>(x_bin),<span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Binomial   — Media: 3.98   Var: 2.42 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Normal     — Media:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(x_norm),<span class="dv">2</span>),</span>
-<span id="cb15-2"><a href=""></a>    <span class="st">"  Var:"</span>, <span class="fu">round</span>(<span class="fu">var</span>(x_norm),<span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Normal     — Media: 49.82   Var: 96.69 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Exponencial— Media:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(x_exp),<span class="dv">2</span>),</span>
-<span id="cb17-2"><a href=""></a>    <span class="st">"  Var:"</span>, <span class="fu">round</span>(<span class="fu">var</span>(x_exp),<span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Exponencial— Media: 5.16   Var: 25.89 </code></pre>
-</div>
-</div>
-</section>
-<section id="visualización-simulaciones" class="slide level2">
-<h2>Visualización — simulaciones</h2>
-
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
-<section id="verificar-que-una-función-es-fmp-válida" class="slide level2">
-<h2>Verificar que una función es FMP válida</h2>
+<section id="verificar-una-fdp-ejercicio" class="slide level2">
+<h2>Verificar una FDP — ejercicio</h2>
 <div class="block-example fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Ejercicio — Verificación
+Ejercicio — ¿Es FDP válida?
 </div>
 <div class="block-body">
 <p>
-Sea <span class="math inline">\(p(k) = c \cdot (0.6)^k\)</span> para <span class="math inline">\(k = 0, 1, 2, \ldots\)</span> Determine la constante <span class="math inline">\(c\)</span> para que <span class="math inline">\(p\)</span> sea una FMP válida.
+Determine si <span class="math inline">\(f(x) = ce^{-2x}\)</span> para <span class="math inline">\(x &gt; 0\)</span> es una FDP válida y encuentre <span class="math inline">\(c\)</span>.
 </p>
 </div>
 </div>
@@ -1077,59 +888,59 @@ Sea <span class="math inline">\(p(k) = c \cdot (0.6)^k\)</span> para <span class
 Solución
 </div>
 <div class="block-body">
-<span class="math display">\[\sum_{k=0}^{\infty} c \cdot (0.6)^k = c \cdot \frac{1}{1-0.6} = \frac{c}{0.4} = 1 \implies c = 0.4\]</span> Esta es una distribución Geométrica con <span class="math inline">\(p = 0.4\)</span>.
+<span class="math display">\[\int_0^\infty ce^{-2x}\,dx = c\cdot\frac{1}{2} = 1 \implies c = 2\]</span> Con <span class="math inline">\(c=2\)</span>: <span class="math inline">\(f(x) = 2e^{-2x}\)</span> es la FDP de una <span class="math inline">\(\text{Exp}(\lambda=2)\)</span>.
 </div>
 </div>
 </section>
-<section id="verificar-que-una-función-es-fdp-válida" class="slide level2">
-<h2>Verificar que una función es FDP válida</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Ejercicio — FDP válida
-</div>
-<div class="block-body">
-<p>
-¿Es <span class="math inline">\(f(x) = 3x^2\)</span> para <span class="math inline">\(0 &lt; x &lt; 1\)</span> (y <span class="math inline">\(f(x) = 0\)</span> en otro caso) una FDP válida?
-</p>
-</div>
-</div>
-<div class="block-proof fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Solución
-</div>
-<div class="block-body">
-<span class="math display">\[\int_0^1 3x^2\, dx = \left[x^3\right]_0^1 = 1 \quad \checkmark\]</span> Además <span class="math inline">\(f(x) = 3x^2 \geq 0\)</span> en <span class="math inline">\((0,1)\)</span>. Sí es una FDP válida. Esta es una <span class="math inline">\(\text{Beta}(3,1)\)</span>.
-</div>
-</div>
-</section>
-<section id="fda-de-la-distribución-beta31" class="slide level2">
-<h2>FDA de la distribución Beta(3,1)</h2>
+<section id="comparación-normal-vs-t-de-student" class="slide level2">
+<h2>Comparación Normal vs t de Student</h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-8-1.png" width="864" class="r-stretch"></section>
-<section id="valor-esperado-anticipando-el-tema" class="slide level2">
-<h2>Valor esperado — anticipando el tema</h2>
-<div class="block-note fragment fade-up" data-fragment-index="1">
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-15-1.png" width="864" class="r-stretch"></section>
+<section id="simulación-y-comparación-empírica" class="slide level2">
+<h2>Simulación y comparación empírica</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb31-2"><a href=""></a>n <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb31-3"><a href=""></a><span class="co"># Suma de 30 Bernoulli(0.3) vs Normal por TCL</span></span>
+<span id="cb31-4"><a href=""></a>x_bin  <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">30</span>, <span class="fl">0.3</span>)</span>
+<span id="cb31-5"><a href=""></a>x_norm <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">30</span><span class="sc">*</span><span class="fl">0.3</span>, <span class="fu">sqrt</span>(<span class="dv">30</span><span class="sc">*</span><span class="fl">0.3</span><span class="sc">*</span><span class="fl">0.7</span>))</span>
+<span id="cb31-6"><a href=""></a><span class="fu">cat</span>(<span class="st">"Binomial: media ="</span>, <span class="fu">round</span>(<span class="fu">mean</span>(x_bin),<span class="dv">2</span>), <span class="st">" sd ="</span>, <span class="fu">round</span>(<span class="fu">sd</span>(x_bin),<span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Binomial: media = 9.02  sd = 2.53 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Normal:   media ="</span>, <span class="fu">round</span>(<span class="fu">mean</span>(x_norm),<span class="dv">2</span>), <span class="st">" sd ="</span>, <span class="fu">round</span>(<span class="fu">sd</span>(x_norm),<span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Normal:   media = 8.97  sd = 2.53 </code></pre>
+</div>
+</div>
+</section>
+<section id="teorema-central-del-límite-anticipación" class="slide level2">
+<h2>Teorema Central del Límite — anticipación</h2>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Teorema Central del Límite (TCL)
+</div>
 <div class="block-body">
-<p>
-Conocido el modelo de <span class="math inline">\(X\)</span> (su FMP o FDP), la siguiente pregunta natural es: <strong>¿cuál es el valor “típico” de <span class="math inline">\(X\)</span>?</strong>
-</p>
+Si <span class="math inline">\(X_1, \ldots, X_n\)</span> son variables independientes e idénticamente distribuidas con media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2 &lt; \infty\)</span>, entonces: <span class="math display">\[\frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1) \quad \text{cuando } n \to \infty\]</span>
 </div>
 </div>
-<ul style="margin-top: 20px;">
+<ul style="margin-top: 10px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El <strong>valor esperado</strong> <span class="math inline">\(E(X)\)</span> cuantifica el centro de la distribución.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-La <strong>varianza</strong> <span class="math inline">\(\text{Var}(X)\)</span> cuantifica la dispersión alrededor del centro.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-Los <strong>percentiles</strong> indican qué porcentaje de la distribución queda por debajo de un valor dado.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-Estos conceptos serán el tema central de las próximas clases.
+El TCL explica por qué la distribución Normal aparece en tantos fenómenos: es el límite de sumas de variables aleatorias independientes.
 </li>
 </ul>
 </section>
+<section id="mixtura-de-distribuciones" class="slide level2">
+<h2>Mixtura de distribuciones</h2>
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-body">
+<p>
+A veces los datos provienen de <strong>subpoblaciones</strong> con distintas distribuciones. Por ejemplo, el peso de bovinos de una finca puede mezclar machos <span class="math inline">\(N(\mu_1, \sigma_1^2)\)</span> y hembras <span class="math inline">\(N(\mu_2, \sigma_2^2)\)</span>.
+</p>
+</div>
+</div>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-17-1.png" width="864" class="r-stretch"></section>
 <section id="taller-en-clase" class="slide level2 center middle">
 <h2>Taller en clase</h2>
 <div style="text-align: center; margin-top: 50px;">
@@ -1137,32 +948,32 @@ Estos conceptos serán el tema central de las próximas clases.
 Ejercicios para resolver en clase
 </p>
 <p style="font-size: 28px; color: #6b7280; margin-top: 20px;">
-Variables aleatorias — Definición y tipos
+Funciones de probabilidad y densidad
 </p>
 </div>
 </section>
-<section id="taller-1-construir-una-fmp" class="slide level2">
-<h2>Taller 1: Construir una FMP</h2>
+<section id="taller-1-fmp-de-la-binomial" class="slide level2">
+<h2>Taller 1: FMP de la Binomial</h2>
 <div class="block-example">
 <div class="block-title">
 Problema
 </div>
 <div class="block-body">
 <p>
-Un médico veterinario examina 4 cerdos de una granja del Meta para detectar fiebre aftosa. La probabilidad de que cada cerdo esté infectado es 0.25, independientemente. Sea <span class="math inline">\(X\)</span> = número de cerdos infectados.
+En un ensayo clínico sobre tuberculosis en el Cauca, se seleccionan 6 pacientes. La probabilidad de respuesta positiva al tratamiento es 0.70. Sea <span class="math inline">\(X\)</span> = número de pacientes que responden.
 </p>
 <ol>
 <li>
-Escriba la FMP completa de <span class="math inline">\(X\)</span> (calcule <span class="math inline">\(p(0), p(1), p(2), p(3), p(4)\)</span>).
+Calcule <span class="math inline">\(p(0), p(3), p(6)\)</span> usando la fórmula de la Binomial.
 </li>
 <li>
-Verifique que <span class="math inline">\(\sum p(x_i) = 1\)</span>.
+¿Cuál es la probabilidad de que <em>al menos 5</em> pacientes respondan?
 </li>
 <li>
-Calcule <span class="math inline">\(P(X \geq 2)\)</span>.
+¿Cuál es la probabilidad de que <em>exactamente la mitad</em> responda?
 </li>
 <li>
-Grafique la FMP y la FDA en R.
+Grafique la FMP y señale los valores con mayor probabilidad.
 </li>
 </ol>
 </div>
@@ -1170,55 +981,50 @@ Grafique la FMP y la FDA en R.
 </section>
 <section id="taller-1-solución" class="slide level2">
 <h2>Taller 1: Solución</h2>
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Solución
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Bin}(4, 0.25)\)</span>
-</div>
-</div>
-<div class="cell" data-source-line-numbers="true" data-fragment-index="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># FMP completa</span></span>
-<span id="cb19-2"><a href=""></a>k  <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span></span>
-<span id="cb19-3"><a href=""></a>pk <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(k, <span class="dv">4</span>, <span class="fl">0.25</span>)</span>
-<span id="cb19-4"><a href=""></a><span class="fu">data.frame</span>(<span class="at">x=</span>k, <span class="at">p_x=</span><span class="fu">round</span>(pk,<span class="dv">4</span>), <span class="at">suma_acum=</span><span class="fu">round</span>(<span class="fu">cumsum</span>(pk),<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-fragment-index="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>n <span class="ot">&lt;-</span> <span class="dv">6</span>; p <span class="ot">&lt;-</span> <span class="fl">0.70</span></span>
+<span id="cb35-2"><a href=""></a><span class="co"># a) p(0), p(3), p(6)</span></span>
+<span id="cb35-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"p(0)="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">0</span>,n,p),<span class="dv">4</span>),</span>
+<span id="cb35-4"><a href=""></a>    <span class="st">" p(3)="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">3</span>,n,p),<span class="dv">4</span>),</span>
+<span id="cb35-5"><a href=""></a>    <span class="st">" p(6)="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">6</span>,n,p),<span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  x    p_x suma_acum
-1 0 0.3164    0.3164
-2 1 0.4219    0.7383
-3 2 0.2109    0.9492
-4 3 0.0469    0.9961
-5 4 0.0039    1.0000</code></pre>
+<pre><code>p(0)= 7e-04  p(3)= 0.1852  p(6)= 0.1176 </code></pre>
 </div>
-</div>
-<div class="cell" data-fragment-index="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># P(X &gt;= 2)</span></span>
-<span id="cb21-2"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">0.25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># b) P(X &gt;= 5)</span></span>
+<span id="cb37-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X&gt;=5) ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">4</span>,n,p), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2617188</code></pre>
+<pre><code>P(X&gt;=5) = 0.4202 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># c) P(X = 3)</span></span>
+<span id="cb39-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X=3)  ="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">3</span>,n,p), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X=3)  = 0.1852 </code></pre>
 </div>
 </div>
-</section>
-<section id="taller-2-es-una-fdp-válida" class="slide level2">
-<h2>Taller 2: ¿Es una FDP válida?</h2>
+
+<img data-src="clase_11_files/figure-revealjs/unnamed-chunk-19-1.png" width="672" class="r-stretch"></section>
+<section id="taller-2-cálculo-con-la-fdp-normal" class="slide level2">
+<h2>Taller 2: Cálculo con la FDP Normal</h2>
 <div class="block-example">
 <div class="block-title">
 Problema
 </div>
 <div class="block-body">
 <p>
-Para cada función, determine si puede ser una FDP válida. Si no lo es, explique por qué. Si lo es, encuentre la FDA <span class="math inline">\(F(x)\)</span>.
+La hemoglobina (g/dL) en mujeres adultas de Bogotá sigue <span class="math inline">\(X \sim N(12.8,\; 1.2^2)\)</span>. Se considera anemia si <span class="math inline">\(X &lt; 12\)</span> g/dL.
 </p>
 <ol>
 <li>
-<span class="math inline">\(f(x) = 2x\)</span> para <span class="math inline">\(0 &lt; x &lt; 1\)</span>, cero en otro caso.
+Calcule la proporción de mujeres con anemia.
 </li>
 <li>
-<span class="math inline">\(f(x) = x - 1\)</span> para <span class="math inline">\(1 &lt; x &lt; 3\)</span>, cero en otro caso.
+Calcule el puntaje Z para <span class="math inline">\(x = 11\)</span> g/dL e interprete.
 </li>
 <li>
-<span class="math inline">\(f(x) = \frac{1}{4}e^{-x/4}\)</span> para <span class="math inline">\(x &gt; 0\)</span>, cero en otro caso.
+¿Qué nivel de hemoglobina corresponde al percentil 25?
+</li>
+<li>
+Calcule <span class="math inline">\(P(11.5 \leq X \leq 14)\)</span> y represente el área en un gráfico.
 </li>
 </ol>
 </div>
@@ -1226,48 +1032,53 @@ Para cada función, determine si puede ser una FDP válida. Si no lo es, expliqu
 </section>
 <section id="taller-2-solución" class="slide level2">
 <h2>Taller 2: Solución</h2>
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Solución
+<div class="cell" data-fragment-index="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>mu <span class="ot">&lt;-</span> <span class="fl">12.8</span>; sigma <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
+<span id="cb41-2"><a href=""></a><span class="co"># a) Proporción con anemia</span></span>
+<span id="cb41-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(anemia) ="</span>, <span class="fu">round</span>(<span class="fu">pnorm</span>(<span class="dv">12</span>, mu, sigma), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(anemia) = 0.2525 </code></pre>
 </div>
-<div class="block-body">
-<ol>
-<li>
-<span class="math inline">\(\int_0^1 2x\,dx = [x^2]_0^1 = 1\)</span> ✓, <span class="math inline">\(f(x)\geq 0\)</span> ✓. <strong>Válida.</strong> <span class="math inline">\(F(x) = x^2\)</span>.
-</li>
-<li>
-<span class="math inline">\(f(1)=0\)</span>, <span class="math inline">\(f(2)=1\)</span>, pero <span class="math inline">\(f(x)&lt;0\)</span> para <span class="math inline">\(1&lt;x&lt;2\)</span> es incorrecto — en realidad <span class="math inline">\(f(x)\geq 0\)</span>, pero <span class="math inline">\(\int_1^3(x-1)dx = 2 \neq 1\)</span>. <strong>No válida.</strong>
-</li>
-<li>
-<span class="math inline">\(\int_0^\infty \frac{1}{4}e^{-x/4}dx = 1\)</span> ✓, <span class="math inline">\(f(x)&gt;0\)</span> ✓. <strong>Válida.</strong> Es <span class="math inline">\(\text{Exp}(\lambda=1/4)\)</span>.
-</li>
-</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="co"># b) Puntaje Z para x=11</span></span>
+<span id="cb43-2"><a href=""></a>Z <span class="ot">&lt;-</span> (<span class="dv">11</span> <span class="sc">-</span> mu) <span class="sc">/</span> sigma</span>
+<span id="cb43-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"Z(11)     ="</span>, <span class="fu">round</span>(Z, <span class="dv">3</span>), <span class="st">"— está"</span>, <span class="fu">abs</span>(<span class="fu">round</span>(Z,<span class="dv">2</span>)), <span class="st">"σ por debajo</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Z(11)     = -1.5 — está 1.5 σ por debajo</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="co"># c) Percentil 25</span></span>
+<span id="cb45-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"Q1        ="</span>, <span class="fu">round</span>(<span class="fu">qnorm</span>(<span class="fl">0.25</span>, mu, sigma), <span class="dv">3</span>), <span class="st">"g/dL</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Q1        = 11.991 g/dL</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="co"># d) P(11.5 ≤ X ≤ 14)</span></span>
+<span id="cb47-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(11.5≤X≤14)="</span>, <span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="fl">11.5</span>,<span class="dv">14</span>), mu, sigma)), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(11.5≤X≤14)= 0.702 </code></pre>
 </div>
 </div>
 </section>
-<section id="taller-3-propiedades-de-la-fda" class="slide level2">
-<h2>Taller 3: Propiedades de la FDA</h2>
+<section id="taller-3-distribución-poisson-parámetro-desconocido" class="slide level2">
+<h2>Taller 3: Distribución Poisson — parámetro desconocido</h2>
 <div class="block-example">
 <div class="block-title">
 Problema
 </div>
 <div class="block-body">
 <p>
-La concentración de arsénico (μg/L) en pozos artesianos del Cauca sigue la distribución con FDA:
+En un laboratorio de microbiología, el número de colonias de <em>E. coli</em> por placa sigue una distribución de Poisson. Se registraron los siguientes conteos en 10 placas:
 </p>
-<span class="math display">\[F(x) = 1 - e^{-0.08x}, \quad x &gt; 0\]</span>
+<p style="text-align:center; font-size:28px;">
+<code>3, 1, 5, 2, 4, 3, 6, 2, 4, 3</code>
+</p>
 <ol>
 <li>
-Identifique el modelo de distribución y su parámetro.
+Estime el parámetro <span class="math inline">\(\lambda\)</span> (use la media muestral).
 </li>
 <li>
-¿Qué proporción de pozos supera el límite de 10 μg/L (OMS)?
+Con ese <span class="math inline">\(\lambda\)</span>, calcule <span class="math inline">\(P(X = 0)\)</span> y <span class="math inline">\(P(X \geq 5)\)</span>.
 </li>
 <li>
-Encuentre el percentil 95: el nivel que supera al 95% de los pozos.
-</li>
-<li>
-Calcule <span class="math inline">\(P(5 \leq X \leq 20)\)</span>.
+¿Qué tan probable es observar más de 8 colonias en una placa?
 </li>
 </ol>
 </div>
@@ -1275,55 +1086,54 @@ Calcule <span class="math inline">\(P(5 \leq X \leq 20)\)</span>.
 </section>
 <section id="taller-3-solución" class="slide level2">
 <h2>Taller 3: Solución</h2>
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Solución
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Exp}(\lambda = 0.08)\)</span>
-</div>
-</div>
-<div class="cell" data-fragment-index="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>lam <span class="ot">&lt;-</span> <span class="fl">0.08</span></span>
-<span id="cb23-2"><a href=""></a><span class="co"># 1. Proporción que supera 10 μg/L</span></span>
-<span id="cb23-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X&gt;10) ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">10</span>, lam), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-fragment-index="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a>conteos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>)</span>
+<span id="cb49-2"><a href=""></a>lambda_hat <span class="ot">&lt;-</span> <span class="fu">mean</span>(conteos)</span>
+<span id="cb49-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"lambda estimado ="</span>, lambda_hat, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>P(X&gt;10) = 0.4493 </code></pre>
+<pre><code>lambda estimado = 3.3 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="co"># 2. Percentil 95</span></span>
-<span id="cb25-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P95     ="</span>, <span class="fu">round</span>(<span class="fu">qexp</span>(<span class="fl">0.95</span>, lam), <span class="dv">2</span>), <span class="st">"μg/L</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X=0)          ="</span>, <span class="fu">round</span>(<span class="fu">dpois</span>(<span class="dv">0</span>, lambda_hat), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>P95     = 37.45 μg/L</code></pre>
+<pre><code>P(X=0)          = 0.0369 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="co"># 3. P(5 ≤ X ≤ 20)</span></span>
-<span id="cb27-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(5≤X≤20)="</span>, <span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pexp</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">20</span>), lam)), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X&gt;=5)         ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">4</span>, lambda_hat), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>P(5≤X≤20)= 0.4684 </code></pre>
+<pre><code>P(X&gt;=5)         = 0.2374 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X&gt;8)          ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">8</span>, lambda_hat), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X&gt;8)          = 0.0069 </code></pre>
 </div>
 </div>
 </section>
-<section id="taller-4-seleccionar-el-modelo-adecuado" class="slide level2">
-<h2>Taller 4: Seleccionar el modelo adecuado</h2>
+<section id="taller-4-comparar-distribuciones" class="slide level2">
+<h2>Taller 4: Comparar distribuciones</h2>
 <div class="block-example">
 <div class="block-title">
-Problema — ¿Qué distribución usar?
+Problema — Decisión con distribuciones
 </div>
 <div class="block-body">
 <p>
-Justifique qué distribución usaría para modelar cada variable y especifique sus parámetros si es posible:
+Dos regiones tienen la siguiente información sobre casos semanales de dengue:
 </p>
+<ul>
+<li>
+<strong>Región A:</strong> <span class="math inline">\(X_A \sim \text{Poi}(4)\)</span>
+</li>
+<li>
+<strong>Región B:</strong> <span class="math inline">\(X_B \sim \text{Bin}(20, 0.2)\)</span>
+</li>
+</ul>
 <ol>
 <li>
-Número de mosquitos <em>Aedes aegypti</em> capturados en una trampa en 24 horas (promedio histórico: 8 por trampa).
+¿En cuál región es más probable que en una semana haya cero casos?
 </li>
 <li>
-Proporción de semillas de maíz que germinan en un ensayo de 200 semillas.
+¿En cuál región la varianza es mayor?
 </li>
 <li>
-Tiempo (días) hasta que aparecen síntomas de fiebre amarilla tras la picadura del vector (media: 5 días).
-</li>
-<li>
-Peso (kg) de una tortuga Podocnemis unifilis adulta muestreada aleatoriamente en el Amazonas.
+¿En cuál región la probabilidad de más de 6 casos supera el 10%?
 </li>
 </ol>
 </div>
@@ -1331,69 +1141,73 @@ Peso (kg) de una tortuga Podocnemis unifilis adulta muestreada aleatoriamente en
 </section>
 <section id="taller-4-solución" class="slide level2">
 <h2>Taller 4: Solución</h2>
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Solución
+<div class="cell" data-fragment-index="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="co"># 1. P(X=0) en cada región</span></span>
+<span id="cb57-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(XA=0) ="</span>, <span class="fu">round</span>(<span class="fu">dpois</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="dv">4</span>),</span>
+<span id="cb57-3"><a href=""></a>    <span class="st">"  P(XB=0) ="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="fl">0.2</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(XA=0) = 0.0183   P(XB=0) = 0.0115 </code></pre>
 </div>
-<div class="block-body">
-<ol>
-<li>
-<strong>Poisson(8)</strong>: conteo de eventos independientes en tiempo fijo con tasa constante.
-</li>
-<li>
-<strong>Binomial(200, p)</strong>: número de éxitos en <span class="math inline">\(n=200\)</span> ensayos independientes con prob. constante <span class="math inline">\(p\)</span>.
-</li>
-<li>
-<strong>Exponencial(<span class="math inline">\(\lambda=0.2\)</span>)</strong>: tiempo de espera con <span class="math inline">\(E(X)=5\)</span> días, <span class="math inline">\(\lambda=1/5\)</span>.
-</li>
-<li>
-<strong>Normal(<span class="math inline">\(\mu, \sigma^2\)</span>)</strong>: medida morfológica continua en población biológica adulta.
-</li>
-</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="co"># 2. Varianzas</span></span>
+<span id="cb59-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"Var(XA) ="</span>, <span class="dv">4</span>, <span class="st">"  Var(XB) ="</span>, <span class="dv">20</span><span class="sc">*</span><span class="fl">0.2</span><span class="sc">*</span><span class="fl">0.8</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Var(XA) = 4   Var(XB) = 3.2 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="co"># 3. P(X&gt;6)</span></span>
+<span id="cb61-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(XA&gt;6) ="</span>, <span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">ppois</span>(<span class="dv">6</span>,<span class="dv">4</span>), <span class="dv">4</span>),</span>
+<span id="cb61-3"><a href=""></a>    <span class="st">"  P(XB&gt;6) ="</span>, <span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pbinom</span>(<span class="dv">6</span>,<span class="dv">20</span>,<span class="fl">0.2</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(XA&gt;6) = 0.1107   P(XB&gt;6) = 0.0867 </code></pre>
 </div>
 </div>
 </section>
-<section id="resumen-de-la-clase" class="slide level2">
-<h2>Resumen de la clase</h2>
+<section id="resumen-fmp-y-fdp" class="slide level2">
+<h2>Resumen — FMP y FDP</h2>
 <div class="twocol">
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Conceptos clave
+Variables Discretas
 </div>
 <div class="block-body">
 <ul>
 <li>
-<strong>Variable aleatoria</strong>: función <span class="math inline">\(X:\Omega\to\mathbb{R}\)</span>
+Bernoulli(<span class="math inline">\(p\)</span>): ensayo único
 </li>
 <li>
-<strong>Discreta</strong>: soporte contable, FMP <span class="math inline">\(p(x)\)</span>
+Binomial(<span class="math inline">\(n,p\)</span>): conteos en <span class="math inline">\(n\)</span> ensayos
 </li>
 <li>
-<strong>Continua</strong>: soporte intervalar, FDP <span class="math inline">\(f(x)\)</span>
+Poisson(<span class="math inline">\(\lambda\)</span>): conteos de eventos raros
 </li>
 <li>
-<strong>FDA</strong>: <span class="math inline">\(F(x) = P(X \leq x)\)</span>, herramienta unificadora
+Geométrica(<span class="math inline">\(p\)</span>): espera del primer éxito
+</li>
+<li>
+Hipergeométrica: sin reemplazo
 </li>
 </ul>
 </div>
 </div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
 <div class="block-title">
-Distribuciones vistas
+Variables Continuas
 </div>
 <div class="block-body">
 <ul>
 <li>
-Bernoulli, Binomial, Poisson
+Uniforme(<span class="math inline">\(a,b\)</span>): equiprobable
 </li>
 <li>
-Uniforme, Normal, Exponencial, Gamma
+Normal(<span class="math inline">\(\mu,\sigma^2\)</span>): campana
 </li>
 <li>
-Notación <span class="math inline">\(X \sim \text{Modelo}(\theta)\)</span>
+Exponencial(<span class="math inline">\(\lambda\)</span>): tiempos de espera
 </li>
 <li>
-Funciones en R: <code>d-</code>, <code>p-</code>, <code>q-</code>, <code>r-</code>
+Gamma(<span class="math inline">\(\alpha,\beta\)</span>): tiempos hasta <span class="math inline">\(k\)</span>-ésimo evento
+</li>
+<li>
+Beta(<span class="math inline">\(\alpha,\beta\)</span>): proporciones
 </li>
 </ul>
 </div>
@@ -1404,13 +1218,13 @@ Funciones en R: <code>d-</code>, <code>p-</code>, <code>q-</code>, <code>r-</cod
 <h2>Próxima clase</h2>
 <div style="text-align: center; margin-top: 60px;">
 <p style="font-size: 40px; font-weight: bold; color: #006DAE;">
-Clase 11
+Clase 12
 </p>
 <p style="font-size: 32px; color: #1b4d2e; margin-top: 15px; font-weight: 600;">
-Funciones de probabilidad y densidad
+Valor esperado, varianza y percentiles
 </p>
 <p style="font-size: 26px; color: #6b7280; margin-top: 20px;">
-Propiedades, cálculos y distribuciones en profundidad
+Resumiendo distribuciones: centro, dispersión y posición
 </p>
 </div>
 
@@ -1424,21 +1238,21 @@ Propiedades, cálculos y distribuciones en profundidad
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="clase_10_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="clase_11_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="clase_10_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="clase_10_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="clase_10_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="clase_11_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1454,7 +1268,7 @@ Propiedades, cálculos y distribuciones en profundidad
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'multiplex': {"secret":null,"id":"39ae7888f5b23e4ebc1a5715bbda942186d3d1984ccc853e606990b3eb0280ea","url":"https://multiplex.up.railway.app/"},
+'multiplex': {"secret":null,"id":"dcb3434ab71f437a64eda26cfce853bd6b93813f92acc59834005474e2333d8a","url":"https://multiplex.up.railway.app/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
