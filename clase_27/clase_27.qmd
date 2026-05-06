@@ -1,0 +1,457 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 27 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Distribución F y prueba de varianzas</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Distribución F de Fisher-Snedecor.</li>
+<li class="fragment fade-in" data-fragment-index="3">Prueba F para $H_0: \sigma_1^2 = \sigma_2^2$.</li>
+<li class="fragment fade-in" data-fragment-index="4">Prueba de Bartlett y Levene.</li>
+<li class="fragment fade-in" data-fragment-index="5">Código R.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Aplicaciones</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">IC para la razón de varianzas.</li>
+<li class="fragment fade-in" data-fragment-index="8">Homogeneidad en ensayos agrícolas.</li>
+<li class="fragment fade-in" data-fragment-index="9">Conexión con el ANOVA.</li>
+<li class="fragment fade-in" data-fragment-index="10">Errores comunes y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Razón de Varianzas</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Comparando la dispersión entre dos poblaciones</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## ¿Por qué comparar varianzas?
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En control de calidad, la uniformidad del producto puede ser tan importante como el promedio: un fertilizante con alta variabilidad de concentración es poco confiable, aunque su media sea correcta.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+En comparaciones de dos grupos (Clase 26), la elección entre la prueba t de Student y la de Welch depende de si las varianzas son iguales.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La <strong>prueba F</strong> compara formalmente dos varianzas poblacionales usando la razón $S_1^2 / S_2^2$.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+La distribución F es también el fundamento del ANOVA (Clase 30): la varianza entre grupos se compara con la varianza dentro de los grupos.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Distribución F de Fisher-Snedecor
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: distribución F</div>
+  <div class="block-body">
+  <p>Si $Q_1 \sim \chi^2_{\nu_1}$ y $Q_2 \sim \chi^2_{\nu_2}$ son independientes, entonces:</p>
+  $$F = \frac{Q_1/\nu_1}{Q_2/\nu_2} \sim F_{\nu_1,\,\nu_2}$$
+  <p>con $\nu_1$ y $\nu_2$ grados de libertad. $E(F) = \nu_2/(\nu_2-2)$ para $\nu_2 > 2$.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+La distribución F es asimétrica a la derecha y solo toma valores positivos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Propiedad: si $F \sim F_{\nu_1, \nu_2}$, entonces $1/F \sim F_{\nu_2, \nu_1}$.
+</li>
+</ul>
+
+## Forma de la distribución F
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+x <- seq(0, 6, length.out = 400)
+params <- list(c(2,10), c(5,20), c(10,30), c(30,100))
+
+df <- map_dfr(params, function(p) {
+  tibble(x, f = df(x, p[1], p[2]),
+         dist = paste0("F(", p[1], ",", p[2], ")"))
+})
+
+ggplot(df, aes(x, f, color = dist)) +
+  geom_line(linewidth = 1.2) +
+  coord_cartesian(ylim = c(0, 1.2)) +
+  labs(x = "F", y = "f(F)", color = NULL,
+       title = "Distribución F para distintos grados de libertad") +
+  theme_minimal(base_size = 13) + theme(legend.position = "top")
+```
+
+## Prueba F para igualdad de varianzas
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba F: $H_0: \sigma_1^2 = \sigma_2^2$</div>
+  <div class="block-body">
+  <p>Si $X_{1i} \sim N(\mu_1, \sigma_1^2)$ y $X_{2j} \sim N(\mu_2, \sigma_2^2)$, independientes:</p>
+  $$F = \frac{S_1^2}{S_2^2} \sim F_{n_1-1,\,n_2-1} \quad \text{bajo } H_0$$
+  <p>Región de rechazo bilateral: $F < F_{1-\alpha/2,\,n_1-1,\,n_2-1}$ o $F > F_{\alpha/2,\,n_1-1,\,n_2-1}$.</p>
+  </div>
+</div>
+
+## Ejemplo: uniformidad en peso de trucha arcoíris
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: piscicultura, Huila</div>
+  <div class="block-body">
+  <p>En dos piscifactorías del Huila se mide el peso (g) de truchas arcoíris al momento de cosecha. ¿Tienen la misma variabilidad? $H_0: \sigma_1^2 = \sigma_2^2$ vs $H_1: \sigma_1^2 \neq \sigma_2^2$, $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(27)
+piscif_1 <- rnorm(20, 280, 25)   # mayor variabilidad
+piscif_2 <- rnorm(18, 275, 15)   # menor variabilidad
+
+cat("s1² =", round(var(piscif_1), 3), "\n")
+cat("s2² =", round(var(piscif_2), 3), "\n")
+
+resultado_F <- var.test(piscif_1, piscif_2, conf.level = 0.95)
+cat("F =", round(resultado_F$statistic, 4), "\n")
+cat("Valor-p =", round(resultado_F$p.value, 4), "\n")
+cat("IC 95% para σ1²/σ2²: [",
+    round(resultado_F$conf.int[1], 4), ",",
+    round(resultado_F$conf.int[2], 4), "]\n")
+```
+
+## Interpretación del IC para la razón de varianzas
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">IC para $\sigma_1^2/\sigma_2^2$</div>
+  <div class="block-body">
+  $$\left[\frac{S_1^2/S_2^2}{F_{\alpha/2,\,n_1-1,\,n_2-1}},\; \frac{S_1^2/S_2^2}{F_{1-\alpha/2,\,n_1-1,\,n_2-1}}\right]$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Si el IC contiene al 1: no hay evidencia suficiente de diferencia entre varianzas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Si el IC está completamente por encima de 1: $\sigma_1^2 > \sigma_2^2$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Si el IC está completamente por debajo de 1: $\sigma_1^2 < \sigma_2^2$.
+</li>
+</ul>
+
+## Prueba de Bartlett: más de dos grupos
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba de Bartlett</div>
+  <div class="block-body">
+  <p>Para $k$ grupos con muestras normales, contrasta $H_0: \sigma_1^2 = \cdots = \sigma_k^2$. El estadístico sigue aproximadamente $\chi^2_{k-1}$ bajo $H_0$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(27)
+grupo_A <- rnorm(15, 5.2, 0.5)
+grupo_B <- rnorm(12, 5.8, 0.4)
+grupo_C <- rnorm(14, 5.0, 0.6)
+
+bartlett.test(list(grupo_A, grupo_B, grupo_C))
+```
+
+## Prueba de Levene: alternativa robusta
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>La prueba de Bartlett es sensible a desviaciones de la normalidad. La <strong>prueba de Levene</strong> (basada en las desviaciones absolutas de la mediana) es más robusta y se prefiere cuando la normalidad es dudosa.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Prueba de Levene manual (versión simplificada)
+library(tidyverse)
+datos <- tibble(
+  y = c(grupo_A, grupo_B, grupo_C),
+  grupo = rep(c("A","B","C"), c(15,12,14))
+)
+
+# Desviaciones absolutas de la mediana por grupo
+datos <- datos |>
+  group_by(grupo) |>
+  mutate(d = abs(y - median(y))) |>
+  ungroup()
+
+# ANOVA sobre las desviaciones (equivalente a Levene)
+summary(aov(d ~ grupo, data = datos))
+```
+
+## Supuesto de normalidad en la prueba F
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: sensibilidad a la no-normalidad</div>
+  <div class="block-body">
+  <p>La prueba F de varianzas es muy sensible a desviaciones de la normalidad: si los datos no son normales, el nivel real de significancia puede diferir mucho de $\alpha$. Siempre verifique normalidad antes de aplicarla.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Verificar normalidad en cada grupo antes de usar var.test
+sw1 <- shapiro.test(piscif_1)
+sw2 <- shapiro.test(piscif_2)
+cat("Shapiro-Wilk piscifactoría 1: p =", round(sw1$p.value, 4), "\n")
+cat("Shapiro-Wilk piscifactoría 2: p =", round(sw2$p.value, 4), "\n")
+```
+
+## Conexión con el ANOVA
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>En el ANOVA de un factor (Clase 30), el estadístico de prueba es también una razón F:</p>
+  $$F = \frac{CM_{entre}}{CM_{dentro}} = \frac{\text{Varianza entre grupos}}{\text{Varianza dentro de grupos}}$$
+  <p>Si $H_0$ (todas las medias son iguales) es verdadera, el numerador y el denominador estiman la misma $\sigma^2$, y $F \approx 1$. Si $H_0$ es falsa, el numerador es más grande y $F > 1$.</p>
+  </div>
+</div>
+
+## Flujo de decisión: prueba t con dos grupos
+
+```{r}
+#| echo: false
+#| fig-height: 3.5
+library(ggplot2)
+df_flow <- data.frame(
+  label = c("¿Datos normales?", "¿σ₁² = σ₂²?\n(var.test, Levene)",
+            "t de Student\n(var.equal=TRUE)", "Welch\n(var.equal=FALSE)",
+            "Wilcoxon\n(no paramétrica)"),
+  x = c(3, 3, 1.5, 4.5, 3),
+  y = c(4, 2.5, 1, 1, 1.2),
+  fill = c("#dce9f7","#d6f0dd","#1b4d2e","#1a3a6b","#fad8d8")
+)
+ggplot(df_flow, aes(x, y)) +
+  geom_label(aes(label = label, fill = fill), size = 3.8,
+             color = c("black","black","white","white","black"),
+             fontface = "bold", label.size = 0.5) +
+  scale_fill_identity() +
+  annotate("segment", x=3, xend=3, y=3.7, yend=2.9,
+           arrow=arrow(length=unit(0.2,"cm"))) +
+  annotate("segment", x=3, xend=1.5, y=2.2, yend=1.3,
+           arrow=arrow(length=unit(0.2,"cm"))) +
+  annotate("segment", x=3, xend=4.5, y=2.2, yend=1.3,
+           arrow=arrow(length=unit(0.2,"cm"))) +
+  annotate("text", x=1.5, y=2.4, label="Sí", size=4) +
+  annotate("text", x=4.5, y=2.4, label="No", size=4) +
+  annotate("text", x=1, y=3.6, label="Sí", size=4) +
+  xlim(0.5, 6) + ylim(0.5, 4.5) + theme_void()
+```
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes en pruebas de varianza</div>
+  <div class="block-body">
+  <p>La prueba de igualdad de varianzas es una herramienta auxiliar, no un fin en sí misma.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Aplicar la prueba F sin verificar normalidad:</strong> con datos no normales, use siempre la prueba de Levene.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Usar la prueba F como prerrequisito obligatorio para t:</strong> la prueba de Welch es robusta ante varianzas desiguales y puede usarse por defecto sin necesidad de verificar primero.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Confundir $F_{\nu_1,\nu_2}$ con $F_{\nu_2,\nu_1}$:</strong> los grados de libertad importan: $F_{n_1-1, n_2-1}$ no es igual a $F_{n_2-1, n_1-1}$.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: prueba F de varianzas
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se compara la variabilidad en el contenido de grasa de leche (%) entre dos razas bovinas en Antioquia. Raza 1 ($n_1 = 15$): $s_1^2 = 0.36$. Raza 2 ($n_2 = 12$): $s_2^2 = 0.16$. ¿Son las varianzas iguales? Use $\alpha = 0.10$. Construya también un IC al 90%.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+n1 <- 15; s2_1 <- 0.36
+n2 <- 12; s2_2 <- 0.16
+alpha <- 0.10
+
+F_obs  <- s2_1 / s2_2
+F_low  <- qf(alpha/2, n1-1, n2-1)
+F_high <- qf(1-alpha/2, n1-1, n2-1)
+vp     <- 2 * min(pf(F_obs, n1-1, n2-1),
+                  pf(F_obs, n1-1, n2-1, lower.tail = FALSE))
+
+cat("F observado:", round(F_obs, 4), "\n")
+cat("Región de no rechazo: [", round(F_low,4), ",", round(F_high,4), "]\n")
+cat("Valor-p:", round(vp, 4), "\n")
+cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+ic <- c(F_obs/F_high, F_obs/F_low)
+cat("IC 90% para σ1²/σ2²: [", round(ic[1],4), ",", round(ic[2],4), "]\n")
+```
+
+## Taller 2: Bartlett para tres grupos
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un ensayo de tres variedades de frijol en el Meta, se mide el peso de 100 granos (g) en 12 plantas por variedad. Antes de aplicar ANOVA, verifique la homogeneidad de varianzas con la prueba de Bartlett. Use $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+set.seed(27)
+var1 <- rnorm(12, 52, 4)
+var2 <- rnorm(12, 55, 5)
+var3 <- rnorm(12, 50, 4.5)
+
+cat("Varianzas muestrales:\n")
+cat("Variedad 1:", round(var(var1), 3), "\n")
+cat("Variedad 2:", round(var(var2), 3), "\n")
+cat("Variedad 3:", round(var(var3), 3), "\n\n")
+
+# Prueba de Bartlett
+bt <- bartlett.test(list(var1, var2, var3))
+cat("Bartlett K² =", round(bt$statistic, 4), "\n")
+cat("Valor-p =", round(bt$p.value, 4), "\n")
+cat("Conclusión:", ifelse(bt$p.value > 0.05,
+    "Varianzas homogéneas: ANOVA es apropiado.",
+    "Varianzas heterogéneas: considere Welch-ANOVA o transformación."), "\n")
+```
+
+## Taller 3: flujo de análisis completo
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Para comparar el rendimiento de dos tratamientos de riego en 20 parcelas de arroz (10 por grupo): (a) verifique normalidad en cada grupo, (b) pruebe igualdad de varianzas, (c) aplique la prueba t apropiada, (d) calcule el IC al 95% y el d de Cohen.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+set.seed(27)
+riego_A <- rnorm(10, 5.6, 0.5)
+riego_B <- rnorm(10, 5.1, 0.7)
+
+cat("(a) Shapiro-Wilk:\n")
+cat("   Grupo A: p =", round(shapiro.test(riego_A)$p.value, 4), "\n")
+cat("   Grupo B: p =", round(shapiro.test(riego_B)$p.value, 4), "\n")
+
+cat("(b) Igualdad de varianzas (F-test):\n")
+vt <- var.test(riego_A, riego_B)
+cat("   F =", round(vt$statistic, 4), "  p =", round(vt$p.value, 4), "\n")
+
+cat("(c) Prueba t (Welch):\n")
+tt <- t.test(riego_A, riego_B)
+cat("   t =", round(tt$statistic, 4), "  p =", round(tt$p.value, 4), "\n")
+cat("(d) IC 95%: [", round(tt$conf.int[1],4), ",", round(tt$conf.int[2],4), "]\n")
+d <- (mean(riego_A)-mean(riego_B))/sqrt((var(riego_A)+var(riego_B))/2)
+cat("   d Cohen =", round(d, 4), "\n")
+```
+
+## Resumen: razón de varianzas
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Pruebas de varianza</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">Dos grupos (Normal): <code>var.test(x, y)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">Varios grupos (Normal): <code>bartlett.test()</code>.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">Varios grupos (robusta): prueba de Levene (<code>car::leveneTest</code>).</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 style="color:#1a3a6b; font-size: 26px;">Interpretación</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px;">IC para $\sigma_1^2/\sigma_2^2$ contiene 1: varianzas iguales.</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;">p-valor Bartlett/Levene $> 0.05$: homocedasticidad.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;">Welch funciona bien en la mayoría de los casos.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 28: Modelo de regresión y Método de mínimos cuadrados.</strong> Pasamos al análisis de la relación entre dos variables cuantitativas. Aprenderemos a ajustar una recta a los datos y a estimar los coeficientes por mínimos cuadrados ordinarios.</p>
+  </div>
+</div>

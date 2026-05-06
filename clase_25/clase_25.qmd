@@ -1,0 +1,363 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 25 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Pruebas para la media</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Prueba Z: $\sigma$ conocida.</li>
+<li class="fragment fade-in" data-fragment-index="3">Prueba t de una muestra.</li>
+<li class="fragment fade-in" data-fragment-index="4">Supuesto de normalidad.</li>
+<li class="fragment fade-in" data-fragment-index="5">Código R completo.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Proporción y varianza</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Prueba Z para la proporción.</li>
+<li class="fragment fade-in" data-fragment-index="8">Prueba chi-cuadrado para la varianza.</li>
+<li class="fragment fade-in" data-fragment-index="9">Ejemplos agrícolas integrales.</li>
+<li class="fragment fade-in" data-fragment-index="10">Errores comunes y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Pruebas para la Media, Proporción y Varianza</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Aplicando el marco inferencial a los parámetros fundamentales</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Prueba Z para la media: $\sigma$ conocida
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba Z: $H_0: \mu = \mu_0$</div>
+  <div class="block-body">
+  <p>Bajo $H_0$ con $X_i \sim N(\mu_0, \sigma^2)$ o $n$ grande:</p>
+  $$Z = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} \sim N(0,1)$$
+  <p>Región de rechazo con $\alpha = 0.05$: $|Z| > 1.96$ (bilateral); $Z > 1.645$ (unilateral derecha).</p>
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: productividad de palma africana</div>
+  <div class="block-body">
+  <p>$H_0: \mu = 18$ t/ha vs $H_1: \mu > 18$. Muestra de $n = 40$ fincas: $\bar{x} = 18.9$, $\sigma = 2.5$ (histórica). $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+## Solución: prueba Z palma africana
+
+```{r}
+#| echo: true
+mu0 <- 18; sigma <- 2.5; n <- 40; xbar <- 18.9; alpha <- 0.05
+
+Z    <- (xbar - mu0) / (sigma / sqrt(n))
+vp   <- pnorm(Z, lower.tail = FALSE)          # unilateral derecha
+ic95 <- xbar + c(-1,1) * qnorm(0.975) * sigma/sqrt(n)
+d    <- (xbar - mu0) / sigma
+
+cat("Z =", round(Z, 4), "\n")
+cat("Valor-p =", round(vp, 4), "\n")
+cat("IC 95%: [", round(ic95[1],3), ",", round(ic95[2],3), "]\n")
+cat("d Cohen =", round(d, 4), "\n")
+cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+```
+
+## Prueba t de una muestra: $\sigma$ desconocida
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba t: $H_0: \mu = \mu_0$, $\sigma$ desconocida</div>
+  <div class="block-body">
+  <p>Si $X_i \sim N(\mu_0, \sigma^2)$ con $\sigma$ desconocida:</p>
+  $$t = \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \sim t_{n-1} \quad \text{bajo } H_0$$
+  <p>Región de rechazo bilateral: $|t| > t_{\alpha/2,\, n-1}$.</p>
+  </div>
+</div>
+
+## Ejemplo: pH de suelo en parcelas de cacao
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: cacao, Huila</div>
+  <div class="block-body">
+  <p>El pH óptimo para cacao es 6.5. Se midió el pH en 15 parcelas del Huila. ¿Difiere significativamente del valor óptimo? $H_0: \mu = 6.5$ vs $H_1: \mu \neq 6.5$, $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(25)
+ph <- c(6.1, 6.4, 5.9, 6.3, 6.0, 6.5, 6.2, 5.8, 6.4, 6.1,
+        6.3, 5.7, 6.2, 6.0, 6.3)
+mu0 <- 6.5
+
+resultado <- t.test(ph, mu = mu0, alternative = "two.sided", conf.level = 0.95)
+cat("t =", round(resultado$statistic, 4), "\n")
+cat("Valor-p =", round(resultado$p.value, 4), "\n")
+cat("IC 95%: [", round(resultado$conf.int[1], 4), ",",
+    round(resultado$conf.int[2], 4), "]\n")
+cat("d Cohen =", round((mean(ph) - mu0)/sd(ph), 4), "\n")
+```
+
+## Verificación del supuesto de normalidad
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+library(ggplot2)
+ph <- c(6.1, 6.4, 5.9, 6.3, 6.0, 6.5, 6.2, 5.8, 6.4, 6.1,
+        6.3, 5.7, 6.2, 6.0, 6.3)
+
+# Shapiro-Wilk
+sw <- shapiro.test(ph)
+cat("Shapiro-Wilk: W =", round(sw$statistic, 4),
+    "  p-valor =", round(sw$p.value, 4), "\n")
+
+# QQ-plot
+df_qq <- data.frame(teorico  = qnorm(ppoints(length(ph))),
+                    muestral = sort(ph))
+ggplot(df_qq, aes(teorico, muestral)) +
+  geom_point(color = "#1b4d2e", size = 2.5) +
+  geom_abline(slope = sd(ph), intercept = mean(ph), color = "#c0392b") +
+  labs(x = "Cuantiles N(0,1)", y = "pH muestral",
+       title = "QQ-plot: pH suelo parcelas de cacao") +
+  theme_minimal(base_size = 13)
+```
+
+## Prueba Z para la proporción
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba Z: $H_0: p = p_0$</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Bin}(n, p)$ con $np_0 \geq 5$ y $n(1-p_0) \geq 5$:</p>
+  $$Z = \frac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \quad \text{bajo } H_0$$
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: adopción de riego tecnificado</div>
+  <div class="block-body">
+  <p>Se afirma que más del 30% de los arroceros del Tolima usa riego tecnificado. En una muestra de 120 agricultores, 42 lo usan. $H_0: p = 0.30$ vs $H_1: p > 0.30$, $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+## Solución: prueba Z para proporción
+
+```{r}
+#| echo: true
+x <- 42; n <- 120; p0 <- 0.30; alpha <- 0.05
+p_hat <- x / n
+
+Z  <- (p_hat - p0) / sqrt(p0 * (1 - p0) / n)
+vp <- pnorm(Z, lower.tail = FALSE)   # unilateral derecha
+
+cat("p̂ =", round(p_hat, 4), "\n")
+cat("Z =", round(Z, 4), "\n")
+cat("Valor-p =", round(vp, 4), "\n")
+cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+
+# Alternativa automática en R
+prop.test(x, n, p = p0, alternative = "greater", correct = FALSE)
+```
+
+## Prueba chi-cuadrado para la varianza
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba $\chi^2$: $H_0: \sigma^2 = \sigma_0^2$</div>
+  <div class="block-body">
+  <p>Si $X_i \sim N(\mu, \sigma^2)$:</p>
+  $$\chi^2 = \frac{(n-1)S^2}{\sigma_0^2} \sim \chi^2_{n-1} \quad \text{bajo } H_0$$
+  <p>Región de rechazo bilateral: $\chi^2 < \chi^2_{1-\alpha/2,\,n-1}$ o $\chi^2 > \chi^2_{\alpha/2,\,n-1}$.</p>
+  </div>
+</div>
+
+## Ejemplo: uniformidad en el peso de pollos
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: avicultura, Valle del Cauca</div>
+  <div class="block-body">
+  <p>El proceso exige $\sigma^2 \leq 400\,\text{g}^2$ en el peso al sacrificio. En 20 pollos se obtuvo $s^2 = 520\,\text{g}^2$. $H_0: \sigma^2 = 400$ vs $H_1: \sigma^2 > 400$, $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+n <- 20; s2 <- 520; sigma2_0 <- 400; alpha <- 0.05
+
+chi2_obs  <- (n - 1) * s2 / sigma2_0
+chi2_crit <- qchisq(1 - alpha, df = n - 1)
+vp        <- pchisq(chi2_obs, df = n - 1, lower.tail = FALSE)
+
+cat("χ² observado:", round(chi2_obs, 4), "\n")
+cat("χ² crítico (unilateral der.):", round(chi2_crit, 4), "\n")
+cat("Valor-p:", round(vp, 4), "\n")
+cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+```
+
+## Resumen: estadísticos y distribuciones
+
+<div class="fragment fade-in" data-fragment-index="1">
+
+| Parámetro | $H_0$ | Estadístico | Distribución bajo $H_0$ | Función R |
+|---|---|---|---|---|
+| $\mu$ ($\sigma$ conocida) | $\mu = \mu_0$ | $Z = (\bar{x}-\mu_0)/(\sigma/\sqrt{n})$ | $N(0,1)$ | `pnorm` |
+| $\mu$ ($\sigma$ desconocida) | $\mu = \mu_0$ | $t = (\bar{x}-\mu_0)/(s/\sqrt{n})$ | $t_{n-1}$ | `t.test` |
+| $p$ | $p = p_0$ | $Z = (\hat{p}-p_0)/\sqrt{p_0 q_0/n}$ | $N(0,1)$ | `prop.test` |
+| $\sigma^2$ | $\sigma^2 = \sigma_0^2$ | $\chi^2 = (n-1)s^2/\sigma_0^2$ | $\chi^2_{n-1}$ | `pchisq` |
+
+</div>
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>Cada prueba tiene sus propias condiciones de aplicación que deben verificarse.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Usar prueba Z para $\sigma$ desconocida con $n$ pequeño:</strong> con $n < 30$ y $\sigma$ desconocida, siempre use la prueba t.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>No verificar normalidad antes de la prueba t:</strong> con $n$ pequeño, la prueba t requiere que los datos sean aproximadamente normales.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>La prueba $\chi^2$ de varianza es muy sensible a la falta de normalidad:</strong> no es robusta; verifique normalidad con Shapiro-Wilk antes de aplicarla.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: prueba t para la media
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El contenido de proteína en pienso para cerdos debe ser al menos 18%. Se analizan 12 muestras y se obtiene $\bar{x} = 17.4\%$ y $s = 0.9\%$. ¿Hay evidencia de que el contenido es inferior al 18%? Use $\alpha = 0.05$. Verifique normalidad.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+set.seed(25)
+proteina <- rnorm(12, 17.4, 0.9)
+mu0 <- 18.0
+
+# Verificar normalidad
+sw <- shapiro.test(proteina)
+cat("Shapiro-Wilk p-valor:", round(sw$p.value, 4), "\n")
+
+# Prueba t unilateral izquierda (H1: mu < 18)
+resultado <- t.test(proteina, mu = mu0, alternative = "less", conf.level = 0.95)
+cat("t =", round(resultado$statistic, 4), "\n")
+cat("Valor-p =", round(resultado$p.value, 4), "\n")
+cat("Decisión:", ifelse(resultado$p.value < 0.05, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+```
+
+## Taller 2: prueba Z para proporción
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El ICA reporta que el 45% de los predios avícolas de Cundinamarca cumplen con la normativa de bioseguridad. Una ONG inspecciona 200 predios y encuentra que 100 cumplen. ¿Es la tasa observada significativamente diferente del 45% reportado? Use $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+x <- 100; n <- 200; p0 <- 0.45
+
+resultado <- prop.test(x, n, p = p0, alternative = "two.sided", correct = FALSE)
+cat("p̂ =", x/n, "\n")
+cat("Z =", round(sqrt(resultado$statistic), 4), "\n")
+cat("Valor-p =", round(resultado$p.value, 4), "\n")
+cat("IC 95%: [", round(resultado$conf.int[1], 4), ",",
+    round(resultado$conf.int[2], 4), "]\n")
+cat("Decisión:", ifelse(resultado$p.value < 0.05, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+```
+
+## Taller 3: prueba chi-cuadrado para la varianza
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un proceso de dosificación de fertilizante líquido, la variabilidad no debe superar $\sigma^2 = 0.04\,\text{L}^2$. Se tomaron 25 mediciones con $s^2 = 0.06\,\text{L}^2$. ¿Hay evidencia de que la varianza supera el límite? $\alpha = 0.01$.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+n <- 25; s2 <- 0.06; sigma2_0 <- 0.04; alpha <- 0.01
+
+chi2_obs  <- (n - 1) * s2 / sigma2_0
+chi2_crit <- qchisq(1 - alpha, df = n - 1)
+vp        <- pchisq(chi2_obs, df = n - 1, lower.tail = FALSE)
+
+cat("χ² observado:", round(chi2_obs, 4), "\n")
+cat("χ² crítico (1%):", round(chi2_crit, 4), "\n")
+cat("Valor-p:", round(vp, 4), "\n")
+cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+cat("Conclusión: con α = 0.01", ifelse(vp < alpha,
+    "hay evidencia de que la varianza supera el límite de proceso.",
+    "no hay evidencia suficiente para afirmar que la varianza supera el límite."), "\n")
+```
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 26: Comparación de medias y proporciones.</strong> Extenderemos las pruebas al caso de dos grupos: prueba t de dos muestras independientes, prueba t pareada y prueba Z para diferencia de proporciones.</p>
+  </div>
+</div>

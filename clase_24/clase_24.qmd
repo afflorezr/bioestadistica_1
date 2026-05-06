@@ -1,0 +1,514 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 24 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Errores y potencia</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Error tipo I y tipo II: revisión profunda.</li>
+<li class="fragment fade-in" data-fragment-index="3">Función de potencia.</li>
+<li class="fragment fade-in" data-fragment-index="4">Curvas ROC en pruebas diagnósticas.</li>
+<li class="fragment fade-in" data-fragment-index="5">Tamaño del efecto.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: El valor-p en profundidad</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Valor-p: cálculo en los tres tipos de prueba.</li>
+<li class="fragment fade-in" data-fragment-index="8">El debate actual sobre el valor-p.</li>
+<li class="fragment fade-in" data-fragment-index="9">Alternativas: IC, tamaño del efecto, d de Cohen.</li>
+<li class="fragment fade-in" data-fragment-index="10">Simulación y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">Errores tipo I y II, Valor-p</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Tomando decisiones con incertidumbre cuantificada</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Repaso: la tabla de decisiones
+
+<div class="fragment fade-in" data-fragment-index="1">
+
+| | $H_0$ verdadera | $H_0$ falsa |
+|---|:---:|:---:|
+| **No rechazar $H_0$** | $1 - \alpha$ (correcto) | $\beta$ (error tipo II) |
+| **Rechazar $H_0$** | $\alpha$ (error tipo I) | $1 - \beta$ (potencia) |
+
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En esta clase profundizamos en cómo la función de potencia depende del verdadero valor del parámetro y cómo los errores interactúan con el diseño del estudio.
+</li>
+</ul>
+
+## Función de potencia
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: función de potencia</div>
+  <div class="block-body">
+  <p>La <strong>función de potencia</strong> $\pi(\theta)$ de una prueba es la probabilidad de rechazar $H_0$ como función del verdadero valor del parámetro $\theta$:</p>
+  $$\pi(\theta) = P(\text{rechazar } H_0 \mid \theta \text{ verdadero})$$
+  <p>Cuando $\theta \in H_0$: $\pi(\theta) = \alpha$. Cuando $\theta \in H_1$: $\pi(\theta) = 1 - \beta(\theta)$ (potencia).</p>
+  </div>
+</div>
+
+## Gráfica de la función de potencia
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+# Prueba bilateral H0: mu = 5, sigma = 2, n = 25, alpha = 0.05
+mu0 <- 5; sigma <- 2; n <- 25; alpha <- 0.05
+z_crit <- qnorm(1 - alpha/2)
+ee <- sigma / sqrt(n)
+
+mu_vals <- seq(3, 7, length.out = 200)
+# Potencia = P(Z > z_crit | mu) + P(Z < -z_crit | mu)
+potencia <- pnorm(-z_crit, (mu_vals - mu0)/ee) +
+            pnorm(z_crit,  (mu_vals - mu0)/ee, lower.tail = FALSE)
+
+ggplot(data.frame(mu = mu_vals, pot = potencia), aes(mu, pot)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.4) +
+  geom_hline(yintercept = alpha, color = "#c0392b", linetype = "dashed") +
+  geom_vline(xintercept = mu0, color = "#374151", linetype = "dotted") +
+  annotate("text", x = 3.3, y = alpha + 0.04, label = paste0("α = ", alpha),
+           color = "#c0392b", size = 4) +
+  labs(x = "Verdadero valor de μ", y = "Potencia π(μ)",
+       title = "Función de potencia: H₀: μ = 5, n = 25, σ = 2") +
+  theme_minimal(base_size = 13)
+```
+
+## Efecto de $n$ en la función de potencia
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+mu0 <- 5; sigma <- 2; alpha <- 0.05
+z_crit <- qnorm(1 - alpha/2)
+mu_vals <- seq(3, 7, length.out = 200)
+ns <- c(10, 25, 50, 100)
+
+df <- map_dfr(ns, function(n) {
+  ee <- sigma / sqrt(n)
+  pot <- pnorm(-z_crit, (mu_vals - mu0)/ee) +
+         pnorm(z_crit, (mu_vals - mu0)/ee, lower.tail = FALSE)
+  tibble(mu = mu_vals, potencia = pot, n = paste0("n = ", n))
+})
+
+ggplot(df, aes(mu, potencia, color = n)) +
+  geom_line(linewidth = 1.2) +
+  geom_hline(yintercept = alpha, linetype = "dashed", color = "gray50") +
+  labs(x = "Verdadero μ", y = "Potencia", color = NULL,
+       title = "Potencia vs n: H₀: μ = 5, σ = 2") +
+  theme_minimal(base_size = 13) + theme(legend.position = "top")
+```
+
+## Tamaño del efecto
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: tamaño del efecto (d de Cohen)</div>
+  <div class="block-body">
+  <p>El <strong>tamaño del efecto</strong> $d$ de Cohen cuantifica la magnitud de la diferencia en unidades de desviación estándar:</p>
+  $$d = \frac{\mu_1 - \mu_2}{\sigma} \qquad \text{o para una muestra: } \quad d = \frac{\mu - \mu_0}{\sigma}$$
+  </div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 16px;">
+
+| Magnitud | d de Cohen |
+|---|:---:|
+| Pequeño | $\approx 0.2$ |
+| Mediano | $\approx 0.5$ |
+| Grande | $\approx 0.8$ |
+
+</div>
+
+## Tamaño del efecto en R
+
+```{r}
+#| echo: true
+# Efecto en rendimiento de maíz
+mu0 <- 4.5; mu_obs <- 4.8; sigma <- 0.8
+d_cohen <- (mu_obs - mu0) / sigma
+cat("d de Cohen:", round(d_cohen, 4), "\n")
+cat("Magnitud:", ifelse(abs(d_cohen) < 0.2, "trivial",
+                 ifelse(abs(d_cohen) < 0.5, "pequeño",
+                 ifelse(abs(d_cohen) < 0.8, "mediano", "grande"))), "\n")
+
+# paquete effectsize (si está disponible)
+# install.packages("effectsize")
+# library(effectsize)
+# cohens_d(rendimientos, mu = mu0)
+```
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>Un valor-p pequeño con $d$ cercano a 0 indica significancia estadística sin relevancia práctica. Siempre reporte ambos.</p>
+  </div>
+</div>
+
+## Valor-p: los tres casos
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Bilateral $H_1: \mu \neq \mu_0$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+$\text{valor-p} = 2 \cdot P(Z > |z_{obs}|)$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Se duplica la probabilidad de una sola cola.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Unilaterales</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+$H_1: \mu > \mu_0$: $\text{vp} = P(Z > z_{obs})$
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+$H_1: \mu < \mu_0$: $\text{vp} = P(Z < z_{obs})$
+</li>
+</ul>
+</div>
+
+</div>
+
+```{r}
+#| echo: true
+z_obs <- 2.00
+cat("Bilateral: ", 2 * pnorm(abs(z_obs), lower.tail = FALSE), "\n")
+cat("Unilateral der: ", pnorm(z_obs, lower.tail = FALSE), "\n")
+cat("Unilateral izq: ", pnorm(z_obs), "\n")
+```
+
+## Visualización del valor-p
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+library(ggplot2); library(patchwork)
+x <- seq(-4, 4, length.out = 400)
+df <- data.frame(x, f = dnorm(x))
+z0 <- 2.0
+
+p1 <- ggplot(df, aes(x, f)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.2) +
+  geom_ribbon(data = subset(df, x >= z0),
+              aes(ymin = 0, ymax = f), fill = "#c0392b", alpha = 0.6) +
+  geom_ribbon(data = subset(df, x <= -z0),
+              aes(ymin = 0, ymax = f), fill = "#c0392b", alpha = 0.6) +
+  geom_vline(xintercept = z0, color = "#c0392b") +
+  labs(x = "Z", y = "f(z)", title = "Bilateral: valor-p = 0.046") +
+  theme_minimal(base_size = 11)
+
+p2 <- ggplot(df, aes(x, f)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.2) +
+  geom_ribbon(data = subset(df, x >= z0),
+              aes(ymin = 0, ymax = f), fill = "#1b4d2e", alpha = 0.6) +
+  geom_vline(xintercept = z0, color = "#1b4d2e") +
+  labs(x = "Z", y = "f(z)", title = "Unilateral der.: valor-p = 0.023") +
+  theme_minimal(base_size = 11)
+
+p1 + p2
+```
+
+## Simulación: distribución del valor-p bajo H0
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+set.seed(24)
+B <- 5000; mu0 <- 5; sigma <- 2; n <- 25
+
+# Bajo H0: los valores-p deben ser Uniforme(0,1)
+vp_bajo_H0 <- replicate(B, {
+  x <- rnorm(n, mu0, sigma)    # datos bajo H0 verdadera
+  Z <- (mean(x) - mu0) / (sigma / sqrt(n))
+  2 * pnorm(abs(Z), lower.tail = FALSE)
+})
+
+library(ggplot2)
+ggplot(data.frame(vp = vp_bajo_H0), aes(vp)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 25,
+                 fill = "#1a3a6b", color = "white", alpha = 0.8) +
+  geom_hline(yintercept = 1, color = "#c0392b", linetype = "dashed", linewidth = 1) +
+  labs(x = "Valor-p", y = "Densidad",
+       title = "Distribución del valor-p bajo H₀ verdadera: Uniforme(0,1)") +
+  theme_minimal(base_size = 13)
+```
+
+## El debate actual sobre el valor-p
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: limitaciones del valor-p</div>
+  <div class="block-body">
+  <p>En 2016, la Asociación Americana de Estadística (ASA) publicó una declaración advirtiendo sobre el mal uso del valor-p en la investigación científica.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>«p-hacking»:</strong> realizar múltiples pruebas hasta obtener $p < 0.05$, inflando el error tipo I real.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Sesgo de publicación:</strong> los resultados con $p < 0.05$ se publican más, distorsionando la evidencia acumulada.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Recomendación actual:</strong> reportar el valor-p exacto junto al tamaño del efecto (d de Cohen, $\eta^2$, OR), IC al 95% y una descripción del contexto práctico del resultado.
+</li>
+</ul>
+
+## Alternativas y complementos al valor-p
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Reportar siempre</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">Valor-p exacto (no solo $< 0.05$).</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">IC al 95% del parámetro estimado.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">Tamaño del efecto (d, $r$, $\eta^2$, OR).</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">Potencia del estudio.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 class="fragment fade-in" data-fragment-index="6" style="color:#1a3a6b;">Alternativas formales</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">Factor de Bayes: evidencia relativa entre $H_0$ y $H_1$.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">Estimación bayesiana con distribuciones a posteriori.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">Pruebas de equivalencia (TOST) para demostrar «no diferencia».</li>
+</ul>
+</div>
+
+</div>
+
+## Ejemplo integral: rendimiento de sorgo forrajero
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: sorgo, Cesar</div>
+  <div class="block-body">
+  <p>Un agrónomo afirma que una nueva variedad de sorgo forrajero supera los 6.0 t/ha de rendimiento promedio. En 20 parcelas obtuvo $\bar{x} = 6.4$ t/ha y $s = 1.1$ t/ha. Realice la prueba completa con $\alpha = 0.05$ y reporte el tamaño del efecto.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+xbar <- 6.4; s <- 1.1; n <- 20; mu0 <- 6.0; alpha <- 0.05
+
+# Estadístico t
+t_obs <- (xbar - mu0) / (s / sqrt(n))
+vp    <- pt(t_obs, df = n - 1, lower.tail = FALSE)   # unilateral derecha
+d     <- (xbar - mu0) / s
+
+cat("t observado:", round(t_obs, 4), "\n")
+cat("Valor-p (H1: mu > 6):", round(vp, 4), "\n")
+cat("d de Cohen:", round(d, 4), "\n")
+cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+```
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes con errores y valor-p</div>
+  <div class="block-body">
+  <p>La mala interpretación del valor-p es uno de los problemas más graves en la investigación aplicada.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Confundir $\alpha$ (planificado) con el valor-p (observado):</strong> $\alpha$ se fija antes del estudio; el valor-p se calcula con los datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Prueba unilateral cuando debería ser bilateral:</strong> elegir la dirección de la prueba después de ver los datos invalida la inferencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Ignorar el tamaño del efecto:</strong> reportar solo «$p = 0.03$, diferencia significativa» sin cuantificar la magnitud es insuficiente para la toma de decisiones.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: función de potencia
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Para la prueba bilateral $H_0: \mu = 10$ vs $H_1: \mu \neq 10$ con $\sigma = 3$ y $n = 36$, calcule la potencia cuando el verdadero $\mu$ es 10.5, 11, 11.5 y 12. Use $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+mu0 <- 10; sigma <- 3; n <- 36; alpha <- 0.05
+z_crit <- qnorm(1 - alpha/2)
+ee <- sigma / sqrt(n)
+
+mu_alt <- c(10.5, 11, 11.5, 12)
+for (mu in mu_alt) {
+  delta <- (mu - mu0) / ee
+  pot <- pnorm(-z_crit - delta) + pnorm(z_crit - delta, lower.tail = FALSE)
+  cat(sprintf("μ = %.1f:  d = %.3f  potencia = %.4f\n",
+              mu, (mu - mu0)/sigma, pot))
+}
+```
+
+## Taller 2: valor-p en tres tipos de prueba
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se prueban 30 ovinos y se obtiene un peso promedio de $\bar{x} = 42.3$ kg con $\sigma = 5$ kg conocida. El valor de referencia es $\mu_0 = 40$ kg. Calcule el valor-p para: (a) $H_1: \mu \neq 40$, (b) $H_1: \mu > 40$, (c) $H_1: \mu < 40$. Concluya con $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+xbar <- 42.3; mu0 <- 40; sigma <- 5; n <- 30
+Z <- (xbar - mu0) / (sigma / sqrt(n))
+cat("Z observado:", round(Z, 4), "\n\n")
+
+# (a) Bilateral
+vp_bil <- 2 * pnorm(abs(Z), lower.tail = FALSE)
+cat("(a) Bilateral vp =", round(vp_bil, 4),
+    "->", ifelse(vp_bil < 0.05, "Rechazar H0", "No rechazar H0"), "\n")
+
+# (b) Unilateral derecha
+vp_der <- pnorm(Z, lower.tail = FALSE)
+cat("(b) Unilat. der. vp =", round(vp_der, 4),
+    "->", ifelse(vp_der < 0.05, "Rechazar H0", "No rechazar H0"), "\n")
+
+# (c) Unilateral izquierda
+vp_izq <- pnorm(Z)
+cat("(c) Unilat. izq. vp =", round(vp_izq, 4),
+    "->", ifelse(vp_izq < 0.05, "Rechazar H0", "No rechazar H0"), "\n")
+```
+
+## Taller 3: informe completo de resultados
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Con los datos del taller 2, elabore un informe completo de los resultados incluyendo: estadístico de prueba, valor-p, IC 95%, tamaño del efecto d de Cohen, y una conclusión en lenguaje no técnico para el productor ganadero.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+xbar <- 42.3; mu0 <- 40; sigma <- 5; n <- 30
+
+Z   <- (xbar - mu0) / (sigma/sqrt(n))
+vp  <- 2 * pnorm(abs(Z), lower.tail = FALSE)
+ic  <- xbar + c(-1,1) * qnorm(0.975) * sigma/sqrt(n)
+d   <- (xbar - mu0) / sigma
+
+cat(sprintf(
+"=== Informe de resultados ===
+Estadístico Z = %.4f
+Valor-p (bilateral) = %.4f
+IC 95%%: [%.3f, %.3f] kg
+d de Cohen = %.4f (efecto %s)
+Conclusión: con α = 0.05, hay evidencia significativa de que el peso
+promedio difiere del valor de referencia (40 kg). El peso observado
+(%.1f kg) supera en promedio %.1f kg al de referencia, un efecto %s.\n",
+Z, vp, ic[1], ic[2], d,
+ifelse(abs(d)<0.2,"trivial",ifelse(abs(d)<0.5,"pequeño",
+ifelse(abs(d)<0.8,"mediano","grande"))),
+xbar, xbar - mu0,
+ifelse(abs(d)<0.5,"de magnitud pequeña","de magnitud mediana")
+))
+```
+
+## Resumen: errores y valor-p
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Errores</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">Error I: rechazar $H_0$ verdadera ($\alpha$).</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">Error II: no rechazar $H_0$ falsa ($\beta$).</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">Potencia = $1 - \beta$: aumenta con $n$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px;">d de Cohen: magnitud del efecto.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 26px;">Valor-p</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;">Bilateral: $2P(Z > |z_{obs}|)$.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;">Unilateral: $P(Z > z_{obs})$ o $P(Z < z_{obs})$.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 23px;">Siempre reportar con IC y tamaño del efecto.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 25: Pruebas para la media, proporción y varianza.</strong> Aplicaremos el marco de las pruebas de hipótesis a los parámetros más usados: la media (prueba Z y t), la proporción (prueba Z) y la varianza (prueba chi-cuadrado).</p>
+  </div>
+</div>

@@ -1,0 +1,469 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 32 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Kappa ponderado</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Limitación del Kappa simple en datos ordinales.</li>
+<li class="fragment fade-in" data-fragment-index="3">Ponderación lineal y cuadrática.</li>
+<li class="fragment fade-in" data-fragment-index="4">Cálculo e interpretación.</li>
+<li class="fragment fade-in" data-fragment-index="5">Código R: <code>irr::kappa2(weight=)</code>.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Correlación intraclase (CCI)</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Motivación: variables cuantitativas.</li>
+<li class="fragment fade-in" data-fragment-index="8">Modelos de la CCI.</li>
+<li class="fragment fade-in" data-fragment-index="9">IC y criterios de interpretación.</li>
+<li class="fragment fade-in" data-fragment-index="10">Código R y taller final.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Kappa Ponderado y Correlación Intraclase</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Concordancia en datos ordinales y continuos</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Limitación del Kappa simple: datos ordinales
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El Kappa simple trata todos los desacuerdos por igual: clasificar «Leve» cuando la respuesta es «Severa» tiene el mismo peso que clasificar «Leve» cuando es «Moderada».
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+En datos ordinales (niveles de daño, grados de condición corporal, escalas de severidad), los desacuerdos más distantes deben penalizarse más.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+El <strong>Kappa ponderado</strong> incorpora una matriz de pesos $w_{ij}$ que refleja la «gravedad» de cada tipo de desacuerdo.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Los pesos más grandes corresponden a desacuerdos más graves; los acuerdos exactos tienen peso 1.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Kappa ponderado: definición
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Kappa ponderado</div>
+  <div class="block-body">
+  $$\kappa_w = \frac{P_o^w - P_e^w}{1 - P_e^w}$$
+  <p>donde $P_o^w = \sum_{i,j} w_{ij} p_{ij}$ y $P_e^w = \sum_{i,j} w_{ij} p_{i\bullet} p_{\bullet j}$, con pesos $w_{ij} \in [0,1]$ que dependen del tipo de ponderación.</p>
+  </div>
+</div>
+
+## Tipos de ponderación
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Ponderación lineal</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+$$w_{ij} = 1 - \frac{|i - j|}{r - 1}$$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Penaliza proporcionalmente a la distancia entre categorías.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+En R: <code>weight = "equal"</code>.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#1a3a6b;">Ponderación cuadrática</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+$$w_{ij} = 1 - \frac{(i-j)^2}{(r-1)^2}$$
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+Penaliza más fuertemente los desacuerdos grandes.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">
+En R: <code>weight = "squared"</code>. Equivale al CCI en ciertos modelos.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Ejemplo: Kappa ponderado en evaluación de condición corporal
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: condición corporal bovina, Llanos</div>
+  <div class="block-body">
+  <p>Dos zootecnistas evalúan la condición corporal (CC) de 70 bovinos en escala ordinal 1 a 5. Calcule Kappa simple y ponderado (lineal y cuadrático) y compare.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+library(irr)
+set.seed(32)
+cc_A <- sample(1:5, 70, replace = TRUE, prob = c(0.1,0.2,0.4,0.2,0.1))
+cc_B <- cc_A + sample(c(-1,0,0,1), 70, replace = TRUE)
+cc_B <- pmax(1, pmin(5, cc_B))  # clamp a [1,5]
+
+df_cc <- data.frame(A = cc_A, B = cc_B)
+cat("Kappa simple:\n");     print(kappa2(df_cc, weight="unweighted"))
+cat("\nKappa lineal:\n");   print(kappa2(df_cc, weight="equal"))
+cat("\nKappa cuadrático:\n"); print(kappa2(df_cc, weight="squared"))
+```
+
+## Comparación: Kappa simple vs ponderado
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>El Kappa ponderado siempre es $\geq$ Kappa simple para datos ordinales, porque los desacuerdos menores tienen menor penalización. La diferencia entre ambos indica cuán frecuentes son los desacuerdos de magnitud distinta.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Use Kappa <strong>simple</strong>: categorías nominales sin orden (ej: especie de plaga, tipo de lesión).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Use Kappa <strong>ponderado lineal</strong>: escalas ordinales donde la distancia importa (ej: grado de madurez 1-5).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+Use Kappa <strong>ponderado cuadrático</strong>: cuando se quiere penalizar mucho los desacuerdos grandes (equivale al CCI bajo ciertos modelos).
+</li>
+</ul>
+
+## Correlación intraclase (CCI): motivación
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Dos analistas miden el porcentaje de grasa intramuscular en 15 cortes de carne de res. Los valores son continuos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La correlación de Pearson mide asociación lineal, pero no detecta sesgo sistemático entre métodos: si el analista B siempre mide 2% más que A, $r = 1$ pero el acuerdo es malo.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La <strong>Correlación Intraclase</strong> (CCI) mide tanto la consistencia como el acuerdo absoluto entre evaluadores para variables continuas.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Es el estándar actual para estudios de reproducibilidad y validación de métodos en ciencias biológicas y agrícolas.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Definición: Correlación Intraclase
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">CCI basada en ANOVA</div>
+  <div class="block-body">
+  <p>Dado un modelo de dos vías con $n$ sujetos y $k$ evaluadores:</p>
+  $$CCI = \frac{CMSujetos - CMError}{CMSujetos + (k-1) \cdot CMError + k(CMEvaluadores - CMError)/n}$$
+  <p>El valor exacto depende del <strong>modelo</strong> (one-way, two-way) y del <strong>tipo</strong> (consistencia vs acuerdo absoluto).</p>
+  </div>
+</div>
+
+## Modelos de la CCI (Shrout y Fleiss, 1979)
+
+<div class="fragment fade-in" data-fragment-index="1">
+
+| Modelo | Evaluadores | Tipo | Uso |
+|---|---|---|---|
+| **CCI(1,1)** | Aleatorios, distintos por sujeto | Acuerdo | Confiabilidad inter-evaluador |
+| **CCI(2,1)** | Aleatoria muestra de todos | Consistencia | Evaluadores replicables |
+| **CCI(3,1)** | Fijos, mismos siempre | Consistencia | Instrumentos o métodos fijos |
+| **CCI(X,k)** | Cualquiera | Media de $k$ | Cuando se promedian evaluadores |
+
+</div>
+
+## Ejemplo: peso de granos de maíz
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: laboratorio de calidad, Tolima</div>
+  <div class="block-body">
+  <p>Tres analistas de un laboratorio miden el peso (g) de 100 granos de maíz en 12 muestras. Se quiere evaluar la reproducibilidad (CCI) del método de pesaje.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# install.packages("irr")
+library(irr)
+set.seed(32)
+n <- 12
+maiz <- data.frame(
+  A1 = round(rnorm(n, 25, 2), 2),
+  A2 = round(rnorm(n, 25, 2) + rnorm(n, 0, 0.5), 2),
+  A3 = round(rnorm(n, 25, 2) + rnorm(n, 0, 0.5), 2)
+)
+print(maiz)
+```
+
+## Cálculo de la CCI en R
+
+```{r}
+#| echo: true
+library(irr)
+# CCI modelo two-way, tipo consistencia, unidad individual
+icc(maiz, model = "twoway", type = "consistency", unit = "single")
+```
+
+## Interpretación de la CCI
+
+<div class="fragment fade-in" data-fragment-index="1">
+
+| CCI | Reproducibilidad |
+|:---:|---|
+| $< 0.50$ | Pobre |
+| $0.50 - 0.75$ | Moderada |
+| $0.75 - 0.90$ | Buena |
+| $> 0.90$ | Excelente |
+
+*(Koo y Mae, 2016. Physical Therapy & Rehabilitation Journal)*
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p>Para estudios de validación de métodos diagnósticos se recomienda CCI $> 0.75$ para reproducibilidad aceptable y CCI $> 0.90$ para estudios de alta exigencia clínica o regulatoria.</p>
+  </div>
+</div>
+
+## Gráfica de Bland-Altman: complemento de la CCI
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+media_BA  <- (maiz$A1 + maiz$A2) / 2
+dif_BA    <- maiz$A1 - maiz$A2
+loa_upper <- mean(dif_BA) + 1.96*sd(dif_BA)
+loa_lower <- mean(dif_BA) - 1.96*sd(dif_BA)
+
+ggplot(data.frame(media_BA, dif_BA), aes(media_BA, dif_BA)) +
+  geom_point(color = "#1b4d2e", size = 2.5) +
+  geom_hline(yintercept = mean(dif_BA), color = "#1a3a6b", linetype = "dashed") +
+  geom_hline(yintercept = c(loa_upper, loa_lower),
+             color = "#c0392b", linetype = "dotted", linewidth = 1) +
+  annotate("text", x = max(media_BA)*0.9, y = loa_upper + 0.1,
+           label = "+1.96 SD", color = "#c0392b", size = 4) +
+  annotate("text", x = max(media_BA)*0.9, y = loa_lower - 0.1,
+           label = "-1.96 SD", color = "#c0392b", size = 4) +
+  labs(x = "Media entre analistas", y = "Diferencia A1 - A2",
+       title = "Gráfica de Bland-Altman: A1 vs A2") +
+  theme_minimal(base_size = 13)
+```
+
+## Errores comunes en CCI y Kappa ponderado
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>La elección incorrecta del modelo o la interpretación superficial de los resultados pueden llevar a conclusiones equivocadas.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Usar Pearson en vez de CCI:</strong> la correlación de Pearson no detecta sesgos sistemáticos entre métodos. Use siempre la gráfica de Bland-Altman junto con la CCI.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Elegir el modelo de CCI sin justificación:</strong> el modelo depende de si los evaluadores son fijos o aleatorios y si importa el acuerdo absoluto o la consistencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Reportar solo el punto estimado sin IC:</strong> siempre reporte el IC al 95% de la CCI o de $\kappa_w$; el estimador puntual solo es informativo junto con su precisión.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: Kappa ponderado en escala de daño
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Dos entomólogos evalúan el daño de Spodoptera frugiperda en 50 plantas de maíz con escala 0 (sin daño) a 4 (daño severo). Calcule Kappa simple y ponderado (lineal) e interprete la diferencia. ¿Por qué el ponderado es más apropiado aquí?</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+library(irr)
+set.seed(32)
+dano_A <- sample(0:4, 50, replace=TRUE, prob=c(0.2,0.3,0.25,0.15,0.1))
+dano_B <- dano_A + sample(c(-1,0,0,1), 50, replace=TRUE)
+dano_B <- pmax(0, pmin(4, dano_B))
+
+df_dano <- data.frame(A = dano_A, B = dano_B)
+k_simple <- kappa2(df_dano, weight="unweighted")$value
+k_lineal <- kappa2(df_dano, weight="equal")$value
+
+cat("Kappa simple:  ", round(k_simple, 4), "\n")
+cat("Kappa lineal:  ", round(k_lineal, 4), "\n")
+cat("El Kappa ponderado es mayor porque reconoce que equivocarse\n",
+    "en 1 nivel (ej: 2 vs 3) es menos grave que en 3 niveles (ej: 0 vs 3).\n")
+```
+
+## Taller 2: CCI entre dos métodos de medición
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se comparan dos métodos para medir el contenido de humedad (%) en granos de arroz: el método estándar (estufa) y un sensor portátil. Se realizan 15 mediciones pareadas. Calcule la CCI (two-way, consistency), haga la gráfica de Bland-Altman e interprete la reproducibilidad.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+#| fig-height: 3
+library(irr); library(ggplot2)
+set.seed(32)
+estufa  <- round(runif(15, 12, 16), 2)
+sensor  <- round(estufa + rnorm(15, 0.3, 0.4), 2)   # sesgo leve
+df_hum  <- data.frame(Estufa=estufa, Sensor=sensor)
+
+resultado_cci <- icc(df_hum, model="twoway", type="consistency", unit="single")
+cat("CCI =", round(resultado_cci$value, 4), "\n")
+cat("IC 95%: [", round(resultado_cci$lbound, 4), ",",
+    round(resultado_cci$ubound, 4), "]\n")
+
+# Bland-Altman
+media_h <- (estufa + sensor)/2; dif_h <- estufa - sensor
+ggplot(data.frame(media_h, dif_h), aes(media_h, dif_h)) +
+  geom_point(color="#1b4d2e", size=2.5) +
+  geom_hline(yintercept=mean(dif_h), color="#1a3a6b", linetype="dashed") +
+  geom_hline(yintercept=mean(dif_h)+c(-1,1)*1.96*sd(dif_h),
+             color="#c0392b", linetype="dotted") +
+  labs(x="Media", y="Diferencia (estufa - sensor)",
+       title="Bland-Altman: humedad de arroz") +
+  theme_minimal(base_size=12)
+```
+
+## Resumen del curso: Bioestadística Fundamental
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 24px;">Distribuciones</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 21px;">Discretas: Bernoulli, Binomial, Poisson.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px;">Continuas: Uniforme, Exponencial, Normal.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px;">Muestrales: t, $\chi^2$, F.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 style="color:#1a3a6b; font-size: 24px;">Inferencia</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 21px;">IC para media, proporción, varianza.</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 21px;">Pruebas Z, t, $\chi^2$, F, ANOVA.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px;">Regresión lineal simple.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px;">Concordancia: Kappa, CCI.</li>
+</ul>
+</div>
+
+</div>
+
+## Herramientas R del curso
+
+<div class="fragment fade-in" data-fragment-index="1" style="font-size: 25px; margin-top: 10px;">
+
+| Tarea | Función R |
+|---|---|
+| Distribuciones | `d/p/q/r + [norm, binom, pois, exp, unif, t, chisq, f]` |
+| IC para media | `t.test(x)` |
+| IC para proporción | `prop.test(x, n)` |
+| Prueba de varianzas | `var.test(x, y)`, `bartlett.test()` |
+| Regresión | `lm(y ~ x)`, `summary()`, `anova()`, `predict()` |
+| ANOVA | `aov(y ~ trat)`, `TukeyHSD()` |
+| Kappa | `irr::kappa2(df, weight=)` |
+| CCI | `irr::icc(df, model=, type=)` |
+
+</div>
+
+## Mensaje final del curso
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>La estadística es una herramienta para tomar mejores decisiones bajo incertidumbre.</strong></p>
+  <p>En bioestadística aplicada al sector agropecuario colombiano, los conceptos de esta asignatura permiten diseñar estudios válidos, analizar datos con rigor y comunicar resultados de forma honesta y útil para productores, investigadores y tomadores de decisiones.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+El valor-p no es una sentencia: es una herramienta que debe usarse junto con el tamaño del efecto, los IC y el contexto biológico.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Todo análisis estadístico comienza con un buen diseño y termina con una conclusión útil para quien toma decisiones en el campo.
+</li>
+</ul>

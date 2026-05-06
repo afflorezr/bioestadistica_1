@@ -1,0 +1,449 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 22 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Fundamentos</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Error tolerable y nivel de confianza.</li>
+<li class="fragment fade-in" data-fragment-index="3">$n$ para estimar la media.</li>
+<li class="fragment fade-in" data-fragment-index="4">$n$ para estimar la proporción.</li>
+<li class="fragment fade-in" data-fragment-index="5">Efecto del tamaño poblacional.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Casos avanzados</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">$n$ para comparación de dos medias.</li>
+<li class="fragment fade-in" data-fragment-index="8">$n$ para comparación de proporciones.</li>
+<li class="fragment fade-in" data-fragment-index="9">Potencia estadística.</li>
+<li class="fragment fade-in" data-fragment-index="10">Código R y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Tamaño de Muestra</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">¿Cuántas observaciones necesito para responder mi pregunta?</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## ¿Por qué calcular el tamaño de muestra?
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Una muestra muy pequeña produce ICs muy amplios: la estimación es poco precisa para tomar decisiones.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Una muestra muy grande desperdicia recursos: tiempo, dinero y esfuerzo del campo.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+El tamaño de muestra se calcula <strong>antes</strong> de recolectar los datos, fijando el error máximo tolerable y el nivel de confianza deseado.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Es un componente obligatorio de cualquier protocolo de investigación o estudio de campo.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Ingredientes para calcular $n$
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
+<strong>Error tolerable $E$:</strong> máxima diferencia aceptable entre el estimador y el parámetro. Lo fija el investigador según el contexto.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Nivel de confianza $1-\alpha$:</strong> generalmente 90%, 95% o 99%.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>Variabilidad poblacional $\sigma$ (o $p$):</strong> se estima a partir de estudios previos, datos piloto o valores conservadores.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>Potencia $1-\beta$:</strong> en comparaciones, probabilidad de detectar una diferencia real. Usualmente 80% o 90%.
+</li>
+</ul>
+
+## Tamaño de muestra para estimar la media
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Fórmula: $n$ para la media</div>
+  <div class="block-body">
+  <p>Para un IC al $(1-\alpha)\times 100\%$ con error máximo $E = |\bar{x} - \mu|$:</p>
+  $$n = \left\lceil \left(\frac{z_{\alpha/2}\,\sigma}{E}\right)^2 \right\rceil$$
+  <p>Siempre se redondea hacia arriba.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Si $\sigma$ es desconocida, se puede usar una estimación previa $s$ o el rango dividido por 4 como aproximación.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Con $\sigma$ desconocida y sin datos piloto, use $t$ en lugar de $z$ y resuelva iterativamente.
+</li>
+</ul>
+
+## Ejemplo: estimación del rendimiento de papa
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: papa pastusa, Boyacá</div>
+  <div class="block-body">
+  <p>Se quiere estimar el rendimiento promedio de papa pastusa en Boyacá con un error máximo de $E = 0.5$ t/ha y 95% de confianza. Estudios previos reportan $\sigma = 2.0$ t/ha. ¿Cuántas parcelas deben muestrearse?</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+z <- qnorm(0.975)   # z para 95%
+sigma <- 2.0
+E <- 0.5
+
+n_exacto <- (z * sigma / E)^2
+n <- ceiling(n_exacto)
+cat("n exacto:", round(n_exacto, 4), "\n")
+cat("n requerido:", n, "parcelas\n")
+```
+
+## Efecto de E y $\sigma$ en el tamaño de muestra
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+z95 <- qnorm(0.975)
+df <- expand_grid(E = c(0.25, 0.5, 1.0, 1.5),
+                  sigma = c(1.0, 1.5, 2.0, 2.5)) |>
+  mutate(n = ceiling((z95 * sigma / E)^2),
+         E_label = paste0("E = ", E))
+
+ggplot(df, aes(x = sigma, y = n, color = E_label, group = E_label)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2.5) +
+  labs(x = "Desviación estándar (σ)", y = "Tamaño de muestra (n)",
+       color = "Error tolerable",
+       title = "n requerido para estimar la media (IC 95%)") +
+  theme_minimal(base_size = 13)
+```
+
+## Tamaño de muestra para estimar la proporción
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Fórmula: $n$ para la proporción</div>
+  <div class="block-body">
+  <p>Para un IC al $(1-\alpha)\times 100\%$ con error máximo $E = |\hat{p} - p|$:</p>
+  $$n = \left\lceil \frac{z_{\alpha/2}^2\; p(1-p)}{E^2} \right\rceil$$
+  <p>Si $p$ es desconocida, usar $p = 0.5$ (valor conservador que maximiza $p(1-p) = 0.25$).</p>
+  </div>
+</div>
+
+## Ejemplo: encuesta de adopción de BPA
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: adopción de BPA, Tolima</div>
+  <div class="block-body">
+  <p>Se quiere estimar la proporción de caficultores del Tolima que adoptan BPA con error máximo $E = 0.04$ y 95% de confianza. Sin información previa sobre $p$, ¿cuántos caficultores deben encuestarse?</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+z <- qnorm(0.975)
+E <- 0.04
+p_cons <- 0.5   # conservador
+
+n_cons <- ceiling(z^2 * p_cons * (1 - p_cons) / E^2)
+cat("n conservador (p = 0.5):", n_cons, "\n")
+
+# Si se estima p ≈ 0.35 de estudios previos
+p_prev <- 0.35
+n_prev <- ceiling(z^2 * p_prev * (1 - p_prev) / E^2)
+cat("n con p estimada = 0.35:", n_prev, "\n")
+```
+
+## Corrección por tamaño de población finita
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Factor de corrección por población finita</div>
+  <div class="block-body">
+  <p>Si la población tiene tamaño $N$ finito y $n_0$ es el tamaño calculado sin corrección:</p>
+  $$n = \frac{n_0}{1 + (n_0 - 1)/N}$$
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Ejemplo: población de 800 fincas, n0 calculado = 384
+n0 <- 384; N <- 800
+
+n_corregido <- ceiling(n0 / (1 + (n0 - 1) / N))
+cat("n sin corrección:", n0, "\n")
+cat("n con corrección (N =", N, "):", n_corregido, "\n")
+cat("Reducción:", n0 - n_corregido, "unidades\n")
+```
+
+## Potencia estadística
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: potencia</div>
+  <div class="block-body">
+  <p>La <strong>potencia</strong> de una prueba es $1 - \beta$, donde $\beta = P(\text{no detectar diferencia} \mid \text{diferencia real existe})$. Una potencia del 80% significa que hay un 80% de probabilidad de detectar una diferencia real de tamaño especificado.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Potencia baja implica estudios que no detectan efectos reales: conclusiones de «no diferencia» pueden ser falsas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+El tamaño de muestra para comparaciones se calcula fijando simultáneamente $\alpha$ y $1-\beta$.
+</li>
+</ul>
+
+## $n$ para comparar dos medias
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Fórmula: $n$ por grupo para comparar $\mu_1$ vs $\mu_2$</div>
+  <div class="block-body">
+  $$n = \left\lceil \frac{(z_{\alpha/2} + z_\beta)^2 \cdot 2\sigma^2}{\delta^2} \right\rceil$$
+  <p>donde $\delta = |\mu_1 - \mu_2|$ es la diferencia mínima a detectar y $z_\beta = z_{1-\beta}$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Detectar delta = 0.5 t/ha, sigma = 1.2, alpha = 0.05, potencia = 0.80
+delta <- 0.5; sigma <- 1.2
+z_alpha <- qnorm(0.975)   # alpha = 0.05 bilateral
+z_beta  <- qnorm(0.80)    # potencia 80%
+
+n_grupo <- ceiling((z_alpha + z_beta)^2 * 2 * sigma^2 / delta^2)
+cat("n por grupo:", n_grupo, "\n")
+cat("n total:", 2 * n_grupo, "\n")
+```
+
+## Función power.t.test en R
+
+```{r}
+#| echo: true
+# Calcular n dado delta, sigma, alpha y potencia
+power.t.test(delta = 0.5, sd = 1.2, sig.level = 0.05,
+             power = 0.80, type = "two.sample")
+
+# Calcular potencia dado n
+power.t.test(n = 50, delta = 0.5, sd = 1.2, sig.level = 0.05,
+             type = "two.sample")$power
+```
+
+## Curvas de potencia
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+ns <- seq(10, 150, by = 5)
+potencias <- map_dbl(ns, ~power.t.test(
+  n = .x, delta = 0.5, sd = 1.2, sig.level = 0.05,
+  type = "two.sample")$power)
+
+ggplot(data.frame(n = ns, pot = potencias), aes(n, pot)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.3) +
+  geom_hline(yintercept = 0.80, color = "#c0392b", linetype = "dashed") +
+  geom_hline(yintercept = 0.90, color = "#1b4d2e", linetype = "dashed") +
+  annotate("text", x = 140, y = 0.82, label = "80%", color = "#c0392b", size = 4) +
+  annotate("text", x = 140, y = 0.92, label = "90%", color = "#1b4d2e", size = 4) +
+  labs(x = "n por grupo", y = "Potencia",
+       title = "Curva de potencia: comparar medias (δ = 0.5, σ = 1.2)") +
+  theme_minimal(base_size = 13)
+```
+
+## Errores comunes en el cálculo de $n$
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>Calcular mal el tamaño de muestra es una de las causas más frecuentes de estudios no concluyentes o de derroche de recursos.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>No redondear hacia arriba:</strong> siempre use <code>ceiling()</code>. Un $n$ fraccionario nunca se redondea hacia abajo.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Olvidar pérdidas:</strong> en estudios longitudinales, el $n$ calculado debe incrementarse por la tasa de abandono esperada (ej: $n / (1 - 0.15)$ si se espera un 15% de deserción).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Subestimar $\sigma$:</strong> un $\sigma$ más pequeño del real produce un $n$ insuficiente. Use estimaciones conservadoras.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: $n$ para la media
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se quiere estimar el peso promedio de pollos de engorde en una granja del Valle del Cauca con $E = 50\,\text{g}$ y 95% de confianza. Un estudio piloto reportó $s = 180\,\text{g}$. (a) ¿Cuántos pollos deben pesarse? (b) ¿Cuántos si se reduce el error a $E = 30\,\text{g}$?</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+z <- qnorm(0.975); sigma <- 180
+
+# (a) E = 50 g
+n_a <- ceiling((z * sigma / 50)^2)
+cat("(a) n con E = 50 g:", n_a, "\n")
+
+# (b) E = 30 g
+n_b <- ceiling((z * sigma / 30)^2)
+cat("(b) n con E = 30 g:", n_b, "\n")
+cat("Al reducir E a la mitad, n aumenta aprox", round(n_b/n_a, 1), "veces.\n")
+```
+
+## Taller 2: $n$ para la proporción
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El ICA quiere estimar la proporción de cuerpos de agua en zonas agrícolas de Cundinamarca con presencia de cianobacterias, con $E = 0.05$ y 99% de confianza. Sin información previa: (a) calcule $n$ conservador. (b) Si estudios previos sugieren $p \approx 0.25$, ¿cuánto se reduce $n$?</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+z <- qnorm(0.995); E <- 0.05   # 99% de confianza
+
+# (a) Conservador p = 0.5
+n_cons <- ceiling(z^2 * 0.5 * 0.5 / E^2)
+cat("(a) n conservador:", n_cons, "\n")
+
+# (b) p estimada = 0.25
+n_prev <- ceiling(z^2 * 0.25 * 0.75 / E^2)
+cat("(b) n con p = 0.25:", n_prev, "\n")
+cat("Reducción:", n_cons - n_prev, "unidades\n")
+```
+
+## Taller 3: tamaño y potencia
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Un ensayo busca detectar una diferencia de al menos 0.3 en el índice de condición corporal (ICC) de bovinos entre dos dietas. Se estima $\sigma = 0.5$. (a) ¿Cuántos animales por grupo para $\alpha = 0.05$ y potencia del 80%? (b) ¿Cuál sería la potencia con $n = 30$ por grupo?</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+# (a) n por grupo
+result_a <- power.t.test(delta = 0.3, sd = 0.5,
+                          sig.level = 0.05, power = 0.80,
+                          type = "two.sample")
+cat("(a) n por grupo:", ceiling(result_a$n), "\n")
+
+# (b) potencia con n = 30
+result_b <- power.t.test(n = 30, delta = 0.3, sd = 0.5,
+                          sig.level = 0.05, type = "two.sample")
+cat("(b) Potencia con n = 30:", round(result_b$power, 4), "\n")
+```
+
+## Resumen: tamaño de muestra
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Fórmulas clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">Media: $n = \lceil(z_{\alpha/2}\sigma/E)^2\rceil$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">Proporción: $n = \lceil z_{\alpha/2}^2 p(1-p)/E^2\rceil$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">Siempre redondear hacia arriba (<code>ceiling</code>).</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px;">Corrección finita si $n_0 > 0.05N$.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 26px;">Funciones R</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;"><code>ceiling((z*sigma/E)^2)</code>: media.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;"><code>ceiling(z^2*p*(1-p)/E^2)</code>: proporción.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 23px;"><code>power.t.test()</code>: dos medias.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 23px;"><code>power.prop.test()</code>: dos proporciones.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 23: Conceptos fundamentales de pruebas de hipótesis.</strong> Formalizaremos el lenguaje estadístico para tomar decisiones: hipótesis nula y alternativa, errores tipo I y II, valor-p y regiones de rechazo.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Este marco conceptual es la base de todas las pruebas de hipótesis de las Clases 24 a 27.
+</li>
+</ul>

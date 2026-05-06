@@ -1,0 +1,468 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 19 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El TCL</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Enunciado y condiciones.</li>
+<li class="fragment fade-in" data-fragment-index="3">Demostración intuitiva.</li>
+<li class="fragment fade-in" data-fragment-index="4">Convergencia en distribución.</li>
+<li class="fragment fade-in" data-fragment-index="5">Velocidad de convergencia.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Aplicaciones</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">TCL para la suma y la media.</li>
+<li class="fragment fade-in" data-fragment-index="8">Aproximación Normal a Binomial y Poisson.</li>
+<li class="fragment fade-in" data-fragment-index="9">Simulación y visualización en R.</li>
+<li class="fragment fade-in" data-fragment-index="10">Condiciones de aplicación y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Teorema Central del Límite</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Por qué la Normal aparece en todas partes</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## El fenómeno que justifica la Normal
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El rendimiento de un cultivo depende de cientos de factores: temperatura, lluvia, pH, nutrientes, luz, plagas. Ninguno por sí solo domina.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Cada factor contribuye una pequeña perturbación aleatoria. La suma de muchos efectos pequeños e independientes produce una distribución Normal.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Este fenómeno es precisamente lo que establece el <strong>Teorema Central del Límite (TCL)</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Es el resultado teórico más importante de la estadística: explica por qué la distribución Normal es ubicua en fenómenos naturales y biológicos.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Enunciado del TCL
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema Central del Límite (Lindeberg-Lévy)</div>
+  <div class="block-body">
+  <p>Sea $X_1, X_2, \ldots$ una sucesión de variables aleatorias i.i.d. con $E(X_i) = \mu$ y $\text{Var}(X_i) = \sigma^2 < \infty$. Entonces, cuando $n \to \infty$:</p>
+  $$Z_n = \frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} = \frac{\sum_{i=1}^n X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1)$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+El resultado es válido <strong>sin importar la distribución original</strong> de $X_i$, siempre que $\mu$ y $\sigma^2$ sean finitos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+$\xrightarrow{d}$ denota convergencia en distribución.
+</li>
+</ul>
+
+## Consecuencias prácticas del TCL
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
+Para $n$ suficientemente grande, $\bar{X} \approx N(\mu, \sigma^2/n)$ <strong>independientemente de la distribución de la población</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Los intervalos de confianza y pruebas de hipótesis basados en la Normal son aproximadamente válidos para muestras grandes aunque la población no sea Normal.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Regla práctica: el TCL es una buena aproximación con $n \geq 30$ para distribuciones moderadamente asimétricas, y $n \geq 50$ para distribuciones muy asimétricas.
+</li>
+</ul>
+
+## Demostración intuitiva: sumas de Uniformes
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+set.seed(19)
+B <- 5000
+ns <- c(1, 2, 5, 30)
+
+df <- map_dfr(ns, function(n) {
+  sumas <- replicate(B, mean(runif(n, 0, 1)))
+  tibble(xbar = sumas, n = paste0("n = ", n))
+}) |> mutate(n = factor(n, levels = paste0("n = ", ns)))
+
+ggplot(df, aes(x = xbar)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 40,
+                 fill = "#1a3a6b", color = "white", alpha = 0.8) +
+  facet_wrap(~n, scales = "free_y") +
+  labs(x = "Media muestral", y = "Densidad",
+       title = "TCL: medias de Uniforme(0,1) convergen a Normal") +
+  theme_minimal(base_size = 12)
+```
+
+## Velocidad de convergencia
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Distribuciones simétricas</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+La convergencia es rápida: con $n \geq 10$ la aproximación Normal es buena.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+Ejemplos: Uniforme, Binomial($n$, 0.5).
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Distribuciones asimétricas</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+La convergencia es más lenta: se necesita $n \geq 50$ o más.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+Ejemplos: Exponencial, Poisson con $\lambda$ pequeño.
+</li>
+</ul>
+</div>
+
+</div>
+
+## TCL con distribución Exponencial
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+set.seed(19)
+lambda <- 0.5; B <- 5000
+mu <- 1/lambda; sigma <- 1/lambda
+ns <- c(2, 10, 30, 100)
+
+df <- map_dfr(ns, function(n) {
+  zs <- replicate(B, {
+    x <- rexp(n, lambda)
+    (mean(x) - mu) / (sigma / sqrt(n))
+  })
+  tibble(z = zs, n = paste0("n = ", n))
+}) |> mutate(n = factor(n, levels = paste0("n = ", ns)))
+
+ggplot(df, aes(x = z)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 40,
+                 fill = "#1b4d2e", color = "white", alpha = 0.8) +
+  stat_function(fun = dnorm, color = "#c0392b", linewidth = 1) +
+  facet_wrap(~n) +
+  labs(x = "Z estandarizado", y = "Densidad",
+       title = "TCL: Exp(0.5) converge a N(0,1)") +
+  theme_minimal(base_size = 12)
+```
+
+## Aproximación Normal a la Binomial
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Corolario: aproximación Normal a Binomial</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Bin}(n, p)$ con $np \geq 5$ y $n(1-p) \geq 5$:</p>
+  $$X \approx N(np,\; np(1-p))$$
+  <p>Con corrección de continuidad: $P(X \leq k) \approx \Phi\!\left(\dfrac{k + 0.5 - np}{\sqrt{np(1-p)}}\right)$.</p>
+  </div>
+</div>
+
+## Corrección de continuidad: ejemplo
+
+```{r}
+#| echo: true
+n <- 50; p <- 0.4
+# Exacto (Binomial)
+p_exacto <- pbinom(22, n, p)
+
+# Aproximación Normal sin corrección
+p_sin_cc <- pnorm(22, n*p, sqrt(n*p*(1-p)))
+
+# Aproximación Normal con corrección de continuidad
+p_con_cc <- pnorm(22.5, n*p, sqrt(n*p*(1-p)))
+
+cat("Binomial exacto:", round(p_exacto, 5), "\n")
+cat("Normal sin CC:  ", round(p_sin_cc, 5), "\n")
+cat("Normal con CC:  ", round(p_con_cc, 5), "\n")
+```
+
+## Aproximación Normal a la Poisson
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Corolario: aproximación Normal a Poisson</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Poisson}(\lambda)$ con $\lambda$ grande ($\lambda \geq 10$):</p>
+  $$X \approx N(\lambda, \lambda)$$
+  </div>
+</div>
+
+```{r}
+#| echo: true
+lambda <- 25
+# Exacto
+ppois(20, lambda)
+# Aproximación Normal con CC
+pnorm(20.5, lambda, sqrt(lambda))
+
+# Gráfica comparativa
+k <- 0:50
+df_comp <- data.frame(k, pois = dpois(k, lambda),
+                       norm = dnorm(k, lambda, sqrt(lambda)))
+```
+
+## Ejemplo aplicado: rendimiento de maíz
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: maíz, Valledupar</div>
+  <div class="block-body">
+  <p>El rendimiento por planta de maíz en Valledupar sigue una distribución con $\mu = 250\,\text{g}$ y $\sigma = 40\,\text{g}$ (distribución desconocida). Se toman $n = 64$ plantas. ¿Cuál es la probabilidad de que el rendimiento promedio supere 260 g?</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Por el TCL, con $n = 64$: $\bar{X} \approx N(250, 40^2/64) = N(250, 25)$, es decir $\sigma_{\bar{X}} = 5$.
+</li>
+</ul>
+
+```{r}
+#| echo: true
+mu <- 250; sigma <- 40; n <- 64
+ee <- sigma / sqrt(n)
+pnorm(260, mu, ee, lower.tail = FALSE)
+```
+
+## Condiciones del TCL: cuándo no aplica
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: violaciones del TCL</div>
+  <div class="block-body">
+  <p>El TCL requiere varianza finita. Cuando no se cumple, la aproximación Normal falla.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Distribución Cauchy:</strong> no tiene media ni varianza finita. La media muestral no converge a Normal.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Distribuciones de colas muy pesadas:</strong> si existen valores extremos muy frecuentes, $n$ debe ser muy grande.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Dependencia:</strong> el TCL clásico requiere independencia. Para series de tiempo o datos espaciales, existen versiones modificadas.
+</li>
+</ul>
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: malas interpretaciones del TCL</div>
+  <div class="block-body">
+  <p>El TCL afirma que $\bar{X}$ se distribuye aproximadamente Normal; no afirma que los datos individuales sean Normales.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Error frecuente:</strong> concluir que la población es Normal porque la media muestral "parece" Normal. La distribución de $X_i$ puede seguir siendo Exponencial, Poisson, etc.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>$n \geq 30$ como regla absoluta:</strong> es una guía, no una garantía. Para distribuciones muy asimétricas se necesita mayor $n$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Ignorar la corrección de continuidad:</strong> al aproximar Binomial o Poisson con la Normal, la corrección mejora la precisión, especialmente para $n$ moderado.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: aplicación del TCL
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El número de huevos puestos por una gallina en un ciclo sigue una distribución con $\mu = 6$ y $\sigma = 1.5$ huevos. Se registran $n = 36$ gallinas. Calcule: (a) $P(\bar{X} > 6.4)$, (b) $P(5.7 \leq \bar{X} \leq 6.3)$, (c) el valor $c$ tal que $P(\bar{X} \leq c) = 0.80$.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+mu <- 6; sigma <- 1.5; n <- 36
+ee <- sigma / sqrt(n)
+cat("EE:", ee, "\n")
+
+# (a) P(Xbar > 6.4)
+pnorm(6.4, mu, ee, lower.tail = FALSE)
+
+# (b) P(5.7 <= Xbar <= 6.3)
+pnorm(6.3, mu, ee) - pnorm(5.7, mu, ee)
+
+# (c) c tal que P(Xbar <= c) = 0.80
+qnorm(0.80, mu, ee)
+```
+
+## Taller 2: aproximación Normal a Binomial
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un ensayo de vacunación contra la fiebre aftosa, el 70% de los bovinos vacunados desarrolla inmunidad protectora. Se vacunan 200 animales. (a) ¿Cuál es la probabilidad de que entre 130 y 150 desarrollen inmunidad? Use la aproximación Normal con corrección de continuidad. (b) Compare con el valor exacto Binomial.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+n <- 200; p <- 0.70
+mu_b <- n * p; sigma_b <- sqrt(n * p * (1 - p))
+cat("mu =", mu_b, "  sigma =", round(sigma_b, 4), "\n")
+
+# Exacto
+exacto <- pbinom(150, n, p) - pbinom(129, n, p)
+
+# Normal con corrección de continuidad
+aprox  <- pnorm(150.5, mu_b, sigma_b) - pnorm(129.5, mu_b, sigma_b)
+
+cat("Binomial exacto:", round(exacto, 5), "\n")
+cat("Normal con CC:  ", round(aprox, 5), "\n")
+```
+
+## Taller 3: simulación del TCL
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Simule la distribución muestral de $\bar{X}$ para $n \in \{5, 30, 100\}$ cuando la población sigue una distribución Poisson($\lambda = 2$). Grafique los histogramas y superponga la densidad Normal teórica. ¿Para qué $n$ la aproximación es buena visualmente?</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+lambda <- 2; B <- 4000
+ns <- c(5, 30, 100)
+
+df <- map_dfr(ns, function(n) {
+  set.seed(19)
+  tibble(xbar = replicate(B, mean(rpois(n, lambda))),
+         n = paste0("n = ", n),
+         mu_t = lambda, sd_t = sqrt(lambda/n))
+}) |> mutate(n = factor(n, levels = paste0("n = ", ns)))
+
+ggplot(df, aes(x = xbar)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 35,
+                 fill = "#1a3a6b", color = "white", alpha = 0.75) +
+  stat_function(fun = ~dnorm(.x, lambda, sqrt(lambda/as.numeric(gsub("n = ","",
+               df$n[1])))), inherit.aes = FALSE, color = "#c0392b") +
+  facet_wrap(~n, scales = "free") +
+  labs(x = expression(bar(X)), title = "TCL: Poisson(2) para distintos n") +
+  theme_minimal(base_size = 12)
+```
+
+## Resumen: Teorema Central del Límite
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">El TCL en síntesis</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px;">$X_i$ i.i.d., $\mu$ y $\sigma^2$ finitos.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">$\bar{X} \approx N(\mu, \sigma^2/n)$ para $n$ grande.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">Válido sin importar la distribución original.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">$n \geq 30$ como guía, más si hay asimetría.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 26px;">Aplicaciones</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">Justifica los intervalos de confianza (Clase 20).</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">Aproximación Normal a Binomial y Poisson.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">Fundamento de pruebas $Z$ y $t$ (Clases 23-25).</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 20: Estimadores e intervalos de confianza.</strong> Usaremos el TCL y las distribuciones muestrales para construir estimaciones puntuales y por intervalos de los parámetros poblacionales.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Estudiaremos propiedades deseables de los estimadores: insesgamiento, consistencia y eficiencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Construiremos el primer intervalo de confianza para la media con $\sigma$ conocida.
+</li>
+</ul>

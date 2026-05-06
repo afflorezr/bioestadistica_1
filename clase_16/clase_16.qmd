@@ -1,0 +1,578 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 16 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: La distribución Normal</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">FDP y propiedades de la campana.</li>
+<li class="fragment fade-in" data-fragment-index="3">Parámetros $\mu$ y $\sigma$.</li>
+<li class="fragment fade-in" data-fragment-index="4">Normal estándar Z.</li>
+<li class="fragment fade-in" data-fragment-index="5">Regla empírica 68-95-99.7.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Cálculo y aplicaciones</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Estandarización y uso de tablas.</li>
+<li class="fragment fade-in" data-fragment-index="8">Cálculo de probabilidades en R.</li>
+<li class="fragment fade-in" data-fragment-index="9">Percentiles y valores críticos.</li>
+<li class="fragment fade-in" data-fragment-index="10">Ejemplos agrícolas y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Distribución Normal</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">La campana de Gauss y su papel central en estadística</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Motivación: ¿por qué la Normal es ubícua?
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El peso de los frutos de una cosecha de aguacate Hass en Antioquia varía alrededor de un valor central con dispersión simétrica.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La estatura de animales de una misma raza, el error de medición de un instrumento, la concentración de un nutriente en suelo: todos siguen aproximadamente una distribución Normal.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La Normal surge cuando la variable es la <strong>suma de muchos efectos pequeños e independientes</strong> (Teorema Central del Límite, Clase 19).
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Es la base de la mayoría de pruebas estadísticas clásicas y de los intervalos de confianza.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Distribución Normal: definición
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Distribución Normal</div>
+  <div class="block-body">
+  <p>Se dice que $X \sim N(\mu, \sigma^2)$ si su FDP es:</p>
+  $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \mathbb{R}$$
+  <p>donde $\mu \in \mathbb{R}$ es la <strong>media</strong> y $\sigma > 0$ es la <strong>desviación estándar</strong>.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+La constante $\frac{1}{\sigma\sqrt{2\pi}}$ normaliza la integral a 1.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+No existe forma cerrada para $F(x) = P(X \leq x)$: se usa la función erf o tablas.
+</li>
+</ul>
+
+## Propiedades de la campana de Gauss
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
+<strong>Simetría:</strong> la FDP es simétrica alrededor de $\mu$: media = mediana = moda = $\mu$.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Campana:</strong> la curva tiene un único máximo en $x = \mu$ y dos puntos de inflexión en $x = \mu \pm \sigma$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>Colas asimétricamente ligeras:</strong> $f(x) \to 0$ cuando $|x| \to \infty$, pero nunca toca 0.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>Parámetros:</strong> $E(X) = \mu$, $\text{Var}(X) = \sigma^2$, $\text{Asimetría} = 0$, $\text{Curtosis} = 3$.
+</li>
+</ul>
+
+## Efecto de $\mu$ y $\sigma$ en la forma
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+params <- tibble(mu = c(0, 2, 0, 0), sigma = c(1, 1, 0.5, 2))
+x <- seq(-7, 7, length.out = 500)
+df <- params |>
+  rowwise() |>
+  mutate(data = list(tibble(x = x, f = dnorm(x, mu, sigma)))) |>
+  unnest(data) |>
+  mutate(etiq = paste0("N(", mu, ", ", sigma^2, ")"))
+
+ggplot(df, aes(x, f, color = etiq)) +
+  geom_line(linewidth = 1.2) +
+  labs(x = "x", y = "f(x)", color = NULL,
+       title = "Normal: efecto de μ y σ") +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "top")
+```
+
+## La normal estándar: $Z \sim N(0,1)$
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Normal estándar</div>
+  <div class="block-body">
+  <p>La distribución $N(0, 1)$ se denomina <strong>normal estándar</strong>. Su FDP es:</p>
+  $$\phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}, \quad z \in \mathbb{R}$$
+  <p>Su FDA es $\Phi(z) = P(Z \leq z)$, tabulada y disponible en R como <code>pnorm(z)</code>.</p>
+  </div>
+</div>
+
+## Estandarización
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: estandarización</div>
+  <div class="block-body">
+  <p>Si $X \sim N(\mu, \sigma^2)$, entonces $Z = \dfrac{X - \mu}{\sigma} \sim N(0, 1)$.</p>
+  <p>En consecuencia:</p>
+  $$P(X \leq x) = P\!\left(Z \leq \frac{x - \mu}{\sigma}\right) = \Phi\!\left(\frac{x - \mu}{\sigma}\right)$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+La estandarización convierte cualquier cálculo de probabilidad Normal a un cálculo en la tabla de $N(0,1)$.
+</li>
+</ul>
+
+## Regla empírica 68-95-99.7
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Regla empírica</div>
+  <div class="block-body">
+  <p>Si $X \sim N(\mu, \sigma^2)$:</p>
+  <ul>
+  <li>$P(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0.6827$ (68.27%)</li>
+  <li>$P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) \approx 0.9545$ (95.45%)</li>
+  <li>$P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) \approx 0.9973$ (99.73%)</li>
+  </ul>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+pnorm(1) - pnorm(-1)   # P(-1 < Z < 1)
+pnorm(2) - pnorm(-2)   # P(-2 < Z < 2)
+pnorm(3) - pnorm(-3)   # P(-3 < Z < 3)
+```
+
+## Gráfica de la regla empírica
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+x <- seq(-4, 4, length.out = 500)
+df <- data.frame(x, f = dnorm(x))
+
+ggplot(df, aes(x, f)) +
+  geom_line(linewidth = 1.3, color = "#1a3a6b") +
+  geom_ribbon(data = subset(df, x >= -3 & x <= 3),
+              aes(ymin = 0, ymax = f), fill = "#dce9f7", alpha = 0.8) +
+  geom_ribbon(data = subset(df, x >= -2 & x <= 2),
+              aes(ymin = 0, ymax = f), fill = "#1a3a6b", alpha = 0.3) +
+  geom_ribbon(data = subset(df, x >= -1 & x <= 1),
+              aes(ymin = 0, ymax = f), fill = "#1a3a6b", alpha = 0.5) +
+  annotate("text", x = 0, y = 0.15, label = "68%", size = 5, fontface = "bold") +
+  annotate("text", x = 0, y = 0.07, label = "95%", size = 5) +
+  annotate("text", x = 0, y = 0.03, label = "99.7%", size = 4.5) +
+  labs(x = "z", y = "φ(z)", title = "Regla empírica: N(0,1)") +
+  theme_minimal(base_size = 13)
+```
+
+## Ejemplo 1: peso de frutos de aguacate
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: aguacate Hass, Antioquia</div>
+  <div class="block-body">
+  <p>El peso de los frutos de aguacate Hass en una finca de Marinilla (Antioquia) sigue $N(\mu = 220\,\text{g},\, \sigma^2 = 625\,\text{g}^2)$, es decir $\sigma = 25\,\text{g}$. Calcule:</p>
+  <ol style="font-size: 26px;">
+  <li>$P(X \leq 250)$</li>
+  <li>$P(180 \leq X \leq 260)$</li>
+  <li>$P(X > 280)$</li>
+  <li>Valor $c$ tal que $P(X \leq c) = 0.90$.</li>
+  </ol>
+  </div>
+</div>
+
+## Cálculo manual: estandarización
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">$P(X \leq 250)$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;">
+$z = \dfrac{250 - 220}{25} = 1.20$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;">
+$P(Z \leq 1.20) = \Phi(1.20) \approx 0.8849$
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">$P(180 \leq X \leq 260)$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px;">
+$z_1 = \dfrac{180-220}{25} = -1.60$, $\quad z_2 = \dfrac{260-220}{25} = 1.60$
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px;">
+$\Phi(1.60) - \Phi(-1.60) = 2\Phi(1.60) - 1 \approx 0.8904$
+</li>
+</ul>
+</div>
+
+</div>
+
+## Código R: distribución normal
+
+```{r}
+#| echo: true
+mu <- 220; sigma <- 25
+
+# (1) P(X <= 250)
+pnorm(250, mean = mu, sd = sigma)
+
+# (2) P(180 <= X <= 260)
+pnorm(260, mu, sigma) - pnorm(180, mu, sigma)
+
+# (3) P(X > 280)
+pnorm(280, mu, sigma, lower.tail = FALSE)
+
+# (4) c tal que P(X <= c) = 0.90
+qnorm(0.90, mean = mu, sd = sigma)
+```
+
+## Visualización: probabilidades de la Normal
+
+```{r}
+#| echo: true
+#| fig-height: 4
+mu <- 220; sigma <- 25
+x <- seq(130, 310, length.out = 500)
+df <- data.frame(x, f = dnorm(x, mu, sigma))
+
+ggplot(df, aes(x, f)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.3) +
+  geom_ribbon(data = subset(df, x <= 250),
+              aes(ymin = 0, ymax = f), fill = "#1b4d2e", alpha = 0.4) +
+  geom_vline(xintercept = mu, color = "#c0392b", linetype = "dashed") +
+  annotate("text", x = 215, y = 0.009, label = "μ = 220g", color = "#c0392b", size = 4) +
+  annotate("text", x = 200, y = 0.006, label = "P(X ≤ 250) ≈ 88.5%",
+           color = "#1b4d2e", size = 4.5, fontface = "bold") +
+  labs(x = "Peso (g)", y = "f(x)", title = "N(220, 625): peso aguacate Hass") +
+  theme_minimal(base_size = 13)
+```
+
+## Simetría de la normal estándar
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Propiedades de simetría</div>
+  <div class="block-body">
+  <p>Para $Z \sim N(0,1)$:</p>
+  <ul>
+  <li>$P(Z \leq -z) = 1 - \Phi(z)$ (simetría alrededor de 0)</li>
+  <li>$P(|Z| \leq z) = 2\Phi(z) - 1$</li>
+  <li>$P(Z \geq z) = P(Z \leq -z) = 1 - \Phi(z)$</li>
+  </ul>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Verificación de simetría
+pnorm(-1.5)                    # P(Z <= -1.5)
+1 - pnorm(1.5)                 # 1 - Phi(1.5)  => deben ser iguales
+pnorm(1.96) - pnorm(-1.96)     # P(-1.96 < Z < 1.96) ≈ 0.95
+```
+
+## Valores críticos de la Normal
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>Los <strong>valores críticos</strong> $z_{\alpha}$ son los cuantiles de $N(0,1)$ más usados en inferencia estadística:</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Valores críticos más usados
+cat("z_0.90 =", round(qnorm(0.90), 4), "\n")   # 1.2816
+cat("z_0.95 =", round(qnorm(0.95), 4), "\n")   # 1.6449
+cat("z_0.975 =", round(qnorm(0.975), 4), "\n") # 1.9600
+cat("z_0.995 =", round(qnorm(0.995), 4), "\n") # 2.5758
+```
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p>Estos valores se usarán en intervalos de confianza (Clase 21) y pruebas de hipótesis (Clase 23).</p>
+  </div>
+</div>
+
+## Ejemplo 2: contenido de proteína en leche bovina
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: leche Holstein, Cundinamarca</div>
+  <div class="block-body">
+  <p>El porcentaje de proteína en leche de vacas Holstein en Cundinamarca sigue $N(\mu = 3.20\%, \sigma = 0.18\%)$. La norma colombiana NTC 506 exige mínimo 2.9% de proteína. ¿Qué proporción de muestras no cumple la norma?</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+mu <- 3.20; sigma <- 0.18
+# P(X < 2.9): proporción que no cumple
+pnorm(2.90, mu, sigma)
+# Estandarización manual
+z <- (2.90 - mu) / sigma
+cat("z =", round(z, 4), "  P(Z <", round(z,2), ") =", round(pnorm(z), 4), "\n")
+```
+
+## Verificación de normalidad: QQ-plot
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+# QQ-plot para verificar normalidad
+set.seed(16)
+proteina <- rnorm(60, mean = 3.20, sd = 0.18)
+
+library(ggplot2)
+df_qq <- data.frame(
+  teorico  = qnorm(ppoints(length(proteina))),
+  muestral = sort(proteina)
+)
+ggplot(df_qq, aes(teorico, muestral)) +
+  geom_point(color = "#1b4d2e", size = 2) +
+  geom_abline(slope = sd(proteina), intercept = mean(proteina),
+              color = "#c0392b") +
+  labs(x = "Cuantiles N(0,1)", y = "Cuantiles muestrales",
+       title = "QQ-plot: proteína en leche bovina") +
+  theme_minimal(base_size = 13)
+```
+
+## Test de Shapiro-Wilk
+
+```{r}
+#| echo: true
+# Prueba formal de normalidad
+set.seed(16)
+proteina <- rnorm(60, mean = 3.20, sd = 0.18)
+shapiro.test(proteina)
+
+# Interpretación: si p-valor > 0.05, no se rechaza normalidad
+```
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>El test de Shapiro-Wilk es el más potente para tamaños de muestra pequeños ($n < 50$). Para muestras grandes, use el test de Kolmogorov-Smirnov o Lilliefors.</p>
+  </div>
+</div>
+
+## Combinaciones lineales de Normales
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: linealidad de la Normal</div>
+  <div class="block-body">
+  <p>Si $X \sim N(\mu_X, \sigma_X^2)$ y $Y \sim N(\mu_Y, \sigma_Y^2)$ son independientes, entonces:</p>
+  $$aX + bY \sim N(a\mu_X + b\mu_Y,\; a^2\sigma_X^2 + b^2\sigma_Y^2)$$
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Aplicación: mezcla de fertilizantes</div>
+  <div class="block-body">
+  <p>Si la concentración de N en el fertilizante A sigue $N(12, 1)$ y en el B $N(15, 2)$, la mezcla 50%-50% tiene concentración con distribución $N(13.5, 0.75)$.</p>
+  </div>
+</div>
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>La distribución Normal tiene convenciones y trampas que causan errores frecuentes.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Parámetro en R:</strong> <code>rnorm(n, mean, sd)</code> recibe $\sigma$ (desviación estándar), no $\sigma^2$ (varianza).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>No toda variable continua es Normal:</strong> verifique con QQ-plot o Shapiro-Wilk antes de asumir normalidad.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Simetría:</strong> $\Phi(-z) = 1 - \Phi(z)$. No busque valores negativos en la tabla estándar.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
+<strong>$P(X = x) = 0$:</strong> como toda variable continua, la probabilidad puntual es cero. Solo se calculan probabilidades de intervalos.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: estandarización y probabilidades
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>La longitud de mazorcas de maíz en Córdoba sigue $N(\mu = 22\,\text{cm}, \sigma = 3\,\text{cm})$. Calcule: (a) $P(X > 25)$, (b) $P(18 \leq X \leq 26)$, (c) valor $c$ tal que solo el 5% de las mazorcas supera $c$, (d) proporción de mazorcas entre $\mu - 2\sigma$ y $\mu + 2\sigma$.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+mu <- 22; sigma <- 3
+
+# (a) P(X > 25)
+pnorm(25, mu, sigma, lower.tail = FALSE)
+
+# (b) P(18 <= X <= 26)
+pnorm(26, mu, sigma) - pnorm(18, mu, sigma)
+
+# (c) c tal que P(X > c) = 0.05
+qnorm(0.95, mu, sigma)
+
+# (d) Regla 2-sigma
+pnorm(mu + 2*sigma, mu, sigma) - pnorm(mu - 2*sigma, mu, sigma)
+```
+
+## Taller 2: percentiles e interpretación
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El contenido de grasa de leche de búfala en el Meta sigue $N(\mu = 7.5\%, \sigma = 0.8\%)$. El comprador rechaza muestras con menos de 6.5% o más de 9.0%. ¿Qué proporción de muestras es rechazada? ¿Cuál es el percentil 10?</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+mu <- 7.5; sigma <- 0.8
+
+# P(rechazada) = P(X < 6.5) + P(X > 9.0)
+p_bajo <- pnorm(6.5, mu, sigma)
+p_alto <- pnorm(9.0, mu, sigma, lower.tail = FALSE)
+cat("P(rechazo) =", round(p_bajo + p_alto, 4), "\n")
+
+# Percentil 10
+qnorm(0.10, mu, sigma)
+```
+
+## Taller 3: verificación de normalidad
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se midió el pH del suelo en 30 parcelas de caficultura en Huila: haga un QQ-plot y aplique Shapiro-Wilk para verificar si los datos siguen una distribución Normal. Use los datos simulados del código.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+set.seed(16)
+ph_suelo <- c(rnorm(25, 5.8, 0.3), runif(5, 4.5, 5.0))  # datos ligeramente no normales
+shapiro.test(ph_suelo)
+qqnorm(ph_suelo, main = "QQ-plot: pH suelo caficultura")
+qqline(ph_suelo, col = "red")
+```
+
+## Resumen: distribución Normal
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 28px;">Fórmulas clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;">$X \sim N(\mu, \sigma^2)$: campana centrada en $\mu$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;">Estandarización: $Z = (X-\mu)/\sigma \sim N(0,1)$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">$P(X \leq x) = \Phi\!\left(\frac{x-\mu}{\sigma}\right)$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px;">Regla 68-95-99.7%.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 28px;">Uso en R</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px;"><code>dnorm(x, mean, sd)</code>: densidad.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px;"><code>pnorm(x, mean, sd)</code>: $P(X \leq x)$.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px;"><code>qnorm(p, mean, sd)</code>: percentil $p$.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 25px;"><code>shapiro.test(x)</code>: prueba de normalidad.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 17: Tipos de muestreo.</strong> Pasamos de distribuciones de probabilidad a la inferencia estadística. ¿Cómo seleccionar una muestra que represente correctamente a la población de interés?</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Estudiaremos muestreo aleatorio simple, estratificado, por conglomerados y sistemático, con ejemplos en ensayos agrícolas.
+</li>
+</ul>
