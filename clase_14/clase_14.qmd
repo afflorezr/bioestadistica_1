@@ -1,0 +1,641 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 14 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Variables continuas</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Función de densidad de probabilidad (FDP).</li>
+<li class="fragment fade-in" data-fragment-index="3">Función de distribución acumulada continua.</li>
+<li class="fragment fade-in" data-fragment-index="4">Propiedades fundamentales.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="5" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Distribución Uniforme</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="6">Definición y parámetros.</li>
+<li class="fragment fade-in" data-fragment-index="7">FDP y FDA de la Uniforme.</li>
+<li class="fragment fade-in" data-fragment-index="8">Ejemplos agrícolas y código R.</li>
+<li class="fragment fade-in" data-fragment-index="9">Errores comunes y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Distribución Uniforme Continua</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Cuando todos los valores en un intervalo son igualmente posibles</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Del mundo discreto al mundo continuo
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Variables discretas (Clases 9-13)</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Soporte finito o infinito numerable: $\{0, 1, 2, \ldots\}$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+$P(X = k) > 0$ para cada valor del soporte.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Función de masa de probabilidad (FMP).
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#1a3a6b;">Variables continuas (Clases 14-16)</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Soporte intervalo (acotado o no): $[a, b]$, $(0, \infty)$, $(-\infty, \infty)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+$P(X = x) = 0$ para cualquier valor puntual.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+Función de densidad de probabilidad (FDP).
+</li>
+</ul>
+</div>
+
+</div>
+
+## Función de densidad de probabilidad (FDP)
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: FDP</div>
+  <div class="block-body">
+  <p>Una función $f(x)$ es una <strong>función de densidad de probabilidad</strong> si:</p>
+  <ol style="font-size: 27px;">
+  <li>$f(x) \geq 0$ para todo $x$.</li>
+  <li>$\displaystyle\int_{-\infty}^{\infty} f(x)\,dx = 1$.</li>
+  </ol>
+  <p>La probabilidad de que $X$ caiga en el intervalo $[a, b]$ es:</p>
+  $$P(a \leq X \leq b) = \int_a^b f(x)\,dx$$
+  </div>
+</div>
+
+## Propiedades de las variables continuas
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
+Para variables continuas, $P(X = x) = 0$ para cualquier $x$ puntual. Las probabilidades se calculan siempre sobre <strong>intervalos</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Como consecuencia: $P(a < X < b) = P(a \leq X < b) = P(a < X \leq b) = P(a \leq X \leq b)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La FDA continua es: $F(x) = P(X \leq x) = \displaystyle\int_{-\infty}^{x} f(t)\,dt$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Relación FDP-FDA: $f(x) = F'(x)$ (la FDP es la derivada de la FDA).
+</li>
+</ul>
+
+## Motivación: distribución uniforme
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El tiempo de emergencia de una plaga en un cultivo puede ocurrir con igual probabilidad en cualquier momento de un intervalo de 2 horas tras la lluvia.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La posición de un insecto polinizador al ser capturado puede estar uniformemente distribuida a lo largo de una franja de cultivo.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+En todos estos casos, <strong>todos los valores en el intervalo son igualmente probables</strong>: la densidad es constante.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Este modelo es también la base de la simulación computacional: los generadores de números aleatorios producen valores $\text{Uniforme}(0, 1)$.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Distribución uniforme continua: definición
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Distribución Uniforme</div>
+  <div class="block-body">
+  <p>Se dice que $X \sim \text{Uniforme}(a, b)$ si su FDP es:</p>
+  $$f(x) = \begin{cases} \dfrac{1}{b-a} & a \leq x \leq b \\ 0 & \text{en otro caso} \end{cases}$$
+  <p>donde $a < b$ son los extremos del intervalo soporte.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+La densidad es <strong>constante</strong> en $[a, b]$: todos los subintervalos de igual longitud tienen la misma probabilidad.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Verificación: $\int_a^b \frac{1}{b-a}\,dx = \frac{b-a}{b-a} = 1$. ✓
+</li>
+</ul>
+
+## FDA de la distribución uniforme
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">FDA: Uniforme(a, b)</div>
+  <div class="block-body">
+  $$F(x) = \begin{cases} 0 & x < a \\ \dfrac{x - a}{b - a} & a \leq x \leq b \\ 1 & x > b \end{cases}$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+La FDA crece <strong>linealmente</strong> de 0 a 1 en el intervalo $[a, b]$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Cálculo de probabilidades: $P(c \leq X \leq d) = F(d) - F(c) = \dfrac{d - c}{b - a}$ para $a \leq c \leq d \leq b$.
+</li>
+</ul>
+
+## Parámetros de la distribución uniforme
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: E(X), Var(X) y percentiles</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Uniforme}(a, b)$:</p>
+  $$E(X) = \frac{a + b}{2} \qquad \text{Var}(X) = \frac{(b-a)^2}{12}$$
+  <p>El percentil $p$ es: $x_p = a + p(b-a)$.</p>
+  </div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Demostración: E(X)</div>
+  <div class="block-body">
+  $$E(X) = \int_a^b x \cdot \frac{1}{b-a}\,dx = \frac{1}{b-a} \cdot \frac{x^2}{2}\bigg|_a^b = \frac{b^2 - a^2}{2(b-a)} = \frac{a+b}{2} \quad \blacksquare$$
+  </div>
+</div>
+
+## Derivación: Var(X) de la Uniforme
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Demostración: Var(X)</div>
+  <div class="block-body">
+  $$E(X^2) = \int_a^b x^2 \cdot \frac{1}{b-a}\,dx = \frac{b^3 - a^3}{3(b-a)} = \frac{a^2 + ab + b^2}{3}$$
+  $$\text{Var}(X) = E(X^2) - [E(X)]^2 = \frac{a^2+ab+b^2}{3} - \frac{(a+b)^2}{4} = \frac{(b-a)^2}{12} \quad \blacksquare$$
+  </div>
+</div>
+
+## Gráfica: FDP y FDA de la Uniforme
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(patchwork)
+a <- 2; b <- 8
+x <- seq(0, 10, length.out = 500)
+fdp <- dunif(x, a, b)
+fda <- punif(x, a, b)
+
+p1 <- ggplot(data.frame(x, fdp), aes(x, fdp)) +
+  geom_line(color = "#1b4d2e", linewidth = 1.5) +
+  geom_ribbon(data = subset(data.frame(x, fdp), x >= a & x <= b),
+              aes(ymin = 0, ymax = fdp), fill = "#1b4d2e", alpha = 0.3) +
+  labs(x = "x", y = "f(x)", title = "FDP: Uniforme(2, 8)") +
+  theme_minimal(base_size = 13)
+
+p2 <- ggplot(data.frame(x, fda), aes(x, fda)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.5) +
+  labs(x = "x", y = "F(x)", title = "FDA: Uniforme(2, 8)") +
+  theme_minimal(base_size = 13)
+
+p1 + p2
+```
+
+## Ejemplo 1: tiempo de colecta en campo
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: muestreo de suelo, Nariño</div>
+  <div class="block-body">
+  <p>El tiempo de colecta de una muestra de suelo en una parcela de papa en Nariño varía uniformemente entre 3 y 11 minutos. Sea $X$ = tiempo de colecta (minutos).</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Uniforme}(3, 11)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$E(X) = (3 + 11)/2 = 7$ minutos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+$\text{Var}(X) = (11 - 3)^2/12 = 64/12 \approx 5.33$, $\quad \sigma \approx 2.31$ minutos.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Calcule: (a) $P(X \leq 5)$, (b) $P(5 \leq X \leq 9)$, (c) percentil 75.
+</li>
+</ul>
+
+## Cálculo manual: ejemplo tiempo de colecta
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">$P(X \leq 5)$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+$$P(X \leq 5) = F(5) = \frac{5 - 3}{11 - 3} = \frac{2}{8} = 0.25$$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+El 25% de las veces la colecta dura 5 minutos o menos.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">$P(5 \leq X \leq 9)$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+$$P(5 \leq X \leq 9) = \frac{9-5}{11-3} = \frac{4}{8} = 0.50$$
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+El 50% de las colectas dura entre 5 y 9 minutos.
+</li>
+</ul>
+</div>
+
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 27px; text-align: justify;">
+Percentil 75: $x_{0.75} = a + 0.75(b-a) = 3 + 0.75 \times 8 = 9$ minutos.
+</li>
+</ul>
+
+## Código R: distribución uniforme
+
+```{r}
+#| echo: true
+a <- 3; b <- 11
+
+# FDP en x = 6
+dunif(6, min = a, max = b)       # = 1/(b-a) = 1/8 = 0.125
+
+# P(X <= 5)
+punif(5, min = a, max = b)
+
+# P(5 <= X <= 9)
+punif(9, a, b) - punif(5, a, b)
+
+# Percentil 75
+qunif(0.75, min = a, max = b)
+
+# Simulación de 1000 tiempos de colecta
+set.seed(7)
+sim <- runif(1000, min = a, max = b)
+cat("Media:", round(mean(sim), 3), " Var:", round(var(sim), 3), "\n")
+```
+
+## Interpretación geométrica de la probabilidad
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>Para la Uniforme(a, b), la probabilidad $P(c \leq X \leq d)$ es el <strong>área del rectángulo</strong> con base $(d-c)$ y altura $\frac{1}{b-a}$:</p>
+  $$P(c \leq X \leq d) = (d - c) \times \frac{1}{b-a} = \frac{d-c}{b-a}$$
+  </div>
+</div>
+
+```{r}
+#| echo: true
+#| fig-height: 3
+a <- 3; b <- 11; c_ <- 5; d_ <- 9
+x <- seq(0, 13, length.out = 500)
+df <- data.frame(x, fdp = dunif(x, a, b))
+ggplot(df, aes(x, fdp)) +
+  geom_line(color = "#1b4d2e", linewidth = 1.2) +
+  geom_ribbon(data = subset(df, x >= c_ & x <= d_),
+              aes(ymin = 0, ymax = fdp), fill = "#1a3a6b", alpha = 0.5) +
+  annotate("text", x = (c_ + d_)/2, y = 1/(b-a)/2,
+           label = "P(5 ≤ X ≤ 9) = 0.50", color = "white", size = 5, fontface = "bold") +
+  labs(x = "x", y = "f(x)", title = "Uniforme(3, 11): área = probabilidad") +
+  theme_minimal(base_size = 13)
+```
+
+## Ejemplo 2: dispersión de semillas en una franja
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: dispersión de semillas de arroz, Tolima</div>
+  <div class="block-body">
+  <p>Una sembradora mecánica distribuye semillas de arroz a lo largo de una franja de 0 a 6 metros. La posición de cada semilla es Uniforme(0, 6). Si la densidad óptima exige que las semillas caigan entre 1.5 y 4.5 m del borde, ¿qué proporción cae en la zona óptima?</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Uniforme}(0, 6)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$P(1.5 \leq X \leq 4.5) = \dfrac{4.5 - 1.5}{6 - 0} = \dfrac{3}{6} = 0.50$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+El 50% de las semillas caerá en la zona óptima.
+</li>
+</ul>
+
+## Código R: ejemplo sembradora
+
+```{r}
+#| echo: true
+a <- 0; b <- 6
+
+# P(1.5 <= X <= 4.5)
+punif(4.5, a, b) - punif(1.5, a, b)
+
+# Simulación: 500 semillas
+set.seed(14)
+semillas <- runif(500, a, b)
+en_zona  <- mean(semillas >= 1.5 & semillas <= 4.5)
+cat("Proporción en zona óptima (simulada):", en_zona, "\n")
+
+# Gráfica de posición de semillas
+library(ggplot2)
+df_sim <- data.frame(pos = semillas, zona = ifelse(semillas >= 1.5 & semillas <= 4.5,
+                                                    "Óptima", "Fuera"))
+ggplot(df_sim, aes(x = pos, fill = zona)) +
+  geom_histogram(bins = 20, color = "white") +
+  scale_fill_manual(values = c("Óptima" = "#1b4d2e", "Fuera" = "#c0392b")) +
+  labs(x = "Posición (m)", y = "Frecuencia", fill = NULL,
+       title = "Posición de 500 semillas: Uniforme(0, 6)") +
+  theme_minimal(base_size = 13)
+```
+
+## Uniforme(0,1): caso estándar
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>La distribución $\text{Uniforme}(0, 1)$ tiene importancia especial: es la base de la <strong>simulación estocástica</strong>. Todo generador de números aleatorios produce valores $U \sim \text{Uniforme}(0, 1)$.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$E(U) = 0.5$, $\text{Var}(U) = 1/12 \approx 0.083$, $\sigma = 1/\sqrt{12} \approx 0.289$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>Transformación inversa:</strong> si $U \sim \text{Uniforme}(0,1)$ y $F$ es una FDA continua con inversa $F^{-1}$, entonces $X = F^{-1}(U)$ tiene distribución $F$. Esto permite simular cualquier distribución.
+</li>
+</ul>
+
+## Transformación de la Uniforme
+
+```{r}
+#| echo: true
+# Simular Exponencial(lambda=2) usando la transformación inversa
+lambda <- 2
+set.seed(99)
+U <- runif(5000)
+X <- -log(1 - U) / lambda   # inversa de la FDA Exponencial
+
+cat("Media (teórica 1/lambda = 0.5):", round(mean(X), 3), "\n")
+cat("Varianza (teórica 1/lambda^2 = 0.25):", round(var(X), 3), "\n")
+```
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>Este principio (método de transformación inversa) es fundamental en simulación estocástica de sistemas agrícolas, epidemiológicos y ecológicos.</p>
+  </div>
+</div>
+
+## Relación con otras distribuciones
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Uniforme como caso especial</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+La distribución Beta(1, 1) es idéntica a la Uniforme(0, 1).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Es el caso límite de distribuciones acampanadas con varianza muy alta.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Cuándo usar la Uniforme</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Cuando no hay información que favorezca ningún valor sobre otro dentro de un intervalo acotado.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Como distribución a priori no informativa en análisis bayesiano.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+Como base de la simulación estocástica.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>La distribución uniforme continua es sencilla pero tiene trampas conceptuales.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Confundir FDP con probabilidad:</strong> $f(x) = 1/(b-a)$ no es una probabilidad; es una densidad. Para obtener probabilidades se integra.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>$P(X = x) = 0$:</strong> para variables continuas, la probabilidad de un valor puntual es siempre cero.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>Aplicar a variables no acotadas:</strong> la Uniforme requiere un intervalo finito $[a, b]$. Para tiempos sin cota superior, use la Exponencial (Clase 15).
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+<strong><code>dunif(x, min, max)</code> devuelve la densidad:</strong> para probabilidades use <code>punif</code>.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: cálculo de probabilidades
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El peso de un fruto de mango Tommy Atkins en un cultivo del Meta sigue $\text{Uniforme}(200, 500)$ gramos. Calcule: (a) $P(X \leq 350)$, (b) $P(250 \leq X \leq 400)$, (c) el percentil 90, (d) $E(X)$ y $\sigma$.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+a <- 200; b <- 500
+
+# (a) P(X <= 350)
+punif(350, a, b)
+
+# (b) P(250 <= X <= 400)
+punif(400, a, b) - punif(250, a, b)
+
+# (c) Percentil 90
+qunif(0.90, a, b)
+
+# (d) E(X) y sigma
+E_X  <- (a + b) / 2
+sd_X <- (b - a) / sqrt(12)
+cat("E(X) =", E_X, "  sigma =", round(sd_X, 3), "\n")
+```
+
+## Taller 2: aplicación en control de riego
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El tiempo de respuesta de un sistema de riego automático en un cultivo de flores de exportación en Cundinamarca sigue $\text{Uniforme}(0.5, 3.5)$ minutos. Si el sistema falla cuando la respuesta tarda más de 3 minutos, ¿con qué frecuencia se esperan fallas?</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify;">
+$X \sim \text{Uniforme}(0.5, 3.5)$.
+</li>
+</ul>
+
+```{r}
+#| echo: true
+a <- 0.5; b <- 3.5
+
+# P(X > 3) = 1 - P(X <= 3)
+prob_falla <- 1 - punif(3, a, b)
+cat("P(falla) = P(X > 3) =", round(prob_falla, 4), "\n")
+cat("Aproximadamente el", round(prob_falla * 100, 1), "% de los ciclos tendrán fallas.\n")
+```
+
+## Taller 3: verificación de propiedades
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Sea $X \sim \text{Uniforme}(0, 1)$. (a) Verifique que $E(X) = 1/2$ integrando la FDP. (b) Demuestre que $\text{Var}(X) = 1/12$. (c) Simule 10 000 valores y compare con los valores teóricos.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+<strong>(a)</strong> $E(X) = \int_0^1 x \cdot 1\,dx = [x^2/2]_0^1 = 1/2$. ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>(b)</strong> $E(X^2) = \int_0^1 x^2\,dx = 1/3$. $\text{Var}(X) = 1/3 - (1/2)^2 = 1/3 - 1/4 = 1/12$. ✓
+</li>
+</ul>
+
+```{r}
+#| echo: true
+set.seed(14)
+U <- runif(10000)
+cat("Media simulada:", round(mean(U), 4), " (teórica: 0.5)\n")
+cat("Varianza simulada:", round(var(U), 4), " (teórica:", round(1/12, 4), ")\n")
+```
+
+## Resumen: distribución uniforme continua
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 28px;">Fórmulas clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">$f(x) = \frac{1}{b-a}$ en $[a,b]$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">$F(x) = \frac{x-a}{b-a}$ en $[a,b]$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">$E(X) = \frac{a+b}{2}$, $\text{Var}(X) = \frac{(b-a)^2}{12}$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">$x_p = a + p(b-a)$.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 28px;">Uso en R</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;"><code>dunif(x, min, max)</code>: densidad.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;"><code>punif(x, min, max)</code>: $P(X \leq x)$.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;"><code>qunif(p, min, max)</code>: percentil $p$.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px;"><code>runif(n, min, max)</code>: simulación.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 15: Distribución exponencial.</strong> Estudiaremos el modelo natural para tiempos de espera entre eventos: tiempo hasta la primera plaga, tiempo de vida útil de un equipo de riego, intervalo entre lluvias.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Veremos la propiedad de <strong>falta de memoria</strong> de la Exponencial y su conexión con el proceso de Poisson.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Aprenderemos a calcular probabilidades con <code>dexp</code>, <code>pexp</code>, <code>qexp</code> en R.
+</li>
+</ul>

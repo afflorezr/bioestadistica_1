@@ -1,0 +1,403 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 21 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: IC para la media</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">IC con $\sigma$ conocida y desconocida.</li>
+<li class="fragment fade-in" data-fragment-index="3">IC para diferencia de medias.</li>
+<li class="fragment fade-in" data-fragment-index="4">Muestras pareadas.</li>
+<li class="fragment fade-in" data-fragment-index="5">Código R: <code>t.test</code>.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: IC para la proporción</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">IC para una proporción.</li>
+<li class="fragment fade-in" data-fragment-index="8">IC para diferencia de proporciones.</li>
+<li class="fragment fade-in" data-fragment-index="9">Código R: <code>prop.test</code>.</li>
+<li class="fragment fade-in" data-fragment-index="10">Interpretación y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">Estimación de la Media y la Proporción</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Intervalos de confianza para los parámetros más usados</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Resumen: IC para la media (repaso)
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>De la Clase 20: IC al $(1-\alpha)\times 100\%$ para $\mu$:</p>
+  <ul style="font-size: 27px;">
+  <li>$\sigma$ conocida: $\bar{x} \pm z_{\alpha/2}\,\sigma/\sqrt{n}$</li>
+  <li>$\sigma$ desconocida: $\bar{x} \pm t_{\alpha/2,\,n-1}\,s/\sqrt{n}$</li>
+  </ul>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En esta clase extendemos el análisis a: comparación de dos medias independientes, medias pareadas y proporciones.
+</li>
+</ul>
+
+## IC para diferencia de medias: varianzas iguales
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">IC para $\mu_1 - \mu_2$ (varianzas iguales)</div>
+  <div class="block-body">
+  <p>Si $X_i \sim N(\mu_1, \sigma^2)$ y $Y_j \sim N(\mu_2, \sigma^2)$, muestras independientes, el IC al $(1-\alpha)\times 100\%$ para $\mu_1 - \mu_2$ es:</p>
+  $$(\bar{x} - \bar{y}) \pm t_{\alpha/2,\, n_1+n_2-2}\; S_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}$$
+  <p>donde $S_p^2 = \dfrac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$ es la varianza combinada.</p>
+  </div>
+</div>
+
+## IC para diferencia de medias: varianzas distintas
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">IC para $\mu_1 - \mu_2$ (Welch, varianzas distintas)</div>
+  <div class="block-body">
+  $$(\bar{x} - \bar{y}) \pm t_{\alpha/2,\, \nu}\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}$$
+  <p>con grados de libertad de Welch:</p>
+  $$\nu = \frac{(s_1^2/n_1 + s_2^2/n_2)^2}{\frac{(s_1^2/n_1)^2}{n_1-1}+\frac{(s_2^2/n_2)^2}{n_2-1}}$$
+  </div>
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p>En R, <code>t.test(x, y)</code> usa por defecto la aproximación de Welch (varianzas distintas), que es más conservadora y robusta.</p>
+  </div>
+</div>
+
+## Ejemplo: comparación de dos variedades de arroz
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: arroz, Tolima</div>
+  <div class="block-body">
+  <p>Se compara el rendimiento (t/ha) de dos variedades de arroz en el Tolima. Variedad A ($n_1 = 15$): $\bar{x}_1 = 5.8$, $s_1 = 0.6$. Variedad B ($n_2 = 12$): $\bar{x}_2 = 5.2$, $s_2 = 0.8$. Construya un IC al 95% para $\mu_A - \mu_B$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(21)
+arroz_A <- rnorm(15, 5.8, 0.6)
+arroz_B <- rnorm(12, 5.2, 0.8)
+
+# IC Welch (por defecto en R)
+resultado <- t.test(arroz_A, arroz_B, conf.level = 0.95)
+cat("IC 95% para mu_A - mu_B:\n")
+print(resultado$conf.int)
+cat("Diferencia estimada:", round(mean(arroz_A) - mean(arroz_B), 4), "\n")
+```
+
+## Muestras pareadas
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Muestras pareadas</div>
+  <div class="block-body">
+  <p>Cuando las mediciones se hacen sobre las mismas unidades en dos condiciones, se calculan las diferencias $D_i = X_i - Y_i$ y se construye un IC para $\mu_D = \mu_X - \mu_Y$:</p>
+  $$\bar{d} \pm t_{\alpha/2,\, n-1}\;\frac{s_d}{\sqrt{n}}$$
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: peso de bovinos antes y después de suplemento</div>
+  <div class="block-body">
+  <p>Se pesa a 10 bovinos antes y 60 días después de suministrar un suplemento proteico. ¿Aumentó el peso promedio?</p>
+  </div>
+</div>
+
+## Código R: muestras pareadas
+
+```{r}
+#| echo: true
+set.seed(21)
+antes   <- c(420, 385, 410, 398, 430, 415, 402, 390, 425, 408)
+despues <- c(438, 401, 428, 415, 449, 430, 418, 405, 441, 422)
+diferencias <- despues - antes
+
+cat("Diferencias:", diferencias, "\n")
+cat("Media d:", round(mean(diferencias), 3),
+    "  SD d:", round(sd(diferencias), 3), "\n")
+
+# IC al 95% para mu_D
+t.test(diferencias, conf.level = 0.95)$conf.int
+
+# Equivalente con paired = TRUE
+t.test(despues, antes, paired = TRUE, conf.level = 0.95)$conf.int
+```
+
+## IC para una proporción
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">IC para $p$: método de Wald</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Bin}(n, p)$ y $\hat{p} = X/n$, el IC al $(1-\alpha)\times 100\%$ para $p$ es:</p>
+  $$\hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$
+  <p>Condición: $n\hat{p} \geq 5$ y $n(1-\hat{p}) \geq 5$.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Cuando la condición no se cumple, use el <strong>IC de Wilson</strong> (implementado en <code>prop.test</code> con corrección de continuidad).
+</li>
+</ul>
+
+## Ejemplo: adopción de BPA en caficultores
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: caficultura, Huila</div>
+  <div class="block-body">
+  <p>En una encuesta a 150 caficultores del Huila, 87 declararon haber adoptado Buenas Prácticas Agrícolas (BPA). Construya un IC al 95% para la proporción real $p$ de adoptantes.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+x <- 87; n <- 150
+p_hat <- x / n
+cat("p̂ =", round(p_hat, 4), "\n")
+
+# IC de Wald (manual)
+z <- qnorm(0.975)
+ee <- sqrt(p_hat * (1 - p_hat) / n)
+ic_wald <- p_hat + c(-1, 1) * z * ee
+cat("IC Wald 95%: [", round(ic_wald[1], 4), ",", round(ic_wald[2], 4), "]\n")
+
+# IC de Wilson via prop.test
+prop.test(x, n, conf.level = 0.95)$conf.int
+```
+
+## IC para diferencia de proporciones
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">IC para $p_1 - p_2$</div>
+  <div class="block-body">
+  $$(\hat{p}_1 - \hat{p}_2) \pm z_{\alpha/2}\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}$$
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: BPA en Huila vs Nariño</div>
+  <div class="block-body">
+  <p>Huila: 87/150 adoptantes. Nariño: 54/120 adoptantes. IC al 95% para $p_{Huila} - p_{Nariño}$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+prop.test(c(87, 54), c(150, 120), conf.level = 0.95)$conf.int
+```
+
+## Interpretación de los IC
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">IC que no contiene al 0</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Para una diferencia $\mu_1 - \mu_2$: si el IC no incluye el 0, hay evidencia de que las medias son distintas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Para una proporción: si el IC no incluye el valor hipotético $p_0$, hay evidencia contra $p = p_0$.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">IC que contiene al 0</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Para una diferencia: no hay evidencia suficiente para afirmar que las medias (o proporciones) son distintas al nivel de confianza elegido.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Esto no implica que sean iguales, solo que la muestra no tiene poder suficiente para detectar la diferencia.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>Los IC para diferencias y proporciones tienen sus propias condiciones de aplicación.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Usar datos pareados como independientes:</strong> si las mediciones corresponden a las mismas unidades (antes/después), usar <code>paired = TRUE</code>. Ignorarlo produce ICs más anchos e ineficientes.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>IC de Wald con $n\hat{p}$ pequeño:</strong> si hay pocos éxitos o fracasos, use <code>prop.test</code> (Wilson) o el método exacto de Clopper-Pearson.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Asumir varianzas iguales sin verificar:</strong> use la prueba de Levene o Bartlett antes de elegir el IC con varianza combinada.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: IC para la media con muestras independientes
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se compara el contenido de grasa (%) en leche de vacas Holstein y Jersey en Cundinamarca. Holstein ($n_1 = 18$): $\bar{x}_1 = 3.8\%$, $s_1 = 0.4\%$. Jersey ($n_2 = 16$): $\bar{x}_2 = 5.2\%$, $s_2 = 0.5\%$. Construya un IC al 95% para $\mu_H - \mu_J$ usando la aproximación de Welch.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+set.seed(21)
+holstein <- rnorm(18, 3.8, 0.4)
+jersey   <- rnorm(16, 5.2, 0.5)
+
+resultado <- t.test(holstein, jersey, var.equal = FALSE, conf.level = 0.95)
+cat("IC 95% (Welch) para mu_H - mu_J:\n")
+print(round(resultado$conf.int, 4))
+cat("¿El IC contiene al 0?", resultado$conf.int[1] <= 0 & 0 <= resultado$conf.int[2], "\n")
+```
+
+## Taller 2: muestras pareadas
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se evalúa el efecto de un fertilizante orgánico en el rendimiento de maíz (t/ha) en 8 parcelas. Se mide el rendimiento antes y después de la aplicación. Construya un IC al 95% para el cambio promedio $\mu_D = \mu_{después} - \mu_{antes}$.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+antes   <- c(3.2, 2.9, 3.5, 3.0, 3.8, 2.7, 3.1, 3.4)
+despues <- c(3.8, 3.4, 4.0, 3.6, 4.3, 3.2, 3.7, 4.0)
+
+resultado <- t.test(despues, antes, paired = TRUE, conf.level = 0.95)
+cat("Diferencia media:", round(mean(despues - antes), 4), "\n")
+cat("IC 95% para mu_D:\n")
+print(round(resultado$conf.int, 4))
+cat("Interpretación: el fertilizante incrementa el rendimiento en promedio\n",
+    "entre", round(resultado$conf.int[1], 3), "y",
+    round(resultado$conf.int[2], 3), "t/ha.\n")
+```
+
+## Taller 3: IC para proporciones
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En una encuesta sobre mastitis bovina en el Altiplano Cundiboyacense, de 200 vacas inspeccionadas 68 presentaron mastitis subclínica. (a) IC al 95% para $p$. (b) En Antioquia, de 180 vacas, 45 presentaron mastitis. IC al 95% para $p_{Cund} - p_{Ant}$.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+# (a) IC para proporción en Cundinamarca
+ic_cund <- prop.test(68, 200, conf.level = 0.95)$conf.int
+cat("IC 95% p_Cund: [", round(ic_cund[1], 4), ",", round(ic_cund[2], 4), "]\n")
+
+# (b) IC para diferencia de proporciones
+ic_dif <- prop.test(c(68, 45), c(200, 180), conf.level = 0.95)$conf.int
+cat("IC 95% p_Cund - p_Ant: [", round(ic_dif[1], 4), ",", round(ic_dif[2], 4), "]\n")
+cat("¿El IC contiene al 0?", ic_dif[1] <= 0 & 0 <= ic_dif[2], "\n")
+```
+
+## Resumen: IC para media y proporción
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Medias</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">Una media: <code>t.test(x)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">Dos medias indep. (Welch): <code>t.test(x, y)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">Muestras pareadas: <code>t.test(x, y, paired=TRUE)</code>.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 style="color:#1a3a6b; font-size: 26px;">Proporciones</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px;">Una proporción: <code>prop.test(x, n)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;">Diferencia: <code>prop.test(c(x1,x2), c(n1,n2))</code>.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;">IC contiene 0: no hay diferencia significativa.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 22: Tamaño de muestra.</strong> ¿Cuántas observaciones necesito para detectar un efecto de tamaño determinado con una confianza y potencia especificadas? Esta es una de las preguntas más prácticas del diseño estadístico.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Calcularemos $n$ para ICs de media y proporción, y para comparaciones con error tolerable dado.
+</li>
+</ul>

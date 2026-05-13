@@ -1,0 +1,827 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 12 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Distribución Bernoulli</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">El ensayo de Bernoulli.</li>
+<li class="fragment fade-in" data-fragment-index="3">Función de masa de probabilidad.</li>
+<li class="fragment fade-in" data-fragment-index="4">Esperanza y varianza.</li>
+<li class="fragment fade-in" data-fragment-index="5">Código R.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Distribución Binomial</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Definición y condiciones IBIN.</li>
+<li class="fragment fade-in" data-fragment-index="8">FMP y FDA.</li>
+<li class="fragment fade-in" data-fragment-index="9">Parámetros y propiedades.</li>
+<li class="fragment fade-in" data-fragment-index="10">Ejemplos agrícolas y código R.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Distribución Bernoulli y Binomial</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Modelando experimentos con dos resultados posibles</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Motivación: ¿germinó o no germinó?
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En un ensayo de germinación de semillas de maíz, cada semilla puede <strong>germinar</strong> o <strong>no germinar</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Si la probabilidad de germinación bajo riego tecnificado es del 85%, ¿cuántas de 20 semillas esperamos que germinen?
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+¿Qué probabilidad hay de que germinen exactamente 18?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Estos experimentos tienen en común: <strong>dos resultados</strong> posibles (éxito o fracaso), una <strong>probabilidad fija</strong> de éxito, y <strong>repeticiones independientes</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Las distribuciones <strong>Bernoulli</strong> y <strong>Binomial</strong> modelan exactamente estas situaciones.
+</li>
+</ul>
+</div>
+
+</div>
+
+## El ensayo de Bernoulli
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Ensayo de Bernoulli</div>
+  <div class="block-body">
+  <p>Un <strong>ensayo de Bernoulli</strong> es un experimento aleatorio con exactamente dos resultados posibles: <strong>éxito</strong> (codificado como 1) y <strong>fracaso</strong> (codificado como 0), donde la probabilidad de éxito es $p$ y la de fracaso es $1-p = q$.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El parámetro $p \in [0, 1]$ es la <strong>probabilidad de éxito</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Los resultados son mutuamente excluyentes y exhaustivos: $P(\text{éxito}) + P(\text{fracaso}) = 1$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Ejemplos: semilla germina o no, planta enferma o sana, fruto calidad A o B, animal infectado o sano.
+</li>
+</ul>
+
+## Distribución de Bernoulli: definición
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Distribución Bernoulli</div>
+  <div class="block-body">
+  <p>Sea $X$ el resultado de un ensayo de Bernoulli con probabilidad de éxito $p$. Se dice que $X \sim \text{Bernoulli}(p)$ si su función de masa de probabilidad es:</p>
+  $$P(X = x) = p^x (1-p)^{1-x}, \quad x \in \{0, 1\}$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+De forma explícita: $P(X = 1) = p$ y $P(X = 0) = 1 - p$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La Bernoulli es el <strong>caso más simple</strong> de variable aleatoria discreta con soporte en $\{0, 1\}$.
+</li>
+</ul>
+
+## FMP y FDA de la Bernoulli
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Función de masa de probabilidad</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+$$P(X = 0) = 1 - p, \quad P(X = 1) = p$$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+La suma verifica: $(1-p) + p = 1$. ✓
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Función de distribución acumulada</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
+$$F(x) = \begin{cases} 0 & x < 0 \\ 1-p & 0 \leq x < 1 \\ 1 & x \geq 1 \end{cases}$$
+</li>
+</ul>
+</div>
+
+</div>
+
+## Parámetros de la Bernoulli
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Proposición: E(X) y Var(X) de la Bernoulli</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Bernoulli}(p)$, entonces:</p>
+  $$E(X) = p \qquad \text{Var}(X) = p(1-p) = pq$$
+  </div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Demostración</div>
+  <div class="block-body">
+  <p>$E(X) = 0 \cdot (1-p) + 1 \cdot p = p$.</p>
+  <p>$E(X^2) = 0^2(1-p) + 1^2 \cdot p = p$.</p>
+  <p>$\text{Var}(X) = E(X^2) - [E(X)]^2 = p - p^2 = p(1-p)$. $\blacksquare$</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+La varianza es máxima cuando $p = 0.5$ ($\text{Var}(X) = 0.25$) y mínima (0) cuando $p = 0$ o $p = 1$.
+</li>
+</ul>
+
+## Ejemplo Bernoulli: detección de roya en café
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: cultivo de café, Huila</div>
+  <div class="block-body">
+  <p>Se selecciona aleatoriamente una planta de café. La probabilidad de que presente roya (<em>Hemileia vastatrix</em>) es $p = 0.30$. Sea $X$ = 1 si la planta tiene roya, 0 si no.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Bernoulli}(0.30)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$P(X = 1) = 0.30$: hay un 30% de probabilidad de que la planta seleccionada tenga roya.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+$E(X) = 0.30$: en promedio, el 30% de las plantas en el cultivo tienen roya.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+$\text{Var}(X) = 0.30 \times 0.70 = 0.21$.
+</li>
+</ul>
+
+## Código R: distribución Bernoulli
+
+```{r}
+#| echo: true
+#| eval: false
+# La Bernoulli es un caso especial de la Binomial con n = 1
+p <- 0.30  # probabilidad de éxito (roya)
+
+# Probabilidades puntuales
+dbinom(0, size = 1, prob = p)   # P(X = 0) = 0.70
+dbinom(1, size = 1, prob = p)   # P(X = 1) = 0.30
+
+# Esperanza y varianza
+E_X  <- p
+Var_X <- p * (1 - p)
+cat("E(X) =", E_X, "  Var(X) =", Var_X, "\n")
+
+# Simulación: 10 ensayos Bernoulli
+set.seed(42)
+rbinom(10, size = 1, prob = p)
+```
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>En R no existe una función <code>dbernoulli</code> nativa. Se usa <code>dbinom(..., size = 1, ...)</code> porque Bernoulli(p) = Binomial(1, p).</p>
+  </div>
+</div>
+
+## De Bernoulli a Binomial: motivación
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+¿Qué ocurre si repetimos el ensayo de Bernoulli <strong>$n$ veces</strong>, de forma independiente y con la misma probabilidad $p$?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Ahora nos interesa <strong>el número total de éxitos</strong> en esas $n$ repeticiones.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Ejemplo: inspeccionar 20 semillas de maíz, cada una germina con probabilidad 0.85, independientemente. ¿Cuántas germinan?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+La variable aleatoria $X$ = «número de éxitos en $n$ ensayos Bernoulli independientes con probabilidad $p$» sigue una <strong>distribución Binomial</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Podemos escribir: $X = X_1 + X_2 + \cdots + X_n$ donde cada $X_i \sim \text{Bernoulli}(p)$, independientes.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Condiciones del modelo Binomial (IBIN)
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: condiciones IBIN</div>
+  <div class="block-body">
+  <p>El modelo Binomial es válido solo si se cumplen las cuatro condiciones <strong>IBIN</strong>:</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>I</strong>ndependencia: el resultado de cada ensayo no afecta a los demás.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>B</strong>inario: cada ensayo tiene exactamente dos resultados posibles (éxito o fracaso).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>I</strong>gual probabilidad: $p$ es la misma en todos los ensayos.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+<strong>N</strong>úmero fijo: el número de ensayos $n$ es fijo de antemano.
+</li>
+</ul>
+
+## Definición: distribución Binomial
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Distribución Binomial</div>
+  <div class="block-body">
+  <p>Sea $X$ el número de éxitos en $n$ ensayos Bernoulli independientes con probabilidad de éxito $p$. Se dice que $X \sim \text{Bin}(n, p)$ si su función de masa de probabilidad es:</p>
+  $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+$\binom{n}{k} = \dfrac{n!}{k!(n-k)!}$ es el número de formas de elegir $k$ éxitos entre $n$ ensayos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+$p^k$ es la probabilidad de obtener exactamente $k$ éxitos y $(1-p)^{n-k}$ la de $n-k$ fracasos.
+</li>
+</ul>
+
+## Derivación de la FMP Binomial
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Razonamiento combinatorio</div>
+  <div class="block-body">
+  <p>Fijemos una secuencia con $k$ éxitos y $n-k$ fracasos. Por independencia, su probabilidad es $p^k(1-p)^{n-k}$. El número de secuencias posibles con exactamente $k$ éxitos es $\binom{n}{k}$. Sumando todas las secuencias equivalentes:</p>
+  $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k} \quad \blacksquare$$
+  </div>
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p>Verificación: $\sum_{k=0}^{n} \binom{n}{k} p^k (1-p)^{n-k} = [p + (1-p)]^n = 1^n = 1$. (Binomio de Newton.)</p>
+  </div>
+</div>
+
+## Parámetros de la distribución Binomial
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: E(X) y Var(X) de la Binomial</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Bin}(n, p)$, entonces:</p>
+  $$E(X) = np \qquad \text{Var}(X) = np(1-p) = npq$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Intuición:</strong> $E(X) = np$ es el número esperado de éxitos si cada ensayo aporta $p$ en promedio.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+La desviación estándar es $\sigma = \sqrt{npq}$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Ejemplo: $\text{Bin}(20, 0.85)$ tiene $E(X) = 17$ y $\sigma = \sqrt{20 \times 0.85 \times 0.15} \approx 1.60$.
+</li>
+</ul>
+
+## Derivación: E(X) de la Binomial
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Derivación por linealidad</div>
+  <div class="block-body">
+  <p>Como $X = X_1 + \cdots + X_n$ con $X_i \sim \text{Bernoulli}(p)$ independientes:</p>
+  $$E(X) = E(X_1 + \cdots + X_n) = E(X_1) + \cdots + E(X_n) = p + \cdots + p = np$$
+  $$\text{Var}(X) = \text{Var}(X_1) + \cdots + \text{Var}(X_n) = pq + \cdots + pq = npq \quad \blacksquare$$
+  </div>
+</div>
+
+## Función de distribución acumulada Binomial
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: FDA Binomial</div>
+  <div class="block-body">
+  $$F(k) = P(X \leq k) = \sum_{j=0}^{k} \binom{n}{j} p^j (1-p)^{n-j}, \quad k = 0, 1, \ldots, n$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+No tiene forma cerrada sencilla: en la práctica se usa R o tablas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Probabilidades complementarias: $P(X > k) = 1 - F(k)$ y $P(X \geq k) = 1 - F(k-1)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Probabilidades en un rango: $P(a \leq X \leq b) = F(b) - F(a-1)$.
+</li>
+</ul>
+
+## Ejemplo aplicado: germinación de maíz
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: semillas de maíz, Córdoba</div>
+  <div class="block-body">
+  <p>En un lote de 20 semillas de maíz bajo riego tecnificado, cada semilla germina independientemente con probabilidad $p = 0.85$. Sea $X$ = número de semillas que germinan.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Bin}(20, 0.85)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$E(X) = 20 \times 0.85 = 17$ semillas se esperan que germinen.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+$\text{Var}(X) = 20 \times 0.85 \times 0.15 = 2.55$, $\quad \sigma \approx 1.60$.
+</li>
+</ul>
+
+## Cálculo manual: probabilidades puntuales
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">$P(X = 18)$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+$$P(X=18) = \binom{20}{18}(0.85)^{18}(0.15)^{2}$$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+$$= 190 \times (0.85)^{18} \times (0.15)^{2}$$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+$$\approx 190 \times 0.0536 \times 0.0225 \approx 0.229$$
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#1a3a6b;">$P(X \geq 17)$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+$$P(X \geq 17) = P(X=17) + P(X=18) + P(X=19) + P(X=20)$$
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
+$$\approx 0.243 + 0.229 + 0.137 + 0.039 \approx 0.648$$
+</li>
+</ul>
+</div>
+
+</div>
+
+## Código R: dbinom y pbinom
+
+```{r}
+#| echo: true
+n <- 20; p <- 0.85
+
+# P(X = 18)
+dbinom(18, size = n, prob = p)
+
+# P(X >= 17) = 1 - P(X <= 16)
+1 - pbinom(16, size = n, prob = p)
+
+# P(X >= 17) directamente como suma
+sum(dbinom(17:20, size = n, prob = p))
+
+# FDA completa
+pbinom(0:20, size = n, prob = p)
+```
+
+## Gráfica: FMP de la Binomial(20, 0.85)
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+n <- 20; p <- 0.85
+df <- data.frame(k = 0:n, prob = dbinom(0:n, n, p))
+
+ggplot(df, aes(x = k, y = prob)) +
+  geom_col(fill = "#1b4d2e", width = 0.6) +
+  geom_vline(xintercept = n * p, color = "#c0392b", linetype = "dashed", linewidth = 1) +
+  annotate("text", x = n*p + 0.5, y = max(df$prob)*0.9,
+           label = paste0("E(X) = ", n*p), color = "#c0392b", size = 5) +
+  labs(x = "k (número de germinaciones)", y = "P(X = k)",
+       title = "FMP: Bin(20, 0.85)") +
+  theme_minimal(base_size = 14)
+```
+
+## Gráfica: FDA de la Binomial(20, 0.85)
+
+```{r}
+#| echo: true
+#| fig-height: 4
+df_fda <- data.frame(k = 0:n, F_k = pbinom(0:n, n, p))
+
+ggplot(df_fda, aes(x = k, y = F_k)) +
+  geom_step(color = "#1a3a6b", linewidth = 1.2) +
+  geom_point(color = "#1a3a6b", size = 2.5) +
+  geom_hline(yintercept = 0.95, color = "#c0392b", linetype = "dashed") +
+  annotate("text", x = 3, y = 0.97, label = "F(k) = 0.95", color = "#c0392b", size = 5) +
+  labs(x = "k", y = "F(k) = P(X ≤ k)",
+       title = "FDA: Bin(20, 0.85)") +
+  theme_minimal(base_size = 14)
+```
+
+## Cuantiles y simulación en R
+
+```{r}
+#| echo: true
+n <- 20; p <- 0.85
+
+# Percentil 5% y 95%
+qbinom(0.05, size = n, prob = p)
+qbinom(0.95, size = n, prob = p)
+
+# Mediana
+qbinom(0.50, size = n, prob = p)
+
+# Simulación de 1000 lotes de 20 semillas
+set.seed(123)
+sim <- rbinom(1000, size = n, prob = p)
+cat("Media simulada:", mean(sim), "  Var simulada:", var(sim), "\n")
+```
+
+## Interpretación de la Binomial
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Parámetros en contexto</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+$E(X) = np$ es el número <strong>esperado</strong> de éxitos. Con $n=20$ y $p=0.85$: se esperan 17 germinaciones.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+$\sigma = \sqrt{npq} \approx 1.60$: el número de germinaciones variará alrededor de 17 en unas 1.6 semillas.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Regla empírica</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Aproximadamente el 95% de los lotes tendrá entre $np - 2\sigma$ y $np + 2\sigma$ germinaciones.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Con $\text{Bin}(20, 0.85)$: rango $[17 - 3.2,\, 17 + 3.2] = [13.8,\, 20.2]$, es decir, entre 14 y 20.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Ejemplo 2: control de calidad en cultivo de papa
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: inspección de tubérculos, Boyacá</div>
+  <div class="block-body">
+  <p>En un lote de papa criolla, el 15% de los tubérculos no cumple estándares de calidad. Se seleccionan 10 tubérculos al azar. Sea $X$ = número de tubérculos fuera de estándar.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Bin}(10, 0.15)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Calcule: (a) $P(X = 0)$, (b) $P(X \leq 2)$, (c) $P(X \geq 3)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+$E(X) = 10 \times 0.15 = 1.5$, $\quad \sigma = \sqrt{10 \times 0.15 \times 0.85} \approx 1.13$.
+</li>
+</ul>
+
+## Solución: ejemplo tubérculos de papa
+
+```{r}
+#| echo: true
+n <- 10; p <- 0.15
+
+# (a) P(X = 0): ningún tubérculo fuera de estándar
+dbinom(0, n, p)
+
+# (b) P(X <= 2): a lo sumo 2 fuera de estándar
+pbinom(2, n, p)
+
+# (c) P(X >= 3) = 1 - P(X <= 2)
+1 - pbinom(2, n, p)
+```
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Interpretación:</strong> hay un 82% de probabilidad de que a lo sumo 2 de los 10 tubérculos inspeccionados estén fuera de estándar. Este dato es útil para decidir si ampliar o reducir el muestreo de control de calidad.</p>
+  </div>
+</div>
+
+## Forma de la Binomial según p
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1">Asimetría de la distribución</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>$p < 0.5$:</strong> distribución sesgada a la derecha (cola hacia valores altos).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>$p = 0.5$:</strong> distribución simétrica alrededor de $n/2$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>$p > 0.5$:</strong> distribución sesgada a la izquierda (cola hacia valores bajos).
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5">Efecto de $n$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 27px; text-align: justify;">
+Al aumentar $n$, la distribución se vuelve más simétrica y tiende a la forma de campana (Teorema Central del Límite, Clase 19).
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 27px; text-align: justify;">
+Regla práctica: si $np \geq 5$ y $n(1-p) \geq 5$, la aproximación Normal es aceptable.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Visualización: Binomial con distintos parámetros
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+params <- list(c(10, 0.15), c(10, 0.50), c(10, 0.85))
+df_multi <- map_dfr(params, function(par) {
+  tibble(k = 0:par[1],
+         prob = dbinom(0:par[1], par[1], par[2]),
+         etiqueta = paste0("Bin(", par[1], ", ", par[2], ")"))
+})
+ggplot(df_multi, aes(x = k, y = prob, fill = etiqueta)) +
+  geom_col(position = "dodge", width = 0.7) +
+  facet_wrap(~etiqueta) +
+  labs(x = "k", y = "P(X = k)") +
+  theme_minimal(base_size = 13) + theme(legend.position = "none")
+```
+
+## Conexión con la distribución de Poisson
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>Cuando $n$ es grande y $p$ es pequeño, la Binomial(n, p) puede aproximarse por una Poisson($\lambda = np$). Esta aproximación se estudia en detalle en la próxima clase.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Regla práctica: usar la aproximación si $n \geq 20$ y $p \leq 0.05$ (o equivalentemente, $np \leq 5$).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Ejemplo: si el 2% de las semillas en un lote de 500 está contaminada, $X \approx \text{Poisson}(10)$.
+</li>
+</ul>
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>Verifique siempre las condiciones IBIN antes de aplicar el modelo Binomial.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Dependencia ignorada:</strong> seleccionar sin reemplazo en poblaciones pequeñas viola la independencia. Use la distribución hipergeométrica en ese caso.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>$p$ variable:</strong> si la probabilidad de éxito cambia entre ensayos (ej. condiciones de campo distintas), el modelo Binomial no aplica.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>Confundir $P(X = k)$ con $P(X \leq k)$:</strong> use <code>dbinom</code> para probabilidades puntuales y <code>pbinom</code> para acumuladas.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+<strong>$P(X \geq k)$ con <code>pbinom</code>:</strong> recuerde que <code>pbinom(k, ...)</code> calcula $P(X \leq k)$, no $P(X \geq k)$.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: modelo Bernoulli
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un ensayo de resistencia a la sequía, una variedad de frijol sobrevive 21 días sin riego con probabilidad $p = 0.60$. Se selecciona una planta. Sea $X$ = 1 si sobrevive, 0 si no. Calcule $P(X = 1)$, $E(X)$ y $\text{Var}(X)$.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px;">
+$X \sim \text{Bernoulli}(0.60)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px;">
+$P(X = 1) = 0.60$ (probabilidad de sobrevivir).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px;">
+$E(X) = 0.60$: en promedio el 60% de las plantas sobreviven.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px;">
+$\text{Var}(X) = 0.60 \times 0.40 = 0.24$.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+```{r}
+#| echo: true
+p <- 0.60
+dbinom(1, 1, p)    # P(X = 1)
+p                  # E(X)
+p * (1 - p)        # Var(X)
+```
+</div>
+</div>
+
+## Taller 2: distribución Binomial
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un estudio de mastitis bovina en Antioquia, el 25% de las vacas en producción presentan la enfermedad. Se seleccionan 12 vacas al azar. Sea $X$ = número de vacas con mastitis.</p>
+  <p>Calcule: (a) $P(X = 3)$, (b) $P(X \leq 4)$, (c) $P(X > 6)$, (d) $E(X)$ y $\text{Var}(X)$.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+n <- 12; p <- 0.25
+
+# (a) P(X = 3)
+dbinom(3, n, p)
+
+# (b) P(X <= 4)
+pbinom(4, n, p)
+
+# (c) P(X > 6) = 1 - P(X <= 6)
+1 - pbinom(6, n, p)
+
+# (d) E(X) y Var(X)
+cat("E(X) =", n*p, "  Var(X) =", n*p*(1-p), "\n")
+```
+
+## Taller 3: verificación de condiciones IBIN
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Para cada escenario, determine si aplica el modelo Binomial y justifique:</p>
+  <ol style="font-size: 26px;">
+  <li>Se eligen 10 plantas de un invernadero de 30 (sin reemplazo) para detectar mosca blanca.</li>
+  <li>Se lanzan 15 semillas de tomate en distintos sustratos; la probabilidad de germinación varía según el sustrato.</li>
+  <li>Se inspeccionan 100 frutas de exportación; cada fruta pasa o falla el control de calidad con $p = 0.08$, independientemente.</li>
+  </ol>
+  </div>
+</div>
+
+## Taller 3: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify;">
+<strong>Escenario 1:</strong> No aplica Binomial. La extracción sin reemplazo en una población pequeña (30) crea dependencia entre selecciones. Usar distribución <strong>hipergeométrica</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Escenario 2:</strong> No aplica Binomial. La probabilidad de éxito no es igual en todos los ensayos (depende del sustrato). Se viola la condición de $p$ constante.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Escenario 3:</strong> Sí aplica Binomial. Las frutas son independientes, hay dos resultados (pasa/falla), $p = 0.08$ es constante, y $n = 100$ está fijo. $X \sim \text{Bin}(100, 0.08)$.
+</li>
+</ul>
+
+## Resumen: Bernoulli y Binomial
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 28px;">Bernoulli(p)</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">Un ensayo, dos resultados.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">$P(X=1) = p$, $P(X=0) = 1-p$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">$E(X) = p$, $\text{Var}(X) = pq$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">En R: <code>dbinom(x, 1, p)</code>.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 28px;">Binomial(n, p)</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">$n$ ensayos Bernoulli, IBIN.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">$P(X=k) = \binom{n}{k}p^k q^{n-k}$.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">$E(X) = np$, $\text{Var}(X) = npq$.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px;">En R: <code>dbinom, pbinom, qbinom, rbinom</code>.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 13: Distribución de Poisson.</strong> Modelaremos el número de eventos raros en un intervalo de tiempo o espacio: plagas por hectárea, bacterias por mililitro, defectos por lote.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Veremos la <strong>aproximación Binomial-Poisson</strong> y la condición $n \to \infty$, $p \to 0$, $np \to \lambda$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Aprenderemos a calcular probabilidades con <code>dpois</code>, <code>ppois</code> en R.
+</li>
+</ul>

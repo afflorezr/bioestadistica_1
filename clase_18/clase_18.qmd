@@ -1,0 +1,529 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 18 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El estadístico como variable aleatoria</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Estadístico y distribución muestral.</li>
+<li class="fragment fade-in" data-fragment-index="3">Distribución de la media muestral.</li>
+<li class="fragment fade-in" data-fragment-index="4">Error estándar.</li>
+<li class="fragment fade-in" data-fragment-index="5">Simulación de distribuciones muestrales.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Otras distribuciones muestrales</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Distribución de la proporción muestral.</li>
+<li class="fragment fade-in" data-fragment-index="8">Distribución de la varianza muestral.</li>
+<li class="fragment fade-in" data-fragment-index="9">Distribuciones chi-cuadrado, t y F.</li>
+<li class="fragment fade-in" data-fragment-index="10">Aplicaciones y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Distribuciones Muestrales</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">La variabilidad de los estadísticos de muestra a muestra</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## El problema de la variabilidad muestral
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Si tomamos una muestra de 30 plantas de café en Huila y calculamos $\bar{x} = 1.8$ kg/planta, ¿qué tan cercano es este valor al promedio real de la población $\mu$?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Si tomamos otra muestra diferente de 30 plantas, obtendremos otro valor $\bar{x}$, probablemente distinto al primero.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La <strong>distribución muestral</strong> de un estadístico describe cómo varía ese estadístico al repetir el proceso de muestreo muchas veces.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Conocer esta distribución es el fundamento de toda la inferencia estadística.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Definición: distribución muestral
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: distribución muestral</div>
+  <div class="block-body">
+  <p>La <strong>distribución muestral</strong> de un estadístico $T = T(X_1, \ldots, X_n)$ es la distribución de probabilidad de $T$ sobre todas las posibles muestras de tamaño $n$ extraídas de la población.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+El estadístico más importante: la <strong>media muestral</strong> $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$\bar{X}$ es una variable aleatoria: su valor cambia con cada muestra. Su distribución se denomina <strong>distribución de la media muestral</strong>.
+</li>
+</ul>
+
+## Distribución de $\bar{X}$: población Normal
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: distribución de $\bar{X}$ si $X \sim N(\mu, \sigma^2)$</div>
+  <div class="block-body">
+  <p>Si $X_1, \ldots, X_n$ son independientes con distribución $N(\mu, \sigma^2)$, entonces:</p>
+  $$\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i \sim N\!\left(\mu,\; \frac{\sigma^2}{n}\right)$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$E(\bar{X}) = \mu$: la media muestral es un estimador <strong>insesgado</strong> de la media poblacional.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$\text{Var}(\bar{X}) = \sigma^2/n$: la varianza de $\bar{X}$ disminuye al aumentar $n$.
+</li>
+</ul>
+
+## Error estándar de la media
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: error estándar</div>
+  <div class="block-body">
+  <p>El <strong>error estándar</strong> (EE) de la media muestral es la desviación estándar de su distribución muestral:</p>
+  $$EE(\bar{X}) = \frac{\sigma}{\sqrt{n}}$$
+  <p>Cuando $\sigma$ es desconocida se estima como $\hat{EE} = s/\sqrt{n}$, donde $s$ es la desviación estándar muestral.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+El EE mide la <strong>precisión</strong> de la estimación: cuanto menor, más precisa.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Para reducir el EE a la mitad se necesita <strong>cuadruplicar</strong> el tamaño de muestra.
+</li>
+</ul>
+
+## Simulación: distribución muestral de $\bar{X}$
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+set.seed(18)
+mu <- 1.8; sigma <- 0.5; n <- 30; B <- 5000
+
+# Simular 5000 medias muestrales
+medias <- replicate(B, mean(rnorm(n, mu, sigma)))
+
+ggplot(data.frame(x = medias), aes(x)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 50,
+                 fill = "#1b4d2e", color = "white", alpha = 0.8) +
+  stat_function(fun = dnorm,
+                args = list(mean = mu, sd = sigma/sqrt(n)),
+                color = "#c0392b", linewidth = 1.3) +
+  labs(x = expression(bar(X)), y = "Densidad",
+       title = paste0("Distribución muestral de X̄: N(", mu, ", ", sigma^2/n, ")")) +
+  theme_minimal(base_size = 13)
+```
+
+## Efecto de $n$ en la distribución de $\bar{X}$
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+mu <- 1.8; sigma <- 0.5; B <- 3000
+ns <- c(5, 15, 30, 100)
+
+df <- map_dfr(ns, function(n) {
+  set.seed(18)
+  tibble(xbar = replicate(B, mean(rnorm(n, mu, sigma))),
+         n = paste0("n = ", n))
+})
+
+ggplot(df, aes(x = xbar, fill = n)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 40,
+                 color = "white", alpha = 0.8) +
+  facet_wrap(~n, scales = "free_y") +
+  labs(x = expression(bar(X)), y = "Densidad",
+       title = "Distribución muestral de X̄ para distintos n") +
+  theme_minimal(base_size = 12) + theme(legend.position = "none")
+```
+
+## Estandarización de $\bar{X}$
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Corolario: estandarización de $\bar{X}$</div>
+  <div class="block-body">
+  <p>Si $X_i \sim N(\mu, \sigma^2)$ i.i.d., entonces:</p>
+  $$Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1)$$
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: producción de leche</div>
+  <div class="block-body">
+  <p>La producción diaria de leche en fincas de Nariño sigue $N(12, 4)$ litros. Si $n = 25$: ¿cuál es $P(\bar{X} > 12.5)$?</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+mu <- 12; sigma <- 2; n <- 25
+pnorm(12.5, mean = mu, sd = sigma/sqrt(n), lower.tail = FALSE)
+```
+
+## Distribución de la proporción muestral
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: distribución de $\hat{p}$</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Bin}(n, p)$ y $\hat{p} = X/n$, entonces:</p>
+  $$E(\hat{p}) = p \qquad \text{Var}(\hat{p}) = \frac{p(1-p)}{n}$$
+  <p>Para $n$ grande (condición: $np \geq 5$ y $n(1-p) \geq 5$): $\hat{p} \approx N\!\left(p,\, \frac{p(1-p)}{n}\right)$.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+$\hat{p}$ es un estimador insesgado de $p$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Su error estándar es $EE(\hat{p}) = \sqrt{p(1-p)/n}$.
+</li>
+</ul>
+
+## Distribución chi-cuadrado
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: distribución $\chi^2_\nu$</div>
+  <div class="block-body">
+  <p>Si $Z_1, \ldots, Z_\nu$ son independientes con distribución $N(0,1)$, entonces:</p>
+  $$Q = Z_1^2 + Z_2^2 + \cdots + Z_\nu^2 \sim \chi^2_\nu$$
+  <p>con $\nu$ <strong>grados de libertad</strong>. Se cumple: $E(Q) = \nu$, $\text{Var}(Q) = 2\nu$.</p>
+  </div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Aplicación: varianza muestral</div>
+  <div class="block-body">
+  <p>Si $X_i \sim N(\mu, \sigma^2)$ i.i.d., entonces: $\dfrac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$.</p>
+  </div>
+</div>
+
+## Distribución $t$ de Student
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: distribución $t_\nu$</div>
+  <div class="block-body">
+  <p>Si $Z \sim N(0,1)$ y $Q \sim \chi^2_\nu$ son independientes:</p>
+  $$T = \frac{Z}{\sqrt{Q/\nu}} \sim t_\nu$$
+  </div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Aplicación: media con $\sigma$ desconocida</div>
+  <div class="block-body">
+  <p>Si $X_i \sim N(\mu, \sigma^2)$ i.i.d. con $\sigma$ desconocida:</p>
+  $$T = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$$
+  </div>
+</div>
+
+## Distribución $t$: propiedades y comparación con $N(0,1)$
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+x <- seq(-5, 5, length.out = 400)
+df <- bind_rows(
+  tibble(x, f = dnorm(x), dist = "N(0,1)"),
+  tibble(x, f = dt(x, df = 3), dist = "t(3)"),
+  tibble(x, f = dt(x, df = 10), dist = "t(10)"),
+  tibble(x, f = dt(x, df = 30), dist = "t(30)")
+)
+ggplot(df, aes(x, f, color = dist)) +
+  geom_line(linewidth = 1.2) +
+  labs(x = "t", y = "f(t)", color = NULL,
+       title = "Distribución t vs Normal estándar") +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "top")
+```
+
+## Distribución F de Fisher-Snedecor
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: distribución $F_{\nu_1, \nu_2}$</div>
+  <div class="block-body">
+  <p>Si $Q_1 \sim \chi^2_{\nu_1}$ y $Q_2 \sim \chi^2_{\nu_2}$ son independientes:</p>
+  $$F = \frac{Q_1/\nu_1}{Q_2/\nu_2} \sim F_{\nu_1,\nu_2}$$
+  </div>
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p>La distribución $F$ aparece en la comparación de varianzas (Clase 27) y en el análisis de varianza (Clase 30). Si $T \sim t_\nu$, entonces $T^2 \sim F_{1,\nu}$.</p>
+  </div>
+</div>
+
+## Relación entre distribuciones muestrales
+
+<div class="fragment fade-in" data-fragment-index="1" style="text-align: center; margin-top: 20px;">
+
+```{r}
+#| echo: false
+#| fig-height: 3
+library(ggplot2)
+df_rel <- data.frame(
+  dist = c("Normal\nN(0,1)", "Chi-cuadrado\nχ²(ν)", "t de Student\nt(ν)", "F de Fisher\nF(ν₁,ν₂)"),
+  x    = c(2, 4, 2, 4),
+  y    = c(3, 3, 1, 1)
+)
+ggplot(df_rel, aes(x, y, label = dist)) +
+  geom_label(size = 4.5, fill = c("#dce9f7","#d6f0dd","#fad8d8","#f3f4f6"),
+             color = "#1a3a6b", fontface = "bold") +
+  annotate("segment", x=2.6, xend=3.3, y=3, yend=3, arrow=arrow(length=unit(0.2,"cm"))) +
+  annotate("text", x=3, y=3.2, label="Z²", size=4) +
+  annotate("segment", x=3, xend=3, y=2.7, yend=1.3, arrow=arrow(length=unit(0.2,"cm"))) +
+  annotate("segment", x=3.5, xend=3.9, y=3, yend=1.3, arrow=arrow(length=unit(0.2,"cm"))) +
+  xlim(1, 5.5) + ylim(0.5, 4) +
+  theme_void()
+```
+
+</div>
+
+## Valores críticos en R
+
+```{r}
+#| echo: true
+# Cuantiles de la distribución t
+qt(0.975, df = 9)    # t crítico para IC 95%, n=10
+qt(0.975, df = 29)   # t crítico para IC 95%, n=30
+
+# Cuantil chi-cuadrado
+qchisq(0.975, df = 9)   # chi² superior al 97.5%
+qchisq(0.025, df = 9)   # chi² inferior al 2.5%
+
+# Cuantil F
+qf(0.95, df1 = 3, df2 = 20)  # F crítico ANOVA 4 grupos, 24 obs
+```
+
+## Ejemplo: rendimiento de soya, precisión del estimador
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: soya en el Tolima</div>
+  <div class="block-body">
+  <p>El rendimiento de soya en el Tolima sigue $N(\mu = 2.5\,\text{t/ha}, \sigma = 0.4\,\text{t/ha})$. Si $n = 16$ parcelas, calcule: (a) $P(\bar{X} > 2.7)$, (b) el valor $c$ tal que $P(\bar{X} \leq c) = 0.95$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+mu <- 2.5; sigma <- 0.4; n <- 16
+ee <- sigma / sqrt(n)
+cat("Error estándar:", ee, "\n")
+
+# (a)
+pnorm(2.7, mu, ee, lower.tail = FALSE)
+
+# (b)
+qnorm(0.95, mu, ee)
+```
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>Confundir la distribución poblacional con la distribución muestral del estadístico.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>$\sigma$ vs $\sigma/\sqrt{n}$:</strong> la desviación estándar de $\bar{X}$ es $\sigma/\sqrt{n}$, no $\sigma$. El error estándar siempre es menor.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Usar $N(0,1)$ cuando $\sigma$ es desconocida:</strong> si $\sigma$ no se conoce y $n$ es pequeño, se debe usar la distribución $t_{n-1}$, no la Normal.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Grados de libertad:</strong> para la varianza muestral son $n-1$, no $n$. En R: <code>qt(p, df = n-1)</code>.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: distribución de $\bar{X}$
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El peso al sacrificio de cerdos en Antioquia sigue $N(\mu = 95\,\text{kg}, \sigma = 8\,\text{kg})$. Se toma una muestra aleatoria de $n = 25$ cerdos. Calcule: (a) $P(\bar{X} > 97)$, (b) $P(93 \leq \bar{X} \leq 97)$, (c) $EE(\bar{X})$, (d) el percentil 10 de $\bar{X}$.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+mu <- 95; sigma <- 8; n <- 25
+ee <- sigma / sqrt(n)
+cat("EE =", ee, "\n")
+
+# (a) P(Xbar > 97)
+pnorm(97, mu, ee, lower.tail = FALSE)
+
+# (b) P(93 <= Xbar <= 97)
+pnorm(97, mu, ee) - pnorm(93, mu, ee)
+
+# (d) Percentil 10 de Xbar
+qnorm(0.10, mu, ee)
+```
+
+## Taller 2: simulación de la distribución muestral
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Simule 4000 medias muestrales de tamaño $n = 20$ de una distribución Exponencial(0.5). Grafique el histograma y compare la media y varianza simuladas con los valores teóricos de la distribución muestral.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+lambda <- 0.5; n <- 20; B <- 4000
+mu_pob <- 1/lambda; sigma_pob <- 1/lambda
+set.seed(18)
+medias_exp <- replicate(B, mean(rexp(n, lambda)))
+
+cat("Media teórica:", mu_pob, "  Simulada:", round(mean(medias_exp), 4), "\n")
+cat("Var teórica:", sigma_pob^2/n, "  Simulada:", round(var(medias_exp), 4), "\n")
+
+library(ggplot2)
+ggplot(data.frame(x = medias_exp), aes(x)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 40,
+                 fill = "#1a3a6b", color = "white", alpha = 0.8) +
+  labs(x = "Media muestral", title = "Distribución muestral: Exp(0.5), n=20") +
+  theme_minimal(base_size = 13)
+```
+
+## Taller 3: proporción muestral
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En una encuesta sobre adopción de BPA (Buenas Prácticas Agrícolas) en el Tolima, $p = 0.40$ de los agricultores las ha adoptado. Si se encuestan $n = 100$ agricultores, calcule: (a) $E(\hat{p})$, $EE(\hat{p})$, (b) $P(\hat{p} > 0.50)$, (c) $P(0.35 \leq \hat{p} \leq 0.45)$.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+p <- 0.40; n <- 100
+ee_phat <- sqrt(p*(1-p)/n)
+cat("E(p̂):", p, "  EE(p̂):", ee_phat, "\n")
+
+# (b) P(p̂ > 0.50)
+pnorm(0.50, p, ee_phat, lower.tail = FALSE)
+
+# (c) P(0.35 <= p̂ <= 0.45)
+pnorm(0.45, p, ee_phat) - pnorm(0.35, p, ee_phat)
+```
+
+## Resumen: distribuciones muestrales
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Estadístico y distribución</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px;">$\bar{X} \sim N(\mu, \sigma^2/n)$ si $X_i \sim N(\mu,\sigma^2)$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">$EE(\bar{X}) = \sigma/\sqrt{n}$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">$(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">$(\bar{X}-\mu)/(S/\sqrt{n}) \sim t_{n-1}$.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 26px;">Funciones R clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;"><code>pnorm, qnorm</code>: Normal.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;"><code>pt, qt</code>: $t$ de Student.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;"><code>pchisq, qchisq</code>: chi-cuadrado.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;"><code>pf, qf</code>: F de Fisher.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 19: Teorema Central del Límite.</strong> ¿Por qué $\bar{X}$ se distribuye aproximadamente Normal incluso cuando la población no es Normal? El TCL es el resultado más importante de la estadística matemática.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Veremos la demostración intuitiva, las condiciones de aplicación y la aproximación Normal a distribuciones discretas.
+</li>
+</ul>

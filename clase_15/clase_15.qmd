@@ -1,0 +1,568 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 15 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Fundamentos</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Conexión con el proceso de Poisson.</li>
+<li class="fragment fade-in" data-fragment-index="3">FDP y FDA de la Exponencial.</li>
+<li class="fragment fade-in" data-fragment-index="4">Esperanza, varianza y percentiles.</li>
+<li class="fragment fade-in" data-fragment-index="5">Propiedad de falta de memoria.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Aplicaciones</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Ejemplos en tiempo de vida y espera.</li>
+<li class="fragment fade-in" data-fragment-index="8">Código R: dexp, pexp, qexp.</li>
+<li class="fragment fade-in" data-fragment-index="9">Diagnóstico de ajuste.</li>
+<li class="fragment fade-in" data-fragment-index="10">Errores comunes y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Distribución Exponencial</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Modelando tiempos de espera y de vida en sistemas biológicos</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Motivación: tiempos de espera en agricultura
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+¿Cuánto tiempo transcurre hasta el primer ataque de mosca de la fruta en un cultivo de mango?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+¿Cuál es la vida útil de una bomba de riego hasta su primera falla?
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+¿Cuántos días transcurren entre lluvias consecutivas en una región semiárida de la costa colombiana?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+En todos estos casos modelamos el <strong>tiempo hasta que ocurre un evento</strong>, cuando los eventos siguen un proceso de Poisson.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+La distribución <strong>Exponencial</strong> es el modelo natural para estos tiempos de espera.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Conexión con la Poisson
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Proposición: Poisson y Exponencial</div>
+  <div class="block-body">
+  <p>Si el número de eventos en un intervalo sigue una $\text{Poisson}(\lambda t)$, entonces el tiempo $T$ entre eventos consecutivos sigue una distribución $\text{Exponencial}(\lambda)$.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Ejemplo: si se detectan en promedio 2 focos de plaga por hectárea por semana ($\lambda = 2$), el tiempo entre focos consecutivos sigue Exponencial(2) semanas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$E(T) = 1/\lambda = 0.5$ semanas entre focos consecutivos.
+</li>
+</ul>
+
+## Distribución exponencial: definición
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Distribución Exponencial</div>
+  <div class="block-body">
+  <p>Se dice que $T \sim \text{Exp}(\lambda)$ si su FDP es:</p>
+  $$f(t) = \lambda e^{-\lambda t}, \quad t \geq 0$$
+  <p>donde $\lambda > 0$ es la <strong>tasa de ocurrencia</strong> (eventos por unidad de tiempo).</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+El soporte es $[0, \infty)$: la variable toma valores positivos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Verificación: $\int_0^{\infty} \lambda e^{-\lambda t}\,dt = \lambda \cdot \frac{1}{\lambda} = 1$. ✓
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+Notación alternativa: algunos textos usan $\text{Exp}(\beta)$ donde $\beta = 1/\lambda$ es la <strong>escala media</strong>.
+</li>
+</ul>
+
+## FDA de la distribución exponencial
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">FDA: Exponencial($\lambda$)</div>
+  <div class="block-body">
+  $$F(t) = P(T \leq t) = 1 - e^{-\lambda t}, \quad t \geq 0$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Probabilidad de que el evento aún no ocurra en $[0, t]$: $P(T > t) = e^{-\lambda t}$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$P(a \leq T \leq b) = e^{-\lambda a} - e^{-\lambda b}$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+La FDA tiene una forma analítica cerrada, a diferencia de la Normal (Clase 16).
+</li>
+</ul>
+
+## Parámetros de la exponencial
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: E(T), Var(T) y percentiles</div>
+  <div class="block-body">
+  <p>Si $T \sim \text{Exp}(\lambda)$:</p>
+  $$E(T) = \frac{1}{\lambda} \qquad \text{Var}(T) = \frac{1}{\lambda^2} \qquad \sigma_T = \frac{1}{\lambda}$$
+  <p>El percentil $p$: $t_p = -\dfrac{\ln(1-p)}{\lambda}$.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Notable: $E(T) = \sigma_T$. La media y la desviación estándar son iguales, lo que implica una distribución muy asimétrica a la derecha.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Mediana: $t_{0.5} = \ln(2)/\lambda \approx 0.693/\lambda$, que es menor que la media $1/\lambda$.
+</li>
+</ul>
+
+## Derivación: E(T) de la Exponencial
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Demostración: E(T)</div>
+  <div class="block-body">
+  $$E(T) = \int_0^{\infty} t \cdot \lambda e^{-\lambda t}\,dt$$
+  <p>Integrando por partes con $u = t$, $dv = \lambda e^{-\lambda t}dt$:</p>
+  $$= \left[-t e^{-\lambda t}\right]_0^{\infty} + \int_0^{\infty} e^{-\lambda t}\,dt = 0 + \frac{1}{\lambda} = \frac{1}{\lambda} \quad \blacksquare$$
+  </div>
+</div>
+
+## Propiedad de falta de memoria
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: falta de memoria</div>
+  <div class="block-body">
+  <p>Si $T \sim \text{Exp}(\lambda)$, entonces para todo $s, t \geq 0$:</p>
+  $$P(T > s + t \mid T > s) = P(T > t)$$
+  </div>
+</div>
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<h4 class="fragment fade-in" data-fragment-index="2">Interpretación</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Habiendo esperado $s$ días sin lluvia, la probabilidad de esperar $t$ días más es la misma que si recién empezáramos a esperar.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+La distribución no tiene <strong>memoria</strong>: el historial de espera no cambia la distribución futura.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5">Unicidad</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+La Exponencial es la <strong>única distribución continua</strong> con la propiedad de falta de memoria.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+Cuando hay desgaste o envejecimiento, esta propiedad no se cumple y se usan otras distribuciones (Weibull, Gamma).
+</li>
+</ul>
+</div>
+
+</div>
+
+## Gráfica: FDP y FDA de la Exponencial
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(patchwork)
+lambda <- 2
+t <- seq(0, 4, length.out = 400)
+
+p1 <- ggplot(data.frame(t, f = dexp(t, lambda)), aes(t, f)) +
+  geom_line(color = "#1b4d2e", linewidth = 1.4) +
+  labs(x = "t", y = "f(t)", title = paste0("FDP: Exp(λ = ", lambda, ")")) +
+  theme_minimal(base_size = 13)
+
+p2 <- ggplot(data.frame(t, F = pexp(t, lambda)), aes(t, F)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.4) +
+  geom_hline(yintercept = 0.5, color = "#c0392b", linetype = "dashed") +
+  annotate("text", x = 2.5, y = 0.55, label = "mediana", color = "#c0392b", size = 4) +
+  labs(x = "t", y = "F(t)", title = "FDA: Exp(λ = 2)") +
+  theme_minimal(base_size = 13)
+
+p1 + p2
+```
+
+## Ejemplo 1: vida útil de una bomba de riego
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: sistema de riego, Meta</div>
+  <div class="block-body">
+  <p>La vida útil de una bomba de riego centrífuga en condiciones de campo en el Meta sigue una distribución Exponencial con media 3 años. Sea $T$ = tiempo hasta la primera falla (años).</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$E(T) = 3$ años, entonces $\lambda = 1/3$ fallas por año. $T \sim \text{Exp}(1/3)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Calcule: (a) $P(T > 2)$, (b) $P(1 \leq T \leq 4)$, (c) mediana de vida útil, (d) percentil 10.
+</li>
+</ul>
+
+## Cálculo: vida útil de la bomba
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Probabilidades</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+$P(T > 2) = e^{-2/3} \approx 0.513$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+$P(1 \leq T \leq 4) = e^{-1/3} - e^{-4/3} \approx 0.716 - 0.264 \approx 0.452$
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Percentiles</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+Mediana: $t_{0.5} = \ln(2) \times 3 \approx 2.08$ años
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+$P_{10}$: $t_{0.10} = -\ln(0.90) \times 3 \approx 0.316$ años $\approx 115$ días
+</li>
+</ul>
+</div>
+
+</div>
+
+## Código R: distribución exponencial
+
+```{r}
+#| echo: true
+lambda <- 1/3   # tasa = 1/media
+
+# (a) P(T > 2) = 1 - F(2)
+pexp(2, rate = lambda, lower.tail = FALSE)
+
+# (b) P(1 <= T <= 4)
+pexp(4, lambda) - pexp(1, lambda)
+
+# (c) Mediana
+qexp(0.50, rate = lambda)
+
+# (d) Percentil 10
+qexp(0.10, rate = lambda)
+
+# Verificación: E(T) y Var(T)
+set.seed(15)
+sim <- rexp(10000, rate = lambda)
+cat("Media:", round(mean(sim), 3), "  Var:", round(var(sim), 3), "\n")
+```
+
+## Efecto de $\lambda$ en la forma de la distribución
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+lambdas <- c(0.5, 1, 2, 4)
+df <- map_dfr(lambdas, function(l) {
+  t <- seq(0, 8, length.out = 300)
+  tibble(t, fdp = dexp(t, l), lambda = paste0("λ = ", l))
+})
+ggplot(df, aes(t, fdp, color = lambda)) +
+  geom_line(linewidth = 1.2) +
+  labs(x = "t", y = "f(t)", color = "Tasa",
+       title = "FDP Exponencial para distintos λ") +
+  theme_minimal(base_size = 13)
+```
+
+## Ejemplo 2: tiempo entre lluvias en la Guajira
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: sequía en La Guajira</div>
+  <div class="block-body">
+  <p>En la región árida de La Guajira, llueve en promedio 0.8 veces por mes durante la temporada seca. El tiempo entre lluvias consecutivas sigue una Exponencial. ¿Cuál es la probabilidad de que pasen más de 2 meses sin lluvia?</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$\lambda = 0.8$ lluvias/mes, $T \sim \text{Exp}(0.8)$. $E(T) = 1/0.8 = 1.25$ meses.
+</li>
+</ul>
+
+```{r}
+#| echo: true
+lambda <- 0.8
+# P(T > 2)
+pexp(2, rate = lambda, lower.tail = FALSE)
+# Mediana
+qexp(0.5, rate = lambda)
+```
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Hay aproximadamente un 20.2% de probabilidad de que pasen más de 2 meses sin lluvia.
+</li>
+</ul>
+
+## Diagnóstico: ¿los datos siguen una Exponencial?
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+# Gráfico QQ-Exponencial
+set.seed(77)
+datos <- rexp(80, rate = 0.5)          # datos simulados
+lambda_est <- 1 / mean(datos)          # estimación MLE de lambda
+
+# QQ-plot contra Exponencial
+library(ggplot2)
+n <- length(datos)
+p_i <- (1:n - 0.5) / n
+q_teorico <- qexp(p_i, rate = lambda_est)
+q_muestral <- sort(datos)
+
+ggplot(data.frame(q_teorico, q_muestral), aes(q_teorico, q_muestral)) +
+  geom_point(color = "#1b4d2e", size = 1.8) +
+  geom_abline(slope = 1, intercept = 0, color = "#c0392b") +
+  labs(x = "Cuantiles teóricos Exp", y = "Cuantiles muestrales",
+       title = "QQ-plot: ajuste Exponencial") +
+  theme_minimal(base_size = 13)
+```
+
+## Estimación de $\lambda$ por máxima verosimilitud
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Proposición: estimador MLE de $\lambda$</div>
+  <div class="block-body">
+  <p>Dado un conjunto de observaciones $t_1, \ldots, t_n$ de una Exponencial($\lambda$), el estimador de máxima verosimilitud es:</p>
+  $$\hat{\lambda} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}$$
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Estimación de lambda desde datos de campo
+tiempos <- c(0.8, 2.1, 1.3, 3.5, 0.4, 1.9, 2.8, 0.7, 4.2, 1.1)
+lambda_mle <- 1 / mean(tiempos)
+cat("Lambda estimado:", round(lambda_mle, 4), "\n")
+cat("Media estimada:", round(1/lambda_mle, 4), "\n")
+```
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>La parametrización de la Exponencial puede causar confusión entre $\lambda$ (tasa) y $\beta = 1/\lambda$ (media).</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Confundir tasa y media:</strong> si $E(T) = 3$ entonces $\lambda = 1/3$, no $\lambda = 3$. En R, el argumento es <code>rate = lambda</code>, no la media.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Aplicar donde hay envejecimiento:</strong> si la tasa de falla aumenta con el tiempo (desgaste mecánico, senescencia vegetal), la Exponencial no aplica. Use la distribución Weibull.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Confundir $P(T > t)$ con $P(T \geq t)$:</strong> para distribuciones continuas, son iguales. Use <code>pexp(t, rate, lower.tail = FALSE)</code>.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: vida de semillas en almacenamiento
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El tiempo de viabilidad de semillas de arroz almacenadas en condiciones no controladas sigue una distribución Exponencial con media 18 meses. Calcule: (a) $P(T > 24)$, (b) $P(12 \leq T \leq 24)$, (c) el tiempo mínimo que garantiza el 90% de viabilidad.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+lambda <- 1/18   # tasa = 1/media
+
+# (a) P(T > 24)
+pexp(24, rate = lambda, lower.tail = FALSE)
+
+# (b) P(12 <= T <= 24)
+pexp(24, lambda) - pexp(12, lambda)
+
+# (c) Percentil 90 (90% de las semillas habrán fallado para ese tiempo)
+# Equivalente: tiempo t tal que P(T > t) = 0.90, es decir P(T <= t) = 0.10
+qexp(0.10, rate = lambda)
+```
+
+## Taller 2: falta de memoria
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Una trampa de insectos captura en promedio 1 abeja reina cada 4 horas. El tiempo entre capturas sigue una Exponencial. Si ya pasaron 2 horas desde la última captura, ¿cuál es la probabilidad de capturar una abeja reina en la próxima hora?</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify;">
+$\lambda = 1/4$ capturas/hora. $T \sim \text{Exp}(1/4)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Por la propiedad de <strong>falta de memoria</strong>: $P(T \leq 1 \mid T > 2) = P(T \leq 1)$.
+</li>
+</ul>
+
+```{r}
+#| echo: true
+lambda <- 1/4
+# P(T <= 1) por falta de memoria
+pexp(1, rate = lambda)
+# Verificación directa: P(T <= 3 | T > 2) = P(2 < T <= 3) / P(T > 2)
+(pexp(3, lambda) - pexp(2, lambda)) / pexp(2, lambda, lower.tail = FALSE)
+```
+
+## Taller 3: comparación entre distribuciones
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Dos variedades de frijol se comparan en resistencia a la sequía. La variedad A resiste hasta $T_A \sim \text{Exp}(0.2)$ días y la variedad B hasta $T_B \sim \text{Exp}(0.1)$ días. Compare: (a) tiempos medios de resistencia, (b) $P(T_A > 7)$ vs $P(T_B > 7)$, (c) percentiles 25.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+lambdaA <- 0.2; lambdaB <- 0.1
+
+# (a) Medias
+cat("Media A:", 1/lambdaA, "días  Media B:", 1/lambdaB, "días\n")
+
+# (b) P(T > 7)
+cat("P(TA > 7):", round(pexp(7, lambdaA, lower.tail=FALSE), 4), "\n")
+cat("P(TB > 7):", round(pexp(7, lambdaB, lower.tail=FALSE), 4), "\n")
+
+# (c) Percentil 25
+cat("P25 de TA:", round(qexp(0.25, lambdaA), 3), "días\n")
+cat("P25 de TB:", round(qexp(0.25, lambdaB), 3), "días\n")
+```
+
+## Resumen: distribución exponencial
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 28px;">Fórmulas clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">$f(t) = \lambda e^{-\lambda t}$, $t \geq 0$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">$F(t) = 1 - e^{-\lambda t}$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">$E(T) = \sigma_T = 1/\lambda$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">Falta de memoria: $P(T > s+t \mid T>s) = P(T>t)$.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 28px;">Uso en R</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;"><code>dexp(t, rate)</code>: densidad.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;"><code>pexp(t, rate)</code>: $P(T \leq t)$.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;"><code>qexp(p, rate)</code>: percentil $p$.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px;"><code>rexp(n, rate)</code>: simulación.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 16: Distribución Normal.</strong> La distribución más importante de la estadística. Aparece en errores de medición, caracteres cuantitativos en genética, y como límite de muchas distribuciones (Teorema Central del Límite).</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Estudiaremos la estandarización $Z = (X - \mu)/\sigma$, el uso de tablas y el cálculo en R con <code>dnorm</code>, <code>pnorm</code>, <code>qnorm</code>.
+</li>
+</ul>

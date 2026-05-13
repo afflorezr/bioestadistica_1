@@ -1,0 +1,404 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 29 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Inferencia en regresión</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Distribución de $\hat{\beta}_0$ y $\hat{\beta}_1$.</li>
+<li class="fragment fade-in" data-fragment-index="3">Pruebas de hipótesis para los coeficientes.</li>
+<li class="fragment fade-in" data-fragment-index="4">Intervalos de confianza para $\beta_0$ y $\beta_1$.</li>
+<li class="fragment fade-in" data-fragment-index="5">Tabla ANOVA de regresión.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Evaluación del modelo</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Coeficiente de determinación $R^2$.</li>
+<li class="fragment fade-in" data-fragment-index="8">Diagnóstico de residuos.</li>
+<li class="fragment fade-in" data-fragment-index="9">Bandas de confianza y predicción.</li>
+<li class="fragment fade-in" data-fragment-index="10">Ejemplos y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Estimación de Parámetros y Evaluación del Modelo</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Inferencia, bondad de ajuste y diagnósticos en regresión lineal</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Distribución de los estimadores MCO
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: distribución de $\hat{\beta}_0$ y $\hat{\beta}_1$</div>
+  <div class="block-body">
+  <p>Bajo los supuestos LINE con $\varepsilon_i \sim N(0, \sigma^2)$:</p>
+  $$\hat{\beta}_1 \sim N\!\left(\beta_1,\; \frac{\sigma^2}{S_{XX}}\right) \qquad \hat{\beta}_0 \sim N\!\left(\beta_0,\; \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{XX}}\right)\right)$$
+  <p>con $S_{XX} = \sum(X_i - \bar{X})^2$ y $\sigma^2$ estimado por $\hat{\sigma}^2 = SCE/(n-2)$.</p>
+  </div>
+</div>
+
+## Prueba de hipótesis sobre $\beta_1$
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba t: $H_0: \beta_1 = 0$</div>
+  <div class="block-body">
+  <p>La hipótesis $H_0: \beta_1 = 0$ afirma que no existe relación lineal entre $X$ e $Y$. El estadístico de prueba es:</p>
+  $$t = \frac{\hat{\beta}_1}{EE(\hat{\beta}_1)} = \frac{\hat{\beta}_1}{\hat{\sigma}/\sqrt{S_{XX}}} \sim t_{n-2} \quad \text{bajo } H_0$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Región de rechazo bilateral: $|t| > t_{\alpha/2,\, n-2}$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+En R, esta prueba aparece automáticamente en <code>summary(lm(...))</code>.
+</li>
+</ul>
+
+## Ejemplo: inferencia en regresión dosis-rendimiento
+
+```{r}
+#| echo: true
+set.seed(29)
+dosis <- seq(20, 120, by = 10)
+rend  <- 2.5 + 0.04 * dosis + rnorm(length(dosis), 0, 0.4)
+modelo <- lm(rend ~ dosis)
+
+# Tabla de coeficientes con pruebas t
+coefs <- summary(modelo)$coefficients
+print(round(coefs, 6))
+
+cat("\nIC 95% para β₀ y β₁:\n")
+print(round(confint(modelo, level = 0.95), 6))
+```
+
+## Interpretación de la tabla de coeficientes
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">$\hat{\beta}_1$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Si $p < 0.05$: la pendiente es significativamente distinta de 0. Hay evidencia de relación lineal.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+El IC para $\beta_1$ que no contiene al 0 confirma la relación.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">$\hat{\beta}_0$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+La prueba $H_0: \beta_0 = 0$ raramente es de interés biológico.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Se interpreta solo si $X = 0$ es un valor observado o teóricamente relevante.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Descomposición de la variabilidad total
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Descomposición SCT = SCR + SCE</div>
+  <div class="block-body">
+  $$\underbrace{\sum(Y_i - \bar{Y})^2}_{SCT} = \underbrace{\sum(\hat{Y}_i - \bar{Y})^2}_{SCR} + \underbrace{\sum(Y_i - \hat{Y}_i)^2}_{SCE}$$
+  <p>SCT: variabilidad total. SCR: variabilidad explicada por la regresión. SCE: variabilidad residual (no explicada).</p>
+  </div>
+</div>
+
+## Tabla ANOVA de regresión
+
+<div class="fragment fade-in" data-fragment-index="1">
+
+| Fuente | SC | GL | CM | F |
+|---|---|---|---|---|
+| Regresión | SCR | 1 | SCR/1 | SCR/CME |
+| Error | SCE | $n-2$ | SCE/$(n-2)$ | |
+| Total | SCT | $n-1$ | | |
+
+</div>
+
+```{r}
+#| echo: true
+anova(modelo)
+```
+
+## Coeficiente de determinación $R^2$
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: $R^2$</div>
+  <div class="block-body">
+  $$R^2 = \frac{SCR}{SCT} = 1 - \frac{SCE}{SCT}$$
+  <p>$R^2 \in [0, 1]$: proporción de la variabilidad total de $Y$ explicada por el modelo lineal.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+$R^2 = 1$: ajuste perfecto (todos los puntos en la recta).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+$R^2 = 0$: el modelo no explica ninguna variación de $Y$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+En regresión simple: $R^2 = r^2$ (cuadrado del coeficiente de correlación de Pearson).
+</li>
+</ul>
+
+```{r}
+#| echo: true
+cat("R² =", round(summary(modelo)$r.squared, 4), "\n")
+cat("R² ajustado =", round(summary(modelo)$adj.r.squared, 4), "\n")
+cat("r (Pearson) =", round(cor(dosis, rend), 4),
+    "  r² =", round(cor(dosis, rend)^2, 4), "\n")
+```
+
+## Diagnóstico completo de residuos
+
+```{r}
+#| echo: true
+#| fig-height: 4
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+plot(modelo)
+```
+
+## Bandas de confianza y de predicción
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+x_nuevo <- data.frame(dosis = seq(20, 120, length.out = 100))
+ic_media <- predict(modelo, x_nuevo, interval = "confidence", level = 0.95)
+ip_obs   <- predict(modelo, x_nuevo, interval = "prediction",  level = 0.95)
+
+df_pred <- cbind(x_nuevo, as.data.frame(ic_media))
+df_pred$lwr_p <- ip_obs[,2]; df_pred$upr_p <- ip_obs[,3]
+
+ggplot(df_pred, aes(dosis)) +
+  geom_ribbon(aes(ymin = lwr_p, ymax = upr_p), fill = "#fad8d8", alpha = 0.5) +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), fill = "#dce9f7", alpha = 0.7) +
+  geom_line(aes(y = fit), color = "#c0392b", linewidth = 1.2) +
+  geom_point(data = data.frame(dosis, rend), aes(y = rend),
+             color = "#1b4d2e", size = 2.5) +
+  labs(x = "Dosis N (kg/ha)", y = "Rendimiento (t/ha)",
+       title = "Bandas de confianza (azul) y predicción (rojo)") +
+  theme_minimal(base_size = 13)
+```
+
+## Ejemplo integral: peso vivo y consumo de alimento
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: bovinos, Llanos Orientales</div>
+  <div class="block-body">
+  <p>En 18 novillas Brahman de los Llanos Orientales se midió el peso vivo (kg) y el consumo diario de materia seca (kg/día). Ajuste el modelo de regresión, evalúe $R^2$, pruebe $H_0: \beta_1 = 0$ e interprete los resultados.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(29)
+peso    <- runif(18, 250, 450)
+consumo <- 1.8 + 0.012 * peso + rnorm(18, 0, 0.5)
+mod2    <- lm(consumo ~ peso)
+sm2     <- summary(mod2)
+
+cat("β̂₁ =", round(coef(mod2)[2], 6),
+    "  p-valor =", round(sm2$coefficients[2,4], 4), "\n")
+cat("R² =", round(sm2$r.squared, 4), "\n")
+cat("IC 95% para β₁: [",
+    round(confint(mod2)[2,1], 6), ",",
+    round(confint(mod2)[2,2], 6), "]\n")
+```
+
+## Errores comunes en la evaluación del modelo
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>Un $R^2$ alto no garantiza que el modelo sea adecuado.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>$R^2$ alto con violación de supuestos:</strong> siempre verifique la gráfica de residuos. Un $R^2 = 0.95$ con patrón no aleatorio en los residuos indica que el modelo es incorrecto.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Usar el IC de la media para predecir observaciones individuales:</strong> el IC para $E(Y|X)$ es más estrecho que el intervalo de predicción (IP). Para predecir una nueva observación, use <code>interval = "prediction"</code>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Forzar el intercepto a cero sin justificación:</strong> solo elimine el intercepto si hay razones biológicas o físicas sólidas para que $Y = 0$ cuando $X = 0$.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: inferencia sobre la pendiente
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un estudio de nutrición porcina en Antioquia, se relaciona la cantidad de lisina en el alimento (%) con la ganancia diaria de peso (g/día) en 12 cerdos. Con $\hat{\beta}_1 = 185$, $EE(\hat{\beta}_1) = 42$, $n = 12$: (a) Pruebe $H_0: \beta_1 = 0$ con $\alpha = 0.05$. (b) Construya un IC al 95% para $\beta_1$. (c) Interprete.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+b1_hat <- 185; ee_b1 <- 42; n <- 12; alpha <- 0.05
+
+t_obs  <- b1_hat / ee_b1
+t_crit <- qt(1 - alpha/2, df = n - 2)
+vp     <- 2 * pt(abs(t_obs), df = n-2, lower.tail = FALSE)
+ic     <- b1_hat + c(-1,1) * t_crit * ee_b1
+
+cat("t observado:", round(t_obs, 4), "\n")
+cat("t crítico (±):", round(t_crit, 4), "\n")
+cat("Valor-p:", round(vp, 4), "\n")
+cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+cat("IC 95% para β₁: [", round(ic[1],2), ",", round(ic[2],2), "] g/día por %\n")
+cat("Interpretación: cada 1% adicional de lisina incrementa la GDP\n",
+    "en promedio entre", round(ic[1],0), "y", round(ic[2],0), "g/día.\n")
+```
+
+## Taller 2: tabla ANOVA y $R^2$
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Con los datos del taller 1 de la Clase 28 (lámina de riego vs rendimiento de papa), construya la tabla ANOVA de regresión, calcule $R^2$ e interprete el porcentaje de variabilidad explicado.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+x  <- c(50, 75, 100, 125, 150)
+y  <- c(18.2, 21.5, 24.8, 27.1, 29.3)
+mod_papa <- lm(y ~ x)
+
+cat("Tabla ANOVA:\n")
+print(anova(mod_papa))
+cat("\nR² =", round(summary(mod_papa)$r.squared, 4), "\n")
+cat("Interpretación: el", round(summary(mod_papa)$r.squared*100, 1),
+    "% de la variabilidad en el rendimiento\n",
+    "de papa es explicada por la lámina de riego aplicada.\n")
+```
+
+## Taller 3: diagnóstico y predicción
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Usando el modelo de riego de papa: (a) haga el diagnóstico de residuos (gráfica y Shapiro-Wilk), (b) calcule el IC al 95% para el rendimiento promedio esperado con 90 mm de riego, (c) calcule el IP al 95% para una nueva parcela con 90 mm.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+x90 <- data.frame(x = 90)
+
+# IC para la media
+ic_media <- predict(mod_papa, x90, interval = "confidence", level = 0.95)
+cat("IC 95% para E(Y|X=90): [", round(ic_media[2],4), ",",
+    round(ic_media[3],4), "] t/ha\n")
+
+# IP para observación nueva
+ip_obs <- predict(mod_papa, x90, interval = "prediction", level = 0.95)
+cat("IP 95% para Y_nuevo|X=90: [", round(ip_obs[2],4), ",",
+    round(ip_obs[3],4), "] t/ha\n")
+
+# Diagnóstico de residuos
+cat("\nShapiro-Wilk residuos: p =",
+    round(shapiro.test(residuals(mod_papa))$p.value, 4), "\n")
+```
+
+## Resumen: inferencia y evaluación en regresión
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 25px;">Inferencia</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px;">$t = \hat{\beta}_1/EE(\hat{\beta}_1) \sim t_{n-2}$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px;">IC para $\beta_j$: <code>confint(mod)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px;">ANOVA: <code>anova(mod)</code>.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 style="color:#1a3a6b; font-size: 25px;">Evaluación</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">$R^2$: proporción de variabilidad explicada.</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;"><code>plot(mod)</code>: gráficas de diagnóstico.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">IC media vs IP observación: <code>interval=</code>.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 30: ANOVA e Introducción al Diseño de Experimentos.</strong> Extendemos la comparación de grupos más allá de dos: el Análisis de Varianza (ANOVA) permite comparar las medias de $k \geq 2$ grupos con una sola prueba controlando el error tipo I global.</p>
+  </div>
+</div>

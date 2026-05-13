@@ -1,0 +1,518 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 23 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El lenguaje de las hipótesis</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Hipótesis nula y alternativa.</li>
+<li class="fragment fade-in" data-fragment-index="3">Pruebas unilaterales y bilaterales.</li>
+<li class="fragment fade-in" data-fragment-index="4">Estadístico de prueba.</li>
+<li class="fragment fade-in" data-fragment-index="5">Región de rechazo.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Decisiones y errores</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Error tipo I y tipo II.</li>
+<li class="fragment fade-in" data-fragment-index="8">Nivel de significancia y valor-p.</li>
+<li class="fragment fade-in" data-fragment-index="9">Interpretación correcta del valor-p.</li>
+<li class="fragment fade-in" data-fragment-index="10">Taller de conceptos.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">Conceptos Fundamentales de Pruebas de Hipótesis</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">El marco para tomar decisiones estadísticas con datos</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## ¿Qué es una prueba de hipótesis?
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Un agrónomo afirma que un nuevo fertilizante aumenta el rendimiento de maíz por encima de 4.5 t/ha.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Con los datos de 25 parcelas obtenemos $\bar{x} = 4.8$ t/ha. ¿Es esta diferencia real o producto del azar del muestreo?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Una <strong>prueba de hipótesis</strong> es un procedimiento formal para decidir si los datos ofrecen evidencia suficiente contra una afirmación sobre la población.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+La decisión no es «la hipótesis es verdadera»: es «los datos son compatibles o incompatibles con la hipótesis».
+</li>
+</ul>
+</div>
+
+</div>
+
+## Hipótesis nula y alternativa
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definiciones</div>
+  <div class="block-body">
+  <ul style="font-size: 27px;">
+  <li><strong>Hipótesis nula $H_0$:</strong> afirmación de «no efecto», «no diferencia» o valor específico del parámetro. Es lo que se quiere refutar.</li>
+  <li><strong>Hipótesis alternativa $H_1$:</strong> lo que el investigador quiere demostrar. Indica la dirección del efecto.</li>
+  </ul>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px;">
+Ejemplo: $H_0: \mu = 4.5$ t/ha vs $H_1: \mu > 4.5$ t/ha (prueba unilateral derecha).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+La carga de la prueba recae sobre $H_1$: rechazamos $H_0$ solo si los datos ofrecen evidencia suficientemente fuerte en contra.
+</li>
+</ul>
+
+## Tipos de hipótesis alternativa
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Bilateral</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+$H_0: \mu = \mu_0$ vs $H_1: \mu \neq \mu_0$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
+Se rechaza $H_0$ si el estadístico es muy grande o muy pequeño.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Uso: cuando la dirección del efecto es desconocida a priori.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#1a3a6b;">Unilateral</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
+Derecha: $H_1: \mu > \mu_0$ (se espera aumento)
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
+Izquierda: $H_1: \mu < \mu_0$ (se espera disminución)
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+Uso: cuando la dirección del efecto es conocida por el contexto científico.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Estadístico de prueba
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: estadístico de prueba</div>
+  <div class="block-body">
+  <p>El <strong>estadístico de prueba</strong> es una función de la muestra que mide qué tan lejos están los datos observados del valor postulado en $H_0$. Para la prueba de la media con $\sigma$ conocida:</p>
+  $$Z = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} \sim N(0,1) \quad \text{bajo } H_0$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Un estadístico de prueba grande (en valor absoluto) indica que los datos son poco compatibles con $H_0$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+La distribución del estadístico bajo $H_0$ permite calcular probabilidades y tomar decisiones.
+</li>
+</ul>
+
+## Región de rechazo y valor crítico
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Región de rechazo</div>
+  <div class="block-body">
+  <p>La <strong>región de rechazo</strong> $\mathcal{R}$ es el conjunto de valores del estadístico para los cuales se rechaza $H_0$. Está determinada por el <strong>valor crítico</strong> $c$:</p>
+  <ul style="font-size: 26px;">
+  <li>Bilateral: $|Z| > z_{\alpha/2}$ (ej: $|Z| > 1.96$ con $\alpha = 0.05$)</li>
+  <li>Unilateral derecha: $Z > z_\alpha$ (ej: $Z > 1.645$)</li>
+  <li>Unilateral izquierda: $Z < -z_\alpha$</li>
+  </ul>
+  </div>
+</div>
+
+## Visualización de la región de rechazo
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+x <- seq(-4, 4, length.out = 400)
+df <- data.frame(x, f = dnorm(x))
+
+# Bilateral con alpha = 0.05
+z_crit <- qnorm(0.975)
+
+ggplot(df, aes(x, f)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.3) +
+  geom_ribbon(data = subset(df, x >= z_crit),
+              aes(ymin = 0, ymax = f), fill = "#c0392b", alpha = 0.5) +
+  geom_ribbon(data = subset(df, x <= -z_crit),
+              aes(ymin = 0, ymax = f), fill = "#c0392b", alpha = 0.5) +
+  geom_ribbon(data = subset(df, x > -z_crit & x < z_crit),
+              aes(ymin = 0, ymax = f), fill = "#dce9f7", alpha = 0.6) +
+  geom_vline(xintercept = c(-z_crit, z_crit), color = "#c0392b", linetype = "dashed") +
+  annotate("text", x = 3, y = 0.05, label = "RR\nα/2", color = "#c0392b", size = 4.5) +
+  annotate("text", x = -3, y = 0.05, label = "RR\nα/2", color = "#c0392b", size = 4.5) +
+  annotate("text", x = 0, y = 0.15, label = "No rechazo\n1-α", color = "#1a3a6b", size = 4.5) +
+  labs(x = "Z", y = "f(z)", title = "Región de rechazo bilateral (α = 0.05)") +
+  theme_minimal(base_size = 13)
+```
+
+## Error tipo I y error tipo II
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Tipos de error</div>
+  <div class="block-body">
+
+| | $H_0$ verdadera | $H_0$ falsa |
+|---|---|---|
+| **No rechazar $H_0$** | Decisión correcta ($1-\alpha$) | Error tipo II ($\beta$) |
+| **Rechazar $H_0$** | Error tipo I ($\alpha$) | Decisión correcta ($1-\beta$: potencia) |
+
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>Error tipo I ($\alpha$):</strong> rechazar $H_0$ cuando es verdadera (falso positivo). Se controla fijando $\alpha$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Error tipo II ($\beta$):</strong> no rechazar $H_0$ cuando es falsa (falso negativo). Se reduce aumentando $n$.
+</li>
+</ul>
+
+## La disyuntiva $\alpha$ versus $\beta$
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Reducir $\alpha$ implica aumentar $\beta$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Si exigimos mayor evidencia para rechazar $H_0$ (reducir falsos positivos), aumentamos el riesgo de no detectar efectos reales.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+En diagnóstico veterinario: ¿es peor declarar sano a un animal enfermo o enfermo a uno sano?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">La solución: aumentar $n$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Mayor tamaño de muestra reduce simultáneamente ambos errores, manteniendo $\alpha$ fijo.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Esto justifica el cálculo de $n$ antes del estudio (Clase 22).
+</li>
+</ul>
+</div>
+
+</div>
+
+## El valor-p
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: valor-p</div>
+  <div class="block-body">
+  <p>El <strong>valor-p</strong> es la probabilidad de observar un estadístico de prueba tan extremo o más extremo que el observado, <strong>asumiendo que $H_0$ es verdadera</strong>:</p>
+  $$\text{valor-p} = P(\text{estadístico tan extremo} \mid H_0 \text{ verdadera})$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Un valor-p pequeño indica que los datos son poco compatibles con $H_0$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Regla de decisión:</strong> si valor-p $< \alpha$, se rechaza $H_0$; si valor-p $\geq \alpha$, no se rechaza.
+</li>
+</ul>
+
+## Interpretación correcta del valor-p
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: lo que el valor-p NO es</div>
+  <div class="block-body">
+  <ul style="font-size: 26px;">
+  <li>NO es la probabilidad de que $H_0$ sea verdadera.</li>
+  <li>NO es la probabilidad de que los resultados sean «por azar».</li>
+  <li>NO mide el tamaño del efecto ni su importancia práctica.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p><strong>Interpretación correcta:</strong> «si $H_0$ fuera verdadera, la probabilidad de obtener datos tan extremos como los observados (o más) es de valor-p = x». Un valor-p pequeño indica evidencia contra $H_0$.</p>
+  </div>
+</div>
+
+## Cálculo del valor-p en R
+
+```{r}
+#| echo: true
+# Ejemplo: rendimiento de maíz
+# H0: mu = 4.5 t/ha vs H1: mu > 4.5 (unilateral derecha)
+mu0 <- 4.5; sigma <- 0.8; n <- 25; xbar <- 4.8
+
+# Estadístico Z
+Z <- (xbar - mu0) / (sigma / sqrt(n))
+cat("Estadístico Z:", round(Z, 4), "\n")
+
+# Valor-p unilateral derecha
+vp_derecha <- pnorm(Z, lower.tail = FALSE)
+cat("Valor-p (H1: mu > 4.5):", round(vp_derecha, 4), "\n")
+
+# Valor-p bilateral
+vp_bilateral <- 2 * pnorm(abs(Z), lower.tail = FALSE)
+cat("Valor-p (H1: mu ≠ 4.5):", round(vp_bilateral, 4), "\n")
+```
+
+## Pasos para realizar una prueba de hipótesis
+
+<ol>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
+<strong>Plantear $H_0$ y $H_1$</strong> con claridad, especificando el tipo de prueba (bilateral o unilateral).
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
+<strong>Fijar el nivel de significancia $\alpha$</strong> (típicamente 0.05 o 0.01).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
+<strong>Seleccionar el estadístico de prueba</strong> apropiado y determinar su distribución bajo $H_0$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
+<strong>Calcular el estadístico</strong> con los datos observados.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
+<strong>Calcular el valor-p</strong> y comparar con $\alpha$ (o comparar el estadístico con el valor crítico).
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 27px; text-align: justify;">
+<strong>Concluir en el contexto del problema</strong>: con suficiente evidencia o sin evidencia suficiente.
+</li>
+</ol>
+
+## Significancia estadística vs importancia práctica
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: significancia no equivale a importancia</div>
+  <div class="block-body">
+  <p>Con muestras grandes, diferencias triviales pueden ser estadísticamente significativas. Siempre reporte el tamaño del efecto junto al valor-p.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Diferencia de 0.02 t/ha con n = 10000: significativa pero trivial
+mu0 <- 4.50; sigma <- 0.8; xbar <- 4.52
+for (n in c(30, 100, 1000, 10000)) {
+  Z <- (xbar - mu0) / (sigma/sqrt(n))
+  vp <- 2 * pnorm(abs(Z), lower.tail = FALSE)
+  cat(sprintf("n = %5d: Z = %.3f, valor-p = %.4f\n", n, Z, vp))
+}
+```
+
+## Errores comunes en pruebas de hipótesis
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores conceptuales frecuentes</div>
+  <div class="block-body">
+  <p>Las pruebas de hipótesis son el área de la estadística con más malentendidos en la práctica científica.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>«$p > 0.05$ demuestra que $H_0$ es verdadera»:</strong> incorrecto. Solo significa que no hay evidencia suficiente para rechazarla con esos datos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>«$p = 0.049$ es importante, $p = 0.051$ no»:</strong> el umbral $\alpha = 0.05$ es una convención, no una frontera absoluta. Reporte el valor-p exacto y el tamaño del efecto.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>Plantear $H_1$ después de ver los datos:</strong> llamado «HARKing» (Hypothesizing After Results are Known). Invalida la prueba.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: plantear hipótesis
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Para cada situación, plantee $H_0$ y $H_1$, y justifique si la prueba debe ser bilateral o unilateral:</p>
+  <ol style="font-size: 24px;">
+  <li>Un laboratorio asegura que su nuevo inóculo aumenta la fijación de nitrógeno en leguminosas por encima del promedio histórico de 12 mg/g.</li>
+  <li>Se quiere verificar si el peso promedio de truchas en una piscicultora del Huila difiere de las 350 g recomendadas para comercialización.</li>
+  <li>Un estudio evalúa si la tasa de preñez de bovinos tratados con progesterona es diferente (sin dirección esperada) a la del grupo control.</li>
+  </ol>
+  </div>
+</div>
+
+## Taller 1: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+<strong>Caso 1:</strong> $H_0: \mu \leq 12$ vs $H_1: \mu > 12$. Unilateral derecha: se afirma un aumento.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>Caso 2:</strong> $H_0: \mu = 350$ vs $H_1: \mu \neq 350$. Bilateral: se quiere detectar cualquier diferencia sin dirección específica.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Caso 3:</strong> $H_0: p_{trat} = p_{ctrl}$ vs $H_1: p_{trat} \neq p_{ctrl}$. Bilateral: sin dirección esperada.
+</li>
+</ul>
+
+## Taller 2: valor-p y decisión
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un ensayo con 36 parcelas de arroz, se obtuvo $\bar{x} = 5.1$ t/ha con $\sigma = 0.9$ t/ha (conocida). La hipótesis es $H_0: \mu = 4.8$ vs $H_1: \mu \neq 4.8$ con $\alpha = 0.05$. Calcule el estadístico $Z$, el valor-p y concluya.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+mu0 <- 4.8; sigma <- 0.9; n <- 36; xbar <- 5.1
+
+Z <- (xbar - mu0) / (sigma / sqrt(n))
+vp <- 2 * pnorm(abs(Z), lower.tail = FALSE)
+z_crit <- qnorm(0.975)
+
+cat("Z =", round(Z, 4), "\n")
+cat("Valor crítico z_0.025 =", round(z_crit, 4), "\n")
+cat("Valor-p =", round(vp, 4), "\n")
+cat("Decisión: ", ifelse(vp < 0.05, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+cat("Conclusión: hay evidencia suficiente de que el rendimiento",
+    "promedio difiere de 4.8 t/ha.\n")
+```
+
+## Taller 3: errores tipo I y tipo II
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En una prueba diagnóstica de brucelosis en bovinos: $H_0$ = «animal sano», $H_1$ = «animal enfermo». (a) ¿Qué representa el error tipo I? (b) ¿El error tipo II? (c) ¿Cuál error es más grave desde la perspectiva de salud pública? (d) ¿Cómo afecta reducir $\alpha$ a 0.01?</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+<strong>(a) Error tipo I:</strong> declarar enfermo a un animal sano. Consecuencia: sacrificio innecesario, pérdida económica para el productor.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>(b) Error tipo II:</strong> declarar sano a un animal enfermo. Consecuencia: el animal circula en la cadena productiva, riesgo de contagio al rebaño y potencial zoonosis.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>(c)</strong> El error tipo II es más grave en salud pública. Se prefiere una prueba más sensible (mayor $\alpha$, menor $\beta$).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>(d)</strong> Reducir $\alpha$ a 0.01 aumenta la región de no rechazo, incrementando $\beta$: más animales enfermos pasarían como sanos.
+</li>
+</ul>
+
+## Resumen: conceptos fundamentales
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Elementos clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">$H_0$: lo que se quiere refutar.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">$H_1$: lo que se quiere demostrar.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">$\alpha$ = P(error tipo I) = nivel de significancia.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px;">valor-p: evidencia contra $H_0$ dado los datos.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 26px;">Reglas de decisión</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;">valor-p $< \alpha$: rechazar $H_0$.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;">valor-p $\geq \alpha$: no rechazar $H_0$.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 23px;">Reportar siempre tamaño del efecto.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 23px;">Significancia $\neq$ importancia práctica.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 24: Errores tipo I y II, Valor-p.</strong> Profundizaremos en la relación entre errores, potencia y tamaño de muestra, y revisaremos el debate actual sobre el uso del valor-p en ciencias biológicas y agrícolas.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Comenzaremos también a aplicar el marco de las pruebas a situaciones concretas: prueba Z y prueba t para la media.
+</li>
+</ul>

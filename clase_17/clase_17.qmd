@@ -1,0 +1,530 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 17 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Fundamentos</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Población, muestra y parámetro.</li>
+<li class="fragment fade-in" data-fragment-index="3">Marco muestral.</li>
+<li class="fragment fade-in" data-fragment-index="4">Muestreo probabilístico vs no probabilístico.</li>
+<li class="fragment fade-in" data-fragment-index="5">Muestreo aleatorio simple.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Tipos de muestreo</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Muestreo estratificado.</li>
+<li class="fragment fade-in" data-fragment-index="8">Muestreo sistemático.</li>
+<li class="fragment fade-in" data-fragment-index="9">Muestreo por conglomerados.</li>
+<li class="fragment fade-in" data-fragment-index="10">Sesgos y errores de muestreo.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Tipos de Muestreo</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Cómo obtener datos representativos de una población</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## El puente hacia la inferencia
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Hasta ahora hemos trabajado con distribuciones de probabilidad teóricas para describir variables aleatorias.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+En la práctica, queremos <strong>aprender sobre una población</strong> a partir de una muestra de datos observados.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La validez de cualquier conclusión estadística depende de <strong>cómo se obtuvo la muestra</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Un mal diseño muestral puede producir conclusiones completamente erróneas, sin importar el análisis estadístico posterior.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Conceptos fundamentales
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definiciones básicas</div>
+  <div class="block-body">
+  <ul style="font-size: 27px;">
+  <li><strong>Población:</strong> conjunto de todas las unidades sobre las que se quiere hacer inferencia.</li>
+  <li><strong>Muestra:</strong> subconjunto de la población efectivamente observado.</li>
+  <li><strong>Parámetro:</strong> medida numérica que describe la población (ej: $\mu$, $\sigma^2$, $p$).</li>
+  <li><strong>Estadístico:</strong> medida calculada a partir de la muestra (ej: $\bar{x}$, $s^2$, $\hat{p}$).</li>
+  </ul>
+  </div>
+</div>
+
+## Marco muestral y unidad de muestreo
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: marco muestral</div>
+  <div class="block-body">
+  <p>El <strong>marco muestral</strong> es la lista o descripción de todas las unidades de la población que pueden ser seleccionadas. La <strong>unidad de muestreo</strong> es el elemento individual que puede ser seleccionado.</p>
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: caficultura en Huila</div>
+  <div class="block-body">
+  <p>Población: todos los caficultores del departamento del Huila. Marco muestral: el registro oficial de productores de la Federación Nacional de Cafeteros. Unidad de muestreo: cada finca caficultora registrada.</p>
+  </div>
+</div>
+
+## Muestreo probabilístico vs no probabilístico
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Probabilístico</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Cada unidad tiene una probabilidad conocida y positiva de ser seleccionada.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Permite cuantificar el error de muestreo y construir intervalos de confianza válidos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
+Tipos: MAS, estratificado, sistemático, conglomerados.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#7a1515;">No probabilístico</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+La selección depende del criterio del investigador o de la conveniencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+No permite cuantificar el error de muestreo de forma rigurosa.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">
+Tipos: muestreo por conveniencia, intencional, bola de nieve.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Muestreo aleatorio simple (MAS)
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: MAS</div>
+  <div class="block-body">
+  <p>En el <strong>Muestreo Aleatorio Simple</strong>, cada muestra posible de tamaño $n$ tiene la misma probabilidad de ser seleccionada. Equivalentemente, cada unidad tiene probabilidad $n/N$ de ser incluida en la muestra.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Con reemplazo:</strong> una unidad puede ser seleccionada más de una vez. Más sencillo teóricamente.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Sin reemplazo:</strong> cada unidad se selecciona a lo sumo una vez. Más eficiente en la práctica.
+</li>
+</ul>
+
+## MAS en R: implementación
+
+```{r}
+#| echo: true
+# Marco muestral: 500 parcelas de papa en Boyacá (numeradas 1 a 500)
+set.seed(17)
+N <- 500   # tamaño de la población
+n <- 40    # tamaño de la muestra
+
+# MAS sin reemplazo
+muestra_mas <- sample(1:N, size = n, replace = FALSE)
+cat("Primeras 10 parcelas seleccionadas:", muestra_mas[1:10], "\n")
+
+# MAS con reemplazo
+muestra_cr <- sample(1:N, size = n, replace = TRUE)
+
+# Verificar: cada unidad tiene la misma probabilidad n/N
+cat("Probabilidad de selección:", n/N, "\n")
+```
+
+## Muestreo estratificado
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: muestreo estratificado</div>
+  <div class="block-body">
+  <p>La población se divide en grupos homogéneos (<strong>estratos</strong>) y se aplica MAS dentro de cada estrato. El tamaño de muestra por estrato puede ser <strong>proporcional</strong> (al tamaño del estrato) o <strong>óptimo</strong> (considera también la variabilidad).</p>
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: encuesta ganadera, Llanos</div>
+  <div class="block-body">
+  <p>En los Llanos Orientales hay 3000 fincas ganaderas: 1200 pequeñas, 1100 medianas y 700 grandes. Si se quieren encuestar 120 fincas con asignación proporcional: 48 pequeñas, 44 medianas y 28 grandes.</p>
+  </div>
+</div>
+
+## Asignación proporcional: código R
+
+```{r}
+#| echo: true
+# Marco muestral estratificado
+N_total <- 3000
+estratos <- data.frame(
+  tipo    = c("Pequeña", "Mediana", "Grande"),
+  N_h     = c(1200, 1100, 700),
+  prop    = c(1200, 1100, 700) / 3000
+)
+n_total <- 120
+
+# Asignación proporcional
+estratos$n_h <- round(n_total * estratos$prop)
+print(estratos)
+
+# Selección dentro de cada estrato
+set.seed(17)
+muestra_estrat <- lapply(seq_along(estratos$tipo), function(i) {
+  sample(1:estratos$N_h[i], estratos$n_h[i], replace = FALSE)
+})
+```
+
+## Ventajas del muestreo estratificado
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Ventajas</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Garantiza representación de todos los grupos de interés.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Mayor precisión que el MAS cuando los estratos son internamente homogéneos y entre sí heterogéneos.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Permite hacer estimaciones separadas por estrato.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#7a1515;">Cuándo usarlo</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+La población tiene subgrupos claramente diferenciados (tamaño de finca, altitud, variedad cultivada).
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+Se requieren estimaciones separadas para cada subgrupo.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Muestreo sistemático
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: muestreo sistemático</div>
+  <div class="block-body">
+  <p>Se selecciona aleatoriamente el primer elemento entre los primeros $k = N/n$ del marco, y luego se toman cada $k$ elementos. El valor $k$ se denomina <strong>intervalo de muestreo</strong>.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+N <- 300; n <- 30
+k <- N / n   # intervalo de muestreo
+cat("Intervalo k =", k, "\n")
+
+# Inicio aleatorio entre 1 y k
+set.seed(17)
+inicio <- sample(1:k, 1)
+cat("Inicio:", inicio, "\n")
+
+# Muestra sistemática
+muestra_sist <- seq(inicio, N, by = k)
+cat("Muestra:", muestra_sist, "\n")
+```
+
+## Muestreo por conglomerados
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: muestreo por conglomerados</div>
+  <div class="block-body">
+  <p>La población se divide en grupos naturales (<strong>conglomerados</strong>), se seleccionan aleatoriamente algunos conglomerados y se observan <strong>todas</strong> las unidades de los conglomerados seleccionados (una etapa) o una muestra dentro de ellos (dos etapas).</p>
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: cultivo de arroz, Tolima</div>
+  <div class="block-body">
+  <p>Se dividen 200 parcelas en 40 conglomerados de 5 parcelas cada una (por lotes colindantes). Se seleccionan al azar 10 conglomerados y se inspecciona cada parcela en los conglomerados elegidos.</p>
+  </div>
+</div>
+
+## Comparación de los tipos de muestreo
+
+<div class="fragment fade-in" data-fragment-index="1" style="overflow-x: auto;">
+
+| Tipo | Cuándo usar | Ventaja | Desventaja |
+|---|---|---|---|
+| **MAS** | Marco completo disponible | Simple, sin sesgo | Puede ser ineficiente |
+| **Estratificado** | Subgrupos diferenciados | Alta precisión | Requiere info. previa |
+| **Sistemático** | Lista ordenada disponible | Fácil implementación | Riesgo de periodicidad |
+| **Conglomerados** | Población geográficamente dispersa | Bajo costo de desplazamiento | Menor precisión |
+
+</div>
+
+## Errores en muestreo
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Tipos de error</div>
+  <div class="block-body">
+  <p>El error total de una estimación tiene dos componentes principales:</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Error de muestreo:</strong> variación debida al azar en la selección de la muestra. Disminuye al aumentar $n$ y puede cuantificarse.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Error de no muestreo (sesgo):</strong> errores sistemáticos independientes del tamaño de muestra. Causas: marco incompleto, no respuesta, errores de medición, mala definición de unidad.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Sesgo de selección:</strong> usar como muestra a voluntarios o a quienes responden más fácilmente. No se corrige aumentando $n$.
+</li>
+</ul>
+
+## Sesgos comunes en estudios agropecuarios
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplos de sesgo</div>
+  <div class="block-body">
+  <ul style="font-size: 27px;">
+  <li><strong>Sesgo de acceso:</strong> solo se encuestan fincas cerca de vías principales, excluyendo las más aisladas.</li>
+  <li><strong>Sesgo de respuesta:</strong> los agricultores exitosos son más propensos a responder encuestas de productividad.</li>
+  <li><strong>Sesgo de temporada:</strong> medir la condición corporal de bovinos solo en época de lluvias sobreestima la condición promedio anual.</li>
+  </ul>
+  </div>
+</div>
+
+## Muestreo en diseño de experimentos
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>En ensayos de campo, el muestreo determina la unidad experimental. La <strong>aleatorización</strong> de los tratamientos es análoga al MAS: cada parcela tiene la misma probabilidad de recibir cualquier tratamiento, eliminando el sesgo sistemático.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+En ensayos en bloques completos aleatorizados: la población de parcelas se estratifica por bloque y se aleatoriza dentro de cada bloque.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Este principio se aplicará en el diseño experimental (Clase 30).
+</li>
+</ul>
+
+## Errores comunes en el diseño muestral
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>El muestreo deficiente no puede corregirse con análisis estadístico sofisticado.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Confundir marco muestral con población:</strong> el marco puede ser incompleto (ej: registro desactualizado de fincas).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Tamaño de muestra insuficiente:</strong> un $n$ muy pequeño produce estimadores con alta varianza. El tamaño de muestra se calcula a partir del error tolerado (Clase 22).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Usar muestreo por conveniencia y llamarlo aleatorio:</strong> invalida toda la inferencia posterior.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: identificación del tipo de muestreo
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Identifique el tipo de muestreo en cada caso y justifique:</p>
+  <ol style="font-size: 25px;">
+  <li>Para evaluar la calidad del grano de cacao en el Caquetá, se divide el departamento en 12 municipios cacaoteros (conglomerados) y se visitan 4 municipios seleccionados al azar.</li>
+  <li>En un cultivo de 1000 plantas de palma, se selecciona la planta 3 y luego cada 10 plantas.</li>
+  <li>En una encuesta de adopción tecnológica, se seleccionan 80 agricultores de zonas planas y 40 de zonas de ladera, en proporción al número de fincas en cada zona.</li>
+  </ol>
+  </div>
+</div>
+
+## Taller 1: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+<strong>Caso 1: Conglomerados (una etapa).</strong> Los municipios son los conglomerados; se observan todos los productores en los 4 municipios seleccionados.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>Caso 2: Sistemático.</strong> $k = 1000/100 = 10$. Inicio aleatorio en {1,2,...,10}, luego cada 10.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Caso 3: Estratificado proporcional.</strong> Los estratos son zona plana y zona de ladera. La muestra es proporcional al tamaño de cada estrato.
+</li>
+</ul>
+
+## Taller 2: implementación en R
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Un investigador quiere estimar el rendimiento promedio (kg/ha) en 400 fincas arroceras del Tolima. Hay 3 zonas: zona alta (150 fincas), media (160) y baja (90). Implemente en R: (a) MAS de 60 fincas, (b) muestreo estratificado proporcional de 60 fincas.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+set.seed(17)
+N <- 400; n <- 60
+
+# (a) MAS sin reemplazo
+mas <- sample(1:N, n, replace = FALSE)
+cat("MAS - primeras 5:", head(mas, 5), "\n")
+
+# (b) Estratificado proporcional
+N_h <- c(alta = 150, media = 160, baja = 90)
+n_h <- round(n * N_h / N)
+cat("Muestra por estrato:", n_h, "\n")
+
+estrat <- mapply(function(nh, Nh) sample(1:Nh, nh, replace = FALSE),
+                 n_h, N_h, SIMPLIFY = FALSE)
+cat("Zona alta - primeros 5:", head(estrat$alta, 5), "\n")
+```
+
+## Taller 3: análisis de sesgo
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un estudio de bienestar animal en granjas porcinas de Antioquia, el investigador visita solo las granjas que aceptaron participar voluntariamente. Identifique: (a) el tipo de sesgo, (b) por qué el resultado puede sobrestimar el bienestar real, (c) cómo corregir el diseño.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify;">
+<strong>(a)</strong> Sesgo de selección por autoselección (muestreo de voluntarios).
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>(b)</strong> Las granjas con mejores condiciones de bienestar tienen mayor incentivo a participar. Las que presentan problemas tienden a rechazar la visita, sesgando la muestra hacia mejores condiciones.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>(c)</strong> Usar el registro de granjas certificadas (marco muestral) y aplicar MAS. Si hay rechazo, implementar un protocolo de seguimiento a los no respondientes o imputación.
+</li>
+</ul>
+
+## Resumen: tipos de muestreo
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Tipos probabilísticos</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px;"><strong>MAS:</strong> <code>sample(1:N, n)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;"><strong>Estratificado:</strong> MAS por estrato, proporcional o no.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;"><strong>Sistemático:</strong> inicio aleatorio, luego cada $k$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;"><strong>Conglomerados:</strong> selección de grupos, observación completa.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 26px;">Reglas de oro</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">Definir claramente la población y el marco muestral.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">El tamaño de muestra se calcula según el error tolerado.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">El sesgo no desaparece con mayor $n$.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;">Documentar el diseño muestral en el protocolo del estudio.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 18: Distribuciones muestrales.</strong> ¿Cómo se distribuye la media muestral $\bar{X}$ cuando tomamos muchas muestras de la misma población? Esta pregunta es el corazón de la inferencia estadística.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Estudiaremos la distribución del estadístico $\bar{X}$ y sus propiedades: $E(\bar{X}) = \mu$ y $\text{Var}(\bar{X}) = \sigma^2/n$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Veremos por qué el tamaño de muestra importa para la precisión de una estimación.
+</li>
+</ul>

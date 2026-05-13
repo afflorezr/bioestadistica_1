@@ -1,0 +1,645 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 13 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Fundamentos de Poisson</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Proceso de Poisson.</li>
+<li class="fragment fade-in" data-fragment-index="3">FMP y FDA.</li>
+<li class="fragment fade-in" data-fragment-index="4">Esperanza y varianza.</li>
+<li class="fragment fade-in" data-fragment-index="5">Derivación desde la Binomial.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Aplicaciones</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Ejemplos agrícolas y biológicos.</li>
+<li class="fragment fade-in" data-fragment-index="8">Código R: dpois, ppois.</li>
+<li class="fragment fade-in" data-fragment-index="9">Aproximación Binomial-Poisson.</li>
+<li class="fragment fade-in" data-fragment-index="10">Errores comunes y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Distribución de Poisson</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Modelando eventos raros en tiempo y espacio</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Motivación: contando eventos raros
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En epidemiología vegetal, ¿cuántos focos de marchitez bacteriana se detectan por hectárea en un cultivo de tomate?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+En parasitología, ¿cuántos parásitos por mililitro de muestra se encuentran en análisis de agua de riego?
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+En control de calidad, ¿cuántos defectos por lote de 1000 unidades se producen?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+En todos estos casos: el evento es <strong>raro</strong> (probabilidad pequeña) pero se puede repetir muchas veces en el intervalo de observación.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+La distribución de <strong>Poisson</strong> modela el <strong>número de ocurrencias</strong> de un evento en un intervalo fijo de tiempo o espacio.
+</li>
+</ul>
+</div>
+
+</div>
+
+## El proceso de Poisson: condiciones
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Proceso de Poisson</div>
+  <div class="block-body">
+  <p>Un proceso de Poisson con tasa $\lambda > 0$ cumple:</p>
+  <ol style="font-size: 27px;">
+  <li>Los eventos ocurren de forma <strong>independiente</strong> en intervalos distintos.</li>
+  <li>La probabilidad de un evento en un intervalo muy pequeño es <strong>proporcional</strong> a su longitud.</li>
+  <li>La probabilidad de dos o más eventos en un intervalo muy pequeño es <strong>despreciable</strong> (eventos raros).</li>
+  </ol>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+El parámetro $\lambda$ es la <strong>tasa de ocurrencia</strong>: número esperado de eventos por unidad de tiempo (o espacio).
+</li>
+</ul>
+
+## Distribución de Poisson: definición
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Distribución de Poisson</div>
+  <div class="block-body">
+  <p>Sea $X$ el número de ocurrencias en un intervalo fijo. Se dice que $X \sim \text{Poisson}(\lambda)$ si:</p>
+  $$P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots$$
+  <p>donde $\lambda > 0$ es el número esperado de eventos en el intervalo.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+El soporte de $X$ es $\{0, 1, 2, \ldots\}$: <strong>infinito numerable</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Verificación: $\sum_{k=0}^{\infty} \frac{e^{-\lambda}\lambda^k}{k!} = e^{-\lambda} e^{\lambda} = 1$. ✓ (Serie de Taylor de $e^\lambda$.)
+</li>
+</ul>
+
+## Derivación: de Binomial a Poisson
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Derivación por límite</div>
+  <div class="block-body">
+  <p>Sea $X \sim \text{Bin}(n, p)$ con $\lambda = np$ fijo. Tomando $n \to \infty$ y $p \to 0$:</p>
+  $$P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} \xrightarrow{n \to \infty} \frac{e^{-\lambda}\lambda^k}{k!}$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+La Poisson emerge naturalmente como el caso límite de la Binomial cuando hay <strong>muchos ensayos</strong> y <strong>baja probabilidad</strong> por ensayo.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+En la práctica: se usa la Poisson cuando $n \geq 20$ y $p \leq 0.05$, con $\lambda = np$.
+</li>
+</ul>
+
+## Parámetros de la Poisson
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: E(X) y Var(X) de la Poisson</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Poisson}(\lambda)$, entonces:</p>
+  $$E(X) = \lambda \qquad \text{Var}(X) = \lambda$$
+  </div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Propiedad notable</div>
+  <div class="block-body">
+  <p>La media y la varianza son <strong>iguales</strong> e igual a $\lambda$. Esta propiedad sirve para <em>diagnosticar</em> si un conteo sigue una Poisson: si la varianza muestral es mucho mayor que la media, hay <strong>sobredispersión</strong>.</p>
+  </div>
+</div>
+
+## Derivación: E(X) de la Poisson
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Demostración: E(X)</div>
+  <div class="block-body">
+  $$E(X) = \sum_{k=0}^{\infty} k \frac{e^{-\lambda}\lambda^k}{k!} = e^{-\lambda} \sum_{k=1}^{\infty} \frac{\lambda^k}{(k-1)!}$$
+  $$= e^{-\lambda} \lambda \sum_{j=0}^{\infty} \frac{\lambda^j}{j!} = e^{-\lambda} \lambda e^{\lambda} = \lambda \quad \blacksquare$$
+  </div>
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p>De forma análoga se demuestra que $E(X^2) = \lambda^2 + \lambda$, por lo que $\text{Var}(X) = E(X^2) - [E(X)]^2 = \lambda$.</p>
+  </div>
+</div>
+
+## Función de distribución acumulada
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">FDA de la Poisson</div>
+  <div class="block-body">
+  $$F(k) = P(X \leq k) = e^{-\lambda} \sum_{j=0}^{k} \frac{\lambda^j}{j!}, \quad k = 0, 1, 2, \ldots$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+No hay forma cerrada sencilla: se calcula con R o tablas de Poisson.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Complemento: $P(X > k) = 1 - F(k)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Rango: $P(a \leq X \leq b) = F(b) - F(a-1)$.
+</li>
+</ul>
+
+## Ejemplo 1: focos de marchitez en cultivo de tomate
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: tomate, Valle del Cauca</div>
+  <div class="block-body">
+  <p>En un cultivo de tomate bajo invernadero en el Valle del Cauca, se detectan en promedio 2.4 focos de marchitez bacteriana por hectárea por semana. Sea $X$ = número de focos por hectárea en una semana.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Poisson}(2.4)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$E(X) = \text{Var}(X) = 2.4$. La desviación estándar es $\sigma = \sqrt{2.4} \approx 1.55$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Calcule: (a) $P(X = 0)$, (b) $P(X \leq 3)$, (c) $P(X \geq 5)$.
+</li>
+</ul>
+
+## Cálculo manual: ejemplo tomate
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">$P(X = 0)$: ningún foco</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
+$$P(X=0) = \frac{e^{-2.4}(2.4)^0}{0!} = e^{-2.4} \approx 0.091$$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Solo el 9.1% de las semanas no habrá ningún foco de marchitez.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">$P(X = 3)$: exactamente 3 focos</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
+$$P(X=3) = \frac{e^{-2.4}(2.4)^3}{3!} = \frac{0.091 \times 13.824}{6} \approx 0.209$$
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Hay un 20.9% de probabilidad de observar exactamente 3 focos.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Código R: dpois y ppois
+
+```{r}
+#| echo: true
+lambda <- 2.4
+
+# (a) P(X = 0): ningún foco de marchitez
+dpois(0, lambda)
+
+# P(X = 3)
+dpois(3, lambda)
+
+# (b) P(X <= 3)
+ppois(3, lambda)
+
+# (c) P(X >= 5) = 1 - P(X <= 4)
+1 - ppois(4, lambda)
+
+# Suma directa (verificación)
+sum(dpois(0:3, lambda))
+```
+
+## Código R: gráfica FMP de la Poisson
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+lambda <- 2.4
+df <- data.frame(k = 0:12, prob = dpois(0:12, lambda))
+
+ggplot(df, aes(x = k, y = prob)) +
+  geom_col(fill = "#1a3a6b", width = 0.6) +
+  geom_vline(xintercept = lambda, color = "#c0392b",
+             linetype = "dashed", linewidth = 1) +
+  annotate("text", x = lambda + 0.5, y = max(df$prob) * 0.9,
+           label = paste0("λ = ", lambda), color = "#c0392b", size = 5) +
+  labs(x = "k (número de focos)", y = "P(X = k)",
+       title = "FMP: Poisson(2.4)") +
+  theme_minimal(base_size = 14)
+```
+
+## Código R: cuantiles y simulación
+
+```{r}
+#| echo: true
+lambda <- 2.4
+
+# Cuantil: ¿a partir de cuántos focos el acumulado supera el 90%?
+qpois(0.90, lambda)
+
+# Simulación de 1000 semanas
+set.seed(42)
+sim <- rpois(1000, lambda)
+cat("Media simulada:", round(mean(sim), 3),
+    " Varianza simulada:", round(var(sim), 3), "\n")
+
+# Comparación media = varianza (característica Poisson)
+cat("¿Media ≈ Varianza?", round(mean(sim), 2) == round(var(sim), 2), "\n")
+```
+
+## Propiedad de aditividad
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Teorema: aditividad de la Poisson</div>
+  <div class="block-body">
+  <p>Si $X \sim \text{Poisson}(\lambda_1)$ y $Y \sim \text{Poisson}(\lambda_2)$ son independientes, entonces:</p>
+  $$X + Y \sim \text{Poisson}(\lambda_1 + \lambda_2)$$
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Aplicación</div>
+  <div class="block-body">
+  <p>En un cultivo mixto de maíz y frijol, los insectos plaga en maíz siguen Poisson(1.5) y en frijol Poisson(0.8) por parcela. El total de insectos por parcela sigue Poisson(2.3).</p>
+  </div>
+</div>
+
+## Ejemplo 2: bacterias en agua de riego
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: calidad de agua de riego, Cundinamarca</div>
+  <div class="block-body">
+  <p>En el análisis microbiológico de agua de riego para hortalizas, se detectan en promedio 3.5 colonias de <em>E. coli</em> por 100 mL. Si la norma colombiana permite máximo 5 colonias, ¿cuál es la probabilidad de que una muestra supere el límite?</p>
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+$X \sim \text{Poisson}(3.5)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$P(X > 5) = 1 - P(X \leq 5)$.
+</li>
+</ul>
+
+## Solución: ejemplo agua de riego
+
+```{r}
+#| echo: true
+lambda <- 3.5
+
+# P(X > 5) = 1 - P(X <= 5)
+prob_supera <- 1 - ppois(5, lambda)
+cat("P(X > 5) =", round(prob_supera, 4), "\n")
+
+# Gráfica con área coloreada
+df <- data.frame(k = 0:15, prob = dpois(0:15, lambda),
+                 supera = ifelse(0:15 > 5, "Supera límite", "Dentro del límite"))
+library(ggplot2)
+ggplot(df, aes(x = k, y = prob, fill = supera)) +
+  geom_col(width = 0.65) +
+  scale_fill_manual(values = c("Dentro del límite" = "#1b4d2e",
+                               "Supera límite" = "#c0392b")) +
+  labs(x = "k (colonias por 100 mL)", y = "P(X = k)", fill = NULL,
+       title = "Poisson(3.5): norma de E. coli") +
+  theme_minimal(base_size = 13)
+```
+
+## Aproximación Binomial con Poisson
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Regla de uso:</strong> Si $X \sim \text{Bin}(n, p)$ con $n \geq 20$ y $p \leq 0.05$, entonces $X \approx \text{Poisson}(\lambda = np)$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Comparación: Bin(500, 0.006) vs Poisson(3)
+n <- 500; p <- 0.006; lambda <- n * p
+
+# P(X = 2) bajo los dos modelos
+cat("Binomial P(X=2):", dbinom(2, n, p), "\n")
+cat("Poisson  P(X=2):", dpois(2, lambda), "\n")
+
+# P(X <= 5)
+cat("Binomial P(X<=5):", pbinom(5, n, p), "\n")
+cat("Poisson  P(X<=5):", ppois(5, lambda), "\n")
+```
+
+## Interpretación del parámetro $\lambda$
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">$\lambda$ depende de la unidad</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+$\lambda$ es la tasa de ocurrencia en la <strong>unidad de referencia</strong> (tiempo, área, volumen).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Si $\lambda = 3$ eventos/hora, entonces en 2 horas el parámetro es $\lambda' = 6$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+General: si la tasa por unidad es $\lambda_0$, en $t$ unidades es $\lambda = \lambda_0 t$.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 class="fragment fade-in" data-fragment-index="5" style="color:#1a3a6b;">Escalamiento en R</h4>
+
+```{r}
+#| echo: true
+# Tasa: 2.4 focos/ha/semana
+lambda_sem <- 2.4
+
+# En un mes (4 semanas):
+lambda_mes <- 2.4 * 4
+dpois(10, lambda_mes)   # P(X = 10 focos/mes)
+
+# En media hectárea:
+dpois(1, 2.4 * 0.5)
+```
+
+</div>
+</div>
+
+## Forma de la distribución Poisson
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+lambdas <- c(0.5, 2, 5, 10)
+df_multi <- map_dfr(lambdas, function(l) {
+  k_max <- max(20, qpois(0.9999, l))
+  tibble(k = 0:k_max, prob = dpois(0:k_max, l),
+         lambda = paste0("λ = ", l))
+})
+ggplot(df_multi, aes(x = k, y = prob, fill = lambda)) +
+  geom_col(width = 0.7) +
+  facet_wrap(~lambda, scales = "free") +
+  labs(x = "k", y = "P(X = k)") +
+  theme_minimal(base_size = 12) + theme(legend.position = "none")
+```
+
+## Sobredispersión: diagnóstico Poisson
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: sobredispersión</div>
+  <div class="block-body">
+  <p>Si en datos reales $\hat{\sigma}^2 \gg \bar{x}$ (varianza muestral mucho mayor que la media), el modelo Poisson puede no ser adecuado. Esto se llama <strong>sobredispersión</strong> y ocurre con frecuencia en conteos biológicos.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Diagnóstico: ¿media ≈ varianza?
+conteos <- c(0, 1, 1, 2, 3, 0, 4, 2, 1, 5, 2, 3, 0, 1, 6, 2, 1, 3, 2, 1)
+cat("Media muestral:", round(mean(conteos), 3), "\n")
+cat("Varianza muestral:", round(var(conteos), 3), "\n")
+cat("Razón Var/Media:", round(var(conteos)/mean(conteos), 3), "\n")
+```
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes con la Poisson</div>
+  <div class="block-body">
+  <p>Verifique las condiciones del proceso de Poisson antes de aplicar el modelo.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<strong>Unidad incorrecta de $\lambda$:</strong> si $\lambda$ es por hora y se pregunta por dos horas, debe ajustarse a $2\lambda$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>Eventos no independientes:</strong> la Poisson supone que un evento no afecta la probabilidad del siguiente. No aplica si hay efecto de contagio o agrupamiento.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<strong>Confundir media y varianza:</strong> en la Poisson son iguales. Si la varianza es muy distinta de la media en los datos, el modelo no es adecuado.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+<strong><code>ppois(k, lambda)</code> calcula $P(X \leq k)$:</strong> para $P(X \geq k)$ use <code>1 - ppois(k-1, lambda)</code>.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: Poisson en ganadería
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un hato bovino en los Llanos Orientales, se registran en promedio 1.8 casos de garrapatas por animal por semana. Sea $X$ = número de casos en un animal en una semana.</p>
+  <p>Calcule: (a) $P(X = 0)$, (b) $P(X \geq 3)$, (c) $E(X)$ y $\sigma$.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+lambda <- 1.8
+
+# (a) P(X = 0): ninguna garrapata
+dpois(0, lambda)
+
+# (b) P(X >= 3) = 1 - P(X <= 2)
+1 - ppois(2, lambda)
+
+# (c) E(X) y sigma
+cat("E(X) =", lambda, "  sigma =", round(sqrt(lambda), 4), "\n")
+```
+
+## Taller 2: aditividad de la Poisson
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En una parcela experimental, la presencia de trips en pimiento sigue Poisson(0.8) por planta por semana, y la de mosca blanca Poisson(1.2). Asuma independencia entre plagas.</p>
+  <p>(a) Distribución del total de insectos plaga por planta por semana. (b) $P(\text{total} \geq 4)$.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify;">
+<strong>(a)</strong> Por aditividad: $T = \text{Trips} + \text{Mosca blanca} \sim \text{Poisson}(0.8 + 1.2) = \text{Poisson}(2.0)$.
+</li>
+</ul>
+
+```{r}
+#| echo: true
+lambda_total <- 0.8 + 1.2   # = 2.0
+
+# (b) P(T >= 4) = 1 - P(T <= 3)
+1 - ppois(3, lambda_total)
+```
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Hay aproximadamente un 14.3% de probabilidad de que haya 4 o más insectos plaga por planta en una semana.
+</li>
+</ul>
+
+## Taller 3: diagnóstico y comparación de modelos
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se registró el número de plantas enfermas por parcela en 15 parcelas de arroz: 2, 0, 4, 1, 3, 2, 5, 1, 0, 3, 2, 4, 1, 2, 3. Evalúe si el modelo Poisson es adecuado. Estime $\lambda$ y calcule $P(X = 0)$ con el $\hat{\lambda}$ estimado.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+datos <- c(2, 0, 4, 1, 3, 2, 5, 1, 0, 3, 2, 4, 1, 2, 3)
+
+media   <- mean(datos)
+varianza <- var(datos)
+cat("Media:", round(media, 3), " Varianza:", round(varianza, 3), "\n")
+cat("Razón Var/Media:", round(varianza/media, 3), "\n")
+
+# Estimación de lambda (método de momentos / máxima verosimilitud)
+lambda_est <- media
+cat("Lambda estimado:", lambda_est, "\n")
+
+# P(X = 0) con lambda estimado
+dpois(0, lambda_est)
+```
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+Si la razón Var/Media está cerca de 1, el modelo Poisson es razonable.
+</li>
+</ul>
+
+## Resumen: distribución de Poisson
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 28px;">Definición y parámetros</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">$X \sim \text{Poisson}(\lambda)$, soporte $\{0,1,2,\ldots\}$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">$P(X=k) = e^{-\lambda}\lambda^k/k!$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">$E(X) = \text{Var}(X) = \lambda$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">Aditividad: suma de Poissons independientes es Poisson.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 28px;">Uso en R</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;"><code>dpois(k, lambda)</code>: $P(X=k)$.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;"><code>ppois(k, lambda)</code>: $P(X \leq k)$.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;"><code>qpois(p, lambda)</code>: cuantil.</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px;"><code>rpois(n, lambda)</code>: simulación.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 14: Distribución uniforme.</strong> Comenzaremos el estudio de las distribuciones continuas. La distribución uniforme es el modelo más simple de variable continua: todos los valores en el intervalo son igualmente probables.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Estudiaremos la función de densidad de probabilidad (FDP) y la función de distribución acumulada (FDA) continuas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Veremos aplicaciones en modelamiento de tiempos de espera y variables de posición en campo.
+</li>
+</ul>

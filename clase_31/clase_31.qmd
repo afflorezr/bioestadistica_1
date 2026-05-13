@@ -1,0 +1,390 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 31 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Acuerdo entre evaluadores</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">El problema del acuerdo categórico.</li>
+<li class="fragment fade-in" data-fragment-index="3">Proporción de acuerdo observado.</li>
+<li class="fragment fade-in" data-fragment-index="4">Acuerdo esperado por azar.</li>
+<li class="fragment fade-in" data-fragment-index="5">Kappa de Cohen: definición.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Cálculo e interpretación</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Tabla de concordancia 2x2 y rxr.</li>
+<li class="fragment fade-in" data-fragment-index="8">Interpretación de Landis y Koch.</li>
+<li class="fragment fade-in" data-fragment-index="9">IC y prueba de hipótesis para $\kappa$.</li>
+<li class="fragment fade-in" data-fragment-index="10">Código R y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Coeficiente Kappa</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Midiendo el acuerdo entre evaluadores más allá del azar</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Motivación: concordancia en diagnóstico veterinario
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Dos veterinarios clasifican independientemente 80 bovinos como «sanos» o «enfermos» de mastitis subclínica.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Ambos coinciden en el 75% de los casos. ¿Es este un buen nivel de acuerdo?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+El problema: si el 90% de las vacas está sana, dos evaluadores que dijeran «sana» al azar coincidirían el 81% de las veces sin ningún conocimiento real.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+La proporción de acuerdo observada debe corregirse por el <strong>acuerdo esperado por azar</strong>. Esto es lo que hace el coeficiente <strong>Kappa de Cohen</strong>.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Tabla de concordancia
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Tabla de concordancia 2x2</div>
+  <div class="block-body">
+
+| | Evaluador B: Positivo | Evaluador B: Negativo | Total |
+|---|:---:|:---:|:---:|
+| **Evaluador A: Positivo** | $a$ | $b$ | $a+b$ |
+| **Evaluador A: Negativo** | $c$ | $d$ | $c+d$ |
+| **Total** | $a+c$ | $b+d$ | $n$ |
+
+  <p>Las celdas diagonales ($a$ y $d$) son acuerdos; las off-diagonal ($b$ y $c$) son desacuerdos.</p>
+  </div>
+</div>
+
+## Proporción de acuerdo observado y esperado
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: $P_o$ y $P_e$</div>
+  <div class="block-body">
+  $$P_o = \frac{a + d}{n} \qquad \text{(acuerdo observado)}$$
+  $$P_e = \frac{(a+b)(a+c)}{n^2} + \frac{(c+d)(b+d)}{n^2} \qquad \text{(acuerdo esperado por azar)}$$
+  </div>
+</div>
+
+## Coeficiente Kappa de Cohen
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Kappa de Cohen ($\kappa$)</div>
+  <div class="block-body">
+  $$\kappa = \frac{P_o - P_e}{1 - P_e}$$
+  <p>$\kappa$ mide la proporción del acuerdo más allá del azar, corregida por el máximo acuerdo posible más allá del azar.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+$\kappa = 1$: acuerdo perfecto.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+$\kappa = 0$: acuerdo igual al esperado por azar.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+$\kappa < 0$: acuerdo peor que el azar (poco frecuente en la práctica).
+</li>
+</ul>
+
+## Ejemplo manual: diagnóstico de mastitis
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: mastitis subclínica, Antioquia</div>
+  <div class="block-body">
+  <p>Dos veterinarios clasifican 80 vacas:</p>
+
+  | | B: Enferma | B: Sana | Total |
+  |---|:---:|:---:|:---:|
+  | **A: Enferma** | 30 | 5 | 35 |
+  | **A: Sana** | 10 | 35 | 45 |
+  | **Total** | 40 | 40 | 80 |
+
+  </p>
+  </div>
+</div>
+
+## Cálculo manual de Kappa
+
+```{r}
+#| echo: true
+a <- 30; b <- 5; c <- 10; d <- 35; n <- 80
+
+Po <- (a + d) / n
+Pe <- ((a+b)*(a+c) + (c+d)*(b+d)) / n^2
+kappa <- (Po - Pe) / (1 - Pe)
+
+cat("P_o (acuerdo observado):", round(Po, 4), "\n")
+cat("P_e (acuerdo esperado):", round(Pe, 4), "\n")
+cat("κ =", round(kappa, 4), "\n")
+```
+
+## Interpretación: escala de Landis y Koch
+
+<div class="fragment fade-in" data-fragment-index="1">
+
+| Kappa ($\kappa$) | Fuerza del acuerdo |
+|:---:|---|
+| $< 0$ | Pobre (peor que el azar) |
+| $0.00 - 0.20$ | Leve |
+| $0.21 - 0.40$ | Aceptable |
+| $0.41 - 0.60$ | Moderado |
+| $0.61 - 0.80$ | Considerable |
+| $0.81 - 1.00$ | Casi perfecto |
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p>Esta escala es la más citada pero es una convención, no una regla absoluta. El contexto clínico o de investigación debe guiar la interpretación.</p>
+  </div>
+</div>
+
+## Error estándar e IC para $\kappa$
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución asintótica de $\hat{\kappa}$</div>
+  <div class="block-body">
+  <p>Para $n$ grande, $\hat{\kappa}$ es aproximadamente normal con error estándar:</p>
+  $$EE(\hat{\kappa}) \approx \sqrt{\frac{P_o(1-P_o)}{n(1-P_e)^2}}$$
+  <p>IC al 95%: $\hat{\kappa} \pm 1.96 \cdot EE(\hat{\kappa})$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+ee_kappa <- sqrt(Po * (1 - Po) / (n * (1 - Pe)^2))
+ic <- kappa + c(-1,1) * qnorm(0.975) * ee_kappa
+cat("EE(κ) =", round(ee_kappa, 4), "\n")
+cat("IC 95%: [", round(ic[1], 4), ",", round(ic[2], 4), "]\n")
+```
+
+## Kappa con R: paquete irr
+
+```{r}
+#| echo: true
+# install.packages("irr")
+library(irr)
+
+# Matriz de clasificaciones de dos evaluadores
+evalA <- c(rep("Enferma",30), rep("Enferma",5),
+           rep("Sana",10), rep("Sana",35))
+evalB <- c(rep("Enferma",30), rep("Sana",5),
+           rep("Enferma",10), rep("Sana",35))
+
+df_kappa <- data.frame(A = evalA, B = evalB)
+kappa2(df_kappa, weight = "unweighted")
+```
+
+## Kappa en tablas rxr (más de dos categorías)
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Generalización a $r$ categorías</div>
+  <div class="block-body">
+  <p>Para una tabla $r \times r$ con $n_{ij}$ unidades clasificadas en categoría $i$ por el evaluador A y en categoría $j$ por el evaluador B:</p>
+  $$P_o = \frac{\sum_i n_{ii}}{n} \qquad P_e = \sum_i \frac{n_{i\bullet} \cdot n_{\bullet i}}{n^2}$$
+  $$\kappa = \frac{P_o - P_e}{1-P_e}$$
+  </div>
+</div>
+
+## Ejemplo: clasificación de severidad de plaga
+
+```{r}
+#| echo: true
+# Dos agrónomos clasifican 60 plantas en: Leve, Moderada, Severa
+set.seed(31)
+nivel <- c("Leve","Moderada","Severa")
+evalA3 <- sample(nivel, 60, replace = TRUE, prob = c(0.4, 0.4, 0.2))
+evalB3 <- ifelse(runif(60) < 0.75, evalA3,
+                 sample(nivel, 60, replace = TRUE, prob = c(0.4, 0.4, 0.2)))
+
+df3 <- data.frame(A = evalA3, B = evalB3)
+print(table(df3))
+kappa2(df3, weight = "unweighted")
+```
+
+## Errores comunes con Kappa
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>El Kappa tiene limitaciones importantes que deben conocerse antes de usarlo.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Kappa depende de la prevalencia:</strong> la misma sensibilidad y especificidad produce distintos $\kappa$ según la proporción de casos positivos. Esto es la paradoja de Kappa.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Confundir $\kappa$ con correlación:</strong> $\kappa$ mide acuerdo exacto en categorías, no tendencia lineal. Para datos ordinales, use Kappa ponderado (Clase 32).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Muestra insuficiente:</strong> con $n < 50$, el IC para $\kappa$ es muy amplio. Se recomienda $n \geq 100$ para estimaciones confiables.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: cálculo manual de Kappa
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Dos patólogos vegetales clasifican 100 muestras de hoja de café como «sana» o «con roya». Los resultados son: ambos positivos = 25, A positivo B negativo = 8, A negativo B positivo = 12, ambos negativos = 55. Calcule $\kappa$, su IC al 95% e interprete según Landis y Koch.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+a <- 25; b <- 8; c <- 12; d <- 55; n <- 100
+
+Po <- (a + d) / n
+Pe <- ((a+b)*(a+c) + (c+d)*(b+d)) / n^2
+k  <- (Po - Pe) / (1 - Pe)
+ee <- sqrt(Po*(1-Po) / (n*(1-Pe)^2))
+ic <- k + c(-1,1)*1.96*ee
+
+cat("P_o:", round(Po,4), "  P_e:", round(Pe,4), "\n")
+cat("κ =", round(k,4), "\n")
+cat("IC 95%: [", round(ic[1],4), ",", round(ic[2],4), "]\n")
+
+interpretacion <- ifelse(k < 0.21, "Leve",
+                  ifelse(k < 0.41, "Aceptable",
+                  ifelse(k < 0.61, "Moderado",
+                  ifelse(k < 0.81, "Considerable", "Casi perfecto"))))
+cat("Interpretación:", interpretacion, "\n")
+```
+
+## Taller 2: Kappa con tres categorías
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Dos inspectores del ICA clasifican 90 lotes de exportación de flores como «Aprobado», «Observación» o «Rechazado». Tabla de concordancia:</p>
+
+  | | Aprob. | Obs. | Rech. |
+  |---|:---:|:---:|:---:|
+  | **Aprobado** | 40 | 5 | 2 |
+  | **Observación** | 3 | 18 | 4 |
+  | **Rechazado** | 1 | 2 | 15 |
+
+  Calcule $\kappa$ con R e interprete.
+  </p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+library(irr)
+tabla_flores <- matrix(c(40,3,1, 5,18,2, 2,4,15), nrow=3,
+  dimnames=list(c("Aprobado","Observación","Rechazado"),
+                c("Aprobado","Observación","Rechazado")))
+
+# Reconstruir datos individuales desde la tabla
+evalA_f <- c(rep("Aprobado", 40+5+2),
+             rep("Observacion", 3+18+4),
+             rep("Rechazado", 1+2+15))
+evalB_f <- c(rep("Aprobado",40), rep("Observacion",5), rep("Rechazado",2),
+             rep("Aprobado",3), rep("Observacion",18), rep("Rechazado",4),
+             rep("Aprobado",1), rep("Observacion",2), rep("Rechazado",15))
+df_f <- data.frame(A=evalA_f, B=evalB_f)
+kappa2(df_f, weight="unweighted")
+```
+
+## Resumen: coeficiente Kappa
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Fórmulas clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">$\kappa = (P_o - P_e)/(1 - P_e)$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">$\kappa = 0$: solo azar. $\kappa = 1$: perfecto.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">IC: $\kappa \pm 1.96 \cdot EE(\kappa)$.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 style="color:#1a3a6b; font-size: 26px;">R e interpretación</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px;"><code>irr::kappa2(df)</code>: Kappa no ponderado.</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;">Escala Landis y Koch: leve a casi perfecto.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;">$n \geq 100$ para estimaciones confiables.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 32: Kappa ponderado y Correlación intraclase.</strong> Extendemos el análisis de concordancia a datos ordinales (Kappa ponderado) y a variables cuantitativas (CCI), herramientas esenciales en validación de métodos diagnósticos.</p>
+  </div>
+</div>

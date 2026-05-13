@@ -1,0 +1,436 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 30 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: ANOVA de un factor</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Motivación: comparar $k$ grupos.</li>
+<li class="fragment fade-in" data-fragment-index="3">Modelo y supuestos del ANOVA.</li>
+<li class="fragment fade-in" data-fragment-index="4">Descomposición SCT = SCTrat + SCE.</li>
+<li class="fragment fade-in" data-fragment-index="5">Tabla ANOVA y estadístico F.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Diseño de experimentos</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Principios: replicación, aleatorización, control local.</li>
+<li class="fragment fade-in" data-fragment-index="8">DCA y DBCA.</li>
+<li class="fragment fade-in" data-fragment-index="9">Comparaciones múltiples: Tukey.</li>
+<li class="fragment fade-in" data-fragment-index="10">Código R completo y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 44px; font-weight: bold; color: #3b82f6;">ANOVA e Introducción al Diseño de Experimentos</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Comparando más de dos grupos con control del error tipo I</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## ¿Por qué no hacer múltiples pruebas t?
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Si comparamos 4 variedades de café, hay $\binom{4}{2} = 6$ pares posibles. Si hacemos 6 pruebas t con $\alpha = 0.05$ cada una:
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+$P(\text{al menos un error tipo I}) = 1 - (0.95)^6 \approx 0.265$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+El error tipo I global se infla a 26.5%, muy por encima del 5% nominal.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+El <strong>ANOVA</strong> (Análisis de Varianza) compara simultáneamente $k$ grupos con una sola prueba, manteniendo el error tipo I global en $\alpha$.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Si la prueba F global es significativa, se aplican comparaciones múltiples (Tukey, Bonferroni) para identificar qué pares difieren.
+</li>
+</ul>
+</div>
+
+</div>
+
+## El modelo ANOVA de un factor
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Modelo de efectos fijos (un factor, $k$ grupos)</div>
+  <div class="block-body">
+  $$Y_{ij} = \mu + \tau_i + \varepsilon_{ij}, \quad i = 1,\ldots,k;\; j = 1,\ldots,n_i$$
+  <p>donde $\mu$ es la media global, $\tau_i$ es el efecto del tratamiento $i$ ($\sum n_i \tau_i = 0$), y $\varepsilon_{ij} \sim N(0, \sigma^2)$ i.i.d.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+$H_0: \tau_1 = \tau_2 = \cdots = \tau_k = 0$ (todas las medias son iguales).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Supuestos: normalidad, independencia y homocedasticidad (misma varianza en todos los grupos).
+</li>
+</ul>
+
+## Descomposición de la variabilidad
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Identidad fundamental del ANOVA</div>
+  <div class="block-body">
+  $$\underbrace{\sum_i\sum_j (Y_{ij} - \bar{Y}_{..})^2}_{SCT} = \underbrace{\sum_i n_i(\bar{Y}_{i.} - \bar{Y}_{..})^2}_{SCTrat} + \underbrace{\sum_i\sum_j (Y_{ij} - \bar{Y}_{i.})^2}_{SCE}$$
+  <p>SCTrat: variabilidad entre tratamientos. SCE: variabilidad dentro de los grupos (error).</p>
+  </div>
+</div>
+
+## Tabla ANOVA
+
+<div class="fragment fade-in" data-fragment-index="1">
+
+| Fuente | SC | GL | CM | F |
+|---|---|---|---|---|
+| Tratamientos | SCTrat | $k-1$ | $CMTrat = SCTrat/(k-1)$ | $CMTrat/CME$ |
+| Error | SCE | $N-k$ | $CME = SCE/(N-k)$ | |
+| Total | SCT | $N-1$ | | |
+
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Bajo $H_0$: $CMTrat$ y $CME$ estiman la misma $\sigma^2$, por lo que $F \approx 1$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Bajo $H_1$: $CMTrat > CME$, por lo que $F > 1$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+Se rechaza $H_0$ si $F > F_{\alpha,\, k-1,\, N-k}$.
+</li>
+</ul>
+
+## Ejemplo: cuatro variedades de café
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: café, Huila</div>
+  <div class="block-body">
+  <p>Se evalúa el rendimiento (kg/árbol/año) de 4 variedades de café en el Huila, con 8 árboles por variedad. ¿Difieren significativamente los rendimientos medios? $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(30)
+datos_cafe <- data.frame(
+  rendimiento = c(rnorm(8, 2.8, 0.3), rnorm(8, 3.2, 0.3),
+                  rnorm(8, 2.5, 0.3), rnorm(8, 3.0, 0.3)),
+  variedad    = rep(c("Caturra","Castillo","Colombia","Tabi"), each = 8)
+)
+modelo_aov <- aov(rendimiento ~ variedad, data = datos_cafe)
+summary(modelo_aov)
+```
+
+## Visualización: boxplots por tratamiento
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+ggplot(datos_cafe, aes(variedad, rendimiento, fill = variedad)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.1, alpha = 0.5, size = 2) +
+  scale_fill_manual(values = c("#1b4d2e","#1a3a6b","#c0392b","#F28E2B")) +
+  labs(x = "Variedad", y = "Rendimiento (kg/árbol/año)",
+       title = "Rendimiento de 4 variedades de café, Huila") +
+  theme_minimal(base_size = 13) + theme(legend.position = "none")
+```
+
+## Comparaciones múltiples: prueba de Tukey
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba HSD de Tukey</div>
+  <div class="block-body">
+  <p>La prueba de Tukey (Honest Significant Difference) compara todos los pares de medias controlando el error de experimentación global al nivel $\alpha$. Declara diferente el par $(i, j)$ si:</p>
+  $$|\bar{Y}_{i.} - \bar{Y}_{j.}| > \frac{q_{\alpha,k,N-k}}{\sqrt{2}} \cdot \sqrt{\frac{2\, CME}{n}}$$
+  </div>
+</div>
+
+```{r}
+#| echo: true
+tukey <- TukeyHSD(modelo_aov, conf.level = 0.95)
+print(round(tukey$variedad, 4))
+```
+
+## Visualización de Tukey
+
+```{r}
+#| echo: true
+#| fig-height: 4
+par(mar = c(5, 10, 3, 2))
+plot(tukey, las = 1, col = "#1a3a6b")
+```
+
+## Diagnóstico del ANOVA
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
+# Normalidad de residuos
+qqnorm(residuals(modelo_aov), main = "QQ-plot residuos ANOVA")
+qqline(residuals(modelo_aov), col = "#c0392b")
+
+# Homocedasticidad
+plot(fitted(modelo_aov), residuals(modelo_aov),
+     xlab = "Valores ajustados", ylab = "Residuos",
+     main = "Residuos vs ajustados")
+abline(h = 0, col = "#c0392b", lty = 2)
+```
+
+## Principios del diseño de experimentos
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify;">
+<strong>Replicación:</strong> cada tratamiento se aplica a más de una unidad experimental. Permite estimar el error experimental y aumenta la potencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Aleatorización:</strong> los tratamientos se asignan al azar a las unidades experimentales. Elimina el sesgo sistemático y valida la inferencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Control local:</strong> agrupar unidades homogéneas en bloques reduce el error experimental y aumenta la precisión de las comparaciones.
+</li>
+</ul>
+
+## Diseño completamente al azar (DCA)
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">DCA</div>
+  <div class="block-body">
+  <p>Los tratamientos se asignan completamente al azar a las unidades experimentales, sin restricción alguna. Es apropiado cuando las condiciones experimentales son homogéneas.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+# Aleatorización de un DCA: 4 tratamientos, 5 repeticiones cada uno
+set.seed(30)
+N <- 20
+tratamientos <- rep(paste0("T", 1:4), each = 5)
+orden_aleatorio <- sample(N)
+cat("Orden de aplicación de tratamientos:\n")
+print(data.frame(unidad = 1:N, tratamiento = tratamientos[orden_aleatorio]))
+```
+
+## Diseño en bloques completos al azar (DBCA)
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">DBCA</div>
+  <div class="block-body">
+  <p>Las unidades experimentales se agrupan en bloques homogéneos. Dentro de cada bloque, los tratamientos se asignan al azar. El modelo es:</p>
+  $$Y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij}$$
+  <p>donde $\beta_j$ es el efecto del bloque $j$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(30)
+datos_dbca <- data.frame(
+  rendimiento = c(rnorm(4, c(2.8,3.2,2.5,3.0), 0.2),
+                  rnorm(4, c(3.0,3.4,2.7,3.2), 0.2),
+                  rnorm(4, c(2.6,3.0,2.3,2.8), 0.2)),
+  variedad    = rep(c("Caturra","Castillo","Colombia","Tabi"), 3),
+  bloque      = rep(c("B1","B2","B3"), each = 4)
+)
+modelo_dbca <- aov(rendimiento ~ variedad + bloque, data = datos_dbca)
+summary(modelo_dbca)
+```
+
+## Errores comunes en ANOVA
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>El ANOVA tiene supuestos que deben verificarse y sus resultados deben interpretarse con cuidado.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>F significativa implica que TODOS los grupos difieren:</strong> incorrecto. Solo indica que al menos un par es distinto. Use Tukey para identificar cuáles.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>No verificar homocedasticidad:</strong> aplique Bartlett o Levene antes del ANOVA. Si hay heterogeneidad de varianzas, use Welch-ANOVA (<code>oneway.test</code>).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Ignorar el diseño en el análisis:</strong> un experimento en bloques analizado como DCA produce conclusiones incorrectas al ignorar la fuente de variación de los bloques.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: ANOVA de un factor
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se evalúan tres dosis de biofertilizante (0, 50, 100 kg/ha) en el rendimiento de arroz (t/ha), con 10 parcelas por dosis. ¿Hay diferencias significativas entre dosis? Use $\alpha = 0.05$. Si las hay, aplique Tukey para identificar qué pares difieren.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+set.seed(30)
+datos_arroz <- data.frame(
+  rendimiento = c(rnorm(10, 4.8, 0.4), rnorm(10, 5.5, 0.4),
+                  rnorm(10, 5.9, 0.4)),
+  dosis       = rep(c("D0","D50","D100"), each = 10)
+)
+
+mod_arroz <- aov(rendimiento ~ dosis, data = datos_arroz)
+cat("Tabla ANOVA:\n"); print(summary(mod_arroz))
+
+cat("\nPrueba de Tukey:\n")
+print(round(TukeyHSD(mod_arroz)$dosis, 4))
+```
+
+## Taller 2: verificación de supuestos ANOVA
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Para el ANOVA del taller 1: (a) verifique normalidad de residuos con Shapiro-Wilk, (b) verifique homocedasticidad con Bartlett, (c) haga el QQ-plot de residuos. ¿Se cumplen los supuestos?</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+#| fig-height: 3
+# (a) Normalidad de residuos
+sw_res <- shapiro.test(residuals(mod_arroz))
+cat("Shapiro-Wilk residuos: W =", round(sw_res$statistic, 4),
+    "  p =", round(sw_res$p.value, 4), "\n")
+
+# (b) Homocedasticidad
+bt <- bartlett.test(rendimiento ~ dosis, data = datos_arroz)
+cat("Bartlett: K² =", round(bt$statistic, 4),
+    "  p =", round(bt$p.value, 4), "\n")
+
+# (c) QQ-plot
+par(mar = c(4, 4, 2, 1))
+qqnorm(residuals(mod_arroz), main = "QQ-plot residuos")
+qqline(residuals(mod_arroz), col = "#c0392b")
+```
+
+## Taller 3: diseño en bloques
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un ensayo de 3 herbicidas en cultivos de soya en el Tolima, las parcelas se agrupan en 4 bloques según el nivel de pendiente. Ajuste el modelo DBCA, compare con el DCA e interprete el efecto de los bloques sobre la reducción del error experimental.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+set.seed(30)
+datos_soya <- data.frame(
+  control = c(rnorm(4, c(85,90,80,88), 3),
+              rnorm(4, c(78,82,74,80), 3),
+              rnorm(4, c(92,96,88,94), 3)),
+  herbicida = rep(c("H1","H2","H3"), each = 4),
+  bloque    = rep(c("P1","P2","P3","P4"), 3)
+)
+mod_dca  <- aov(control ~ herbicida, data = datos_soya)
+mod_dbca <- aov(control ~ herbicida + bloque, data = datos_soya)
+
+cat("CME (DCA): ", round(summary(mod_dca)[[1]][2,3], 4), "\n")
+cat("CME (DBCA):", round(summary(mod_dbca)[[1]][3,3], 4), "\n")
+cat("Los bloques reducen el CME, aumentando la precisión.\n")
+```
+
+## Resumen: ANOVA y diseño de experimentos
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 25px;">ANOVA</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px;"><code>aov(y ~ trat)</code>: DCA.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px;"><code>aov(y ~ trat + bloque)</code>: DBCA.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px;"><code>TukeyHSD(mod)</code>: comparaciones múltiples.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px;"><code>summary(aov)</code>: tabla ANOVA.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
+<h4 style="color:#1a3a6b; font-size: 25px;">Diseño de experimentos</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;">Principios: replicación, aleatorización, control local.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">DCA: condiciones homogéneas.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px;">DBCA: fuente de heterogeneidad conocida.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 31: Coeficiente Kappa.</strong> Cuando los datos son categorías y necesitamos medir el acuerdo entre dos evaluadores (más allá del acuerdo por azar), el coeficiente Kappa de Cohen es la herramienta estándar.</p>
+  </div>
+</div>

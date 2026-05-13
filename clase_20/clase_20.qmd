@@ -1,0 +1,437 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 20 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Estimación puntual</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Estimador e insesgamiento.</li>
+<li class="fragment fade-in" data-fragment-index="3">Consistencia y eficiencia.</li>
+<li class="fragment fade-in" data-fragment-index="4">Error cuadrático medio.</li>
+<li class="fragment fade-in" data-fragment-index="5">Métodos de estimación.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Intervalos de confianza</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Definición e interpretación correcta.</li>
+<li class="fragment fade-in" data-fragment-index="8">IC para la media con $\sigma$ conocida.</li>
+<li class="fragment fade-in" data-fragment-index="9">IC para la media con $\sigma$ desconocida.</li>
+<li class="fragment fade-in" data-fragment-index="10">Código R y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Estimadores e Intervalos de Confianza</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Del estadístico al parámetro: cuantificar la incertidumbre</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## La pregunta central de la inferencia
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Medimos el contenido de proteína en 30 muestras de leche de Nariño y obtenemos $\bar{x} = 3.18\%$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+¿Qué tan certera es esta estimación del promedio real $\mu$ de toda la producción lechera del departamento?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Un <strong>estimador puntual</strong> da un solo valor ($\bar{x} = 3.18\%$), pero no cuantifica la incertidumbre.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Un <strong>intervalo de confianza</strong> dice: «con un 95% de confianza, $\mu$ está entre 3.11% y 3.25%». Eso comunica la precisión de la estimación.
+</li>
+</ul>
+</div>
+
+</div>
+
+## Estimador: definición y propiedades
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: estimador</div>
+  <div class="block-body">
+  <p>Un <strong>estimador</strong> $\hat{\theta}$ de un parámetro $\theta$ es una función de la muestra $\hat{\theta} = T(X_1, \ldots, X_n)$ usada para estimar $\theta$. El valor observado $\hat{\theta}(x_1,\ldots,x_n)$ es la <strong>estimación</strong>.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Insesgamiento:</strong> $E(\hat{\theta}) = \theta$. El estimador no sobreestima ni subestima sistemáticamente.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Consistencia:</strong> $\hat{\theta} \to \theta$ en probabilidad cuando $n \to \infty$. Más datos implican mayor precisión.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Eficiencia:</strong> entre estimadores insesgados, el más eficiente tiene la menor varianza.
+</li>
+</ul>
+
+## Error cuadrático medio
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: ECM</div>
+  <div class="block-body">
+  $$ECM(\hat{\theta}) = E[(\hat{\theta} - \theta)^2] = \text{Var}(\hat{\theta}) + [\text{sesgo}(\hat{\theta})]^2$$
+  </div>
+</div>
+
+<ul style="margin-top: 20px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+El ECM combina varianza y sesgo: un estimador puede tener mayor sesgo pero menor ECM que otro insesgado con mayor varianza.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Para estimadores insesgados: $ECM(\hat{\theta}) = \text{Var}(\hat{\theta})$.
+</li>
+</ul>
+
+## Estimadores de $\mu$ y $\sigma^2$
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Proposición: estimadores de la media y varianza</div>
+  <div class="block-body">
+  <ul style="font-size: 27px;">
+  <li>$\bar{X} = \frac{1}{n}\sum X_i$ es estimador <strong>insesgado</strong> y consistente de $\mu$.</li>
+  <li>$S^2 = \frac{1}{n-1}\sum(X_i - \bar{X})^2$ es estimador <strong>insesgado</strong> de $\sigma^2$ (divisor $n-1$).</li>
+  <li>$S^2_n = \frac{1}{n}\sum(X_i - \bar{X})^2$ es estimador <strong>sesgado</strong> de $\sigma^2$ (divisor $n$).</li>
+  </ul>
+  </div>
+</div>
+
+## Intervalo de confianza: definición e interpretación
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: intervalo de confianza</div>
+  <div class="block-body">
+  <p>Un <strong>intervalo de confianza</strong> al $(1-\alpha)\times 100\%$ para $\theta$ es un intervalo aleatorio $[L(X), U(X)]$ tal que:</p>
+  $$P(L \leq \theta \leq U) = 1 - \alpha$$
+  </div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Interpretación correcta</div>
+  <div class="block-body">
+  <p>El nivel de confianza $1-\alpha$ NO es la probabilidad de que $\theta$ caiga en el intervalo calculado de una muestra específica. Es la proporción de intervalos que contendrían a $\theta$ si repitiéramos el proceso de muestreo infinitas veces.</p>
+  </div>
+</div>
+
+## IC para la media: $\sigma$ conocida
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">IC para $\mu$ con $\sigma$ conocida</div>
+  <div class="block-body">
+  <p>Si $X_i \sim N(\mu, \sigma^2)$ o $n$ es grande (TCL), el IC al $(1-\alpha)\times 100\%$ para $\mu$ es:</p>
+  $$\bar{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}$$
+  <p>donde $z_{\alpha/2} = \Phi^{-1}(1 - \alpha/2)$ es el cuantil Normal estándar.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px;">
+$\alpha = 0.05$: $z_{0.025} = 1.96$ (IC 95%)
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px;">
+$\alpha = 0.01$: $z_{0.005} = 2.576$ (IC 99%)
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px;">
+El margen de error es $E = z_{\alpha/2} \cdot \sigma/\sqrt{n}$.
+</li>
+</ul>
+
+## Ejemplo: IC para proteína en leche
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: leche, Nariño</div>
+  <div class="block-body">
+  <p>En 30 muestras de leche de Nariño se obtuvo $\bar{x} = 3.18\%$ de proteína. Se sabe que $\sigma = 0.20\%$. Construya un IC al 95% para la proteína media $\mu$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+xbar <- 3.18; sigma <- 0.20; n <- 30; alpha <- 0.05
+z <- qnorm(1 - alpha/2)
+ee <- sigma / sqrt(n)
+ic <- c(xbar - z*ee, xbar + z*ee)
+cat("IC 95%: [", round(ic[1], 4), ",", round(ic[2], 4), "]\n")
+cat("Margen de error:", round(z*ee, 4), "\n")
+```
+
+## IC para la media: $\sigma$ desconocida
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">IC para $\mu$ con $\sigma$ desconocida</div>
+  <div class="block-body">
+  <p>Si $X_i \sim N(\mu, \sigma^2)$ con $\sigma$ desconocida, el IC al $(1-\alpha)\times 100\%$ para $\mu$ es:</p>
+  $$\bar{x} \pm t_{\alpha/2,\, n-1} \frac{s}{\sqrt{n}}$$
+  <p>donde $t_{\alpha/2, n-1}$ es el cuantil de la distribución $t$ con $n-1$ grados de libertad.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Para $n$ grande, $t_{n-1} \approx z$ y los dos IC coinciden.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Para $n$ pequeño, el IC con $t$ es más ancho (más conservador) que el de $z$.
+</li>
+</ul>
+
+## Código R: IC con t de Student
+
+```{r}
+#| echo: true
+# Datos: pH del suelo en 15 parcelas de cacao, Huila
+set.seed(20)
+ph <- rnorm(15, mean = 5.6, sd = 0.4)
+n <- length(ph); xbar <- mean(ph); s <- sd(ph)
+
+cat("n =", n, "  xbar =", round(xbar, 4), "  s =", round(s, 4), "\n")
+
+# IC 95% manual con t
+t_crit <- qt(0.975, df = n - 1)
+ee <- s / sqrt(n)
+ic <- c(xbar - t_crit*ee, xbar + t_crit*ee)
+cat("IC 95% (manual): [", round(ic[1], 4), ",", round(ic[2], 4), "]\n")
+
+# IC 95% automático con t.test
+t.test(ph, conf.level = 0.95)$conf.int
+```
+
+## Efecto del nivel de confianza y del tamaño de muestra
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+library(ggplot2); library(tidyverse)
+set.seed(20)
+datos <- rnorm(50, 5.6, 0.4)
+
+# IC para distintos niveles
+niveles <- c(0.80, 0.90, 0.95, 0.99)
+ics <- map_dfr(niveles, function(conf) {
+  ic <- t.test(datos, conf.level = conf)$conf.int
+  tibble(nivel = paste0(conf*100, "%"), lwr = ic[1], upr = ic[2],
+         centro = mean(datos))
+})
+
+ggplot(ics, aes(y = nivel)) +
+  geom_errorbarh(aes(xmin = lwr, xmax = upr), height = 0.3,
+                 color = "#1a3a6b", linewidth = 1.2) +
+  geom_point(aes(x = centro), color = "#c0392b", size = 3) +
+  labs(x = "pH", y = "Nivel de confianza",
+       title = "IC para el pH: distintos niveles de confianza") +
+  theme_minimal(base_size = 13)
+```
+
+## Simulación: cobertura del IC
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+set.seed(20)
+mu_real <- 5.6; sigma <- 0.4; n <- 15; B <- 100
+
+resultados <- map_dfr(1:B, function(i) {
+  x <- rnorm(n, mu_real, sigma)
+  ic <- t.test(x)$conf.int
+  tibble(sim = i, lwr = ic[1], upr = ic[2],
+         cubre = ic[1] <= mu_real & mu_real <= ic[2])
+})
+
+ggplot(resultados[1:50,], aes(y = sim, color = cubre)) +
+  geom_errorbarh(aes(xmin = lwr, xmax = upr), height = 0.5) +
+  geom_vline(xintercept = mu_real, color = "#c0392b", linewidth = 1.2) +
+  scale_color_manual(values = c("TRUE"="#1b4d2e","FALSE"="#c0392b")) +
+  labs(x = "pH", y = "Muestra", color = "¿Cubre μ?",
+       title = "50 IC al 95%: cobertura simulada") +
+  theme_minimal(base_size = 12)
+```
+
+## Errores comunes en intervalos de confianza
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: interpretaciones incorrectas</div>
+  <div class="block-body">
+  <p>El IC es una propiedad del procedimiento de estimación, no del parámetro.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Error:</strong> «hay un 95% de probabilidad de que $\mu$ esté en [3.11, 3.25]». Incorrecto: $\mu$ es fijo, no aleatorio.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Correcto:</strong> «el procedimiento que produjo este intervalo genera intervalos que contienen a $\mu$ el 95% de las veces».
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Usar $z$ cuando se desconoce $\sigma$:</strong> con muestras pequeñas, debe usarse $t_{n-1}$.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
+<strong>IC más ancho no significa peor:</strong> mayor nivel de confianza produce IC más amplios, lo cual es correcto.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: IC con $\sigma$ conocida
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>El rendimiento de papa pastusa en Boyacá sigue $N(\mu, \sigma^2)$ con $\sigma = 1.8$ t/ha (conocida por estudios históricos). Una muestra de $n = 40$ parcelas arrojó $\bar{x} = 22.3$ t/ha. Construya: (a) IC al 90%, (b) IC al 95%, (c) IC al 99%. ¿Qué ocurre con el ancho del IC al aumentar el nivel?</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+xbar <- 22.3; sigma <- 1.8; n <- 40
+
+for (conf in c(0.90, 0.95, 0.99)) {
+  z  <- qnorm(1 - (1-conf)/2)
+  ee <- sigma / sqrt(n)
+  ic <- xbar + c(-1, 1) * z * ee
+  cat(sprintf("IC %s%%: [%.4f, %.4f]  ancho = %.4f\n",
+              conf*100, ic[1], ic[2], diff(ic)))
+}
+```
+
+## Taller 2: IC con $\sigma$ desconocida
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se midió el contenido de nitrógeno en 12 muestras de suelo de un cultivo de plátano en el Urabá antioqueño, obteniendo $\bar{x} = 18.4$ mg/kg y $s = 3.2$ mg/kg. Construya un IC al 95% para la media poblacional $\mu$. ¿Qué distribución aplica?</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+xbar <- 18.4; s <- 3.2; n <- 12; alpha <- 0.05
+# Distribución t con n-1 = 11 grados de libertad
+t_crit <- qt(1 - alpha/2, df = n - 1)
+cat("t crítico (11 gl):", round(t_crit, 4), "\n")
+ee <- s / sqrt(n)
+ic <- xbar + c(-1, 1) * t_crit * ee
+cat("IC 95%: [", round(ic[1], 4), ",", round(ic[2], 4), "]\n")
+```
+
+## Taller 3: interpretación y simulación
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Simule 200 muestras de tamaño $n = 20$ de una $N(\mu = 10, \sigma = 2)$. Para cada muestra construya un IC al 95%. Calcule la proporción de ICs que contienen a $\mu = 10$ y compare con el nivel de confianza nominal.</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+set.seed(20)
+mu <- 10; sigma <- 2; n <- 20; B <- 200
+cobertura <- replicate(B, {
+  x <- rnorm(n, mu, sigma)
+  ic <- t.test(x, conf.level = 0.95)$conf.int
+  ic[1] <= mu & mu <= ic[2]
+})
+cat("Cobertura observada:", mean(cobertura), "\n")
+cat("Cobertura nominal:  0.95\n")
+```
+
+## Resumen: estimadores e IC
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Estimadores</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px;">$\bar{X}$: insesgado, consistente para $\mu$.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">$S^2$ (divisor $n-1$): insesgado para $\sigma^2$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">ECM = Varianza + Sesgo².</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 style="color:#1a3a6b; font-size: 26px;">Intervalos de confianza</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px;">$\sigma$ conocida: $\bar{x} \pm z_{\alpha/2} \sigma/\sqrt{n}$.</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">$\sigma$ desconocida: $\bar{x} \pm t_{\alpha/2,n-1} s/\sqrt{n}$.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">En R: <code>t.test(x, conf.level = 0.95)</code>.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 21: Estimación de la media y la proporción.</strong> Extenderemos los IC al caso de proporciones y estudiaremos el IC para la diferencia de medias entre dos poblaciones.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Aprenderemos a usar <code>prop.test</code> en R para ICs de proporciones y veremos la corrección de Yates.
+</li>
+</ul>

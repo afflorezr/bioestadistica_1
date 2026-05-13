@@ -1,0 +1,478 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 28 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El modelo de regresión</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Relación lineal entre variables.</li>
+<li class="fragment fade-in" data-fragment-index="3">Modelo de regresión lineal simple.</li>
+<li class="fragment fade-in" data-fragment-index="4">Supuestos del modelo (LINE).</li>
+<li class="fragment fade-in" data-fragment-index="5">Diagrama de dispersión.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Mínimos cuadrados ordinarios</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Criterio MCO.</li>
+<li class="fragment fade-in" data-fragment-index="8">Derivación de $\hat{\beta}_0$ y $\hat{\beta}_1$.</li>
+<li class="fragment fade-in" data-fragment-index="9">Recta ajustada y residuos.</li>
+<li class="fragment fade-in" data-fragment-index="10">Código R: <code>lm()</code> y visualización.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Modelo de Regresión y Mínimos Cuadrados</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Modelando la relación lineal entre dos variables cuantitativas</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Motivación: dosis de fertilizante y rendimiento
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Un agrónomo aplica distintas dosis de nitrógeno (kg/ha) a parcelas de maíz y mide el rendimiento (t/ha). ¿Existe una relación lineal entre la dosis y el rendimiento?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Si la hay, ¿podemos predecir el rendimiento esperado para una dosis que no fue ensayada?
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La <strong>regresión lineal simple</strong> modela la relación entre una variable respuesta $Y$ (rendimiento) y una variable predictora $X$ (dosis) mediante una recta.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+Permite cuantificar el efecto de $X$ sobre $Y$, hacer predicciones y probar hipótesis sobre esa relación.
+</li>
+</ul>
+</div>
+
+</div>
+
+## El modelo de regresión lineal simple
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: modelo de regresión lineal simple</div>
+  <div class="block-body">
+  $$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i, \quad i = 1, \ldots, n$$
+  <p>donde:</p>
+  <ul style="font-size: 26px;">
+  <li>$Y_i$: variable respuesta (dependiente) en la observación $i$.</li>
+  <li>$X_i$: variable predictora (independiente), fija o aleatoria.</li>
+  <li>$\beta_0$: intercepto (valor esperado de $Y$ cuando $X = 0$).</li>
+  <li>$\beta_1$: pendiente (cambio esperado en $Y$ por unidad de cambio en $X$).</li>
+  <li>$\varepsilon_i$: error aleatorio con $E(\varepsilon_i) = 0$.</li>
+  </ul>
+  </div>
+</div>
+
+## Supuestos del modelo: LINE
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Supuestos LINE</div>
+  <div class="block-body">
+  <ul style="font-size: 27px;">
+  <li><strong>L</strong>inealidad: $E(Y_i \mid X_i) = \beta_0 + \beta_1 X_i$.</li>
+  <li><strong>I</strong>ndependencia: los errores $\varepsilon_i$ son independientes entre sí.</li>
+  <li><strong>N</strong>ormalidad: $\varepsilon_i \sim N(0, \sigma^2)$.</li>
+  <li><strong>E</strong>quivarianza (homocedasticidad): $\text{Var}(\varepsilon_i) = \sigma^2$ constante.</li>
+  </ul>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Consecuencia: $Y_i \sim N(\beta_0 + \beta_1 X_i,\, \sigma^2)$ condicionalmente en $X_i$.
+</li>
+</ul>
+
+## Diagrama de dispersión y correlación
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+set.seed(28)
+dosis   <- seq(20, 120, by = 10)  # kg N/ha
+rend    <- 2.5 + 0.04 * dosis + rnorm(length(dosis), 0, 0.4)  # t/ha
+
+df <- data.frame(dosis, rend)
+r  <- cor(dosis, rend)
+
+ggplot(df, aes(dosis, rend)) +
+  geom_point(color = "#1b4d2e", size = 3) +
+  labs(x = "Dosis de nitrógeno (kg/ha)",
+       y = "Rendimiento (t/ha)",
+       title = paste0("Maíz: dosis vs rendimiento  (r = ", round(r, 3), ")")) +
+  theme_minimal(base_size = 13)
+```
+
+## Criterio de mínimos cuadrados ordinarios
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Criterio MCO</div>
+  <div class="block-body">
+  <p>Los estimadores MCO $\hat{\beta}_0$ y $\hat{\beta}_1$ minimizan la <strong>suma de cuadrados de los residuos</strong>:</p>
+  $$SCE = \sum_{i=1}^n \hat{\varepsilon}_i^2 = \sum_{i=1}^n (Y_i - \hat{\beta}_0 - \hat{\beta}_1 X_i)^2$$
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Los residuos $\hat{\varepsilon}_i = Y_i - \hat{Y}_i$ son las diferencias entre valores observados y predichos.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+Minimizar SCE equivale a encontrar la recta más cercana a todos los puntos, en el sentido de la distancia vertical al cuadrado.
+</li>
+</ul>
+
+## Derivación de los estimadores MCO
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Demostración: $\hat{\beta}_0$ y $\hat{\beta}_1$</div>
+  <div class="block-body">
+  <p>Derivando $SCE$ respecto a $\beta_0$ y $\beta_1$ e igualando a cero:</p>
+  $$\hat{\beta}_1 = \frac{\sum(X_i - \bar{X})(Y_i - \bar{Y})}{\sum(X_i - \bar{X})^2} = \frac{S_{XY}}{S_{XX}}$$
+  $$\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{X}$$
+  <p>La recta ajustada siempre pasa por $(\bar{X}, \bar{Y})$. $\blacksquare$</p>
+  </div>
+</div>
+
+## Cálculo manual de $\hat{\beta}_1$ y $\hat{\beta}_0$
+
+```{r}
+#| echo: true
+x <- dosis; y <- rend
+n <- length(x)
+
+Sxx <- sum((x - mean(x))^2)
+Sxy <- sum((x - mean(x)) * (y - mean(y)))
+
+beta1_hat <- Sxy / Sxx
+beta0_hat <- mean(y) - beta1_hat * mean(x)
+
+cat("β̂₁ (pendiente) =", round(beta1_hat, 6), "t/ha por kg N/ha\n")
+cat("β̂₀ (intercepto) =", round(beta0_hat, 4), "t/ha\n")
+cat("Recta: Ŷ = ", round(beta0_hat, 4), "+", round(beta1_hat, 6), "* X\n")
+```
+
+## Ajuste con lm() en R
+
+```{r}
+#| echo: true
+modelo <- lm(rend ~ dosis, data = df)
+summary(modelo)
+```
+
+## Interpretación de los coeficientes
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Pendiente $\hat{\beta}_1$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+Por cada kg/ha adicional de nitrógeno, el rendimiento aumenta en $\hat{\beta}_1$ t/ha en promedio.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Si $\hat{\beta}_1 > 0$: relación positiva. Si $\hat{\beta}_1 < 0$: relación negativa.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Intercepto $\hat{\beta}_0$</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+Valor esperado de $Y$ cuando $X = 0$. Solo tiene interpretación directa si $X = 0$ es plausible en el contexto.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Con dosis = 0 kg N/ha, el rendimiento esperado sería $\hat{\beta}_0$ t/ha (rendimiento sin fertilizar).
+</li>
+</ul>
+</div>
+
+</div>
+
+## Visualización de la recta ajustada
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2)
+df$predichos <- fitted(modelo)
+df$residuos  <- residuals(modelo)
+
+ggplot(df, aes(dosis, rend)) +
+  geom_point(color = "#1b4d2e", size = 2.5) +
+  geom_smooth(method = "lm", se = TRUE, color = "#c0392b",
+              fill = "#fad8d8", alpha = 0.3) +
+  geom_segment(aes(xend = dosis, yend = predichos),
+               color = "#1a3a6b", linetype = "dashed", alpha = 0.5) +
+  labs(x = "Dosis de nitrógeno (kg/ha)",
+       y = "Rendimiento (t/ha)",
+       title = "Regresión lineal: maíz, Córdoba") +
+  theme_minimal(base_size = 13)
+```
+
+## Los residuos y su importancia
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: residuos</div>
+  <div class="block-body">
+  <p>El <strong>residuo</strong> de la observación $i$ es:</p>
+  $$\hat{\varepsilon}_i = Y_i - \hat{Y}_i = Y_i - (\hat{\beta}_0 + \hat{\beta}_1 X_i)$$
+  <p>Propiedades MCO: $\sum \hat{\varepsilon}_i = 0$ y $\sum X_i \hat{\varepsilon}_i = 0$.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+Los residuos son la parte de $Y$ no explicada por la recta. Su análisis permite verificar los supuestos del modelo.
+</li>
+</ul>
+
+## Diagnóstico: gráficas de residuos
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(patchwork)
+
+p1 <- ggplot(df, aes(predichos, residuos)) +
+  geom_point(color = "#1b4d2e", size = 2) +
+  geom_hline(yintercept = 0, color = "#c0392b", linetype = "dashed") +
+  labs(x = "Valores ajustados", y = "Residuos",
+       title = "Residuos vs ajustados") +
+  theme_minimal(base_size = 11)
+
+p2 <- ggplot(df, aes(sample = residuos)) +
+  stat_qq(color = "#1a3a6b") + stat_qq_line(color = "#c0392b") +
+  labs(x = "Cuantiles teóricos", y = "Cuantiles muestrales",
+       title = "QQ-plot de residuos") +
+  theme_minimal(base_size = 11)
+
+p1 + p2
+```
+
+## Predicción con la recta ajustada
+
+```{r}
+#| echo: true
+# Predicción puntual para dosis = 80 kg N/ha
+nueva_dosis <- data.frame(dosis = 80)
+pred_puntual <- predict(modelo, newdata = nueva_dosis)
+cat("Rendimiento predicho para 80 kg N/ha:", round(pred_puntual, 4), "t/ha\n")
+
+# IC para la media (banda de confianza)
+pred_ic_media <- predict(modelo, newdata = nueva_dosis,
+                          interval = "confidence", level = 0.95)
+cat("IC 95% para E(Y|X=80): [", round(pred_ic_media[2], 4),
+    ",", round(pred_ic_media[3], 4), "]\n")
+
+# IP para una observación nueva (banda de predicción)
+pred_ip <- predict(modelo, newdata = nueva_dosis,
+                   interval = "prediction", level = 0.95)
+cat("IP 95% para Y_nuevo|X=80: [", round(pred_ip[2], 4),
+    ",", round(pred_ip[3], 4), "]\n")
+```
+
+## Errores comunes en regresión
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes</div>
+  <div class="block-body">
+  <p>La regresión lineal tiene supuestos que, si se violan, invalidan las inferencias.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Extrapolación:</strong> predecir fuera del rango de $X$ observado puede producir valores sin sentido. La relación lineal puede no mantenerse más allá del rango estudiado.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Confundir correlación con causalidad:</strong> una alta $r^2$ no implica que $X$ cause $Y$. Puede haber una variable de confusión.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>No verificar supuestos:</strong> analice siempre las gráficas de residuos antes de interpretar los coeficientes.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: estimación manual de MCO
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En un ensayo de riego en papa, se midió la lámina de agua aplicada (mm) y el rendimiento (t/ha). Con los datos: $X$: 50, 75, 100, 125, 150 mm; $Y$: 18.2, 21.5, 24.8, 27.1, 29.3 t/ha. (a) Calcule $\hat{\beta}_0$ y $\hat{\beta}_1$. (b) Interprete la pendiente. (c) Prediga el rendimiento para 110 mm.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+x <- c(50, 75, 100, 125, 150)
+y <- c(18.2, 21.5, 24.8, 27.1, 29.3)
+
+Sxx <- sum((x - mean(x))^2)
+Sxy <- sum((x - mean(x)) * (y - mean(y)))
+b1  <- Sxy / Sxx
+b0  <- mean(y) - b1 * mean(x)
+
+cat("β̂₀ =", round(b0, 4), "\n")
+cat("β̂₁ =", round(b1, 4), "t/ha por mm\n")
+cat("Interpretación: por cada mm adicional de riego, el rendimiento\n",
+    "aumenta en promedio", round(b1, 4), "t/ha.\n")
+cat("Predicción X = 110 mm:", round(b0 + b1 * 110, 4), "t/ha\n")
+```
+
+## Taller 2: ajuste con lm() e interpretación
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Con los datos del taller 1, ajuste el modelo con <code>lm()</code>, grafique la recta ajustada con su banda de confianza al 95%, haga el diagnóstico de residuos e interprete el coeficiente $R^2$.</p>
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+library(ggplot2)
+df_t <- data.frame(x, y)
+mod  <- lm(y ~ x, data = df_t)
+cat("Resumen del modelo:\n")
+print(summary(mod)$coefficients)
+cat("R² =", round(summary(mod)$r.squared, 4), "\n")
+
+ggplot(df_t, aes(x, y)) +
+  geom_point(color = "#1b4d2e", size = 3) +
+  geom_smooth(method = "lm", se = TRUE, color = "#c0392b", fill = "#fad8d8") +
+  labs(x = "Lámina de riego (mm)", y = "Rendimiento (t/ha)",
+       title = "Regresión: riego vs rendimiento de papa") +
+  theme_minimal(base_size = 13)
+```
+
+## Taller 3: verificación de supuestos
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Para el modelo ajustado en el taller 2: (a) grafique residuos vs valores ajustados, (b) haga el QQ-plot de residuos, (c) aplique Shapiro-Wilk a los residuos. ¿Se cumplen los supuestos de normalidad y homocedasticidad?</p>
+  </div>
+</div>
+
+## Taller 3: solución
+
+```{r}
+#| echo: true
+#| fig-height: 3
+library(ggplot2); library(patchwork)
+df_t$res  <- residuals(mod)
+df_t$ajus <- fitted(mod)
+
+p1 <- ggplot(df_t, aes(ajus, res)) +
+  geom_point(color="#1b4d2e", size=2.5) +
+  geom_hline(yintercept=0, color="#c0392b", linetype="dashed") +
+  labs(x="Ajustados", y="Residuos", title="Residuos vs ajustados") +
+  theme_minimal(base_size=11)
+
+p2 <- ggplot(df_t, aes(sample=res)) +
+  stat_qq(color="#1a3a6b") + stat_qq_line(color="#c0392b") +
+  labs(title="QQ-plot residuos") + theme_minimal(base_size=11)
+
+p1 + p2
+```
+
+```{r}
+#| echo: true
+shapiro.test(residuals(mod))
+```
+
+## Resumen: regresión y MCO
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 26px;">Modelo y estimadores</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">$Y = \beta_0 + \beta_1 X + \varepsilon$, supuestos LINE.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">$\hat{\beta}_1 = S_{XY}/S_{XX}$, $\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1\bar{X}$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">MCO minimiza $\sum\hat{\varepsilon}_i^2$.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 style="color:#1a3a6b; font-size: 26px;">Código R clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px;"><code>lm(y ~ x)</code>: ajuste del modelo.</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;"><code>summary(mod)</code>: coeficientes y $R^2$.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;"><code>predict(mod, newdata, interval)</code>: predicciones.</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 23px;"><code>residuals(mod)</code>, <code>fitted(mod)</code>.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 29: Estimación de parámetros y evaluación del modelo.</strong> Inferencia sobre $\beta_0$ y $\beta_1$, el coeficiente de determinación $R^2$, la tabla ANOVA de regresión y diagnósticos formales del modelo.</p>
+  </div>
+</div>

@@ -1,0 +1,418 @@
+---
+title: "Bioestadística Fundamental"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: referencias.bib
+csl: ieee.csl
+format:
+  revealjs:
+    logo: images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
+      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+## Clase 26 {.center .middle}
+
+## Contenido
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Comparación de medias</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">Prueba t de dos muestras independientes.</li>
+<li class="fragment fade-in" data-fragment-index="3">Prueba de Levene: igualdad de varianzas.</li>
+<li class="fragment fade-in" data-fragment-index="4">Prueba t pareada.</li>
+<li class="fragment fade-in" data-fragment-index="5">Código R: <code>t.test</code>.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Comparación de proporciones</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Prueba Z para diferencia de proporciones.</li>
+<li class="fragment fade-in" data-fragment-index="8">Prueba chi-cuadrado de independencia.</li>
+<li class="fragment fade-in" data-fragment-index="9">Tablas de contingencia en R.</li>
+<li class="fragment fade-in" data-fragment-index="10">Ejemplos integrales y taller.</li>
+</ul>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Comparación de Medias y Proporciones</p>
+<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">¿Son estadísticamente diferentes dos grupos?</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+</div>
+
+## Prueba t de dos muestras independientes
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba t: $H_0: \mu_1 = \mu_2$ (Welch)</div>
+  <div class="block-body">
+  <p>Si $X_{1i} \sim N(\mu_1, \sigma_1^2)$ y $X_{2j} \sim N(\mu_2, \sigma_2^2)$, independientes:</p>
+  $$t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_1^2/n_1 + S_2^2/n_2}} \sim t_\nu \quad \text{(Welch)}$$
+  <p>con $\nu$ grados de libertad de Welch. En R: <code>t.test(x, y, var.equal = FALSE)</code> (por defecto).</p>
+  </div>
+</div>
+
+## Prueba t con varianzas iguales (Student)
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba t: varianzas iguales (Student)</div>
+  <div class="block-body">
+  <p>Si $\sigma_1^2 = \sigma_2^2 = \sigma^2$ (verificado con prueba de Levene):</p>
+  $$t = \frac{\bar{X}_1 - \bar{X}_2}{S_p\sqrt{1/n_1 + 1/n_2}} \sim t_{n_1+n_2-2}$$
+  <p>con $S_p^2 = \dfrac{(n_1-1)S_1^2 + (n_2-1)S_2^2}{n_1+n_2-2}$.</p>
+  </div>
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="2">
+  <div class="block-body">
+  <p>La prueba de Welch es más robusta y funciona bien incluso cuando las varianzas son iguales. Se recomienda como opción por defecto.</p>
+  </div>
+</div>
+
+## Verificación de igualdad de varianzas
+
+```{r}
+#| echo: true
+set.seed(26)
+var_A <- rnorm(20, 5.8, 0.6)
+var_B <- rnorm(18, 5.2, 0.8)
+
+# Prueba de Levene (paquete car)
+# library(car)
+# leveneTest(c(var_A, var_B), group = factor(rep(c("A","B"), c(20,18))))
+
+# Alternativa: prueba F de Bartlett (para normalidad verificada)
+bartlett.test(list(var_A, var_B))
+```
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>Si el valor-p de Bartlett/Levene es $> 0.05$: no se rechaza igualdad de varianzas, se puede usar la prueba t Student. Si es $< 0.05$: use Welch.</p>
+  </div>
+</div>
+
+## Ejemplo: rendimiento de dos variedades de maíz
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: maíz amarillo, Córdoba</div>
+  <div class="block-body">
+  <p>Se comparan dos variedades de maíz amarillo en 15 parcelas cada una. ¿Tienen el mismo rendimiento promedio? $H_0: \mu_A = \mu_B$ vs $H_1: \mu_A \neq \mu_B$, $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(26)
+maiz_A <- c(5.2, 5.8, 6.1, 5.5, 5.9, 6.3, 5.4, 6.0, 5.7, 5.6,
+            6.2, 5.3, 5.8, 6.0, 5.9)
+maiz_B <- c(4.8, 5.1, 4.9, 5.3, 5.0, 5.5, 4.7, 5.2, 5.4, 4.9,
+            5.1, 5.0, 4.8, 5.3, 5.1)
+
+resultado <- t.test(maiz_A, maiz_B, var.equal = FALSE, conf.level = 0.95)
+cat("t =", round(resultado$statistic, 4), "\n")
+cat("gl (Welch) =", round(resultado$parameter, 2), "\n")
+cat("Valor-p =", round(resultado$p.value, 4), "\n")
+cat("IC 95% para μ_A - μ_B: [", round(resultado$conf.int[1], 4),
+    ",", round(resultado$conf.int[2], 4), "]\n")
+```
+
+## Prueba t pareada: análisis antes y después
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: efecto de biofertilizante en frijol</div>
+  <div class="block-body">
+  <p>Se mide el contenido de clorofila (SPAD) en 10 plantas de frijol antes y después de aplicar un biofertilizante. $H_0: \mu_D = 0$ vs $H_1: \mu_D > 0$, $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+antes   <- c(32.1, 30.5, 33.4, 31.0, 29.8, 34.2, 31.5, 30.9, 32.8, 31.3)
+despues <- c(35.6, 33.8, 36.2, 34.5, 32.4, 37.1, 34.8, 33.6, 35.9, 34.2)
+
+resultado <- t.test(despues, antes, paired = TRUE,
+                    alternative = "greater", conf.level = 0.95)
+cat("Diferencia media:", round(mean(despues - antes), 4), "\n")
+cat("t =", round(resultado$statistic, 4), "\n")
+cat("Valor-p:", round(resultado$p.value, 4), "\n")
+cat("IC 95% inferior:", round(resultado$conf.int[1], 4), "\n")
+```
+
+## Visualización: comparación de grupos
+
+```{r}
+#| echo: true
+#| fig-height: 4
+library(ggplot2); library(tidyverse)
+df <- bind_rows(
+  tibble(rendimiento = maiz_A, variedad = "A"),
+  tibble(rendimiento = maiz_B, variedad = "B")
+)
+
+ggplot(df, aes(x = variedad, y = rendimiento, fill = variedad)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = 16, outlier.size = 2) +
+  geom_jitter(width = 0.1, alpha = 0.5, size = 2) +
+  scale_fill_manual(values = c("A" = "#1b4d2e", "B" = "#1a3a6b")) +
+  labs(x = "Variedad", y = "Rendimiento (t/ha)",
+       title = "Rendimiento de maíz amarillo por variedad") +
+  theme_minimal(base_size = 13) + theme(legend.position = "none")
+```
+
+## Prueba Z para diferencia de proporciones
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba: $H_0: p_1 = p_2$</div>
+  <div class="block-body">
+  <p>Con estimador combinado $\hat{p} = (X_1 + X_2)/(n_1 + n_2)$:</p>
+  $$Z = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})(1/n_1 + 1/n_2)}} \sim N(0,1) \quad \text{bajo } H_0$$
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Ejemplo: BPA en dos departamentos</div>
+  <div class="block-body">
+  <p>Huila: 87/150 adoptan BPA. Nariño: 54/120 adoptan BPA. ¿Difieren las tasas? $\alpha = 0.05$.</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+resultado <- prop.test(c(87, 54), c(150, 120),
+                       alternative = "two.sided", correct = FALSE)
+cat("Valor-p:", round(resultado$p.value, 4), "\n")
+cat("IC 95%: [", round(resultado$conf.int[1], 4),
+    ",", round(resultado$conf.int[2], 4), "]\n")
+```
+
+## Prueba chi-cuadrado de independencia
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Prueba $\chi^2$ de independencia</div>
+  <div class="block-body">
+  <p>Para una tabla de contingencia $r \times c$, bajo $H_0$ de independencia:</p>
+  $$\chi^2 = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}} \sim \chi^2_{(r-1)(c-1)}$$
+  <p>con frecuencias esperadas $E_{ij} = n_{i\bullet} \cdot n_{\bullet j} / n$.</p>
+  </div>
+</div>
+
+## Ejemplo: tabla de contingencia en sanidad animal
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Ejemplo: brucelosis y región, Antioquia</div>
+  <div class="block-body">
+  <p>Se registra si 200 bovinos de cuatro zonas presentan brucelosis. ¿Es la prevalencia independiente de la zona?</p>
+  </div>
+</div>
+
+```{r}
+#| echo: true
+tabla <- matrix(c(12, 88, 18, 72, 25, 65, 8, 92),
+                nrow = 2, byrow = FALSE,
+                dimnames = list(c("Positivo", "Negativo"),
+                                c("Zona_A", "Zona_B", "Zona_C", "Zona_D")))
+print(tabla)
+
+resultado_chi <- chisq.test(tabla)
+cat("\nχ² =", round(resultado_chi$statistic, 4), "\n")
+cat("gl =", resultado_chi$parameter, "\n")
+cat("Valor-p =", round(resultado_chi$p.value, 4), "\n")
+```
+
+## Frecuencias esperadas y residuos
+
+```{r}
+#| echo: true
+resultado_chi <- chisq.test(tabla)
+cat("Frecuencias esperadas:\n")
+print(round(resultado_chi$expected, 2))
+
+cat("\nResiduos estandarizados (Pearson):\n")
+print(round(resultado_chi$residuals, 3))
+```
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p>Residuos $|r_{ij}| > 2$ indican celdas que contribuyen más de lo esperado al estadístico $\chi^2$, señalando dónde está la asociación.</p>
+  </div>
+</div>
+
+## Errores comunes
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Advertencia: errores frecuentes en comparaciones</div>
+  <div class="block-body">
+  <p>Las pruebas de comparación tienen supuestos que deben verificarse cuidadosamente.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 16px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
+<strong>Tratar datos pareados como independientes:</strong> siempre use <code>paired = TRUE</code> cuando las observaciones están naturalmente emparejadas.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
+<strong>Prueba $\chi^2$ con frecuencias esperadas pequeñas:</strong> si alguna $E_{ij} < 5$, use la prueba exacta de Fisher (<code>fisher.test()</code>).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
+<strong>Comparaciones múltiples sin corrección:</strong> comparar $k$ grupos tomando pares produce inflación del error tipo I. Use ANOVA (Clase 30) o corrección de Bonferroni.
+</li>
+</ul>
+
+## Taller en clase {.center .middle}
+
+## Taller 1: prueba t de dos muestras
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Se evalúa el contenido de grasa (%) en leche de 16 vacas Holstein y 14 Jersey en Cundinamarca. Holstein: $\bar{x}_1 = 3.8\%$, $s_1 = 0.4\%$. Jersey: $\bar{x}_2 = 5.1\%$, $s_2 = 0.6\%$. ¿Difieren las medias? $H_0: \mu_H = \mu_J$ vs $H_1: \mu_H \neq \mu_J$, $\alpha = 0.01$.</p>
+  </div>
+</div>
+
+## Taller 1: solución
+
+```{r}
+#| echo: true
+set.seed(26)
+holstein <- rnorm(16, 3.8, 0.4)
+jersey   <- rnorm(14, 5.1, 0.6)
+
+resultado <- t.test(holstein, jersey, var.equal = FALSE, conf.level = 0.99)
+cat("t =", round(resultado$statistic, 4), "\n")
+cat("Valor-p =", round(resultado$p.value, 4), "\n")
+cat("IC 99%: [", round(resultado$conf.int[1], 4), ",",
+    round(resultado$conf.int[2], 4), "]\n")
+cat("Decisión:", ifelse(resultado$p.value < 0.01,
+    "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+d <- (mean(holstein) - mean(jersey)) /
+  sqrt((var(holstein) + var(jersey)) / 2)
+cat("d Cohen =", round(d, 4), "\n")
+```
+
+## Taller 2: prueba de independencia chi-cuadrado
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>En una encuesta a 250 agricultores del Huila, se registró el tipo de tenencia de tierra (propia/arrendada) y la adopción de abono orgánico (sí/no). Con los datos de la tabla, pruebe si la adopción es independiente de la tenencia. $\alpha = 0.05$.</p>
+
+  | | Adopta | No adopta |
+  |---|:---:|:---:|
+  | Tierra propia | 95 | 55 |
+  | Tierra arrendada | 30 | 70 |
+
+  </div>
+</div>
+
+## Taller 2: solución
+
+```{r}
+#| echo: true
+tabla2 <- matrix(c(95, 30, 55, 70), nrow = 2,
+                 dimnames = list(c("Propia", "Arrendada"),
+                                 c("Adopta", "No adopta")))
+resultado_chi2 <- chisq.test(tabla2, correct = FALSE)
+cat("χ² =", round(resultado_chi2$statistic, 4), "\n")
+cat("gl =", resultado_chi2$parameter, "\n")
+cat("Valor-p =", round(resultado_chi2$p.value, 4), "\n")
+cat("Decisión:", ifelse(resultado_chi2$p.value < 0.05,
+    "RECHAZAR H0 (dependencia)", "NO RECHAZAR H0"), "\n")
+cat("\nFrecuencias esperadas:\n")
+print(round(resultado_chi2$expected, 2))
+```
+
+## Taller 3: elección del tipo de prueba
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Problema</div>
+  <div class="block-body">
+  <p>Para cada escenario, indique qué prueba usar y justifique:</p>
+  <ol style="font-size: 24px;">
+  <li>Comparar el rendimiento de dos fertilizantes en 20 parcelas, 10 por tratamiento, asignados al azar.</li>
+  <li>Evaluar si la tasa de preñez difiere entre dos razas bovinas (120 y 95 hembras).</li>
+  <li>Comparar el peso de 15 terneros antes y después de un programa de suplementación.</li>
+  </ol>
+  </div>
+</div>
+
+## Taller 3: solución
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
+<strong>1:</strong> Prueba t de Welch (dos muestras independientes). Verificar normalidad con Shapiro-Wilk. Si se viola, usar Wilcoxon de rango suma.
+</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+<strong>2:</strong> Prueba Z para diferencia de proporciones (<code>prop.test</code>) o $\chi^2$ de independencia. Verificar que $n\hat{p} \geq 5$ en cada celda.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>3:</strong> Prueba t pareada (<code>t.test(..., paired = TRUE)</code>). Las mismas unidades se miden dos veces, por lo que hay una dependencia natural entre las observaciones.
+</li>
+</ul>
+
+## Resumen: comparación de dos grupos
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<h4 style="color:#1b4d2e; font-size: 25px;">Medias</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px;">Independientes (Welch): <code>t.test(x, y)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px;">Independientes (Student): <code>t.test(x, y, var.equal=TRUE)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px;">Pareadas: <code>t.test(x, y, paired=TRUE)</code>.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<h4 style="color:#1a3a6b; font-size: 25px;">Proporciones / tablas</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">Dos proporciones: <code>prop.test(c(x1,x2), c(n1,n2))</code>.</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;">Tabla $r \times c$: <code>chisq.test(tabla)</code>.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">Frecuencias pequeñas: <code>fisher.test(tabla)</code>.</li>
+</ul>
+</div>
+
+</div>
+
+## Próxima clase
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+  <p><strong>Clase 27: Razón de varianzas.</strong> Completaremos el panorama de comparaciones con la prueba F para igualdad de varianzas, que es también el fundamento del ANOVA.</p>
+  </div>
+</div>
+
+<ul style="margin-top: 24px;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+Estudiaremos la distribución F, la prueba de Bartlett y de Levene, y la relación con la prueba t de varianzas iguales.
+</li>
+</ul>
