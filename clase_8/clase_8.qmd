@@ -6,6 +6,7 @@ bibliography: referencias.bib
 csl: ieee.csl
 format:
   revealjs:
+    embed-resources: true
     logo: images/logo_unal_3.png
     slide-number: true
     title-slide: false
@@ -17,8 +18,8 @@ format:
     height: 720
     css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
     header-includes: |
-      <link rel="stylesheet" href="/assets/fontawesome-free-6.1.1-web/css/font-awesome.min.css">
-      <script defer src="/assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
       <script>
       window.addEventListener('load', function() {
         if (typeof Reveal === 'undefined') return;
@@ -66,6 +67,39 @@ execute:
 </div>
 </div>
 
+
+## La clase anterior...
+
+<div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:20px;">
+
+<div class="fragment fade-in" data-fragment-index="1" style="background:#a78bfa; color:white; border-radius:12px; padding:16px 28px; font-size:22px; width:280px; text-align:center;">
+<strong>Prob. Condicional</strong><br>
+$P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}$<br>
+<em>Reduce el espacio muestral</em>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="2" style="background:#3b82f6; color:white; border-radius:12px; padding:16px 28px; font-size:22px; width:320px; text-align:center;">
+<strong>Regla Multiplicación</strong><br>
+$P(A \cap B) = P(A\mid B)\cdot P(B)$<br>
+<em>Eventos secuenciales</em>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="background:#59A14F; color:white; border-radius:12px; padding:16px 28px; font-size:22px; width:320px; text-align:center;">
+<strong>Independencia</strong><br>
+$P(A \cap B) = P(A)\cdot P(B)$<br>
+<em>Sin influencia mutua</em>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="4" style="background:#F28E2B; color:white; border-radius:12px; padding:16px 28px; font-size:22px; width:320px; text-align:center;">
+<strong>Prob. Total</strong><br>
+$P(A) = \sum_i P(A\mid B_i)P(B_i)$<br>
+<em>Combinar particiones</em>
+</div>
+
+</div>
+
+## {.center .middle}
+
 <div style="text-align: center; margin-top: 40px;">
 <p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Teorema de Bayes</p>
 <p style="font-size: 32px; color: #6b7280; margin-top: 20px;">Del resultado a la causa: razonamiento probabilístico inverso</p>
@@ -74,7 +108,7 @@ execute:
 
 ## El problema inverso
 
-<div class="twocol">
+<div class="twocol" style="margin-top:50px">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <ul>
@@ -110,53 +144,30 @@ Permite actualizar nuestras creencias sobre una hipótesis a la luz de nueva evi
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
   <div class="block-body">
-<p>
+<p style="font-size: 32px;">
 <strong>Escenario:</strong> En un cultivo de café en el Huila, se aplica una prueba rápida para detectar la roya (<em>Hemileia vastatrix</em>). El resultado es <strong>positivo</strong>.
 </p>
   </div>
 </div>
 
 <ul style="margin-top: 30px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
 La pregunta que surge de inmediato: <strong>¿la planta realmente tiene roya?</strong>
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
 Sabemos que ninguna prueba es perfecta: existe la posibilidad de <em>falsos positivos</em> y <em>falsos negativos</em>.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
 La respuesta depende de tres factores: la <strong>sensibilidad</strong> de la prueba, su <strong>especificidad</strong> y la <strong>prevalencia</strong> de la enfermedad en la zona.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 32px; text-align: justify;">
 El Teorema de Bayes integra estos tres factores en un único cálculo coherente.
-</li>
-</ul>
-
-## Recordatorio: Ley de Probabilidad Total
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-<p>
-<strong>Ley de Probabilidad Total:</strong> Si $\{B_1, B_2, \ldots, B_k\}$ es una partición del espacio muestral $\Omega$ y $A$ es cualquier evento, entonces:
-$$P(A) = \sum_{i=1}^{k} P(A \mid B_i)\, P(B_i)$$
-</p>
-  </div>
-</div>
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Una <strong>partición</strong> es un conjunto de eventos mutuamente excluyentes y exhaustivos: $B_i \cap B_j = \emptyset$ y $\bigcup_{i} B_i = \Omega$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-La probabilidad de $A$ se descompone según los distintos <em>caminos</em> que pueden llevar a $A$.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-Esta ley es el <strong>denominador</strong> del Teorema de Bayes — la recordaremos en el siguiente bloque.
 </li>
 </ul>
 
 ## Thomas Bayes (Contexto histórico)
 
-<div class="twocol">
+<div class="twocol" style="margin-top:50px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <ul>
@@ -188,26 +199,35 @@ Sus aplicaciones van desde diagnóstico médico hasta inteligencia artificial y 
 
 </div>
 
-## Punto de partida: Probabilidad Condicional
+## Punto de partida: probabilidad Condicional
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
+<div class="block-body">
 <p>
-<strong>Definición:</strong> La probabilidad condicional de $A$ dado $B$ es:
+<span style="font-size: 32px;">
+<strong>Definición:</strong> La probabilidad condicional de A dado B es:
+</span>
 $$P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
 </p>
-  </div>
+</div>
 </div>
 
 <ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-De modo simétrico: $P(B \mid A) = \dfrac{P(A \cap B)}{P(A)}$
+<li class="fragment fade-up" data-fragment-index="2" style="text-align: justify;">
+<span style="font-size: 32px;">De modo simétrico:</span>
+<p style="font-size:26px;"> 
+
+$$P(B \mid A) = \dfrac{P(A \cap B)}{P(A)}$$</p>
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Despejando $P(A \cap B)$ de ambas expresiones obtenemos la <strong>regla de la multiplicación</strong>:
+<li class="fragment fade-up" data-fragment-index="3" style="text-align: justify;">
+<span style="font-size: 32px;">Despejando $P(A \cap B)$ de ambas expresiones obtenemos la <strong>regla de la multiplicación</strong>:</span>
+
+<p style="font-size:26px;">
+
 $$P(A \cap B) = P(A \mid B)\,P(B) = P(B \mid A)\,P(A)$$
+</p>
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size:32px; text-align: justify;">
 Esta igualdad es el <em>núcleo algebraico</em> del Teorema de Bayes.
 </li>
 </ul>
@@ -217,7 +237,7 @@ Esta igualdad es el <em>núcleo algebraico</em> del Teorema de Bayes.
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
   <div class="block-body">
 <p>
-De la regla de multiplicación:
+<span style="font-size:32px">De la regla de multiplicación tenemos que:</span>
 $$P(A \cap B_i) = P(A \mid B_i)\,P(B_i) = P(B_i \mid A)\,P(A)$$
 </p>
   </div>
@@ -225,14 +245,15 @@ $$P(A \cap B_i) = P(A \mid B_i)\,P(B_i) = P(B_i \mid A)\,P(A)$$
 
 <ul style="margin-top: 15px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Despejando $P(B_i \mid A)$:
+<span style="font-size:32px"> Despejando $P(B_i \mid A)$:</span>
+
 $$P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{P(A)}$$
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Sustituimos $P(A)$ usando la <strong>ley de probabilidad total</strong>:
+<span style="font-size:32px">Sustituimos $P(A)$ usando la <strong>ley de probabilidad total</strong>:</span>
 $$P(A) = \sum_{j=1}^{k} P(A \mid B_j)\,P(B_j)$$
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
 Obtenemos así la <strong>forma completa</strong> del Teorema de Bayes.
 </li>
 </ul>
@@ -248,89 +269,63 @@ $$\boxed{P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{\displaystyle\sum_{j=1}^{k
 </div>
 
 <ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
 El <strong>numerador</strong> cuantifica cuánto contribuye la hipótesis $B_i$ a la ocurrencia del evento $A$.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
 El <strong>denominador</strong> normaliza: garantiza que la suma de todas las probabilidades a posteriori sea 1.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
 La fórmula es válida para cualquier partición $\{B_1, \ldots, B_k\}$ del espacio muestral.
 </li>
 </ul>
 
-## Enunciado Formal del Teorema de Bayes
+## El Teorema de Bayes:
 
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-theorem fragment fade-up" data-fragment-index="1" style="margin-top:30px">
   <div class="block-body">
-<p>
-<strong>Teorema de Bayes:</strong> Sea $\{B_1, B_2, \ldots, B_k\}$ una partición del espacio muestral $\Omega$ con $P(B_i) > 0$ para todo $i$. Sea $A$ un evento con $P(A) > 0$. Entonces, para cada $i = 1, 2, \ldots, k$:
+
+<span style="font-size: 32px;">Sea $\{B_1, B_2, \ldots, B_k\}$ una partición del espacio muestral $\Omega$ con $P(B_i) > 0$ para todo $i$. Sea $A$ un evento con $P(A) > 0$. Entonces, para cada $i = 1, 2, \ldots, k$:</span>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">
+
 $$P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{\sum_{j=1}^{k} P(A \mid B_j)\,P(B_j)}$$
 </p>
   </div>
 </div>
 
 <ul style="margin-top: 15px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
 Las hipótesis $B_1, \ldots, B_k$ son <strong>mutuamente excluyentes y exhaustivas</strong>.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
 El evento $A$ es la <strong>evidencia observada</strong> que actualiza la probabilidad de cada hipótesis.
 </li>
 </ul>
 
 ## Terminología Bayesiana
 
-<div class="twocol">
+<div style="display:flex; flex-direction:column; gap:20px;">
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
-<strong style="color: #a78bfa;">Probabilidad a priori</strong> $P(B_i)$: probabilidad de la hipótesis <em>antes</em> de observar la evidencia. Representa el conocimiento previo.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-<strong style="color: #3b82f6;">Verosimilitud</strong> $P(A \mid B_i)$: probabilidad de observar la evidencia $A$ <em>si</em> la hipótesis $B_i$ es verdadera.
-</li>
-</ul>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1"  style="font-size:34px">
+<strong style="color: #a78bfa;">Probabilidad a priori</strong>: $P(B_i)$ probabilidad de la hipótesis <em>antes</em> de observar la evidencia. Representa el conocimiento previo.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
-<strong style="color: #59A14F;">Probabilidad a posteriori</strong> $P(B_i \mid A)$: probabilidad de la hipótesis <em>después</em> de observar la evidencia. Es la cantidad que calculamos con Bayes.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
-<strong style="color: #F28E2B;">Evidencia marginal</strong> $P(A)$: constante de normalización que garantiza que las probabilidades sumen 1.
-</li>
-</ul>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="font-size:34px">
+<strong style="color: #3b82f6;">Verosimilitud</strong>: $P(A \mid B_i)$ probabilidad de observar la evidencia $A$ <em>si</em> la hipótesis $B_i$ es verdadera.
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3"style="font-size:34px">
+<strong style="color: #59A14F;">Probabilidad a posteriori</strong>: $P(B_i \mid A)$ probabilidad de la hipótesis <em>después</em> de observar la videncia. Es la cantidad que calculamos con Bayes.
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4" style="font-size:34px">
+<strong style="color: #F28E2B;">Evidencia marginal</strong>: $P(A)$ constante de normalización que garantiza que las probabilidades sumen 1.
 </div>
 
 </div>
 
-## Representación con Árbol de Probabilidad
 
-<ul>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 32px; text-align: justify;">
-El árbol de probabilidad organiza visualmente todos los términos del Teorema de Bayes.
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
-<strong>Primer nivel:</strong> las ramas representan las hipótesis $B_1, \ldots, B_k$ con sus probabilidades a priori $P(B_i)$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
-<strong>Segundo nivel:</strong> desde cada $B_i$ salen ramas para $A$ y $A^c$ con las verosimilitudes $P(A \mid B_i)$ y $P(A^c \mid B_i)$.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
-<strong>Probabilidades de caminos:</strong> el producto a lo largo de cada rama da $P(A \cap B_i) = P(A \mid B_i)\,P(B_i)$.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 32px; text-align: justify;">
-<strong>Denominador:</strong> la suma de los caminos que llevan a $A$ da $P(A)$ (ley de probabilidad total).
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 32px; text-align: justify;">
-<strong>Bayes:</strong> dividimos el camino de interés entre la suma total de caminos hacia $A$.
-</li>
-</ul>
-
-## Verificación: Suma de Probabilidades a Posteriori
+## Suma de Probabilidades a Posteriori
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
   <div class="block-body">
@@ -342,33 +337,34 @@ $$\sum_{i=1}^{k} P(B_i \mid A) = 1$$
 </div>
 
 <ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
 <strong>Demostración:</strong> $\displaystyle\sum_{i=1}^{k} P(B_i \mid A) = \frac{\sum_{i=1}^{k} P(A \mid B_i)\,P(B_i)}{P(A)} = \frac{P(A)}{P(A)} = 1$
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
 Esto confirma que las probabilidades a posteriori forman una <strong>distribución de probabilidad válida</strong> sobre las hipótesis.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
 Esta verificación sirve como <strong>chequeo aritmético</strong> al resolver problemas con múltiples hipótesis.
 </li>
 </ul>
 
-## Caso Especial: Dos Hipótesis ($B$ y $B^c$)
+## Dos Hipótesis ($B$ y $B^c$)
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-<p>
-Cuando la partición es binaria el evento $B$ y su complemento $B^c$, el Teorema de Bayes toma la siguiente forma simplificada:
+<div class="block-body">
+<span style="font-size:32px;">Cuando la partición es binaria, el evento $B$ y su complemento $B^c$, el Teorema de Bayes toma la siguiente forma simplificada:<span>
+<p style="font-size:24px;">
+
 $$P(B \mid A) = \frac{P(A \mid B)\,P(B)}{P(A \mid B)\,P(B) + P(A \mid B^c)\,P(B^c)}$$
 </p>
-  </div>
+</div>
 </div>
 
-<ul style="margin-top: 15px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+<ul style="margin-top: 15px;line-height: 1.8;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
 Aquí $P(B^c) = 1 - P(B)$, por lo que solo necesitamos tres parámetros: $P(B)$, $P(A|B)$ y $P(A|B^c)$.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
 Esta es la forma más usada en <strong>diagnóstico</strong>: $B$ = "tiene la enfermedad", $A$ = "prueba positiva".
 </li>
 </ul>
@@ -387,7 +383,7 @@ $$P(B \mid A) = \frac{P(A \mid B)\,P(B)}{P(A \mid B)\,P(B) + P(A \mid B^c)\,P(B^
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
 <p style="font-size: 26px; font-weight: bold; color: #a78bfa;">Términos del numerador</p>
-<ul>
+<ul style="line-height: 1.8;">
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 $P(B)$: prevalencia es la probabilidad previa de que $B$ sea verdadera.
 </li>
@@ -399,7 +395,7 @@ $P(A \mid B)$: sensibilidad es la probabilidad de observar $A$ cuando $B$ es ver
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
 <p style="font-size: 26px; font-weight: bold; color: #3b82f6;">Términos del denominador adicional</p>
-<ul>
+<ul style="line-height: 1.8;">
 <li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
 $P(B^c)$: probabilidad previa de que $B$ sea falsa.
 </li>
@@ -412,17 +408,40 @@ Es la probabilidad de $A$ cuando $B$ es falsa.
 
 </div>
 
-## Ejemplo 1: Prueba de Resistencia en Café
+
+## Árbol de Probabilidad
+
+<ul style="line-height: 1.8;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
+<strong>Primer nivel:</strong> las ramas representan las hipótesis $B_1, \ldots, B_k$ con sus probabilidades a priori $P(B_i)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
+<strong>Segundo nivel:</strong> desde cada $B_i$ salen ramas para $A$ y $A^c$ con las verosimilitudes $P(A \mid B_i)$ y $P(A^c \mid B_i)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
+<strong>Probabilidades de caminos:</strong> el producto a lo largo de cada rama da $P(A \cap B_i) = P(A \mid B_i)\,P(B_i)$.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 32px; text-align: justify;">
+<strong>Denominador:</strong> la suma de los caminos que llevan a $A$ da $P(A)$ (ley de probabilidad total).
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 32px; text-align: justify;">
+<strong>Bayes:</strong> dividimos el camino de interés entre la suma total de caminos hacia $A$.
+</li>
+</ul>
+
+
+
+## Ejemplo 1: prueba de resistencia en café
 
 <div class="block-example fragment fade-up" data-fragment-index="1" style="font-size: 30px;">
-  <div class="block-body">
+<div class="block-body">
 <p>
-<strong>Enunciado:</strong> En un cultivo de café en el Huila, se aplica una prueba para detectar resistencia genética a la roya. Se sabe que: <strong>20%</strong> de las plantas son resistentes (prevalencia). La prueba tiene <strong>sensibilidad del 90%</strong> y <strong>especificidad del 85%</strong>. Una planta muestra resultado positivo. ¿Cuál es la probabilidad de que sea realmente resistente?
+En un cultivo de café en el Huila, se aplica una prueba para detectar resistencia genética a la roya. Se sabe que: <strong>20%</strong> de las plantas son resistentes (prevalencia). La prueba tiene <strong>sensibilidad del 90%</strong> y <strong>especificidad del 85%</strong>. Una planta muestra resultado positivo. ¿Cuál es la probabilidad de que sea realmente resistente?
 </p>
-  </div>
+</div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 15px;line-height: 1.8;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 Sea $R$ = Planta resistente y $T^+$ = prueba positiva.
 </li>
@@ -439,8 +458,8 @@ Queremos: $P(R \mid T^+) = ?$
 </ul>
 
 ## Datos
-<h4 class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; color: #3b82f6; margin-top: 30px; text-align: center;">Tabla de Parámetros</h4>
-<div style="margin-top: 30px; text-align: center;">
+
+<div style="margin-top: 50px; text-align: center;">
 <table class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; margin: auto; border-collapse: collapse; width: 80%;">
 <thead>
 <tr style="background-color: #3b82f6; color: white;">
@@ -481,21 +500,11 @@ Queremos: $P(R \mid T^+) = ?$
 
 ## Árbol de probabilidades
 
-<div style="margin-top: 20px; font-size: 50px;" class="fragment fade-up" data-fragment-index="1">
+<center>
+<img src="images/arbol.png" alt="Árbol de probabilidades" style="width: 55%; height: auto;">
+</center>
 
-```
-                    ┌─ T⁺  P(R ∩ T⁺) = 0.20 × 0.90 = 0.18
-         P(R)=0.20 ─┤
-                    └─ T⁻  P(R ∩ T⁻) = 0.20 × 0.10 = 0.02
-Inicio ─┤
-                    ┌─ T⁺  P(Rᶜ ∩ T⁺) = 0.80 × 0.15 = 0.12
-        P(Rᶜ)=0.80 ─┤
-                    └─ T⁻  P(Rᶜ ∩ T⁻) = 0.80 × 0.85 = 0.68
-```
-
-</div>
-
-<ul style="margin-top: 20px;">
+<ul style="line-height: 1.8;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 <strong>$P(T^+)$</strong> = suma de caminos hacia $T^+$ = $0.18 + 0.12 = 0.30$
 </li>
@@ -514,27 +523,27 @@ $$P(R \mid T^+) = \frac{P(T^+ \mid R)\,P(R)}{P(T^+ \mid R)\,P(R) + P(T^+ \mid R^
   </div>
 </div>
 
-<ul style="margin-top: 15px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+<ul style="margin-top: 15px;line-height: 1.8;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
 <strong>Numerador:</strong> $P(T^+ \mid R)\,P(R) = 0.90 \times 0.20 = 0.18$
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
 <strong>Denominador:</strong> $P(T^+) = 0.18 + 0.80 \times 0.15 = 0.18 + 0.12 = 0.30$
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
 <strong>Resultado:</strong> $P(R \mid T^+) = \dfrac{0.18}{0.30} = 0.60$
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify; color: #059669;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 32px; text-align: justify; color: #059669;">
 Dado un resultado positivo, hay un <strong>60% de probabilidad</strong> de que la planta sea realmente resistente.
 </li>
 </ul>
 
-## Interpretación del Resultado del Ejemplo 1
+## Interpretación:
 
-<div class="twocol">
+<div class="twocol" style="margin-top:50px">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
+<ul style="line-height:1.3;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 A pesar de que la prueba tiene <strong>90% de sensibilidad</strong>, un resultado positivo solo indica resistencia con probabilidad <strong>60%</strong>.
 </li>
@@ -545,7 +554,7 @@ Esto se debe a la <strong>baja prevalencia</strong> (20%): la mayoría de planta
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
+<ul style="line-height:1.3;">
 <li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
 Este fenómeno se conoce como la <strong>paradoja de la prevalencia baja</strong>: las pruebas diagnósticas son menos informativas cuando la condición es rara.
 </li>
@@ -559,7 +568,7 @@ En la práctica agronómica, conocer la prevalencia regional es tan importante c
 
 ## Efecto de la Prevalencia en el VPP
 
-<div style="margin-top: 20px; text-align: center;">
+<div style="margin-top: 50px; text-align: center;">
 <table class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; margin: auto; border-collapse: collapse; width: 85%;">
 <thead>
 <tr style="background-color: #59A14F; color: white;">
@@ -601,7 +610,7 @@ En la práctica agronómica, conocer la prevalencia regional es tan importante c
 </li>
 </div>
 
-## Definición: Sensibilidad
+## Sensibilidad
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
   <div class="block-body" style="font-size: 34px;">
@@ -611,7 +620,7 @@ $$\text{Sensibilidad} = P(\text{test}^+ \mid \text{enfermo}) = \frac{VP}{VP + FN
   </div>
 </div>
 
-<ul style="margin-top: 20px;">
+<ul style="margin-top: 20px;line-height: 2;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
 Mide la <strong>capacidad de la prueba para detectar casos verdaderos</strong> (enfermos o afectados).
 </li>
@@ -619,11 +628,11 @@ Mide la <strong>capacidad de la prueba para detectar casos verdaderos</strong> (
 $VP$ = Verdaderos Positivos; $FN$ = Falsos Negativos (enfermos no detectados).
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
-Una prueba con alta sensibilidad tiene pocas <strong>pérdidas de casos reales</strong> — importante cuando el costo de no detectar es alto (p.ej., brotes de plaga).
+Una prueba con alta sensibilidad tiene pocas <strong>pérdidas de casos reales</strong>, importante cuando el costo de no detectar es alto (p.ej., brotes de plaga).
 </li>
 </ul>
 
-## Definición: Especificidad
+## Especificidad
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
   <div class="block-body" style="font-size: 34px;">
@@ -633,7 +642,7 @@ $$\text{Especificidad} = P(\text{test}^- \mid \text{sano}) = \frac{VN}{VN + FP}$
   </div>
 </div>
 
-<ul style="margin-top: 20px;">
+<ul style="margin-top: 20px;line-height: 2;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 34px; text-align: justify;">
 Mide la <strong>capacidad de la prueba para identificar correctamente los sanos</strong> (no afectados).
 </li>
@@ -641,11 +650,11 @@ Mide la <strong>capacidad de la prueba para identificar correctamente los sanos<
 $VN$ = Verdaderos Negativos; $FP$ = Falsos Positivos (sanos que dan positivo).
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 34px; text-align: justify;">
-Una prueba con alta especificidad tiene pocos <strong>falsos positivos</strong> — importante para evitar tratamientos innecesarios costosos.
+Una prueba con alta especificidad tiene pocos <strong>falsos positivos</strong>, importante para evitar tratamientos innecesarios costosos.
 </li>
 </ul>
 
-## Definición: VPP y VPN
+## VPP y VPN
 
 <div class="twocol">
 
@@ -654,7 +663,7 @@ Una prueba con alta especificidad tiene pocos <strong>falsos positivos</strong> 
 <p style="font-size: 30px;">
 $$\text{VPP} = P(\text{enfermo} \mid \text{test}^+) = \frac{VP}{VP + FP}$$
 </p>
-<ul>
+<ul style="line-height: 2;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 De todos los que dan positivo, ¿qué fracción está realmente enferma?
 </li>
@@ -669,7 +678,7 @@ Es directamente la <strong>probabilidad a posteriori</strong> calculada con Baye
 <p style="font-size: 30px;">
 $$\text{VPN} = P(\text{sano} \mid \text{test}^-) = \frac{VN}{VN + FN}$$
 </p>
-<ul>
+<ul style="line-height: 2;">
 <li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
 De todos los que dan negativo, ¿qué fracción está realmente sana?
 </li>
@@ -683,7 +692,7 @@ También se calcula con Bayes: $P(\text{sano} \mid T^-) = \frac{P(T^- \mid \text
 
 ## Tabla de Contingencia para prueba diagnóstica
 
-<div style="margin-top: 20px; text-align: center;" class="fragment fade-up" data-fragment-index="1">
+<div style="margin-top: 50px; text-align: center;" class="fragment fade-up" data-fragment-index="1">
 <table style="font-size: 30px; margin: auto; border-collapse: collapse; width: 80%;">
 <thead>
 <tr style="background-color: #1e3a8a; color: white;">
@@ -716,27 +725,42 @@ También se calcula con Bayes: $P(\text{sano} \mid T^-) = \frac{P(T^- \mid \text
 </table>
 </div>
 
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px;  margin-top: 20px; color: #052552;list-style: none; text-align: justify;">
-· Sensibilidad $= VP/(VP+FN)$  
-· Especificidad $= VN/(VN+FP)$  
-· VPP $= VP/(VP+FP)$  
-· VPN $= VN/(VN+FN)$
-</li>
+<ul style="font-size: 30px;line-height: 2;margin-top: 20px; color: #052552; text-align: justify;">
+
+  <li class="fragment fade-up" data-fragment-index="5">
+    Sensibilidad $= \frac{VP}{VP+FN}$
+  </li>
+
+  <li class="fragment fade-up" data-fragment-index="6">
+    Especificidad $= \frac{VN}{VN+FP}$
+  </li>
+
+  <li class="fragment fade-up" data-fragment-index="7">
+    VPP $= \frac{VP}{VP+FP}$
+  </li>
+
+  <li class="fragment fade-up" data-fragment-index="8">
+    VPN $= \frac{VN}{VN+FN}$
+  </li>
+
+</ul>
 
 
 ## Relación entre VPP y el Teorema de Bayes
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-<p>
-El VPP es exactamente la probabilidad a posteriori de estar enfermo dado un resultado positivo:
+<div class="block-body">
+<span style="font-size: 32px;">El VPP es exactamente la probabilidad a posteriori de estar enfermo dado un resultado positivo:</span>
+<p style="font-size: 24px;">
+
 $$\text{VPP} = P(D^+ \mid T^+) = \frac{P(T^+ \mid D^+)\,P(D^+)}{P(T^+ \mid D^+)\,P(D^+) + P(T^+ \mid D^-)\,P(D^-)}$$
-donde $P(T^+ \mid D^+) = \text{Sensibilidad}$ y $P(T^+ \mid D^-) = 1 - \text{Especificidad}$.
-</p>
-  </div>
+</p><br>
+<span style="font-size: 28px;">donde $P(T^+ \mid D^+) = \text{Sensibilidad}$ y $P(T^+ \mid D^-) = 1 - \text{Especificidad}$.</span>
+
+</div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 15px;line-height: 2;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
 El VPN es la probabilidad a posteriori de estar sano dado resultado negativo: $P(D^- \mid T^-)$.
 </li>
@@ -745,38 +769,39 @@ Ambos dependen de la <strong>prevalencia</strong> $P(D^+)$, que actúa como prob
 </li>
 </ul>
 
-## Ejemplo: Prueba de Hongos en Cultivo de Maíz
+## Ejemplo 2: hongos en cultivo de maíz
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-body">
 <p style="font-size: 30px;">
-<strong>Enunciado:</strong> En una región cálida del Tolima con cultivo de maíz, la prevalencia de <em>Aspergillus</em> (hongo) es del <strong>30%</strong>. Se usa una prueba rápida con sensibilidad <strong>88%</strong> y especificidad <strong>80%</strong>. Calcular VPP y VPN.
+En una región del Tolima con cultivo de maíz, la prevalencia de <em>Aspergillus</em> (hongo) es del <strong>30%</strong>. Se usa una prueba rápida con sensibilidad <strong>88%</strong> y especificidad <strong>80%</strong>. Calcular VPP y VPN.
 </p>
   </div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 15px;line-height:3;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 Sea $H$ = Planta infectada, $T^+$ = Prueba positiva.
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 $P(H) = 0.30$, $P(T^+ \mid H) = 0.88$, $P(T^- \mid H^c) = 0.80 \Rightarrow P(T^+ \mid H^c) = 0.20$.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
 <strong>VPP:</strong> $\dfrac{0.88 \times 0.30}{0.88 \times 0.30 + 0.20 \times 0.70} = \dfrac{0.264}{0.264 + 0.140} = \dfrac{0.264}{0.404} \approx 0.653$
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
 <strong>VPN:</strong> $\dfrac{0.80 \times 0.70}{0.80 \times 0.70 + 0.12 \times 0.30} = \dfrac{0.560}{0.560 + 0.036} = \dfrac{0.560}{0.596} \approx 0.940$
 </li>
 </ul>
 
-## Cálculo Completo VPP y VPN
+## Interpretación:
 
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<p style="font-size: 30px; font-weight: bold; color: #a78bfa;">Interpretación VPP = 65.3%</p>
-<ul>
+<p style="font-size: 30px; font-weight: bold; color: #a78bfa;">VPP = 65.3%</p>
+
+<ul style="line-height:1.8;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 De cada 100 plantas con prueba positiva, aproximadamente <strong>65</strong> están realmente infectadas.
 </li>
@@ -787,11 +812,13 @@ El 35% restante son <strong>falsos positivos</strong>: plantas sanas que arrojar
 Recomendación: confirmar con una segunda prueba antes de aplicar fungicida.
 </li>
 </ul>
+
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<p style="font-size: 30px; font-weight: bold; color: #3b82f6;">Interpretación VPN = 94.0%</p>
-<ul>
+<p style="font-size: 30px; font-weight: bold; color: #3b82f6;">VPN = 94.0%</p>
+
+<ul style="line-height:1.8;">
 <li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
 De cada 100 plantas con prueba negativa, aproximadamente <strong>94</strong> están realmente sanas.
 </li>
@@ -802,6 +829,7 @@ Un resultado negativo es muy confiable, ya que pocas plantas infectadas pasarán
 El VPN es alto en parte porque la prevalencia (30%) no es extremadamente alta.
 </li>
 </ul>
+
 </div>
 
 </div>
@@ -817,7 +845,7 @@ $$P(B_i \mid A) = \frac{P(A \mid B_i)\,P(B_i)}{\displaystyle\sum_{j=1}^{k} P(A \
   </div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 10px;line-height:2;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
 Las hipótesis pueden representar: <strong>orígenes diferentes</strong> de una muestra, <strong>variedades</strong> de una especie, <strong>regiones</strong> de producción, etc.
 </li>
@@ -825,16 +853,16 @@ Las hipótesis pueden representar: <strong>orígenes diferentes</strong> de una 
 El cálculo es idéntico para cada hipótesis, solo cambia el numerador.
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
-<strong>Verificación:</strong> $\sum_{i=1}^k P(B_i \mid A) = 1$ —> siempre debemos comprobarlo.
+<strong>Verificación:</strong> $\sum_{i=1}^k P(B_i \mid A) = 1 \rightarrow$  siempre debemos comprobarlo.
 </li>
 </ul>
 
-## Ejemplo 2: Origen del Lote de Semillas de Papa
+## Ejemplo 3: origen del lote de semillas de papa
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-body">
-<p style="font-size: 32px;">
-<strong>Enunciado:</strong> Un lote de semillas de papa puede provenir de tres proveedores: $B_1$ (Cundinamarca), $B_2$ (Boyacá) y $B_3$ (Nariño). Se selecciona una semilla al azar y <strong>germina</strong> (evento $A$). ¿Cuál proveedor es más probable?
+<p style="font-size: 32px; line-height:1.5;">
+Un lote de semillas de papa puede provenir de tres proveedores: $B_1$ (Cundinamarca), $B_2$ (Boyacá) y $B_3$ (Nariño). Se selecciona una semilla al azar y <strong>germina</strong> (evento $A$). ¿Cuál proveedor es más probable?
 </p>
   </div>
 </div>
@@ -850,7 +878,7 @@ El cálculo es idéntico para cada hipótesis, solo cambia el numerador.
 </thead>
 <tbody>
 <tr class="fragment fade-up" data-fragment-index="3" style="background-color: #f0fdf4;">
-<td style="padding: 8px; border: 1px solid #ccc;">$B_1$ Cundinamarca</td>
+<td style="padding: 8px; border: 1px solid #ccc;">$B_1$ C/marca</td>
 <td style="padding: 8px; border: 1px solid #ccc;">0.50</td>
 <td style="padding: 8px; border: 1px solid #ccc;">0.80</td>
 </tr>
@@ -938,7 +966,7 @@ $\therefore P(A)=0.40+0.21+0.12=\mathbf{0.73}$
 </div>
 
 
-## Cálculo de $P(B_i \mid A)$ y verificación
+## Cálculo de $P(B_i \mid A)$
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
@@ -1010,11 +1038,11 @@ $$P(B_3 \mid A) = \frac{0.12}{0.73} \approx 0.1644$$
 </div>
 
 
-## Interpretación de resultados
-<div class="twocol">
+## Interpretación:
+<div class="twocol" style="margin-top:50px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
+<ul style="line-height:1.4;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 A priori, el proveedor $B_1$ (Cundinamarca) tenía un <strong>50% de probabilidad</strong> de ser el origen, mientras que $B_3$ (Nariño) solo tenía un <strong>20%</strong>.
 </li>
@@ -1025,7 +1053,7 @@ Al observar que la semilla <strong>germinó</strong>, las probabilidades se actu
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
+<ul style="line-height:1.4;">
 <li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
 La germinación que más peso tiene es a favor de $B_1$ porque tiene la mayor tasa de germinación (80%) y la mayor participación (50%).
 </li>
@@ -1037,12 +1065,12 @@ La germinación que más peso tiene es a favor de $B_1$ porque tiene la mayor ta
 
 </div>
 
-## Ejercicio Propuesto: Zonas de Cultivo de Arroz
+## Ejemplo 4: zonas de cultivo de arroz
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
   <div class="block-body">
-<p style="font-size: 30px;">
-<strong>Enunciado:</strong> Se monitorean cuatro zonas arroceras del Tolima y Meta. Se selecciona aleatoriamente una planta que muestra <strong>síntomas de piricularia</strong> (hongo). ¿De qué zona proviene con mayor probabilidad?
+<p style="font-size: 30px;line-height:1.4;">
+Se monitorean cuatro zonas arroceras del Tolima y Meta. Se selecciona aleatoriamente una planta que muestra <strong>síntomas de piricularia</strong> (hongo). ¿De qué zona proviene con mayor probabilidad?
 </p>
   </div>
 </div>
@@ -1108,9 +1136,9 @@ Suma de todas las probabilidades = 100% ✓
 </ul>
 </div>
 
-## Concepto de Actualización Bayesiana Secuencial
+## Actualización Bayesiana Secuencial
 
-<div class="twocol">
+<div class="twocol" style="margin-top: 50px;line-height:1.4;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <ul>
@@ -1136,18 +1164,17 @@ Con suficientes observaciones, las probabilidades a posteriori convergen hacia l
 
 </div>
 
-## La Posteriori de Hoy es la Priori de Mañana
+## Principio fundamental de la actualización secuencial:
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
   <div class="block-body">
 <p>
-<strong>Principio fundamental de la actualización secuencial:</strong>
 $$P_{\text{nueva priori}}(B_i) \leftarrow P(B_i \mid A_1) \quad \Rightarrow \quad P(B_i \mid A_1, A_2) = \frac{P(A_2 \mid B_i)\,P(B_i \mid A_1)}{\sum_j P(A_2 \mid B_j)\,P(B_j \mid A_1)}$$
 </p>
   </div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 15px;line-height:1.4;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 Las observaciones $A_1$ y $A_2$ deben ser <strong>condicionalmente independientes</strong> dado cada $B_i$ para que la actualización sea válida.
 </li>
@@ -1159,19 +1186,19 @@ La actualización secuencial es <strong>equivalente</strong> a aplicar Bayes una
 </li>
 </ul>
 
-## Ejemplo: Dos Pruebas en Secuencia sobre un Cultivo
+## Ejemplo 5: dos pruebas en secuencia sobre un cultivo
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-<p style="font-size: 30px;">
-<strong>Contexto:</strong> En un cultivo de fresa en Cundinamarca, se sospecha infección por <em>Botrytis cinerea</em> (moho gris). La prevalencia regional es 25%. Se dispone de dos pruebas independientes, cada una con sensibilidad 85% y especificidad 90%. Ambas dan resultado positivo. Calcular la probabilidad de infección.
+<div class="block-body">
+<p style="font-size: 30px;line-height:1.4;">
+En un cultivo de fresa en Cundinamarca, se sospecha infección por <em>Botrytis cinerea</em> (moho gris). La prevalencia regional es 25%. Se dispone de dos pruebas independientes, cada una con sensibilidad 85% y especificidad 90%. Ambas dan resultado positivo. Calcular la probabilidad de infección.
 </p>
-  </div>
+</div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 15px;line-height:1.4;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
-<strong>Paso 1</strong> — Priori inicial: $P(I) = 0.25$, $P(T_1^+ \mid I) = 0.85$, $P(T_1^+ \mid I^c) = 0.10$.
+<strong>Paso 1</strong>, apriori inicial: $P(I) = 0.25$, $P(T_1^+ \mid I) = 0.85$, $P(T_1^+ \mid I^c) = 0.10$.
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 Denominador: $0.85 \times 0.25 + 0.10 \times 0.75 = 0.2125 + 0.0750 = 0.2875$
@@ -1185,7 +1212,7 @@ Denominador: $0.85 \times 0.25 + 0.10 \times 0.75 = 0.2125 + 0.0750 = 0.2875$
 
 <ul style="margin-top: 20px;">
 <li class="fragment fade-up" data-fragment-index="1" style="font-size: 34px; text-align: justify;">
-<strong>Paso 2</strong> — Nueva priori: $P'(I) = 0.7391$ (posteriori del paso 1).
+<strong>Paso 2</strong>, Nueva priori: $P'(I) = 0.7391$ (posteriori del paso 1).
 </li>
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 34px; text-align: justify;">
 Nueva denominador: $0.85 \times 0.7391 + 0.10 \times 0.2609 = 0.6282 + 0.0261 = 0.6543$
@@ -1207,7 +1234,7 @@ Resumen: $P(I) = 25\% \xrightarrow{T_1^+} 73.9\% \xrightarrow{T_2^+} 96.0\%$
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <p style="font-size: 30px; font-weight: bold; color: #a78bfa;">Incorporar conocimiento previo</p>
-<ul>
+<ul style="line-height:1.4;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 La probabilidad a priori permite integrar <strong>datos históricos, experimentos anteriores o conocimiento experto</strong> en el análisis.
 </li>
@@ -1231,7 +1258,7 @@ Esto es útil en monitoreo continuo de cultivos, ensayos adaptativos y sistemas 
 
 </div>
 
-## Razón de Verosimilitudes Desde Una Perspectiva Alternativa
+## Razón de Verosimilitudes
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
   <div class="block-body">
@@ -1242,7 +1269,7 @@ $$\underbrace{\frac{P(B \mid A)}{P(B^c \mid A)}}_{\text{Cuota a posteriori}} = \
   </div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 15px;line-height:1.8;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 La <strong>razón de verosimilitudes (LR)</strong> mide cuánto cambia la cuota de una hipótesis al observar $A$.
 </li>
@@ -1250,38 +1277,46 @@ La <strong>razón de verosimilitudes (LR)</strong> mide cuánto cambia la cuota 
 LR $> 1$: la evidencia favorece $B$. LR $= 1$: la evidencia no aporta. LR $< 1$: la evidencia favorece $B^c$.
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
-Para el ejemplo del café: LR $= 0.90 / 0.15 = 6.0$ —> la prueba es positiva lo que quiere decir que multiplica por 6 las cuotas de que la planta sea resistente.
+Para el ejemplo del café: LR $= 0.90 / 0.15 = 6.0\rightarrow$ la prueba es positiva lo que quiere decir que multiplica por 6 las cuotas de que la planta sea resistente.
 </li>
 </ul>
 
-## Diagnóstico de Enfermedades en Cultivos
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Aplicaciones</p>
+<p style="font-size: 32px; color: #6b7280; margin-top: 20px;">Aplicaciones del teorema de Bayes en el área biologica</p>
+</div>
+
+## Diagnóstico de enfermedades en cultivos
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
   <div class="block-body">
 <p style="font-size: 30px;">
-<strong>Aplicación directa:</strong> El VPP y el VPN calculados con el Teorema de Bayes orientan la toma de decisiones en campo.
+El VPP y el VPN calculados con el Teorema de Bayes orientan la toma de decisiones en campo.
 </p>
   </div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 15px;line-height:1.8;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 32px; text-align: justify;">
-<strong>Café (clima cálido):</strong> roya (<em>Hemileia vastatrix</em>), antracnosis (<em>Colletotrichum</em>): pruebas moleculares o visuales.
+<strong>Café:</strong> roya (<em>Hemileia vastatrix</em>), antracnosis (<em>Colletotrichum</em>): pruebas moleculares o visuales.
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 32px; text-align: justify;">
-<strong>Arroz (clima cálido):</strong> piricularia, pudrición de vaina: la prevalencia varía mucho entre variedades y regiones.
+<strong>Arroz:</strong> piricularia, pudrición de vaina: la prevalencia varía mucho entre variedades y regiones.
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 32px; text-align: justify;">
-<strong>Papa / Fresa (clima frío):</strong> <em>Phytophthora</em>, <em>Botrytis</em>: baja temperatura aumenta el riesgo — prevalencia mayor en épocas lluviosas.
+<strong>Papa / Fresa:</strong> <em>Phytophthora</em>, <em>Botrytis</em>: baja temperatura aumenta el riesgo, prevalencia mayor en épocas lluviosas.
 </li>
 <li class="fragment fade-up" data-fragment-index="5" style="font-size: 32px; text-align: justify;">
 El conocimiento de la prevalencia regional es el dato más crítico para el cálculo bayesiano correcto.
 </li>
 </ul>
 
-## Control de Calidad en Lotes de Semillas
+## Control de calidad en lotes de semillas
 
-<div class="twocol">
+<div class="twocol" style="line-height:1.4;margin-top:50px">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <ul>
@@ -1310,7 +1345,7 @@ Las probabilidades a priori pueden fijarse con base en el historial de cada prov
 
 </div>
 
-## Estimación de Prevalencia de Plagas por Zona Climática
+## Estimación de prevalencia de plagas por zona climática
 
 <ul style="margin-top: 20px;">
 <li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify;">
@@ -1327,34 +1362,42 @@ Esto se implementa como un modelo bayesiano jerárquico en estudios epidemiológ
 </li>
 </ul>
 
-## Selección de Tratamientos Fitosanitarios
+## Selección de tratamientos fitosanitarios
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
+<div class="block-body">
 <p style="font-size: 30px;">
 El razonamiento bayesiano guía la <strong>toma de decisiones bajo incertidumbre</strong>:
 </p>
-  </div>
+</div>
 </div>
 
-<ul style="margin-top: 15px;">
+<ul style="margin-top: 15px;padding-left:100px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;list-style-type: none;">
-$H_1$ = "el patógeno es hongo"; $H_2$ = "el patógeno es bacteria"; $H_3$ = "el patógeno es virus".
+$H_1$ = "el patógeno es hongo".
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type: none;">
-Observamos síntomas en el cultivo de mango (manchas foliares): calculamos $P(H_i \mid \text{síntomas})$.
+$H_2$ = "el patógeno es bacteria".
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;list-style-type: none;">
-Seleccionamos el tratamiento (fungicida, bactericida o control de vectores) que maximiza la probabilidad de éxito dado el diagnóstico más probable.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;list-style-type: none;">
-Con nueva evidencia (laboratorio, evolución de síntomas) se actualiza el diagnóstico y se ajusta el tratamiento.
+$H_3$ = "el patógeno es virus".
 </li>
 </ul>
+<ol>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
+Observamos síntomas en el cultivo de mango (manchas foliares): calculamos $P(H_i \mid \text{síntomas})$.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
+Seleccionamos el tratamiento (fungicida, bactericida o control de vectores) que maximiza la probabilidad de éxito dado el diagnóstico más probable.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify;">
+Con nueva evidencia (laboratorio, evolución de síntomas) se actualiza el diagnóstico y se ajusta el tratamiento.
+</li>
+</ol>
 
-## Teorema de Bayes en Investigación: Ensayos y Experimentos de Campo
+## Ensayos y Experimentos de Campo
 
-<div class="twocol">
+<div class="twocol" style="margin-top: 50px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <p style="font-size: 30px; font-weight: bold; color: #B07AA1;">Ensayos clínicos (adaptación a biología)</p>
@@ -1382,12 +1425,12 @@ Cada temporada de cultivo aporta nueva evidencia que refina la estimación de la
 
 </div>
 
-## Limitaciones del Teorema de Bayes
+## Limitaciones del teorema de Bayes
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
   <div class="block-body">
 <p style="font-size: 34px;">
-<strong>Advertencia:</strong> El teorema es matemáticamente exacto, pero sus resultados son tan buenos como la calidad de los datos de entrada.
+El teorema es matemáticamente exacto, pero sus resultados son tan buenos como la calidad de los datos de entrada.
 </p>
   </div>
 </div>
@@ -1406,169 +1449,6 @@ Cada temporada de cultivo aporta nueva evidencia que refina la estimación de la
 <strong>Subjetividad de la priori:</strong> distintos expertos pueden asignar probabilidades a priori diferentes, llevando a conclusiones distintas con los mismos datos.
 </li>
 </ul>
-
-## Ejercicio Integrador 1: Cultivo de Mora
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-<p style="font-size: 30px;">
-<strong>Enunciado:</strong> En un cultivo de mora en clima frío (Cundinamarca, 2500 m.s.n.m.), la prevalencia de <em>Botrytis</em> es del <strong>15%</strong>. La prueba disponible tiene sensibilidad <strong>88%</strong> y especificidad <strong>92%</strong>. Una planta arroja resultado positivo.
-<br><br>
-<strong>Calcular:</strong> VPP, VPN e interpretar los resultados en contexto agronómico.
-</p>
-  </div>
-</div>
-
-<ul style="margin-top: 15px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;list-style-type: none;">
-Sea $B$ = "planta infectada con <em>Botrytis</em>", $T^+$ = "prueba positiva".
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;list-style-type: none;">
-Datos: $P(B)=0.15$; $P(T^+|B)=0.88$; $P(T^-|B^c)=0.92 \Rightarrow P(T^+|B^c)=0.08$.
-</li>
-</ul>
-
-## Solución 
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify;">
-<strong>Denominador:</strong> $P(T^+) = 0.88 \times 0.15 + 0.08 \times 0.85 = 0.1320 + 0.0680 = 0.20$
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
-<strong>VPP:</strong> $P(B|T^+) = 0.1320/0.20 = \mathbf{0.660}$ esto equivale al 66% de probabilidad de infección dado positivo.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-<strong>Para VPN:</strong> $P(T^-) = 1 - 0.20 = 0.80$. 
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
-<strong>Numerador:</strong> $P(T^-|B^c)\,P(B^c) = 0.92 \times 0.85 = 0.7820$
-</li>
-
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
-<strong>VPN:</strong> $P(B^c|T^-) = 0.7820/0.80 = \mathbf{0.9775}$ equivale al 97.8% de confianza de que una planta negativa está sana.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify; color: #059669;">
-<strong>Interpretación:</strong> El VPN alto implica que un resultado negativo descarta infección con alta confiabilidad. El VPP moderado sugiere confirmar positivos antes de aplicar fungicida.
-</li>
-</ul>
-
-## Ejercicio Integrador 2: Tres Variedades de Trigo
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-<p style="font-size: 30px;">
-<strong>Enunciado:</strong> Un molino del altiplano boyacense recibe trigo de tres variedades: $V_1$ (ICA Chía, 40%), $V_2$ (Yema de Huevo, 35%) y $V_3$ (Nóbsa, 25%). La probabilidad de obtener grano de baja calidad (proteína < 10%) es 5%, 12% y 8% respectivamente. Se selecciona un lote y el grano resulta de baja calidad. ¿Qué variedad es más probable?
-</p>
-  </div>
-</div>
-
-<ul style="margin-top: 15px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;list-style-type: none;">
-$P(A) = 0.05\times0.40 + 0.12\times0.35 + 0.08\times0.25 = 0.020+0.042+0.020 = 0.082$
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type: none;">
-$P(V_1|A)=0.02/0.082\approx24.4\%$  
-$P(V_2|A)=0.042/0.082\approx51.2\%$  
-$P(V_3|A)=0.020/0.082\approx24.4\%$
-</li>
-</ul>
-
-## Solución 
-
-<div style="margin-top: 20px; text-align: center;">
-<table class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; margin: auto; border-collapse: collapse; width: 82%;">
-<thead>
-<tr style="background-color: #B07AA1; color: white;">
-<th style="padding: 8px; border: 1px solid #ccc;">Variedad</th>
-<th style="padding: 8px; border: 1px solid #ccc;">$P(V_i)$</th>
-<th style="padding: 8px; border: 1px solid #ccc;">$P(A|V_i)$</th>
-<th style="padding: 8px; border: 1px solid #ccc;">Producto</th>
-<th style="padding: 8px; border: 1px solid #ccc;">A posteriori</th>
-</tr>
-</thead>
-<tbody>
-<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #fdf4ff;">
-<td style="padding: 7px; border: 1px solid #ccc;">$V_1$ ICA Chía</td><td style="padding: 7px; border: 1px solid #ccc;">0.40</td><td style="padding: 7px; border: 1px solid #ccc;">0.05</td><td style="padding: 7px; border: 1px solid #ccc;">0.020</td><td style="padding: 7px; border: 1px solid #ccc; font-weight: bold;">24.4%</td>
-</tr>
-<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;">
-<td style="padding: 7px; border: 1px solid #ccc;">$V_2$ Yema de Huevo</td><td style="padding: 7px; border: 1px solid #ccc;">0.35</td><td style="padding: 7px; border: 1px solid #ccc;">0.12</td><td style="padding: 7px; border: 1px solid #ccc;">0.042</td><td style="padding: 7px; border: 1px solid #ccc; font-weight: bold; color: #dc2626;">51.2%</td>
-</tr>
-<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #fdf4ff;">
-<td style="padding: 7px; border: 1px solid #ccc;">$V_3$ Nóbsa</td><td style="padding: 7px; border: 1px solid #ccc;">0.25</td><td style="padding: 7px; border: 1px solid #ccc;">0.08</td><td style="padding: 7px; border: 1px solid #ccc;">0.020</td><td style="padding: 7px; border: 1px solid #ccc; font-weight: bold;">24.4%</td>
-</tr>
-<tr class="fragment fade-up" data-fragment-index="5" style="background-color: #fce7f3;">
-<td style="padding: 7px; border: 1px solid #ccc; font-weight： bold;">Total</td><td style="padding: 7px; border: 1px solid #ccc;">1.00</td><td style="padding： 7px; border： 1px solid #ccc；">—</td><td style="padding： 7px； border： 1px solid #ccc；">0.0820</td><td style="padding： 7px； border： 1px solid #ccc； font-weight： bold； color： #059669；">100% ✓</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<p class="fragment fade-up" data-fragment-index="6" style="font-size: 32px; text-align: center; color: #1e40af; margin-top: 10px;">
-<strong>Conclusión:</strong> La variedad Yema de Huevo ($V_2$) es la más probable con 51.2%, a pesar de no ser la más frecuente a priori.
-</p>
-
-
-## Comparación: A Priori vs A Posteriori
-
-<div style="margin-top: 15px; text-align: center;">
-<table class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; margin: auto; border-collapse: collapse; width: 110%;">
-<thead>
-<tr style="background-color: #1e3a8a; color: white;">
-<th style="padding: 8px; border: 1px solid #ccc;">Ejercicio</th>
-<th style="padding: 8px; border: 1px solid #ccc;">Hipótesis más probable a priori</th>
-<th style="padding: 8px; border: 1px solid #ccc;">P(a priori)</th>
-<th style="padding: 8px; border: 1px solid #ccc;">Hipótesis más probable a posteriori</th>
-<th style="padding: 8px; border: 1px solid #ccc;">P(a posteriori)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #eff6ff;">
-<td style="padding: 10px; border: 1px solid #ccc;">Mora (Ej. 1)</td>
-<td style="padding: 7px; border: 1px solid #ccc;">Planta sana</td>
-<td style="padding: 7px; border: 1px solid #ccc;">85%</td>
-<td style="padding: 7px; border: 1px solid #ccc;">Planta infectada</td>
-<td style="padding: 7px; border: 1px solid #ccc; font-weight: bold; color: #dc2626;">66%</td>
-</tr>
-<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;">
-<td style="padding: 10px; border: 1px solid #ccc;">Trigo (Ej. 2)</td>
-<td style="padding: 7px; border: 1px solid #ccc;">$V_1$ ICA Chía</td>
-<td style="padding: 7px; border: 1px solid #ccc;">40%</td>
-<td style="padding: 7px; border: 1px solid #ccc;">$V_2$ Yema de Huevo</td>
-<td style="padding: 7px; border: 1px solid #ccc; font-weight: bold; color: #dc2626;">51.2%</td>
-</tr>
-
-</tbody>
-</table>
-</div>
-
-<p class="fragment fade-up" data-fragment-index="5" style="font-size: 34px; text-align: center; color: #4b5563; margin-top: 15px;">
-En ambos casos, la evidencia observada <strong>cambió el orden de probabilidades</strong> respecto a la situación inicial.
-</p>
-
-## Tabla Resumen de Ejercicios
-
-<div style="margin-top: 15px; text-align: center;">
-<table class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; margin: auto; border-collapse: collapse; width: 100%;">
-<thead>
-<tr style="background-color: #059669; color: white;">
-<th style="padding: 7px; border: 1px solid #ccc;">Ejercicio</th>
-<th style="padding: 7px; border: 1px solid #ccc;">Cultivo</th>
-<th style="padding: 7px; border: 1px solid #ccc;">Tipo de problema</th>
-<th style="padding: 7px; border: 1px solid #ccc;"># Hipótesis</th>
-<th style="padding: 7px; border: 1px solid #ccc;">VPP / P(más probable)</th>
-<th style="padding: 7px; border: 1px solid #ccc;">Clima</th>
-</tr>
-</thead>
-<tbody>
-<tr class="fragment fade-up" data-fragment-index="2" style="background-color: #f0fdf4;"><td style="padding: 6px; border: 1px solid #ccc;">Café — Roya</td><td style="padding: 6px; border: 1px solid #ccc;">Café</td><td style="padding: 6px; border: 1px solid #ccc;">Binario (diagnóstico)</td><td style="padding: 6px; border: 1px solid #ccc;">2</td><td style="padding: 6px; border: 1px solid #ccc;">60%</td><td style="padding: 6px; border: 1px solid #ccc;">Cálido</td></tr>
-<tr class="fragment fade-up" data-fragment-index="3" style="background-color: white;"><td style="padding: 6px; border: 1px solid #ccc;">Maíz — Hongo</td><td style="padding: 6px; border: 1px solid #ccc;">Maíz</td><td style="padding: 6px; border: 1px solid #ccc;">Binario (VPP/VPN)</td><td style="padding: 6px; border: 1px solid #ccc;">2</td><td style="padding: 6px; border: 1px solid #ccc;">65.3% / 94.0%</td><td style="padding: 6px; border: 1px solid #ccc;">Cálido</td></tr>
-<tr class="fragment fade-up" data-fragment-index="4" style="background-color: #f0fdf4;"><td style="padding: 6px; border: 1px solid #ccc;">Papa — Origen</td><td style="padding: 6px; border: 1px solid #ccc;">Papa</td><td style="padding: 6px; border: 1px solid #ccc;">Múltiples hipótesis</td><td style="padding: 6px; border: 1px solid #ccc;">3</td><td style="padding: 6px; border: 1px solid #ccc;">54.8% (B₁)</td><td style="padding: 6px; border: 1px solid #ccc;">Frío</td></tr>
-<tr class="fragment fade-up" data-fragment-index="5" style="background-color: white;"><td style="padding: 6px; border: 1px solid #ccc;">Mora — Botrytis</td><td style="padding: 6px; border: 1px solid #ccc;">Mora</td><td style="padding: 6px; border: 1px solid #ccc;">Binario (VPP/VPN)</td><td style="padding: 6px; border: 1px solid #ccc;">2</td><td style="padding: 6px; border: 1px solid #ccc;">66% / 97.8%</td><td style="padding: 6px; border: 1px solid #ccc;">Frío</td></tr>
-<tr class="fragment fade-up" data-fragment-index="6" style="background-color: #f0fdf4;"><td style="padding: 6px; border: 1px solid #ccc;">Trigo — Calidad</td><td style="padding: 6px; border: 1px solid #ccc;">Trigo</td><td style="padding: 6px; border: 1px solid #ccc;">Múltiples hipótesis</td><td style="padding: 6px; border: 1px solid #ccc;">3</td><td style="padding: 6px; border: 1px solid #ccc;">51.2% (V₂)</td><td style="padding: 6px; border: 1px solid #ccc;">Frío</td></tr>
-
-</tbody>
-</table>
-</div>
 
 ## Bayes vs Frecuentismo 
 <h4> Diferencias Conceptuales </h4>
@@ -1607,10 +1487,11 @@ El conocimiento previo se incorpora explícitamente a través de la distribució
 
 </div>
 
-## Resumen Visual 
-<h4>Fórmulas y Conceptos Clave</h4>
 
-<div class="twocol">
+
+## Fórmulas y conceptos clave 
+
+<div class="twocol" style="margin-top:50px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 6px solid #a78bfa;">
 <p style="font-size: 30px; font-weight: bold; color: #a78bfa;">Teorema de Bayes</p>
@@ -1618,9 +1499,9 @@ El conocimiento previo se incorpora explícitamente a través de la distribució
 $$P(B_i|A) = \frac{P(A|B_i)P(B_i)}{\sum_j P(A|B_j)P(B_j)}$$
 </p>
 <ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">$P(B_i)$ —> a priori</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">$P(A|B_i)$ —>verosimilitud</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">$P(B_i|A)$ —> a posteriori</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px;">$P(B_i)\rightarrow$  a priori</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px;">$P(A|B_i)\rightarrow$ verosimilitud</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;">$P(B_i|A)\rightarrow$  a posteriori</li>
 </ul>
 </div>
 
@@ -1638,8 +1519,7 @@ $$\text{VPN} = \frac{\text{Espec} \times P(D^c)}{\text{Espec} \times P(D^c) + (1
 
 </div>
 
-## El Ciclo Bayesiano 
-<h4>Esquema General</h4>
+## Esquema General
 
 <div style="margin-top: 20px; text-align: center;" class="fragment fade-up" data-fragment-index="1">
 <p style="font-size: 30px; font-weight: bold; color: #1e3a8a;">Ciclo de aprendizaje bayesiano</p>
@@ -1689,24 +1569,37 @@ En cada caso, el Teorema de Bayes sigue siendo el <strong>puente entre los datos
 </ul>
 
 
-## Reglas de conteo: motivación
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Reglas de conteo</p>
+<p style="font-size: 32px; color: #6b7280; margin-top: 20px;">Permutaciones, Combinaciones y sus aplicaciones</p>
+</div>
+
+
+## Motivación: reglas de conteo
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-title">¿Por qué contar?</div>
-  <div class="block-body">
+<div class="block-body">
 <p style="font-size: 30px;">
 Para aplicar la probabilidad clásica $P(A) = \frac{|A|}{|\Omega|}$, necesitamos <strong>contar</strong> el número de resultados posibles. Las reglas de conteo son herramientas sistemáticas para hacer esto sin listar cada elemento.
 </p>
   </div>
 </div>
 
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 34px; text-align: center;">
-Tres herramientas fundamentales: <strong>principio multiplicativo</strong>, <strong>permutaciones</strong> y <strong>combinaciones</strong>.
-</div>
+<p class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 32px;">
+Tres herramientas fundamentales:
+</p>
+<ul style="padding-left:16px; font-size: 32px;"> 
+<li class="fragment fade-in" data-fragment-index="4">principio multiplicativo.</li>
+<li class="fragment fade-in" data-fragment-index="5">permutaciones.</li>
+<li class="fragment fade-in" data-fragment-index="6">combinaciones.</li>
+</ul>
+
 
 ## Principio fundamental del conteo
 
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-theorem fragment fade-up" data-fragment-index="1" style="margin-top:50px">
   <div class="block-title">Regla del producto</div>
   <div class="block-body">
 <p style="font-size: 34px;">
@@ -1716,44 +1609,37 @@ $$N = n_1 \times n_2 \times \cdots \times n_k$$
   </div>
 </div>
 
-## Ejemplo: variedad × riego × suelo
+## Ejemplo 6: variedad × riego × suelo
 
-<div class="twocol">
+<div class="twocol" style="margin-top: 50px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
+<p style="font-size: 30px;">Un agricultor de maíz debe elegir entre:</p>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Un agricultor de maíz (clima cálido) debe elegir:
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;list-style-type: none;">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px;list-style-type: none;">
 <strong>3 variedades</strong>: V1, V2, V3
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px;list-style-type: none;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px;list-style-type: none;">
 <strong>2 sistemas de riego</strong>: goteo, aspersión
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;list-style-type: none;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px;list-style-type: none;">
 <strong>4 tipos de suelo</strong>: arcilloso, arenoso, franco, limoso
 </li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px;list-style-type: none;">
-¿Cuántas combinaciones de tratamiento posibles hay?
-</li>
 </ul>
+<p class="fragment fade-up" data-fragment-index="7" style="font-size: 30px;">¿Cuántas combinaciones de tratamiento posibles hay?</p>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8">
 <h4 class="fragment fade-in" data-fragment-index="9">Solución</h4>
 <ul>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 28px;list-style-type: none;">
+<li class="fragment fade-in" data-fragment-index="10" style="font-size: 30px;list-style-type: none;">
 $n_1 = 3$, $n_2 = 2$, $n_3 = 4$
 </li>
-<li class="fragment fade-in" data-fragment-index="11" style="font-size: 28px;list-style-type: none;">
+<li class="fragment fade-in" data-fragment-index="11" style="font-size: 30px;list-style-type: none;">
 $$N = 3 \times 2 \times 4 = 24 \text{ combinaciones}$$
 </li>
-<li class="fragment fade-in" data-fragment-index="12" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Cada uno de los 24 tratamientos es un resultado elemental del espacio muestral.
-</li>
 </ul>
+<p class="fragment fade-up" data-fragment-index="12" style="font-size: 30px;">Cada uno de los 24 tratamientos es un resultado elemental del espacio muestral.</p>
 </div>
 
 </div>
@@ -1793,12 +1679,12 @@ Los árboles son útiles para visualizar; el principio multiplicativo es más ef
 
 </div>
 
-## Permutaciones: definición
+## Permutaciones:
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición</div>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top: 40px;">
+  <div class="block-title" style="font-size: 32px;">Definición</div>
   <div class="block-body">
-<p style="font-size: 34px;">
+<p style="font-size: 32px;">
 Una <strong>permutación</strong> es un arreglo <strong>ordenado</strong> de objetos. El <strong>orden importa</strong>: dos arreglos con los mismos elementos en distinto orden son permutaciones diferentes.
 </p>
   </div>
@@ -1813,17 +1699,12 @@ $$P_n = n! = n \times (n-1) \times \cdots \times 2 \times 1$$
 </div>
 </div>
 
-## Ejemplo: ordenar variedades de arroz
+## Ejemplo 7: ordenar variedades de arroz
 
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type: none;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 50px;">
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type: none;">
 Un investigador tiene 4 variedades de arroz: IR8, FEDEARROZ, ORYZICA, COLOMBIA. Desea ordenarlas en una hilera de ensayo. ¿De cuántas formas puede hacerlo?
-</li>
-</ul>
+</p>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
@@ -1841,14 +1722,12 @@ Cada orden produce una configuración experimental diferente.
 </ul>
 </div>
 
-</div>
+## Permutaciones de $r$ elementos tomados de $n$
 
-## Permutaciones de $r$ de $n$ elementos
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Fórmula $P(n, r)$</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="1" style="margin-top: 50px;">
+  <div class="block-title" style="font-size: 32px;">Definición</div>
   <div class="block-body">
-<p style="font-size: 34px;">
+<p style="font-size: 32px;">
 $$P(n, r) = \frac{n!}{(n-r)!}$$
 </p>
 <p style="font-size: 30px;">
@@ -1857,17 +1736,12 @@ Número de formas de seleccionar y <strong>ordenar</strong> $r$ objetos de un co
   </div>
 </div>
 
-## Ejemplo $P(n,r)$: asignación de parcelas
+## Ejemplo 8: asignación de parcelas
 
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type: none;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 50px;">
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;list-style-type: none;">
 Hay 8 parcelas disponibles y se deben asignar 3 tratamientos distintos (T1, T2, T3), uno a cada parcela, en un orden específico. ¿De cuántas maneras se pueden ordenar?
-</li>
-</ul>
+</p>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
@@ -1879,37 +1753,30 @@ $n = 8$, $r = 3$
 <li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;list-style-type: none;">
 $$P(8,3) = \frac{8!}{(8-3)!} = \frac{8!}{5!} = 8 \times 7 \times 6 = 336$$
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; text-align: justify;list-style-type: none;">
-Hay 336 formas distintas de asignar los 3 tratamientos ordenadamente.
-</li>
 </ul>
-</div>
-
+<p class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; text-align: justify;list-style-type: none;">
+Hay 336 formas distintas de asignar los 3 tratamientos ordenadamente.
+</p>
 </div>
 
 ## Permutaciones con repetición
 
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Fórmula</div>
-  <div class="block-body">
-<p style="font-size: 34px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="1" style="margin-top: 50px;">
+<div class="block-title" style="font-size: 32px;">Fórmula</div>
+<div class="block-body">
+<p style="font-size: 32px;">
 Si se tienen $n$ objetos donde hay $n_1$ iguales del tipo 1, $n_2$ del tipo 2, ..., $n_k$ del tipo $k$, con $n_1 + n_2 + \cdots + n_k = n$:
 $$P = \frac{n!}{n_1!\, n_2!\, \cdots\, n_k!}$$
 </p>
-  </div>
+</div>
 </div>
 
-## Ejemplo: organizar plantas en hilera
-
-<div class="twocol">
+## Ejemplo 9: organizar plantas en hilera
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type: none;">
+<p class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify;list-style-type: none;">
 Se tienen 7 plantas: 3 Sanas (S), 2 con plaga (P) y 2 con deficiencia (D). Si se organizan en una hilera. ¿Cuántos arreglos distintos existen?
-</li>
-</ul>
+</p>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
@@ -1921,36 +1788,34 @@ $n = 7$, $n_1 = 3$ (S), $n_2 = 2$ (P), $n_3 = 2$ (D)
 <li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;list-style-type: none;">
 $$P = \frac{7!}{3!\,2!\,2!} = \frac{5040}{6 \times 2 \times 2} = \frac{5040}{24} = 210$$
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; text-align: justify;list-style-type: none;">
-Existen 210 arreglos distintos en la hilera.
-</li>
 </ul>
+<p class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; text-align: justify;list-style-type: none;">
+Existen 210 arreglos distintos en la hilera.
+</p>
 </div>
 
-</div>
 
-## Combinaciones: definición
+## Combinaciones:
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición</div>
-  <div class="block-body">
-<p style="font-size: 34px;">
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top: 50px;">
+<div class="block-title" style="font-size: 32px;">Definición</div>
+<div class="block-body">
+<p style="font-size: 32px;">
 Una <strong>combinación</strong> es una selección de $r$ objetos de un conjunto de $n$, donde el <strong>orden NO importa</strong>. Dos selecciones con los mismos elementos en distinto orden son la misma combinación.
 $$\binom{n}{r} = \frac{n!}{r!\,(n-r)!}$$
 </p>
-  </div>
+</div>
 </div>
 
-## Ejemplo: Variedades de Maíz.
-<div class="twocol">
+## Ejemplo 10: variedades de maíz.
+
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type: none;">
+
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;list-style-type: none;">
 Un ingeniero agrónomo tiene disponibles 10 variedades de maíz para un ensayo experimental y necesita escoger 3 variedades para sembrarlas en una parcela piloto. ¿Cuántas combinaciones de variedades puede elegir?
-</li>
-</ul>
+</p>
+
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
@@ -1968,18 +1833,16 @@ Reemplazando:
 $\frac{10!}{3!(10-3)!} = \frac{10!}{3! \cdot 7!}
 = \frac{10 \times 9 \times 8}{3 \times 2 \times 1} = 120$
 </li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 30px; text-align: justify;list-style-type: none;">
-El agrónomo puede formar 120 grupos diferentes de 3 variedades de maíz.
-</li>
 </ul>
-</div>
-
+<p class="fragment fade-in" data-fragment-index="9" style="font-size: 30px; text-align: justify;list-style-type: none;">
+El agrónomo puede formar 120 grupos diferentes de 3 variedades de maíz.
+</p>
 </div>
 
 
 ## Permutaciones vs Combinaciones
 
-<div class="twocol">
+<div class="twocol" style="margin-top: 50px;">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
 <h4 class="fragment fade-in" data-fragment-index="2" style="color: #a78bfa;">Permutaciones (orden importa)</h4>
@@ -2016,38 +1879,42 @@ Relación: $P(n,r) = \binom{n}{r} \times r!$
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;list-style-type: none;text-align: justify;">
-<strong>Propiedad 1: </strong>
-Hay una sola forma de escoger 0 elementos de un conjunto.  
-También hay una sola forma de escoger todos los elementos.  
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;list-style-type: none;text-align: justify;">
+<strong>Propiedad 1: </strong> Hay una sola forma de escoger 0 elementos de un conjunto. También hay una sola forma de escoger todos los elementos.</p><br>
+
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 25px;list-style-type: none;text-align: justify;">
 $\displaystyle\binom{n}{0} = 1$ y $\displaystyle\binom{n}{n} = 1$
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;list-style-type: none; text-align: justify;">
+</p><br>
+
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;list-style-type: none; text-align: justify;">
 <strong>Propiedad 2: </strong>  
 Escoger $r$ elementos es equivalente a escoger los $n-r$ elementos que se quedan fuera.
-$\displaystyle\binom{n}{r} = \binom{n}{n-r}$
-</li>
+</p><br>
 
-</ul>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;list-style-type: none; text-align: justify;">
+
+$\displaystyle\binom{n}{r} = \binom{n}{n-r}$
+</p>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
 
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px;list-style-type: none;text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;list-style-type: none;text-align: justify;">
 <strong>Propiedad 3: </strong>  
-Escoger un solo elemento de un conjunto de n elementos puede hacerse de n maneras.
-$\displaystyle\binom{n}{1} = n$
+Escoger un solo elemento de un conjunto de n elementos puede hacerse de n maneras. <br>
+
+$$\displaystyle\binom{n}{1} = n$$
+
 </li>
 
-<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 26px;">Identidad de Pascal</h4>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px; text-align: justify;list-style-type: none;">
+<h4 class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">Identidad de Pascal</h4>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px; text-align: justify;list-style-type: none;">
 El número de formas de escoger $r$ elementos de un conjunto de $n$ elementos es igual a la suma de:
 </li>
-<p class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: center;">
+<p class="fragment fade-in" data-fragment-index="9" style="font-size: 28px; text-align: center;">
 $$\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}$$
 </p>
-<p class="fragment fade-in" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
+<p class="fragment fade-in" data-fragment-index="10" style="font-size: 28px; text-align: justify;">
 Sirve para calcular combinaciones sin usar factoriales grandes.
 </p>
 </div>
@@ -2057,45 +1924,39 @@ Sirve para calcular combinaciones sin usar factoriales grandes.
 
 ## Combinaciones aplicadas a probabilidad clásica
 
-<div class="twocol">
+<div class="twocol" style="margin-top:50px">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Conexión</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
-Cuando los elementos se seleccionan sin orden, usamos combinaciones en el numerador y denominador de $P(A) = \frac{|A|}{|\Omega|}$.
-</li>
-</ul>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+Cuando los elementos se seleccionan sin orden, usamos combinaciones en el numerador y denominador de: $$P(A) = \frac{|A|}{|\Omega|}$$.
+</p>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">Ejemplo</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 30px; text-align: justify;list-style-type: none;">
-De un lote de 10 plantas de café (7 sanas, 3 con plaga) al seleccionar 3 al azar. ¿Cuál es la probabilidad de que las 3 sean sanas?
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;list-style-type: none;text-align: justify;">
+<p class="fragment fade-in" data-fragment-index="6" style="font-size: 30px; text-align: justify;list-style-type: none;">
+**Ejemplo**: De un lote de 10 plantas de café (7 sanas, 3 con plaga) al seleccionar 3 al azar. ¿Cuál es la probabilidad de que las 3 sean sanas?
+</p>
+<p class="fragment fade-in" data-fragment-index="7" style="font-size: 30px;list-style-type: none;text-align: justify;">
 $$P(\text{3 sanas}) = \frac{\binom{7}{3}}{\binom{10}{3}} = \frac{35}{120} \approx 0.292$$
-</li>
-</ul>
+</p>
 </div>
 
 </div>
 
-## Ejercicio: muestrear plantas de arroz
-
-<div class="twocol">
+## Ejemplo 11: muestrear plantas de arroz
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;list-style-type: none;">
-Un lote de 20 plantas de arroz contiene 14 sanas y 6 con enfermedad. Se seleccionan 5 plantas al azar para inspección.
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type: none;">
+Un lote de 20 plantas de arroz contiene 14 sanas y 6 con enfermedad. Se seleccionan 5 plantas al azar para inspección. Calcule:
+</p>
+
+<ol style="padding-left:50px">
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+número total de selecciones posibles,
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;list-style-type: none;">
-Calcule: a) número total de selecciones posibles, b) $P(\text{exactamente 2 enfermas})$.
-</li>
-</ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">$P(\text{exactamente 2 enfermas})$.</li>
+</ol>
+
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
@@ -2104,7 +1965,7 @@ Calcule: a) número total de selecciones posibles, b) $P(\text{exactamente 2 enf
 <li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;list-style-type: none;text-align: justify;">
 a) $|\Omega| = \binom{20}{5} = 15504$
 </li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px;list-style-type: none;text-align: justify;">
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;list-style-type: none;text-align: justify;">
 b) Seleccionar 2 enfermas de 6 y 3 sanas de 14:
 $$|A| = \binom{6}{2} \times \binom{14}{3} = 15 \times 364 = 5460$$
 </li>
@@ -2112,8 +1973,6 @@ $$|A| = \binom{6}{2} \times \binom{14}{3} = 15 \times 364 = 5460$$
 $$P(A) = \frac{5460}{15504} \approx 0.352$$
 </li>
 </ul>
-</div>
-
 </div>
 
 ## Tabla comparativa: tres enfoques de probabilidad
@@ -2147,31 +2006,31 @@ $$P(A) = \frac{5460}{15504} \approx 0.352$$
 </table>
 </div>
 
-## Resumen: propiedades de probabilidad y reglas de conteo
+## Resumen:
 <div class=twocol>
 <ul>
-<h4 style="color: blue; font-size: 28px; margin-bottom: 8px; padding: 8px;">Propiedades de la probabilidad</h4>
+<h4 style="color: blue; font-size: 32px; margin-bottom: 8px; padding: 8px;">Teorema de Bayes</h4>
 <li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-$0 \leq P(A) \leq 1$, $P(\Omega)=1$, $P(\emptyset)=0$
+<strong>Prob. condicional:</strong> $P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}$
 </li>
 <li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-$P(A^c) = 1 - P(A)$
+<strong>Prob. total:</strong> $P(B) = \sum_{i} P(B \mid A_i)\,P(A_i)$
 </li>
 <li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-$P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+<strong>Fórmula:</strong> $P(A_i \mid B) = \dfrac{P(B \mid A_i)\,P(A_i)}{\sum_j P(B \mid A_j)\,P(A_j)}$
 </li>
 <li class="fragment fade-up" style="background: #F28E2B; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-Si $A \subset B$: $P(A) \leq P(B)$
+<strong>Prior</strong> $P(A_i)$ → <strong>Posterior</strong> $P(A_i \mid B)$
 </li>
 </ul>
 
 <ul>
-<h4 style="color: #223392; font-size: 26px; margin-bottom: 8px; padding: 8px;">Reglas de conteo</h4>
+<h4 style="color: #223392; font-size: 32px; margin-bottom: 8px; padding: 8px;">Reglas de conteo</h4>
 <li class="fragment fade-up" style="background: #a78bfa; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
 <strong>Principio multiplicativo:</strong> $N = n_1 \times n_2 \times \cdots \times n_k$
 </li>
 <li class="fragment fade-up" style="background: #3b82f6; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<strong>Permutaciones (todo):</strong> $P_n = n!$ el orden importa
+<strong>Permutaciones (todo):</strong> $P_n = n!$
 </li>
 <li class="fragment fade-up" style="background: #59A14F; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
 <strong>Permutaciones ($r$ de $n$):</strong> $P(n,r) = \frac{n!}{(n-r)!}$
@@ -2180,7 +2039,7 @@ Si $A \subset B$: $P(A) \leq P(B)$
 <strong>Permutaciones con repetición:</strong> $\frac{n!}{n_1!\cdots n_k!}$
 </li>
 <li class="fragment fade-up" style="background: #B07AA1; color: white; font-size: 26px; margin-bottom: 8px; padding: 8px;">
-<strong>Combinaciones:</strong> $\binom{n}{r} = \frac{n!}{r!(n-r)!}$ el orden no importa
+<strong>Combinaciones:</strong> $\binom{n}{r} = \frac{n!}{r!(n-r)!}$
 </li>
 </ul>
 </div>
@@ -2365,65 +2224,7 @@ Selección de individuos para cruzamiento: combinaciones relevantes.
 
 </div>
 
-## Conexión con la siguiente clase
 
-<div style="text-align: center; margin-top: 50px;">
-
-<div class="fragment fade-in" data-fragment-index="1" style="font-size: 32px; font-weight: bold; color: #a78bfa;">
-Clase 9: 
-</div>
-
-<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 30px; font-size: 28px; text-align: justify; max-width: 900px; margin-left: auto; margin-right: auto;">
-
-</div>
-
-<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 30px; font-size: 26px;">
-
-</div>
-
-</div>
-
-## Resumen general de la clase
-
-<div style="margin-top: 10px;">
-<table class="fragment fade-in" data-fragment-index="1" style="font-size: 30px; width: 105%; border-collapse: collapse;">
-<tr style="background:#59A14F; color:white;">
-<th style="padding:8px;">Tema</th>
-<th style="padding:8px;">Concepto clave</th>
-<th style="padding:8px;">Fórmula</th>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">Enfoque clásico</td>
-<td style="padding:8px;">Resultados equiprobables</td>
-<td style="padding:8px;">$P(A)=|A|/|\Omega|$</td>
-</tr>
-<tr>
-<td style="padding:8px;">Axiomas</td>
-<td style="padding:8px;">No negatividad, normalización, aditividad</td>
-<td style="padding:8px;">$P(\Omega)=1$</td>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">Complemento</td>
-<td style="padding:8px;">Lo que no está en $A$</td>
-<td style="padding:8px;">$P(A^c)=1-P(A)$</td>
-</tr>
-<tr>
-<td style="padding:8px;">Adición</td>
-<td style="padding:8px;">Al menos uno de dos eventos</td>
-<td style="padding:8px;">$P(A\cup B)=P(A)+P(B)-P(A\cap B)$</td>
-</tr>
-<tr style="background:#f3f4f6;">
-<td style="padding:8px;">Permutaciones</td>
-<td style="padding:8px;">Orden importa</td>
-<td style="padding:8px;">$P(n,r)=n!/(n-r)!$</td>
-</tr>
-<tr>
-<td style="padding:8px;">Combinaciones</td>
-<td style="padding:8px;">Orden no importa</td>
-<td style="padding:8px;">$\binom{n}{r}=n!/[r!(n-r)!]$</td>
-</tr>
-</table>
-</div>
 
 ## Bibliografía sugerida
 
@@ -2439,404 +2240,4 @@ Devore, J. L. (2016). <em>Probabilidad y Estadística para Ingeniería y Ciencia
 Ross, S. M. (2014). <em>Introducción a la Probabilidad y la Estadística para Ingenieros y Científicos</em>, 4ª ed. Academic Press. Capítulos 2 y 3.
 </li>
 </ul>
-</div>
-
-## Ejercicios para escoger en clase {.center .middle}
-
-
-## Ejercicio Integrador 3: Dos Invernaderos
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-<p>
-<strong>Enunciado:</strong> Una empresa productora de flores tiene dos invernaderos: $I_1$ (cálido, 60% de producción) e $I_2$ (frío, 40% de producción). La probabilidad de que una planta presente deficiencia nutricional es 7% en $I_1$ y 15% en $I_2$. Se selecciona aleatoriamente una planta con deficiencia nutricional. ¿De qué invernadero proviene con mayor probabilidad?
-</p>
-  </div>
-</div>
-
-<ul style="margin-top: 15px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
-Sea $D$ = "deficiencia nutricional", $I_1$ e $I_2$ son las hipótesis.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-$P(D) = 0{,}07 \times 0{,}60 + 0{,}15 \times 0{,}40 = 0{,}0420 + 0{,}0600 = 0{,}1020$
-</li>
-</ul>
-
-## Solución Ejercicio 3 — Invernaderos
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
-$$P(I_1 \mid D) = \frac{0{,}07 \times 0{,}60}{0{,}1020} = \frac{0{,}0420}{0{,}1020} \approx 0{,}4118$$
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-$$P(I_2 \mid D) = \frac{0{,}15 \times 0{,}40}{0{,}1020} = \frac{0{,}0600}{0{,}1020} \approx 0{,}5882$$
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify; color: #059669;">
-<strong>Verificación:</strong> $0{,}4118 + 0{,}5882 = 1{,}0000$ ✓
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify; color: #1e40af;">
-<strong>Conclusión:</strong> A pesar de que el invernadero cálido ($I_1$) produce el 60% de las plantas, una planta con deficiencia nutricional tiene mayor probabilidad (58,8%) de provenir del invernadero frío ($I_2$), que tiene mayor tasa de deficiencia.
-</li>
-</ul>
-
-## Ejemplo combinaciones: análisis foliar
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-De un lote de 10 plantas de café (clima cálido), se seleccionan 3 para análisis foliar. ¿De cuántas formas puede hacerse la selección?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
-$n = 10$, $r = 3$
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-$$\binom{10}{3} = \frac{10!}{3!\,7!} = \frac{10 \times 9 \times 8}{3 \times 2 \times 1} = 120$$
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-Hay 120 grupos posibles de 3 plantas.
-</li>
-</ul>
-</div>
-
-</div>
-
-
-
-## Ejemplo: parcelas en clima cálido
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Un experimento dispone de 12 parcelas en zona de clima cálido. Se deben elegir 4 para aplicar un nuevo fertilizante. ¿Cuántas selecciones posibles existen?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 26px;">
-$n = 12$, $r = 4$
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 27px;">
-$$\binom{12}{4} = \frac{12!}{4!\,8!} = \frac{12 \times 11 \times 10 \times 9}{4!} = 495$$
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
-Existen 495 maneras distintas de seleccionar las 4 parcelas.
-</li>
-</ul>
-</div>
-
-</div>
-
-
-## Ejercicio integrador 1: lote de maíz
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-Un lote de 15 plantas de maíz (clima cálido) tiene: 8 sanas, 4 con plaga, 3 con deficiencia nutricional. Se seleccionan 3 al azar.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
-Calcule: $P(\text{al menos 2 sanas})$.
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-$|\Omega| = \binom{15}{3} = 455$
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
-$P(\text{exactamente 2 sanas}) = \frac{\binom{8}{2}\binom{7}{1}}{455} = \frac{28 \times 7}{455} = \frac{196}{455}$
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
-$P(\text{exactamente 3 sanas}) = \frac{\binom{8}{3}}{455} = \frac{56}{455}$
-</li>
-<li class="fragment fade-in" data-fragment-index="10" style="font-size: 24px;">
-$P(\text{al menos 2 sanas}) = \frac{196 + 56}{455} = \frac{252}{455} \approx 0.554$
-</li>
-</ul>
-</div>
-
-</div>
-
-## Ejercicio integrador 2: zonas climáticas
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-Un investigador dispone de 6 parcelas en clima frío (papa, mora) y 5 en clima cálido (mango, maíz). Selecciona 4 parcelas al azar.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
-¿Cuál es la probabilidad de que exactamente 2 sean de clima frío?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-$|\Omega| = \binom{11}{4} = 330$
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
-$|A| = \binom{6}{2} \times \binom{5}{2} = 15 \times 10 = 150$
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
-$$P(A) = \frac{150}{330} \approx 0.455$$
-</li>
-</ul>
-</div>
-
-</div>
-
-
-
-
-## Ejercicio: secuencia de tratamientos en trigo
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-En un ensayo de trigo (clima frío), hay 6 tratamientos de fertilización. Se van a aplicar 3 de ellos en secuencia (el orden de aplicación importa).
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-¿Cuántas secuencias distintas son posibles?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-El orden importa → usar permutaciones.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-$$P(6, 3) = \frac{6!}{3!} = 6 \times 5 \times 4 = 120$$
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Hay 120 secuencias distintas de 3 tratamientos elegidos de 6.
-</li>
-</ul>
-</div>
-
-</div>
-
-## Ejercicio: clasificación de frutos de mora
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Se tienen 9 frutos de mora (clima frío): 4 maduros (M) y 5 verdes (V). Se organizan en fila para inspección.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px;">
-¿Cuántos arreglos distintos existen en la fila?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-Permutaciones con repetición: $n=9$, $n_1=4$ (M), $n_2=5$ (V).
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-$$P = \frac{9!}{4!\,5!} = \binom{9}{4} = 126$$
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
-Existen 126 arreglos distintos. Nota: $\binom{9}{4} = \binom{9}{5}$.
-</li>
-</ul>
-</div>
-
-</div>
-
-
-
-
-## Ejemplo: probabilidad clásica con combinaciones 
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
-Un lote de 12 semillas de papa (clima frío) tiene 9 de alta pureza y 3 contaminadas. Se toman 4 al azar. ¿Cuál es la probabilidad de que ninguna sea contaminada?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px;">
-$|\Omega| = \binom{12}{4} = 495$
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-$|A| = \binom{9}{4} = 126$ (elegir 4 de las 9 puras)
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 27px;">
-$$P(A) = \frac{126}{495} \approx 0.255$$
-</li>
-</ul>
-</div>
-
-</div>
-
-## Verificación: suma de probabilidades de una partición
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Principio</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Si $A_1, A_2, \ldots, A_k$ forman una <strong>partición</strong> de $\Omega$ (disjuntos y su unión es $\Omega$), entonces:
-$$\sum_{i=1}^{k} P(A_i) = 1$$
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">Ejemplo: calidad de cosecha de arroz</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 25px;">
-Categorías: Extra (E), Estándar (S), Inferior (I).
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 25px;">
-$P(E)=0.45$, $P(S)=0.40$, $P(I)=0.15$
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 25px;">
-$P(E)+P(S)+P(I) = 0.45+0.40+0.15 = 1$ ✓
-</li>
-</ul>
-</div>
-
-</div>
-
-## Ejercicio integrador 5: ensayo con variedades de maíz
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-En un ensayo con 7 variedades de maíz (clima cálido), se eligen al azar 3 para la fase de campo. ¿De cuántas formas se puede hacer? Si se sabe que la variedad V1 es la más prometedora, ¿cuál es la probabilidad de que quede incluida?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 24px;">
-Total: $\binom{7}{3} = 35$ selecciones.
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-Con V1 fija: $\binom{6}{2} = 15$ selecciones favorables.
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 26px;">
-$$P(\text{V1 incluida}) = \frac{15}{35} = \frac{3}{7} \approx 0.429$$
-</li>
-</ul>
-</div>
-
-</div>
-
-## Ejercicio integrador 3: diseño experimental en papa
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-Un investigador de papa (clima frío) dispone de 4 fungicidas (F1, F2, F3, F4) y 3 niveles de fertilización (N1, N2, N3). Diseña un experimento eligiendo 2 fungicidas y 2 niveles.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">
-¿Cuántos diseños distintos puede armar?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="6">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px;">
-Elegir 2 fungicidas de 4: $\binom{4}{2} = 6$
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px;">
-Elegir 2 niveles de 3: $\binom{3}{2} = 3$
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 24px;">
-Por el principio multiplicativo:
-$$6 \times 3 = 18 \text{ diseños distintos}$$
-</li>
-</ul>
-</div>
-
-</div>
-
-## Ejercicio integrador 4: inspección de calidad en mango
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="2">Enunciado</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
-Un lote de exportación tiene 18 mangos: 13 de primera calidad y 5 de segunda. El inspector elige 4 al azar. ¿Cuál es la probabilidad de que al menos 3 sean de primera calidad?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="5">Solución</h4>
-<ul>
-<li class="fragment fade-in" data-fragment-index="6" style="font-size: 23px;">
-$|\Omega| = \binom{18}{4} = 3060$
-</li>
-<li class="fragment fade-in" data-fragment-index="7" style="font-size: 23px;">
-$P(\text{exactamente 3}) = \frac{\binom{13}{3}\binom{5}{1}}{3060} = \frac{286 \times 5}{3060} = \frac{1430}{3060}$
-</li>
-<li class="fragment fade-in" data-fragment-index="8" style="font-size: 23px;">
-$P(\text{exactamente 4}) = \frac{\binom{13}{4}\binom{5}{0}}{3060} = \frac{715}{3060}$
-</li>
-<li class="fragment fade-in" data-fragment-index="9" style="font-size: 23px;">
-$P(\text{al menos 3}) = \frac{1430+715}{3060} = \frac{2145}{3060} \approx 0.701$
-</li>
-</ul>
-</div>
-
 </div>
