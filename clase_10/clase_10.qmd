@@ -40,7 +40,7 @@ execute:
   echo: true
 ---
 
-## Clase 11 {.center .middle}
+## Clase 10 {.center .middle}
 
 ## Contenido
 
@@ -75,11 +75,9 @@ execute:
 
 ## Repaso: dos tipos de variables
 
-<div class="twocol">
-
 <div class="block-definition fragment fade-up" data-fragment-index="1">
   <div class="block-title">Variable Discreta</div>
-  <div class="block-body">
+  <div class="block-body" style="font-size: 30px; text-align: justify;">
 Soporte contable $\{x_1, x_2, \ldots\}$. Se describe con la <strong>función de masa de probabilidad</strong> (FMP):
 $$p(x) = P(X = x) \geq 0, \quad \sum_x p(x) = 1$$
   </div>
@@ -87,59 +85,96 @@ $$p(x) = P(X = x) \geq 0, \quad \sum_x p(x) = 1$$
 
 <div class="block-theorem fragment fade-up" data-fragment-index="2">
   <div class="block-title">Variable Continua</div>
-  <div class="block-body">
+  <div class="block-body" style="font-size: 30px; text-align: justify;">
 Soporte intervalar. Se describe con la <strong>función de densidad de probabilidad</strong> (FDP):
 $$f(x) \geq 0, \quad \int_{-\infty}^{\infty} f(x)\,dx = 1$$
   </div>
 </div>
 
-</div>
 
-## Función de masa de probabilidad — propiedades
+
+## Función de masa de probabilidad y sus propiedades
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Propiedades de la FMP</div>
-  <div class="block-body">
+
+<div class="block-title">Definición</div>
+
+<div class="block-body" style="font-size: 30px; text-align: justify;">
 Una función $p: \mathbb{R} \to [0,1]$ es una FMP si y solo si:
-<ol>
-<li>$p(x) \geq 0$ para todo $x$</li>
-<li>$p(x) = 0$ fuera del soporte</li>
-<li>$\displaystyle\sum_{x \in \text{soporte}} p(x) = 1$</li>
-</ol>
-  </div>
+
+
+<ul style="margin-top:10px;">
+
+<li class="fragment fade-up" data-fragment-index="2" style="list-style-type:none;">
+
+1. $p(x) \geq 0$ para todo $x$
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="list-style-type:none;">
+
+2. $p(x) = 0$ fuera del soporte
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="list-style-type:none;">
+
+3. $\displaystyle\sum_{x \in \text{soporte}} p(x) = 1$
+
+</li>
+
+</ul>
+
 </div>
 
+</div>
 <ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
 Cada valor del soporte tiene una probabilidad positiva asignada.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
 La suma de todas las probabilidades debe ser exactamente 1 (certeza total).
 </li>
 </ul>
 
-## Construcción de una FMP — ejemplo agrícola
+
+## Ejemplo 1
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo — Inspección fitosanitaria</div>
+  
   <div class="block-body">
-<p>Se inspeccionan 3 plantas de cacao en Tumaco. Cada planta tiene probabilidad $p = 0.4$ de presentar moniliasis, independientemente. Sea $X$ = número de plantas infectadas.</p>
+<p style="font-size: 30px; text-align: justify;">
+Se inspeccionan 3 plantas de cacao en Tumaco. Cada planta tiene probabilidad $p = 0.4$ de presentar moniliasis, independientemente.  
+Sea $X$ = número de plantas infectadas.</p>
   </div>
 </div>
 
 <ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-$X \sim \text{Bin}(3, 0.4)$: los valores posibles son $\{0, 1, 2, 3\}$.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;list-style-type:none;">
+Si $X \sim \text{Bin}(3, 0.4)$, verificar que  $p(x)$ cumple las propiedades de una FMP:
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-$p(0) = (0.6)^3 = 0.216$, $p(1) = 3(0.4)(0.6)^2 = 0.432$, $p(2) = 3(0.4)^2(0.6) = 0.288$, $p(3) = (0.4)^3 = 0.064$.
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type:none;">
+<strong>Solución:</strong> los valores posibles son $\{0, 1, 2, 3\}$.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-Verificación: $0.216 + 0.432 + 0.288 + 0.064 = 1$ ✓
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;list-style-type:none;">
+<strong>Cálculo de $p(x)$:</strong>
 </li>
+
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;list-style-type:none;">
+$p(0) = (0.6)^3 = 0.216$,  $p(1) = 3(0.4)(0.6)^2 = 0.432$,  
+$p(2) = 3(0.4)^2(0.6) = 0.288$,  $p(3) = (0.4)^3 = 0.064$  
+
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;list-style-type:none;">
+<strong>Verificación</strong>: $0.216 + 0.432 + 0.288 + 0.064 = 1$
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify;list-style-type:none;">
+Se cumple que:  $p(x) \geq 0$ y la suma de las probabilidades es 1, por lo tanto $p(x)$ es una FMP válida para $X$.
+</li>
+
 </ul>
 
-## Gráfica de la FMP Binomial(3, 0.4)
+## Gráfica FMP Distribución Binomial (n=3, p=0.4)
 
 ```{r}
 #| echo: false
@@ -154,21 +189,32 @@ bp <- barplot(px, names.arg = x, col = c("#bfdbfe","#3b82f6","#3b82f6","#bfdbfe"
 text(bp, px + 0.015, round(px, 3), cex = 1.2, font = 2)
 ```
 
-## Distribución Bernoulli — FMP y propiedades
+## Distribución Bernoulli FMP y propiedades
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Bernoulli</div>
+<div class="block-definition fragment fade-up"  data-fragment-index="1">
+  <div class="block-title">Definición</div>
   <div class="block-body">
+  
 $X \sim \text{Ber}(p)$:
+   
 $$p(x) = p^x(1-p)^{1-x}, \quad x \in \{0,1\}$$
-Parámetro: $p = P(X=1)$, probabilidad de éxito.
+
+
+Parámetro: $p = P(X=1)$, probabilidad de éxito.  
+$1-p = P(X=0)$, probabilidad de fracaso.  
+Es la base de la distribución Binomial.
+
+
   </div>
 </div>
 
+
+
+## Efecto de p en la distribución Bernoulli
 ```{r}
 #| echo: false
-#| fig-width: 8
-#| fig-height: 4
+#| fig-width: 15
+#| fig-height: 7
 par(mfrow = c(1,3), mar = c(4,4,2,1))
 for(p in c(0.2, 0.5, 0.8)) {
   barplot(c(1-p, p), names.arg = c("0","1"), col = c("#bfdbfe","#1a3a6b"),
@@ -177,29 +223,39 @@ for(p in c(0.2, 0.5, 0.8)) {
 }
 ```
 
-## Distribución Binomial — FMP
+## FMP de la Distribución Binomial 
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">FMP Binomial</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 $X \sim \text{Bin}(n, p)$:
-$$p(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
+$$p(X=k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
 El coeficiente $\binom{n}{k}$ cuenta el número de formas de elegir $k$ éxitos de $n$ ensayos.
   </div>
 </div>
 
-<ul style="margin-top: 10px;">
+<ul style="margin-top: 10px;line-height=1.8;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Supuestos: ensayos <strong>independientes</strong>, probabilidad de éxito <strong>constante</strong> $p$, número de ensayos <strong>fijo</strong> $n$.
+Supuestos:
 </li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;list-style-type:none;">
+1. Ensayos <strong>independientes</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;list-style-type:none;">
+2. Probabilidad de éxito <strong>constante</strong> $p$.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;list-style-type:none;">
+3. Número de ensayos <strong>fijo</strong> $n$.
+</li>
+
 </ul>
 
-## Binomial — efecto de los parámetros
+## Efecto de los parámetros en la Distribución Binomial 
 
 ```{r}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 5
+#| fig-width: 16
+#| fig-height: 6
 par(mfrow = c(2,3), mar = c(3,3,2,1))
 for(p in c(0.3, 0.5, 0.7)) {
   k <- 0:20
@@ -213,32 +269,45 @@ for(n in c(5, 20, 50)) {
 }
 ```
 
-## Distribución Poisson — FMP
+
+## FMP de la Distribución Poisson
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">FMP Poisson</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 $X \sim \text{Poi}(\lambda)$, $\lambda > 0$:
-$$p(k) = \frac{e^{-\lambda}\lambda^k}{k!}, \quad k = 0, 1, 2, \ldots$$
+$$p(X=k) = \frac{e^{-\lambda}\lambda^k}{k!}, \quad k = 0, 1, 2, \ldots$$
 $\lambda$ representa el <strong>número promedio de eventos</strong> por unidad de tiempo/espacio.
   </div>
 </div>
 
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Condiciones de validez: eventos <strong>independientes</strong>, tasa <strong>constante</strong>, dos eventos no pueden ocurrir <em>simultáneamente</em>.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; ">
+Condiciones de validez:
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Aproximación: $\text{Bin}(n,p) \approx \text{Poi}(np)$ cuando $n$ grande, $p$ pequeño.
-</li>
-</ul>
 
-## Poisson — efecto de λ
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type:none;">
+1. Eventos independientes.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;list-style-type:none;">
+2. Tasa constante.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;list-style-type:none;">
+3. Dos eventos no pueden ocurrir simultáneamente.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;list-style-type:none;">
+4. La distribucion binomial se aproxima a una Poisson cuando $n$ es grande y $p$ pequeño:  
+$\text{Bin}(n,p) \approx \text{Poi}(np)$ , donde $\lambda=np$.
+</li>
+
+## Efecto del parámetro λ en la Distribución Poisson
 
 ```{r}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 4.5
+#| fig-width: 16
+#| fig-height: 7
 par(mfrow = c(1,4), mar = c(4,3,2,1))
 for(lam in c(0.5, 2, 5, 10)) {
   k <- 0:20
@@ -248,17 +317,17 @@ for(lam in c(0.5, 2, 5, 10)) {
 }
 ```
 
-<p class="fragment fade-up" style="font-size: 26px; text-align: center;" data-fragment-index="1">
+<p class="fragment fade-up" style="font-size: 30px; text-align: center;" data-fragment-index="1">
 Para $\lambda$ grande, la Poisson se aproxima a una distribución Normal.
 </p>
 
 ## Distribución Geométrica
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Geométrica</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 $X \sim \text{Geo}(p)$: número de ensayos hasta el <strong>primer éxito</strong>:
-$$p(k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots$$
+$$p(X=k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots$$
   </div>
 </div>
 
@@ -274,10 +343,10 @@ También tiene propiedad sin memoria: el historial de fracasos no afecta la prob
 ## Distribución Hipergeométrica
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Hipergeométrica</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 Población de $N$ elementos: $M$ "éxitos" y $N-M$ "fracasos". Se extrae una muestra sin reemplazo de tamaño $n$. Entonces $X$ = número de éxitos tiene FMP:
-$$p(k) = \frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}, \quad k = 0,\ldots,\min(n,M)$$
+$$p(X=k) = \frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}, \quad k = 0,\ldots,\min(n,M)$$
   </div>
 </div>
 
@@ -287,32 +356,53 @@ Diferencia clave con Binomial: el muestreo es <strong>sin reemplazo</strong>, po
 </li>
 </ul>
 
-## Función de densidad de probabilidad — propiedades
-
+## Propiedades de la Función de Densidad de Probabilidad (FDP)
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Propiedades de la FDP</div>
-  <div class="block-body">
-Una función $f: \mathbb{R} \to \mathbb{R}$ es una FDP si y solo si:
-<ol>
-<li>$f(x) \geq 0$ para todo $x$</li>
-<li>$\displaystyle\int_{-\infty}^{\infty} f(x)\,dx = 1$</li>
-</ol>
-Para cualquier intervalo $(a,b)$: $P(a \leq X \leq b) = \int_a^b f(x)\,dx$
-  </div>
-</div>
 
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-A diferencia de la FMP, $f(x)$ puede tomar valores mayores que 1 (no es una probabilidad directa).
+<div class="block-title">Definición</div>
+
+<div class="block-body" style="font-size: 30px; text-align: justify;">
+Una función $f: \mathbb{R} \to \mathbb{R}$ es una FDP si y solo si:
+
+<ul style="margin-top:10px;">
+
+<li class="fragment fade-up" data-fragment-index="2" style="list-style-type:none;">
+
+1. $f(x) \geq 0$ para todo $x$
+
 </li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="list-style-type:none;">
+
+2. $\displaystyle\int_{-\infty}^{\infty} f(x)\,dx = 1$
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="list-style-type:none;">
+
+3. Para cualquier intervalo $(a,b)$: $P(a \leq X \leq b) = \int_a^b f(x)\,dx$
+
+</li>
+
 </ul>
 
-## FDP y FDA — relación diferencial
+</div>
+
+</div>
+<ul style="margin-top: 10px;">
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
+A diferencia de la FMP, $f(x)$ puede tomar valores mayores que 1 (no es una probabilidad directa).
+</li>
+
+</ul>
+
+
+## Relación diferencial entre FDP y FDA 
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Relación entre FDP y FDA</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
-Si $X$ es continua con FDP $f$ y FDA $F$:
+Si $X$ es v.a continua con FDP $f(x)$ y FDA $F(x)$:
 $$F(x) = \int_{-\infty}^{x} f(t)\,dt$$
 $$f(x) = F'(x) \quad \text{(donde existe la derivada)}$$
   </div>
@@ -327,31 +417,168 @@ Las zonas donde $f(x)$ es alta concentran mayor probabilidad.
 </li>
 </ul>
 
-## Distribución Uniforme — FDP y FDA
-
+## FDP y FDA de la Distribución Uniforme 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Uniforme U(a,b)</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
-$$f(x) = \frac{1}{b-a}, \quad a < x < b$$
-$$F(x) = \begin{cases} 0 & x < a \\ \frac{x-a}{b-a} & a \leq x \leq b \\ 1 & x > b \end{cases}$$
-  </div>
+
+<p style="font-size: 22px; text-align: justify; line-height: 1.35;">
+
+Una variable aleatoria continua $X$ sigue una <strong>distribución uniforme continua</strong> en el intervalo $(a,b)$ 
+si todos los valores comprendidos entre $a$ y $b$ tienen la misma probabilidad de ocurrir.
+
+</p>
+
+$$X \sim U(a,b)$$
+
+<p style="font-size: 20px; text-align: justify; line-height: 1.45;">
+
+La distribución uniforme se utiliza cuando no existe preferencia por ningún valor dentro del intervalo, 
+por lo que la densidad permanece constante en todo el soporte.
+
+</p>
+
+<div class="r-hstack" style="gap: 35px; align-items: flex-start; margin-top: 10px;">
+
+<div style="width: 50%;">
+
+$$
+f(x)=\frac{1}{b-a}, \quad a<x<b
+$$
+
+<p style="font-size: 20px; text-align:center;">
+Función de densidad
+</p>
+
 </div>
 
+<div style="width: 50%;">
+
+$$
+F(x)=
+\begin{cases}
+0, & x<a \\[6pt]
+\dfrac{x-a}{b-a}, & a\leq x\leq b \\[10pt]
+1, & x>b
+\end{cases}
+$$
+
+<p style="font-size: 20px; text-align:center;">
+Función de distribución acumulada
+</p>
+
+</div>
+
+</div>
+
+<div style="font-size: 20px; margin-top: 10px; line-height: 1.45;">
+
+<strong>Parámetros:</strong> $a$ y $b$ representan los límites inferior y superior del intervalo.<br>
+
+<strong>Soporte:</strong> $x\in(a,b)$.
+
+</div>
+
+</div>
+</div>
+
+
+## Gráfico de la FDP y FDA de una distribución Uniforme con $a=1$ y $b=4$
 ```{r}
 #| echo: false
-#| fig-width: 9
-#| fig-height: 3.5
-par(mfrow = c(1,2), mar = c(4,4,2,1))
-curve(dunif(x, 1, 4), 0, 5, lwd = 3, col = "#1b4d2e",
-      main = "FDP: U(1,4)", ylab = "f(x)", cex.main = 1.2, ylim = c(0, 0.5))
-curve(punif(x, 1, 4), 0, 5, lwd = 3, col = "#7a1515",
-      main = "FDA: U(1,4)", ylab = "F(x)", cex.main = 1.2)
+#| fig-width: 16
+#| fig-height: 7
+#| warning: false
+
+par(
+  mfrow = c(1,2),
+  mar = c(5,5,3,1),
+  bg = "white",
+  family = "sans"
+)
+
+# Parámetros
+a <- 1
+b <- 4
+
+# Colores
+col_fdp <- "#2e7d32"
+col_fda <- "#b23a48"
+
+# =========================
+# FDP Uniforme
+# =========================
+curve(
+  dunif(x, a, b),
+  from = 0,
+  to = 5,
+  lwd = 4,
+  col = col_fdp,
+  ylim = c(0,0.42),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Función de densidad U(1,4)",
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85")
+
+# Líneas verticales del soporte
+abline(v = c(a,b), lty = 2, lwd = 2, col = "gray45")
+
+# Área sombreada
+polygon(
+  c(a, a, b, b),
+  c(0, 1/(b-a), 1/(b-a), 0),
+  col = adjustcolor(col_fdp, alpha.f = 0.20),
+  border = NA
+)
+
+text(
+  2.5, 0.37,
+  labels = "Densidad constante",
+  cex = 1.1
+)
+
+# =========================
+# FDA Uniforme
+# =========================
+curve(
+  punif(x, a, b),
+  from = 0,
+  to = 5,
+  lwd = 4,
+  col = col_fda,
+  ylim = c(0,1.05),
+  xlab = "x",
+  ylab = "F(x)",
+  main = "Función acumulada U(1,4)",
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85")
+
+abline(v = c(a,b), lty = 2, lwd = 2, col = "gray45")
+abline(h = c(0,1), lty = 3, col = "gray60")
+
+points(c(a,b), c(0,1), pch = 19, cex = 1.3, col = col_fda)
+
+text(
+  2.7, 0.55,
+  labels = "Incremento lineal",
+  cex = 1.1
+)
 ```
 
-## Distribución Normal — FDP
+
+## FDP de la Distribución Normal
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">FDP Normal N(μ, σ²)</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \mathbb{R}$$
 Parámetros: $\mu \in \mathbb{R}$ (media), $\sigma^2 > 0$ (varianza).
@@ -371,24 +598,114 @@ Los puntos de inflexión se ubican en $\mu \pm \sigma$.
 
 ```{r}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 4.5
-par(mfrow = c(1,2), mar = c(4,4,2,1))
-x <- seq(-5, 15, length = 400)
-plot(x, dnorm(x,0,1), type="l", lwd=3, col="#1a3a6b",
-     main = "Efecto de μ (σ=1 fijo)", ylab="f(x)", cex.main=1.2)
-lines(x, dnorm(x,3,1), lwd=3, col="#1b4d2e")
-lines(x, dnorm(x,7,1), lwd=3, col="#7a1515")
-legend("topright", c("μ=0","μ=3","μ=7"), col=c("#1a3a6b","#1b4d2e","#7a1515"), lwd=3, cex=1.1)
-x2 <- seq(-10, 10, length = 400)
-plot(x2, dnorm(x2,0,1), type="l", lwd=3, col="#1a3a6b",
-     main = "Efecto de σ (μ=0 fijo)", ylab="f(x)", cex.main=1.2)
-lines(x2, dnorm(x2,0,2), lwd=3, col="#1b4d2e")
-lines(x2, dnorm(x2,0,3), lwd=3, col="#7a1515")
-legend("topright", c("σ=1","σ=2","σ=3"), col=c("#1a3a6b","#1b4d2e","#7a1515"), lwd=3, cex=1.1)
+#| fig-width: 14
+#| fig-height: 6
+#| warning: false
+
+par(
+  mfrow = c(1,2),
+  mar = c(5,5,3,1),
+  bg = "white",
+  family = "sans"
+)
+
+# Colores
+col1 <- "#1f4e79"
+col2 <- "#2e7d32"
+col3 <- "#b23a48"
+
+# =====================================================
+# EFECTO DE LA MEDIA
+# =====================================================
+
+x <- seq(-5, 15, length = 600)
+
+plot(
+  x, dnorm(x,0,1),
+  type = "l",
+  lwd = 4,
+  col = col1,
+  ylim = c(0,0.45),
+  xlab = "x",
+  ylab = "f(x)",
+  main = expression("Efecto de " * mu * " (" * sigma == 1 * " fijo)"),
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85")
+
+lines(x, dnorm(x,3,1), lwd = 4, col = col2)
+lines(x, dnorm(x,7,1), lwd = 4, col = col3)
+
+# Líneas en las medias
+abline(v = c(0,3,7), lty = 2, lwd = 2,
+       col = c(col1,col2,col3))
+
+legend(
+  "topright",
+  legend = c(expression(mu==0),
+             expression(mu==3),
+             expression(mu==7)),
+  col = c(col1,col2,col3),
+  lwd = 4,
+  bty = "n",
+  cex = 1.1
+)
+
+text(
+  7.5, 0.42,
+  labels = "La curva se desplaza\nhorizontalmente",
+  cex = 1
+)
+
+# =====================================================
+# EFECTO DE LA DESVIACIÓN ESTÁNDAR
+# =====================================================
+
+x2 <- seq(-10, 10, length = 600)
+
+plot(
+  x2, dnorm(x2,0,1),
+  type = "l",
+  lwd = 4,
+  col = col1,
+  ylim = c(0,0.45),
+  xlab = "x",
+  ylab = "f(x)",
+  main = expression("Efecto de " * sigma * " (" * mu == 0 * " fijo)"),
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85")
+
+lines(x2, dnorm(x2,0,2), lwd = 4, col = col2)
+lines(x2, dnorm(x2,0,3), lwd = 4, col = col3)
+
+abline(v = 0, lty = 2, lwd = 2, col = "gray40")
+
+legend(
+  "topright",
+  legend = c(expression(sigma==1),
+             expression(sigma==2),
+             expression(sigma==3)),
+  col = c(col1,col2,col3),
+  lwd = 4,
+  bty = "n",
+  cex = 1.1
+)
+
+text(
+  4.8, 0.42,
+  labels = "Mayor dispersión\ncuando aumenta σ",
+  cex = 1
+)
 ```
 
-## La regla 68-95-99.7
+## La regla del 68%, 95% y 99.7%
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
   <div class="block-title">Regla empírica de la Normal</div>
@@ -399,17 +716,23 @@ $$P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) \approx 0.9545$$
 $$P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) \approx 0.9973$$
   </div>
 </div>
-
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
 ```{r}
-round(diff(pnorm(c(-1,1))), 4)    # ±1σ
-round(diff(pnorm(c(-2,2))), 4)    # ±2σ
-round(diff(pnorm(c(-3,3))), 4)    # ±3σ
+#| fig-width: 10
+#| fig-height: 4.5
+
+# Comando en R
+round(diff(pnorm(c(-1,1))), 4)    # Para ±1σ El área bajo la curva es de aproximadamente 68%
+round(diff(pnorm(c(-2,2))), 4)    # Para ±2σ El área bajo la curva es de aproximadamente 95%
+round(diff(pnorm(c(-3,3))), 4)    # Para ±3σ El área bajo la curva es de aproximadamente 99.7%
 ```
 
-## Normal — cálculo de probabilidades
+</div>
+
+## Ejemplo 2
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo — Peso de neonatos</div>
+  <div class="block-title">Enunciado</div>
   <div class="block-body">
 <p>El peso de neonatos a término en un hospital de Medellín sigue $X \sim N(3200, 400^2)$ gramos. Calcule:</p>
 <ol>
@@ -417,12 +740,21 @@ round(diff(pnorm(c(-3,3))), 4)    # ±3σ
 <li>$P(X < 2500)$ (bajo peso)</li>
 <li>$P(X > 4000)$ (macrosomía)</li>
 </ol>
+
+
   </div>
 </div>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;list-style-type:none;">
+Datos: $\mu=3200$ y $\sigma=400$
+</li>
 
-## Normal — solución
+## Solución
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div style="font-size: 30px;">
 
 ```{r}
+
+
 mu <- 3200; sigma <- 400
 # 1. P(2800 <= X <= 3600)
 diff(pnorm(c(2800, 3600), mu, sigma))
@@ -432,10 +764,23 @@ pnorm(2500, mu, sigma)
 1 - pnorm(4000, mu, sigma)
 ```
 
-## Estandarización — uso de la tabla Z
+</div>
+</div>
+<ul style="line-height: 1.8;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;list-style-type:none;">
+1. La probabilidad de que un neonato pese entre 2800 y 3600 gr es aproximadamente: $68.27\%$
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;list-style-type:none;">
+2. La probabilidad de que presente bajo peso es: $4\%$
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;list-style-type:none;">
+3. La probabilidad de que pese mas de 4000 gr es: $2.275\%$
+</li>
+
+##  Uso de la tabla Z (Estandarización)
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Estandarización</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 Si $X \sim N(\mu, \sigma^2)$, entonces $Z = \frac{X-\mu}{\sigma} \sim N(0,1)$. Por lo tanto:
 $$P(X \leq x) = P\!\left(Z \leq \frac{x-\mu}{\sigma}\right) = \Phi\!\left(\frac{x-\mu}{\sigma}\right)$$
@@ -443,39 +788,320 @@ donde $\Phi$ es la FDA de la normal estándar.
   </div>
 </div>
 
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El <strong>puntaje Z</strong> indica cuántas desviaciones estándar se aleja $x$ de la media.
-</li>
+ <ul style="margin-top: 10px;"> 
+ <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;"> 
+ El <strong>puntaje Z</strong> indica cuántas desviaciones estándar se encuentra un valor $x$ por encima o por debajo de la media. 
+ </li> 
+ <li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+  Si $Z>0$, el valor observado está <strong>por encima de la media</strong>; mientras que si $Z<0$, el valor se encuentra <strong>por debajo de la media</strong>. 
+  </li> 
+  <li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;"> La tabla Z permite calcular probabilidades acumuladas de la distribución normal estándar, es decir, áreas bajo la curva normal. 
+  </li>
+
 </ul>
 
-## Distribución Exponencial — FDP y FDA
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Exponencial Exp(λ)</div>
+## Procedimiento general para usar la tabla Z
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Pasos:</div>
   <div class="block-body">
-$$f(x) = \lambda e^{-\lambda x}, \quad x > 0$$
-$$F(x) = 1 - e^{-\lambda x}, \quad x > 0$$
-Parámetro: $\lambda > 0$ (tasa de ocurrencia).
-  </div>
+
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify; margin-bottom: 18px; list-style-type:none;">
+<strong>1.</strong> Identificar la media $\mu$, la desviación estándar $\sigma$ y el valor de interés $x$.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="2"style="font-size: 30px; text-align: justify; margin-bottom: 18px;list-style-type:none;">
+<strong>2.</strong> Estandarizar la variable utilizando:
+$$
+Z=\frac{X-\mu}{\sigma}
+$$
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify; margin-bottom: 18px;list-style-type:none;">
+<strong>3.</strong> Buscar el valor de $Z$ en la tabla de la normal estándar.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4"style="font-size: 30px; text-align: justify;list-style-type:none;">
+<strong>4.</strong> Interpretar la probabilidad obtenida según el contexto del problema.
+</li>
+
+</div>
 </div>
 
+## Probabilidades usando la tabla Z
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">La tabla Z normalmente proporciona valores de:</div>
+  <div class="block-body">
+
+$$
+P(Z \leq z)=\Phi(z)
+$$
+
+
+
+<ul style="margin-top: 20px;">
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; margin-bottom: 18px;">
+
+<strong>Probabilidad acumulada a la izquierda</strong>: $P(Z \leq z)=\Phi(z)$
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; margin-bottom: 18px;">
+
+<strong>Probabilidad a la derecha</strong>: $P(Z > z)=1-P(Z \leq z)=1-\Phi(z)$
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; margin-bottom: 18px;">
+<strong>Probabilidad entre dos valores</strong>: $P(a \leq Z \leq b)=P(Z \leq b)-P(Z \leq a)=\Phi(b)-\Phi(a)$
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; margin-bottom: 18px;">
+<strong>Simetría de la normal estándar</strong>: $P(Z \leq -z)=1-P(Z \leq z)=1-\Phi(z)$
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px;">
+<strong>Probabilidad central</strong>: $P(-z \leq Z \leq z)=2P(Z\leq z)=2\Phi(z)-1$
+</li>
+
+</ul>
+</div>
+</div>
+
+## Ejemplo 3
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Enunciado</div>
+  <div class="block-body">
+
+En un estudio agronómico realizado en cultivos de café de la región Andina de Colombia, 
+se encontró que la producción mensual de café por finca sigue aproximadamente una distribución normal con:
+
+$$
+X \sim N(5200,\; 650^2)
+$$
+
+donde:
+
+<ul style="font-size: 26px;">
+<li>$\mu = 5200$ kg de café por mes</li>
+<li>$\sigma = 650$ kg</li>
+</ul>
+
+Se desea calcular la probabilidad de que una finca produzca menos de <strong>6000 kg</strong> de café en un mes.
+</div>
+</div>
+
+
+## Solución
+
+<div class="r-hstack" style="gap: 28px; align-items: stretch; margin-top: 10px;">
+
+<!-- Columna izquierda -->
+<div style="width: 50%;">
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Paso 1. Estandarizar</div>
+<div class="block-body">
+
+<div style="font-size: 24px; text-align:center; line-height:1.4;">
+
+$$
+X \sim N(5200,650^2)
+$$
+
+Se desea calcular:
+
+$$
+P(X<6000)
+$$
+
+Aplicando la transformación Z:
+
+$$
+Z=\frac{X-\mu}{\sigma}
+$$
+
+Reemplazando:
+$$
+Z=\frac{6000-5200}{650}
+$$
+
+$$
+Z=1.23
+$$
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<!-- Columna derecha -->
+<div style="width: 50%;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Paso 2. Tabla Z</div>
+<div class="block-body">
+
+<div style="font-size: 24px; text-align:center; line-height:1.45;">
+
+Buscando en la tabla de la distribucion Normal estándar:
+
+$$
+P(Z<1.23)=0.8907
+$$
+
+Por lo tanto:
+
+$$
+P(X<6000)=0.8907
+$$
+
+</div>
+
+<div style="font-size: 22px; text-align: justify; margin-top: 12px; line-height:1.35;">
+
+Esto significa que aproximadamente el 
+<strong>89.07%</strong> de las fincas cafeteras de la región Andina producen menos de 6000 kg de café por mes.
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+
+
+## FDP y FDA de la distribución Exponencial
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición</div>
+  <div class="block-body">
+
+<p style="font-size: 24px; text-align: justify; line-height: 1.4;">
+Una variable aleatoria continua $X$ sigue una distribución exponencial con parámetro 
+$\lambda>0$ si modela el <strong>tiempo de espera</strong> hasta la ocurrencia de un evento.
+</p>
+
+$$
+X \sim Exp(\lambda)
+$$
+
+<p style="font-size: 24px; text-align: justify; line-height: 1.4;">
+La distribución exponencial describe fenómenos donde los eventos ocurren de manera 
+independiente y a una tasa promedio constante.
+</p>
+
+FDP:
+$$
+f(x)=\lambda e^{-\lambda x}, \quad x>0
+$$
+FDA:
+$$
+F(x)=P(X\le x)=1-e^{-\lambda x}, \quad x>0
+$$
+
+<div style="font-size: 23px; margin-top: 10px; line-height: 1.4;">
+
+<strong>Parámetro:</strong> $\lambda>0$ representa la tasa promedio de ocurrencia.<br>
+
+<strong>Soporte:</strong> $x\in(0,\infty)$.
+
+</div>
+
+</div>
+</div>
+
+## Gráfico de la FDP y FDA de una distribución Exponencial
 ```{r}
 #| echo: false
-#| fig-width: 9
-#| fig-height: 3.5
-par(mfrow=c(1,2), mar=c(4,4,2,1))
-x <- seq(0, 5, length=300)
-plot(x, dexp(x,1), type="l", lwd=3, col="#1a3a6b", ylim=c(0,2),
-     main="FDP Exponencial", ylab="f(x)", cex.main=1.2)
-lines(x, dexp(x,0.5), lwd=3, col="#1b4d2e")
-lines(x, dexp(x,2),   lwd=3, col="#7a1515")
-legend("topright", c("λ=1","λ=0.5","λ=2"), col=c("#1a3a6b","#1b4d2e","#7a1515"), lwd=3, cex=1.0)
-plot(x, pexp(x,1), type="l", lwd=3, col="#1a3a6b",
-     main="FDA Exponencial", ylab="F(x)", cex.main=1.2)
-lines(x, pexp(x,0.5), lwd=3, col="#1b4d2e")
-lines(x, pexp(x,2),   lwd=3, col="#7a1515")
+#| fig-width: 16
+#| fig-height: 7
+#| warning: false
+
+par(
+  mfrow = c(1,2),
+  mar = c(5,5,3,1),
+  bg = "white",
+  family = "sans"
+)
+
+# Secuencia de valores
+x <- seq(0, 5, length = 500)
+
+# Colores
+col1 <- "#1f4e79"
+col2 <- "#2e7d32"
+col3 <- "#b23a48"
+
+# =========================
+# FDP
+# =========================
+plot(
+  x, dexp(x,1),
+  type = "l",
+  lwd = 4,
+  col = col1,
+  ylim = c(0,2.2),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Función de densidad exponencial",
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85", lty = 1)
+
+lines(x, dexp(x,0.5), lwd = 4, col = col2)
+lines(x, dexp(x,2),   lwd = 4, col = col3)
+
+legend(
+  "topright",
+  legend = c(expression(lambda==1),
+             expression(lambda==0.5),
+             expression(lambda==2)),
+  col = c(col1, col2, col3),
+  lwd = 4,
+  bty = "n",
+  cex = 1.1
+)
+
+# =========================
+# FDA
+# =========================
+plot(
+  x, pexp(x,1),
+  type = "l",
+  lwd = 4,
+  col = col1,
+  ylim = c(0,1.05),
+  xlab = "x",
+  ylab = "F(x)",
+  main = "Función de distribución acumulada",
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85", lty = 1)
+
+lines(x, pexp(x,0.5), lwd = 4, col = col2)
+lines(x, pexp(x,2),   lwd = 4, col = col3)
+
+legend(
+  "bottomright",
+  legend = c(expression(lambda==1),
+             expression(lambda==0.5),
+             expression(lambda==2)),
+  col = c(col1, col2, col3),
+  lwd = 4,
+  bty = "n",
+  cex = 1.1
+)
+
 ```
+
 
 ## Propiedad sin memoria de la Exponencial
 
@@ -495,50 +1121,188 @@ $$P(X > s+t \mid X > s) = \frac{P(X > s+t)}{P(X > s)} = \frac{e^{-\lambda(s+t)}}
   </div>
 </div>
 
-## Distribución Gamma — FDP
+## 
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Gamma(α, β)</div>
+  <div class="block-title">FDP de la Distribución Gamma</div>
   <div class="block-body">
-$$f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta}, \quad x > 0$$
-Parámetros: $\alpha > 0$ (forma), $\beta > 0$ (escala).
-$\Gamma(\alpha) = \int_0^\infty t^{\alpha-1}e^{-t}dt$, con $\Gamma(n) = (n-1)!$ para $n \in \mathbb{N}$.
-  </div>
+
+<p style="font-size: 22px; text-align: justify; line-height: 1.4;">
+
+Una variable aleatoria continua $X$ sigue una 
+<strong>distribución Gamma</strong> con parámetros 
+$\alpha>0$ y $\beta>0$ si:
+
+$$
+X\sim Gamma(\alpha,\beta)
+$$
+
+</p>
+
+$$
+f(x)=
+\frac{1}{\Gamma(\alpha)\beta^\alpha}
+x^{\alpha-1}e^{-x/\beta},
+\quad x>0
+$$
+
+<p style="font-size: 20px; text-align:center; margin-top:5px;">
+Función de densidad
+</p>
+
+<p style="font-size: 22px; text-align: justify; line-height: 1.4;">
+
+<strong>Parámetro de forma:</strong> $\alpha$ controla la forma de la distribución.<br>
+
+<strong>Parámetro de escala:</strong> $\beta$ controla la dispersión.<br>
+
+<strong>Soporte:</strong> $x\in(0,\infty)$.
+
+</p>
+
+$\Gamma(\alpha)=\int_0^\infty t^{\alpha-1}e^{-t}dt$
+
+<p style="font-size: 20px; text-align:center;">
+Además, $\Gamma(n)=(n-1)!$
+</p>
+
+</div>
 </div>
 
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Casos especiales: $\text{Gamma}(1,\beta) = \text{Exp}(1/\beta)$ y $\text{Gamma}(n/2, 2) = \chi^2_n$.
+<ul style="margin-top: 5px;">
+
+<li class="fragment fade-up" data-fragment-index="2"
+style="font-size: 24px; text-align: justify;">
+
+Casos especiales:
+
+$$
+Gamma(1,\beta)=Exp\left(\frac{1}{\beta}\right)
+\qquad
+Gamma\left(\frac{n}{2},2\right)=\chi_n^2
+$$
+
 </li>
+
 </ul>
 
-## Gamma — efecto de los parámetros
+## Efecto de los parámetros en la distribución Gamma
 
 ```{r}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 4.5
-par(mfrow=c(1,2), mar=c(4,4,2,1))
-x <- seq(0, 20, length=300)
-plot(x, dgamma(x,1,scale=2), type="l", lwd=3, col="#1a3a6b",
-     main="Efecto de α (β=2)", ylab="f(x)", cex.main=1.2, ylim=c(0,0.35))
-lines(x, dgamma(x,2,scale=2), lwd=3, col="#1b4d2e")
-lines(x, dgamma(x,5,scale=2), lwd=3, col="#7a1515")
-legend("topright", c("α=1","α=2","α=5"), col=c("#1a3a6b","#1b4d2e","#7a1515"), lwd=3)
-plot(x, dgamma(x,3,scale=1), type="l", lwd=3, col="#1a3a6b",
-     main="Efecto de β (α=3)", ylab="f(x)", cex.main=1.2)
-lines(x, dgamma(x,3,scale=2), lwd=3, col="#1b4d2e")
-lines(x, dgamma(x,3,scale=3), lwd=3, col="#7a1515")
-legend("topright", c("β=1","β=2","β=3"), col=c("#1a3a6b","#1b4d2e","#7a1515"), lwd=3)
+#| fig-width: 14
+#| fig-height: 6
+#| warning: false
+
+par(
+  mfrow = c(1,2),
+  mar = c(5,5,3,1),
+  bg = "white",
+  family = "sans"
+)
+
+# Colores
+col1 <- "#1f4e79"
+col2 <- "#2e7d32"
+col3 <- "#b23a48"
+
+x <- seq(0, 20, length = 600)
+
+# =====================================================
+# EFECTO DE α
+# =====================================================
+
+plot(
+  x, dgamma(x,1,scale=2),
+  type = "l",
+  lwd = 4,
+  col = col1,
+  ylim = c(0,0.40),
+  xlab = "x",
+  ylab = "f(x)",
+  main = expression("Efecto de " * alpha * " (" * beta == 2 * ")"),
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85")
+
+lines(x, dgamma(x,2,scale=2), lwd = 4, col = col2)
+lines(x, dgamma(x,5,scale=2), lwd = 4, col = col3)
+
+legend(
+  "topright",
+  legend = c(expression(alpha==1),
+             expression(alpha==2),
+             expression(alpha==5)),
+  col = c(col1,col2,col3),
+  lwd = 4,
+  bty = "n",
+  cex = 1.1
+)
+
+text(
+  12, 0.37,
+  labels = "Mayor simetría\ncuando α aumenta",
+  cex = 1
+)
+
+# =====================================================
+# EFECTO DE β
+# =====================================================
+
+plot(
+  x, dgamma(x,3,scale=1),
+  type = "l",
+  lwd = 4,
+  col = col1,
+  ylim = c(0,0.40),
+  xlab = "x",
+  ylab = "f(x)",
+  main = expression("Efecto de " * beta * " (" * alpha == 3 * ")"),
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85")
+
+lines(x, dgamma(x,3,scale=2), lwd = 4, col = col2)
+lines(x, dgamma(x,3,scale=3), lwd = 4, col = col3)
+
+legend(
+  "topright",
+  legend = c(expression(beta==1),
+             expression(beta==2),
+             expression(beta==3)),
+  col = c(col1,col2,col3),
+  lwd = 4,
+  bty = "n",
+  cex = 1.1
+)
+
+text(
+  13, 0.37,
+  labels = "Mayor dispersión\ncuando β aumenta",
+  cex = 1
+)
 ```
 
-## Distribución Beta — FDP
+## FDP de la distribución Beta 
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Beta(α, β)</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 $$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}, \quad 0 < x < 1$$
 donde $B(\alpha,\beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$.
+
+
+<strong>Parámetro $\alpha$:</strong> controla el comportamiento cerca de 0.
+
+<strong>Parámetro $\beta$:</strong> controla el comportamiento cerca de 1.
+
+Soporte:</strong> $x\in(0,1)$. 
   </div>
 </div>
 
@@ -547,62 +1311,227 @@ donde $B(\alpha,\beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)
 Usada para modelar <strong>proporciones</strong> y <strong>probabilidades</strong>: prevalencia de una enfermedad, porcentaje de germinación, eficacia de un tratamiento.
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Muy flexible: puede ser uniforme ($\alpha=\beta=1$), en U, en J, unimodal simétrica o asimétrica.
+Muy flexible: puede ser uniforme ($\alpha=\beta=1$), en forma de U, J, unimodal simétrica o asimétrica.
 </li>
 </ul>
 
-## Beta — formas según parámetros
+
+## Formas de la distribución Beta según los parámetros
 
 ```{r}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 4.5
-par(mfrow=c(2,3), mar=c(3,3,2,1))
-params <- list(c(1,1), c(2,2), c(5,2), c(0.5,0.5), c(2,5), c(5,1))
-titles <- c("Beta(1,1)","Beta(2,2)","Beta(5,2)","Beta(0.5,0.5)","Beta(2,5)","Beta(5,1)")
-cols   <- rep(c("#1a3a6b","#1b4d2e","#7a1515"), 2)
+#| fig-width: 16
+#| fig-height: 7
+#| warning: false
+
+par(
+  mfrow = c(2,3),
+  mar = c(4,4,3,1),
+  bg = "white",
+  family = "sans"
+)
+
+# Parámetros Beta
+params <- list(
+  c(1,1),
+  c(2,2),
+  c(5,2),
+  c(0.5,0.5),
+  c(2,5),
+  c(5,1)
+)
+
+# Títulos
+titles <- c(
+  expression(Beta(1,1)),
+  expression(Beta(2,2)),
+  expression(Beta(5,2)),
+  expression(Beta(0.5,0.5)),
+  expression(Beta(2,5)),
+  expression(Beta(5,1))
+)
+
+# Colores
+cols <- c(
+  "#1f4e79",
+  "#2e7d32",
+  "#b23a48",
+  "#7b1fa2",
+  "#d17a22",
+  "#00838f"
+)
+
+# Valores de x
+x <- seq(0.001, 0.999, length = 600)
+
+# Crear gráficos
 for(i in seq_along(params)) {
-  x <- seq(0,1,length=300)
-  plot(x, dbeta(x, params[[i]][1], params[[i]][2]), type="l", lwd=3, col=cols[i],
-       main=titles[i], ylab="", cex.main=1.1)
+
+  a <- params[[i]][1]
+  b <- params[[i]][2]
+
+  y <- dbeta(x, a, b)
+
+  plot(
+    x, y,
+    type = "l",
+    lwd = 4,
+    col = cols[i],
+    main = titles[i],
+    xlab = "x",
+    ylab = "f(x)",
+    cex.main = 1.3,
+    cex.lab = 1.1,
+    cex.axis = 1,
+    ylim = c(0, max(y)*1.10)
+  )
+
+  grid(col = "gray88")
+
+  # Área sombreada
+  polygon(
+    c(x, rev(x)),
+    c(y, rep(0, length(y))),
+    col = adjustcolor(cols[i], alpha.f = 0.18),
+    border = NA
+  )
+
+  # Curva nuevamente encima
+  lines(x, y, lwd = 4, col = cols[i])
+
+  # Línea vertical en la media
+  abline(v = a/(a+b), lty = 2, lwd = 2, col = "gray35")
+
 }
 ```
 
+
 ## Distribución Chi-cuadrado
-
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Chi-cuadrado χ²(ν)</div>
+  <div class="block-title">Distribución Chi-cuadrado $\chi^2(\nu)$</div>
   <div class="block-body">
-Si $Z_1, \ldots, Z_\nu$ son independientes con $Z_i \sim N(0,1)$, entonces:
-$$Q = Z_1^2 + \cdots + Z_\nu^2 \sim \chi^2(\nu)$$
-Es un caso especial de $\text{Gamma}(\nu/2, 2)$. Su soporte es $(0, \infty)$.
-  </div>
+
+<p style="font-size: 21px; text-align: justify; line-height: 1.35;">
+
+Si $Z_1,\ldots,Z_\nu$ son variables aleatorias independientes con:
+
+$$
+Z_i\sim N(0,1)
+$$
+
+Entonces la suma de sus cuadrados sigue una distribución Chi-cuadrado:
+
+$$
+Q=Z_1^2+\cdots+Z_\nu^2\sim\chi^2(\nu)
+$$
+
+</p>
+
+$$
+f(x)=
+\frac{1}{2^{\nu/2}\Gamma(\nu/2)}
+x^{\nu/2-1}e^{-x/2},
+\quad x>0
+$$
+
+<p style="font-size: 20px; text-align: center; margin-top: 5px;">
+Es un caso particular de $Gamma(\nu/2,2)$
+</p>
+
+<p style="font-size: 21px; text-align: justify; line-height: 1.35;">
+
+<strong>Parámetro:</strong> $\nu$ representa los grados de libertad.<br>
+
+<strong>Soporte:</strong> $x\in(0,\infty)$.
+
+</p>
+
+</div>
 </div>
 
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Fundamental en inferencia: aparece en pruebas de bondad de ajuste y en la estimación de la varianza poblacional.
+<ul style="margin-top: 5px;">
+
+<li class="fragment fade-up" data-fragment-index="2"
+style="font-size: 23px; text-align: justify;">
+
+Es fundamental en inferencia estadística, especialmente en pruebas de bondad de ajuste y estimación de varianzas.
+
 </li>
+
 </ul>
 
-## Distribución t de Student
-
+## 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución t(ν)</div>
+  <div class="block-title">Distribución t de Student $t(\nu)$</div>
   <div class="block-body">
-Si $Z \sim N(0,1)$ y $Q \sim \chi^2(\nu)$ son independientes:
-$$T = \frac{Z}{\sqrt{Q/\nu}} \sim t(\nu)$$
-  </div>
+
+<p style="font-size: 21px; text-align: justify; line-height: 1.35;">
+
+La distribución t de Student se utiliza para inferencia sobre medias cuando la varianza poblacional es desconocida.
+
+</p>
+
+$$
+Z\sim N(0,1),
+\qquad
+Q\sim\chi^2(\nu)
+$$
+
+<p style="font-size: 20px; text-align:center;">
+Si $Z$ y $Q$ son independientes:
+</p>
+
+$$
+T=
+\frac{Z}{\sqrt{Q/\nu}}
+\sim t(\nu)
+$$
+
+$$
+f(t)=
+\frac{\Gamma\left(\frac{\nu+1}{2}\right)}
+{\sqrt{\nu\pi}\cdot \Gamma\left(\frac{\nu}{2}\right)}
+\left(1+\frac{t^2}{\nu}\right)^{-(\nu+1)/2}
+$$
+
+
+<p style="font-size: 20px; text-align: justify; line-height: 1.35;">
+
+<strong>Parámetro:</strong> $\nu$ grados de libertad.<br>
+
+<strong>Soporte:</strong> $t\in(-\infty,\infty)$.
+
+</p>
+
+</div>
 </div>
 
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Simétrica alrededor de 0, con colas más pesadas que la normal. A medida que $\nu \to \infty$, $t(\nu) \to N(0,1)$.
+<ul style="margin-top: 5px;">
+
+<li class="fragment fade-up" data-fragment-index="2"
+style="font-size: 22px; text-align: justify;">
+
+Es simétrica alrededor de 0 y tiene colas más pesadas que la normal.
+
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Usada en intervalos de confianza y pruebas de hipótesis sobre medias con varianza desconocida.
+
+<li class="fragment fade-up" data-fragment-index="3"
+style="font-size: 22px; text-align: justify;">
+
+Cuando $\nu\to\infty$, se aproxima a $N(0,1)$.
+
 </li>
+
+<li class="fragment fade-up" data-fragment-index="4"
+style="font-size: 22px; text-align: justify;">
+
+Se usa en pruebas de hipótesis e intervalos de confianza para medias.
+
+</li>
+
 </ul>
+
+
 
 ## Funciones R para distribuciones
 
@@ -621,10 +1550,14 @@ Usada en intervalos de confianza y pruebas de hipótesis sobre medias con varian
 El mismo esquema aplica a todas las distribuciones: `dbinom`, `pbinom`, `qbinom`, `rbinom`; `dpois`, `ppois`; etc.
 </p>
 
-## Ejercicio: Poisson en epidemiología
+
+## Ejercicios y aplicaciones en R {.center .middle}
+
+
+## Ejercicio 1
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — Casos de leptospirosis</div>
+  <div class="block-title">Casos de leptospirosis</div>
   <div class="block-body">
 <p>En un municipio de la Orinoquia, el número de casos semanales de leptospirosis sigue una $\text{Poi}(\lambda = 3)$. Calcule:</p>
 <ol>
@@ -635,7 +1568,7 @@ El mismo esquema aplica a todas las distribuciones: `dbinom`, `pbinom`, `qbinom`
   </div>
 </div>
 
-## Ejercicio: Poisson — solución
+## solución
 
 ```{r}
 # X ~ Poi(3)
@@ -644,10 +1577,10 @@ dpois(0, 3)                       # P(X = 0)
 ppois(4, 3) - ppois(1, 3)         # P(2 <= X <= 4)
 ```
 
-## Ejercicio: Normal en nutrición
+## Ejercicio 2
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — IMC en adultos</div>
+  <div class="block-title">IMC en adultos</div>
   <div class="block-body">
 <p>El IMC de adultos en una ciudad colombiana se distribuye aproximadamente $N(\mu=26.5,\, \sigma^2=4^2)$. Calcule:</p>
 <ol>
@@ -658,7 +1591,7 @@ ppois(4, 3) - ppois(1, 3)         # P(2 <= X <= 4)
   </div>
 </div>
 
-## Ejercicio: Normal — solución
+## Solución
 
 ```{r}
 mu <- 26.5; sigma <- 4
@@ -670,12 +1603,12 @@ diff(pnorm(c(18.5, 24.9), mu, sigma))
 qnorm(0.90, mu, sigma)
 ```
 
-## Ejercicio: Exponencial en ecología
+## Ejercicio 3
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — Tiempo de vida de parásito</div>
+  <div class="block-title">Tiempo de vida de parásito</div>
   <div class="block-body">
-<p>El tiempo de vida (en horas) de un parásito fuera del huésped sigue $\text{Exp}(\lambda = 0.25)$. Determine:</p>
+<p>El tiempo de vida (en horas) de un parásito fuera del huésped sigue una distribución $\text{Exp}(\lambda = 0.25)$. Determine:</p>
 <ol>
 <li>$P(X > 6)$: sobrevive más de 6 horas.</li>
 <li>$P(2 < X < 8)$: muere entre 2 y 8 horas.</li>
@@ -684,7 +1617,7 @@ qnorm(0.90, mu, sigma)
   </div>
 </div>
 
-## Ejercicio: Exponencial — solución
+##  Solución
 
 ```{r}
 lam <- 0.25
@@ -696,10 +1629,10 @@ diff(pexp(c(2, 8), lam))
 qexp(0.5, lam)
 ```
 
-## Verificar una FDP — ejercicio
+## Ejercicio 4
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — ¿Es FDP válida?</div>
+  <div class="block-title">¿Es FDP válida?</div>
   <div class="block-body">
 <p>Determine si $f(x) = ce^{-2x}$ para $x > 0$ es una FDP válida y encuentre $c$.</p>
   </div>
@@ -717,31 +1650,91 @@ Con $c=2$: $f(x) = 2e^{-2x}$ es la FDP de una $\text{Exp}(\lambda=2)$.
 
 ```{r}
 #| echo: false
-#| fig-width: 9
-#| fig-height: 5
-x <- seq(-5, 5, length = 400)
-plot(x, dnorm(x), type = "l", lwd = 3, col = "#1a3a6b",
-     main = "Normal vs t de Student", ylab = "f(x)", cex.main = 1.3)
-lines(x, dt(x, 3),  lwd = 3, col = "#7a1515", lty = 2)
-lines(x, dt(x, 10), lwd = 3, col = "#1b4d2e", lty = 3)
-legend("topright", c("N(0,1)", "t(3)", "t(10)"),
-       col = c("#1a3a6b","#7a1515","#1b4d2e"), lwd = 3, lty = c(1,2,3), cex = 1.2)
-text(-4, 0.35, "Colas\nmás pesadas", cex = 1.1, col = "#7a1515")
+#| fig-width: 11
+#| fig-height: 5.8
+#| warning: false
+
+par(
+  mar = c(5,5,3,1),
+  bg = "white",
+  family = "sans"
+)
+
+# Valores de x
+x <- seq(-5, 5, length = 600)
+
+# Colores
+col_norm <- "#1f4e79"
+col_t3   <- "#b23a48"
+col_t10  <- "#2e7d32"
+
+# Gráfico principal
+plot(
+  x, dnorm(x),
+  type = "l",
+  lwd = 4,
+  col = col_norm,
+  ylim = c(0,0.42),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Distribución normal vs t de Student",
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray88")
+
+# Curvas t
+lines(
+  x, dt(x,3),
+  lwd = 4,
+  col = col_t3,
+  lty = 2
+)
+
+lines(
+  x, dt(x,10),
+  lwd = 4,
+  col = col_t10,
+  lty = 3
+)
+
+# Línea vertical en 0
+abline(v = 0, lty = 2, col = "gray50")
+
+# Leyenda elegante
+legend(
+  "topright",
+  legend = c(
+    expression(N(0,1)),
+    expression(t(3)),
+    expression(t(10))
+  ),
+  col = c(col_norm, col_t3, col_t10),
+  lwd = 4,
+  lty = c(1,2,3),
+  bty = "n",
+  cex = 1.1
+)
+
+# Texto explicativo
+text(
+  -3.8, 0.33,
+  labels = "Colas más pesadas\npara pocos grados\nde libertad",
+  cex = 1,
+  col = col_t3
+)
+
+text(
+  2.7, 0.39,
+  labels = "La distribución t\nse aproxima a la normal",
+  cex = 1,
+  col = col_t10
+)
 ```
 
-## Simulación y comparación empírica
-
-```{r}
-set.seed(42)
-n <- 5000
-# Suma de 30 Bernoulli(0.3) vs Normal por TCL
-x_bin  <- rbinom(n, 30, 0.3)
-x_norm <- rnorm(n, 30*0.3, sqrt(30*0.3*0.7))
-cat("Binomial: media =", round(mean(x_bin),2), " sd =", round(sd(x_bin),2), "\n")
-cat("Normal:   media =", round(mean(x_norm),2), " sd =", round(sd(x_norm),2), "\n")
-```
-
-## Teorema Central del Límite — anticipación
+## Teorema Central del Límite (Anticipación)
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
   <div class="block-title">Teorema Central del Límite (TCL)</div>
@@ -757,6 +1750,69 @@ El TCL explica por qué la distribución Normal aparece en tantos fenómenos: es
 </li>
 </ul>
 
+## Simulación y comparación empírica
+
+```{r}
+set.seed(42)
+n <- 5000
+# Suma de 30 Bernoulli(0.3) vs Normal por TCL
+x_bin  <- rbinom(n, 30, 0.3)
+x_norm <- rnorm(n, 30*0.3, sqrt(30*0.3*0.7))
+cat("Binomial: media =", round(mean(x_bin),2), " sd =", round(sd(x_bin),2), "\n")
+cat("Normal:   media =", round(mean(x_norm),2), " sd =", round(sd(x_norm),2), "\n")
+```
+
+## Gráficamente
+
+```{r}
+#| echo: false
+#| fig-width: 18
+#| fig-height: 9
+
+set.seed(42)
+
+n <- 5000
+
+# Simulación
+x_bin  <- rbinom(n, 30, 0.3)
+x_norm <- rnorm(n, 30*0.3, sqrt(30*0.3*0.7))
+
+# Histograma Binomial
+hist(
+  x_bin,
+  probability = TRUE,
+  breaks = seq(-0.5, 30.5, 1),
+  col = "#3b82f6",
+  border = "white",
+  main = "Aproximación Normal a la Binomial",
+  xlab = "Número de éxitos",
+  ylab = "Densidad",
+  ylim = c(0, 0.22)
+)
+
+# Curva Normal superpuesta
+curve(
+  dnorm(x, mean = 30*0.3, sd = sqrt(30*0.3*0.7)),
+  add = TRUE,
+  col = "#dc2626",
+  lwd = 3
+)
+
+legend(
+  "topright",
+  legend = c("Binomial B(30,0.3)", "Aproximación Normal"),
+  fill = c("#3b82f6", NA),
+  border = NA,
+  lty = c(NA, 1),
+  lwd = c(NA, 3),
+  col = c(NA, "#dc2626"),
+  bty = "n",
+  cex = 0.9
+)
+
+```
+
+
 ## Mixtura de distribuciones
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
@@ -767,10 +1823,11 @@ A veces los datos provienen de <strong>subpoblaciones</strong> con distintas dis
   </div>
 </div>
 
+<div class="block-note fragment fade-up" data-fragment-index="2">
 ```{r}
 #| echo: false
-#| fig-width: 9
-#| fig-height: 4
+#| fig-width: 18
+#| fig-height: 6
 set.seed(1)
 x1 <- rnorm(300, 500, 40); x2 <- rnorm(300, 380, 30)
 x_mix <- c(x1, x2)
@@ -778,6 +1835,7 @@ hist(x_mix, breaks=30, col="#bfdbfe", border="white", probability=TRUE,
      main="Mixtura: machos + hembras", xlab="Peso (kg)", cex.main=1.3)
 lines(density(x_mix), col="#1a3a6b", lwd=3)
 ```
+</div>
 
 ## Taller en clase {.center .middle}
 
@@ -786,7 +1844,7 @@ lines(density(x_mix), col="#1a3a6b", lwd=3)
 <p style="font-size: 28px; color: #6b7280; margin-top: 20px;">Funciones de probabilidad y densidad</p>
 </div>
 
-## Taller 1: FMP de la Binomial
+## 1. FMP de la Binomial
 
 <div class="block-example">
   <div class="block-title">Problema</div>
@@ -801,7 +1859,7 @@ lines(density(x_mix), col="#1a3a6b", lwd=3)
   </div>
 </div>
 
-## Taller 1: Solución
+## Solución
 
 ```{r}
 #| class-source: fragment
@@ -817,17 +1875,18 @@ cat("P(X>=5) =", round(1 - pbinom(4,n,p), 4), "\n")
 cat("P(X=3)  =", round(dbinom(3,n,p), 4), "\n")
 ```
 
+## Gráficamente
 ```{r}
 #| echo: false
-#| fig-width: 7
-#| fig-height: 3
+#| fig-width: 16
+#| fig-height: 8
 #| class-source: fragment
 #| data-fragment-index: 2
 barplot(dbinom(0:6, 6, 0.7), names.arg=0:6, col="#3b82f6", border=NA,
         main="FMP: Bin(6, 0.70)", xlab="k", ylab="P(X=k)")
 ```
 
-## Taller 2: Cálculo con la FDP Normal
+## 2. Cálculo con la FDP Normal
 
 <div class="block-example">
   <div class="block-title">Problema</div>
@@ -842,7 +1901,7 @@ barplot(dbinom(0:6, 6, 0.7), names.arg=0:6, col="#3b82f6", border=NA,
   </div>
 </div>
 
-## Taller 2: Solución
+## Solución
 
 ```{r}
 #| class-source: fragment
@@ -859,7 +1918,7 @@ cat("Q1        =", round(qnorm(0.25, mu, sigma), 3), "g/dL\n")
 cat("P(11.5≤X≤14)=", round(diff(pnorm(c(11.5,14), mu, sigma)), 4), "\n")
 ```
 
-## Taller 3: Distribución Poisson — parámetro desconocido
+## 3. Distribución Poisson (parámetro desconocido)
 
 <div class="block-example">
   <div class="block-title">Problema</div>
@@ -874,7 +1933,7 @@ cat("P(11.5≤X≤14)=", round(diff(pnorm(c(11.5,14), mu, sigma)), 4), "\n")
   </div>
 </div>
 
-## Taller 3: Solución
+## Solución
 
 ```{r}
 #| class-source: fragment
@@ -887,25 +1946,43 @@ cat("P(X>=5)         =", round(1 - ppois(4, lambda_hat), 4), "\n")
 cat("P(X>8)          =", round(1 - ppois(8, lambda_hat), 4), "\n")
 ```
 
-## Taller 4: Comparar distribuciones
+
+
+## 4. Comparar distribuciones
 
 <div class="block-example">
-  <div class="block-title">Problema — Decisión con distribuciones</div>
+  <div class="block-title">Decisión con distribuciones</div>
   <div class="block-body">
-<p>Dos regiones tienen la siguiente información sobre casos semanales de dengue:</p>
+
+<div class="fragment fade-up" data-fragment-index="1">
+
+<p><strong>Información sobre casos semanales de dengue:</strong></p>
+
 <ul>
 <li><strong>Región A:</strong> $X_A \sim \text{Poi}(4)$</li>
-<li><strong>Región B:</strong> $X_B \sim \text{Bin}(20, 0.2)$</li>
+<li><strong>Región B:</strong> $X_B \sim \text{Bin}(20,0.2)$</li>
 </ul>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2">
+
 <ol>
 <li>¿En cuál región es más probable que en una semana haya cero casos?</li>
+
 <li>¿En cuál región la varianza es mayor?</li>
+
 <li>¿En cuál región la probabilidad de más de 6 casos supera el 10%?</li>
 </ol>
+
+</div>
+
   </div>
 </div>
 
-## Taller 4: Solución
+
+
+## Solución
 
 ```{r}
 #| class-source: fragment
@@ -920,7 +1997,7 @@ cat("P(XA>6) =", round(1-ppois(6,4), 4),
     "  P(XB>6) =", round(1-pbinom(6,20,0.2), 4), "\n")
 ```
 
-## Resumen — FMP y FDP
+## Resumen FMP y FDP
 
 <div class="twocol">
 
@@ -955,7 +2032,7 @@ cat("P(XA>6) =", round(1-ppois(6,4), 4),
 ## Próxima clase
 
 <div style="text-align: center; margin-top: 60px;">
-<p style="font-size: 40px; font-weight: bold; color: #006DAE;">Clase 12</p>
+<p style="font-size: 40px; font-weight: bold; color: #006DAE;">Clase 11</p>
 <p style="font-size: 32px; color: #1b4d2e; margin-top: 15px; font-weight: 600;">Valor esperado, varianza y percentiles</p>
 <p style="font-size: 26px; color: #6b7280; margin-top: 20px;">Resumiendo distribuciones: centro, dispersión y posición</p>
 </div>
