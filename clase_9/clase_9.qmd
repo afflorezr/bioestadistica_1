@@ -40,8 +40,6 @@ execute:
   echo: true
 ---
 
-## Clase 9 {.center .middle}
-
 ## Contenido
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
@@ -65,6 +63,195 @@ execute:
 </ul>
 </div>
 </div>
+
+## De eventos a distribuciones: el puente
+
+<div style="display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 16px;">
+<div style="height: 4px; flex: 1; background: linear-gradient(90deg, #1a3a6b, #1b4d2e); border-radius: 2px;"></div>
+<p style="font-size: 26px; font-weight: 700; color: #1a3a6b; white-space: nowrap;">Cada paso construye el siguiente.</p>
+<div style="height: 4px; flex: 1; background: linear-gradient(90deg, #1b4d2e, #1a3a6b); border-radius: 2px;"></div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; align-items: start; text-align: center;">
+
+<div class="fragment fade-up" data-fragment-index="1" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #1a3a6b; color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; margin-bottom: 10px;">1</div>
+<p style="font-size: 26px; font-weight: 700; color: #1a3a6b;">Experimento</p>
+<p style="font-size: 23px; color: #374151; margin-top: 6px;">Siembro 10 semillas y observo cuántas germinan.</p>
+<p style="font-size: 22px; color: #6b7280; margin-top: 8px; font-style: italic;">Clases 4–5</p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #1a3a6b; color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; margin-bottom: 10px;">2</div>
+<p style="font-size: 26px; font-weight: 700; color: #1a3a6b;">Conteo</p>
+<p style="font-size: 23px; color: #374151; margin-top: 6px;">$\binom{10}{k}$ formas de elegir cuáles $k$ semillas germinan.</p>
+<p style="font-size: 22px; color: #6b7280; margin-top: 8px; font-style: italic;">Clases 7-8</p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #1b4d2e; color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; margin-bottom: 10px;">3</div>
+<p style="font-size: 26px; font-weight: 700; color: #1b4d2e;">Variable aleatoria</p>
+<p style="font-size: 23px; color: #374151; margin-top: 6px;">$X=$ número de germinaciones. Un número resume el resultado.</p>
+<p style="font-size: 22px; color: #6b7280; margin-top: 8px; font-style: italic;">Clase 9</p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #1b4d2e; color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; margin-bottom: 10px;">4</div>
+<p style="font-size: 26px; font-weight: 700; color: #1b4d2e;">Distribución</p>
+<p style="font-size: 23px; color: #374151; margin-top: 6px;">$X \sim \text{Bin}(10, p)$ da $P(X=k)$ para todo $k$ de una vez.</p>
+<p style="font-size: 22px; color: #6b7280; margin-top: 8px; font-style: italic;">Clase 9 →</p>
+</div>
+
+</div>
+
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: center; margin-top: 28px; color: #1a3a6b; font-weight: 700;">
+Todo lo que aprendimos sobre probabilidad es el ingrediente de las distribuciones.
+</p>
+
+
+## El problema que queremos resolver
+
+<div style="margin-top: 10px;">
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-body" style="font-size: 28px; text-align: justify;">
+En un lote de <strong>10 semillas de maíz</strong>, cada semilla germina con probabilidad $p = 0.8$. ¿Cuál es la probabilidad de que germinen <em>exactamente 7</em>?
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 16px;">
+
+<div>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; color: #7a1515; font-weight: 700; margin-bottom: 6px;">❌ Enfoque de clases 4–7: listar eventos</p>
+
+<div class="block-alert fragment fade-up" data-fragment-index="3" style="max-width: 750px;">
+<div class="block-title">Espacio muestral</div>
+<div class="block-body" style="font-size: 25px;">
+$\Omega = \{GGGGGGGGGG,\; FGGGGGGGGG,\;\ldots\}$
+<br><br>
+$|\Omega| = 2^{10} = \mathbf{1024}$ <strong>resultados posibles.</strong>
+<br><br>
+Para $P(\text{exactamente 7 germinan})$ hay que contar todos los subconjuntos de tamaño 7... $\binom{10}{7} = 120$ eventos.
+</div>
+</div>
+</div>
+
+<div>
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; color: #1b4d2e; font-weight: 700; margin-bottom: 6px;">✓ Enfoque nuevo: distribución de probabilidad</p>
+<div class="block-definition fragment fade-up" data-fragment-index="5">
+<div class="block-title">Variable aleatoria + fórmula</div>
+<div class="block-body" style="font-size: 24px;">
+Sea $X =$ número de semillas que germinan. Entonces $X \sim \text{Bin}(10,\, 0.8)$ y:
+<br><br>
+$P(X = 7) = \binom{10}{7}(0.8)^7(0.2)^3 \approx 0.201$
+<br><br>
+Una sola expresión reemplaza los 1024 casos.
+</div>
+</div>
+</div>
+
+</div>
+
+<p class="fragment fade-up" data-fragment-index="6" style="font-size: 27px; text-align: center; margin-top: 16px; color: #1a3a6b; font-weight: 700;">
+Las distribuciones son atajos que condensan toda la probabilidad de un fenómeno en una fórmula.
+</p>
+
+</div>
+
+
+## ¿Qué es un parámetro?
+
+<div style="text-align: center; margin-top: 10px;">
+<p class="fragment fade-up" data-fragment-index="1" style="font-size: 32px; color: #374151;">
+Un parámetro es el <strong>control</strong> que ajusta una distribución.
+</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 20px; text-align: center;">
+
+<div class="fragment fade-up" data-fragment-index="2">
+<div style="font-size: 44px; margin-bottom: 8px;">🌡️</div>
+<p style="font-size: 26px; font-weight: 700; color: #1a3a6b;">Mismo termostato</p>
+<p style="font-size: 24px; color: #374151; margin-top: 6px;">Lo ajustas a 18 °C o 28 °C. Mismo dispositivo, temperatura distinta.</p>
+<p style="font-size: 24px; color: #6b7280; margin-top: 8px;">Temperatura = <strong>parámetro</strong></p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3">
+<div style="font-size: 44px; margin-bottom: 8px;">🌱</div>
+<p style="font-size: 26px; font-weight: 700; color: #1b4d2e;">Misma distribución</p>
+<p style="font-size: 24px; color: #374151; margin-top: 6px;">$X \sim \text{Bin}(10,\, 0.3)$ vs. $X \sim \text{Bin}(10,\, 0.9)$. Misma fórmula, comportamiento distinto.</p>
+<p style="font-size: 24px; color: #6b7280; margin-top: 8px;">$p$ = <strong>parámetro</strong></p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4">
+<div style="font-size: 44px; margin-bottom: 8px;">🔍</div>
+<p style="font-size: 26px; font-weight: 700; color: #7a1515;">El reto real</p>
+<p style="font-size: 24px; color: #374151; margin-top: 6px;">En la práctica <strong>no sabemos</strong> el valor del parámetro. Lo estimamos con datos.</p>
+<p style="font-size: 24px; color: #6b7280; margin-top: 8px;">Eso es <strong>inferencia</strong></p>
+</div>
+
+</div>
+
+## ¿Qué es una distribución de probabilidad?
+
+<div style="text-align: center; margin-top: 8px;">
+<p class="fragment fade-up" data-fragment-index="1" style="font-size: 31px; color: #374151;">
+Una distribución es el <strong>mapa completo</strong> de un fenómeno aleatorio:<br>muestra todos los valores posibles y qué tan probable es cada uno.
+</p>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 18px;">
+
+<div class="fragment fade-up" data-fragment-index="2" style="text-align: center;">
+<div style="font-size: 40px; margin-bottom: 8px;">🎲</div>
+<p style="font-size: 25px; font-weight: 700; color: #1a3a6b; margin-bottom: 10px;">Sin distribución</p>
+<p style="font-size: 24px; color: #374151;">Sé que al lanzar un dado puede salir 1, 2, 3, 4, 5 o 6.</p>
+<p style="font-size: 24px; color: #374151; margin-top: 8px;">Pero no sé <em>cuánto esperar</em>, ni <em>cuán seguido</em> ocurre cada valor.</p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="text-align: center;">
+<div style="font-size: 40px; margin-bottom: 8px;">📋</div>
+<p style="font-size: 25px; font-weight: 700; color: #1b4d2e; margin-bottom: 10px;">Con distribución</p>
+<table style="width:100%; font-size:24px; border-collapse:collapse; margin: 0 auto;">
+<tr style="background:#1b4d2e; color:white;">
+<th style="padding:6px 12px;">$x$</th>
+<td style="padding:6px 12px;">1</td><td style="padding:6px 12px;">2</td><td style="padding:6px 12px;">3</td>
+<td style="padding:6px 12px;">4</td><td style="padding:6px 12px;">5</td><td style="padding:6px 12px;">6</td>
+</tr>
+<tr style="background:#d6f0dd;">
+<th style="padding:6px 12px;">$P(X=x)$</th>
+<td style="padding:6px 12px;">$\frac{1}{6}$</td><td style="padding:6px 12px;">$\frac{1}{6}$</td><td style="padding:6px 12px;">$\frac{1}{6}$</td>
+<td style="padding:6px 12px;">$\frac{1}{6}$</td><td style="padding:6px 12px;">$\frac{1}{6}$</td><td style="padding:6px 12px;">$\frac{1}{6}$</td>
+</tr>
+</table>
+<p style="font-size: 24px; color: #374151; margin-top: 10px;">Ahora sé <em>exactamente</em> qué esperar de cada resultado.</p>
+</div>
+
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; text-align: center;">
+
+<div class="fragment fade-up" data-fragment-index="4">
+<p style="font-size: 38px;">📍</p>
+<p style="font-size: 24px; font-weight: 700; color: #1a3a6b;">Qué valores puede tomar</p>
+<p style="font-size: 22px; color: #6b7280;">El soporte de la variable</p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5">
+<p style="font-size: 38px;">⚖️</p>
+<p style="font-size: 24px; font-weight: 700; color: #1a3a6b;">Con qué probabilidad</p>
+<p style="font-size: 22px; color: #6b7280;">La función de masa o densidad</p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="6">
+<p style="font-size: 38px;">📐</p>
+<p style="font-size: 24px; font-weight: 700; color: #1a3a6b;">Cómo se acumula</p>
+<p style="font-size: 22px; color: #6b7280;">La función de distribución $F(x)$</p>
+</div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
 <p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Variables Aleatorias</p>
@@ -101,12 +288,12 @@ Con ello podemos calcular probabilidades, esperanzas, varianzas y mucho más de 
 
 </div>
 
-## Ejemplo motivador: ensayo clínico
+## Ejemplo 1: ensayo clínico
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
   <div class="block-body">
 <p style="font-size: 32px; text-align: justify;">
-<strong>Contexto:</strong> En un estudio sobre malaria en el Chocó, se aplica un tratamiento a 10 pacientes. Para cada paciente se registra si <em>se recupera</em> (R) o <em>no se recupera</em> (N).
+En un estudio sobre malaria en el Chocó, se aplica un tratamiento a 10 pacientes. Para cada paciente se registra si <em>se recupera</em> (R) o <em>no se recupera</em> (N).
 </p>
   </div>
 </div>
@@ -126,7 +313,7 @@ En lugar de trabajar con 1024 eventos, trabajamos con 11 valores numéricos. ¡M
 ## Definición formal
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: Variable Aleatoria</div>
+  <div class="block-title">Variable Aleatoria</div>
   <div class="block-body" style="font-size: 32px; text-align: justify;">
 Una <strong>variable aleatoria</strong> $X$ es una función $X: \Omega \to \mathbb{R}$ que asigna a cada elemento $\omega \in \Omega$ del espacio muestral un número real $X(\omega)$.
   </div>
@@ -146,7 +333,7 @@ Convencionalmente usamos letras mayúsculas ($X$, $Y$, $Z$) para variables aleat
 
 ## Dos grandes tipos de variables aleatorias
 
-<div class="twocol">
+<div class="twocol" style="margin-top:40px">
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
   <div class="block-title">Variable Discreta</div>
@@ -254,12 +441,13 @@ La propiedad 4 distingue la FDA de otras funciones: en variables discretas tiene
 </li>
 </ul>
 
-## FDA de una variable discreta (Gráficamente)
+## FDA de una variable discreta
 
 ```{r}
 #| echo: false
-#| fig-width: 9
-#| fig-height: 4.5
+#| fig-width: 7
+#| fig-height: 4
+#| fig-align: center
 # FDA de Binomial(3, 0.5)
 x_vals <- 0:3
 probs   <- dbinom(x_vals, 3, 0.5)
@@ -299,18 +487,17 @@ Para variables <strong>continuas</strong>: $P(X = a) = 0$ para todo $a$, y $F$ e
 </ul>
 
 
-## FMP (Función de Masa de Probabilidad) 
+## Función de masa de probabilidad (FMP) 
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-body" style="font-size: 30px; text-align: justify;">
 Para $X$ discreta existe un conjunto contable $\{x_1, x_2, \ldots\}$ tal que $\sum_i P(X = x_i) = 1$. La función $p(x_i) = P(X = x_i)$ se denomina <strong>función de masa de probabilidad</strong> (FMP).
   </div>
 </div>
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify; list-style-type: none;">
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: left;">
 <strong>Propiedades:</strong> 
-</li>
+</p>
+<ul style="margin-top: 20px; padding-left:40px">
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
 La FMP satisface: $p(x_i) \geq 0$ para todo $i$, y $\sum_{i} p(x_i) = 1$.
 </li>
@@ -337,22 +524,21 @@ La FDA se obtiene como $F(x) = \sum_{x_i \leq x} p(x_i)$, se calcula como una su
 
 
 
-## FDP (Función de Densidad de Probabilidad)
+## Función de densidad de probabilidad (FDP)
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
   <div class="block-title">Variable Aleatoria Continua</div>
   <div class="block-body" style="font-size: 25px; text-align: justify;">
-Para $X$ continua si existe una función $f(x) \geq 0$ tal que:
-$$f(x) = \int_{-\infty}^{x} f(t)\, dt \quad \text{para todo } x \in \mathbb{R}$$
+Para $X$ continua existe una función $f(x) \geq 0$ tal que:
+$$F(x) = \int_{-\infty}^{x} f(t)\, dt \quad \text{para todo } x \in \mathbb{R}$$
 La función $f$ se llama <strong>función de densidad de probabilidad</strong> (FDP), en inglés (PDF).
   </div>
 </div>
 
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;list-style-type: none;">
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
 <strong>Propiedades:</strong>
-</li>
-
+</p>
+<ul style="margin-top: 20px;">
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
 La FDP satisface: $f(x) \geq 0$ y $\int_{-\infty}^{\infty} f(x)\,dx = 1$.
 </li>
@@ -378,12 +564,13 @@ En variables aleatorias continuas $P(a < X < b) = P(a \leq X \leq b)$: los extre
 </ul>
 
 
-## Gráficamente la FDP y FDA de una variable continua 
+## FDP y FDA de una variable continua 
 
 ```{r}
 #| echo: false
 #| fig-width: 9
 #| fig-height: 4.5
+#| fig-align: center
 
 # FDP de una Normal estándar
 x <- seq(-4, 4, length = 1000)
@@ -406,7 +593,7 @@ plot(x, pnorm(x), type = "l", lwd = 3, col = "#15803d",
 ```
 
 
-## Gráfica de la FDP (Distribución Normal Estándar)
+## Gráfica de la FDP
 
 ```{r}
 #| echo: false
@@ -432,7 +619,6 @@ abline(h = 0, col = "gray60")
 El <strong>soporte</strong> de una variable aleatoria $X$ es el conjunto de valores $x$ donde $P(X = x) > 0$ (discreta) o $f(x) > 0$ (continua).
   </div>
 </div>
-
 <ul style="margin-top: 20px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
 El soporte define el <em>rango natural</em> de la variable: los valores que realmente pueden ocurrir.
@@ -441,7 +627,6 @@ El soporte define el <em>rango natural</em> de la variable: los valores que real
 Por ejemplo: número de parásitos en sangre $\Rightarrow$ soporte $\{0,1,2,\ldots\}$; temperatura corporal $\Rightarrow$ soporte $(35, 45)$ °C (en la práctica clínica).
 </li>
 </ul>
-
 <h4 class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
 Variables Aleatorias Mixtas
 </h4>
@@ -465,9 +650,8 @@ En este curso nos concentraremos en los dos tipos puros: discreto y continuo.
 ## Modelo probabilístico de una variable
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Modelo probabilístico</div>
-  <div class="block-body">
-
+<div class="block-title">Modelo probabilístico</div>
+<div class="block-body">
 Un modelo probabilístico describe el comportamiento aleatorio de una variable mediante una distribución de probabilidad.
 
 $$
@@ -476,17 +660,15 @@ $$
 
 donde $\theta$ representa los parámetros del modelo.
 
-  </div>
 </div>
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 25px; text-align: justify; list-style-type: none;">
+</div>
+<p class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
 Algunos ejemplos de modelos probabilísticos comunes en biología y agronomía son:
-</li>
+</p>
+<ul >
 <li class="fragment fade-up" data-fragment-index="2"
 style="font-size: 25px; text-align: justify;">
-Modelo discreto con dos resultados posibles: éxito o fracaso, vivo o muerto, sano o enfermo. Se representa como:
-$X \sim \text{Bernoulli}(p)$
+Modelo discreto con dos resultados posibles: vivo o muerto, sano o enfermo. Se representa como: $X \sim \text{Bernoulli}(p)$
 </li>
 
 <li class="fragment fade-up" data-fragment-index="3"style="font-size: 25px; text-align: justify;">
@@ -512,28 +694,29 @@ $X \sim \text{Exp}(\lambda)$
 </ul>
 
 
-## Ejemplo Modelo Probabilístico de Bernoulli
+## Modelo probabilístico Bernoulli
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución de Bernoulli</div>
-  <div class="block-body">
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top:40px">
+<div class="block-title">Distribución de Bernoulli</div>
+<div class="block-body">
+
 $X \sim \text{Bernoulli}(p)$ si $P(X=1) = p$ y $P(X=0) = 1-p$, con $0 < p < 1$. Su FMP es:
 $$p(x) = p^x (1-p)^{1-x}, \quad x \in \{0,1\}$$
-  </div>
+</div>
 </div>
 
 <ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 Modela experimentos con exactamente <strong>dos resultados</strong>: éxito ($X=1$) o fracaso ($X=0$).
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 Ejemplos: una semilla germina (sí/no), un paciente responde al tratamiento (sí/no), una vaca produce leche de alta calidad (sí/no).
 </li>
 </ul>
 
 ## Construcción de la Distribución Binomial
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top:50px">
   <div class="block-title">Distribución Binomial</div>
   <div class="block-body">
 Si $X_1, \ldots, X_n$ son independientes con $X_i \sim \text{Bernoulli}(p)$, entonces $X = \sum_{i=1}^n X_i \sim \text{Binomial}(n, p)$ con:
@@ -542,17 +725,18 @@ $$p(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
 </div>
 
 <ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 $X$ cuenta el <strong>número de éxitos</strong> en $n$ ensayos independientes con la misma probabilidad de éxito $p$.
 </li>
 </ul>
 
-## Distribución Binomial — visualización
+## Distribución Binomial
 
 ```{r}
 #| echo: false
 #| fig-width: 9
 #| fig-height: 4.5
+#| fig-align: center
 par(mfrow = c(1,3), mar = c(4,4,2,1))
 for(p in c(0.2, 0.5, 0.8)) {
   k <- 0:20
@@ -563,114 +747,70 @@ for(p in c(0.2, 0.5, 0.8)) {
 }
 ```
 
-<p class="fragment fade-up" style="font-size: 26px; text-align: center;" data-fragment-index="1">
+<p class="fragment fade-up" style="font-size: 30px; text-align: center;" data-fragment-index="1">
 Para $p < 0.5$ sesgada a la derecha; para $p = 0.5$ la distribución es simétrica; para $p > 0.5$ sesgada a la izquierda.
 </p>
 
-## Ejemplo 1
-
-<div class="example-box fragment fade-up" data-fragment-index="1">
-
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;list-style-type: none;">
-En un cultivo de tomate en el pueblo de La Unión <strong>Antioquia</strong>, un ingeniero agrónomo analiza la germinación de semillas mejoradas. Se sabe que cada semilla tiene una probabilidad de germinar correctamente de:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$p=0.85$
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Si se siembran:
-$n=10$ semillas, determine la probabilidad de que germinen exactamente:
-$x=8$ semillas.
-</li>
-
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;list-style-type: none;">
-<strong>Solución:</strong>
-</li>
-
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Definimos $X$ como el número de semillas que germinan, entonces $X \sim \text{Binomial}(10, 0.85)$.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Aplicando la distribución binomial:
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X=8)=\binom{10}{8}(0.85)^8(0.15)^2$
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X=8)=45(0.2725)(0.0225)$
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X=8)\approx0.276$
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify;list-style-type: none;">
-La probabilidad de que germinen exactamente 8 semillas es aproximadamente:
-$27.6\%$
-</li>
-</div>
-
 ## Ejemplo 2
 
-<div class="example-box fragment fade-up" data-fragment-index="1">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;list-style-type: none;">
-En un cultivo de maíz en el departamento del 
-<strong>Valle del Cauca, Colombia</strong>, la probabilidad de que una planta resista una plaga es de: $p=0.70$
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Se seleccionan aleatoriamente: $n=5$ plantas.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Determine la probabilidad de que como máximo 2 plantas resistan la plaga.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;list-style-type: none;">
-<strong>Solución:</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Definimos $X$ como el número de plantas que resisten la plaga, entonces
-Esto equivale a calcular:
-</li>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Ejemplo: Germinación de semillas</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X\leq2)$
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Para esto usamos suma de probabilidades:  
-$P(X\leq2)=P(X=0)+P(X=1)+P(X=2)$
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Calculamos cada término usando la fórmula de la distribución binomial:
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X=0)=\binom{5}{0}(0.70)^0(0.30)^5=0.00243$
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify; line-height: 1.5;">
+En un cultivo de tomate en el pueblo de La Unión, <strong>Antioquia</strong>, un ingeniero analiza la germinación de semillas mejoradas. Se sabe que cada semilla tiene una probabilidad de germinar correctamente de $p=0.85$. Si se siembran $n=10$ semillas, determine la probabilidad de que germinen exactamente $x=8$ semillas.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X=1)=\binom{5}{1}(0.70)^1(0.30)^4=0.02835$
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>Solución:</strong><br> Definimos $X$ como el número de semillas que germinan, entonces $X \sim \text{Binomial}(10, 0.85)$.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X=2)=\binom{5}{2}(0.70)^2(0.30)^3=0.13230$
-</li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 28px; text-align: justify;list-style-type: none;">
-Sumando:
-</li>
-<li class="fragment fade-up" data-fragment-index="14" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X\leq2)=0.00243+0.02835+0.13230$
-</li>
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Aplicando la distribución binomial:
+$$P(X=8)=\binom{10}{8}(0.85)^8(0.15)^2 = 45(0.2725)(0.0225) \approx 0.276$$
+</p>
 
-<li class="fragment fade-up" data-fragment-index="15" style="font-size: 28px; text-align: justify;list-style-type: none;">
-$P(X\leq2)=0.16308$
-</li>
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+La probabilidad de que germinen exactamente 8 semillas es aproximadamente $27.6\%$.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="16" style="font-size: 28px; text-align: justify;list-style-type: none;">
- La probabilidad de que máximo 2 plantas resistan la plaga es aproximadamente de $16.31\%$
-</li>
+</div>
+</div>
+
+## Ejemplo 3
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Resistencia a plaga en maíz</div>
+<div class="block-body">
+
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En un cultivo de maíz la probabilidad de que una planta resista una plaga es de $p=0.70$. Se seleccionan aleatoriamente $n=5$ plantas. Determine la probabilidad de que como máximo 2 plantas resistan la plaga.
+</p>
+
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>Solución:</strong><br>Definimos $X$ como el número de plantas que resisten la plaga, $X \sim \text{Binomial}(5, 0.70)$. Esto equivale a calcular $P(X \leq 2) = P(X=0) + P(X=1) + P(X=2)$. Calculamos cada término:
+</p>
+
+
+<div class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
+  
+$$P(X=0)=\binom{5}{0}(0.70)^0(0.30)^5=0.002; \quad P(X=1)=\binom{5}{1}(0.70)^1(0.30)^4=0.03;$$
+
+$$ P(X=2)=\binom{5}{2}(0.70)^2(0.30)^3=0.13 $$
+</div>
+
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Sumando: $P(X \leq 2) = 0.00243 + 0.02835 + 0.13230 = 0.16308$. La probabilidad de que máximo 2 plantas resistan la plaga es aproximadamente $16.31\%$.
+</p>
+
+</div>
 </div>
 
 ## Algunas distribuciones de Probabilidad {.center .middle}
 
 ## Distribución de Poisson
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-definition fragment fade-up" data-fragment-index="1"  style="margin-top: 30px;">
   <div class="block-title">Distribución de Poisson</div>
   <div class="block-body " style="font-size: 30px; text-align: justify;">
 $X \sim \text{Poisson}(\lambda)$, con $\lambda > 0$, si:
@@ -680,63 +820,45 @@ $$p(k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots$$
 
 <ul style="margin-top: 20px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
-Modela el <strong>número de eventos raros</strong> en un intervalo de tiempo o espacio fijo: casos de una enfermedad en un municipio por semana, bacterias en un ml de agua.
+Modela el <strong>número de eventos</strong> en un intervalo de tiempo o espacio fijo, por ejemplo, casos de una enfermedad en un municipio por semana, bacterias en un ml de agua.
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 El parámetro $\lambda$ es simultáneamente la media y la varianza de la distribución.
 </li>
 </ul>
 
-## Ejemplo
+## Ejemplo 4: Distribución de Poisson
 
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Plaga en cultivo de arroz</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify; list-style-type: none;">
-En un cultivo de arroz en el departamento del <strong>Tolima</strong>, se presenta un promedio de: $\lambda=2$ sectores afectados por una plaga por semana. Determine la probabilidad de que en una semana se presenten por lo menos 3 sectores afectados.
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En un cultivo de arroz se presenta un promedio de $\lambda=2$ sectores afectados por una plaga por semana. Determine la probabilidad de que en una semana se presenten por lo menos 3 sectores afectados.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify; list-style-type: none;">
-<strong>Solución</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify; list-style-type: none;">
-Definimos $X$ como el número de sectores afectados por la plaga en una semana, entonces $X \sim \text{Poisson}(2)$.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify; list-style-type: none;">
-Se necesita calcular:  
-$P(X \geq 3)$
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify; list-style-type: none;">
-Por la propiedad de la FDA:
-$P(X \geq 3) = 1 - P(X < 3) = 1 - P(X \leq 2)$
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify; list-style-type: none;">
-$P(X\geq3)=1-[P(X=0)+P(X=1)+P(X=2)]$
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify; list-style-type: none;">
-Calculamos cada término usando la fórmula de la distribución de Poisson:
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 28px; text-align: justify; list-style-type: none;">
-$P(X=0)=\frac{e^{-2} 2^0}{0!}=0.1353$; 
-$P(X=1)=\frac{e^{-2} 2^1}{1!}=0.2707$; 
-$P(X=2)=\frac{e^{-2} 2^2}{2!}=0.2707$
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 28px; text-align: justify; list-style-type: none;">
-$P(X\geq3)=1-(0.1353+0.2707+0.2707)$
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 28px; text-align: justify; list-style-type: none;">
-$P(X\geq3)=1-0.6767$
-</li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 28px; text-align: justify; list-style-type: none;">
-$P(X\geq3)=0.3233$
-</li>
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 28px; text-align: justify; list-style-type: none;">
-La probabilidad de que en una semana se presenten por lo menos 3 sectores afectados es aproximadamente de $32.33\%$.
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<strong>Solución:</strong><br>Definimos $X$ como el número de sectores afectados, $X \sim \text{Poisson}(2)$. Por complemento:
+$$P(X \geq 3) = 1 - P(X \leq 2) = 1 - [P(X=0)+P(X=1)+P(X=2)]$$
+</p>
+
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Calculamos cada término:
+$$P(X=0)=\frac{e^{-2} 2^0}{0!}=0.14; \quad P(X=1)=\frac{e^{-2} 2^1}{1!}=0.27; \quad P(X=2)=\frac{e^{-2} 2^2}{2!}=0.27$$
+</p>
+
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
+Sumando: $P(X \geq 3) = 1 - (0.1353 + 0.2707 + 0.2707) = 1 - 0.6767 = 0.3233$. La probabilidad de que se presenten por lo menos 3 sectores afectados es aproximadamente $32.33\%$.
+</p>
+
+</div>
+</div>
 
 ## Distribución Geométrica
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Geométrica</div>
-  <div class="block-body " style="font-size: 30px; text-align: justify;">
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top: 40px;">
+<div class="block-title">Definición:</div>
+<div class="block-body " style="font-size: 30px; text-align: justify;">
 
 $$
 X \sim \text{Geométrica}(p), \quad 0<p<1
@@ -749,69 +871,41 @@ p(k)=(1-p)^{k-1}p,
 \quad k=1,2,3,\ldots
 $$
 
-  </div>
+</div>
 </div>
 
-<ul style="margin-top: 20px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">Modela el número de intentos hasta el primer éxito.</li>
 
-<li class="fragment fade-up" data-fragment-index="2"
-style="font-size: 30px; text-align: justify;">
-
-Modela el número de intentos hasta el primer éxito.
-
-</li>
-
-<li class="fragment fade-up" data-fragment-index="3"
-style="font-size: 30px; text-align: justify;">
-
-Ejemplo: número de semillas sembradas hasta obtener la primera germinación.
-
-</li>
-
-
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">Ejemplo: número de semillas sembradas hasta obtener la primera germinación.</li>
 </ul>
 
-## Ejemplo
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify; list-style-type: none;">
-En un cultivo de flores en el municipio de 
-<strong>Rionegro, Antioquia</strong>, la probabilidad de que una semilla germine correctamente es de: $p=0.25$
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Un agrónomo selecciona semillas de manera aleatoria hasta encontrar la primera semilla que germine.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Determine la probabilidad de que la primera germinación ocurra en el $4^\circ$ intento.
+## Ejemplo 5: Distribución Geométrica
 
+<div class="block-example fragment fade-up" data-fragment-index="1" style="margin-top:40px">
+<div class="block-title">Germinación en cultivo de flores</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify; list-style-type: none;">
-<strong>Solución</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Aplicando la distribución geométrica:
-$P(X=x)=(1-p)^{x-1}p$
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Sustituyendo los valores:
-$P(X=4)=(1-0.25)^{4-1}(0.25)$
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X=4)=(0.75)^3(0.25)$
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X=4)=0.4219(0.25)$
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X=4)\approx0.1055$
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; line-height:1.5">
+En un cultivo de flores la probabilidad de que una semilla germine correctamente es $p=0.25$. Un agrónomo selecciona semillas aleatoriamente hasta encontrar la primera que germine. Determine la probabilidad de que la primera germinación ocurra en el $4^\circ$ intento.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 30px; text-align: justify; list-style-type: none;">
-La probabilidad de que la primera germinación ocurra en el $4^\circ$ intento es aproximadamente de $10.55\%$.
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<strong>Solución:</strong><br>Aplicando la distribución geométrica $P(X=x)=(1-p)^{x-1}p$:
+$$P(X=4)=(1-0.25)^{3}(0.25)=(0.75)^3(0.25)=0.4219 \times 0.25 \approx 0.1055$$
+</p>
+
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+La probabilidad de que la primera germinación ocurra en el $4^\circ$ intento es aproximadamente $10.55\%$.
+</p>
+
+</div>
+</div>
 
 ## Distribución Hipergeométrica
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Hipergeométrica</div>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top:40px">
+  <div class="block-title">Definición:</div>
   <div class="block-body" style="font-size: 30px; text-align: justify;">
 
 $$
@@ -844,44 +938,32 @@ Ejemplo: número de frutas dañadas en una muestra seleccionada de una cosecha.
 
 </ul>
 
-## Ejemplo
+## Ejemplo 6: Distribución Hipergeométrica
 
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify; list-style-type: none;">
-En una finca cafetera del municipio de <strong>Jericó, Antioquia</strong>, se inspecciona un lote de $20$ sacos de café.  
-Se sabe que $6$sacos presentan humedad excesiva y los otros están en buen estado.
-</li>
+<div class="block-example fragment fade-up" data-fragment-index="1" style="margin-top: 40px;">
+<div class="block-title">Sacos de café con humedad</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Si se seleccionan aleatoriamente $4$ sacos sin reemplazo, determine la probabilidad de que exactamente $2$ sacos tengan humedad excesiva.
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; line-height:1.5;">
+En una finca cafetera se inspecciona un lote de $N=20$ sacos de café, de los cuales $K=6$ presentan humedad excesiva. Si se seleccionan aleatoriamente $n=4$ sacos sin reemplazo, determine la probabilidad de que exactamente $2$ sacos tengan humedad excesiva.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify; list-style-type: none;">
-<strong>Solución</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Aplicando la distribución hipergeométrica:
-$P(X=x)=\frac{\binom{K}{x}\binom{N-K}{n-x}}{\binom{N}{n}}$
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Sustituyendo los valores:
-$P(X=2)=\frac{\binom{6}{2}\binom{14}{2}}{\binom{20}{4}}$
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X=2)=\frac{15 \times 91}{4845}=\frac{1365}{4845}=0.2817$
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<strong>Solución:</strong><br>Aplicando la distribución hipergeométrica:
+$$P(X=2)=\frac{\binom{6}{2}\binom{14}{2}}{\binom{20}{4}}=\frac{15 \times 91}{4845}=\frac{1365}{4845}\approx 0.282$$
+</p>
 
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X=2)\approx0.282$
-</li>
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+La probabilidad de seleccionar exactamente 2 sacos con humedad excesiva es aproximadamente $28.2\%$.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 30px; text-align: justify; list-style-type: none;">
-La probabilidad de seleccionar exactamente 2 sacos con humedad excesiva es aproximadamente de $28.2\%$.
-</li>
+</div>
+</div>
 
 ## Distribución Uniforme continua
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Uniforme continua</div>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top: 40px;">
+  <div class="block-title">Definición:</div>
 <div class="block-body">
 $X \sim U(a, b)$ si todos los valores en $(a,b)$ son igualmente probables:
 $$f(x) = \frac{1}{b-a}, \quad a < x < b$$
@@ -889,54 +971,41 @@ $$f(x) = \frac{1}{b-a}, \quad a < x < b$$
 </div>
 
 <ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 Su FDA es $F(x) = \frac{x-a}{b-a}$ para $a \leq x \leq b$, una función lineal creciente.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 Usada como <em>a priori no informativa</em> en estadística bayesiana y para simular otras distribuciones.
 </li>
 </ul>
 
-## Ejemplo
+## Ejemplo 7: Distribución Uniforme
 
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify; list-style-type: none;">
-En un sistema de riego de un cultivo de cebolla en el municipio de <strong>Pasto, Nariño</strong>, el tiempo de activación automática del riego se distribuye uniformemente entre $10$ y $30$ minutos.
-</li>
+<div class="block-example fragment fade-up" data-fragment-index="1" style="margin-top: 40px;">
+<div class="block-title">Sistema de riego:</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Determine la probabilidad de que el sistema se active entre $15$ y $22$ minutos.
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;line-height:1.5">
+En un sistema de riego de un cultivo de cebolla el tiempo de activación automática se distribuye uniformemente entre $A=10$ y $B=30$ minutos. Determine la probabilidad de que el sistema se active entre $15$ y $22$ minutos.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify; list-style-type: none;">
-<strong>Solución</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Para una distribución uniforme continua:
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(a \leq X \leq b)=\frac{b-a}{B-A}$
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Donde:
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$a = 15$; $b = 22$; $A = 10$; $B = 30$
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Sustituyendo:
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(15\leq X\leq22)=\frac{22-15}{30-10} = \frac{7}{20} = 0.35$
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 30px; text-align: justify; list-style-type: none;">
-La probabilidad de que el sistema se active entre 15 y 22 minutos es de $35\%$.
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<strong>Solución:</strong><br>Para una distribución uniforme continua $P(a \leq X \leq b)=\frac{b-a}{B-A}$, sustituyendo:
+$$P(15 \leq X \leq 22)=\frac{22-15}{30-10} = \frac{7}{20} = 0.35$$
+</p>
+
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+La probabilidad de que el sistema se active entre 15 y 22 minutos es $35\%$.
+</p>
+
+</div>
+</div>
 
 
 ## Distribución Normal
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Normal</div>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top: 50px;">
+  <div class="block-title">Definición:</div>
   <div class="block-body">
 $X \sim N(\mu, \sigma^2)$ si su FDP es:
 $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \mathbb{R}$$
@@ -944,10 +1013,10 @@ $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\ri
 </div>
 
 <ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 $\mu$ es la media (centro de la campana) y $\sigma^2$ es la varianza (anchura de la campana).
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 Aplicaciones en biología: peso corporal, talla, presión arterial, niveles séricos de glucosa.
 </li>
 </ul>
@@ -955,8 +1024,8 @@ Aplicaciones en biología: peso corporal, talla, presión arterial, niveles sér
 
 ## Normal estándar
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Normal estándar Z</div>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top: 50px;">
+  <div class="block-title">Definición:</div>
   <div class="block-body">
 $Z \sim N(0,1)$ se denomina la <strong>normal estándar</strong>. Si $X \sim N(\mu, \sigma^2)$, entonces:
 $$Z = \frac{X - \mu}{\sigma} \sim N(0,1)$$
@@ -965,59 +1034,39 @@ Este proceso se llama <strong>estandarización</strong>.
 </div>
 
 <ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La estandarización permite usar <strong>una única tabla</strong> (o función `pnorm` en R) para calcular probabilidades de cualquier normal.
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+La estandarización permite usar <strong>una única tabla</strong> (o función `pnorm` en R) para calcular probabilidades de cualquier distribución normal.
 </li>
 </ul>
 
-## Ejemplo
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify; list-style-type: none;">
-En un cultivo de aguacate en el municipio de 
-<strong>Sonsón, Antioquia</strong>, el peso de los frutos sigue una distribución normal con $\mu=250 \text{ g}$ y $\sigma=20 \text{ g}$
-</li>
+## Ejemplo 8: Distribución Normal
 
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Determine la probabilidad de que un aguacate seleccionado al azar pese menos de 280 \text{ g}
-</li>
+<div class="block-example fragment fade-up" data-fragment-index="1" style="line-height:1.5;margin-top:40px">
+<div class="block-title">Ejemplo: Peso de aguacates, Sonsón</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify; list-style-type: none;">
-<strong>Solución</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Estandarizamos la variable:
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$Z=\frac{X-\mu}{\sigma}$
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X < x) = P\left(Z < \frac{X-\mu}{\sigma}\right)$
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Sustituyendo los valores:
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$Z=\frac{280-250}{20} = \frac{30}{20} = 1.5$
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X < 280) = P(Z < 1.5)$
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+En un cultivo de aguacate el peso de los frutos sigue una distribución normal con $\mu=250$ g y $\sigma=20$ g. Determine la probabilidad de que un aguacate seleccionado al azar pese menos de $280$ g.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Buscando en la tabla normal estándar:
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X < 280) = P(Z < 1.5) \approx 0.9332$
-</li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 30px; text-align: justify; list-style-type: none;">
-La probabilidad de que un aguacate pese menos de 280 g es aproximadamente de 93.32\%
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<strong>Solución:</strong><br>Estandarizamos la variable usando $Z=\frac{X-\mu}{\sigma}$:
+$$Z=\frac{280-250}{20} = \frac{30}{20} = 1.5 \quad \Rightarrow \quad P(X < 280) = P(Z < 1.5)$$
+</p>
+
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+Consultando la tabla normal estándar: $P(Z < 1.5) \approx 0.9332$. La probabilidad de que un aguacate pese menos de 280 g es aproximadamente $93.32\%$.
+</p>
+
+</div>
+</div>
 
 
 
 ## Distribución Exponencial
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Exponencial</div>
+  <div class="block-title">Definición:</div>
   <div class="block-body">
 $X \sim \text{Exp}(\lambda)$, con $\lambda > 0$, si:
 $$f(x) = \lambda e^{-\lambda x}, \quad x > 0$$
@@ -1026,10 +1075,10 @@ Su FDA es $F(x) = 1 - e^{-\lambda x}$.
 </div>
 
 <ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 Modela <strong>tiempos de espera</strong> entre eventos de Poisson: tiempo hasta la próxima infección, tiempo de vida de un organismo bajo condiciones constantes.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 Propiedad sin memoria: $P(X > s+t \mid X > s) = P(X > t)$.
 </li>
 <div class="block-example fragment fade-up" data-fragment-index="4">
@@ -1041,48 +1090,32 @@ Propiedad sin memoria: $P(X > s+t \mid X > s) = P(X > t)$.
 
 </ul>
 
-## Ejemplo
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify; list-style-type: none;">
-En un cultivo de caña de azúcar en el municipio de <strong>Palmira, Valle del Cauca</strong>, el tiempo entre fallas de un sistema de riego automático sigue una distribución exponencial con una tasa promedio de $\lambda=0.5$ fallas por hora.
-</li>
+## Ejemplo 9: Distribución Exponencial
 
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Determine la probabilidad de que el sistema tarde más de $3$ horas en presentar una falla.
-</li>
+<div class="block-example fragment fade-up" data-fragment-index="1" style="line-height:1.5;margin-top:40px">
+<div class="block-title">Fallas en sistema de riego</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify; list-style-type: none;">
-<strong>Solución</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Para una distribución exponencial:
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$f(x)=\lambda e^{-\lambda x}$
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify; list-style-type: none;">
-A partir de esta función integrando se obtiene la probabilidad acumulada:
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X>x)=e^{-\lambda x}$
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Sustituyendo los valores:
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X>3)=e^{-(0.5)(3)}$
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+En un cultivo de caña de azúcar el tiempo entre fallas de un sistema de riego automático sigue una distribución exponencial con tasa $\lambda=0.5$ fallas por hora. Determine la probabilidad de que el sistema tarde más de $3$ horas en presentar una falla.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X>3)=e^{-1.5}\approx 0.223$
-</li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 30px; text-align: justify; list-style-type: none;">
-La probabilidad de que el sistema tarde más de 3 horas en fallar es aproximadamente de 22.31\%
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<strong>Solución:</strong><br>Para la distribución exponencial, $P(X>x)=e^{-\lambda x}$. Sustituyendo:
+$$P(X>3)=e^{-(0.5)(3)}=e^{-1.5}\approx 0.223$$
+</p>
+
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+La probabilidad de que el sistema tarde más de 3 horas en fallar es aproximadamente $22.31\%$.
+</p>
+
+</div>
+</div>
 
 ## Distribución Gamma
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Gamma</div>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="margin-top:40px">
+  <div class="block-title">Definición:</div>
   <div class="block-body">
 $X \sim \text{Gamma}(\alpha, \beta)$, con $\alpha, \beta > 0$, si:
 $$f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta}, \quad x > 0$$
@@ -1091,61 +1124,41 @@ donde $\Gamma(\alpha) = \int_0^\infty t^{\alpha-1}e^{-t}dt$.
 </div>
 
 <ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 $\alpha$ es el parámetro de forma y $\beta$ es el parámetro de escala. La Exponencial es un caso especial con $\alpha=1$.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 Usada para modelar tiempos hasta el $k$-ésimo evento, tiempos de supervivencia, concentraciones.
 </li>
 </ul>
 
-## Ejemplo
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify; list-style-type: none;">
-En un cultivo de tomate en el municipio de 
-<strong>Marinilla, Antioquia</strong>, el tiempo (en días) hasta que un sistema de riego presente la segunda falla sigue una distribución Gamma con: $\alpha=2$ y $\beta=3$.
-</li>
+## Ejemplo 10: Distribución Gamma
 
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Determine la probabilidad de que el sistema presente la segunda falla antes de $4$ días.
-</li>
+<div class="block-example fragment fade-up" data-fragment-index="1" style="line-height:1.5;margin-top:40px">
+<div class="block-title">Ejemplo: Fallas en sistema de riego, Marinilla</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify; list-style-type: none;">
-<strong>Solución</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Para una distribución gamma:
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$f(x)=\frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta}$
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify; list-style-type: none;">
-A partir de esta función integrando se obtiene la probabilidad acumulada:
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X<x)=1-e^{-x/\beta}\cdot \left(1+\frac{x}{\beta}\right)$
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Se necesita calcular $P(X<4)$, sustituyendo los valores:
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X<4)=1-e^{-4/3}\cdot \left(1+\frac{4}{3}\right)=1-e^{-1.333}\cdot (2.333)$
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X<4)=1-0.2636\cdot 2.333=1-0.6144$
-</li> 
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X<4)=0.3856 \approx 0.386$ 
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+En un cultivo de tomate el tiempo (en días) hasta que un sistema de riego presente la segunda falla sigue una distribución Gamma con $\alpha=2$ y $\beta=3$. Determine la probabilidad de que el sistema presente la segunda falla antes de $4$ días.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 30px; text-align: justify; list-style-type: none;">
-La probabilidad de que el sistema presente la segunda falla antes de 4 días es aproximadamente de 38.6%
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<strong>Solución:</strong><br>Para $\alpha=2$, la FDA tiene forma: $P(X<x)=1-e^{-x/\beta}\left(1+\frac{x}{\beta}\right)$. Sustituyendo:
+$$P(X<4)=1-e^{-4/3}\left(1+\frac{4}{3}\right)=1-0.2636\times 2.333=1-0.6144=0.3856$$
+</p>
+
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+La probabilidad de que el sistema presente la segunda falla antes de 4 días es aproximadamente $38.6\%$.
+</p>
+
+</div>
+</div>
 
 
 ## Distribución Beta
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Distribución Beta</div>
+<div class="block-definition fragment fade-up" data-fragment-index="1" style="line-height:1.5;margin-top:40px">
+  <div class="block-title">Definición:</div>
   <div class="block-body">
 $X \sim \text{Beta}(\alpha, \beta)$, con $\alpha, \beta > 0$, si:
 
@@ -1163,14 +1176,14 @@ donde $\Gamma(\cdot)$ es la función Gamma.
 <ul style="margin-top: 10px;">
 
 <li class="fragment fade-up" data-fragment-index="2"
-style="font-size: 28px; text-align: justify;">
+style="font-size: 30px; text-align: justify;">
 
 $\alpha$ y $\beta$ controlan la forma de la distribución sobre el intervalo $(0,1)$.
 
 </li>
 
 <li class="fragment fade-up" data-fragment-index="3"
-style="font-size: 28px; text-align: justify;">
+style="font-size: 30px; text-align: justify;">
 
 Usada para modelar proporciones, probabilidades y porcentajes.
 
@@ -1178,458 +1191,234 @@ Usada para modelar proporciones, probabilidades y porcentajes.
 
 </ul>
 
-## Ejemplo
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify; list-style-type: none;">
-En un cultivo de uva en el municipio de 
-<strong>Villa de Leyva, Boyacá</strong>, la proporción de humedad del suelo sigue una distribución Beta con parámetros: $\alpha=2$ y $\beta=2$.
-</li>
+## Ejemplo 11: Distribución Beta
 
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Determine la probabilidad de que la humedad del suelo sea menor que 0.5
-</li>
+<div class="block-example fragment fade-up" data-fragment-index="1" style="line-height:1.5;margin-top:40px">
+<div class="block-title">Ejemplo: Humedad del suelo, Villa de Leyva</div>
+<div class="block-body">
 
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify; list-style-type: none;">
-<strong>Solución</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify; list-style-type: none;">
-La función de densidad Beta es: $f(x)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}$
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Sustituyendo: $f(x)=\frac{\Gamma(4)}{\Gamma(2)\Gamma(2)}x(1-x)$
-</li>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+En un cultivo de uva la proporción de humedad del suelo sigue una distribución Beta con $\alpha=2$ y $\beta=2$. Determine la probabilidad de que la humedad sea menor que $0.5$.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Como:
-</li>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+<strong>Solución:</strong><br>Con $\Gamma(4)=6$ y $\Gamma(2)=1$, la FDP simplifica a $f(x)=6x(1-x)$. Calculando:
+$$P(X<0.5)=\int_0^{0.5}6x(1-x)\,dx=\left[3x^2-2x^3\right]_0^{0.5}=0.75-0.25=0.5$$
+</p>
 
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$\Gamma(4) = 3! = 6$ y $\Gamma(2) = 1! = 1$
-</li>
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+La probabilidad de que la humedad del suelo sea menor que $0.5$ es $50\%$. Este resultado es esperable dado que $\alpha=\beta$, lo que hace la distribución simétrica alrededor de $0.5$.
+</p>
 
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Entonces:
-</li> 
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$f(x)=6x(1-x)$
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Ahora calculamos la probabilidad:
-</li>
-
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X<0.5)=\int_0^{0.5}6x(1-x)\,dx$
-</li>
-<li class="fragment fade-up" data-fragment-index="12" style="font-size: 30px; text-align: justify; list-style-type: none;">
-Resolviendo la integral:
-</li>
-
-<li class="fragment fade-up" data-fragment-index="13" style="font-size: 30px; text-align: justify; list-style-type: none;">
-$P(X<0.5)=\left[3x^2-2x^3\right]_0^{0.5}=3(0.5)^2-2(0.5)^3-[0]=0.75-0.25=0.5$
-</li>
-
-<li class="fragment fade-up" data-fragment-index="14" style="font-size: 30px; text-align: justify; list-style-type: none;">
-La probabilidad de que la humedad del suelo sea menor que 0.5 es de $50\%$.
-</li>
+</div>
+</div>
 
 
 
 
 ## Tabla de resumen distribuciones discretas
 
-<div style="font-size: 30px; margin-top: 10px;">
+<div style="font-size: 30px; margin-top: 70px;">
 
-| Distribución | Parámetros | Soporte | Notación |
-|:---|:---:|:---:|:---:|
-| Bernoulli | $p \in (0,1)$ | $\{0,1\}$ | $\text{Ber}(p)$ |
-| Binomial | $n \in \mathbb{N}$, $p \in (0,1)$ | $\{0,1,\ldots,n\}$ | $\text{Bin}(n,p)$ |
-| Poisson | $\lambda > 0$ | $\{0,1,2,\ldots\}$ | $\text{Poi}(\lambda)$ |
-| Geométrica | $p \in (0,1)$ | $\{1,2,3,\ldots\}$ | $\text{Geo}(p)$ |
-| Hipergeométrica | $N,M,n$ | $\{0,\ldots,\min(n,M)\}$ | $\text{Hiper}(N,M,n)$ |
+<table style="
+width:100%;
+border-collapse:collapse;
+font-size:30px;
+font-family:'Segoe UI', Arial, sans-serif;
+box-shadow:0 4px 14px rgba(0,83,155,0.18);
+border-radius:12px;
+overflow:hidden;
+">
+
+<thead style="
+background:linear-gradient(90deg,#0072B2,#00A6D6);
+color:white;
+">
+
+<tr>
+<th style="padding:14px 16px; text-align:center;">Distribución</th>
+<th style="padding:14px 16px; text-align:center;">Parámetros</th>
+<th style="padding:14px 16px; text-align:center;">Soporte</th>
+<th style="padding:14px 16px; text-align:center;">Notación</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr class="fragment fade-up" data-fragment-index="1" style="background-color:#FFFFFF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Bernoulli</td>
+<td style="padding:13px 16px; text-align:center;">$(p \in (0,1))$</td>
+<td style="padding:13px 16px; text-align:center;">$(\{0,1\})$</td>
+<td style="padding:13px 16px; text-align:center;">$\text{Ber}(p)$</td>
+</tr>
+
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color:#EAF6FF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Binomial</td>
+<td style="padding:13px 16px; text-align:center;">$(n \in \mathbb{N}, p \in (0,1))$</td>
+<td style="padding:13px 16px; text-align:center;">$(\{0,1,\ldots,n\})$</td>
+<td style="padding:13px 16px; text-align:center;">$\text{Bin}(n,p)$</td>
+</tr>
+
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color:#FFFFFF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Poisson</td>
+<td style="padding:13px 16px; text-align:center;">$(\lambda > 0)$</td>
+<td style="padding:13px 16px; text-align:center;">$(\{0,1,2,\ldots\})$</td>
+<td style="padding:13px 16px; text-align:center;">$\text{Poi}(\lambda)$</td>
+</tr>
+
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color:#EAF6FF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Geométrica</td>
+<td style="padding:13px 16px; text-align:center;">$(p \in (0,1))$</td>
+<td style="padding:13px 16px; text-align:center;">$(\{1,2,3,\ldots\})$</td>
+<td style="padding:13px 16px; text-align:center;">$\text{Geo}(p)$</td>
+</tr>
+
+<tr class="fragment fade-up" data-fragment-index="5" style="background-color:#FFFFFF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Hipergeométrica</td>
+<td style="padding:13px 16px; text-align:center;">$(N,M,n)$</td>
+<td style="padding:13px 16px; text-align:center;">$(\{0,\ldots,\min(n,M)\})$</td>
+<td style="padding:13px 16px; text-align:center;">$\text{Hiper}(N,M,n)$</td>
+</tr>
+
+</tbody>
+</table>
 
 </div>
   
 ## Tabla de resumen distribuciones continuas
 
-<div style="font-size: 30px; margin-top: 10px;">
+<div style="font-size: 30px; margin-top: 70px;">
 
-| Distribución | Parámetros | Soporte | Notación |
-|:---|:---:|:---:|:---:|
-| Uniforme | $a < b$ | $(a,b)$ | $U(a,b)$ |
-| Normal | $\mu \in \mathbb{R}$, $\sigma^2 > 0$ | $\mathbb{R}$ | $N(\mu, \sigma^2)$ |
-| Exponencial | $\lambda > 0$ | $(0,\infty)$ | $\text{Exp}(\lambda)$ |
-| Gamma | $\alpha, \beta > 0$ | $(0,\infty)$ | $\text{Gamma}(\alpha,\beta)$ |
-| Beta | $\alpha, \beta > 0$ | $(0,1)$ | $\text{Beta}(\alpha,\beta)$ |
+<table style="
+width:100%;
+border-collapse:collapse;
+font-size:30px;
+font-family:'Segoe UI', Arial, sans-serif;
+box-shadow:0 4px 14px rgba(0,83,155,0.18);
+border-radius:12px;
+overflow:hidden;
+">
 
+<thead style="
+background:linear-gradient(90deg,#0072B2,#00A6D6);
+color:white;
+">
+<tr>
+<th style="padding:14px 16px; text-align:center;">Distribución</th>
+<th style="padding:14px 16px; text-align:center;">Parámetros</th>
+<th style="padding:14px 16px; text-align:center;">Soporte</th>
+<th style="padding:14px 16px; text-align:center;">Notación</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr class="fragment fade-up" data-fragment-index="1" style="background-color:#FFFFFF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Uniforme</td>
+<td style="padding:13px 16px; text-align:center;">$a < b$</td>
+<td style="padding:13px 16px; text-align:center;">$(a,b)$</td>
+<td style="padding:13px 16px; text-align:center;">$U(a,b)$</td>
+</tr>
+
+<tr class="fragment fade-up" data-fragment-index="2" style="background-color:#EAF6FF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Normal</td>
+<td style="padding:13px 16px; text-align:center;">$\mu \in \mathbb{R},\; \sigma^2 > 0$</td>
+<td style="padding:13px 16px; text-align:center;">$\mathbb{R}$</td>
+<td style="padding:13px 16px; text-align:center;">$N(\mu, \sigma^2)$</td>
+</tr>
+
+<tr class="fragment fade-up" data-fragment-index="3" style="background-color:#FFFFFF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Exponencial</td>
+<td style="padding:13px 16px; text-align:center;">$\lambda > 0$</td>
+<td style="padding:13px 16px; text-align:center;">$(0,\infty)$</td>
+<td style="padding:13px 16px; text-align:center;">$\text{Exp}(\lambda)$</td>
+</tr>
+
+<tr class="fragment fade-up" data-fragment-index="4" style="background-color:#EAF6FF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Gamma</td>
+<td style="padding:13px 16px; text-align:center;">$\alpha, \beta > 0$</td>
+<td style="padding:13px 16px; text-align:center;">$(0,\infty)$</td>
+<td style="padding:13px 16px; text-align:center;">$\text{Gamma}(\alpha,\beta)$</td>
+</tr>
+
+<tr class="fragment fade-up" data-fragment-index="5" style="background-color:#FFFFFF;">
+<td style="padding:13px 16px; font-weight:700; color:#005B96;">Beta</td>
+<td style="padding:13px 16px; text-align:center;">$\alpha, \beta > 0$</td>
+<td style="padding:13px 16px; text-align:center;">$(0,1)$</td>
+<td style="padding:13px 16px; text-align:center;">$\text{Beta}(\alpha,\beta)$</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 ## Ejercicios Aplicados {.center .middle}
 
-<div style="text-align: center; margin-top: 50px;">
-<p style="font-size: 42px; font-weight: bold; color: #1b4d2e;">Ejercicios y aplicaciones en R</p>
+## Ejercicios: Distribuciones Discretas
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 10px;">
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Ejercicio 1: Binomial</div>
+<div class="block-body" style="font-size: 25px; text-align: justify;">
+En un lote de plantas de banano en <strong>Turbo, Antioquia</strong>, la probabilidad de que una planta presente síntomas de Sigatoka negra es $p = 0.30$. Se seleccionan $n = 12$ plantas al azar. Calcule: (a) $P(X = 4)$, (b) $P(X \leq 2)$, (c) $P(X \geq 9)$.
+</div>
 </div>
 
-
-
-## Ejercicio 1: Identificar el tipo de variable
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Clasifique cada variable</div>
-  <div class="block-body">
-<p>Para cada situación, indique si la variable es <strong>discreta</strong> o <strong>continua</strong> y proponga un modelo:</p>
-<ol>
-<li>Número de aves migratorias observadas en el humedal La Conejera en un día.</li>
-<li>Tiempo (en minutos) que tarda una larva de <em>Anopheles</em> en emerger.</li>
-<li>Proporción de parcelas con presencia de <em>Phytophthora infestans</em>.</li>
-<li>Número de lesiones precancerosas detectadas en un examen cervical.</li>
-</ol>
-  </div>
+<div class="block-alert fragment fade-up" data-fragment-index="2">
+<div class="block-title">Ejercicio 2: Poisson</div>
+<div class="block-body" style="font-size: 25px; text-align: justify;">
+En un cultivo de papa en <strong>Ipiales, Nariño</strong>, el número de focos de gota (<em>Phytophthora infestans</em>) por hectárea sigue una $\text{Poisson}(\lambda = 3)$. Calcule: (a) $P(X = 0)$, (b) $P(X > 4)$, (c) $P(2 \leq X \leq 5)$.
+</div>
 </div>
 
-## Ejercicio 1: Solución
-
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-<ol>
-<li>Discreta — valores enteros $\geq 0$. Modelo: $\text{Poisson}(\lambda)$.</li>
-<li>Continua — tiempo en $(0,\infty)$. Modelo: $\text{Exp}(\lambda)$ o $\text{Gamma}(\alpha,\beta)$.</li>
-<li>Continua — valores en $(0,1)$. Modelo: $\text{Beta}(\alpha,\beta)$.</li>
-<li>Discreta — enteros $\geq 0$. Modelo: $\text{Poisson}(\lambda)$ o $\text{Binomial}(n,p)$.</li>
-</ol>
-  </div>
+<div class="block-alert fragment fade-up" data-fragment-index="3">
+<div class="block-title">Ejercicio 3: Geométrica</div>
+<div class="block-body" style="font-size: 25px; text-align: justify;">
+En un banco de semillas de quinua en <strong>Silvia, Cauca</strong>, la probabilidad de que una semilla sea viable es $p = 0.40$. Se prueban semillas una a una hasta encontrar la primera viable. Calcule: (a) $P(X = 3)$, (b) $P(X \leq 4)$, (c) $P(X > 5)$.
+</div>
 </div>
 
-## Ejercicio 2: Calcular probabilidades con la FDA
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — FDA Binomial</div>
-  <div class="block-body">
-<p>En un estudio sobre anemia en niños de Boyacá, $X \sim \text{Bin}(8, 0.35)$ es el número de niños anémicos en un grupo de 8. Calcule:</p>
-<ol>
-<li>$P(X \leq 3)$</li>
-<li>$P(X = 2)$</li>
-<li>$P(X \geq 5)$</li>
-</ol>
-  </div>
+<div class="block-alert fragment fade-up" data-fragment-index="4">
+<div class="block-title">Ejercicio 4: Hipergeométrica</div>
+<div class="block-body" style="font-size: 25px; text-align: justify;">
+En un almacén de <strong>Duitama, Boyacá</strong>, hay $N = 25$ bultos de semillas de papa, de los cuales $K = 8$ están contaminados. Se inspeccionan $n = 5$ bultos sin reemplazo. Calcule: (a) $P(X = 2)$, (b) $P(X \leq 1)$, (c) $P(X \geq 3)$.
 </div>
-
-## Ejercicio 2: Solución en R
-
-```{r}
-# X ~ Bin(8, 0.35)
-pbinom(3, 8, 0.35)          # P(X <= 3)
-dbinom(2, 8, 0.35)          # P(X = 2)
-1 - pbinom(4, 8, 0.35)      # P(X >= 5)
-```
-
-## Ejercicio 3: Variable continua y área bajo la curva
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — Distribución Exponencial</div>
-  <div class="block-body">
-<p>El tiempo (en días) entre brotes sucesivos de una enfermedad en un cultivo de papa sigue una distribución $\text{Exp}(\lambda = 0.1)$. Calcule la probabilidad de que el próximo brote ocurra:</p>
-<ol>
-<li>Antes de 7 días.</li>
-<li>Entre 5 y 15 días.</li>
-<li>Después de 20 días.</li>
-</ol>
-  </div>
-</div>
-
-## Ejercicio 3: Solución
-
-```{r}
-# X ~ Exp(0.1)  (media = 10 días)
-pexp(7,  0.1)                       # P(X < 7)
-pexp(15, 0.1) - pexp(5, 0.1)        # P(5 < X < 15)
-1 - pexp(20, 0.1)                   # P(X > 20)
-```
-
-## Simulación de variables aleatorias en R
-
-```{r}
-set.seed(2026)
-# Generar 1000 obs de distintas distribuciones
-x_bin  <- rbinom(1000, 10, 0.4)
-x_norm <- rnorm(1000, mean = 50, sd = 10)
-x_exp  <- rexp(1000, rate = 0.2)
-
-cat("Binomial   — Media:", round(mean(x_bin),2),
-    "  Var:", round(var(x_bin),2), "\n")
-cat("Normal     — Media:", round(mean(x_norm),2),
-    "  Var:", round(var(x_norm),2), "\n")
-cat("Exponencial— Media:", round(mean(x_exp),2),
-    "  Var:", round(var(x_exp),2), "\n")
-```
-
-## Visualización de las simulaciones
-
-```{r}
-#| echo: false
-#| fig-width: 10
-#| fig-height: 4.5
-set.seed(2026)
-x_bin  <- rbinom(1000, 10, 0.4)
-x_norm <- rnorm(1000, mean = 50, sd = 10)
-x_exp  <- rexp(1000, rate = 0.2)
-par(mfrow = c(1,3), mar = c(4,4,2,1))
-hist(x_bin,  col = "#3b82f6", border = "white", main = "Bin(10, 0.4)",
-     xlab = "x", probability = TRUE, cex.main = 1.2)
-hist(x_norm, col = "#1b4d2e", border = "white", main = "N(50, 100)",
-     xlab = "x", probability = TRUE, cex.main = 1.2)
-hist(x_exp,  col = "#7a1515", border = "white", main = "Exp(0.2)",
-     xlab = "x", probability = TRUE, cex.main = 1.2)
-```
-
-## Verificar que una función es FMP válida
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — Verificación</div>
-  <div class="block-body">
-<p>Sea $p(k) = c \cdot (0.6)^k$ para $k = 0, 1, 2, \ldots$ Determine la constante $c$ para que $p$ sea una FMP válida.</p>
-  </div>
-</div>
-
-<div class="block-proof fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-$$\sum_{k=0}^{\infty} c \cdot (0.6)^k = c \cdot \frac{1}{1-0.6} = \frac{c}{0.4} = 1 \implies c = 0.4$$
-Esta es una distribución Geométrica con $p = 0.4$.
-  </div>
-</div>
-
-## Verificar que una función es FDP válida
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — FDP válida</div>
-  <div class="block-body">
-<p>¿Es $f(x) = 3x^2$ para $0 < x < 1$ (y $f(x) = 0$ en otro caso) una FDP válida?</p>
-  </div>
-</div>
-
-<div class="block-proof fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-$$\int_0^1 3x^2\, dx = \left[x^3\right]_0^1 = 1 \quad \checkmark$$
-Además $f(x) = 3x^2 \geq 0$ en $(0,1)$. Sí es una FDP válida. Esta es una $\text{Beta}(3,1)$.
-  </div>
-</div>
-
-## FDA de la distribución Beta(3,1)
-
-```{r}
-#| echo: false
-#| fig-width: 9
-#| fig-height: 4.5
-x <- seq(0, 1, length = 300)
-par(mfrow = c(1,2), mar = c(4,4,2,1))
-plot(x, 3*x^2, type = "l", lwd = 3, col = "#1b4d2e",
-     main = "FDP: Beta(3,1)", xlab = "x", ylab = "f(x)", cex.main = 1.3)
-polygon(c(0,x,1), c(0,3*x^2,0), col = "#bbf7d0", border = NA)
-lines(x, 3*x^2, lwd = 3, col = "#1b4d2e")
-plot(x, x^3, type = "l", lwd = 3, col = "#7a1515",
-     main = "FDA: Beta(3,1)", xlab = "x", ylab = "F(x)", cex.main = 1.3)
-```
-
-## Valor esperado anticipando el tema
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-<p>
-Conocido el modelo de $X$ (su FMP o FDP), la siguiente pregunta natural es: <strong>¿cuál es el valor "típico" de $X$?</strong>
-</p>
-  </div>
-</div>
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El <strong>valor esperado</strong> $E(X)$ cuantifica el centro de la distribución.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-La <strong>varianza</strong> $\text{Var}(X)$ cuantifica la dispersión alrededor del centro.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-Los <strong>percentiles</strong> indican qué porcentaje de la distribución queda por debajo de un valor dado.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-Estos conceptos serán el tema central de las próximas clases.
-</li>
-</ul>
-
-## Taller en clase {.center .middle}
-
-<div style="text-align: center; margin-top: 50px;">
-<p style="font-size: 42px; font-weight: bold; color: #1b4d2e;">Ejercicios para resolver en clase</p>
-<p style="font-size: 28px; color: #6b7280; margin-top: 20px;">Variables aleatorias — Definición y tipos</p>
-</div>
-
-## 1.Construir una FMP
-
-<div class="block-example">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-<p>Un médico veterinario examina 4 cerdos de una granja del Meta para detectar fiebre aftosa. La probabilidad de que cada cerdo esté infectado es 0.25, independientemente. Sea $X$ = número de cerdos infectados.</p>
-<ol>
-<li>Escriba la FMP completa de $X$ (calcule $p(0), p(1), p(2), p(3), p(4)$).</li>
-<li>Verifique que $\sum p(x_i) = 1$.</li>
-<li>Calcule $P(X \geq 2)$.</li>
-<li>Grafique la FMP y la FDA en R.</li>
-</ol>
-  </div>
-</div>
-
-## Solución
-
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-$X \sim \text{Bin}(4, 0.25)$
-  </div>
-</div>
-
-```{r}
-#| class-source: fragment
-#| source-line-numbers: true
-#| data-fragment-index: 2
-# FMP completa
-k  <- 0:4
-pk <- dbinom(k, 4, 0.25)
-data.frame(x=k, p_x=round(pk,4), suma_acum=round(cumsum(pk),4))
-```
-
-```{r}
-#| class-source: fragment
-#| data-fragment-index: 3
-# P(X >= 2)
-1 - pbinom(1, 4, 0.25)
-```
-
-## 2. Validar una función como FDP
-
-<div class="block-example">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-<p>Para cada función, determine si puede ser una FDP válida. Si no lo es, explique por qué. Si lo es, encuentre la FDA $F(x)$.</p>
-<ol>
-<li>$f(x) = 2x$ para $0 < x < 1$, cero en otro caso.</li>
-<li>$f(x) = x - 1$ para $1 < x < 3$, cero en otro caso.</li>
-<li>$f(x) = \frac{1}{4}e^{-x/4}$ para $x > 0$, cero en otro caso.</li>
-</ol>
-  </div>
-</div>
-
-## Solución
-
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-<ol>
-<li>$\int_0^1 2x\,dx = [x^2]_0^1 = 1$ ✓, $f(x)\geq 0$ ✓. <strong>Válida.</strong> $F(x) = x^2$.</li>
-<li>$f(1)=0$, $f(2)=1$, pero $f(x)<0$ para $1<x<2$ es incorrecto — en realidad $f(x)\geq 0$, pero $\int_1^3(x-1)dx = 2 \neq 1$. <strong>No válida.</strong></li>
-<li>$\int_0^\infty \frac{1}{4}e^{-x/4}dx = 1$ ✓, $f(x)>0$ ✓. <strong>Válida.</strong> Es $\text{Exp}(\lambda=1/4)$.</li>
-</ol>
-  </div>
-</div>
-
-## 3. Propiedades de la FDA
-  
-<div class="block-example">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-<p>La concentración de arsénico (μg/L) en pozos artesianos del Cauca sigue la distribución con FDA:</p>
-$$F(x) = 1 - e^{-0.08x}, \quad x > 0$$
-<ol>
-<li>Identifique el modelo de distribución y su parámetro.</li>
-<li>¿Qué proporción de pozos supera el límite de 10 μg/L (OMS)?</li>
-<li>Encuentre el percentil 95: el nivel que supera al 95% de los pozos.</li>
-<li>Calcule $P(5 \leq X \leq 20)$.</li>
-</ol>
-  </div>
-</div>
-
-## Solución
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-$X \sim \text{Exp}(\lambda = 0.08)$
-  </div>
-</div>
-
-```{r}
-#| class-source: fragment
-#| data-fragment-index: 2
-lam <- 0.08
-# 1. Proporción que supera 10 μg/L
-cat("P(X>10) =", round(1 - pexp(10, lam), 4), "\n")
-# 2. Percentil 95
-cat("P95     =", round(qexp(0.95, lam), 2), "μg/L\n")
-# 3. P(5 ≤ X ≤ 20)
-cat("P(5≤X≤20)=", round(diff(pexp(c(5,20), lam)), 4), "\n")
-```
-
-## 4. Seleccionar el modelo adecuado
-
-<div class="block-example">
-  <div class="block-title">Problema — ¿Qué distribución usar?</div>
-  <div class="block-body">
-<p>Justifique qué distribución usaría para modelar cada variable y especifique sus parámetros si es posible:</p>
-<ol>
-<li>Número de mosquitos <em>Aedes aegypti</em> capturados en una trampa en 24 horas (promedio histórico: 8 por trampa).</li>
-<li>Proporción de semillas de maíz que germinan en un ensayo de 200 semillas.</li>
-<li>Tiempo (días) hasta que aparecen síntomas de fiebre amarilla tras la picadura del vector (media: 5 días).</li>
-<li>Peso (kg) de una tortuga Podocnemis unifilis adulta muestreada aleatoriamente en el Amazonas.</li>
-</ol>
-  </div>
-</div>
-
-## Solución
-
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-<ol>
-<li><strong>Poisson(8)</strong>: conteo de eventos independientes en tiempo fijo con tasa constante.</li>
-<li><strong>Binomial(200, p)</strong>: número de éxitos en $n=200$ ensayos independientes con prob. constante $p$.</li>
-<li><strong>Exponencial($\lambda=0.2$)</strong>: tiempo de espera con $E(X)=5$ días, $\lambda=1/5$.</li>
-<li><strong>Normal($\mu, \sigma^2$)</strong>: medida morfológica continua en población biológica adulta.</li>
-</ol>
-  </div>
-</div>
-
-## Resumen de la clase
-
-<div class="twocol">
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Conceptos clave</div>
-  <div class="block-body">
-<ul>
-<li><strong>Variable aleatoria</strong>: función $X:\Omega\to\mathbb{R}$</li>
-<li><strong>Discreta</strong>: soporte contable, FMP $p(x)$</li>
-<li><strong>Continua</strong>: soporte intervalar, FDP $f(x)$</li>
-<li><strong>FDA</strong>: $F(x) = P(X \leq x)$, herramienta unificadora</li>
-</ul>
-  </div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Distribuciones vistas</div>
-  <div class="block-body">
-<ul>
-<li>Bernoulli, Binomial, Poisson</li>
-<li>Uniforme, Normal, Exponencial, Gamma</li>
-<li>Notación $X \sim \text{Modelo}(\theta)$</li>
-<li>Funciones en R: <code>d-</code>, <code>p-</code>, <code>q-</code>, <code>r-</code></li>
-</ul>
-  </div>
 </div>
 
 </div>
 
-## Próxima clase
+## Ejercicios: Distribuciones Continuas
 
-<div style="text-align: center; margin-top: 60px;">
-<p style="font-size: 40px; font-weight: bold; color: #006DAE;">Clase 10</p>
-<p style="font-size: 32px; color: #1b4d2e; margin-top: 15px; font-weight: 600;">Funciones de probabilidad y densidad</p>
-<p style="font-size: 26px; color: #6b7280; margin-top: 20px;">Propiedades, cálculos y distribuciones en profundidad</p>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 10px;">
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Ejercicio 5: Normal</div>
+<div class="block-body" style="font-size: 25px; text-align: justify;">
+El diámetro del tallo de plantas de maíz en <strong>Montería, Córdoba</strong> sigue $N(\mu = 3.2\text{ cm},\, \sigma = 0.4\text{ cm})$. Calcule: (a) $P(X < 3.0)$, (b) $P(2.8 \leq X \leq 3.6)$, (c) el valor $x_0$ tal que $P(X > x_0) = 0.10$.
 </div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="2">
+<div class="block-title">Ejercicio 6: Exponencial</div>
+<div class="block-body" style="font-size: 25px; text-align: justify;">
+El tiempo (en horas) entre lluvias en un cultivo de cacao en <strong>El Tambo, Huila</strong> sigue $\text{Exp}(\lambda = 0.25)$. Calcule: (a) $P(X > 6)$, (b) $P(2 \leq X \leq 8)$, (c) el tiempo medio entre lluvias.
+</div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="3">
+<div class="block-title">Ejercicio 7: Uniforme</div>
+<div class="block-body" style="font-size: 25px; text-align: justify;">
+El tiempo de maduración (en días) de frutos de mango en <strong>Tolú, Sucre</strong> se distribuye uniformemente entre 85 y 110 días. Calcule: (a) $P(X < 90)$, (b) $P(95 \leq X \leq 105)$, (c) el tiempo de maduración esperado.
+</div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="4">
+<div class="block-title">Ejercicio 8: Gamma</div>
+<div class="block-body" style="font-size: 25px; text-align: justify;">
+El tiempo (en días) hasta que una trampa de feromonas captura el tercer insecto plaga en un cultivo de espárrago en <strong>El Espinal, Tolima</strong> sigue $\text{Gamma}(\alpha = 3,\, \beta = 2)$. Calcule: (a) la media y varianza, (b) $P(X < 4)$ usando software o tablas.
+</div>
+</div>
+
+</div>
+
