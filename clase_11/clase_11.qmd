@@ -40,7 +40,7 @@ execute:
   echo: true
 ---
 
-## Clase 12 {.center .middle}
+## Clase 11 {.center .middle}
 
 ## Contenido
 
@@ -103,11 +103,11 @@ Los <strong>percentiles</strong> responden: ¿qué valor supera a un porcentaje 
 
 </div>
 
-## Valor esperado — variable discreta
+## Valor esperado para variable discreta
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: Valor Esperado (discreta)</div>
-  <div class="block-body">
+  <div class="block-title">Definición</div>
+  <div class="block-body" style="font-size: 30px;">
 Si $X$ es una variable aleatoria discreta con FMP $p(x)$, su <strong>valor esperado</strong> es:
 $$E(X) = \sum_{x \in \text{soporte}} x \cdot p(x)$$
 siempre que la suma sea absolutamente convergente.
@@ -115,19 +115,19 @@ siempre que la suma sea absolutamente convergente.
 </div>
 
 <ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 $E(X)$ es el <strong>promedio ponderado</strong> de los valores posibles, con pesos iguales a sus probabilidades.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 También llamado <em>media</em>, <em>expectativa</em> o <em>primer momento</em> de $X$. Se denota $\mu_X$ o simplemente $\mu$.
 </li>
 </ul>
 
-## Valor esperado — variable continua
+## Valor esperado para variable continua
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: Valor Esperado (continua)</div>
-  <div class="block-body">
+  <div class="block-title">Definición</div>
+  <div class="block-body"style="font-size: 30px;">
 Si $X$ es una variable aleatoria continua con FDP $f(x)$, su <strong>valor esperado</strong> es:
 $$E(X) = \int_{-\infty}^{\infty} x\, f(x)\, dx$$
 siempre que la integral sea absolutamente convergente.
@@ -135,10 +135,10 @@ siempre que la integral sea absolutamente convergente.
 </div>
 
 <ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 La integral reemplaza a la suma: $x$ se pondera por la densidad $f(x)$ en cada punto.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
 El valor esperado es el <strong>centro de masa</strong> de la distribución.
 </li>
 </ul>
@@ -147,23 +147,92 @@ El valor esperado es el <strong>centro de masa</strong> de la distribución.
 
 ```{r}
 #| echo: false
-#| fig-width: 9
-#| fig-height: 4.5
-x <- seq(0, 10, length=400)
-fx <- dgamma(x, shape=3, scale=1.5)
-plot(x, fx, type="l", lwd=3, col="#1a3a6b",
-     main="Centro de masa: Gamma(3, 1.5)", ylab="f(x)", cex.main=1.3)
-polygon(c(0,x,10), c(0,fx,0), col="#bfdbfe", border=NA)
-lines(x, fx, lwd=3, col="#1a3a6b")
-mu_val <- 3*1.5  # E(X) = alpha*beta
-abline(v=mu_val, col="#7a1515", lwd=3, lty=2)
-text(mu_val+0.3, max(fx)*0.8, paste0("E(X) = ", mu_val), col="#7a1515", cex=1.3, font=2)
+#| fig-width: 10
+#| fig-height: 5
+
+# Datos
+x <- seq(0, 12, length = 600)
+fx <- dgamma(x, shape = 3, scale = 1.5)
+
+# Esperanza
+mu_val <- 3 * 1.5
+
+# Márgenes más limpios
+par(
+  mar = c(4.5, 4.5, 3, 1),
+  family = "sans"
+)
+
+# Gráfico base
+plot(
+  x, fx,
+  type = "n",
+  ylim = c(0, max(fx) * 1.15),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Centro de masa de una distribución Gamma(3, 1.5)",
+  cex.main = 1.4,
+  cex.lab = 1.2,
+  cex.axis = 1.05
+)
+
+# Cuadrícula suave
+grid(
+  nx = NULL, ny = NULL,
+  col = "gray90",
+  lty = 1
+)
+
+# Área bajo la curva
+polygon(
+  c(0, x, max(x)),
+  c(0, fx, 0),
+  col = adjustcolor("#93c5fd", alpha.f = 0.55),
+  border = NA
+)
+
+# Curva Gamma
+lines(
+  x, fx,
+  lwd = 4,
+  col = "#1e3a8a"
+)
+
+# Línea de la esperanza
+abline(
+  v = mu_val,
+  col = "#991b1b",
+  lwd = 3,
+  lty = 2
+)
+
+# Punto en la media
+points(
+  mu_val,
+  dgamma(mu_val, shape = 3, scale = 1.5),
+  pch = 19,
+  cex = 1.5,
+  col = "#991b1b"
+)
+
+# Etiqueta elegante
+text(
+  mu_val + 0.5,
+  max(fx) * 0.82,
+  labels = expression(E(X) == 4.5),
+  col = "#991b1b",
+  cex = 1.25,
+  font = 2
+)
+
+# Caja alrededor del gráfico
+box(col = "gray40")
 ```
 
-## Valor esperado — ejemplos básicos
+## Ejemplo 1
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo — Lanzamiento de dado</div>
+  <div class="block-title">Lanzamiento de dado</div>
   <div class="block-body">
 Para un dado justo: $X \in \{1,2,3,4,5,6\}$, $p(x) = 1/6$.
 $$E(X) = \frac{1+2+3+4+5+6}{6} = \frac{21}{6} = 3.5$$
@@ -171,15 +240,22 @@ El 3.5 nunca se observa, pero es el promedio a largo plazo de muchos lanzamiento
   </div>
 </div>
 
+<div class="block-example fragment fade-up" data-fragment-index="2" style="width: 100%; margin: auto;">
+  <div class="block-title">En R</div>
+  <div class="block-body" style="font-size: 30px;">
+
 ```{r}
 # Verificación por simulación
 set.seed(123)
 mean(sample(1:6, 100000, replace=TRUE))
 ```
+ </div>
+</div>
+
 
 ## E(X) para distribuciones conocidas
 
-<div style="font-size: 26px; margin-top: 20px;">
+<div style="font-size: 30px; margin-top: 40px;">
 
 | Distribución | Parámetros | $E(X)$ |
 |:---|:---:|:---:|
@@ -189,35 +265,175 @@ mean(sample(1:6, 100000, replace=TRUE))
 | Uniforme($a,b$) | $a$, $b$ | $\frac{a+b}{2}$ |
 | Normal($\mu,\sigma^2$) | $\mu$, $\sigma^2$ | $\mu$ |
 | Exponencial($\lambda$) | $\lambda$ | $\frac{1}{\lambda}$ |
-| Gamma($\alpha,\beta$) | $\alpha$, $\beta$ | $\alpha\beta$ |
+| Chi-cuadrado($\nu$) | $\nu$ | $\nu$ |
+| t de Student($\nu$) | $\nu$ | $0 \; (\nu > 1)$ |
 
 </div>
+
 
 ## Derivación: E(X) de la Binomial
+<div class="block-proof fragment fade-up" data-fragment-index="1"
+     style="width: 98%; margin: auto;">
 
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Demostración: E(X) = np para Bin(n,p)</div>
-  <div class="block-body">
-$$E(X) = \sum_{k=0}^n k\binom{n}{k}p^k(1-p)^{n-k} = np\sum_{k=1}^n \binom{n-1}{k-1}p^{k-1}(1-p)^{n-k}$$
-$$= np \sum_{j=0}^{n-1}\binom{n-1}{j}p^j(1-p)^{n-1-j} = np \cdot (p + 1 - p)^{n-1} = np \quad \square$$
+   <div class="block-title">Demostración: E(X) = np, para Bin(n,p)</div>
+
+  <div class="block-body" style="padding: 10px;">
+
+<div class="columns">
+
+<div class="column" style="width:50%; font-size:25px; line-height:1.3;">
+
+$$
+E(X)=\sum_{k=0}^{n}
+k\binom{n}{k}p^k(1-p)^{n-k}
+$$
+
+Usando:
+
+$$
+k\binom{n}{k}
+=
+n\binom{n-1}{k-1}
+$$
+
+obtenemos:
+
+$$
+E(X)=
+\sum_{k=1}^{n}
+n\binom{n-1}{k-1}
+p^k(1-p)^{n-k}
+$$
+
+</div>
+
+<div class="column" style="width:50%; font-size:25px; line-height:1.3;">
+
+Factorizando $np$:
+
+$$
+E(X)=
+np
+\sum_{k=1}^{n}
+\binom{n-1}{k-1}
+p^{k-1}(1-p)^{n-k}
+$$
+
+Con $j=k-1$:
+
+$$
+E(X)=
+np
+\sum_{j=0}^{n-1}
+\binom{n-1}{j}
+p^j(1-p)^{(n-1)-j}
+$$
+
+$$
+=
+np(p+1-p)^{n-1}
+=
+\boxed{np}
+$$
+
+</div>
+
+</div>
+
   </div>
 </div>
 
-## E(X) de la Exponencial — cálculo
 
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Demostración: E(X) = 1/λ para Exp(λ)</div>
-  <div class="block-body">
-$$E(X) = \int_0^\infty x \cdot \lambda e^{-\lambda x}\,dx$$
-Integración por partes con $u = x$, $dv = \lambda e^{-\lambda x}dx$:
-$$= \left[-xe^{-\lambda x}\right]_0^\infty + \int_0^\infty e^{-\lambda x}\,dx = 0 + \frac{1}{\lambda} = \frac{1}{\lambda} \quad \square$$
+
+## Cálculo de E(X) de la distrbución Exponencial 
+<div class="block-proof fragment fade-up" data-fragment-index="1"
+     style="width: 95%; margin: auto;">
+
+<div class="block-title">Demostración: E(X) = 1/λ, para Exp(λ)</div>
+  
+  
+  <div class="block-body" style="padding: 14px;">
+
+<div class="columns">
+
+<div class="column" style="width:50%; font-size:26px; line-height:1.45;">
+
+Partimos de:
+
+$$
+E(X)=\int_0^\infty
+x\lambda e^{-\lambda x}\,dx
+$$
+
+Aplicamos integración por partes:
+
+$$
+u=x
+\qquad
+dv=\lambda e^{-\lambda x}dx
+$$
+
+Entonces,
+
+$$
+du=dx
+\qquad
+v=-e^{-\lambda x}
+$$
+
+</div>
+
+<div class="column" style="width:50%; font-size:26px; line-height:1.45;">
+
+Sustituyendo:
+
+$$
+E(X)=
+\left[
+-xe^{-\lambda x}
+\right]_0^\infty
++
+\int_0^\infty
+e^{-\lambda x}dx
+$$
+
+El primer término vale $0$, por lo que:
+
+$$
+E(X)=
+\int_0^\infty
+e^{-\lambda x}dx
+$$
+
+$$
+=
+\left[
+-\frac{1}{\lambda}
+e^{-\lambda x}
+\right]_0^\infty
+=
+\frac{1}{\lambda}
+$$
+
+$$
+\boxed{
+E(X)=\frac{1}{\lambda}
+}
+$$
+
+</div>
+
+</div>
+
   </div>
 </div>
 
-## Valor esperado de una función — Ley del estadístico inconsciente
+
+
+## Valor esperado de una función (Ley del estadístico inconsciente)
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ley del estadístico inconsciente (LOTUS)</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 Si $Y = g(X)$, no es necesario encontrar la distribución de $Y$:
 $$E[g(X)] = \begin{cases} \displaystyle\sum_x g(x)\,p(x) & \text{(discreta)} \\[6pt] \displaystyle\int_{-\infty}^\infty g(x)\,f(x)\,dx & \text{(continua)} \end{cases}$$
@@ -226,30 +442,32 @@ $$E[g(X)] = \begin{cases} \displaystyle\sum_x g(x)\,p(x) & \text{(discreta)} \\[
 
 <ul style="margin-top: 10px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Ejemplo: $E(X^2)$ se calcula directamente integrando $x^2 f(x)$, sin derivar primero la distribución de $X^2$.
+Por ejemplo: $E(X^2)$ se calcula directamente integrando $x^2 f(x)$, sin derivar primero la distribución de $X^2$.
 </li>
 </ul>
+
 
 ## Propiedades del valor esperado
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Propiedades de E(·)</div>
+  <div class="block-title">Para constantes $a$, $b$ y v.a. $X$, $Y$:</div>
   <div class="block-body">
-Para constantes $a$, $b$ y v.a. $X$, $Y$:
+
 <ol>
-<li>$E(a) = a$</li>
-<li>$E(aX) = a\,E(X)$</li>
-<li>$E(X + b) = E(X) + b$</li>
-<li>$E(aX + b) = a\,E(X) + b$ <strong>(linealidad)</strong></li>
-<li>$E(X + Y) = E(X) + E(Y)$ <strong>(siempre, sin importar independencia)</strong></li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">$E(a) = a$</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">$E(aX) = a\,E(X)$</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">$E(X + b) = E(X) + b$</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">$E(aX + b) = a\,E(X) + b$ <strong>(linealidad)</strong></li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">$E(X + Y) = E(X) + E(Y)$ <strong>(siempre, sin importar independencia)</strong></li>
 </ol>
   </div>
 </div>
 
-## Varianza — definición
+
+## Cálculo de la Varianza por medio del valor esperado
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: Varianza</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 La <strong>varianza</strong> de $X$ mide la dispersión alrededor de la media:
 $$\text{Var}(X) = E\!\left[(X - \mu)^2\right] = E(X^2) - [E(X)]^2$$
@@ -266,31 +484,96 @@ $\text{Var}(X) \geq 0$ siempre; es cero solo si $X$ es constante con probabilida
 </li>
 </ul>
 
-## Varianza — para variables discretas y continuas
 
-<div class="twocol">
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Discreta</div>
-  <div class="block-body">
-$$\text{Var}(X) = \sum_x (x-\mu)^2\, p(x)$$
-$$= \sum_x x^2 p(x) - \mu^2$$
-  </div>
+## Varianza para variables discretas y continuas
+
+<div class="columns">
+
+<div class="column" style="width:50%;">
+
+<div class="block-definition fragment fade-up" 
+     data-fragment-index="1"
+     style="height: 100%;">
+
+<div class="block-title" style="font-size: 28px;">
+Variable discreta
 </div>
 
-<div class="block-theorem fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Continua</div>
-  <div class="block-body">
-$$\text{Var}(X) = \int_{-\infty}^\infty (x-\mu)^2 f(x)\,dx$$
-$$= \int_{-\infty}^\infty x^2 f(x)\,dx - \mu^2$$
-  </div>
+<div class="block-body" 
+     style="font-size: 24px; line-height: 1.5; padding: 16px;">
+
+Definición:
+
+$$
+\text{Var}(X)
+=
+\sum_x (x-\mu)^2 p(x)
+$$
+
+Forma equivalente:
+
+$$
+\text{Var}(X)
+=
+\sum_x x^2 p(x)-\mu^2
+$$
+
+<div style="margin-top:12px; font-size:20px;">
+donde $\mu = E(X)$
 </div>
 
 </div>
+</div>
+
+</div>
+
+<div class="column" style="width:50%;">
+
+<div class="block-theorem fragment fade-up" 
+     data-fragment-index="2"
+     style="height: 100%;">
+
+<div class="block-title" style="font-size: 28px;">
+Variable continua
+</div>
+
+<div class="block-body" 
+     style="font-size: 24px; line-height: 1.5; padding: 16px;">
+
+Definición:
+
+$$
+\text{Var}(X)
+=
+\int_{-\infty}^{\infty}
+(x-\mu)^2 f(x)\,dx
+$$
+
+Forma equivalente:
+
+$$
+\text{Var}(X)
+=
+\int_{-\infty}^{\infty}
+x^2 f(x)\,dx-\mu^2
+$$
+
+<div style="margin-top:12px; font-size:20px;">
+donde $\mu = E(X)$
+</div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
 
 ## Varianza para distribuciones conocidas
 
-<div style="font-size: 26px; margin-top: 20px;">
+<div style="font-size: 30px; margin-top: 20px;">
 
 | Distribución | $E(X)$ | $\text{Var}(X)$ |
 |:---|:---:|:---:|
@@ -301,31 +584,32 @@ $$= \int_{-\infty}^\infty x^2 f(x)\,dx - \mu^2$$
 | Normal($\mu,\sigma^2$) | $\mu$ | $\sigma^2$ |
 | Exponencial($\lambda$) | $\frac{1}{\lambda}$ | $\frac{1}{\lambda^2}$ |
 | Gamma($\alpha,\beta$) | $\alpha\beta$ | $\alpha\beta^2$ |
-
+| Chi-cuadrado($\nu$) | $\nu$ | $2\nu$ |
+| t de Student($\nu$) | $0$, si $\nu>1$ | $\frac{\nu}{\nu-2}$, si $\nu>2$ |
 </div>
 
 ## Propiedades de la varianza
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Propiedades de Var(·)</div>
+  <div class="block-title">Para constantes $a$, $b$ y v.a. $X$, $Y$ <strong>independientes</strong>:</div>
   <div class="block-body">
-Para constantes $a$, $b$ y v.a. $X$, $Y$ <strong>independientes</strong>:
+
 <ol>
-<li>$\text{Var}(a) = 0$</li>
-<li>$\text{Var}(aX) = a^2\, \text{Var}(X)$</li>
-<li>$\text{Var}(X + b) = \text{Var}(X)$</li>
-<li>$\text{Var}(aX + b) = a^2\, \text{Var}(X)$</li>
-<li>$\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$ <em>(si $X \perp Y$)</em></li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">$\text{Var}(a) = 0$</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">$\text{Var}(aX) = a^2\, \text{Var}(X)$</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">$\text{Var}(X + b) = \text{Var}(X)$</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">$\text{Var}(aX + b) = a^2\, \text{Var}(X)$</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">$\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$ </li>
 </ol>
   </div>
 </div>
 
-## Varianza — ejemplo con Poisson
-
+## Ejemplo 1 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo — Casos de dengue</div>
+  <div class="block-title">Distribución Poisson</div>
   <div class="block-body">
-<p>El número semanal de casos de dengue en un municipio sigue $X \sim \text{Poi}(5)$. Calcule $E(X)$, $\text{Var}(X)$ y $\sigma$.</p>
+<p>El número semanal de casos de dengue en un municipio sigue $X \sim \text{Poi}(5)$.  
+Calcule $E(X)$, $\text{Var}(X)$ y $\sigma$.</p>
   </div>
 </div>
 
@@ -338,7 +622,7 @@ $$\sigma = \sqrt{5} \approx 2.24 \quad \text{casos/semana}$$
   </div>
 </div>
 
-## Cálculo numérico de E(X) y Var(X)
+## Solución
 
 ```{r}
 # X ~ Poi(5)
@@ -358,97 +642,437 @@ cat("Var(X) =", round(VarX, 4), "\n")
 cat("sd(X)  =", round(sqrt(VarX), 4), "\n")
 ```
 
-## Derivación: Var(X) de la Binomial
+## Demostración Varianza de la Binomial
 
 <div class="block-proof fragment fade-up" data-fragment-index="1">
   <div class="block-title">Var(X) = np(1-p) para Bin(n,p)</div>
   <div class="block-body">
-Escribir $X = X_1 + \cdots + X_n$ con $X_i \sim \text{Ber}(p)$ independientes:
+Sea $X = X_1 + \cdots + X_n$ con $X_i \sim \text{Ber}(p)$ independientes:
 $$\text{Var}(X) = \sum_{i=1}^n \text{Var}(X_i) = n\,\text{Var}(X_1)$$
 $$\text{Var}(X_1) = E(X_1^2) - [E(X_1)]^2 = p - p^2 = p(1-p)$$
 $$\therefore \text{Var}(X) = np(1-p) \quad \square$$
   </div>
 </div>
 
-## Coeficiente de variación
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Coeficiente de variación (CV)</div>
-  <div class="block-body">
-$$CV = \frac{\sigma}{|\mu|} \times 100\%$$
-Mide la dispersión <strong>relativa</strong> a la media. Es adimensional.
-  </div>
-</div>
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Útil para comparar la variabilidad de variables medidas en distintas unidades o con distintas medias.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Ejemplo: producción de leche con $\mu = 15$ L/día y $\sigma = 3$ L tiene $CV = 20\%$.
-</li>
-</ul>
 
 ## Momentos de una distribución
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Momentos</div>
-  <div class="block-body">
-El <strong>$k$-ésimo momento</strong> de $X$ es $\mu_k' = E(X^k)$.
-El <strong>$k$-ésimo momento central</strong> es $\mu_k = E[(X-\mu)^k]$.
-<ul>
-<li>$\mu_1' = \mu = E(X)$ (media)</li>
-<li>$\mu_2 = \text{Var}(X)$ (varianza)</li>
-<li>$\mu_3 / \sigma^3$: asimetría (skewness)</li>
-<li>$\mu_4 / \sigma^4$: curtosis (kurtosis)</li>
+<div class="block-definition fragment fade-up" 
+     data-fragment-index="1"
+     style="width: 96%; margin: auto;">
+
+<div class="block-title" style="font-size: 30px;">
+Momentos
+</div>
+
+<div class="block-body" 
+     style="font-size: 22px; line-height: 1.45; padding: 18px;">
+
+<div class="columns">
+
+<div class="column" style="width:48%;">
+
+El <strong>$k$-ésimo momento respecto al origen</strong> es:
+
+$$
+\mu_k' = E(X^k)
+$$
+
+El <strong>$k$-ésimo momento central</strong> es:
+
+$$
+\mu_k = E[(X-\mu)^k]
+$$
+
+</div>
+
+<div class="column" style="width:52%;">
+
+<ul style="margin-top:0.2em;">
+
+<li class="fragment fade-up" data-fragment-index="2">
+
+<strong>Media</strong>
+
+$$
+\mu = E(X)
+$$
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3">
+
+<strong>Varianza</strong>
+
+$$
+\mu_2 = E[(X-\mu)^2]
+$$
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4">
+
+<strong>Asimetría (skewness)</strong>
+
+$$
+\gamma_1 =
+\frac{\mu_3}{\sigma^3}
+=
+\frac{E[(X-\mu)^3]}{\sigma^3}
+$$
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="5">
+
+<strong>Curtosis (kurtosis)</strong>
+
+$$
+\gamma_2 =
+\frac{\mu_4}{\sigma^4}
+=
+\frac{E[(X-\mu)^4]}{\sigma^4}
+$$
+
+</li>
+
 </ul>
-  </div>
+
 </div>
 
-## Asimetría y curtosis
-
-```{r}
-#| echo: false
-#| fig-width: 10
-#| fig-height: 4.5
-par(mfrow=c(1,3), mar=c(4,3,2,1))
-x <- seq(-4,8,length=400)
-# Simétrica
-hist(rnorm(5000,0,1), col="#bfdbfe", border="white",
-     main="Simétrica\n(asimetría≈0)", probability=TRUE,
-     xlab="x", cex.main=1.1)
-# Sesgada a la derecha
-hist(rexp(5000,0.5), col="#bbf7d0", border="white",
-     main="Sesgo positivo\n(cola derecha)", probability=TRUE,
-     xlab="x", cex.main=1.1)
-# Sesgada a la izquierda
-hist(-rexp(5000,0.5)+8, col="#fecaca", border="white",
-     main="Sesgo negativo\n(cola izquierda)", probability=TRUE,
-     xlab="x", cex.main=1.1)
-```
-
-## Percentiles — definición
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: Percentil p de X</div>
-  <div class="block-body">
-El <strong>percentil $p$</strong> (o cuantil de orden $p$) de $X$, denotado $\eta(p)$ o $x_p$, es el valor tal que:
-$$F(\eta(p)) = P(X \leq \eta(p)) = p, \quad 0 < p < 1$$
-Es la <strong>función inversa de la FDA</strong>: $\eta(p) = F^{-1}(p)$.
-  </div>
 </div>
 
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El percentil $p$ indica que una fracción $p$ de la distribución se ubica <em>por debajo</em> de $\eta(p)$.
+</div>
+</div>
+
+## Asimetría y curtosis 
+<div class="columns">
+
+<div class="column" style="width:50%;">
+
+<div class="block-definition fragment fade-up" 
+     data-fragment-index="1">
+
+<div class="block-title" style="font-size:28px;">
+Asimetría
+</div>
+
+<div class="block-body" 
+     style="font-size:22px; line-height:1.45; padding:16px;">
+
+Mide qué tan <strong>simétrica</strong> es una distribución respecto a su media.
+
+$$
+\text{Asimetría}
+=
+\frac{E[(X-\mu)^3]}{\sigma^3}
+$$
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="2">
+
+$\text{Asimetría}=0$
+
+Distribución simétrica.
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3">
+
+$\text{Asimetría}>0$
+
+Cola más larga hacia la derecha.
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4">
+
+$\text{Asimetría}<0$
+
+Cola más larga hacia la izquierda.
+
 </li>
 </ul>
 
-## Percentiles — variable continua
+</div>
+</div>
+
+</div>
+
+<div class="column" style="width:50%;">
+
+<div class="block-theorem fragment fade-up" 
+     data-fragment-index="5">
+
+<div class="block-title" style="font-size:28px;">
+Curtosis
+</div>
+
+<div class="block-body" 
+     style="font-size:22px; line-height:1.45; padding:16px;">
+
+Mide qué tan <strong>concentrados</strong> están los datos y el peso de las colas.
+
+$$
+\text{Curtosis}
+=
+\frac{E[(X-\mu)^4]}{\sigma^4}
+$$
+
+<ul>
+<li class="fragment fade-up" data-fragment-index="6">
+
+Curtosis alta:
+
+colas pesadas y más valores extremos.
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="7">
+
+Curtosis baja:
+
+colas ligeras y menos extremos.
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="8">
+
+Distribución normal:
+
+$$
+\text{Curtosis}=3
+$$
+
+</li>
+</ul>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" 
+     data-fragment-index="9"
+     style="margin-top:18px; font-size:25px; text-align:center;">
+
+La asimetría describe la <strong>dirección</strong> de la distribución, mientras que la curtosis describe qué tan <strong>pesadas</strong> son sus colas.
+
+</div>
+
+## Gráfica Asimetría y curtosis 
+
+```{r}
+#| echo: false
+#| fig-width: 16
+#| fig-height: 7
+
+par(
+  mfrow = c(1,4),
+  mar = c(4,3.5,3,1),
+  family = "sans"
+)
+
+# -------------------------
+# 1. Distribución simétrica
+# -------------------------
+x1 <- rnorm(5000, 0, 1)
+
+hist(
+  x1,
+  probability = TRUE,
+  col = "#bfdbfe",
+  border = "white",
+  main = "Simétrica",
+  sub = "Asimetría ≈ 0",
+  xlab = "x",
+  cex.main = 1.2,
+  cex.sub = 1,
+  cex.lab = 1.1
+)
+
+curve(
+  dnorm(x, mean(x1), sd(x1)),
+  add = TRUE,
+  lwd = 3,
+  col = "#1d4ed8"
+)
+
+abline(v = mean(x1),
+       col = "#991b1b",
+       lwd = 2,
+       lty = 2)
+
+# -------------------------
+# 2. Sesgo positivo
+# -------------------------
+x2 <- rexp(5000, 0.5)
+
+hist(
+  x2,
+  probability = TRUE,
+  col = "#bbf7d0",
+  border = "white",
+  main = "Sesgo positivo",
+  sub = "Cola hacia la derecha",
+  xlab = "x",
+  cex.main = 1.2,
+  cex.sub = 1,
+  cex.lab = 1.1
+)
+
+lines(
+  density(x2),
+  lwd = 3,
+  col = "#15803d"
+)
+
+abline(v = mean(x2),
+       col = "#991b1b",
+       lwd = 2,
+       lty = 2)
+
+# -------------------------
+# 3. Sesgo negativo
+# -------------------------
+x3 <- -rexp(5000, 0.5) + 8
+
+hist(
+  x3,
+  probability = TRUE,
+  col = "#fecaca",
+  border = "white",
+  main = "Sesgo negativo",
+  sub = "Cola hacia la izquierda",
+  xlab = "x",
+  cex.main = 1.2,
+  cex.sub = 1,
+  cex.lab = 1.1
+)
+
+lines(
+  density(x3),
+  lwd = 3,
+  col = "#b91c1c"
+)
+
+abline(v = mean(x3),
+       col = "#7f1d1d",
+       lwd = 2,
+       lty = 2)
+
+# -------------------------
+# 4. Curtosis
+# -------------------------
+x4 <- rt(5000, df = 3)
+
+hist(
+  x4,
+  probability = TRUE,
+  breaks = 40,
+  xlim = c(-8,8),
+  col = "#ddd6fe",
+  border = "white",
+  main = "Alta curtosis",
+  sub = "Colas pesadas",
+  xlab = "x",
+  cex.main = 1.2,
+  cex.sub = 1,
+  cex.lab = 1.1
+)
+
+lines(
+  density(x4),
+  lwd = 3,
+  col = "#6d28d9"
+)
+
+curve(
+  dnorm(x, mean(x4), sd(x4)),
+  add = TRUE,
+  lwd = 2,
+  lty = 2,
+  col = "black"
+)
+
+legend(
+  "topright",
+  legend = c("Distribución", "Normal"),
+  col = c("#6d28d9", "black"),
+  lwd = c(3,2),
+  lty = c(1,2),
+  bty = "n",
+  cex = 0.9
+)
+```
+
+
+## Percentiles 
+
+<div class="block-definition fragment fade-up" 
+     data-fragment-index="1"
+     style="width: 95%; margin: auto;">
+
+<div class="block-title" style="font-size: 30px;">
+Definición
+</div>
+
+<div class="block-body" 
+     style="font-size: 25px; line-height: 1.5; padding: 18px;">
+
+El <strong>percentil $p$</strong> de una variable aleatoria $X$,
+denotado por $\eta(p)$ o $x_p$, es el valor que satisface:
+
+$$
+F(\eta(p))
+=
+P(X \leq \eta(p))
+=
+p,
+\qquad 0<p<1
+$$
+
+Equivalentemente,
+
+$$
+\eta(p)=F^{-1}(p)
+$$
+
+es decir, el percentil corresponde a la <strong>función inversa de la FDA</strong>.
+
+</div>
+</div>
+
+<div class="fragment fade-up" 
+     data-fragment-index="2"
+     style="
+       margin-top:18px;
+       padding:16px;
+       border-left:6px solid #2563eb;
+       background:#eff6ff;
+       font-size:24px;
+       line-height:1.45;
+       border-radius:10px;
+     ">
+
+<strong>Interpretación:</strong>
+
+El percentil $p$ indica que una proporción $p$ de los datos
+se encuentra por debajo de $\eta(p)$.  
+Por ejemplo: $x_{0.75}$
+representa el valor bajo el cual se encuentra el $75\%$ de la distribución.
+</div>
+
+
+
+## Percentiles variable continua
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Cálculo de percentiles (continua)</div>
-  <div class="block-body">
+  <div class="block-title">Definición</div>
+  <div class="block-body style=font-size: 34px; ">
+
 Para una v.a. continua con FDA $F$, el percentil $p$ es el valor $\eta(p)$ que satisface:
 $$\int_{-\infty}^{\eta(p)} f(x)\,dx = p$$
 En R: `qnorm(p, mu, sigma)`, `qexp(p, lambda)`, `qgamma(p, alpha, beta)`, etc.
@@ -456,7 +1080,7 @@ En R: `qnorm(p, mu, sigma)`, `qexp(p, lambda)`, `qgamma(p, alpha, beta)`, etc.
 </div>
 
 <ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
 El prefijo `q` en R viene de <em>quantile</em> y calcula exactamente $F^{-1}(p)$.
 </li>
 </ul>
@@ -464,15 +1088,21 @@ El prefijo `q` en R viene de <em>quantile</em> y calcula exactamente $F^{-1}(p)$
 ## Cuartiles
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Cuartiles Q1, Q2, Q3</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
-Los <strong>cuartiles</strong> dividen la distribución en cuatro partes iguales:
 <ul>
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify;list-style-type:none;">
+Los <strong>cuartiles</strong> dividen la distribución en cuatro partes iguales:
+</li>
+
 <li>$Q_1 = \eta(0.25)$: primer cuartil (percentil 25)</li>
 <li>$Q_2 = \eta(0.50)$: mediana (percentil 50)</li>
 <li>$Q_3 = \eta(0.75)$: tercer cuartil (percentil 75)</li>
-</ul>
+
+<li class="fragment fade-up" data-fragment-index="1" style="font-size: 30px; text-align: justify;list-style-type:none;">
 El <strong>rango intercuartílico</strong> es $IQR = Q_3 - Q_1$.
+</li>
+</ul>
   </div>
 </div>
 
@@ -492,29 +1122,133 @@ cat("Q3 =", round(Q3, 2), "\n")
 cat("IQR=", round(IQR_val, 2), "\n")
 ```
 
-## Mediana vs Media
 
-<div class="twocol">
+## Mediana vs Media 
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Mediana</div>
-  <div class="block-body">
-La mediana $m = \eta(0.5)$ es el valor que divide la distribución en dos mitades iguales:
-$$P(X \leq m) = 0.5$$
-Es <strong>robusta</strong> ante valores extremos.
-  </div>
+<div class="columns">
+
+<div class="column" style="width:50%;">
+
+<div class="block-definition fragment fade-up" 
+     data-fragment-index="1"
+     style="height:100%;">
+
+<div class="block-title" style="font-size:28px;">
+Mediana
 </div>
 
-<div class="block-theorem fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Media vs Mediana</div>
-  <div class="block-body">
+<div class="block-body" 
+     style="font-size:23px; line-height:1.5; padding:16px;">
+
+La <strong>mediana</strong> de una variable aleatoria $X$ es:
+
+$$
+m=\eta(0.5)
+$$
+
+y satisface:
+
+$$
+P(X \leq m)=0.5
+$$
+
+Es el valor que divide la distribución en dos partes iguales:
+
 <ul>
-<li>Normal simétrica: media = mediana.</li>
-<li>Sesgo positivo: media > mediana.</li>
-<li>Sesgo negativo: media < mediana.</li>
+<li>
+$50\%$ de los datos queda por debajo de $m$
+</li>
+
+<li>
+$50\%$ queda por encima de $m$
+</li>
 </ul>
-La mediana es preferible cuando hay <em>asimetría fuerte</em> o <em>valores atípicos</em>.
-  </div>
+
+<div style="
+margin-top:12px;
+padding:10px;
+background:#eff6ff;
+border-left:5px solid #2563eb;
+border-radius:8px;
+font-size:21px;">
+
+La mediana es <strong>robusta</strong> frente a valores extremos.
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="column" style="width:50%;">
+
+<div class="block-theorem fragment fade-up" 
+     data-fragment-index="2"
+     style="height:100%;">
+
+<div class="block-title" style="font-size:28px;">
+Relación entre media y mediana
+</div>
+
+<div class="block-body" 
+     style="font-size:23px; line-height:1.5; padding:16px;">
+
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="3">
+
+<strong>Distribución simétrica</strong>
+
+$$
+\text{Media} \approx \text{Mediana}
+$$
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4">
+
+<strong>Sesgo positivo</strong>
+
+$$
+\text{Media} > \text{Mediana}
+$$
+
+La cola derecha arrastra la media.
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="5">
+
+<strong>Sesgo negativo</strong>
+
+$$
+\text{Media} < \text{Mediana}
+$$
+
+La cola izquierda arrastra la media.
+
+</li>
+
+</ul>
+
+<div style="
+margin-top:12px;
+padding:10px;
+background:#fef3c7;
+border-left:5px solid #d97706;
+border-radius:8px;
+font-size:21px;">
+
+La mediana suele preferirse cuando existen
+<strong>valores atípicos</strong> o
+<strong>asimetría fuerte</strong>.
+
+</div>
+
+</div>
+</div>
+
 </div>
 
 </div>
@@ -522,23 +1256,29 @@ La mediana es preferible cuando hay <em>asimetría fuerte</em> o <em>valores at�
 ## Mediana de la Exponencial
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo — Mediana de Exp(λ)</div>
+  <div class="block-title">Cálculo de la Mediana de Exp(λ)</div>
   <div class="block-body">
-Encontrar la mediana $m$ de $X \sim \text{Exp}(\lambda)$:
+La mediana $m$ de $X \sim \text{Exp}(\lambda)$:
 $$F(m) = 1 - e^{-\lambda m} = 0.5 \implies e^{-\lambda m} = 0.5 \implies m = \frac{\ln 2}{\lambda}$$
 Para $\lambda = 0.2$: $m = \ln(2)/0.2 \approx 3.47$ horas, mientras que $E(X) = 1/0.2 = 5$ horas.
   </div>
 </div>
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">En R</div>
+  <div class="block-body">
 
 ```{r}
 lambda <- 0.2
 c(mediana = qexp(0.5, lambda), media = 1/lambda)
 ```
 
-## Percentiles de la Normal — ejemplo clínico
+</div>
+</div>
+
+## Ejemplo 2
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo — Talla de niños</div>
+  <div class="block-title">Distribución Normal</div>
   <div class="block-body">
 <p>La talla de niños de 5 años en Colombia sigue $X \sim N(109, 5^2)$ cm. Calcule:</p>
 <ol>
@@ -549,7 +1289,7 @@ c(mediana = qexp(0.5, lambda), media = 1/lambda)
   </div>
 </div>
 
-## Percentiles Normal — solución
+## Solución
 
 ```{r}
 mu <- 109; sigma <- 5
@@ -560,26 +1300,127 @@ qnorm(0.90, mu, sigma)
 diff(pnorm(qnorm(c(0.25, 0.75), mu, sigma), mu, sigma))
 ```
 
-## Visualización de percentiles
+## Visualización de percentiles (Ejemplo 2)
 
 ```{r}
 #| echo: false
-#| fig-width: 9
-#| fig-height: 5
-mu <- 109; sigma <- 5
-x <- seq(94, 124, length=400)
+#| fig-width: 10
+#| fig-height: 5.5
+
+# Parámetros
+mu <- 109
+sigma <- 5
+
+# Dominio
+x <- seq(90, 128, length = 600)
 fx <- dnorm(x, mu, sigma)
-plot(x, fx, type="l", lwd=3, col="#1a3a6b",
-     main="Percentiles: N(109, 25)", ylab="f(x)", cex.main=1.3)
-qs <- qnorm(c(0.10, 0.25, 0.50, 0.75, 0.90), mu, sigma)
-cols <- c("#ef4444","#f97316","#1b4d2e","#f97316","#ef4444")
-for(i in seq_along(qs)) abline(v=qs[i], col=cols[i], lwd=2, lty=2)
-legend("topright", c("P10","Q1","Mediana","Q3","P90"),
-       col=c("#ef4444","#f97316","#1b4d2e","#f97316","#ef4444"),
-       lwd=2, lty=2, cex=1.0)
+
+# Percentiles
+probs <- c(0.10, 0.25, 0.50, 0.75, 0.90)
+qs <- qnorm(probs, mu, sigma)
+
+# Colores
+cols <- c("#dc2626", "#f59e0b", "#166534",
+          "#f59e0b", "#dc2626")
+
+labs <- c("P10", "Q1", "Mediana", "Q3", "P90")
+
+# Márgenes
+par(
+  mar = c(4.5, 4.5, 3, 1),
+  family = "sans"
+)
+
+# Base del gráfico
+plot(
+  x, fx,
+  type = "n",
+  ylim = c(0, max(fx) * 1.15),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Percentiles en una distribución Normal",
+  cex.main = 1.4,
+  cex.lab = 1.2,
+  cex.axis = 1.05
+)
+
+# Cuadrícula
+grid(col = "gray90")
+
+# Área bajo la curva
+polygon(
+  c(min(x), x, max(x)),
+  c(0, fx, 0),
+  col = adjustcolor("#bfdbfe", alpha.f = 0.6),
+  border = NA
+)
+
+# Curva normal
+lines(
+  x, fx,
+  lwd = 4,
+  col = "#1e3a8a"
+)
+
+# Percentiles
+for(i in seq_along(qs)){
+
+  abline(
+    v = qs[i],
+    col = cols[i],
+    lwd = 2.8,
+    lty = 2
+  )
+
+  points(
+    qs[i],
+    dnorm(qs[i], mu, sigma),
+    pch = 19,
+    cex = 1.4,
+    col = cols[i]
+  )
+
+  text(
+    qs[i],
+    dnorm(qs[i], mu, sigma) + 0.01,
+    labels = labs[i],
+    col = cols[i],
+    cex = 1,
+    font = 2
+  )
+}
+
+# Línea de la media
+abline(
+  v = mu,
+  col = "#111827",
+  lwd = 2,
+  lty = 3
+)
+
+# Leyenda
+legend(
+  "topright",
+  legend = c(
+    "P10 y P90",
+    "Q1 y Q3",
+    "Mediana",
+    "Media"
+  ),
+  col = c(
+    "#dc2626",
+    "#f59e0b",
+    "#166534",
+    "#111827"
+  ),
+  lwd = c(2.8, 2.8, 2.8, 2),
+  lty = c(2,2,2,3),
+  bty = "n",
+  cex = 1
+)
 ```
 
-## Rango intercuartílico — uso práctico
+## Uso práctico del rango intercuartílico 
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
   <div class="block-title">IQR como medida de dispersión robusta</div>
@@ -591,8 +1432,7 @@ $$x < Q_1 - 1.5 \cdot IQR \quad \text{o} \quad x > Q_3 + 1.5 \cdot IQR$$
   </div>
 </div>
 
-## IQR en la Normal — relación con σ
-
+## Relación entre σ y IQR en la distribución normal
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-title">IQR de la Normal</div>
   <div class="block-body">
@@ -601,6 +1441,9 @@ $$IQR = Q_3 - Q_1 = \mu + 0.6745\sigma - (\mu - 0.6745\sigma) = 2 \times 0.6745\
   </div>
 </div>
 
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">IQR de la Normal</div>
+  <div class="block-body">
 ```{r}
 # Verificación
 sigma <- 1
@@ -609,34 +1452,203 @@ cat("IQR N(0,1) =", round(IQR_norm, 4), "\n")
 cat("1.35*sigma =", round(1.35*sigma, 4), "\n")
 ```
 
-## Percentiles de distribuciones asimétricas
+  </div>
+</div>
+
+## Cuartiles de distribuciones asimétricas
 
 ```{r}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 4.5
-par(mfrow=c(1,2), mar=c(4,4,2,1))
-# Exponencial
-x <- seq(0, 20, length=400)
-plot(x, dexp(x, 0.3), type="l", lwd=3, col="#1a3a6b",
-     main="Percentiles: Exp(0.3)", ylab="f(x)", cex.main=1.2)
-qs <- qexp(c(0.25,0.50,0.75), 0.3)
-abline(v=qs, col=c("#f97316","#1b4d2e","#f97316"), lwd=2, lty=2)
-abline(v=1/0.3, col="#7a1515", lwd=2)
-legend("topright", c("Q1","Mediana","Q3","Media"),
-       col=c("#f97316","#1b4d2e","#f97316","#7a1515"), lwd=2, cex=0.9)
-# Gamma
-plot(x, dgamma(x, 2, scale=2), type="l", lwd=3, col="#1b4d2e",
-     main="Percentiles: Gamma(2,2)", ylab="f(x)", cex.main=1.2)
-qs2 <- qgamma(c(0.25,0.50,0.75), 2, scale=2)
-abline(v=qs2, col=c("#f97316","#1a3a6b","#f97316"), lwd=2, lty=2)
-abline(v=2*2, col="#7a1515", lwd=2)
+#| fig-width: 12
+#| fig-height: 5.2
+
+par(
+  mfrow = c(1,2),
+  mar = c(4.5,4.5,3,1),
+  family = "sans"
+)
+
+# =========================
+# Distribución Exponencial
+# =========================
+
+lambda <- 0.3
+
+x1 <- seq(0, 20, length = 600)
+fx1 <- dexp(x1, lambda)
+
+q_exp <- qexp(c(0.25, 0.50, 0.75), lambda)
+media_exp <- 1/lambda
+
+plot(
+  x1, fx1,
+  type = "n",
+  ylim = c(0, max(fx1)*1.15),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Cuartiles: Exponencial(0.3)",
+  cex.main = 1.3,
+  cex.lab = 1.1
+)
+
+grid(col = "gray90")
+
+polygon(
+  c(0, x1, max(x1)),
+  c(0, fx1, 0),
+  col = adjustcolor("#bfdbfe", alpha.f = 0.55),
+  border = NA
+)
+
+lines(
+  x1, fx1,
+  lwd = 4,
+  col = "#1e3a8a"
+)
+
+cols <- c("#f59e0b", "#166534", "#f59e0b")
+labs <- c("Q1", "Mediana", "Q3")
+
+for(i in 1:3){
+
+  abline(
+    v = q_exp[i],
+    col = cols[i],
+    lwd = 2.5,
+    lty = 2
+  )
+
+  points(
+    q_exp[i],
+    dexp(q_exp[i], lambda),
+    pch = 19,
+    cex = 1.3,
+    col = cols[i]
+  )
+}
+
+# Media
+abline(
+  v = media_exp,
+  col = "#991b1b",
+  lwd = 2.5,
+  lty = 3
+)
+
+text(
+  media_exp + 0.4,
+  max(fx1)*0.85,
+  "Media",
+  col = "#991b1b",
+  cex = 1,
+  font = 2
+)
+
+legend(
+  "topright",
+  legend = c("Q1", "Mediana", "Q3", "Media"),
+  col = c("#f59e0b", "#166534",
+          "#f59e0b", "#991b1b"),
+  lwd = c(2.5,2.5,2.5,2.5),
+  lty = c(2,2,2,3),
+  bty = "n",
+  cex = 0.95
+)
+
+# ====================
+# Distribución Gamma
+# ====================
+
+alpha <- 2
+beta <- 2
+
+x2 <- seq(0, 20, length = 600)
+fx2 <- dgamma(x2, alpha, scale = beta)
+
+q_gamma <- qgamma(c(0.25, 0.50, 0.75),
+                  alpha, scale = beta)
+
+media_gamma <- alpha * beta
+
+plot(
+  x2, fx2,
+  type = "n",
+  ylim = c(0, max(fx2)*1.15),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Cuartiles: Gamma(2,2)",
+  cex.main = 1.3,
+  cex.lab = 1.1
+)
+
+grid(col = "gray90")
+
+polygon(
+  c(0, x2, max(x2)),
+  c(0, fx2, 0),
+  col = adjustcolor("#bbf7d0", alpha.f = 0.6),
+  border = NA
+)
+
+lines(
+  x2, fx2,
+  lwd = 4,
+  col = "#166534"
+)
+
+cols2 <- c("#f59e0b", "#1e3a8a", "#f59e0b")
+
+for(i in 1:3){
+
+  abline(
+    v = q_gamma[i],
+    col = cols2[i],
+    lwd = 2.5,
+    lty = 2
+  )
+
+  points(
+    q_gamma[i],
+    dgamma(q_gamma[i], alpha, scale = beta),
+    pch = 19,
+    cex = 1.3,
+    col = cols2[i]
+  )
+}
+
+# Media
+abline(
+  v = media_gamma,
+  col = "#991b1b",
+  lwd = 2.5,
+  lty = 3
+)
+
+text(
+  media_gamma + 0.4,
+  max(fx2)*0.85,
+  "Media",
+  col = "#991b1b",
+  cex = 1,
+  font = 2
+)
+
+legend(
+  "topright",
+  legend = c("Q1", "Mediana", "Q3", "Media"),
+  col = c("#f59e0b", "#1e3a8a",
+          "#f59e0b", "#991b1b"),
+  lwd = c(2.5,2.5,2.5,2.5),
+  lty = c(2,2,2,3),
+  bty = "n",
+  cex = 0.95
+)
 ```
 
-## Ejercicio: E(X) y Var(X) con una FMP dada
+## Ejemplo 3
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — FMP personalizada</div>
+  <div class="block-title">Enunciado</div>
   <div class="block-body">
 <p>Sea $X$ el número de procedimientos fallidos en una jornada quirúrgica, con:</p>
 
@@ -648,7 +1660,7 @@ abline(v=2*2, col="#7a1515", lwd=2)
   </div>
 </div>
 
-## Ejercicio — solución
+## Solución
 
 ```{r}
 x  <- c(0, 1, 2, 3)
@@ -661,10 +1673,10 @@ cat("Var(X) =", round(VX, 4), "\n")
 cat("sd(X)  =", round(sqrt(VX), 4), "\n")
 ```
 
-## Ejercicio: percentil de la Gamma
+## Ejemplo 4
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejercicio — Tiempo de recuperación</div>
+  <div class="block-title">Enunciado</div>
   <div class="block-body">
 <p>El tiempo de recuperación (días) de pacientes con hepatitis A sigue $X \sim \text{Gamma}(\alpha=4, \beta=7)$. Calcule:</p>
 <ol>
@@ -675,7 +1687,7 @@ cat("sd(X)  =", round(sqrt(VX), 4), "\n")
   </div>
 </div>
 
-## Ejercicio Gamma — solución
+## Solución
 
 ```{r}
 alpha <- 4; beta <- 7
@@ -689,9 +1701,10 @@ cat("P90    =", round(qgamma(0.90, alpha, scale=beta), 2), "días\n")
 cat("P(X<20)=", round(pgamma(20, alpha, scale=beta), 4), "\n")
 ```
 
-## Valor esperado en decisiones — VE como criterio
+## Ejemplo 5 
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-title">Valor Esperado como criterio</div>
   <div class="block-body">
 <p>
 El valor esperado puede usarse como <strong>criterio de decisión</strong> en situaciones con incertidumbre: elegir la acción que maximiza $E[\text{ganancia}]$ o minimiza $E[\text{pérdida}]$.
@@ -700,7 +1713,7 @@ El valor esperado puede usarse como <strong>criterio de decisión</strong> en si
 </div>
 
 <div class="block-example fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Ejemplo — Política de vacunación</div>
+  <div class="block-title">Enunciado</div>
   <div class="block-body">
 <p>Si vacunar un rebaño cuesta \$200 por animal y la infección cuesta \$800 con probabilidad 0.4, ¿conviene vacunar?</p>
 <ul>
@@ -714,7 +1727,7 @@ El valor esperado puede usarse como <strong>criterio de decisión</strong> en si
 ## Desigualdad de Chebyshev
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Desigualdad de Chebyshev</div>
+  <div class="block-title">Definición</div>
   <div class="block-body">
 Para cualquier variable aleatoria $X$ con media $\mu$ y varianza finita $\sigma^2$:
 $$P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}, \quad k > 1$$
@@ -728,23 +1741,131 @@ Para $k=2$: al menos el 75% de los valores caen dentro de 2 desviaciones estánd
 </li>
 </ul>
 
-## Chebyshev vs Normal — comparación
+## Comparación Chebyshev vs Normal 
 
 ```{r}
 #| echo: false
-#| fig-width: 9
-#| fig-height: 4.5
-k <- seq(1.01, 5, length=200)
+#| fig-width: 10
+#| fig-height: 5.2
+
+# Valores de k
+k <- seq(1.01, 5, length = 500)
+
+# Desigualdad de Chebyshev
 chebyshev <- 1 - 1/k^2
-normal     <- diff(pnorm(c(-1,1)*k[rep(1,length(k))]))
-normal_all <- sapply(k, function(ki) diff(pnorm(c(-ki, ki))))
-plot(k, chebyshev, type="l", lwd=3, col="#7a1515",
-     main="Chebyshev vs Normal: P(|X-μ| < kσ)",
-     xlab="k", ylab="Probabilidad mínima garantizada",
-     ylim=c(0,1), cex.main=1.2)
-lines(k, normal_all, lwd=3, col="#1a3a6b", lty=2)
-legend("bottomright", c("Chebyshev (cualquier dist.)", "Normal"),
-       col=c("#7a1515","#1a3a6b"), lwd=3, lty=c(1,2), cex=1.1)
+
+# Probabilidad exacta en Normal
+normal_prob <- sapply(
+  k,
+  function(ki) diff(pnorm(c(-ki, ki)))
+)
+
+# Configuración gráfica
+par(
+  mar = c(4.5, 4.5, 3, 1),
+  family = "sans"
+)
+
+# Base del gráfico
+plot(
+  k, chebyshev,
+  type = "n",
+  ylim = c(0,1),
+  xlab = "Número de desviaciones estándar (k)",
+  ylab = "Probabilidad",
+  main = "Desigualdad de Chebyshev vs Distribución Normal",
+  cex.main = 1.35,
+  cex.lab = 1.15,
+  cex.axis = 1.05
+)
+
+# Cuadrícula
+grid(col = "gray90")
+
+# Área Chebyshev
+polygon(
+  c(k, rev(k)),
+  c(chebyshev, rep(0, length(k))),
+  col = adjustcolor("#fecaca", alpha.f = 0.45),
+  border = NA
+)
+
+# Área Normal
+polygon(
+  c(k, rev(k)),
+  c(normal_prob, rep(0, length(k))),
+  col = adjustcolor("#bfdbfe", alpha.f = 0.35),
+  border = NA
+)
+
+# Curvas
+lines(
+  k, chebyshev,
+  lwd = 4,
+  col = "#991b1b"
+)
+
+lines(
+  k, normal_prob,
+  lwd = 4,
+  col = "#1e3a8a",
+  lty = 2
+)
+
+# Líneas de referencia
+abline(
+  h = c(0.68, 0.95, 0.997),
+  col = "gray70",
+  lty = 3
+)
+
+# Etiquetas 68-95-99.7
+text(
+  x = 4.7,
+  y = c(0.68, 0.95, 0.997),
+  labels = c("68%", "95%", "99.7%"),
+  cex = 0.9,
+  col = "gray40",
+  pos = 3
+)
+
+# Puntos destacados
+k_pts <- c(2,3)
+
+points(
+  k_pts,
+  1 - 1/k_pts^2,
+  pch = 19,
+  cex = 1.4,
+  col = "#991b1b"
+)
+
+points(
+  k_pts,
+  sapply(k_pts,
+         function(ki) diff(pnorm(c(-ki, ki)))),
+  pch = 19,
+  cex = 1.4,
+  col = "#1e3a8a"
+)
+
+# Leyenda
+legend(
+  "bottomright",
+  legend = c(
+    "Chebyshev (cualquier distribución)",
+    "Distribución Normal"
+  ),
+  col = c("#991b1b", "#1e3a8a"),
+  lwd = 4,
+  lty = c(1,2),
+  pt.cex = 1.2,
+  bty = "n",
+  cex = 1
+)
+
+# Caja
+box(col = "gray40")
 ```
 
 ## Momentos generadores de probabilidad
@@ -773,7 +1894,7 @@ Ejemplo: $M_{N(\mu,\sigma^2)}(t) = \exp(\mu t + \frac{1}{2}\sigma^2 t^2)$.
 <p style="font-size: 28px; color: #6b7280; margin-top: 20px;">Valor esperado, varianza y percentiles</p>
 </div>
 
-## Taller 1: E(X) y Var(X) desde la definición
+##  1. E(X) y Var(X) desde la definición
 
 <div class="block-example">
   <div class="block-title">Problema</div>
@@ -793,25 +1914,8 @@ Ejemplo: $M_{N(\mu,\sigma^2)}(t) = \exp(\mu t + \frac{1}{2}\sigma^2 t^2)$.
   </div>
 </div>
 
-## Taller 1: Solución
 
-```{r}
-#| class-source: fragment
-#| data-fragment-index: 1
-x  <- c(1, 2, 3, 4)
-px <- c(0.20, 0.45, 0.25, 0.10)
-EX  <- sum(x * px)
-EX2 <- sum(x^2 * px)
-VX  <- EX2 - EX^2
-cat("E(X)   =", EX, "\n")
-cat("Var(X) =", round(VX,4), "\n")
-cat("sd(X)  =", round(sqrt(VX),4), "crías\n")
-# 50 partos independientes: E(suma) = 50*E(X), Var(suma) = 50*Var(X)
-cat("E(50 partos) =", 50*EX, "crías\n")
-cat("sd(50 partos)=", round(sqrt(50*VX),3), "crías\n")
-```
-
-## Taller 2: Propiedades de E(X) y Var(X)
+## 2. Propiedades de E(X) y Var(X)
 
 <div class="block-example">
   <div class="block-title">Problema</div>
@@ -826,21 +1930,9 @@ cat("sd(50 partos)=", round(sqrt(50*VX),3), "crías\n")
   </div>
 </div>
 
-## Taller 2: Solución
 
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-<ol>
-<li>$E(2X-5) = 2(22)-5 = 39$; $\text{Var}(2X-5) = 4\cdot9 = 36$, $\sigma=6$.</li>
-<li>$E(Y) = 2.205\times22 = 48.51$ lb; $\sigma_Y = 2.205\times3 = 6.615$ lb.</li>
-<li>$E(W) = 22+22 = 44$; $\text{Var}(W) = 9+9 = 18$.</li>
-<li>$a=1/E(X)=1/22$; $a=1/\sigma=1/3$.</li>
-</ol>
-  </div>
-</div>
 
-## Taller 3: Percentiles y cuartiles
+## 3. Percentiles y cuartiles
 
 <div class="block-example">
   <div class="block-title">Problema</div>
@@ -855,24 +1947,8 @@ cat("sd(50 partos)=", round(sqrt(50*VX),3), "crías\n")
   </div>
 </div>
 
-## Taller 3: Solución
 
-```{r}
-#| class-source: fragment
-#| data-fragment-index: 1
-mu <- 138; sigma <- 18
-# Q1, Q2, Q3
-qs <- qnorm(c(0.25, 0.50, 0.75), mu, sigma)
-cat("Q1=",round(qs[1],1), " Mediana=",round(qs[2],1),
-    " Q3=",round(qs[3],1), "\n")
-cat("IQR =", round(qs[3]-qs[1],2), " vs 1.35σ =", 1.35*sigma, "\n")
-# Percentil 95
-cat("P95 =", round(qnorm(0.95, mu, sigma),1), "mmHg\n")
-# Percentil del paciente con 160 mmHg
-cat("Percentil(160)=", round(pnorm(160, mu, sigma)*100, 1), "%\n")
-```
-
-## Taller 4: Chebyshev en la práctica
+## 4. Chebyshev en la práctica
 
 <div class="block-example">
   <div class="block-title">Problema</div>
@@ -887,27 +1963,6 @@ cat("Percentil(160)=", round(pnorm(160, mu, sigma)*100, 1), "%\n")
   </div>
 </div>
 
-## Taller 4: Solución
-
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Solución</div>
-  <div class="block-body">
-<ol>
-<li>$1 - 1/k^2 \geq 0.75 \implies k^2 \geq 4 \implies k = 2$.</li>
-<li>$(\mu-2\sigma,\;\mu+2\sigma) = (400,\; 2000)$ huevos/g.</li>
-</ol>
-  </div>
-</div>
-
-```{r}
-#| class-source: fragment
-#| data-fragment-index: 2
-mu <- 1200; sigma <- 400
-cat("Intervalo k=2:", mu-2*sigma, "a", mu+2*sigma, "\n")
-# Prob. real si N(1200, 400^2)
-cat("P. normal :", round(diff(pnorm(c(mu-2*sigma, mu+2*sigma), mu, sigma)),4),"\n")
-cat("Chebyshev garantiza >= 0.75, Normal da ~0.9545\n")
-```
 
 ## Resumen: E(X), Var(X) y percentiles
 
