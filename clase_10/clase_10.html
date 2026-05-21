@@ -219,6 +219,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Bioestadística Fundamental</h1>
+  <p class="subtitle">Clase 10: Distribuciones de probabilidad y aplicaciones</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -232,51 +233,51 @@
 </div>
 
 </section>
-<section id="clase-10" class="slide level2 center middle">
-<h2>Clase 10</h2>
-</section>
 <section id="contenido" class="slide level2">
 <h2>Contenido</h2>
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px;">
-Distribuciones discretas
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">
+Parte I: Distribuciones discretas
 </h3>
 <ul>
 <li class="fragment fade-in" data-fragment-index="2">
-FMP y sus propiedades.
+FMP, FDA y su relación.
 </li>
 <li class="fragment fade-in" data-fragment-index="3">
-Bernoulli, Binomial y Poisson.
+Binomial: FMP, FDA y efecto de <span class="math inline">\(n\)</span>, <span class="math inline">\(p\)</span>.
 </li>
 <li class="fragment fade-in" data-fragment-index="4">
-Geométrica e Hipergeométrica.
+Poisson: FMP, FDA y efecto de <span class="math inline">\(\lambda\)</span>.
 </li>
 <li class="fragment fade-in" data-fragment-index="5">
-Efecto de los parámetros.
+Probabilidades en R: todos los casos.
 </li>
 </ul>
 </div>
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px;">
-Distribuciones continuas
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">
+Parte II: Distribuciones continuas
 </h3>
 <ul>
 <li class="fragment fade-in" data-fragment-index="7">
-FDP y relación con la FDA.
+Uniforme, Normal (tabla Z), Exponencial.
 </li>
 <li class="fragment fade-in" data-fragment-index="8">
-Uniforme, Normal y Exponencial.
+Gamma, Beta, Chi-cuadrado, t de Student.
 </li>
 <li class="fragment fade-in" data-fragment-index="9">
-Gamma, Beta, Chi-cuadrado y t.
+FDP, FDA y efecto de los parámetros.
 </li>
 <li class="fragment fade-in" data-fragment-index="10">
-Ejercicios y simulación.
+Probabilidades en R y aproximaciones.
 </li>
 </ul>
 </div>
 </div>
+</section>
+<section id="section" class="slide level2 middle center">
+<h2></h2>
 <div style="text-align: center; margin-top: 40px;">
 <p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
 Funciones de Probabilidad y Densidad
@@ -292,260 +293,628 @@ Bioestadística Fundamental — Departamento de Estadística, UNAL Bogotá
 </p>
 </div>
 </section>
-<section id="repaso-dos-tipos-de-variables" class="slide level2">
-<h2>Repaso: dos tipos de variables</h2>
+<section id="resumen-clase-9" class="slide level2">
+<h2>Resumen Clase 9</h2>
+<div style="margin-top: 8px;">
+<div style="background: linear-gradient(90deg, #1a3a6b, #2e5090); border-radius: 8px; padding: 10px 20px; margin-bottom: 14px;">
+<p style="color: white; font-size: 28px; margin: 0; line-height: 1.6;">
+<strong>Variable aleatoria:</strong> <span class="math inline">\(X:\Omega\to\mathbb{R}\)</span> &nbsp;·&nbsp; <strong>Discreta:</strong> FMP <span class="math inline">\(p(x)=P(X=x)\geq 0,\ \textstyle\sum p=1\)</span> &nbsp;·&nbsp; <strong>Continua:</strong> FDP <span class="math inline">\(f(x)\geq 0,\ \int f=1\)</span> &nbsp;·&nbsp; <strong>FDA:</strong> <span class="math inline">\(F(x)=P(X\leq x)\)</span>
+</p>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+<div style="background: #f0f4ff; border-left: 5px solid #1a3a6b; border-radius: 0 8px 8px 0; padding: 12px 16px;">
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 0 0 8px 0;">
+Distribuciones discretas
+</p>
+<table style="width:100%; font-size:26px; border-collapse:collapse;">
+<tbody><tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#dce9f7; color:#1a3a6b; font-weight:700; border-radius:4px; padding:1px 7px;">Bernoulli(<span class="math inline">\(p\)</span>)</span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Éxito/fracaso único. <span class="math inline">\(p(x)=p^x(1-p)^{1-x}\)</span>
+</td>
+</tr>
+<tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#dce9f7; color:#1a3a6b; font-weight:700; border-radius:4px; padding:1px 7px;">Bin(<span class="math inline">\(n,p\)</span>)</span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+<span class="math inline">\(k\)</span> éxitos en <span class="math inline">\(n\)</span> ensayos. <span class="math inline">\(\binom{n}{k}p^k(1-p)^{n-k}\)</span>
+</td>
+</tr>
+<tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#dce9f7; color:#1a3a6b; font-weight:700; border-radius:4px; padding:1px 7px;">Poi(<span class="math inline">\(\lambda\)</span>)</span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Eventos raros. <span class="math inline">\(e^{-\lambda}\lambda^k/k!\)</span>
+</td>
+</tr>
+<tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#dce9f7; color:#1a3a6b; font-weight:700; border-radius:4px; padding:1px 7px;">Geo(<span class="math inline">\(p\)</span>)</span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Intentos hasta primer éxito. <span class="math inline">\((1-p)^{k-1}p\)</span>
+</td>
+</tr>
+<tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#dce9f7; color:#1a3a6b; font-weight:700; border-radius:4px; padding:1px 7px;">Hiper(<span class="math inline">\(N,K,n\)</span>)</span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Sin reemplazo. <span class="math inline">\(\binom{K}{k}\binom{N-K}{n-k}/\binom{N}{n}\)</span>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div style="background: #f0faf2; border-left: 5px solid #1b4d2e; border-radius: 0 8px 8px 0; padding: 12px 16px;">
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 0 0 8px 0;">
+Distribuciones continuas
+</p>
+<table style="width:100%; font-size:26px; border-collapse:collapse;">
+<tbody><tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#d6f0dd; color:#1b4d2e; font-weight:700; border-radius:4px; padding:1px 7px;"><span class="math inline">\(U(a,b)\)</span></span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Densidad constante <span class="math inline">\(1/(b-a)\)</span> en <span class="math inline">\((a,b)\)</span>
+</td>
+</tr>
+<tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#d6f0dd; color:#1b4d2e; font-weight:700; border-radius:4px; padding:1px 7px;"><span class="math inline">\(N(\mu,\sigma^2)\)</span></span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Campana simétrica; <span class="math inline">\(Z=(X-\mu)/\sigma\)</span>
+</td>
+</tr>
+<tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#d6f0dd; color:#1b4d2e; font-weight:700; border-radius:4px; padding:1px 7px;"><span class="math inline">\(\text{Exp}(\lambda)\)</span></span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Tiempos de espera; sin memoria
+</td>
+</tr>
+<tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#d6f0dd; color:#1b4d2e; font-weight:700; border-radius:4px; padding:1px 7px;"><span class="math inline">\(\text{Gamma}(\alpha,\beta)\)</span></span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Tiempo hasta el <span class="math inline">\(k\)</span>-ésimo evento
+</td>
+</tr>
+<tr>
+<td style="padding:3px 6px; white-space:nowrap;">
+<span style="background:#d6f0dd; color:#1b4d2e; font-weight:700; border-radius:4px; padding:1px 7px;"><span class="math inline">\(\text{Beta}(\alpha,\beta)\)</span></span>
+</td>
+<td style="padding:3px 6px; color:#374151;">
+Proporciones en <span class="math inline">\((0,1)\)</span>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</section>
+<section id="el-hilo-del-curso-clases-1-a-10" class="slide level2">
+<h2>El hilo del curso: clases 1 a 10</h2>
+<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; align-items: start; text-align: center;">
+<div class="fragment fade-up" data-fragment-index="1" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 58px; height: 58px; border-radius: 50%; background: #374151; color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; margin-bottom: 8px;">
+1–3
+</div>
+<p style="font-size: 24px; font-weight: 700; color: #374151;">
+Describir
+</p>
+<p style="font-size: 20px; color: #374151; margin-top: 6px;">
+Tablas, gráficos, tasas, medidas de posición y dispersión.
+</p>
+<p style="font-size: 19px; color: #6b7280; margin-top: 6px; font-style: italic;">
+Estadística descriptiva
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 58px; height: 58px; border-radius: 50%; background: #1a3a6b; color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; margin-bottom: 8px;">
+4–5
+</div>
+<p style="font-size: 24px; font-weight: 700; color: #1a3a6b;">
+Relacionar
+</p>
+<p style="font-size: 20px; color: #374151; margin-top: 6px;">
+Dispersión, correlación, tablas de contingencia y análisis bivariado.
+</p>
+<p style="font-size: 19px; color: #6b7280; margin-top: 6px; font-style: italic;">
+Estadística bivariada
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 58px; height: 58px; border-radius: 50%; background: #1a3a6b; color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; margin-bottom: 8px;">
+6–8
+</div>
+<p style="font-size: 24px; font-weight: 700; color: #1a3a6b;">
+Medir la incertidumbre
+</p>
+<p style="font-size: 20px; color: #374151; margin-top: 6px;">
+Eventos, probabilidad condicional, independencia y Bayes.
+</p>
+<p style="font-size: 19px; color: #6b7280; margin-top: 6px; font-style: italic;">
+Teoría de probabilidad
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 58px; height: 58px; border-radius: 50%; background: #1b4d2e; color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; margin-bottom: 8px;">
+9
+</div>
+<p style="font-size: 24px; font-weight: 700; color: #1b4d2e;">
+Cuantificar
+</p>
+<p style="font-size: 20px; color: #374151; margin-top: 6px;">
+Variables aleatorias, FDA, FMP y FDP. Distribuciones discretas.
+</p>
+<p style="font-size: 19px; color: #6b7280; margin-top: 6px; font-style: italic;">
+Variables aleatorias
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="5" style="display: flex; flex-direction: column; align-items: center;">
+<div style="width: 58px; height: 58px; border-radius: 50%; background: #1b4d2e; color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; margin-bottom: 8px;">
+10
+</div>
+<p style="font-size: 24px; font-weight: 700; color: #1b4d2e;">
+Modelar
+</p>
+<p style="font-size: 20px; color: #374151; margin-top: 6px;">
+Distribuciones continuas: Uniforme, Normal, Exponencial, Gamma, Beta, <span class="math inline">\(\chi^2\)</span>, <span class="math inline">\(t\)</span>.
+</p>
+<p style="font-size: 19px; color: #6b7280; margin-top: 6px; font-style: italic;">
+Modelos probabilísticos
+</p>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 0; margin-top: 20px; padding: 0 30px;">
+<div style="height: 4px; flex: 1; background: linear-gradient(90deg, #374151, #1a3a6b); border-radius: 2px;">
+
+</div>
+<div style="height: 4px; flex: 1; background: linear-gradient(90deg, #1a3a6b, #1b4d2e); border-radius: 2px;">
+
+</div>
+<div style="height: 4px; flex: 1; background: linear-gradient(90deg, #1b4d2e 60%, #9ca3af); border-radius: 2px; border-right: 3px dashed #9ca3af;">
+
+</div>
+</div>
+<p class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: center; margin-top: 12px; color: #1a3a6b; font-weight: 700;">
+Hoy tenemos todas las piezas para el siguiente paso: <span style="color:#1b4d2e;">inferencia estadística.</span>
+</p>
+</section>
+<section id="fmp-y-fda" class="slide level2">
+<h2>FMP y FDA</h2>
+<div class="twocol" style="margin-top: 10px;">
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Variable Discreta
+Función de Masa de Probabilidad
 </div>
-<div class="block-body" style="font-size: 30px; text-align: justify;">
-Soporte contable <span class="math inline">\(\{x_1, x_2, \ldots\}\)</span>. Se describe con la <strong>función de masa de probabilidad</strong> (FMP): <span class="math display">\[p(x) = P(X = x) \geq 0, \quad \sum_x p(x) = 1\]</span>
+<div class="block-body" style="font-size: 27px;">
+<p><span class="math display">\[p(x) = P(X = x)\]</span> Asigna una probabilidad a <strong>cada valor individual</strong>. Responde: ¿con qué chance ocurre exactamente <span class="math inline">\(x\)</span>?</p>
 </div>
 </div>
 <div class="block-theorem fragment fade-up" data-fragment-index="2">
 <div class="block-title">
-Variable Continua
+Función de Distribución Acumulada
 </div>
-<div class="block-body" style="font-size: 30px; text-align: justify;">
-Soporte intervalar. Se describe con la <strong>función de densidad de probabilidad</strong> (FDP): <span class="math display">\[f(x) \geq 0, \quad \int_{-\infty}^{\infty} f(x)\,dx = 1\]</span>
+<div class="block-body" style="font-size: 27px;">
+<p><span class="math display">\[F(x) = P(X \leq x) = \sum_{x_i \leq x} p(x_i)\]</span> <strong>Acumula</strong> toda la probabilidad hasta <span class="math inline">\(x\)</span>. Responde: ¿con qué chance ocurre <span class="math inline">\(x\)</span> o menos?</p>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<p>La FDA <strong>suma</strong> la FMP. Y la FMP indica<strong>cuánto</strong> aumenta la FDA en cada valor, osea, el salto que se da</p>
 </div>
 </div>
 </section>
-<section id="función-de-masa-de-probabilidad-y-sus-propiedades" class="slide level2">
-<h2>Función de masa de probabilidad y sus propiedades</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición
-</div>
-<div class="block-body" style="font-size: 30px; text-align: justify;">
-<p>Una función <span class="math inline">\(p: \mathbb{R} \to [0,1]\)</span> es una FMP si y solo si:</p>
-<ul style="margin-top:10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="list-style-type:none;">
-<ol type="1">
-<li><span class="math inline">\(p(x) \geq 0\)</span> para todo <span class="math inline">\(x\)</span></li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="list-style-type:none;">
-<ol start="2" type="1">
-<li><span class="math inline">\(p(x) = 0\)</span> fuera del soporte</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="list-style-type:none;">
-<ol start="3" type="1">
-<li><span class="math inline">\(\displaystyle\sum_{x \in \text{soporte}} p(x) = 1\)</span></li>
-</ol>
-</li>
-</ul>
-</div>
-</div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
-Cada valor del soporte tiene una probabilidad positiva asignada.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
-La suma de todas las probabilidades debe ser exactamente 1 (certeza total).
-</li>
-</ul>
-</section>
-<section id="ejemplo-1" class="slide level2">
-<h2>Ejemplo 1</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-body">
-<p style="font-size: 30px; text-align: justify;">
-Se inspeccionan 3 plantas de cacao en Tumaco. Cada planta tiene probabilidad <span class="math inline">\(p = 0.4\)</span> de presentar moniliasis, independientemente.<br>
-Sea <span class="math inline">\(X\)</span> = número de plantas infectadas.
+<section id="section-1" class="slide level2 middle center">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución Binomial
+</p>
+<p style="text-align: justify;font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una Distribución Binomial significa que estamos contando cuántas veces ocurre un evento en un número fijo de unidades, donde cada unidad solo tiene dos posibles resultados.
 </p>
 </div>
-</div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;list-style-type:none;">
-Si <span class="math inline">\(X \sim \text{Bin}(3, 0.4)\)</span>, verificar que <span class="math inline">\(p(x)\)</span> cumple las propiedades de una FMP:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<strong>Solución:</strong> los valores posibles son <span class="math inline">\(\{0, 1, 2, 3\}\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<strong>Cálculo de <span class="math inline">\(p(x)\)</span>:</strong>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<p><span class="math inline">\(p(0) = (0.6)^3 = 0.216\)</span>, <span class="math inline">\(p(1) = 3(0.4)(0.6)^2 = 0.432\)</span>,<br>
-<span class="math inline">\(p(2) = 3(0.4)^2(0.6) = 0.288\)</span>, <span class="math inline">\(p(3) = (0.4)^3 = 0.064\)</span></p>
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<strong>Verificación</strong>: <span class="math inline">\(0.216 + 0.432 + 0.288 + 0.064 = 1\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify;list-style-type:none;">
-Se cumple que: <span class="math inline">\(p(x) \geq 0\)</span> y la suma de las probabilidades es 1, por lo tanto <span class="math inline">\(p(x)\)</span> es una FMP válida para <span class="math inline">\(X\)</span>.
-</li>
-</ul>
 </section>
-<section id="gráfica-fmp-distribución-binomial-n3-p0.4" class="slide level2">
-<h2>Gráfica FMP Distribución Binomial (n=3, p=0.4)</h2>
-
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-1-1.png" width="864" class="r-stretch"></section>
-<section id="distribución-bernoulli-fmp-y-propiedades" class="slide level2">
-<h2>Distribución Bernoulli FMP y propiedades</h2>
+<section id="fmp-y-fda-distribución-binomial" class="slide level2">
+<h2>FMP y FDA: Distribución Binomial</h2>
+<div class="twocol" style="margin-top: 10px;">
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Definición
+FMP: <span class="math inline">\(X \sim \text{Bin}(3,\, 0.4)\)</span>
 </div>
-<div class="block-body">
-<p><span class="math inline">\(X \sim \text{Ber}(p)\)</span>:</p>
-<p><span class="math display">\[p(x) = p^x(1-p)^{1-x}, \quad x \in \{0,1\}\]</span></p>
-<p>Parámetro: <span class="math inline">\(p = P(X=1)\)</span>, probabilidad de éxito.<br>
-<span class="math inline">\(1-p = P(X=0)\)</span>, probabilidad de fracaso.<br>
-Es la base de la distribución Binomial.</p>
+<div class="block-body" style="font-size: 26px;">
+<p><span class="math display">\[p(x) = \binom{3}{x}(0.4)^x(0.6)^{3-x}\]</span></p>
+<table class="slide-table" style="width:100%; font-size:25px; margin-top:10px;">
+<thead>
+<tr>
+<th>
+<span class="math inline">\(x\)</span>
+</th>
+<th>
+<span class="math inline">\(p(x) = P(X=x)\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\binom{3}{0}(0.4)^0(0.6)^3 = 0.216\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\binom{3}{1}(0.4)^1(0.6)^2 = 0.432\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\binom{3}{2}(0.4)^2(0.6)^1 = 0.288\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\binom{3}{3}(0.4)^3(0.6)^0 = 0.064\)</span>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</section>
-<section id="efecto-de-p-en-la-distribución-bernoulli" class="slide level2">
-<h2>Efecto de p en la distribución Bernoulli</h2>
-
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-2-1.png" width="1440" class="r-stretch"></section>
-<section id="fmp-de-la-distribución-binomial" class="slide level2">
-<h2>FMP de la Distribución Binomial</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
 <div class="block-title">
-Definición
+FDA: <span class="math inline">\(F(x) = P(X \leq x)\)</span>
 </div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Bin}(n, p)\)</span>: <span class="math display">\[p(X=k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n\]</span> El coeficiente <span class="math inline">\(\binom{n}{k}\)</span> cuenta el número de formas de elegir <span class="math inline">\(k\)</span> éxitos de <span class="math inline">\(n\)</span> ensayos.
+<div class="block-body" style="font-size: 26px;">
+<p><span class="math display">\[F(x) = \sum_{x_i \leq x} p(x_i)\]</span></p>
+<table class="slide-table" style="width:100%; font-size:25px; margin-top:10px;">
+<thead>
+<tr>
+<th>
+<span class="math inline">\(x\)</span>
+</th>
+<th>
+<span class="math inline">\(F(x) = P(X \leq x)\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(0.216\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(0.216 + 0.432 = 0.648\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(0.648 + 0.288 = 0.936\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(0.936 + 0.064 = 1.000\)</span>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<ul style="margin-top: 10px;line-height=1.8;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Supuestos:
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;list-style-type:none;">
-<ol type="1">
-<li>Ensayos <strong>independientes</strong>.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;list-style-type:none;">
-<ol start="2" type="1">
-<li>Probabilidad de éxito <strong>constante</strong> <span class="math inline">\(p\)</span>.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;list-style-type:none;">
-<ol start="3" type="1">
-<li>Número de ensayos <strong>fijo</strong> <span class="math inline">\(n\)</span>.</li>
-</ol>
-</li>
-</ul>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="3" style="margin-top: 12px;">
+<div class="block-body" style="font-size: 24px; text-align: center;">
+<p><span class="math inline">\(P(X \leq 1) = F(1) = 0.648\)</span>; &nbsp; <span class="math inline">\(P(X = 2) = F(2) - F(1) = 0.936 - 0.648 = 0.288\)</span>; &nbsp; <span class="math inline">\(P(X &gt; 2) = 1 - F(2) = 0.064\)</span></p>
+</div>
+</div>
 </section>
+<section id="gráfica-fmp-y-fda-binomial-n3-p0.4" class="slide level2">
+<h2>Gráfica FMP y FDA: Binomial (n=3, p=0.4)</h2>
+
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-1-1.png" width="1152" class="r-stretch"></section>
 <section id="efecto-de-los-parámetros-en-la-distribución-binomial" class="slide level2">
 <h2>Efecto de los parámetros en la Distribución Binomial</h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-3-1.png" width="1536" class="r-stretch"></section>
-<section id="fmp-de-la-distribución-poisson" class="slide level2">
-<h2>FMP de la Distribución Poisson</h2>
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-2-1.png" width="1536" class="r-stretch"></section>
+<section id="r-distribución-binomial" class="slide level2">
+<h2>R: Distribución Binomial</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>En un lote de <span class="math inline">\(n=50\)</span> plantas de café, con <span class="math inline">\(p=0.15\)</span> de tener roya. Calcule <span class="math inline">\(P(X=8)\)</span>, <span class="math inline">\(P(X \leq 10)\)</span>, <span class="math inline">\(P(X &gt; 12)\)</span>, <span class="math inline">\(P(X \geq 12)\)</span> y <span class="math inline">\(P(5 \leq X \leq 12)\)</span>.</p>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0; max-height: 500px; overflow-y: auto; overflow-x: auto;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>; p <span class="ot">&lt;-</span> <span class="fl">0.15</span></span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a><span class="co"># Exactamente 8 plantas</span></span>
+<span id="cb1-4"><a href=""></a><span class="fu">dbinom</span>(<span class="dv">8</span>, n, p)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1493486</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># Menor o igual que 10</span></span>
+<span id="cb3-2"><a href=""></a><span class="fu">pbinom</span>(<span class="dv">10</span>, n, p)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8800827</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Estrictamente menor que 10</span></span>
+<span id="cb5-2"><a href=""></a><span class="fu">pbinom</span>(<span class="dv">9</span>, n, p)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7910937</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Mayor que 12</span></span>
+<span id="cb7-2"><a href=""></a><span class="fu">pbinom</span>(<span class="dv">12</span>, n, p, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03006053</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># Mayor o igual que 12</span></span>
+<span id="cb9-2"><a href=""></a><span class="fu">pbinom</span>(<span class="dv">11</span>, n, p,<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.06281207</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Entre 5 y 12 (inclusive)</span></span>
+<span id="cb11-2"><a href=""></a><span class="fu">pbinom</span>(<span class="dv">12</span>, n, p) <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">4</span>, n, p)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8578343</code></pre>
+</div>
+</div>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dbinom(x, n, p): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X = x)\)</span></span><br><br></p>
+<p><strong><code>pbinom(q, n, p):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \leq q)\)</span></span><br><br></p>
+<p><strong><code>pbinom(q-1, n, p): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &lt; q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &gt; q)\)</span></span><br><br></p>
+<p><strong><code>pbinom(q-1,…,FALSE): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \geq q)\)</span></span><br><br></p>
+<p><strong><code>pbinom(b) - pbinom(a-1): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq X \leq b)\)</span></span></p>
+</div>
+</div>
+</section>
+<section id="aplicaciones-en-agronomía-distribución-binomial" class="slide level2">
+<h2>Aplicaciones en Agronomía: Distribución Binomial</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--success">
+<p style="font-size: 32px; margin: 0;">
+🌿
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 6px 0;">
+Germinación de semillas
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+De <span class="math inline">\(n=20\)</span> semillas de maíz sembradas en <strong>Córdoba</strong>, cada una germina con probabilidad <span class="math inline">\(p=0.85\)</span>. ¿Cuántas germinarán?
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Bin}(20,\, 0.85)\)</span>
+</p>
+</div>
+<div class="card card--danger">
+<p style="font-size: 32px; margin: 0;">
+🦠
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #7a1515; margin: 6px 0;">
+Plantas con enfermedad
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+En un muestreo de <span class="math inline">\(n=50\)</span> plantas de café en <strong>Huila</strong>, cada planta tiene probabilidad <span class="math inline">\(p=0.15\)</span> de presentar roya.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Bin}(50,\, 0.15)\)</span>
+</p>
+</div>
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+✂️
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Éxito de esquejes en vivero
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+De <span class="math inline">\(n=30\)</span> esquejes de aguacate injertados en viveros de <strong>Antioquia</strong>, cada uno prende con probabilidad <span class="math inline">\(p=0.70\)</span>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Bin}(30,\, 0.70)\)</span>
+</p>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Se usa cuando hay <strong><span class="math inline">\(n\)</span> ensayos independientes</strong>, cada uno con probabilidad <span class="math inline">\(p\)</span> de éxito y dos resultados posibles.</p>
+</div>
+</div>
+</section>
+<section id="section-2" class="slide level2 middle center">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución Poisson
+</p>
+<p style="text-align: justify;font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una Distribución Poisson significa que estamos contando cuántas veces ocurre un evento en un intervalo de espacio, tiempo o área, cuando los eventos aparecen de manera aleatoria.
+</p>
+</div>
+</section>
+<section id="fmp-y-fda-fórmulas-de-la-distribución-poisson" class="slide level2">
+<h2>FMP y FDA: fórmulas de la Distribución Poisson</h2>
+<div class="twocol" style="margin-top: 16px;">
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Definición
+Función de Masa de Probabilidad
 </div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Poi}(\lambda)\)</span>, <span class="math inline">\(\lambda &gt; 0\)</span>: <span class="math display">\[p(X=k) = \frac{e^{-\lambda}\lambda^k}{k!}, \quad k = 0, 1, 2, \ldots\]</span> <span class="math inline">\(\lambda\)</span> representa el <strong>número promedio de eventos</strong> por unidad de tiempo/espacio.
+<div class="block-body" style="font-size: 24px;">
+<p><span class="math display">\[p(x) = P(X = x) = \frac{e^{-\lambda}\,\lambda^x}{x!}, \quad x = 0, 1, 2, \ldots\]</span></p>
+<ul style="margin-top: 14px; line-height: 1.1;">
+<li>
+<span class="math inline">\(\lambda &gt; 0\)</span>: tasa promedio de ocurrencias.
+</li>
+<li>
+Cada valor tiene probabilidad estrictamente positiva.
+</li>
+<li>
+La suma de todas las probabilidades es 1: <span class="math inline">\(\displaystyle\sum_{x=0}^{\infty} p(x) = 1\)</span>.
+</li>
+</ul>
 </div>
 </div>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify; ">
-Condiciones de validez:
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Función de Distribución Acumulada
+</div>
+<div class="block-body" style="font-size: 24px;">
+<p><span class="math display">\[F(x) = P(X \leq x) = \sum_{k=0}^{\lfloor x \rfloor} \frac{e^{-\lambda}\,\lambda^k}{k!}\]</span></p>
+<ul style="margin-top: 14px; line-height: 1.8;">
+<li>
+Función escalonada: sube en cada entero no negativo.
 </li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<ol type="1">
-<li>Eventos independientes.</li>
-</ol>
+<li>
+El salto en <span class="math inline">\(x = k\)</span> es exactamente <span class="math inline">\(p(k)\)</span>.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<ol start="2" type="1">
-<li>Tasa constante.</li>
-</ol>
+<li>
+<span class="math inline">\(F(x) \to 1\)</span> cuando <span class="math inline">\(x \to \infty\)</span>.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<ol start="3" type="1">
-<li>Dos eventos no pueden ocurrir simultáneamente.</li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<ol start="4" type="1">
-<li>La distribucion binomial se aproxima a una Poisson cuando <span class="math inline">\(n\)</span> es grande y <span class="math inline">\(p\)</span> pequeño:<br>
-<span class="math inline">\(\text{Bin}(n,p) \approx \text{Poi}(np)\)</span> , donde <span class="math inline">\(\lambda=np\)</span>.</li>
-</ol>
-</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="3" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<p>No existe fórmula cerrada para <span class="math inline">\(F(x)\)</span>: se calcula sumando términos de la FMP. En R: <code>dpois(x, λ)</code> para la FMP y <code>ppois(x, λ)</code> para la FDA.</p>
+</div>
+</div>
+</section>
+<section id="fmp-y-fda-distribución-poisson-lambda-0.3" class="slide level2">
+<h2>FMP y FDA: Distribución Poisson (<span class="math inline">\(\lambda = 0.3\)</span>)</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px;">
+<div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="clase_10_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" width="528"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="clase_10_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" width="528"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="twocol">
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-body" style="font-size: 25px;">
+<p>Con <span class="math inline">\(\lambda = 0.3\)</span>, la masa se concentra en <span class="math inline">\(x = 0\)</span>: <span class="math inline">\(P(X=0) = e^{-0.3} \approx 0.741\)</span>. Modela eventos muy raros.</p>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="2">
+<div class="block-body" style="font-size: 25px;">
+<p>La FDA sube casi de golpe: <span class="math inline">\(F(0) \approx 0.741\)</span>, <span class="math inline">\(F(1) \approx 0.963\)</span>. El <span class="math inline">\(96.3\%\)</span> de las veces ocurre 1 o ningún evento.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="efecto-del-parámetro-λ-en-la-distribución-poisson" class="slide level2">
 <h2>Efecto del parámetro λ en la Distribución Poisson</h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-4-1.png" width="1536" class="r-stretch"><p class="fragment fade-up" style="font-size: 30px; text-align: center;" data-fragment-index="1">
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-6-1.png" width="1536" class="r-stretch"><p class="fragment fade-up" style="font-size: 30px; text-align: center;" data-fragment-index="1">
 Para <span class="math inline">\(\lambda\)</span> grande, la Poisson se aproxima a una distribución Normal.
 </p>
 </section>
-<section id="distribución-geométrica" class="slide level2">
-<h2>Distribución Geométrica</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición
-</div>
-<div class="block-body">
-<span class="math inline">\(X \sim \text{Geo}(p)\)</span>: número de ensayos hasta el <strong>primer éxito</strong>: <span class="math display">\[p(X=k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots\]</span>
+<section id="r-distribución-poisson" class="slide level2">
+<h2>R: Distribución Poisson</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>Brotes de sigatoka por semana en banano, <span class="math inline">\(\lambda=4.2\)</span>. Calcule <span class="math inline">\(P(X=3)\)</span>, <span class="math inline">\(P(X \leq 5)\)</span>, <span class="math inline">\(P(X &gt; 6)\)</span>, <span class="math inline">\(P(X \geq 7)\)</span> y <span class="math inline">\(P(3 \leq X \leq 6)\)</span>.</p>
 </div>
 </div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Ejemplo: número de cultivos inspeccionados hasta encontrar el primer positivo a <em>Salmonella</em>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-También tiene propiedad sin memoria: el historial de fracasos no afecta la probabilidad de éxito futuro.
-</li>
-</ul>
-</section>
-<section id="distribución-hipergeométrica" class="slide level2">
-<h2>Distribución Hipergeométrica</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>lambda <span class="ot">&lt;-</span> <span class="fl">4.2</span></span>
+<span id="cb13-2"><a href=""></a></span>
+<span id="cb13-3"><a href=""></a><span class="co"># Exactamente 3 brotes</span></span>
+<span id="cb13-4"><a href=""></a><span class="fu">dpois</span>(<span class="dv">3</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1851654</code></pre>
 </div>
-<div class="block-body">
-Población de <span class="math inline">\(N\)</span> elementos: <span class="math inline">\(M\)</span> “éxitos” y <span class="math inline">\(N-M\)</span> “fracasos”. Se extrae una muestra sin reemplazo de tamaño <span class="math inline">\(n\)</span>. Entonces <span class="math inline">\(X\)</span> = número de éxitos tiene FMP: <span class="math display">\[p(X=k) = \frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}, \quad k = 0,\ldots,\min(n,M)\]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Menor o igual que 5</span></span>
+<span id="cb15-2"><a href=""></a><span class="fu">ppois</span>(<span class="dv">5</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7531429</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># Estrictamente menor que 5</span></span>
+<span id="cb17-2"><a href=""></a><span class="fu">ppois</span>(<span class="dv">4</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.589827</code></pre>
 </div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Diferencia clave con Binomial: el muestreo es <strong>sin reemplazo</strong>, por lo que los ensayos no son independientes.
-</li>
-</ul>
-</section>
-<section id="propiedades-de-la-función-de-densidad-de-probabilidad-fdp" class="slide level2">
-<h2>Propiedades de la Función de Densidad de Probabilidad (FDP)</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Mayor que 6</span></span>
+<span id="cb19-2"><a href=""></a><span class="fu">ppois</span>(<span class="dv">6</span>, lambda, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.132536</code></pre>
 </div>
-<div class="block-body" style="font-size: 30px; text-align: justify;">
-<p>Una función <span class="math inline">\(f: \mathbb{R} \to \mathbb{R}\)</span> es una FDP si y solo si:</p>
-<ul style="margin-top:10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="list-style-type:none;">
-<ol type="1">
-<li><span class="math inline">\(f(x) \geq 0\)</span> para todo <span class="math inline">\(x\)</span></li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="list-style-type:none;">
-<ol start="2" type="1">
-<li><span class="math inline">\(\displaystyle\int_{-\infty}^{\infty} f(x)\,dx = 1\)</span></li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="list-style-type:none;">
-<ol start="3" type="1">
-<li>Para cualquier intervalo <span class="math inline">\((a,b)\)</span>: <span class="math inline">\(P(a \leq X \leq b) = \int_a^b f(x)\,dx\)</span></li>
-</ol>
-</li>
-</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># Mayor o igual que 7</span></span>
+<span id="cb21-2"><a href=""></a><span class="fu">ppois</span>(<span class="dv">6</span>, lambda, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.132536</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># Entre 3 y 6 (inclusive)</span></span>
+<span id="cb23-2"><a href=""></a><span class="fu">ppois</span>(<span class="dv">6</span>, lambda) <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">2</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.657226</code></pre>
 </div>
 </div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 30px; text-align: justify;">
-A diferencia de la FMP, <span class="math inline">\(f(x)\)</span> puede tomar valores mayores que 1 (no es una probabilidad directa).
-</li>
-</ul>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dpois(x, lambda): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X = x)\)</span></span><br><br></p>
+<p><strong><code>ppois(q, lambda):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \leq q)\)</span></span><br><br></p>
+<p><strong><code>ppois(q-1, lambda): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &lt; q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &gt; q)\)</span></span><br><br></p>
+<p><strong><code>ppois(q-1,…,FALSE): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \geq q)\)</span></span><br><br></p>
+<p><strong><code>ppois(b) - ppois(a-1): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq X \leq b)\)</span></span></p>
+</div>
+</div>
 </section>
 <section id="relación-diferencial-entre-fdp-y-fda" class="slide level2">
 <h2>Relación diferencial entre FDP y FDA</h2>
@@ -554,7 +923,7 @@ A diferencia de la FMP, <span class="math inline">\(f(x)\)</span> puede tomar va
 Definición
 </div>
 <div class="block-body">
-Si <span class="math inline">\(X\)</span> es v.a continua con FDP <span class="math inline">\(f(x)\)</span> y FDA <span class="math inline">\(F(x)\)</span>: <span class="math display">\[F(x) = \int_{-\infty}^{x} f(t)\,dt\]</span> <span class="math display">\[f(x) = F'(x) \quad \text{(donde existe la derivada)}\]</span>
+<p>Si <span class="math inline">\(X\)</span> es v.a continua con FDP <span class="math inline">\(f(x)\)</span> y FDA <span class="math inline">\(F(x)\)</span>: <span class="math display">\[F(x) = \int_{-\infty}^{x} f(t)\,dt\]</span> <span class="math display">\[f(x) = F'(x) \quad \text{(donde existe la derivada)}\]</span></p>
 </div>
 </div>
 <ul style="margin-top: 20px;">
@@ -566,77 +935,304 @@ Las zonas donde <span class="math inline">\(f(x)\)</span> es alta concentran may
 </li>
 </ul>
 </section>
+<section id="aplicaciones-en-agronomía-distribución-poisson" class="slide level2">
+<h2>Aplicaciones en Agronomía: Distribución Poisson</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--danger">
+<p style="font-size: 32px; margin: 0;">
+🦟
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #7a1515; margin: 6px 0;">
+Focos de plaga por hectárea
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Número de brotes de sigatoka por semana en cultivos de banano en <strong>Urabá</strong>. Eventos raros en un intervalo definido.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Poi}(\lambda)\)</span>, <span class="math inline">\(\lambda\)</span> = brotes/semana
+</p>
+</div>
+<div class="card card--warning">
+<p style="font-size: 32px; margin: 0;">
+🌧️
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #b45309; margin: 6px 0;">
+Eventos de granizo por temporada
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Número de eventos de granizo que afectan cultivos de flores en la <strong>Sabana de Bogotá</strong> durante la temporada lluviosa.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Poi}(\lambda)\)</span>, <span class="math inline">\(\lambda\)</span> = eventos/mes
+</p>
+</div>
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+🔬
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Colonias bacterianas en muestra
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Número de colonias de <em>E. coli</em> encontradas en muestras de agua de riego en cultivos de hortalizas en <strong>Cundinamarca</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Poi}(\lambda)\)</span>, <span class="math inline">\(\lambda\)</span> = colonias/mL
+</p>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Ideal para <strong>contar eventos raros</strong> en un intervalo de tiempo, espacio o área cuando los eventos son independientes.</p>
+</div>
+</div>
+</section>
+<section id="section-3" class="slide level2 middle center">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución Uniforme
+</p>
+<p style="text-align: justify;font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una Distribución Uniforme significa que todos los valores dentro de un intervalo tienen la misma probabilidad de ocurrir.
+</p>
+</div>
+</section>
 <section id="fdp-y-fda-de-la-distribución-uniforme" class="slide level2">
 <h2>FDP y FDA de la Distribución Uniforme</h2>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Definición
+Distribución Uniforme continua <span class="math inline">\(X \sim U(a, b)\)</span>
 </div>
-<div class="block-body">
-<p style="font-size: 22px; text-align: justify; line-height: 1.35;">
-</p><p>Una variable aleatoria continua <span class="math inline">\(X\)</span> sigue una <strong>distribución uniforme continua</strong> en el intervalo <span class="math inline">\((a,b)\)</span> si todos los valores comprendidos entre <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span> tienen la misma probabilidad de ocurrir.</p>
-<p></p>
-<p><span class="math display">\[X \sim U(a,b)\]</span></p>
-<p style="font-size: 20px; text-align: justify; line-height: 1.45;">
-</p><p>La distribución uniforme se utiliza cuando no existe preferencia por ningún valor dentro del intervalo, por lo que la densidad permanece constante en todo el soporte.</p>
-<p></p>
-<div class="r-hstack" style="gap: 35px; align-items: flex-start; margin-top: 10px;">
-<div style="width: 50%;">
-<p><span class="math display">\[
-f(x)=\frac{1}{b-a}, \quad a&lt;x&lt;b
-\]</span></p>
-<p style="font-size: 20px; text-align:center;">
-Función de densidad
-</p>
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+<p>Todos los valores en <span class="math inline">\((a, b)\)</span> tienen la <strong>misma probabilidad</strong> de ocurrir. La densidad es constante en todo el soporte. <span style="color: #6b7280; font-size: 24px;"> — Parámetros: <span class="math inline">\(a\)</span> (límite inferior), <span class="math inline">\(b\)</span> (límite superior).</span></p>
 </div>
-<div style="width: 50%;">
-<p><span class="math display">\[
-F(x)=
-\begin{cases}
-0, &amp; x&lt;a \\[6pt]
-\dfrac{x-a}{b-a}, &amp; a\leq x\leq b \\[10pt]
-1, &amp; x&gt;b
-\end{cases}
-\]</span></p>
-<p style="font-size: 20px; text-align:center;">
-Función de distribución acumulada
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Función de Densidad (FDP)
+</div>
+<div class="block-body" style="font-size: 28px; text-align: center;">
+<span class="math display">\[f(x) = \frac{1}{b-a}, \quad a &lt; x &lt; b\]</span>
+<p style="font-size: 24px; color: #374151; margin-top: 10px;">
+Densidad <strong>constante</strong>: ningún valor es más probable que otro dentro del intervalo.
 </p>
 </div>
 </div>
-<div style="font-size: 20px; margin-top: 10px; line-height: 1.45;">
-<p><strong>Parámetros:</strong> <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span> representan los límites inferior y superior del intervalo.<br></p>
-<p><strong>Soporte:</strong> <span class="math inline">\(x\in(a,b)\)</span>.</p>
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Función de Distribución Acumulada (FDA)
+</div>
+<div class="block-body" style="font-size: 24px; text-align: center;">
+<p><span class="math display">\[F(x) = \begin{cases} 0, &amp; x &lt; a \\[4pt] \dfrac{x-a}{b-a}, &amp; a \leq x \leq b \\[8pt] 1, &amp; x &gt; b \end{cases}\]</span></p>
 </div>
 </div>
 </div>
 </section>
-<section id="gráfico-de-la-fdp-y-fda-de-una-distribución-uniforme-con-a1-y-b4" class="slide level2">
-<h2>Gráfico de la FDP y FDA de una distribución Uniforme con <span class="math inline">\(a=1\)</span> y <span class="math inline">\(b=4\)</span></h2>
+<section id="fdp-y-fda-distribución-uniforme-con-a1-y-b4" class="slide level2">
+<h2>FDP y FDA: Distribución Uniforme con <span class="math inline">\(a=1\)</span> y <span class="math inline">\(b=4\)</span></h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-5-1.png" width="1536" class="r-stretch"></section>
-<section id="fdp-de-la-distribución-normal" class="slide level2">
-<h2>FDP de la Distribución Normal</h2>
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1536"></section>
+<section id="r-distribución-uniforme" class="slide level2">
+<h2>R: Distribución Uniforme</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>El tiempo de maduración (días) de una planta de uchuva sigue una <span class="math inline">\(U(60, 90)\)</span>. Calcule <span class="math inline">\(P(X=72)\)</span>, <span class="math inline">\(P(X \leq 75)\)</span>, <span class="math inline">\(P(X &gt; 80)\)</span>, <span class="math inline">\(P(X \geq 80)\)</span> y <span class="math inline">\(P(65 \leq X \leq 80)\)</span>.</p>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>a <span class="ot">&lt;-</span> <span class="dv">60</span>; b <span class="ot">&lt;-</span> <span class="dv">90</span></span>
+<span id="cb25-2"><a href=""></a></span>
+<span id="cb25-3"><a href=""></a><span class="co"># Exactamente 72 días (continua → siempre 0)</span></span>
+<span id="cb25-4"><a href=""></a><span class="fu">dunif</span>(<span class="dv">72</span>, a, b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03333333</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="co"># Menor o igual que 75</span></span>
+<span id="cb27-2"><a href=""></a><span class="fu">punif</span>(<span class="dv">75</span>, a, b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="co"># Estrictamente menor que 75 (igual para continua)</span></span>
+<span id="cb29-2"><a href=""></a><span class="fu">punif</span>(<span class="dv">75</span>, a, b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="co"># Mayor que 80</span></span>
+<span id="cb31-2"><a href=""></a><span class="fu">punif</span>(<span class="dv">80</span>, a, b, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3333333</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="co"># Mayor o igual que 80 (igual para continua)</span></span>
+<span id="cb33-2"><a href=""></a><span class="fu">punif</span>(<span class="dv">80</span>, a, b, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3333333</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="co"># Entre 65 y 80 (inclusive)</span></span>
+<span id="cb35-2"><a href=""></a><span class="fu">punif</span>(<span class="dv">80</span>, a, b) <span class="sc">-</span> <span class="fu">punif</span>(<span class="dv">65</span>, a, b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+</div>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dunif(x, min, max): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(f(x) = 1/(b-a)\)</span></span><br><br></p>
+<p><strong><code>punif(q, min, max):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \leq q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &gt; q)\)</span></span><br><br></p>
+<p><strong><code>punif(b) - punif(a): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq X \leq b)\)</span></span><br><br></p>
+<div class="block-alert" style="margin-top: 8px;">
+<div class="block-title">
+Nota: variable continua
+</div>
+<div class="block-body" style="font-size: 21px;">
+<p><span class="math inline">\(P(X = x) = 0\)</span> siempre.<br> <span class="math inline">\(P(X \leq q) = P(X &lt; q)\)</span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="aplicaciones-en-agronomía-distribución-uniforme" class="slide level2">
+<h2>Aplicaciones en Agronomía: Distribución Uniforme</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--success">
+<p style="font-size: 32px; margin: 0;">
+🌻
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 6px 0;">
+Época de floración
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+El inicio de floración del girasol en una variedad puede ocurrir en cualquier día dentro de una ventana de 15 días en <strong>Meta</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim U(60,\, 75)\)</span> días
+</p>
+</div>
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+💧
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Tiempo de activación de riego
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Sistema de riego automático programado para activarse en un intervalo fijo en cultivos de cebolla en <strong>Pasto</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim U(10,\, 30)\)</span> minutos
+</p>
+</div>
+<div class="card card--warning">
+<p style="font-size: 32px; margin: 0;">
+🌱
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #b45309; margin: 6px 0;">
+Tiempo de germinación
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Semillas de uchuva en condiciones controladas germinan con igual probabilidad en cualquier día entre el 5° y el 15° en <strong>Boyacá</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim U(5,\, 15)\)</span> días
+</p>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Se usa cuando se conocen los límites del fenómeno pero <strong>no hay preferencia</strong> por ningún valor dentro del rango.</p>
+</div>
+</div>
+</section>
+<section id="section-4" class="slide level2 middle center">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución Normal
+</p>
+<p style="text-align: justify;font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una Distribución Normal significa que la mayoría de los valores se concentran alrededor de un promedio, y los valores extremos son menos frecuentes. Es la famosa distribución en forma de “campana”.
+</p>
+</div>
+</section>
+<section id="fdp-y-fda-de-la-distribución-normal" class="slide level2">
+<h2>FDP y FDA de la Distribución Normal</h2>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Definición
+Distribución Normal <span class="math inline">\(X \sim N(\mu,\, \sigma^2)\)</span>
 </div>
-<div class="block-body">
-<span class="math display">\[f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \mathbb{R}\]</span> Parámetros: <span class="math inline">\(\mu \in \mathbb{R}\)</span> (media), <span class="math inline">\(\sigma^2 &gt; 0\)</span> (varianza).
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+<p>Variable continua con forma de campana simétrica alrededor de <span class="math inline">\(\mu\)</span>. Parametrizada por la <strong>media</strong> <span class="math inline">\(\mu \in \mathbb{R}\)</span> y la <strong>varianza</strong> <span class="math inline">\(\sigma^2 &gt; 0\)</span>.</p>
 </div>
 </div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-La curva es <strong>simétrica</strong> alrededor de <span class="math inline">\(\mu\)</span> y tiene forma de campana.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Los puntos de inflexión se ubican en <span class="math inline">\(\mu \pm \sigma\)</span>.
-</li>
-</ul>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Función de Densidad (FDP)
+</div>
+<div class="block-body" style="font-size: 27px; text-align: center;">
+<span class="math display">\[f(x) = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}, \quad x \in \mathbb{R}\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+Simétrica en <span class="math inline">\(\mu\)</span> · máximo en <span class="math inline">\(x = \mu\)</span> · colas asintóticas al eje <span class="math inline">\(x\)</span>.
+</p>
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Función de Distribución Acumulada (FDA)
+</div>
+<div class="block-body" style="font-size: 23px; text-align: center;">
+<span class="math display">\[F(x) = \Phi\!\left(\frac{x - \mu}{\sigma}\right) = \int_{-\infty}^{x} f(t)\,dt\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+No tiene forma cerrada. Se calcula estandarizando: <span class="math inline">\(Z = \dfrac{X - \mu}{\sigma} \sim N(0,1)\)</span> y usando la tabla <span class="math inline">\(\Phi\)</span>.
+</p>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>No existe una fórmula sencilla para calcular directamente la FDA de la normal. Por eso usamos la normal estándar, tablas o un software estadístico como R para calcular.</p>
+</div>
+</div>
+</section>
+<section id="gráfica-fdp-y-fda-normal-mu-3-sigma-7" class="slide level2">
+<h2>Gráfica FDP y FDA: Normal (<span class="math inline">\(\mu = 3,\ \sigma = 7\)</span>)</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px;">
+<div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="clase_10_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center" width="528"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="clase_10_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" width="528"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 8px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<p>La FDP es simétrica en <span class="math inline">\(\mu = 3\)</span> · La FDA cruza <span class="math inline">\(0.5\)</span> exactamente en <span class="math inline">\(x = \mu\)</span> · <span class="math inline">\(\sigma = 7\)</span> produce una campana <strong>ancha</strong> con alta dispersión.</p>
+</div>
+</div>
 </section>
 <section id="efecto-de-μ-y-σ-en-la-normal" class="slide level2">
 <h2>Efecto de μ y σ en la Normal</h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-6-1.png" width="1344" class="r-stretch"></section>
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-12-1.png" width="1344" class="r-stretch"></section>
 <section id="la-regla-del-68-95-y-99.7" class="slide level2">
 <h2>La regla del 68%, 95% y 99.7%</h2>
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
@@ -647,92 +1243,24 @@ Regla empírica de la Normal
 Para <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>: <span class="math display">\[P(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0.6827\]</span> <span class="math display">\[P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) \approx 0.9545\]</span> <span class="math display">\[P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) \approx 0.9973\]</span>
 </div>
 </div>
-<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-theorem fragment fade-up" data-fragment-index="2" style="font-size:36px;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Comando en R</span></span>
-<span id="cb1-2"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))), <span class="dv">4</span>)    <span class="co"># Para ±1σ El área bajo la curva es de aproximadamente 68%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># Comando en R</span></span>
+<span id="cb37-2"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))), <span class="dv">4</span>)    <span class="co"># Para ±1σ El área bajo la curva es de aproximadamente 68%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6827</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>))), <span class="dv">4</span>)    <span class="co"># Para ±2σ El área bajo la curva es de aproximadamente 95%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>))), <span class="dv">4</span>)    <span class="co"># Para ±2σ El área bajo la curva es de aproximadamente 95%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9545</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>))), <span class="dv">4</span>)    <span class="co"># Para ±3σ El área bajo la curva es de aproximadamente 99.7%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>))), <span class="dv">4</span>)    <span class="co"># Para ±3σ El área bajo la curva es de aproximadamente 99.7%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9973</code></pre>
 </div>
 </div>
 </div>
 </section>
-<section id="ejemplo-2" class="slide level2">
-<h2>Ejemplo 2</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Enunciado
-</div>
-<div class="block-body">
-<p>
-El peso de neonatos a término en un hospital de Medellín sigue <span class="math inline">\(X \sim N(3200, 400^2)\)</span> gramos. Calcule:
-</p>
-<ol>
-<li>
-<span class="math inline">\(P(2800 \leq X \leq 3600)\)</span>
-</li>
-<li>
-<span class="math inline">\(P(X &lt; 2500)\)</span> (bajo peso)
-</li>
-<li>
-<span class="math inline">\(P(X &gt; 4000)\)</span> (macrosomía)
-</li>
-</ol>
-</div>
-</div>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;list-style-type:none;">
-Datos: <span class="math inline">\(\mu=3200\)</span> y <span class="math inline">\(\sigma=400\)</span>
-</li>
-</section>
-<section id="solución" class="slide level2">
-<h2>Solución</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div style="font-size: 30px;">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>mu <span class="ot">&lt;-</span> <span class="dv">3200</span>; sigma <span class="ot">&lt;-</span> <span class="dv">400</span></span>
-<span id="cb7-2"><a href=""></a><span class="co"># 1. P(2800 &lt;= X &lt;= 3600)</span></span>
-<span id="cb7-3"><a href=""></a><span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="dv">2800</span>, <span class="dv">3600</span>), mu, sigma))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6826895</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># 2. P(X &lt; 2500)</span></span>
-<span id="cb9-2"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">2500</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.04005916</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># 3. P(X &gt; 4000)</span></span>
-<span id="cb11-2"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">4000</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.02275013</code></pre>
-</div>
-</div>
-</div>
-</div>
-<ul style="line-height: 1.8;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;list-style-type:none;">
-<ol type="1">
-<li>La probabilidad de que un neonato pese entre 2800 y 3600 gr es aproximadamente: <span class="math inline">\(68.27\%\)</span></li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;list-style-type:none;">
-<ol start="2" type="1">
-<li>La probabilidad de que presente bajo peso es: <span class="math inline">\(4\%\)</span></li>
-</ol>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;list-style-type:none;">
-<ol start="3" type="1">
-<li>La probabilidad de que pese mas de 4000 gr es: <span class="math inline">\(2.275\%\)</span></li>
-</ol>
-</li>
-</ul></section>
 <section id="uso-de-la-tabla-z-estandarización" class="slide level2">
 <h2>Uso de la tabla Z (Estandarización)</h2>
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
@@ -745,7 +1273,7 @@ Si <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, entonces <span 
 </div>
 <ul style="margin-top: 10px;">
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El <strong>puntaje Z</strong> indica cuántas desviaciones estándar se encuentra un valor <span class="math inline">\(x\)</span> por encima o por debajo de la media.
+El <strong>Z-score</strong> indica cuántas desviaciones estándar se encuentra un valor <span class="math inline">\(x\)</span> por encima o por debajo de la media.
 </li>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
 Si <span class="math inline">\(Z&gt;0\)</span>, el valor observado está <strong>por encima de la media</strong>; mientras que si <span class="math inline">\(Z&lt;0\)</span>, el valor se encuentra <strong>por debajo de la media</strong>.
@@ -774,7 +1302,7 @@ Z=\frac{X-\mu}{\sigma}
 <strong>3.</strong> Buscar el valor de <span class="math inline">\(Z\)</span> en la tabla de la normal estándar.
 </li>
 <li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;list-style-type:none;">
-<strong>4.</strong> Interpretar la probabilidad obtenida según el contexto del problema.
+<strong>4.</strong> Interpretar la probabilidad obtenida según el contexto del problema. <a href="https://www.um.es/documents/877924/4876701/Tabla+de+la+distribuci%C3%B3n+normal.pdf/c812f3b4-7780-46e0-abfa-8c7cd452e407" target="_blank" style="display:inline-block; margin-top:8px; font-size:26px; color:#006DAE; font-weight:600;"> 📄 Tabla de la distribución normal estándar → </a>
 </li>
 </div>
 </div>
@@ -809,119 +1337,168 @@ P(Z \leq z)=\Phi(z)
 </div>
 </div>
 </section>
-<section id="ejemplo-3" class="slide level2">
-<h2>Ejemplo 3</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Enunciado
+<section id="r-distribución-normal" class="slide level2">
+<h2>R: Distribución Normal</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>El peso de gulupa en gramos sigue una <span class="math inline">\(N(\mu=85,\, \sigma=12)\)</span>. Calcule <span class="math inline">\(P(X \leq 80)\)</span>, <span class="math inline">\(P(X &gt; 100)\)</span>, <span class="math inline">\(P(X \geq 90)\)</span> y <span class="math inline">\(P(70 \leq X \leq 95)\)</span>.</p>
 </div>
-<div class="block-body">
-<p>En un estudio agronómico realizado en cultivos de café de la región Andina de Colombia, se encontró que la producción mensual de café por finca sigue aproximadamente una distribución normal con:</p>
-<p><span class="math display">\[
-X \sim N(5200,\; 650^2)
-\]</span></p>
-<p>donde:</p>
-<ul style="font-size: 26px;">
-<li>
-<span class="math inline">\(\mu = 5200\)</span> kg de café por mes
-</li>
-<li>
-<span class="math inline">\(\sigma = 650\)</span> kg
-</li>
-</ul>
-<p>Se desea calcular la probabilidad de que una finca produzca menos de <strong>6000 kg</strong> de café en un mes.</p>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a>mu <span class="ot">&lt;-</span> <span class="dv">85</span>; sigma <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb43-2"><a href=""></a></span>
+<span id="cb43-3"><a href=""></a><span class="co"># Menor o igual que 80</span></span>
+<span id="cb43-4"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">80</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3384611</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="co"># Estrictamente menor que 80 (igual para continua)</span></span>
+<span id="cb45-2"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">80</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3384611</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="co"># Mayor que 100</span></span>
+<span id="cb47-2"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">100</span>, mu, sigma, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1056498</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="co"># Mayor o igual que 90 (igual para continua)</span></span>
+<span id="cb49-2"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">90</span>, mu, sigma, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3384611</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="co"># Entre 70 y 95 (inclusive)</span></span>
+<span id="cb51-2"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">95</span>, mu, sigma) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">70</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6920218</code></pre>
+</div>
+</div>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dnorm(x, mean, sd): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(f(x)\)</span></span><br><br></p>
+<p><strong><code>pnorm(q, mean, sd):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \leq q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &gt; q)\)</span></span><br><br></p>
+<p><strong><code>pnorm(b) - pnorm(a): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq X \leq b)\)</span></span><br><br></p>
+<div class="block-alert" style="margin-top: 8px;">
+<div class="block-title">
+Nota: variable continua
+</div>
+<div class="block-body" style="font-size: 21px;">
+<p><span class="math inline">\(P(X = x) = 0\)</span> siempre.<br> <span class="math inline">\(P(X \leq q) = P(X &lt; q)\)</span></p>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section id="solución-1" class="slide level2">
-<h2>Solución</h2>
-<div class="r-hstack" style="gap: 28px; align-items: stretch; margin-top: 10px;">
-<!-- Columna izquierda -->
-<div style="width: 50%;">
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 1. Estandarizar
+<section id="aplicaciones-en-agronomía-distribución-normal" class="slide level2">
+<h2>Aplicaciones en Agronomía: Distribución Normal</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--success">
+<p style="font-size: 32px; margin: 0;">
+☕
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 6px 0;">
+Peso de granos de café
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+El peso de granos de café en el <strong>Huila</strong> sigue una Normal por el efecto combinado de suelo, altitud y manejo.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim N(\mu,\, \sigma^2)\)</span>
+</p>
 </div>
-<div class="block-body">
-<div style="font-size: 24px; text-align:center; line-height:1.4;">
-<p><span class="math display">\[
-X \sim N(5200,650^2)
-\]</span></p>
-<p>Se desea calcular:</p>
-<p><span class="math display">\[
-P(X&lt;6000)
-\]</span></p>
-<p>Aplicando la transformación Z:</p>
-<p><span class="math display">\[
-Z=\frac{X-\mu}{\sigma}
-\]</span></p>
-<p>Reemplazando: <span class="math display">\[
-Z=\frac{6000-5200}{650}
-\]</span></p>
-<p><span class="math display">\[
-Z=1.23
-\]</span></p>
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+🌽
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Altura de plantas de maíz
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+La altura de maíz a los 60 días en el <strong>Tolima</strong> es aproximadamente normal, útil para control de calidad varietal.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim N(180\text{ cm},\, 8^2)\)</span>
+</p>
 </div>
-</div>
-</div>
-</div>
-<!-- Columna derecha -->
-<div style="width: 50%;">
-<div class="block-theorem fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 2. Tabla Z
-</div>
-<div class="block-body">
-<div style="font-size: 24px; text-align:center; line-height:1.45;">
-<p>Buscando en la tabla de la distribucion Normal estándar:</p>
-<p><span class="math display">\[
-P(Z&lt;1.23)=0.8907
-\]</span></p>
-<p>Por lo tanto:</p>
-<p><span class="math display">\[
-P(X&lt;6000)=0.8907
-\]</span></p>
-</div>
-<div style="font-size: 22px; text-align: justify; margin-top: 12px; line-height:1.35;">
-<p>Esto significa que aproximadamente el <strong>89.07%</strong> de las fincas cafeteras de la región Andina producen menos de 6000 kg de café por mes.</p>
+<div class="card card--warning">
+<p style="font-size: 32px; margin: 0;">
+🌡️
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #b45309; margin: 6px 0;">
+Temperatura corporal de bovinos
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Temperatura rectal de bovinos en <strong>Córdoba</strong> — detectar fiebres y enfermedades comparando contra la Normal de referencia.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim N(38.5°\text{C},\, 0.3^2)\)</span>
+</p>
 </div>
 </div>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Aparece cuando <strong>muchos factores independientes</strong> actúan sobre una variable. El Teorema Central del Límite garantiza su presencia.</p>
 </div>
 </div>
+</section>
+<section id="section-5" class="slide level2 middle center">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución Exponencial
+</p>
+<p style="text-align: justify;font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una Distribución Exponencial significa que estamos modelando el tiempo, distancia o espacio entre eventos que ocurren aleatoriamente.
+</p>
 </div>
 </section>
 <section id="fdp-y-fda-de-la-distribución-exponencial" class="slide level2">
-<h2>FDP y FDA de la distribución Exponencial</h2>
+<h2>FDP y FDA de la Distribución Exponencial</h2>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Definición
+Distribución Exponencial <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>
 </div>
-<div class="block-body">
-<p style="font-size: 24px; text-align: justify; line-height: 1.4;">
-Una variable aleatoria continua <span class="math inline">\(X\)</span> sigue una distribución exponencial con parámetro <span class="math inline">\(\lambda&gt;0\)</span> si modela el <strong>tiempo de espera</strong> hasta la ocurrencia de un evento.
-</p>
-<p><span class="math display">\[
-X \sim Exp(\lambda)
-\]</span></p>
-<p style="font-size: 24px; text-align: justify; line-height: 1.4;">
-La distribución exponencial describe fenómenos donde los eventos ocurren de manera independiente y a una tasa promedio constante.
-</p>
-<p>FDP: <span class="math display">\[
-f(x)=\lambda e^{-\lambda x}, \quad x&gt;0
-\]</span> FDA: <span class="math display">\[
-F(x)=P(X\le x)=1-e^{-\lambda x}, \quad x&gt;0
-\]</span></p>
-<div style="font-size: 23px; margin-top: 10px; line-height: 1.4;">
-<p><strong>Parámetro:</strong> <span class="math inline">\(\lambda&gt;0\)</span> representa la tasa promedio de ocurrencia.<br></p>
-<p><strong>Soporte:</strong> <span class="math inline">\(x\in(0,\infty)\)</span>.</p>
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+<p>Modela el <strong>tiempo de espera</strong> hasta la ocurrencia de un evento, cuando los eventos ocurren de forma independiente a una tasa constante <span class="math inline">\(\lambda &gt; 0\)</span>. <span style="color:#6b7280; font-size:24px;"> — Soporte: <span class="math inline">\(x \in (0, \infty)\)</span>.</span></p>
 </div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Función de Densidad (FDP)
+</div>
+<div class="block-body" style="font-size: 28px; text-align: center;">
+<span class="math display">\[f(x) = \lambda\, e^{-\lambda x}, \quad x &gt; 0\]</span>
+<p style="font-size: 24px; color: #374151; margin-top: 10px;">
+Decrece exponencialmente. A mayor <span class="math inline">\(\lambda\)</span>, más rápido decrece la curva.
+</p>
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Función de Distribución Acumulada (FDA)
+</div>
+<div class="block-body" style="font-size: 28px; text-align: center;">
+<span class="math display">\[F(x) = 1 - e^{-\lambda x}, \quad x &gt; 0\]</span>
+<p style="font-size: 24px; color: #374151; margin-top: 10px;">
+Forma cerrada, a diferencia de la Normal, no requiere tablas ni software.
+</p>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<p><span class="math inline">\(P(X &gt; x) = e^{-\lambda x}\)</span>; &nbsp;&nbsp; <span class="math inline">\(P(X \leq x) = 1 - e^{-\lambda x}\)</span>; &nbsp;&nbsp; <span class="math inline">\(P(a \leq X \leq b) = e^{-\lambda a} - e^{-\lambda b}\)</span></p>
 </div>
 </div>
 </section>
 <section id="gráfico-de-la-fdp-y-fda-de-una-distribución-exponencial" class="slide level2">
 <h2>Gráfico de la FDP y FDA de una distribución Exponencial</h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-9-1.png" width="1536" class="r-stretch"></section>
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-15-1.png" width="1536" class="r-stretch"></section>
 <section id="propiedad-sin-memoria-de-la-exponencial" class="slide level2">
 <h2>Propiedad sin memoria de la Exponencial</h2>
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
@@ -932,434 +1509,876 @@ Teorema: Propiedad sin memoria
 Si <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, entonces para todo <span class="math inline">\(s, t &gt; 0\)</span>: <span class="math display">\[P(X &gt; s + t \mid X &gt; s) = P(X &gt; t) = e^{-\lambda t}\]</span> La Exponencial es la <em>única</em> distribución continua con esta propiedad.
 </div>
 </div>
-<div class="block-proof fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Demostración
-</div>
-<div class="block-body">
-<span class="math display">\[P(X &gt; s+t \mid X &gt; s) = \frac{P(X &gt; s+t)}{P(X &gt; s)} = \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(X &gt; t) \quad \square\]</span>
+<div class="block-example fragment fade-up" data-fragment-index="2" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 28px; line-height: 1.2; text-align: justify;">
+<p>Suponga que el tiempo en días, hasta la aparición de una plaga en un cultivo sigue una distribución Exponencial <span class="math inline">\(X\sim \mathrm{Exp}(\lambda)\)</span>. Si ya pasaron 10 días sin aparición de la plaga, la propiedad sin memoria dice que:</p>
+<p><span class="math display">\[
+P(X &gt; 10 + 5 \mid X &gt; 10) = P(X &gt; 5) = e^{-5\lambda}
+\]</span></p>
+<p>Haber esperado 10 días sin observar la plaga no cambia la probabilidad de esperar 5 días más.<br>
+El riesgo futuro se mantiene igual porque la tasa de aparición <span class="math inline">\(\lambda\)</span> se asume constante.</p>
 </div>
 </div>
 </section>
-<section id="section" class="slide level2">
+<section id="r-distribución-exponencial" class="slide level2">
+<h2>R: Distribución Exponencial</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>Tiempo en horas entre fallas de una bomba de riego sigue una <span class="math inline">\(\text{Exp}(\lambda=0.08)\)</span>. Calcule <span class="math inline">\(P(X \leq 15)\)</span>, <span class="math inline">\(P(X &gt; 20)\)</span>, <span class="math inline">\(P(X \geq 20)\)</span> y <span class="math inline">\(P(10 \leq X \leq 30)\)</span>.</p>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a>lambda <span class="ot">&lt;-</span> <span class="fl">0.08</span></span>
+<span id="cb53-2"><a href=""></a></span>
+<span id="cb53-3"><a href=""></a><span class="co"># Menor o igual que 15</span></span>
+<span id="cb53-4"><a href=""></a><span class="fu">pexp</span>(<span class="dv">15</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6988058</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="co"># Estrictamente menor que 15 (igual para continua)</span></span>
+<span id="cb55-2"><a href=""></a><span class="fu">pexp</span>(<span class="dv">15</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6988058</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="co"># Mayor que 20</span></span>
+<span id="cb57-2"><a href=""></a><span class="fu">pexp</span>(<span class="dv">20</span>, lambda, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2018965</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="co"># Mayor o igual que 20 (igual para continua)</span></span>
+<span id="cb59-2"><a href=""></a><span class="fu">pexp</span>(<span class="dv">20</span>, lambda, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2018965</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="co"># Entre 10 y 30 (inclusive)</span></span>
+<span id="cb61-2"><a href=""></a><span class="fu">pexp</span>(<span class="dv">30</span>, lambda) <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">10</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.358611</code></pre>
+</div>
+</div>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dexp(x, rate): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(f(x) = \lambda e^{-\lambda x}\)</span></span><br><br></p>
+<p><strong><code>pexp(q, rate):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \leq q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &gt; q)\)</span></span><br><br></p>
+<p><strong><code>pexp(b) - pexp(a): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq X \leq b)\)</span></span><br><br></p>
+<div class="block-alert" style="margin-top: 8px;">
+<div class="block-title">
+Nota: variable continua
+</div>
+<div class="block-body" style="font-size: 21px;">
+<p><span class="math inline">\(P(X = x) = 0\)</span> siempre.<br> <span class="math inline">\(P(X \leq q) = P(X &lt; q)\)</span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="aplicaciones-en-agronomía-distribución-exponencial" class="slide level2">
+<h2>Aplicaciones en Agronomía: Distribución Exponencial</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--danger">
+<p style="font-size: 32px; margin: 0;">
+⚙️
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #7a1515; margin: 6px 0;">
+Tiempo entre fallas de maquinaria
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Modelar el tiempo (horas) entre fallas consecutivas de una bomba de riego en cultivos de caña en <strong>Palmira</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, <span class="math inline">\(E[X] = 1/\lambda\)</span>
+</p>
+</div>
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+🌧️
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Tiempo entre lluvias
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Tiempo (días) entre eventos de lluvia significativa en zona seca del <strong>Caribe colombiano</strong> durante el verano.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span> — sin memoria
+</p>
+</div>
+<div class="card card--success">
+<p style="font-size: 32px; margin: 0;">
+🦟
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 6px 0;">
+Tiempo de vida de patógenos
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Tiempo de sobrevivencia de esporas de <em>Botrytis</em> en condiciones de baja humedad en invernaderos de <strong>Bogotá</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>
+</p>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Propiedad clave: <strong>sin memoria</strong>, el tiempo que ya ha transcurrido no afecta el tiempo restante.</p>
+</div>
+</div>
+</section>
+<section id="section-6" class="slide level2 middle center">
 <h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución Gamma
+</p>
+<p style="text-align: justify;font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una Distribución Gamma significa que estamos modelando el tiempo, acumulación o cantidad total necesaria hasta que ocurren varios eventos aleatorios.
+</p>
+</div>
+</section>
+<section id="fdp-y-fda-de-la-distribución-gamma" class="slide level2">
+<h2>FDP y FDA de la Distribución Gamma</h2>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-FDP de la Distribución Gamma
+Distribución Gamma <span class="math inline">\(X \sim \text{Gamma}(\alpha,\, \beta)\)</span>
 </div>
-<div class="block-body">
-<p style="font-size: 22px; text-align: justify; line-height: 1.4;">
-</p><p>Una variable aleatoria continua <span class="math inline">\(X\)</span> sigue una <strong>distribución Gamma</strong> con parámetros <span class="math inline">\(\alpha&gt;0\)</span> y <span class="math inline">\(\beta&gt;0\)</span> si:</p>
-<p><span class="math display">\[
-X\sim Gamma(\alpha,\beta)
-\]</span></p>
-<p></p>
-<p><span class="math display">\[
-f(x)=
-\frac{1}{\Gamma(\alpha)\beta^\alpha}
-x^{\alpha-1}e^{-x/\beta},
-\quad x&gt;0
-\]</span></p>
-<p style="font-size: 20px; text-align:center; margin-top:5px;">
-Función de densidad
-</p>
-<p style="font-size: 22px; text-align: justify; line-height: 1.4;">
-</p><p><strong>Parámetro de forma:</strong> <span class="math inline">\(\alpha\)</span> controla la forma de la distribución.<br></p>
-<p><strong>Parámetro de escala:</strong> <span class="math inline">\(\beta\)</span> controla la dispersión.<br></p>
-<p><strong>Soporte:</strong> <span class="math inline">\(x\in(0,\infty)\)</span>.</p>
-<p></p>
-<p><span class="math inline">\(\Gamma(\alpha)=\int_0^\infty t^{\alpha-1}e^{-t}dt\)</span></p>
-<p style="font-size: 20px; text-align:center;">
-Además, <span class="math inline">\(\Gamma(n)=(n-1)!\)</span>
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+<p>Modela el <strong>tiempo hasta que ocurren <span class="math inline">\(\alpha\)</span> eventos</strong> a una tasa constante. <span class="math inline">\(\alpha &gt; 0\)</span> controla la forma y <span class="math inline">\(\beta &gt; 0\)</span> la escala. <span style="color:#6b7280; font-size:24px;"> — Soporte: <span class="math inline">\(x \in (0, \infty)\)</span>. &nbsp; Función Gamma: <span class="math inline">\(\Gamma(\alpha) = (\alpha-1)!\)</span> para <span class="math inline">\(\alpha \in \mathbb{N}\)</span>.</span></p>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Función de Densidad (FDP)
+</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<span class="math display">\[f(x) = \frac{x^{\alpha-1}\,e^{-x/\beta}}{\Gamma(\alpha)\,\beta^{\alpha}}, \quad x &gt; 0\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+<span class="math inline">\(\alpha=1\)</span> recupera la Exponencial. <span class="math inline">\(\alpha\)</span> entero = suma de <span class="math inline">\(\alpha\)</span> variables Exp.
 </p>
 </div>
 </div>
-<ul style="margin-top: 5px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
-<p>Casos especiales:</p>
-<p><span class="math display">\[
-Gamma(1,\beta)=Exp\left(\frac{1}{\beta}\right)
-\qquad
-Gamma\left(\frac{n}{2},2\right)=\chi_n^2
-\]</span></p>
-</li>
-</ul>
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Función de Distribución Acumulada (FDA)
+</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<span class="math display">\[F(x) = \frac{\gamma(\alpha,\, x/\beta)}{\Gamma(\alpha)}, \quad x &gt; 0\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+<span class="math inline">\(\gamma(\alpha, \cdot)\)</span> es la función Gamma incompleta. Sin forma cerrada, se calcula con <code>pgamma()</code> en R.
+</p>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<p>Casos especiales: &nbsp; <span class="math inline">\(\text{Gamma}(1, \beta) = \text{Exp}(1/\beta)\)</span>; &nbsp;&nbsp; <span class="math inline">\(\text{Gamma}(n/2,\, 2) = \chi^2_n\)</span></p>
+</div>
+</div>
 </section>
 <section id="efecto-de-los-parámetros-en-la-distribución-gamma" class="slide level2">
 <h2>Efecto de los parámetros en la distribución Gamma</h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-10-1.png" width="1344" class="r-stretch"></section>
-<section id="fdp-de-la-distribución-beta" class="slide level2">
-<h2>FDP de la distribución Beta</h2>
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-17-1.png" width="1344" class="r-stretch"></section>
+<section id="r-distribución-gamma" class="slide level2">
+<h2>R: Distribución Gamma</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>El tiempo en días hasta la 3ª lluvia sigue una <span class="math inline">\(\text{Gamma}(\alpha=3,\, \beta=4)\)</span>. Calcule <span class="math inline">\(P(X \leq 10)\)</span>, <span class="math inline">\(P(X &gt; 15)\)</span>, <span class="math inline">\(P(X \geq 15)\)</span> y <span class="math inline">\(P(8 \leq X \leq 20)\)</span>.</p>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>alpha <span class="ot">&lt;-</span> <span class="dv">3</span>; beta_par <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb63-2"><a href=""></a></span>
+<span id="cb63-3"><a href=""></a><span class="co"># Menor o igual que 10</span></span>
+<span id="cb63-4"><a href=""></a><span class="fu">pgamma</span>(<span class="dv">10</span>, <span class="at">shape =</span> alpha, <span class="at">scale =</span> beta_par)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4561869</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a><span class="co"># Estrictamente menor que 10 (igual para continua)</span></span>
+<span id="cb65-2"><a href=""></a><span class="fu">pgamma</span>(<span class="dv">10</span>, <span class="at">shape =</span> alpha, <span class="at">scale =</span> beta_par)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4561869</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a><span class="co"># Mayor que 15</span></span>
+<span id="cb67-2"><a href=""></a><span class="fu">pgamma</span>(<span class="dv">15</span>, <span class="at">shape =</span> alpha, <span class="at">scale =</span> beta_par,</span>
+<span id="cb67-3"><a href=""></a>       <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2770684</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a><span class="co"># Mayor o igual que 15 (igual para continua)</span></span>
+<span id="cb69-2"><a href=""></a><span class="fu">pgamma</span>(<span class="dv">15</span>, <span class="at">shape =</span> alpha, <span class="at">scale =</span> beta_par,</span>
+<span id="cb69-3"><a href=""></a>       <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2770684</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href=""></a><span class="co"># Entre 8 y 20 (inclusive)</span></span>
+<span id="cb71-2"><a href=""></a><span class="fu">pgamma</span>(<span class="dv">20</span>, <span class="at">shape =</span> alpha, <span class="at">scale =</span> beta_par) <span class="sc">-</span></span>
+<span id="cb71-3"><a href=""></a><span class="fu">pgamma</span>(<span class="dv">8</span>,  <span class="at">shape =</span> alpha, <span class="at">scale =</span> beta_par)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5520244</code></pre>
+</div>
+</div>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dgamma(x, shape, scale): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(f(x)\)</span>.</span><br><br></p>
+<p><strong><code>pgamma(q, shape, scale):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \leq q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &gt; q)\)</span></span><br><br></p>
+<p><strong><code>pgamma(b) - pgamma(a): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq X \leq b)\)</span></span><br><br></p>
+<div class="block-alert" style="margin-top: 8px;">
+<div class="block-title">
+Nota: variable continua
+</div>
+<div class="block-body" style="font-size: 21px;">
+<p><span class="math inline">\(P(X = x) = 0\)</span> siempre.<br> <span class="math inline">\(P(X \leq q) = P(X &lt; q)\)</span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="aplicaciones-en-agronomía-distribución-gamma" class="slide level2">
+<h2>Aplicaciones en Agronomía: Distribución Gamma</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+🌧️
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Tiempo hasta lluvias acumuladas
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Modelar el tiempo hasta recibir la 3ª lluvia significativa (<span class="math inline">\(\geq 20\)</span> mm) en un cultivo de arroz en el <strong>Llano colombiano</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Gamma}(3, \beta)\)</span>
+</p>
+</div>
+<div class="card card--success">
+<p style="font-size: 32px; margin: 0;">
+🐛
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 6px 0;">
+Tiempo hasta <span class="math inline">\(k\)</span> capturas de plaga
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Tiempo hasta capturar el 5º insecto plaga en una trampa de feromonas en cultivos de espárrago en el <strong>Espinal</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Gamma}(5, \beta)\)</span>
+</p>
+</div>
+<div class="card card--warning">
+<p style="font-size: 32px; margin: 0;">
+🌱
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #b45309; margin: 6px 0;">
+Acumulación de biomasa
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Modelar la acumulación progresiva de biomasa en caña de azúcar hasta alcanzar cierto rendimiento en <strong>Valle del Cauca</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Gamma}(\alpha, \beta)\)</span>
+</p>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Generaliza la Exponencial: modela el <strong>tiempo o cantidad acumulada</strong> hasta que ocurren <span class="math inline">\(\alpha\)</span> eventos.</p>
+</div>
+</div>
+</section>
+<section id="section-7" class="slide level2 middle center">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución Beta
+</p>
+<p style="text-align: justify;font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una Distribución Beta significa que estamos modelando una proporción, porcentaje o probabilidad que solo puede tomar valores entre 0 y 1.
+</p>
+</div>
+</section>
+<section id="fdp-y-fda-de-la-distribución-beta" class="slide level2">
+<h2>FDP y FDA de la Distribución Beta</h2>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Definición
+Distribución Beta <span class="math inline">\(X \sim \text{Beta}(\alpha,\, \beta)\)</span>
 </div>
-<div class="block-body">
-<p><span class="math display">\[f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}, \quad 0 &lt; x &lt; 1\]</span> donde <span class="math inline">\(B(\alpha,\beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}\)</span>.</p>
-<p><strong>Parámetro <span class="math inline">\(\alpha\)</span>:</strong> controla el comportamiento cerca de 0.</p>
-<p><strong>Parámetro <span class="math inline">\(\beta\)</span>:</strong> controla el comportamiento cerca de 1.</p>
-Soporte: <span class="math inline">\(x\in(0,1)\)</span>.
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+<p>Modela <strong>proporciones y probabilidades</strong>: prevalencia de enfermedades, porcentaje de germinación, eficacia de tratamientos. <span class="math inline">\(\alpha\)</span> controla el comportamiento cerca de 0; <span class="math inline">\(\beta\)</span> cerca de 1. <span style="color:#6b7280; font-size:24px;"> — Soporte: <span class="math inline">\(x \in (0, 1)\)</span>. &nbsp; Función Beta: <span class="math inline">\(B(\alpha,\beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}\)</span>.</span></p>
 </div>
 </div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Usada para modelar <strong>proporciones</strong> y <strong>probabilidades</strong>: prevalencia de una enfermedad, porcentaje de germinación, eficacia de un tratamiento.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Muy flexible: puede ser uniforme (<span class="math inline">\(\alpha=\beta=1\)</span>), en forma de U, J, unimodal simétrica o asimétrica.
-</li>
-</ul>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Función de Densidad (FDP)
+</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<span class="math display">\[f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}, \quad 0 &lt; x &lt; 1\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+Muy flexible: uniforme (<span class="math inline">\(\alpha=\beta=1\)</span>), forma de U (<span class="math inline">\(\alpha,\beta&lt;1\)</span>), campana simétrica (<span class="math inline">\(\alpha=\beta&gt;1\)</span>), asimétrica (<span class="math inline">\(\alpha \neq \beta\)</span>).
+</p>
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Función de Distribución Acumulada (FDA)
+</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<span class="math display">\[F(x) = I_x(\alpha,\, \beta) = \frac{B(x;\,\alpha,\beta)}{B(\alpha,\beta)}, \quad 0 &lt; x &lt; 1\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+<span class="math inline">\(I_x(\alpha,\beta)\)</span> es la función Beta incompleta regularizada. Sin forma cerrada — se calcula con <code>pbeta()</code> en R.
+</p>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<p>Caso especial: &nbsp; <span class="math inline">\(\text{Beta}(1, 1) = U(0, 1)\)</span> &nbsp;·&nbsp; Si <span class="math inline">\(\alpha = \beta\)</span>: distribución simétrica alrededor de <span class="math inline">\(0.5\)</span></p>
+</div>
+</div>
 </section>
 <section id="formas-de-la-distribución-beta-según-los-parámetros" class="slide level2">
 <h2>Formas de la distribución Beta según los parámetros</h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-11-1.png" width="1536" class="r-stretch"></section>
-<section id="distribución-chi-cuadrado" class="slide level2">
-<h2>Distribución Chi-cuadrado</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-19-1.png" width="1536" class="r-stretch"></section>
+<section id="r-distribución-beta" class="slide level2">
+<h2>R: Distribución Beta</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>Cobertura vegetal en parcelas del <strong>Amazonas colombiano</strong>, <span class="math inline">\(\text{Beta}(2, 5)\)</span>. Calcule <span class="math inline">\(P(X \leq 0.3)\)</span>, <span class="math inline">\(P(X &gt; 0.5)\)</span>, <span class="math inline">\(P(X \geq 0.5)\)</span> y <span class="math inline">\(P(0.2 \leq X \leq 0.5)\)</span>.</p>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href=""></a>alpha <span class="ot">&lt;-</span> <span class="dv">2</span>; beta_par <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb73-2"><a href=""></a></span>
+<span id="cb73-3"><a href=""></a><span class="co"># Menor o igual que 0.3</span></span>
+<span id="cb73-4"><a href=""></a><span class="fu">pbeta</span>(<span class="fl">0.3</span>, alpha, beta_par)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.579825</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href=""></a><span class="co"># Estrictamente menor que 0.3 (igual para continua)</span></span>
+<span id="cb75-2"><a href=""></a><span class="fu">pbeta</span>(<span class="fl">0.3</span>, alpha, beta_par)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.579825</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href=""></a><span class="co"># Mayor que 0.5</span></span>
+<span id="cb77-2"><a href=""></a><span class="fu">pbeta</span>(<span class="fl">0.5</span>, alpha, beta_par, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.109375</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href=""></a><span class="co"># Mayor o igual que 0.5 (igual para continua)</span></span>
+<span id="cb79-2"><a href=""></a><span class="fu">pbeta</span>(<span class="fl">0.5</span>, alpha, beta_par, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.109375</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href=""></a><span class="co"># Entre 0.2 y 0.5 (inclusive)</span></span>
+<span id="cb81-2"><a href=""></a><span class="fu">pbeta</span>(<span class="fl">0.5</span>, alpha, beta_par) <span class="sc">-</span></span>
+<span id="cb81-3"><a href=""></a><span class="fu">pbeta</span>(<span class="fl">0.2</span>, alpha, beta_par)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.545985</code></pre>
+</div>
+</div>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dbeta(x, shape1, shape2): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(f(x)\)</span></span><br><br></p>
+<p><strong><code>pbeta(q, shape1, shape2):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \leq q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &gt; q)\)</span></span><br><br></p>
+<p><strong><code>pbeta(b) - pbeta(a): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq X \leq b)\)</span></span><br><br></p>
+<div class="block-alert" style="margin-top: 8px;">
 <div class="block-title">
-Distribución Chi-cuadrado <span class="math inline">\(\chi^2(\nu)\)</span>
+Nota: variable continua
 </div>
-<div class="block-body">
-<p style="font-size: 21px; text-align: justify; line-height: 1.35;">
-</p><p>Si <span class="math inline">\(Z_1,\ldots,Z_\nu\)</span> son variables aleatorias independientes con:</p>
-<p><span class="math display">\[
-Z_i\sim N(0,1)
-\]</span></p>
-<p>Entonces la suma de sus cuadrados sigue una distribución Chi-cuadrado:</p>
-<p><span class="math display">\[
-Q=Z_1^2+\cdots+Z_\nu^2\sim\chi^2(\nu)
-\]</span></p>
-<p></p>
-<p><span class="math display">\[
-f(x)=
-\frac{1}{2^{\nu/2}\Gamma(\nu/2)}
-x^{\nu/2-1}e^{-x/2},
-\quad x&gt;0
-\]</span></p>
-<p style="font-size: 20px; text-align: center; margin-top: 5px;">
-Es un caso particular de <span class="math inline">\(Gamma(\nu/2,2)\)</span>
-</p>
-<p style="font-size: 21px; text-align: justify; line-height: 1.35;">
-</p><p><strong>Parámetro:</strong> <span class="math inline">\(\nu\)</span> representa los grados de libertad.<br></p>
-<p><strong>Soporte:</strong> <span class="math inline">\(x\in(0,\infty)\)</span>.</p>
-<p></p>
+<div class="block-body" style="font-size: 21px;">
+<p><span class="math inline">\(P(X = x) = 0\)</span> siempre.<br> <span class="math inline">\(P(X \leq q) = P(X &lt; q)\)</span></p>
 </div>
 </div>
-<ul style="margin-top: 5px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px; text-align: justify;">
-<p>Es fundamental en inferencia estadística, especialmente en pruebas de bondad de ajuste y estimación de varianzas.</p>
-</li>
-</ul>
+</div>
+</div>
 </section>
-<section id="section-1" class="slide level2">
+<section id="aplicaciones-en-agronomía-distribución-beta" class="slide level2">
+<h2>Aplicaciones en Agronomía: Distribución Beta</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--success">
+<p style="font-size: 32px; margin: 0;">
+🌿
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 6px 0;">
+Cobertura vegetal de parcelas
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Modelar la proporción de cobertura vegetal en parcelas del <strong>Amazonas</strong>. Los valores siempre están entre 0 y 1.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Beta}(2, 5)\)</span>
+</p>
+</div>
+<div class="card card--warning">
+<p style="font-size: 32px; margin: 0;">
+🦠
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #b45309; margin: 6px 0;">
+Eficacia de un fungicida
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Representar la proporción de plantas protegidas tras aplicar un fungicida en cultivos de papa en <strong>Nariño</strong>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Beta}(8, 2)\)</span> — alta eficacia
+</p>
+</div>
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+🌻
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Porcentaje de germinación
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Modelar la tasa de germinación de semillas de girasol en viveros del <strong>Valle del Cauca</strong> como proporción variable.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(X \sim \text{Beta}(5, 3)\)</span> — sesgo positivo
+</p>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Ideal para cualquier variable que sea una <strong>proporción</strong>: eficacia, cobertura, tasa de supervivencia o porcentaje de daño.</p>
+</div>
+</div>
+</section>
+<section id="section-8" class="slide level2 middle center">
 <h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución Chi-cuadrado
+</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una <span class="math inline">\(\chi^2(\nu)\)</span> significa que estamos midiendo la suma de cuadrados de variables normales estándar independientes. Es la distribución clave para estimar varianzas y probar ajuste de modelos.
+</p>
+</div>
+</section>
+<section id="fdp-y-fda-de-la-distribución-chi-cuadrado" class="slide level2">
+<h2>FDP y FDA de la Distribución Chi-cuadrado</h2>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">
-Distribución t de Student <span class="math inline">\(t(\nu)\)</span>
+Distribución Chi-cuadrado <span class="math inline">\(X \sim \chi^2(\nu)\)</span>
 </div>
-<div class="block-body">
-<p style="font-size: 21px; text-align: justify; line-height: 1.35;">
-</p><p>La distribución t de Student se utiliza para inferencia sobre medias cuando la varianza poblacional es desconocida.</p>
-<p></p>
-<p><span class="math display">\[
-Z\sim N(0,1),
-\qquad
-Q\sim\chi^2(\nu)
-\]</span></p>
-<p style="font-size: 20px; text-align:center;">
-Si <span class="math inline">\(Z\)</span> y <span class="math inline">\(Q\)</span> son independientes:
-</p>
-<p><span class="math display">\[
-T=
-\frac{Z}{\sqrt{Q/\nu}}
-\sim t(\nu)
-\]</span></p>
-<p><span class="math display">\[
-f(t)=
-\frac{\Gamma\left(\frac{\nu+1}{2}\right)}
-{\sqrt{\nu\pi}\cdot \Gamma\left(\frac{\nu}{2}\right)}
-\left(1+\frac{t^2}{\nu}\right)^{-(\nu+1)/2}
-\]</span></p>
-<p style="font-size: 20px; text-align: justify; line-height: 1.35;">
-</p><p><strong>Parámetro:</strong> <span class="math inline">\(\nu\)</span> grados de libertad.<br></p>
-<p><strong>Soporte:</strong> <span class="math inline">\(t\in(-\infty,\infty)\)</span>.</p>
-<p></p>
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+<p>Surge como la suma de <span class="math inline">\(\nu\)</span> cuadrados de normales estándar independientes: <span class="math inline">\(X = Z_1^2 + \cdots + Z_\nu^2\)</span>. Es un caso especial de <span class="math inline">\(\text{Gamma}(\nu/2,\, 2)\)</span>. <span style="color:#6b7280; font-size:24px;"> — Parámetro: <span class="math inline">\(\nu\)</span> grados de libertad. Soporte: <span class="math inline">\(x \in (0, \infty)\)</span>.</span></p>
 </div>
 </div>
-<ul style="margin-top: 5px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; text-align: justify;">
-<p>Es simétrica alrededor de 0 y tiene colas más pesadas que la normal.</p>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
-<p>Cuando <span class="math inline">\(\nu\to\infty\)</span>, se aproxima a <span class="math inline">\(N(0,1)\)</span>.</p>
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
-<p>Se usa en pruebas de hipótesis e intervalos de confianza para medias.</p>
-</li>
-</ul>
-</section>
-<section id="funciones-r-para-distribuciones" class="slide level2">
-<h2>Funciones R para distribuciones</h2>
-<div style="font-size: 24px; margin-top: 20px;">
-<table class="caption-top">
-<colgroup>
-<col style="width: 38%">
-<col style="width: 30%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Prefijo</th>
-<th style="text-align: left;">Significado</th>
-<th style="text-align: left;">Ejemplo</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>d</code></td>
-<td style="text-align: left;">FMP / FDP</td>
-<td style="text-align: left;"><code>dnorm(x, 0, 1)</code> — valor de la FDP en <span class="math inline">\(x\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>p</code></td>
-<td style="text-align: left;">FDA</td>
-<td style="text-align: left;"><code>pnorm(1.96)</code> — <span class="math inline">\(P(Z \leq 1.96)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>q</code></td>
-<td style="text-align: left;">Cuantil (inversa FDA)</td>
-<td style="text-align: left;"><code>qnorm(0.975)</code> — valor tal que <span class="math inline">\(\Phi(x) = 0.975\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>r</code></td>
-<td style="text-align: left;">Simulación aleatoria</td>
-<td style="text-align: left;"><code>rnorm(100, 50, 10)</code> — 100 obs de <span class="math inline">\(N(50,100)\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p class="fragment fade-up" style="font-size: 26px; text-align: center; margin-top: 10px;" data-fragment-index="1">
-El mismo esquema aplica a todas las distribuciones: <code>dbinom</code>, <code>pbinom</code>, <code>qbinom</code>, <code>rbinom</code>; <code>dpois</code>, <code>ppois</code>; etc.
-</p>
-</section>
-<section id="ejercicios-y-aplicaciones-en-r" class="slide level2 center middle">
-<h2>Ejercicios y aplicaciones en R</h2>
-</section>
-<section id="ejercicio-1" class="slide level2">
-<h2>Ejercicio 1</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
 <div class="block-title">
-Casos de leptospirosis
+Función de Densidad (FDP)
 </div>
-<div class="block-body">
-<p>
-En un municipio de la Orinoquia, el número de casos semanales de leptospirosis sigue una <span class="math inline">\(\text{Poi}(\lambda = 3)\)</span>. Calcule:
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<span class="math display">\[f(x) = \frac{x^{\nu/2-1}\,e^{-x/2}}{2^{\nu/2}\,\Gamma(\nu/2)}, \quad x &gt; 0\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+Asimétrica a la derecha para <span class="math inline">\(\nu\)</span> pequeño. Se vuelve más simétrica al aumentar <span class="math inline">\(\nu\)</span>.
 </p>
-<ol>
-<li>
-<span class="math inline">\(P(X = 0)\)</span>: ningún caso esta semana.
-</li>
-<li>
-<span class="math inline">\(P(X \geq 5)\)</span>: al menos 5 casos.
-</li>
-<li>
-<span class="math inline">\(P(2 \leq X \leq 4)\)</span>: entre 2 y 4 casos.
-</li>
-</ol>
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Función de Distribución Acumulada (FDA)
+</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<span class="math display">\[F(x) = \frac{\gamma(\nu/2,\; x/2)}{\Gamma(\nu/2)}, \quad x &gt; 0\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+Función Gamma incompleta regularizada. Sin forma cerrada — se calcula con <code>pchisq()</code> en R.
+</p>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<p>$P(X x) = $ <code>pchisq(x, df)</code> &nbsp;·&nbsp; Caso especial: <span class="math inline">\(\chi^2(\nu) = \text{Gamma}(\nu/2,\, 2)\)</span> &nbsp;·&nbsp; Usada en pruebas de bondad de ajuste e inferencia de varianzas</p>
 </div>
 </div>
 </section>
-<section id="solución-2" class="slide level2">
-<h2>solución</h2>
+<section id="efecto-de-nu-en-la-distribución-chi-cuadrado" class="slide level2">
+<h2>Efecto de <span class="math inline">\(\nu\)</span> en la Distribución Chi-cuadrado</h2>
+
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1344"></section>
+<section id="r-distribución-chi-cuadrado" class="slide level2">
+<h2>R: Distribución Chi-cuadrado</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>En un estudio de calidad de suelos en <strong>Meta</strong>, un estadístico calcula un estadístico <span class="math inline">\(\chi^2 = 12.5\)</span> con <span class="math inline">\(\nu = 6\)</span> grados de libertad. Calcule <span class="math inline">\(P(X \leq 12.5)\)</span>, <span class="math inline">\(P(X &gt; 12.5)\)</span> y <span class="math inline">\(P(5 \leq X \leq 12.5)\)</span>.</p>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># X ~ Poi(3)</span></span>
-<span id="cb13-2"><a href=""></a><span class="fu">dpois</span>(<span class="dv">0</span>, <span class="dv">3</span>)                       <span class="co"># P(X = 0)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a>nu <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb83-2"><a href=""></a></span>
+<span id="cb83-3"><a href=""></a><span class="co"># Menor o igual que 12.5</span></span>
+<span id="cb83-4"><a href=""></a><span class="fu">pchisq</span>(<span class="fl">12.5</span>, <span class="at">df =</span> nu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.04978707</code></pre>
+<pre><code>[1] 0.9483</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">4</span>, <span class="dv">3</span>)                   <span class="co"># P(X &gt;= 5)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href=""></a><span class="co"># Mayor que 12.5</span></span>
+<span id="cb85-2"><a href=""></a><span class="fu">pchisq</span>(<span class="fl">12.5</span>, <span class="at">df =</span> nu, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1847368</code></pre>
+<pre><code>[1] 0.05169997</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">ppois</span>(<span class="dv">4</span>, <span class="dv">3</span>) <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">1</span>, <span class="dv">3</span>)         <span class="co"># P(2 &lt;= X &lt;= 4)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href=""></a><span class="co"># Entre 5 y 12.5</span></span>
+<span id="cb87-2"><a href=""></a><span class="fu">pchisq</span>(<span class="fl">12.5</span>, <span class="at">df =</span> nu) <span class="sc">-</span> <span class="fu">pchisq</span>(<span class="dv">5</span>, <span class="at">df =</span> nu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.616115</code></pre>
+<pre><code>[1] 0.4921131</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href=""></a><span class="co"># Percentil 95 (valor crítico)</span></span>
+<span id="cb89-2"><a href=""></a><span class="fu">qchisq</span>(<span class="fl">0.95</span>, <span class="at">df =</span> nu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12.59159</code></pre>
+</div>
+</div>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dchisq(x, df): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(f(x)\)</span> — densidad</span><br><br></p>
+<p><strong><code>pchisq(q, df):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X \leq q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(X &gt; q)\)</span> — valor <span class="math inline">\(p\)</span></span><br><br></p>
+<p><strong><code>pchisq(b) - pchisq(a): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq X \leq b)\)</span></span><br><br></p>
+<p><strong><code>qchisq(p, df): </code></strong> <span style="color:#374151;font-size:24px">valor crítico con prob. <span class="math inline">\(p\)</span></span></p>
 </div>
 </div>
 </section>
-<section id="ejercicio-2" class="slide level2">
-<h2>Ejercicio 2</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-IMC en adultos
-</div>
-<div class="block-body">
-<p>
-El IMC de adultos en una ciudad colombiana se distribuye aproximadamente <span class="math inline">\(N(\mu=26.5,\, \sigma^2=4^2)\)</span>. Calcule:
+<section id="aplicaciones-en-agronomía-chi-cuadrado" class="slide level2">
+<h2>Aplicaciones en Agronomía: Chi-cuadrado</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+🌱
 </p>
-<ol>
-<li>
-Proporción con IMC entre 18.5 y 24.9 (peso normal).
-</li>
-<li>
-Proporción con IMC <span class="math inline">\(&gt; 30\)</span> (obesidad).
-</li>
-<li>
-El IMC que supera el 90% de la población.
-</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="solución-3" class="slide level2">
-<h2>Solución</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>mu <span class="ot">&lt;-</span> <span class="fl">26.5</span>; sigma <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb19-2"><a href=""></a><span class="co"># Peso normal: IMC entre 18.5 y 24.9</span></span>
-<span id="cb19-3"><a href=""></a><span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">24.9</span>), mu, sigma))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3218281</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># Obesidad: IMC &gt; 30</span></span>
-<span id="cb21-2"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">30</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.190787</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># Percentil 90</span></span>
-<span id="cb23-2"><a href=""></a><span class="fu">qnorm</span>(<span class="fl">0.90</span>, mu, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 31.62621</code></pre>
-</div>
-</div>
-</section>
-<section id="ejercicio-3" class="slide level2">
-<h2>Ejercicio 3</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Tiempo de vida de parásito
-</div>
-<div class="block-body">
-<p>
-El tiempo de vida (en horas) de un parásito fuera del huésped sigue una distribución <span class="math inline">\(\text{Exp}(\lambda = 0.25)\)</span>. Determine:
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Distribución de plagas por región
 </p>
-<ol>
-<li>
-<span class="math inline">\(P(X &gt; 6)\)</span>: sobrevive más de 6 horas.
-</li>
-<li>
-<span class="math inline">\(P(2 &lt; X &lt; 8)\)</span>: muere entre 2 y 8 horas.
-</li>
-<li>
-El tiempo mediano de supervivencia.
-</li>
-</ol>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Probar si la distribución de cultivos afectados por sigatoka es <strong>independiente</strong> de la región en el eje bananero.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(\chi^2\)</span> — prueba de independencia
+</p>
 </div>
+<div class="card card--success">
+<p style="font-size: 32px; margin: 0;">
+🌾
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 6px 0;">
+Ajuste de distribución de rendimientos
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Verificar si el peso de espigas de trigo en <strong>Nariño</strong> sigue una distribución Normal mediante prueba de bondad de ajuste.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(\chi^2\)</span> — bondad de ajuste
+</p>
 </div>
-</section>
-<section id="solución-4" class="slide level2">
-<h2>Solución</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>lam <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb25-2"><a href=""></a><span class="co"># P(X &gt; 6)</span></span>
-<span id="cb25-3"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">6</span>, lam)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2231302</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="co"># P(2 &lt; X &lt; 8)</span></span>
-<span id="cb27-2"><a href=""></a><span class="fu">diff</span>(<span class="fu">pexp</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>), lam))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4711954</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="co"># Mediana: F(m) = 0.5 =&gt; m = -ln(0.5)/lambda</span></span>
-<span id="cb29-2"><a href=""></a><span class="fu">qexp</span>(<span class="fl">0.5</span>, lam)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.772589</code></pre>
-</div>
-</div>
-</section>
-<section id="ejercicio-4" class="slide level2">
-<h2>Ejercicio 4</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-¿Es FDP válida?
-</div>
-<div class="block-body">
-<p>
-Determine si <span class="math inline">\(f(x) = ce^{-2x}\)</span> para <span class="math inline">\(x &gt; 0\)</span> es una FDP válida y encuentre <span class="math inline">\(c\)</span>.
+<div class="card card--warning">
+<p style="font-size: 32px; margin: 0;">
+🧪
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #b45309; margin: 6px 0;">
+Varianza de concentración de nutrientes
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Estimar la varianza de la concentración de nitrógeno en muestras de suelo de <strong>Cundinamarca</strong> con <span class="math inline">\(n=20\)</span>.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(\chi^2(19)\)</span> — intervalo para <span class="math inline">\(\sigma^2\)</span>
 </p>
 </div>
 </div>
-<div class="block-proof fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Solución
-</div>
-<div class="block-body">
-<span class="math display">\[\int_0^\infty ce^{-2x}\,dx = c\cdot\frac{1}{2} = 1 \implies c = 2\]</span> Con <span class="math inline">\(c=2\)</span>: <span class="math inline">\(f(x) = 2e^{-2x}\)</span> es la FDP de una <span class="math inline">\(\text{Exp}(\lambda=2)\)</span>.
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Es la distribución fundamental para probar <strong>asociación entre variables categóricas</strong> y para inferencia sobre varianzas poblacionales.</p>
 </div>
 </div>
 </section>
+<section id="section-9" class="slide level2 middle center">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Distribución t de Student
+</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Decir que una variable sigue una <span class="math inline">\(t(\nu)\)</span> significa que estamos haciendo inferencia sobre una media cuando la varianza poblacional es desconocida. A mayor <span class="math inline">\(\nu\)</span>, más se parece a la Normal estándar.
+</p>
+</div>
+</section>
+<section id="fdp-y-fda-de-la-distribución-t-de-student" class="slide level2">
+<h2>FDP y FDA de la Distribución t de Student</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Distribución t de Student <span class="math inline">\(T \sim t(\nu)\)</span>
+</div>
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+<p>Surge como cociente <span class="math inline">\(T = Z / \sqrt{Q/\nu}\)</span> donde <span class="math inline">\(Z \sim N(0,1)\)</span> y <span class="math inline">\(Q \sim \chi^2(\nu)\)</span> independientes. Simétrica en 0, con colas más pesadas que la Normal. <span style="color:#6b7280; font-size:24px;"> — Parámetro: <span class="math inline">\(\nu\)</span> grados de libertad. Soporte: <span class="math inline">\(t \in (-\infty, \infty)\)</span>.</span></p>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Función de Densidad (FDP)
+</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<span class="math display">\[f(t) = \frac{\Gamma\!\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\;\Gamma\!\left(\frac{\nu}{2}\right)} \left(1+\frac{t^2}{\nu}\right)^{-(\nu+1)/2}\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 8px;">
+Simétrica en 0. Cuando <span class="math inline">\(\nu \to \infty\)</span>, converge a <span class="math inline">\(N(0,1)\)</span>.
+</p>
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Función de Distribución Acumulada (FDA)
+</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<span class="math display">\[F(t) = I_x\!\left(\tfrac{\nu}{2},\,\tfrac{1}{2}\right), \quad x = \frac{\nu}{\nu + t^2}\]</span>
+<p style="font-size: 23px; color: #374151; margin-top: 8px;">
+Sin forma cerrada. Se calcula con <code>pt()</code> en R. Por simetría: <span class="math inline">\(P(T &gt; t) = P(T &lt; -t)\)</span>.
+</p>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+<p>Colas más pesadas que <span class="math inline">\(N(0,1)\)</span> &nbsp;·&nbsp; <span class="math inline">\(t(\nu) \xrightarrow{\nu\to\infty} N(0,1)\)</span> &nbsp;·&nbsp; Usada en pruebas <span class="math inline">\(t\)</span> e intervalos de confianza para medias</p>
+</div>
+</div>
+</section>
+<section id="efecto-de-nu-en-la-distribución-t-de-student" class="slide level2">
+<h2>Efecto de <span class="math inline">\(\nu\)</span> en la Distribución t de Student</h2>
+
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1344"></section>
 <section id="comparación-normal-vs-t-de-student" class="slide level2">
 <h2>Comparación Normal vs t de Student</h2>
 
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-15-1.png" width="1056" class="r-stretch"></section>
-<section id="teorema-central-del-límite-anticipación" class="slide level2">
-<h2>Teorema Central del Límite (Anticipación)</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Teorema Central del Límite (TCL)
-</div>
-<div class="block-body">
-Si <span class="math inline">\(X_1, \ldots, X_n\)</span> son variables independientes e idénticamente distribuidas con media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2 &lt; \infty\)</span>, entonces: <span class="math display">\[\frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1) \quad \text{cuando } n \to \infty\]</span>
+<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-24-1.png" width="1056" class="r-stretch"></section>
+<section id="r-distribución-t-de-student" class="slide level2">
+<h2>R: Distribución t de Student</h2>
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+<p>En un ensayo clínico en <strong>Bogotá</strong>, se obtiene un estadístico <span class="math inline">\(t = 2.1\)</span> con <span class="math inline">\(\nu = 15\)</span> grados de libertad. Calcule <span class="math inline">\(P(T \leq 2.1)\)</span>, <span class="math inline">\(P(T &gt; 2.1)\)</span>, <span class="math inline">\(P(-2.1 \leq T \leq 2.1)\)</span> y el valor crítico al 95%.</p>
 </div>
 </div>
-<ul style="margin-top: 10px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El TCL explica por qué la distribución Normal aparece en tantos fenómenos: es el límite de sumas de variables aleatorias independientes.
-</li>
-</ul>
-</section>
-<section id="simulación-y-comparación-empírica" class="slide level2">
-<h2>Simulación y comparación empírica</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+<div class="scrollable-code" style="min-width: 0;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb31-2"><a href=""></a>n <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
-<span id="cb31-3"><a href=""></a><span class="co"># Suma de 30 Bernoulli(0.3) vs Normal por TCL</span></span>
-<span id="cb31-4"><a href=""></a>x_bin  <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">30</span>, <span class="fl">0.3</span>)</span>
-<span id="cb31-5"><a href=""></a>x_norm <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">30</span><span class="sc">*</span><span class="fl">0.3</span>, <span class="fu">sqrt</span>(<span class="dv">30</span><span class="sc">*</span><span class="fl">0.3</span><span class="sc">*</span><span class="fl">0.7</span>))</span>
-<span id="cb31-6"><a href=""></a><span class="fu">cat</span>(<span class="st">"Binomial: media ="</span>, <span class="fu">round</span>(<span class="fu">mean</span>(x_bin),<span class="dv">2</span>), <span class="st">" sd ="</span>, <span class="fu">round</span>(<span class="fu">sd</span>(x_bin),<span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href=""></a>nu <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb91-2"><a href=""></a></span>
+<span id="cb91-3"><a href=""></a><span class="co"># Menor o igual que 2.1</span></span>
+<span id="cb91-4"><a href=""></a><span class="fu">pt</span>(<span class="fl">2.1</span>, <span class="at">df =</span> nu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Binomial: media = 9.02  sd = 2.53 </code></pre>
+<pre><code>[1] 0.9734724</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Normal:   media ="</span>, <span class="fu">round</span>(<span class="fu">mean</span>(x_norm),<span class="dv">2</span>), <span class="st">" sd ="</span>, <span class="fu">round</span>(<span class="fu">sd</span>(x_norm),<span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href=""></a><span class="co"># Mayor que 2.1 (cola derecha)</span></span>
+<span id="cb93-2"><a href=""></a><span class="fu">pt</span>(<span class="fl">2.1</span>, <span class="at">df =</span> nu, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Normal:   media = 8.97  sd = 2.53 </code></pre>
+<pre><code>[1] 0.02652763</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href=""></a><span class="co"># Prueba bilateral: P(-2.1 &lt;= T &lt;= 2.1)</span></span>
+<span id="cb95-2"><a href=""></a><span class="fu">pt</span>(<span class="fl">2.1</span>, <span class="at">df =</span> nu) <span class="sc">-</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fl">2.1</span>, <span class="at">df =</span> nu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9469447</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href=""></a><span class="co"># Valor crítico bilateral al 95%</span></span>
+<span id="cb97-2"><a href=""></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> nu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.13145</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r scrollable-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href=""></a><span class="co"># Valor crítico unilateral al 95%</span></span>
+<span id="cb99-2"><a href=""></a><span class="fu">qt</span>(<span class="fl">0.95</span>, <span class="at">df =</span> nu)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.75305</code></pre>
+</div>
+</div>
+</div>
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<p><strong><code>dt(x, df): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(f(t)\)</span> — densidad</span><br><br></p>
+<p><strong><code>pt(q, df):</code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(T \leq q)\)</span></span><br><br></p>
+<p><strong><code>lower.tail = FALSE: </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(T &gt; q)\)</span> — valor <span class="math inline">\(p\)</span> unilateral</span><br><br></p>
+<p><strong><code>pt(b) - pt(a): </code></strong> <span style="color:#374151;font-size:24px"><span class="math inline">\(P(a \leq T \leq b)\)</span> — bilateral</span><br><br></p>
+<p><strong><code>qt(p, df): </code></strong> <span style="color:#374151;font-size:24px">valor crítico con prob. <span class="math inline">\(p\)</span></span></p>
 </div>
 </div>
 </section>
-<section id="gráficamente" class="slide level2">
-<h2>Gráficamente</h2>
-
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-17-1.png" width="1728" class="r-stretch"></section>
-<section id="mixtura-de-distribuciones" class="slide level2">
-<h2>Mixtura de distribuciones</h2>
-<div class="block-note fragment fade-up" data-fragment-index="1">
-<div class="block-body">
-<p>
-A veces los datos provienen de <strong>subpoblaciones</strong> con distintas distribuciones. Por ejemplo, el peso de bovinos de una finca puede mezclar machos <span class="math inline">\(N(\mu_1, \sigma_1^2)\)</span> y hembras <span class="math inline">\(N(\mu_2, \sigma_2^2)\)</span>.
+<section id="aplicaciones-en-agronomía-t-de-student" class="slide level2">
+<h2>Aplicaciones en Agronomía: t de Student</h2>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px;">
+<div class="card card--info">
+<p style="font-size: 32px; margin: 0;">
+🌾
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1a3a6b; margin: 6px 0;">
+Rendimiento con fertilizante
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Comparar la media de kg/ha antes y después de aplicar un nuevo abono en <strong>12 parcelas</strong> de arroz en el Tolima.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(T \sim t(11)\)</span> — prueba <span class="math inline">\(t\)</span> pareada
+</p>
+</div>
+<div class="card card--success">
+<p style="font-size: 32px; margin: 0;">
+☕
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #1b4d2e; margin: 6px 0;">
+Peso de granos de café
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Estimar la media del peso de granos en una finca del <strong>Huila</strong> con muestra pequeña (<span class="math inline">\(n=8\)</span>) y varianza desconocida.
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(T \sim t(7)\)</span> — intervalo de confianza
+</p>
+</div>
+<div class="card card--warning">
+<p style="font-size: 32px; margin: 0;">
+🐄
+</p>
+<p style="font-size: 28px; font-weight: 700; color: #b45309; margin: 6px 0;">
+Ganancia de peso bovino
+</p>
+<p style="font-size: 26px; color: #374151; margin: 6px 0;">
+Comparar la media de ganancia de peso de dos grupos de bovinos con dietas distintas en <strong>Córdoba</strong> (<span class="math inline">\(n=15\)</span> c/u).
+</p>
+<p style="font-size: 20px; color: #6b7280; font-style: italic; margin-top: 8px;">
+<span class="math inline">\(T \sim t(28)\)</span> — prueba <span class="math inline">\(t\)</span> de dos muestras
 </p>
 </div>
 </div>
-<div class="block-note fragment fade-up" data-fragment-index="2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="clase_10_files/figure-revealjs/unnamed-chunk-18-1.png" width="1728"></p>
-</figure>
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+<p>Se usa cuando <span class="math inline">\(n\)</span> es pequeño y la varianza poblacional es <strong>desconocida</strong>. Al crecer <span class="math inline">\(n\)</span>, se aproxima a la Normal.</p>
 </div>
 </div>
+</section>
+<section id="aproximaciones-entre-distribuciones" class="slide level2">
+<h2>Aproximaciones entre distribuciones</h2>
+<p class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify; margin-top: 50px;">
+Cuando los parámetros toman valores extremos, algunas distribuciones se <strong>aproximan</strong> a otra más simple de calcular.
+</p>
+<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 4px;">
+<div class="fragment fade-up" data-fragment-index="2" style="text-align: center;">
+<div style="background: #1a3a6b; border-radius: 10px 10px 0 0; padding: 10px 6px;">
+<p style="color: white; font-size: 22px; font-weight: 700; margin: 0;">
+Binomial
+</p>
+<p style="color: #bfdbfe; font-size: 19px; margin: 4px 0 0 0;">
+→ Poisson
+</p>
+</div>
+<div style="background: #dce9f7; border-radius: 0 0 10px 10px; padding: 12px 8px; min-height: 100px;">
+<p style="font-size: 21px; color: #1a3a6b; font-weight: 600; margin: 0 0 6px 0;">
+<span class="math inline">\(n\)</span> grande, <span class="math inline">\(p\)</span> pequeño
+</p>
+<p style="font-size: 20px; color: #374151; margin: 0;">
+<span class="math inline">\(\lambda = np\)</span>
+</p>
+<p style="font-size: 19px; color: #6b7280; margin: 6px 0 0 0;">
+Ej: <span class="math inline">\(n &gt; 100\)</span>, <span class="math inline">\(p &lt; 0.01\)</span>
+</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="text-align: center;">
+<div style="background: #1a3a6b; border-radius: 10px 10px 0 0; padding: 10px 6px;">
+<p style="color: white; font-size: 22px; font-weight: 700; margin: 0;">
+Binomial
+</p>
+<p style="color: #bfdbfe; font-size: 19px; margin: 4px 0 0 0;">
+→ Normal
+</p>
+</div>
+<div style="background: #dce9f7; border-radius: 0 0 10px 10px; padding: 12px 8px; min-height: 100px;">
+<p style="font-size: 21px; color: #1a3a6b; font-weight: 600; margin: 0 0 6px 0;">
+<span class="math inline">\(np\)</span> y <span class="math inline">\(n(1-p)\)</span> grandes
+</p>
+<p style="font-size: 20px; color: #374151; margin: 0;">
+<span class="math inline">\(\mu=np,\;\sigma^2=np(1-p)\)</span>
+</p>
+<p style="font-size: 19px; color: #6b7280; margin: 6px 0 0 0;">
+Ej: <span class="math inline">\(np \geq 5\)</span> y <span class="math inline">\(n(1-p) \geq 5\)</span>
+</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="text-align: center;">
+<div style="background: #1b4d2e; border-radius: 10px 10px 0 0; padding: 10px 6px;">
+<p style="color: white; font-size: 22px; font-weight: 700; margin: 0;">
+Poisson
+</p>
+<p style="color: #d6f0dd; font-size: 19px; margin: 4px 0 0 0;">
+→ Normal
+</p>
+</div>
+<div style="background: #d6f0dd; border-radius: 0 0 10px 10px; padding: 12px 8px; min-height: 100px;">
+<p style="font-size: 21px; color: #1b4d2e; font-weight: 600; margin: 0 0 6px 0;">
+<span class="math inline">\(\lambda\)</span> grande
+</p>
+<p style="font-size: 20px; color: #374151; margin: 0;">
+<span class="math inline">\(\mu=\lambda,\;\sigma^2=\lambda\)</span>
+</p>
+<p style="font-size: 19px; color: #6b7280; margin: 6px 0 0 0;">
+Ej: <span class="math inline">\(\lambda \geq 30\)</span>
+</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="5" style="text-align: center;">
+<div style="background: #7a1515; border-radius: 10px 10px 0 0; padding: 10px 6px;">
+<p style="color: white; font-size: 22px; font-weight: 700; margin: 0;">
+Gamma
+</p>
+<p style="color: #fad8d8; font-size: 19px; margin: 4px 0 0 0;">
+→ Normal
+</p>
+</div>
+<div style="background: #fad8d8; border-radius: 0 0 10px 10px; padding: 12px 8px; min-height: 100px;">
+<p style="font-size: 21px; color: #7a1515; font-weight: 600; margin: 0 0 6px 0;">
+<span class="math inline">\(\alpha\)</span> grande
+</p>
+<p style="font-size: 20px; color: #374151; margin: 0;">
+<span class="math inline">\(\mu=\alpha\beta,\;\sigma^2=\alpha\beta^2\)</span>
+</p>
+<p style="font-size: 19px; color: #6b7280; margin: 6px 0 0 0;">
+Ej: <span class="math inline">\(\alpha \geq 30\)</span>
+</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="6" style="text-align: center;">
+<div style="background: #374151; border-radius: 10px 10px 0 0; padding: 10px 6px;">
+<p style="color: white; font-size: 22px; font-weight: 700; margin: 0;">
+t de Student
+</p>
+<p style="color: #d1d5db; font-size: 19px; margin: 4px 0 0 0;">
+→ Normal
+</p>
+</div>
+<div style="background: #f3f4f6; border-radius: 0 0 10px 10px; padding: 12px 8px; min-height: 100px;">
+<p style="font-size: 21px; color: #374151; font-weight: 600; margin: 0 0 6px 0;">
+Muestra grande
+</p>
+<p style="font-size: 20px; color: #374151; margin: 0;">
+<span class="math inline">\(t(\nu) \xrightarrow{\nu\to\infty} N(0,1)\)</span>
+</p>
+<p style="font-size: 19px; color: #6b7280; margin: 6px 0 0 0;">
+Ej: <span class="math inline">\(\nu \geq 30\)</span>
+</p>
+</div>
+</div>
+</div>
+<div class="block-note fragment fade-up" data-fragment-index="7" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 28px; text-align: justify;">
+<p>La Normal es el <strong>atractor universal</strong>, el Teorema Central del Límite explica por qué tantas distribuciones convergen a ella, Lo veremos en la proxima clase.</p>
 </div>
 </div>
 </section>
@@ -1401,33 +2420,6 @@ Grafique la FMP y señale los valores con mayor probabilidad.
 </div>
 </div>
 </section>
-<section id="solución-5" class="slide level2">
-<h2>Solución</h2>
-<div class="cell" data-fragment-index="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>n <span class="ot">&lt;-</span> <span class="dv">6</span>; p <span class="ot">&lt;-</span> <span class="fl">0.70</span></span>
-<span id="cb35-2"><a href=""></a><span class="co"># a) p(0), p(3), p(6)</span></span>
-<span id="cb35-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"p(0)="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">0</span>,n,p),<span class="dv">4</span>),</span>
-<span id="cb35-4"><a href=""></a>    <span class="st">" p(3)="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">3</span>,n,p),<span class="dv">4</span>),</span>
-<span id="cb35-5"><a href=""></a>    <span class="st">" p(6)="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">6</span>,n,p),<span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>p(0)= 7e-04  p(3)= 0.1852  p(6)= 0.1176 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># b) P(X &gt;= 5)</span></span>
-<span id="cb37-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X&gt;=5) ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">4</span>,n,p), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(X&gt;=5) = 0.4202 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># c) P(X = 3)</span></span>
-<span id="cb39-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X=3)  ="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">3</span>,n,p), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(X=3)  = 0.1852 </code></pre>
-</div>
-</div>
-</section>
-<section id="gráficamente-1" class="slide level2">
-<h2>Gráficamente</h2>
-
-<img data-src="clase_10_files/figure-revealjs/unnamed-chunk-20-1.png" width="1536" class="r-stretch"></section>
 <section id="cálculo-con-la-fdp-normal" class="slide level2">
 <h2>2. Cálculo con la FDP Normal</h2>
 <div class="block-example">
@@ -1455,33 +2447,6 @@ Calcule <span class="math inline">\(P(11.5 \leq X \leq 14)\)</span> y represente
 </div>
 </div>
 </section>
-<section id="solución-6" class="slide level2">
-<h2>Solución</h2>
-<div class="cell" data-fragment-index="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>mu <span class="ot">&lt;-</span> <span class="fl">12.8</span>; sigma <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
-<span id="cb41-2"><a href=""></a><span class="co"># a) Proporción con anemia</span></span>
-<span id="cb41-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(anemia) ="</span>, <span class="fu">round</span>(<span class="fu">pnorm</span>(<span class="dv">12</span>, mu, sigma), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(anemia) = 0.2525 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="co"># b) Puntaje Z para x=11</span></span>
-<span id="cb43-2"><a href=""></a>Z <span class="ot">&lt;-</span> (<span class="dv">11</span> <span class="sc">-</span> mu) <span class="sc">/</span> sigma</span>
-<span id="cb43-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"Z(11)     ="</span>, <span class="fu">round</span>(Z, <span class="dv">3</span>), <span class="st">"— está"</span>, <span class="fu">abs</span>(<span class="fu">round</span>(Z,<span class="dv">2</span>)), <span class="st">"σ por debajo</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Z(11)     = -1.5 — está 1.5 σ por debajo</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="co"># c) Percentil 25</span></span>
-<span id="cb45-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"Q1        ="</span>, <span class="fu">round</span>(<span class="fu">qnorm</span>(<span class="fl">0.25</span>, mu, sigma), <span class="dv">3</span>), <span class="st">"g/dL</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Q1        = 11.991 g/dL</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="co"># d) P(11.5 ≤ X ≤ 14)</span></span>
-<span id="cb47-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(11.5≤X≤14)="</span>, <span class="fu">round</span>(<span class="fu">diff</span>(<span class="fu">pnorm</span>(<span class="fu">c</span>(<span class="fl">11.5</span>,<span class="dv">14</span>), mu, sigma)), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(11.5≤X≤14)= 0.702 </code></pre>
-</div>
-</div>
-</section>
 <section id="distribución-poisson-parámetro-desconocido" class="slide level2">
 <h2>3. Distribución Poisson (parámetro desconocido)</h2>
 <div class="block-example">
@@ -1506,29 +2471,6 @@ Con ese <span class="math inline">\(\lambda\)</span>, calcule <span class="math 
 ¿Qué tan probable es observar más de 8 colonias en una placa?
 </li>
 </ol>
-</div>
-</div>
-</section>
-<section id="solución-7" class="slide level2">
-<h2>Solución</h2>
-<div class="cell" data-fragment-index="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a>conteos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>)</span>
-<span id="cb49-2"><a href=""></a>lambda_hat <span class="ot">&lt;-</span> <span class="fu">mean</span>(conteos)</span>
-<span id="cb49-3"><a href=""></a><span class="fu">cat</span>(<span class="st">"lambda estimado ="</span>, lambda_hat, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>lambda estimado = 3.3 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X=0)          ="</span>, <span class="fu">round</span>(<span class="fu">dpois</span>(<span class="dv">0</span>, lambda_hat), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(X=0)          = 0.0369 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X&gt;=5)         ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">4</span>, lambda_hat), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(X&gt;=5)         = 0.2374 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(X&gt;8)          ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">8</span>, lambda_hat), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(X&gt;8)          = 0.0069 </code></pre>
 </div>
 </div>
 </section>
@@ -1566,95 +2508,6 @@ Decisión con distribuciones
 </ol>
 </div>
 </div>
-</div>
-</section>
-<section id="solución-8" class="slide level2">
-<h2>Solución</h2>
-<div class="cell" data-fragment-index="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="co"># 1. P(X=0) en cada región</span></span>
-<span id="cb57-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(XA=0) ="</span>, <span class="fu">round</span>(<span class="fu">dpois</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="dv">4</span>),</span>
-<span id="cb57-3"><a href=""></a>    <span class="st">"  P(XB=0) ="</span>, <span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="fl">0.2</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(XA=0) = 0.0183   P(XB=0) = 0.0115 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="co"># 2. Varianzas</span></span>
-<span id="cb59-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"Var(XA) ="</span>, <span class="dv">4</span>, <span class="st">"  Var(XB) ="</span>, <span class="dv">20</span><span class="sc">*</span><span class="fl">0.2</span><span class="sc">*</span><span class="fl">0.8</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Var(XA) = 4   Var(XB) = 3.2 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="co"># 3. P(X&gt;6)</span></span>
-<span id="cb61-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(XA&gt;6) ="</span>, <span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">ppois</span>(<span class="dv">6</span>,<span class="dv">4</span>), <span class="dv">4</span>),</span>
-<span id="cb61-3"><a href=""></a>    <span class="st">"  P(XB&gt;6) ="</span>, <span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pbinom</span>(<span class="dv">6</span>,<span class="dv">20</span>,<span class="fl">0.2</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(XA&gt;6) = 0.1107   P(XB&gt;6) = 0.0867 </code></pre>
-</div>
-</div>
-</section>
-<section id="resumen-fmp-y-fdp" class="slide level2">
-<h2>Resumen FMP y FDP</h2>
-<div class="twocol">
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Variables Discretas
-</div>
-<div class="block-body">
-<ul>
-<li>
-Bernoulli(<span class="math inline">\(p\)</span>): ensayo único
-</li>
-<li>
-Binomial(<span class="math inline">\(n,p\)</span>): conteos en <span class="math inline">\(n\)</span> ensayos
-</li>
-<li>
-Poisson(<span class="math inline">\(\lambda\)</span>): conteos de eventos raros
-</li>
-<li>
-Geométrica(<span class="math inline">\(p\)</span>): espera del primer éxito
-</li>
-<li>
-Hipergeométrica: sin reemplazo
-</li>
-</ul>
-</div>
-</div>
-<div class="block-theorem fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Variables Continuas
-</div>
-<div class="block-body">
-<ul>
-<li>
-Uniforme(<span class="math inline">\(a,b\)</span>): equiprobable
-</li>
-<li>
-Normal(<span class="math inline">\(\mu,\sigma^2\)</span>): campana
-</li>
-<li>
-Exponencial(<span class="math inline">\(\lambda\)</span>): tiempos de espera
-</li>
-<li>
-Gamma(<span class="math inline">\(\alpha,\beta\)</span>): tiempos hasta <span class="math inline">\(k\)</span>-ésimo evento
-</li>
-<li>
-Beta(<span class="math inline">\(\alpha,\beta\)</span>): proporciones
-</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="próxima-clase" class="slide level2">
-<h2>Próxima clase</h2>
-<div style="text-align: center; margin-top: 60px;">
-<p style="font-size: 40px; font-weight: bold; color: #006DAE;">
-Clase 11
-</p>
-<p style="font-size: 32px; color: #1b4d2e; margin-top: 15px; font-weight: 600;">
-Valor esperado, varianza y percentiles
-</p>
-<p style="font-size: 26px; color: #6b7280; margin-top: 20px;">
-Resumiendo distribuciones: centro, dispersión y posición
-</p>
 </div>
 
 </section>
@@ -1878,80 +2731,42 @@ Resumiendo distribuciones: centro, dispersión y posición
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
