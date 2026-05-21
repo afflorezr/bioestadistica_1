@@ -48,20 +48,21 @@ execute:
 <div>
 <h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px;">Medidas de centro</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Valor esperado discreto y continuo.</li>
-<li class="fragment fade-in" data-fragment-index="3">Interpretación geométrica.</li>
-<li class="fragment fade-in" data-fragment-index="4">Esperanza de una función.</li>
-<li class="fragment fade-in" data-fragment-index="5">Propiedades del valor esperado.</li>
+<li class="fragment fade-in" data-fragment-index="2">Teorema Central de Limite.</li>
+<li class="fragment fade-in" data-fragment-index="3">Valor esperado discreto y continuo.</li>
+<li class="fragment fade-in" data-fragment-index="4">Interpretación geométrica.</li>
+<li class="fragment fade-in" data-fragment-index="5">Esperanza de una función.</li>
+<li class="fragment fade-in" data-fragment-index="6">Propiedades del valor esperado.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px;">Dispersión y posición</h3>
+<h3 class="fragment fade-in" data-fragment-index="7" style="font-size: 34px; margin-bottom: 14px;">Dispersión y posición</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Varianza y desviación estándar.</li>
-<li class="fragment fade-in" data-fragment-index="8">Asimetría y curtosis.</li>
-<li class="fragment fade-in" data-fragment-index="9">Percentiles y cuartiles.</li>
-<li class="fragment fade-in" data-fragment-index="10">IQR, Chebyshev y taller.</li>
+<li class="fragment fade-in" data-fragment-index="8">Varianza y desviación estándar.</li>
+<li class="fragment fade-in" data-fragment-index="9">Asimetría y curtosis.</li>
+<li class="fragment fade-in" data-fragment-index="10">Percentiles y cuartiles.</li>
+<li class="fragment fade-in" data-fragment-index="11">IQR, Chebyshev y taller.</li>
 </ul>
 </div>
 </div>
@@ -71,6 +72,533 @@ execute:
 <p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Resumiendo distribuciones: centro, dispersión y posición</p>
 <p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental — Departamento de Estadística, UNAL Bogotá</p>
 </div>
+
+## ¿Por qué es importante el Teorema Central del Límite?
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
+En muchas aplicaciones reales, la población original no sigue una distribución normal.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
+Por ejemplo, los rendimientos agrícolas, pesos de frutos o producción de café suelen presentar <strong>asimetría</strong>.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
+Aun así, necesitamos métodos estadísticos confiables para hacer inferencia y tomar decisiones.
+</li>
+
+</ul>
+
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
+El <strong>Teorema Central del Límite (TCL)</strong> explica por qué las medias muestrales tienden a comportarse normalmente.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
+Esto permite construir intervalos de confianza y realizar pruebas de hipótesis.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 28px; text-align: justify;">
+Es uno de los resultados más importantes de toda la estadística aplicada.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+## Idea intuitiva del TCL
+
+<div class="twocol">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+
+<div class="block-title">
+Población original
+</div>
+
+<div class="block-body" style="font-size: 28px;">
+
+La variable original puede ser:
+
+<ul>
+<li>asimétrica,</li>
+<li>irregular,</li>
+<li>o tener colas pesadas.</li>
+</ul>
+
+Por ejemplo:
+
+<ul>
+<li>producción de café.</li>
+<li>peso de mazorcas.</li>
+<li>rendimiento de arroz.</li>
+</ul>
+
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+
+<div class="block-title">
+Media muestral
+</div>
+
+<div class="block-body" style="font-size: 28px;">
+
+Si tomamos muchas muestras de tamaño $n$ y calculamos:
+
+$$
+\bar X
+$$
+
+las medias muestrales tienden a distribuirse aproximadamente como una normal.
+
+Esto ocurre incluso si la población original no es normal.
+
+</div>
+</div>
+
+</div>
+
+## {.middle .center}
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Teorema Central del Límite</p>
+<p style="text-align: justify;font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">El <strong>Teorema Central del Límite (TCL)</strong> es uno de los resultados más importantes de la estadística.
+
+Establece que, cuando se toman muestras aleatorias suficientemente grandes de una población, la distribución de las <strong>medias muestrales</strong> tiende a comportarse como una distribución normal, incluso si la población original no es normal.</p>
+</div>
+
+
+## Definición 
+
+<div class="twocol">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+
+<div class="block-title">
+Supuestos
+</div>
+
+<div class="block-body" style="font-size: 28px;">
+
+Sea:
+
+$$
+X_1,X_2,\ldots,X_n
+$$
+
+una muestra aleatoria independiente con:
+
+$$
+E(X)=\mu
+$$
+
+$$
+\text{Var}(X)=\sigma^2
+$$
+
+y varianza finita.
+
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+
+<div class="block-title">
+Resultado del TCL
+</div>
+
+<div class="block-body" style="font-size: 28px;">
+
+Cuando el tamaño de muestra es grande,
+
+$$
+\bar X
+\approx
+N\left(
+\mu,
+\frac{\sigma^2}{n}
+\right)
+$$
+
+Equivalentemente,
+
+$$
+Z=
+\frac{\bar X-\mu}
+{\sigma/\sqrt n}
+\approx N(0,1)
+$$
+
+</div>
+</div>
+
+</div>
+
+<ul style="margin-top: 12px;">
+
+<li class="fragment fade-up" data-fragment-index="3"
+style="font-size: 28px; text-align: justify;">
+
+La media muestral tiende a comportarse normalmente, incluso si la población original no es normal.
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4"
+style="font-size: 28px; text-align: justify;">
+
+La aproximación mejora a medida que aumenta el tamaño de muestra $n$.
+
+</li>
+
+</ul>
+
+
+## Interpretación del Teorema Central del Límite 
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+<h4 style="font-size: 30px; margin-bottom: 12px;">
+Centro de la distribución
+</h4>
+
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2"
+style="font-size: 27px; text-align: justify;">
+
+La media de las medias muestrales coincide con la media poblacional:
+
+$$
+E(\bar X)=\mu
+$$
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3"
+style="font-size: 27px; text-align: justify;">
+
+Las medias muestrales se concentran alrededor del verdadero valor poblacional.
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4"
+style="font-size: 27px; text-align: justify;">
+
+Por esta razón, $\bar X$ es un estimador natural del parámetro $\mu$.
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+
+<h4 style="font-size: 30px; margin-bottom: 12px;">
+Variabilidad de la media
+</h4>
+
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="6"
+style="font-size: 27px; text-align: justify;">
+
+La desviación estándar de la media muestral es:
+
+$$
+\frac{\sigma}{\sqrt n}
+$$
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="7"
+style="font-size: 27px; text-align: justify;">
+
+A medida que aumenta $n$, la dispersión disminuye.
+
+</li>
+
+<li class="fragment fade-up" data-fragment-index="8"
+style="font-size: 27px; text-align: justify;">
+
+Las estimaciones se vuelven más precisas, estables y cercanas a $\mu$.
+
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="9"
+style="margin-top: 18px;
+font-size: 28px;
+text-align: center;
+font-weight: 600;
+color: #1e3a8a;">
+
+El TCL explica por qué la distribución normal aparece tan frecuentemente en estadística aplicada.
+
+</div>
+
+
+## Condiciones del Teorema Central del Límite
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 30px; text-align: justify;">
+Las observaciones deben ser independientes.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 30px; text-align: justify;">
+La varianza poblacional debe ser finita.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 30px; text-align: justify;">
+El tamaño de muestra debe ser suficientemente grande.
+</li>
+
+</ul>
+
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 30px; text-align: justify;">
+Una regla práctica frecuente es:
+$$
+n \geq 30
+$$
+</li>
+
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 30px; text-align: justify;">
+Distribuciones muy asimétricas pueden requerir tamaños mayores.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 30px; text-align: justify;">
+Mientras mayor sea $n$, mejor será la aproximación a la distribución normal.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+
+## Ejemplo 1 
+<div class="block-example fragment fade-up" data-fragment-index="1">
+
+<div class="block-title">
+    
+</div>
+
+<div class="block-body" style="font-size: 28px; line-height: 1.45;">
+
+En una finca cafetera de Caldas, la producción diaria de café por árbol tiene media y desviación estándar:  
+
+$\mu = 2.4 \text{ kg}$ y $\sigma = 0.8 \text{ kg}$
+
+Si se selecciona una muestra aleatoria de: $n = 64$ árboles.
+
+Usando el <strong>Teorema Central del Límite</strong>:
+
+<ol style="margin-top: 10px;">
+
+<li>
+Determine cómo se distribuye la media muestral $\bar X$.
+</li>
+
+<li>
+Calcule el error estándar de $\bar X$.
+</li>
+
+<li>
+Interprete el resultado obtenido.
+</li>
+
+</ol>
+
+</div>
+
+</div>
+
+
+## Solución
+
+<div class="twocol">
+
+<div class="block-proof fragment fade-up" data-fragment-index="1">
+
+<div class="block-title">
+1. Distribución muestral
+</div>
+
+<div class="block-body" style="font-size: 26px; line-height: 1.4;">
+
+Por el Teorema Central del Límite:  
+
+$\bar X\approx N\left(\mu,\frac{\sigma^2}{n}\right)$
+
+Sustituyendo:
+
+$$
+\mu = 2.4,
+\qquad
+\sigma = 0.8,
+\qquad
+n=64
+$$
+
+obtenemos:
+
+$\bar X\approx N\left(2.4,\frac{0.8^2}{64}\right)$
+
+</div>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray"
+data-fragment-index="2">
+
+<h4 style="font-size: 28px; margin-bottom: 8px;">
+2. Error estándar
+</h4>
+
+<ul>
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+La desviación estándar de $\bar X$ es: $\frac{\sigma}{\sqrt n}$
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+
+Entonces:
+
+$$
+\frac{0.8}{\sqrt{64}}=0.1
+$$
+
+</li>
+
+<li class="fragment fade-up"
+data-fragment-index="5"
+style="font-size: 25px; text-align: justify;">
+
+Finalmente:
+
+$$
+\bar X
+\approx
+N(2.4,0.1^2)
+$$
+3. La media muestral con $n=64$ observaciones presenta menor variabilidad y se aproxima a una distribución normal.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+
+## Ejemplo 2
+
+<div class="twocol">
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+
+<div class="block-title">
+Enunciado 
+</div>
+
+<div class="block-body" style="font-size: 26px; line-height: 1.4;">
+
+El rendimiento por hectárea de arroz tiene:  
+
+$$\mu = 6.5 \text{ toneladas}$$  y  
+$$\sigma = 1.2 \text{ toneladas}$$
+
+Se selecciona una muestra aleatoria de: 
+
+$$
+n=36\ parcelas.
+$$
+
+
+Calcular la probabilidad de que el rendimiento promedio supere las 6.8 toneladas.
+
+
+
+</div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+
+<div class="block-title">
+Solución
+</div>
+
+<div class="block-body" style="font-size: 24px; line-height: 1.35;">
+
+Por el TCL: $\bar X\approx N\left(6.5,\frac{1.2^2}{36}\right)$
+
+El error estándar es: $\sigma_{\bar X} = \frac{1.2}{\sqrt{36}}=0.2$
+
+
+Estandarizando:
+
+$$
+Z=
+\frac{6.8-6.5}{0.2}
+=
+1.5
+$$
+
+Entonces:
+
+$$
+P(\bar X>6.8)
+=P(Z>1.5)\\
+=1-P(Z \leq 1.5)
+\approx 0.0668
+$$
+
+Existe aproximadamente un 6.68% de probabilidad de que la media muestral supere las 6.8 toneladas por hectárea.
+</div>
+
+</div>
+
+</div>
+
+
+## Valor esperado discreto y continuo{.middle .center}
+
 
 ## ¿Por qué resumir una distribución?
 
@@ -229,7 +757,7 @@ text(
 box(col = "gray40")
 ```
 
-## Ejemplo 1
+## Ejemplo 3
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-title">Lanzamiento de dado</div>
@@ -604,7 +1132,7 @@ donde $\mu = E(X)$
   </div>
 </div>
 
-## Ejemplo 1 
+## Ejemplo 4 
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-title">Distribución Poisson</div>
   <div class="block-body">
@@ -1275,7 +1803,7 @@ c(mediana = qexp(0.5, lambda), media = 1/lambda)
 </div>
 </div>
 
-## Ejemplo 2
+## Ejemplo 5
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-title">Distribución Normal</div>
@@ -1300,7 +1828,7 @@ qnorm(0.90, mu, sigma)
 diff(pnorm(qnorm(c(0.25, 0.75), mu, sigma), mu, sigma))
 ```
 
-## Visualización de percentiles (Ejemplo 2)
+## Visualización de percentiles (Ejemplo 5)
 
 ```{r}
 #| echo: false
@@ -1645,7 +2173,7 @@ legend(
 )
 ```
 
-## Ejemplo 3
+## Ejemplo 6
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-title">Enunciado</div>
@@ -1673,7 +2201,7 @@ cat("Var(X) =", round(VX, 4), "\n")
 cat("sd(X)  =", round(sqrt(VX), 4), "\n")
 ```
 
-## Ejemplo 4
+## Ejemplo 7
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
   <div class="block-title">Enunciado</div>
@@ -1701,7 +2229,7 @@ cat("P90    =", round(qgamma(0.90, alpha, scale=beta), 2), "días\n")
 cat("P(X<20)=", round(pgamma(20, alpha, scale=beta), 4), "\n")
 ```
 
-## Ejemplo 5 
+## Ejemplo 8 
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
 <div class="block-title">Valor Esperado como criterio</div>
@@ -2002,17 +2530,11 @@ Ejemplo: $M_{N(\mu,\sigma^2)}(t) = \exp(\mu t + \frac{1}{2}\sigma^2 t^2)$.
 <ul>
 <li>$E(aX+b) = aE(X)+b$ — linealidad de la esperanza</li>
 <li>$\text{Var}(aX+b) = a^2\text{Var}(X)$ — traslación no cambia varianza</li>
-<li>$\text{Var}(X+Y) = \text{Var}(X)+\text{Var}(Y)$ si $X \perp Y$</li>
+<li>$\text{Var}(X+Y) = \text{Var}(X)+\text{Var}(Y)$ si $X$, $Y$ variables independientes</li> 
 <li>$P(|X-\mu|\geq k\sigma) \leq 1/k^2$ — Chebyshev</li>
 <li>Para la Normal: IQR $\approx 1.35\sigma$</li>
 </ul>
   </div>
 </div>
 
-## Próxima clase
 
-<div style="text-align: center; margin-top: 60px;">
-<p style="font-size: 40px; font-weight: bold; color: #006DAE;">Próximas clases</p>
-<p style="font-size: 32px; color: #1b4d2e; margin-top: 15px; font-weight: 600;">Estimación puntual e intervalos de confianza</p>
-<p style="font-size: 26px; color: #6b7280; margin-top: 20px;">Del modelo teórico a la inferencia sobre datos reales</p>
-</div>
