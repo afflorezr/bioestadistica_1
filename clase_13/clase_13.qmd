@@ -772,7 +772,111 @@ round(xbar + c(-1,1)*qt(0.975, n-1)*s/sqrt(n), 2)
 </div>
 
 
-## IC para diferencia de medias: dos muestras independientes
+
+
+## Resumen: estimadores e IC para una media
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 16px;">
+
+<div style="display: flex; flex-direction: column; gap: 14px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Insesgamiento y sesgo</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.5;">
+$$B(\hat{\theta}) = E(\hat{\theta}) - \theta$$
+$B = 0$ → <strong>insesgado</strong>: sin desviación sistemática.
+
+$\bar{X}$, $\hat{p}$ y $S^2$ (con $n-1$) son insesgados.
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">ECM, consistencia y error estándar</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.5;">
+$$\text{ECM}(\hat{\theta}) = \text{Var}(\hat{\theta}) + B^2 \quad \text{(preciso} \neq \text{exacto)}$$
+<strong>Consistencia:</strong> $\hat{\theta}\xrightarrow{P}\theta$ cuando $n\to\infty$ si $\text{ECM}\to 0$.
+
+<div style="margin-top: 8px;">$\widehat{\text{SE}}(\bar{X})=\dfrac{s}{\sqrt{n}}$ &nbsp;&nbsp; $\widehat{\text{SE}}(\hat{p})=\sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}$</div>
+</div>
+</div>
+
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="3">
+<div class="block-title">IC para una media</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.5;">
+
+| Situación | Fórmula |
+|:---|:---|
+| $\sigma$ conocida o $n\geq30$ | $\bar{x}\pm z_{\alpha/2}\,\dfrac{\sigma}{\sqrt{n}}$ |
+| $\sigma$ desconocida | $\bar{x}\pm t_{n-1,\,\alpha/2}\,\dfrac{s}{\sqrt{n}}$ |
+
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 12px; font-size: 23px;">
+<strong>Interpretación:</strong> el $(1-\alpha)\times 100\%$ de los ICs construidos por el método contienen $\mu$ — no el intervalo particular.
+</div>
+<div class="fragment fade-up" data-fragment-index="5" style="margin-top: 8px; font-size: 23px;">
+<strong>Amplitud:</strong> $2e = 2\,z_{\alpha/2}\,s/\sqrt{n}$. Cuadruplicar $n$ reduce $e$ a la mitad.
+</div>
+</div>
+</div>
+
+</div>
+
+
+
+
+## ¿Cuántas observaciones necesito?
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px;">
+
+<div style="display: flex; flex-direction: column; gap: 14px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Fórmula general</div>
+<div class="block-body" style="font-size: 25px;">
+Despejar $n$ de $e = z_{\alpha/2}\,\dfrac{\sigma}{\sqrt{n}}$:
+<div class="block-body" style="font-size: 20px;">
+$$
+n = \left(\frac{z_{\alpha/2}\,\sigma}{e}\right)^2
+$$
+</div>
+
+donde $e$ es el <strong>margen de error máximo admisible</strong>. Si $\sigma$ es desconocida, usar un valor piloto, literatura, o la regla $\sigma \approx \text{rango}/4$.
+</div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="2">
+<div class="block-title">Regla práctica</div>
+<div class="block-body" style="font-size: 24px;">
+Reducir el margen a la <strong>mitad</strong> requiere multiplicar $n$ por <strong>4</strong>.
+
+Reducir el margen a la <strong>tercera parte</strong> requiere multiplicar $n$ por <strong>9</strong>.
+
+$$n \propto \frac{1}{e^2}$$
+</div>
+</div>
+
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="3">
+<div class="block-title">Ejemplo: producción de café, Huila</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.55;">
+Un agrónomo quiere estimar el rendimiento medio con un margen de error de <strong>±0.2 kg/árbol</strong> al 95% de confianza. Estudios previos reportan $\sigma \approx 0.8$ kg.
+
+<ol style="margin-top: 10px; font-size: 23px;">
+<li class="fragment fade-up" data-fragment-index="4"><strong>Datos:</strong> $e = 0.2$, $\sigma = 0.8$, $z_{0.025} = 1.96$</li>
+<li class="fragment fade-up" data-fragment-index="5"><strong>Cálculo:</strong>
+$$n = \left(\frac{1.96 \times 0.8}{0.2}\right)^2 = \left(\frac{1.568}{0.2}\right)^2 = (7.84)^2 = 61.47$$</li>
+<li class="fragment fade-up" data-fragment-index="6"><strong>Decisión:</strong> $n = \lceil 61.47 \rceil = \mathbf{62}$ árboles. <em>(Siempre redondear hacia arriba.)</em></li>
+<li class="fragment fade-up" data-fragment-index="7"><strong>Verificación:</strong> si se quisiera $e = 0.1$ kg (la mitad), se necesitarían $62 \times 4 = \mathbf{248}$ árboles.</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+
+## IC para diferencia de medias
 
 <div class="twocol" style="margin-top: 10px;">
 
@@ -788,22 +892,21 @@ Si IC contiene 0: no hay diferencia significativa entre las medias.
 
 <div class="block-example fragment fade-up" data-fragment-index="2">
 <div class="block-title">Ejemplo: dos variedades de arroz, Meta</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-Variedad A: $n_1=20$, $\bar{x}_1=6.1$, $s_1=0.9$ ton/ha.
-Variedad B: $n_2=20$, $\bar{x}_2=5.4$, $s_2=0.8$ ton/ha.
-```{r}
-n1<-20;x1<-6.1;s1<-0.9; n2<-20;x2<-5.4;s2<-0.8
-Sp2 <- ((n1-1)*s1^2+(n2-1)*s2^2)/(n1+n2-2)
-e   <- qt(0.975, n1+n2-2)*sqrt(Sp2*(1/n1+1/n2))
-cat("IC 95% diferencia:[",round(x1-x2-e,2),",",
-                           round(x1-x2+e,2),"]\n")
-```
-IC no contiene 0 → diferencia significativa.
+<div class="block-body" style="font-size: 24px; line-height: 1.45;">
+Variedad A: $n_1=20$, $\bar{x}_1=6.1$, $s_1=0.9$ ton/ha. &nbsp; Variedad B: $n_2=20$, $\bar{x}_2=5.4$, $s_2=0.8$ ton/ha.
+
+<ol style="margin-top: 6px; font-size: 23px;">
+<li class="fragment fade-up" data-fragment-index="3"><strong>Varianza combinada:</strong> $S_p^2 = \dfrac{19(0.81)+19(0.64)}{38} = \dfrac{27.55}{38} = 0.725$; $\;S_p=0.851$</li>
+<li class="fragment fade-up" data-fragment-index="4"><strong>Error estándar:</strong> $\text{SE}=0.851\sqrt{\tfrac{1}{20}+\tfrac{1}{20}}=0.851\times 0.316=0.269$</li>
+<li class="fragment fade-up" data-fragment-index="5"><strong>Valor crítico:</strong> $t_{38,\,0.025}\approx 2.024$; &nbsp; $e=2.024\times 0.269=0.545$</li>
+<li class="fragment fade-up" data-fragment-index="6"><strong>IC 95%:</strong> $(6.1-5.4)\pm 0.545 \;\Rightarrow\; [0.155,\;1.245]$ ton/ha</li>
+</ol>
+
+<div class="fragment fade-up" data-fragment-index="7" style="margin-top:6px; color:#1b4d2e; font-weight:600; font-size:23px;">$0\notin[0.155,\,1.245]$ → la variedad A produce significativamente más que la B.</div>
 </div>
 </div>
 
 </div>
-
 
 ## IC para medias pareadas
 
@@ -819,16 +922,28 @@ donde $d_i = x_{i1} - x_{i2}$, $\bar{d} = \overline{d_i}$, $s_d$ = desviación e
 </div>
 
 <div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Ejemplo: humedad antes y después de riego, Tolima</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-$n=12$ parcelas medidas antes y después del riego:
-```{r}
-antes  <- c(28,31,27,33,29,30,26,32,28,29,31,27)
-despues<- c(34,37,33,38,35,36,32,38,34,35,37,33)
-d      <- despues - antes
-cat("IC 95% para la diferencia media:\n")
-round(mean(d) + c(-1,1)*qt(0.975,length(d)-1)*sd(d)/sqrt(length(d)), 2)
-```
+<div class="block-title">Ejemplo: humedad (%) antes y después de riego, Tolima</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.4;">
+$n=5$ parcelas; $d_i = \text{después} - \text{antes}$:
+
+<div style="font-size:22px; margin: 4px 0;">
+
+| Parcela | Antes | Después | $d_i$ |
+|:---:|:---:|:---:|:---:|
+| 1 | 28 | 36 | 8 |
+| 2 | 31 | 37 | 6 |
+| 3 | 25 | 34 | 9 |
+| 4 | 33 | 39 | 6 |
+| 5 | 27 | 33 | 6 |
+
+</div>
+
+<ol style="margin-top: 4px; font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="3">$\bar{d}=(8+6+9+6+6)/5=35/5=7.0\%$</li>
+<li class="fragment fade-up" data-fragment-index="4">$s_d^2=\tfrac{(1)^2+(−1)^2+(2)^2+(−1)^2+(−1)^2}{4}=\tfrac{8}{4}=2{,}0\;$; $\;s_d=1.414$</li>
+<li class="fragment fade-up" data-fragment-index="5">$\text{SE}=1.414/\sqrt{5}=0.632$; $\;t_{4,\,0.025}=2.776$; $\;e=2.776\times0.632=1.755$</li>
+<li class="fragment fade-up" data-fragment-index="6">$\text{IC}_{95\%}: 7.0\pm1.755 \;\Rightarrow\; [5.24\%,\;8.76\%]$</li>
+</ol>
 </div>
 </div>
 
@@ -879,7 +994,7 @@ round(p_hat + c(-1,1)*1.96*sqrt(p_hat*(1-p_hat)/n), 3)
 <div class="block-title">Intervalo de Wilson</div>
 <div class="block-body" style="font-size: 25px; line-height: 1.45;">
 El intervalo de Wald falla cuando $\hat{p}$ es extremo (cercano a 0 o 1) o $n$ es pequeño. El intervalo de <strong>Wilson</strong> es más preciso:
-$$\frac{\hat{p} + \frac{z^2}{2n} \pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z^2}{4n^2}}}{1+\frac{z^2}{n}}$$
+$$\frac{\hat{p} + \frac{z_{\alpha/2}^2}{2n} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z_{\alpha/2}^2}{4n^2}}}{1+\frac{z_{\alpha/2}^2}{n}}$$
 Recomendado siempre que $n\hat{p} < 5$ o $n(1-\hat{p}) < 5$.
 </div>
 </div>
@@ -924,22 +1039,24 @@ El IC para $\sigma^2$ es <strong>asimétrico</strong>.
 
 <div class="block-example fragment fade-up" data-fragment-index="2">
 <div class="block-title">Ejemplo: variabilidad de rendimiento, Nariño</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-$n=25$ parcelas de papa, $s^2 = 1.44$ (ton/ha)$^2$.
+<div class="block-body" style="font-size: 24px; line-height: 1.45;">
+$n=25$ parcelas de papa, $s^2=1.44$ (ton/ha)$^2$, IC al 95%.
 
-```{r}
-n <- 25; s2 <- 1.44
-chi_lo <- qchisq(0.025, df = n-1)
-chi_hi <- qchisq(0.975, df = n-1)
-ic_var <- c((n-1)*s2/chi_hi, (n-1)*s2/chi_lo)
-cat("IC 95% para σ²:", round(ic_var, 3), "\n")
-cat("IC 95% para σ: [", round(sqrt(ic_var[1]),2),
-    ",", round(sqrt(ic_var[2]),2), "]\n")
-```
+<ol style="margin-top: 6px; font-size: 23px;">
+<li class="fragment fade-up" data-fragment-index="3"><strong>Grados de libertad:</strong> $df = n-1 = 24$</li>
+<li class="fragment fade-up" data-fragment-index="4"><strong>Valores críticos (tabla $\chi^2$):</strong> $\chi^2_{24,\,0.975}=39.36$ y $\chi^2_{24,\,0.025}=12.40$</li>
+<li class="fragment fade-up" data-fragment-index="5"><strong>IC para $\sigma^2$:</strong>
+$$\left[\frac{24\times1.44}{39.36},\;\frac{24\times1.44}{12.40}\right]=[0.878,\;2.787]$$</li>
+<li class="fragment fade-up" data-fragment-index="6"><strong>IC para $\sigma$:</strong> $[\sqrt{0.878},\;\sqrt{2.787}]=[0.94,\;1.67]$ ton/ha</li>
+</ol>
+
+<div class="fragment fade-up" data-fragment-index="7" style="color:#1a3a6b; font-weight:600; margin-top:4px; font-size:23px;">El IC es <strong>asimétrico</strong>: la distribución $\chi^2$ tiene cola derecha más larga.</div>
 </div>
 </div>
 
 </div>
+
+
 
 
 ## Tabla resumen: IC para distintos parámetros
@@ -1710,24 +1827,6 @@ El contenido de proteína (%) tiene $\sigma = 4\%$ (histórica). Muestra: $n = 1
 </div>
 </div>
 
-## Taller 1: solución
-
-```{r}
-mu_real <- 38; sigma <- 4; n <- 16; xbar <- 39.2
-cat("E(Xbar) =", mu_real, "(insesgado: E(Xbar) = mu)\n")
-cat("SE =", round(sigma/sqrt(n), 4), "\n\n")
-# IC con z
-ic_z <- xbar + c(-1,1)*1.96*sigma/sqrt(n)
-cat("IC 95% (z):", round(ic_z, 2), "\n")
-# IC con t (n=16, df=15)
-ic_t <- xbar + c(-1,1)*qt(0.975, n-1)*sigma/sqrt(n)
-cat("IC 95% (t):", round(ic_t, 2), "\n")
-cat("t_15 =", round(qt(0.975, 15), 3), "vs z = 1.960 -> t es mayor\n\n")
-# Tamaño de muestra para e = 1%
-n_req <- ceiling((1.96*sigma/1)^2)
-cat("n para e=±1% al 95%:", n_req, "\n")
-```
-
 
 ## Taller 2: IC para proporción
 
@@ -1743,25 +1842,6 @@ De $n = 150$ plantas inspeccionadas, $x = 42$ presentan síntomas.
 </div>
 </div>
 
-## Taller 2: solución
-
-```{r}
-x <- 42; n <- 150
-p_hat <- x / n
-cat("p_hat:", round(p_hat, 4), "\n")
-cat("n*p_hat =", n*p_hat, "y n*(1-p_hat) =",
-    n*(1-p_hat), "-> condicion OK\n\n")
-for (conf in c(0.90, 0.99)) {
-  z  <- qnorm(1-(1-conf)/2)
-  ic <- p_hat + c(-1,1)*z*sqrt(p_hat*(1-p_hat)/n)
-  cat(paste0("IC ",conf*100,"%: [",
-      round(ic[1],3),", ",round(ic[2],3),"]\n"))
-}
-n_req <- ceiling(1.96^2 * p_hat*(1-p_hat) / 0.03^2)
-cat("\nn requerido (e=0.03, 95%):", n_req, "\n")
-```
-
-
 ## Taller 3: IC bajo diseño estratificado
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
@@ -1776,36 +1856,6 @@ Se muestrea el contenido de N (g/kg) con diseño estratificado proporcional. Tre
 Calcule: (1) el estimador estratificado $\bar{x}_{st}$, (2) su varianza estimada, (3) IC al 95%.
 </div>
 </div>
-
-## Taller 3: solución
-
-```{r}
-#| echo: true
-N <- c(300, 400, 300); n <- c(15, 20, 15)
-xh <- c(2.8, 3.5, 4.1); sh <- c(0.6, 0.8, 0.7)
-N_total <- sum(N)
-Wh <- N / N_total
-
-# 1. Estimador estratificado
-xbar_st <- sum(Wh * xh)
-cat("Media estratificada:", round(xbar_st, 3), "g/kg\n")
-
-# 2. Varianza estimada (con FPC por estrato)
-var_st <- sum(Wh^2 * sh^2/n * (1 - n/N))
-cat("Var estimada:", round(var_st, 5), "\n")
-cat("SE:", round(sqrt(var_st), 4), "g/kg\n")
-
-# 3. IC al 95%
-e <- 1.96 * sqrt(var_st)
-cat("IC 95%: [", round(xbar_st-e,3), ",",
-    round(xbar_st+e,3), "] g/kg\n")
-
-# Comparar con MAS equivalente
-var_mas <- var(c(rep(2.8,15),rep(3.5,20),rep(4.1,15))) / sum(n)
-cat("DEFF:", round(var_st/var_mas, 3),
-    "(estratificado es más eficiente)\n")
-```
-
 
 ## Resumen de la clase 13
 

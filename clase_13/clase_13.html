@@ -2100,8 +2100,123 @@ Ejemplo: leche bovina, Nariño
 </div>
 </div>
 </section>
-<section id="ic-para-diferencia-de-medias-dos-muestras-independientes" class="slide level2">
-<h2>IC para diferencia de medias: dos muestras independientes</h2>
+<section id="resumen-estimadores-e-ic-para-una-media" class="slide level2">
+<h2>Resumen: estimadores e IC para una media</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 16px;">
+<div style="display: flex; flex-direction: column; gap: 14px;">
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Insesgamiento y sesgo
+</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.5;">
+<p><span class="math display">\[B(\hat{\theta}) = E(\hat{\theta}) - \theta\]</span> <span class="math inline">\(B = 0\)</span> → <strong>insesgado</strong>: sin desviación sistemática.</p>
+<p><span class="math inline">\(\bar{X}\)</span>, <span class="math inline">\(\hat{p}\)</span> y <span class="math inline">\(S^2\)</span> (con <span class="math inline">\(n-1\)</span>) son insesgados.</p>
+</div>
+</div>
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+ECM, consistencia y error estándar
+</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.5;">
+<p><span class="math display">\[\text{ECM}(\hat{\theta}) = \text{Var}(\hat{\theta}) + B^2 \quad \text{(preciso} \neq \text{exacto)}\]</span> <strong>Consistencia:</strong> <span class="math inline">\(\hat{\theta}\xrightarrow{P}\theta\)</span> cuando <span class="math inline">\(n\to\infty\)</span> si <span class="math inline">\(\text{ECM}\to 0\)</span>.</p>
+<div style="margin-top: 8px;">
+<span class="math inline">\(\widehat{\text{SE}}(\bar{X})=\dfrac{s}{\sqrt{n}}\)</span>    <span class="math inline">\(\widehat{\text{SE}}(\hat{p})=\sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}\)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+IC para una media
+</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.5;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Situación</th>
+<th style="text-align: left;">Fórmula</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\sigma\)</span> conocida o <span class="math inline">\(n\geq30\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\bar{x}\pm z_{\alpha/2}\,\dfrac{\sigma}{\sqrt{n}}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\sigma\)</span> desconocida</td>
+<td style="text-align: left;"><span class="math inline">\(\bar{x}\pm t_{n-1,\,\alpha/2}\,\dfrac{s}{\sqrt{n}}\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 12px; font-size: 23px;">
+<p><strong>Interpretación:</strong> el <span class="math inline">\((1-\alpha)\times 100\%\)</span> de los ICs construidos por el método contienen <span class="math inline">\(\mu\)</span> — no el intervalo particular.</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="5" style="margin-top: 8px; font-size: 23px;">
+<p><strong>Amplitud:</strong> <span class="math inline">\(2e = 2\,z_{\alpha/2}\,s/\sqrt{n}\)</span>. Cuadruplicar <span class="math inline">\(n\)</span> reduce <span class="math inline">\(e\)</span> a la mitad.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="cuántas-observaciones-necesito" class="slide level2">
+<h2>¿Cuántas observaciones necesito?</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px;">
+<div style="display: flex; flex-direction: column; gap: 14px;">
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Fórmula general
+</div>
+<div class="block-body" style="font-size: 25px;">
+Despejar <span class="math inline">\(n\)</span> de <span class="math inline">\(e = z_{\alpha/2}\,\dfrac{\sigma}{\sqrt{n}}\)</span>:
+<div class="block-body" style="font-size: 20px;">
+<p><span class="math display">\[
+n = \left(\frac{z_{\alpha/2}\,\sigma}{e}\right)^2
+\]</span></p>
+</div>
+<p>donde <span class="math inline">\(e\)</span> es el <strong>margen de error máximo admisible</strong>. Si <span class="math inline">\(\sigma\)</span> es desconocida, usar un valor piloto, literatura, o la regla <span class="math inline">\(\sigma \approx \text{rango}/4\)</span>.</p>
+</div>
+</div>
+<div class="block-alert fragment fade-up" data-fragment-index="2">
+<div class="block-title">
+Regla práctica
+</div>
+<div class="block-body" style="font-size: 24px;">
+<p>Reducir el margen a la <strong>mitad</strong> requiere multiplicar <span class="math inline">\(n\)</span> por <strong>4</strong>.</p>
+<p>Reducir el margen a la <strong>tercera parte</strong> requiere multiplicar <span class="math inline">\(n\)</span> por <strong>9</strong>.</p>
+<p><span class="math display">\[n \propto \frac{1}{e^2}\]</span></p>
+</div>
+</div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Ejemplo: producción de café, Huila
+</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.55;">
+<p>Un agrónomo quiere estimar el rendimiento medio con un margen de error de <strong>±0.2 kg/árbol</strong> al 95% de confianza. Estudios previos reportan <span class="math inline">\(\sigma \approx 0.8\)</span> kg.</p>
+<ol style="margin-top: 10px; font-size: 23px;">
+<li class="fragment fade-up" data-fragment-index="4">
+<strong>Datos:</strong> <span class="math inline">\(e = 0.2\)</span>, <span class="math inline">\(\sigma = 0.8\)</span>, <span class="math inline">\(z_{0.025} = 1.96\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+<strong>Cálculo:</strong> <span class="math display">\[n = \left(\frac{1.96 \times 0.8}{0.2}\right)^2 = \left(\frac{1.568}{0.2}\right)^2 = (7.84)^2 = 61.47\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6">
+<strong>Decisión:</strong> <span class="math inline">\(n = \lceil 61.47 \rceil = \mathbf{62}\)</span> árboles. <em>(Siempre redondear hacia arriba.)</em>
+</li>
+<li class="fragment fade-up" data-fragment-index="7">
+<strong>Verificación:</strong> si se quisiera <span class="math inline">\(e = 0.1\)</span> kg (la mitad), se necesitarían <span class="math inline">\(62 \times 4 = \mathbf{248}\)</span> árboles.
+</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ic-para-diferencia-de-medias" class="slide level2">
+<h2>IC para diferencia de medias</h2>
 <div class="twocol" style="margin-top: 10px;">
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
 <div class="block-title">
@@ -2115,19 +2230,25 @@ Fórmula (varianzas iguales, <span class="math inline">\(\sigma\)</span> descono
 <div class="block-title">
 Ejemplo: dos variedades de arroz, Meta
 </div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p>Variedad A: <span class="math inline">\(n_1=20\)</span>, <span class="math inline">\(\bar{x}_1=6.1\)</span>, <span class="math inline">\(s_1=0.9\)</span> ton/ha. Variedad B: <span class="math inline">\(n_2=20\)</span>, <span class="math inline">\(\bar{x}_2=5.4\)</span>, <span class="math inline">\(s_2=0.8\)</span> ton/ha.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href></a>n1<span class="ot">&lt;-</span><span class="dv">20</span>;x1<span class="ot">&lt;-</span><span class="fl">6.1</span>;s1<span class="ot">&lt;-</span><span class="fl">0.9</span>; n2<span class="ot">&lt;-</span><span class="dv">20</span>;x2<span class="ot">&lt;-</span><span class="fl">5.4</span>;s2<span class="ot">&lt;-</span><span class="fl">0.8</span></span>
-<span id="cb9-2"><a href></a>Sp2 <span class="ot">&lt;-</span> ((n1<span class="dv">-1</span>)<span class="sc">*</span>s1<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(n2<span class="dv">-1</span>)<span class="sc">*</span>s2<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="dv">-2</span>)</span>
-<span id="cb9-3"><a href></a>e   <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n1<span class="sc">+</span>n2<span class="dv">-2</span>)<span class="sc">*</span><span class="fu">sqrt</span>(Sp2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span>n1<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n2))</span>
-<span id="cb9-4"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% diferencia:[&quot;</span>,<span class="fu">round</span>(x1<span class="sc">-</span>x2<span class="sc">-</span>e,<span class="dv">2</span>),<span class="st">&quot;,&quot;</span>,</span>
-<span id="cb9-5"><a href></a>                           <span class="fu">round</span>(x1<span class="sc">-</span>x2<span class="sc">+</span>e,<span class="dv">2</span>),<span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>IC 95% diferencia:[ 0.15 , 1.25 ]</code></pre>
+<div class="block-body" style="font-size: 24px; line-height: 1.45;">
+<p>Variedad A: <span class="math inline">\(n_1=20\)</span>, <span class="math inline">\(\bar{x}_1=6.1\)</span>, <span class="math inline">\(s_1=0.9\)</span> ton/ha.   Variedad B: <span class="math inline">\(n_2=20\)</span>, <span class="math inline">\(\bar{x}_2=5.4\)</span>, <span class="math inline">\(s_2=0.8\)</span> ton/ha.</p>
+<ol style="margin-top: 6px; font-size: 23px;">
+<li class="fragment fade-up" data-fragment-index="3">
+<strong>Varianza combinada:</strong> <span class="math inline">\(S_p^2 = \dfrac{19(0.81)+19(0.64)}{38} = \dfrac{27.55}{38} = 0.725\)</span>; <span class="math inline">\(\;S_p=0.851\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4">
+<strong>Error estándar:</strong> <span class="math inline">\(\text{SE}=0.851\sqrt{\tfrac{1}{20}+\tfrac{1}{20}}=0.851\times 0.316=0.269\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+<strong>Valor crítico:</strong> <span class="math inline">\(t_{38,\,0.025}\approx 2.024\)</span>;   <span class="math inline">\(e=2.024\times 0.269=0.545\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6">
+<strong>IC 95%:</strong> <span class="math inline">\((6.1-5.4)\pm 0.545 \;\Rightarrow\; [0.155,\;1.245]\)</span> ton/ha
+</li>
+</ol>
+<div class="fragment fade-up" data-fragment-index="7" style="margin-top:6px; color:#1b4d2e; font-weight:600; font-size:23px;">
+<span class="math inline">\(0\notin[0.155,\,1.245]\)</span> → la variedad A produce significativamente más que la B.
 </div>
-</div>
-<p>IC no contiene 0 → diferencia significativa.</p>
 </div>
 </div>
 </div>
@@ -2145,23 +2266,68 @@ Fórmula para datos dependientes
 </div>
 <div class="block-example fragment fade-up" data-fragment-index="2">
 <div class="block-title">
-Ejemplo: humedad antes y después de riego, Tolima
+Ejemplo: humedad (%) antes y después de riego, Tolima
 </div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math inline">\(n=12\)</span> parcelas medidas antes y después del riego:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href></a>antes  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">28</span>,<span class="dv">31</span>,<span class="dv">27</span>,<span class="dv">33</span>,<span class="dv">29</span>,<span class="dv">30</span>,<span class="dv">26</span>,<span class="dv">32</span>,<span class="dv">28</span>,<span class="dv">29</span>,<span class="dv">31</span>,<span class="dv">27</span>)</span>
-<span id="cb11-2"><a href></a>despues<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">34</span>,<span class="dv">37</span>,<span class="dv">33</span>,<span class="dv">38</span>,<span class="dv">35</span>,<span class="dv">36</span>,<span class="dv">32</span>,<span class="dv">38</span>,<span class="dv">34</span>,<span class="dv">35</span>,<span class="dv">37</span>,<span class="dv">33</span>)</span>
-<span id="cb11-3"><a href></a>d      <span class="ot">&lt;-</span> despues <span class="sc">-</span> antes</span>
-<span id="cb11-4"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% para la diferencia media:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>IC 95% para la diferencia media:</code></pre>
+<div class="block-body" style="font-size: 23px; line-height: 1.4;">
+<p><span class="math inline">\(n=5\)</span> parcelas; <span class="math inline">\(d_i = \text{después} - \text{antes}\)</span>:</p>
+<div style="font-size:22px; margin: 4px 0;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Parcela</th>
+<th style="text-align: center;">Antes</th>
+<th style="text-align: center;">Después</th>
+<th style="text-align: center;"><span class="math inline">\(d_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">36</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">37</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">34</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">39</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">27</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">6</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href></a><span class="fu">round</span>(<span class="fu">mean</span>(d) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="fu">length</span>(d)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sd</span>(d)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(d)), <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.73 6.10</code></pre>
-</div>
-</div>
+<ol style="margin-top: 4px; font-size: 22px;">
+<li class="fragment fade-up" data-fragment-index="3">
+<span class="math inline">\(\bar{d}=(8+6+9+6+6)/5=35/5=7.0\%\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4">
+<span class="math inline">\(s_d^2=\tfrac{(1)^2+(−1)^2+(2)^2+(−1)^2+(−1)^2}{4}=\tfrac{8}{4}=2{,}0\;\)</span>; <span class="math inline">\(\;s_d=1.414\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+<span class="math inline">\(\text{SE}=1.414/\sqrt{5}=0.632\)</span>; <span class="math inline">\(\;t_{4,\,0.025}=2.776\)</span>; <span class="math inline">\(\;e=2.776\times0.632=1.755\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6">
+<span class="math inline">\(\text{IC}_{95\%}: 7.0\pm1.755 \;\Rightarrow\; [5.24\%,\;8.76\%]\)</span>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -2189,8 +2355,8 @@ Ejemplo: roya en cafetales, Huila
 <p><span class="math display">\[0.27 \pm 1.96\sqrt{\frac{0.27 \times 0.73}{200}} = 0.27 \pm 0.062\]</span></p>
 <p><span class="math display">\[\text{IC}_{95\%}: [0.208,\; 0.332]\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href></a>p_hat <span class="ot">&lt;-</span> <span class="dv">54</span><span class="sc">/</span><span class="dv">200</span>; n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb15-2"><a href></a><span class="fu">round</span>(p_hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sqrt</span>(p_hat<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_hat)<span class="sc">/</span>n), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href></a>p_hat <span class="ot">&lt;-</span> <span class="dv">54</span><span class="sc">/</span><span class="dv">200</span>; n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb9-2"><a href></a><span class="fu">round</span>(p_hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sqrt</span>(p_hat<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_hat)<span class="sc">/</span>n), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.208 0.332</code></pre>
 </div>
@@ -2207,7 +2373,7 @@ Ejemplo: roya en cafetales, Huila
 Intervalo de Wilson
 </div>
 <div class="block-body" style="font-size: 25px; line-height: 1.45;">
-<p>El intervalo de Wald falla cuando <span class="math inline">\(\hat{p}\)</span> es extremo (cercano a 0 o 1) o <span class="math inline">\(n\)</span> es pequeño. El intervalo de <strong>Wilson</strong> es más preciso: <span class="math display">\[\frac{\hat{p} + \frac{z^2}{2n} \pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z^2}{4n^2}}}{1+\frac{z^2}{n}}\]</span> Recomendado siempre que <span class="math inline">\(n\hat{p} &lt; 5\)</span> o <span class="math inline">\(n(1-\hat{p}) &lt; 5\)</span>.</p>
+<p>El intervalo de Wald falla cuando <span class="math inline">\(\hat{p}\)</span> es extremo (cercano a 0 o 1) o <span class="math inline">\(n\)</span> es pequeño. El intervalo de <strong>Wilson</strong> es más preciso: <span class="math display">\[\frac{\hat{p} + \frac{z_{\alpha/2}^2}{2n} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z_{\alpha/2}^2}{4n^2}}}{1+\frac{z_{\alpha/2}^2}{n}}\]</span> Recomendado siempre que <span class="math inline">\(n\hat{p} &lt; 5\)</span> o <span class="math inline">\(n(1-\hat{p}) &lt; 5\)</span>.</p>
 </div>
 </div>
 <div class="block-example fragment fade-up" data-fragment-index="2">
@@ -2217,19 +2383,19 @@ Comparación: Wald vs Wilson
 <div class="block-body" style="font-size: 25px; line-height: 1.4;">
 <p><span class="math inline">\(n = 20\)</span> plantas, <span class="math inline">\(x = 2\)</span> enfermas (<span class="math inline">\(\hat{p} = 0.10\)</span>). Condición: <span class="math inline">\(20 \times 0.10 = 2 &lt; 5\)</span> → Wald no válido.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>; x <span class="ot">&lt;-</span> <span class="dv">2</span>; p <span class="ot">&lt;-</span> x<span class="sc">/</span>n; z <span class="ot">&lt;-</span> <span class="fl">1.96</span></span>
-<span id="cb17-2"><a href></a><span class="co"># Wald</span></span>
-<span id="cb17-3"><a href></a>wald <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span>z<span class="sc">*</span><span class="fu">sqrt</span>(p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>n)</span>
-<span id="cb17-4"><a href></a><span class="co"># Wilson</span></span>
-<span id="cb17-5"><a href></a>num  <span class="ot">&lt;-</span> p <span class="sc">+</span> z<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>n)</span>
-<span id="cb17-6"><a href></a>den  <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> z<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n</span>
-<span id="cb17-7"><a href></a>rad  <span class="ot">&lt;-</span> z<span class="sc">*</span><span class="fu">sqrt</span>(p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>n <span class="sc">+</span> z<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">4</span><span class="sc">*</span>n<span class="sc">^</span><span class="dv">2</span>))<span class="sc">/</span>den</span>
-<span id="cb17-8"><a href></a>wilson <span class="ot">&lt;-</span> <span class="fu">c</span>(num<span class="sc">/</span>den <span class="sc">-</span> rad, num<span class="sc">/</span>den <span class="sc">+</span> rad)</span>
-<span id="cb17-9"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Wald  :&quot;</span>, <span class="fu">round</span>(wald, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>; x <span class="ot">&lt;-</span> <span class="dv">2</span>; p <span class="ot">&lt;-</span> x<span class="sc">/</span>n; z <span class="ot">&lt;-</span> <span class="fl">1.96</span></span>
+<span id="cb11-2"><a href></a><span class="co"># Wald</span></span>
+<span id="cb11-3"><a href></a>wald <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span>z<span class="sc">*</span><span class="fu">sqrt</span>(p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>n)</span>
+<span id="cb11-4"><a href></a><span class="co"># Wilson</span></span>
+<span id="cb11-5"><a href></a>num  <span class="ot">&lt;-</span> p <span class="sc">+</span> z<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>n)</span>
+<span id="cb11-6"><a href></a>den  <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> z<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n</span>
+<span id="cb11-7"><a href></a>rad  <span class="ot">&lt;-</span> z<span class="sc">*</span><span class="fu">sqrt</span>(p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>n <span class="sc">+</span> z<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">4</span><span class="sc">*</span>n<span class="sc">^</span><span class="dv">2</span>))<span class="sc">/</span>den</span>
+<span id="cb11-8"><a href></a>wilson <span class="ot">&lt;-</span> <span class="fu">c</span>(num<span class="sc">/</span>den <span class="sc">-</span> rad, num<span class="sc">/</span>den <span class="sc">+</span> rad)</span>
+<span id="cb11-9"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Wald  :&quot;</span>, <span class="fu">round</span>(wald, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Wald  : -0.031 0.231 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Wilson:&quot;</span>, <span class="fu">round</span>(wilson, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Wilson:&quot;</span>, <span class="fu">round</span>(wilson, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Wilson: 0.028 0.301 </code></pre>
 </div>
@@ -2253,22 +2419,24 @@ Fórmula
 <div class="block-title">
 Ejemplo: variabilidad de rendimiento, Nariño
 </div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math inline">\(n=25\)</span> parcelas de papa, <span class="math inline">\(s^2 = 1.44\)</span> (ton/ha)<span class="math inline">\(^2\)</span>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href></a>n <span class="ot">&lt;-</span> <span class="dv">25</span>; s2 <span class="ot">&lt;-</span> <span class="fl">1.44</span></span>
-<span id="cb21-2"><a href></a>chi_lo <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(<span class="fl">0.025</span>, <span class="at">df =</span> n<span class="dv">-1</span>)</span>
-<span id="cb21-3"><a href></a>chi_hi <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n<span class="dv">-1</span>)</span>
-<span id="cb21-4"><a href></a>ic_var <span class="ot">&lt;-</span> <span class="fu">c</span>((n<span class="dv">-1</span>)<span class="sc">*</span>s2<span class="sc">/</span>chi_hi, (n<span class="dv">-1</span>)<span class="sc">*</span>s2<span class="sc">/</span>chi_lo)</span>
-<span id="cb21-5"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% para σ²:&quot;</span>, <span class="fu">round</span>(ic_var, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>IC 95% para σ²: 0.878 2.787 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% para σ: [&quot;</span>, <span class="fu">round</span>(<span class="fu">sqrt</span>(ic_var[<span class="dv">1</span>]),<span class="dv">2</span>),</span>
-<span id="cb23-2"><a href></a>    <span class="st">&quot;,&quot;</span>, <span class="fu">round</span>(<span class="fu">sqrt</span>(ic_var[<span class="dv">2</span>]),<span class="dv">2</span>), <span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>IC 95% para σ: [ 0.94 , 1.67 ]</code></pre>
-</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.45;">
+<p><span class="math inline">\(n=25\)</span> parcelas de papa, <span class="math inline">\(s^2=1.44\)</span> (ton/ha)<span class="math inline">\(^2\)</span>, IC al 95%.</p>
+<ol style="margin-top: 6px; font-size: 23px;">
+<li class="fragment fade-up" data-fragment-index="3">
+<strong>Grados de libertad:</strong> <span class="math inline">\(df = n-1 = 24\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4">
+<strong>Valores críticos (tabla <span class="math inline">\(\chi^2\)</span>):</strong> <span class="math inline">\(\chi^2_{24,\,0.975}=39.36\)</span> y <span class="math inline">\(\chi^2_{24,\,0.025}=12.40\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="5">
+<strong>IC para <span class="math inline">\(\sigma^2\)</span>:</strong> <span class="math display">\[\left[\frac{24\times1.44}{39.36},\;\frac{24\times1.44}{12.40}\right]=[0.878,\;2.787]\]</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6">
+<strong>IC para <span class="math inline">\(\sigma\)</span>:</strong> <span class="math inline">\([\sqrt{0.878},\;\sqrt{2.787}]=[0.94,\;1.67]\)</span> ton/ha
+</li>
+</ol>
+<div class="fragment fade-up" data-fragment-index="7" style="color:#1a3a6b; font-weight:600; margin-top:4px; font-size:23px;">
+El IC es <strong>asimétrico</strong>: la distribución <span class="math inline">\(\chi^2\)</span> tiene cola derecha más larga.
 </div>
 </div>
 </div>
@@ -2475,16 +2643,16 @@ Estrategias para reducir <span class="math inline">\(\sigma\)</span>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href></a>sigma <span class="ot">&lt;-</span> <span class="fl">1.5</span>; e_obj <span class="ot">&lt;-</span> <span class="fl">0.3</span>; z95 <span class="ot">&lt;-</span> <span class="fl">1.96</span>; z99 <span class="ot">&lt;-</span> <span class="fl">2.576</span></span>
-<span id="cb25-2"><a href></a><span class="fu">cat</span>(<span class="st">&quot;n (95%, MAS):&quot;</span>, <span class="fu">ceiling</span>((z95<span class="sc">*</span>sigma<span class="sc">/</span>e_obj)<span class="sc">^</span><span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href></a>sigma <span class="ot">&lt;-</span> <span class="fl">1.5</span>; e_obj <span class="ot">&lt;-</span> <span class="fl">0.3</span>; z95 <span class="ot">&lt;-</span> <span class="fl">1.96</span>; z99 <span class="ot">&lt;-</span> <span class="fl">2.576</span></span>
+<span id="cb15-2"><a href></a><span class="fu">cat</span>(<span class="st">&quot;n (95%, MAS):&quot;</span>, <span class="fu">ceiling</span>((z95<span class="sc">*</span>sigma<span class="sc">/</span>e_obj)<span class="sc">^</span><span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>n (95%, MAS): 97 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;n (99%, MAS):&quot;</span>, <span class="fu">ceiling</span>((z99<span class="sc">*</span>sigma<span class="sc">/</span>e_obj)<span class="sc">^</span><span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;n (99%, MAS):&quot;</span>, <span class="fu">ceiling</span>((z99<span class="sc">*</span>sigma<span class="sc">/</span>e_obj)<span class="sc">^</span><span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>n (99%, MAS): 166 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;n (95%, DEFF=0.7):&quot;</span>, <span class="fu">ceiling</span>((z95<span class="sc">*</span>sigma<span class="sc">/</span>e_obj)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fl">0.7</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;n (95%, DEFF=0.7):&quot;</span>, <span class="fu">ceiling</span>((z95<span class="sc">*</span>sigma<span class="sc">/</span>e_obj)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fl">0.7</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>n (95%, DEFF=0.7): 68 </code></pre>
 </div>
@@ -2540,13 +2708,13 @@ QQ-plot y prueba de Shapiro-Wilk
 </div>
 <div class="block-body" style="font-size: 24px; line-height: 1.4;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">5</span>)</span>
-<span id="cb31-2"><a href></a>x <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">25</span>, <span class="at">shape=</span><span class="dv">3</span>, <span class="at">scale=</span><span class="fl">0.5</span>)  <span class="co"># rendimiento asimétrico</span></span>
-<span id="cb31-3"><a href></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">2.5</span>,<span class="dv">1</span>), <span class="at">family=</span><span class="st">&quot;sans&quot;</span>)</span>
-<span id="cb31-4"><a href></a><span class="fu">qqnorm</span>(x, <span class="at">main=</span><span class="st">&quot;QQ-plot&quot;</span>, <span class="at">cex.main=</span><span class="fl">1.0</span>); <span class="fu">qqline</span>(x, <span class="at">col=</span><span class="st">&quot;#dc2626&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb31-5"><a href></a><span class="fu">hist</span>(x, <span class="at">probability=</span><span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">&quot;Histograma&quot;</span>, <span class="at">col=</span><span class="st">&quot;#bfdbfe&quot;</span>,</span>
-<span id="cb31-6"><a href></a>     <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">cex.main=</span><span class="fl">1.0</span>)</span>
-<span id="cb31-7"><a href></a><span class="fu">lines</span>(<span class="fu">density</span>(x), <span class="at">col=</span><span class="st">&quot;#1e3a8a&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">5</span>)</span>
+<span id="cb21-2"><a href></a>x <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">25</span>, <span class="at">shape=</span><span class="dv">3</span>, <span class="at">scale=</span><span class="fl">0.5</span>)  <span class="co"># rendimiento asimétrico</span></span>
+<span id="cb21-3"><a href></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">2.5</span>,<span class="dv">1</span>), <span class="at">family=</span><span class="st">&quot;sans&quot;</span>)</span>
+<span id="cb21-4"><a href></a><span class="fu">qqnorm</span>(x, <span class="at">main=</span><span class="st">&quot;QQ-plot&quot;</span>, <span class="at">cex.main=</span><span class="fl">1.0</span>); <span class="fu">qqline</span>(x, <span class="at">col=</span><span class="st">&quot;#dc2626&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb21-5"><a href></a><span class="fu">hist</span>(x, <span class="at">probability=</span><span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">&quot;Histograma&quot;</span>, <span class="at">col=</span><span class="st">&quot;#bfdbfe&quot;</span>,</span>
+<span id="cb21-6"><a href></a>     <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">cex.main=</span><span class="fl">1.0</span>)</span>
+<span id="cb21-7"><a href></a><span class="fu">lines</span>(<span class="fu">density</span>(x), <span class="at">col=</span><span class="st">&quot;#1e3a8a&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -2556,7 +2724,7 @@ QQ-plot y prueba de Shapiro-Wilk
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href></a><span class="fu">shapiro.test</span>(x)   <span class="co"># H0: normalidad; p &lt; 0.05 → rechazar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href></a><span class="fu">shapiro.test</span>(x)   <span class="co"># H0: normalidad; p &lt; 0.05 → rechazar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -2631,15 +2799,15 @@ Ejemplo: leche en Nariño (10 veredas de 80)
 </div>
 <div class="block-body" style="font-size: 25px; line-height: 1.4;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
-<span id="cb34-2"><a href></a>medias_veredas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">17.1</span>,<span class="fl">18.3</span>,<span class="fl">16.8</span>,<span class="fl">19.2</span>,<span class="fl">17.5</span>,</span>
-<span id="cb34-3"><a href></a>                    <span class="fl">18.0</span>,<span class="fl">16.5</span>,<span class="fl">19.8</span>,<span class="fl">17.3</span>,<span class="fl">18.6</span>)</span>
-<span id="cb34-4"><a href></a>m <span class="ot">&lt;-</span> <span class="dv">10</span>; M <span class="ot">&lt;-</span> <span class="dv">80</span></span>
-<span id="cb34-5"><a href></a>xbar_cl <span class="ot">&lt;-</span> <span class="fu">mean</span>(medias_veredas)</span>
-<span id="cb34-6"><a href></a>sc2     <span class="ot">&lt;-</span> <span class="fu">var</span>(medias_veredas)</span>
-<span id="cb34-7"><a href></a>e_cl    <span class="ot">&lt;-</span> <span class="fl">1.96</span><span class="sc">*</span><span class="fu">sqrt</span>(sc2<span class="sc">/</span>m<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>m<span class="sc">/</span>M))</span>
-<span id="cb34-8"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95%: [&quot;</span>, <span class="fu">round</span>(xbar_cl<span class="sc">-</span>e_cl,<span class="dv">2</span>), <span class="st">&quot;,&quot;</span>,</span>
-<span id="cb34-9"><a href></a>    <span class="fu">round</span>(xbar_cl<span class="sc">+</span>e_cl,<span class="dv">2</span>), <span class="st">&quot;] L/día</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
+<span id="cb24-2"><a href></a>medias_veredas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">17.1</span>,<span class="fl">18.3</span>,<span class="fl">16.8</span>,<span class="fl">19.2</span>,<span class="fl">17.5</span>,</span>
+<span id="cb24-3"><a href></a>                    <span class="fl">18.0</span>,<span class="fl">16.5</span>,<span class="fl">19.8</span>,<span class="fl">17.3</span>,<span class="fl">18.6</span>)</span>
+<span id="cb24-4"><a href></a>m <span class="ot">&lt;-</span> <span class="dv">10</span>; M <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb24-5"><a href></a>xbar_cl <span class="ot">&lt;-</span> <span class="fu">mean</span>(medias_veredas)</span>
+<span id="cb24-6"><a href></a>sc2     <span class="ot">&lt;-</span> <span class="fu">var</span>(medias_veredas)</span>
+<span id="cb24-7"><a href></a>e_cl    <span class="ot">&lt;-</span> <span class="fl">1.96</span><span class="sc">*</span><span class="fu">sqrt</span>(sc2<span class="sc">/</span>m<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>m<span class="sc">/</span>M))</span>
+<span id="cb24-8"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95%: [&quot;</span>, <span class="fu">round</span>(xbar_cl<span class="sc">-</span>e_cl,<span class="dv">2</span>), <span class="st">&quot;,&quot;</span>,</span>
+<span id="cb24-9"><a href></a>    <span class="fu">round</span>(xbar_cl<span class="sc">+</span>e_cl,<span class="dv">2</span>), <span class="st">&quot;] L/día</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>IC 95%: [ 17.29 , 18.53 ] L/día</code></pre>
 </div>
@@ -2873,20 +3041,20 @@ IC en escala log → volver a la original
 </div>
 <div class="block-body" style="font-size: 25px; line-height: 1.4;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">9</span>)</span>
-<span id="cb38-2"><a href></a>x <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean=</span><span class="fl">1.8</span>, <span class="at">sd=</span><span class="fl">0.5</span>)) <span class="co"># log-normal</span></span>
-<span id="cb38-3"><a href></a>log_x <span class="ot">&lt;-</span> <span class="fu">log</span>(x)</span>
-<span id="cb38-4"><a href></a>ic_log <span class="ot">&lt;-</span> <span class="fu">mean</span>(log_x) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">24</span>)<span class="sc">*</span><span class="fu">sd</span>(log_x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">25</span>)</span>
-<span id="cb38-5"><a href></a>ic_orig <span class="ot">&lt;-</span> <span class="fu">exp</span>(ic_log)  <span class="co"># volver a escala original</span></span>
-<span id="cb38-6"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% (escala log):&quot;</span>, <span class="fu">round</span>(ic_log,<span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">9</span>)</span>
+<span id="cb28-2"><a href></a>x <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean=</span><span class="fl">1.8</span>, <span class="at">sd=</span><span class="fl">0.5</span>)) <span class="co"># log-normal</span></span>
+<span id="cb28-3"><a href></a>log_x <span class="ot">&lt;-</span> <span class="fu">log</span>(x)</span>
+<span id="cb28-4"><a href></a>ic_log <span class="ot">&lt;-</span> <span class="fu">mean</span>(log_x) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">24</span>)<span class="sc">*</span><span class="fu">sd</span>(log_x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">25</span>)</span>
+<span id="cb28-5"><a href></a>ic_orig <span class="ot">&lt;-</span> <span class="fu">exp</span>(ic_log)  <span class="co"># volver a escala original</span></span>
+<span id="cb28-6"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% (escala log):&quot;</span>, <span class="fu">round</span>(ic_log,<span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>IC 95% (escala log): 1.573 1.979 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% (escala orig):&quot;</span>, <span class="fu">round</span>(ic_orig,<span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% (escala orig):&quot;</span>, <span class="fu">round</span>(ic_orig,<span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>IC 95% (escala orig): 4.82 7.24 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;(asimétrico en escala original, correcto)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;(asimétrico en escala original, correcto)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(asimétrico en escala original, correcto)</code></pre>
 </div>
@@ -2905,21 +3073,21 @@ Simulación de cobertura real
 </div>
 <div class="block-body" style="font-size: 24px; line-height: 1.4;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">99</span>)</span>
-<span id="cb44-2"><a href></a>cob <span class="ot">&lt;-</span> <span class="cf">function</span>(dist_fn, mu, n, <span class="at">B =</span> <span class="dv">2000</span>)</span>
-<span id="cb44-3"><a href></a>  <span class="fu">mean</span>(<span class="fu">replicate</span>(B, {</span>
-<span id="cb44-4"><a href></a>    x  <span class="ot">&lt;-</span> <span class="fu">dist_fn</span>(n)</span>
-<span id="cb44-5"><a href></a>    ic <span class="ot">&lt;-</span> <span class="fu">mean</span>(x) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,n<span class="dv">-1</span>)<span class="sc">*</span><span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb44-6"><a href></a>    ic[<span class="dv">1</span>] <span class="sc">&lt;=</span> mu <span class="sc">&amp;</span> mu <span class="sc">&lt;=</span> ic[<span class="dv">2</span>]</span>
-<span id="cb44-7"><a href></a>  }))</span>
-<span id="cb44-8"><a href></a>ns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">30</span>, <span class="dv">80</span>)</span>
-<span id="cb44-9"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Normal :&quot;</span>, <span class="fu">sapply</span>(ns, cob,</span>
-<span id="cb44-10"><a href></a>  <span class="at">dist_fn=</span><span class="cf">function</span>(n) <span class="fu">rnorm</span>(n,<span class="dv">5</span>,<span class="dv">1</span>), <span class="at">mu=</span><span class="dv">5</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">99</span>)</span>
+<span id="cb34-2"><a href></a>cob <span class="ot">&lt;-</span> <span class="cf">function</span>(dist_fn, mu, n, <span class="at">B =</span> <span class="dv">2000</span>)</span>
+<span id="cb34-3"><a href></a>  <span class="fu">mean</span>(<span class="fu">replicate</span>(B, {</span>
+<span id="cb34-4"><a href></a>    x  <span class="ot">&lt;-</span> <span class="fu">dist_fn</span>(n)</span>
+<span id="cb34-5"><a href></a>    ic <span class="ot">&lt;-</span> <span class="fu">mean</span>(x) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,n<span class="dv">-1</span>)<span class="sc">*</span><span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb34-6"><a href></a>    ic[<span class="dv">1</span>] <span class="sc">&lt;=</span> mu <span class="sc">&amp;</span> mu <span class="sc">&lt;=</span> ic[<span class="dv">2</span>]</span>
+<span id="cb34-7"><a href></a>  }))</span>
+<span id="cb34-8"><a href></a>ns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">30</span>, <span class="dv">80</span>)</span>
+<span id="cb34-9"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Normal :&quot;</span>, <span class="fu">sapply</span>(ns, cob,</span>
+<span id="cb34-10"><a href></a>  <span class="at">dist_fn=</span><span class="cf">function</span>(n) <span class="fu">rnorm</span>(n,<span class="dv">5</span>,<span class="dv">1</span>), <span class="at">mu=</span><span class="dv">5</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Normal : 0.937 0.947 0.9435 0.9525 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Exp(1/5):&quot;</span>, <span class="fu">sapply</span>(ns, cob,</span>
-<span id="cb46-2"><a href></a>  <span class="at">dist_fn=</span><span class="cf">function</span>(n) <span class="fu">rexp</span>(n,<span class="at">rate=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>), <span class="at">mu=</span><span class="dv">5</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Exp(1/5):&quot;</span>, <span class="fu">sapply</span>(ns, cob,</span>
+<span id="cb36-2"><a href></a>  <span class="at">dist_fn=</span><span class="cf">function</span>(n) <span class="fu">rexp</span>(n,<span class="at">rate=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>), <span class="at">mu=</span><span class="dv">5</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Exp(1/5): 0.876 0.9135 0.9285 0.949 </code></pre>
 </div>
@@ -2933,11 +3101,11 @@ Bootstrap: inferencia sin supuestos
 <div class="block-body" style="font-size: 24px; line-height: 1.4;">
 <p>Usa la muestra como sustituto de la población. Genera <span class="math inline">\(B\)</span> remuestras con reemplazo y construye el IC con los percentiles de la distribución empírica del estadístico.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb48-2"><a href></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.1</span>,<span class="fl">4.8</span>,<span class="fl">5.6</span>,<span class="fl">4.9</span>,<span class="fl">5.3</span>,<span class="fl">5.0</span>,<span class="fl">5.4</span>,<span class="fl">4.7</span>)</span>
-<span id="cb48-3"><a href></a>boot_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">4000</span>,</span>
-<span id="cb48-4"><a href></a>  <span class="fu">mean</span>(<span class="fu">sample</span>(x, <span class="fu">length</span>(x), <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb48-5"><a href></a><span class="fu">round</span>(<span class="fu">quantile</span>(boot_means, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb38-2"><a href></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.1</span>,<span class="fl">4.8</span>,<span class="fl">5.6</span>,<span class="fl">4.9</span>,<span class="fl">5.3</span>,<span class="fl">5.0</span>,<span class="fl">5.4</span>,<span class="fl">4.7</span>)</span>
+<span id="cb38-3"><a href></a>boot_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">4000</span>,</span>
+<span id="cb38-4"><a href></a>  <span class="fu">mean</span>(<span class="fu">sample</span>(x, <span class="fu">length</span>(x), <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb38-5"><a href></a><span class="fu">round</span>(<span class="fu">quantile</span>(boot_means, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 2.5% 97.5% 
 4.912 5.300 </code></pre>
@@ -3050,14 +3218,14 @@ Bootstrap: inferencia sin supuestos
 </table>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href></a><span class="co"># Ejemplo integrado: t.test devuelve IC automáticamente</span></span>
-<span id="cb50-2"><a href></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.1</span>,<span class="fl">4.8</span>,<span class="fl">5.6</span>,<span class="fl">4.9</span>,<span class="fl">5.3</span>,<span class="fl">5.0</span>,<span class="fl">5.4</span>,<span class="fl">4.7</span>,<span class="fl">5.2</span>,<span class="fl">5.5</span>)</span>
-<span id="cb50-3"><a href></a>resultado <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb50-4"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Media:&quot;</span>, <span class="fu">round</span>(resultado<span class="sc">$</span>estimate, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href></a><span class="co"># Ejemplo integrado: t.test devuelve IC automáticamente</span></span>
+<span id="cb40-2"><a href></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.1</span>,<span class="fl">4.8</span>,<span class="fl">5.6</span>,<span class="fl">4.9</span>,<span class="fl">5.3</span>,<span class="fl">5.0</span>,<span class="fl">5.4</span>,<span class="fl">4.7</span>,<span class="fl">5.2</span>,<span class="fl">5.5</span>)</span>
+<span id="cb40-3"><a href></a>resultado <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb40-4"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Media:&quot;</span>, <span class="fu">round</span>(resultado<span class="sc">$</span>estimate, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Media: 5.15 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95%:&quot;</span>, <span class="fu">round</span>(resultado<span class="sc">$</span>conf.int, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95%:&quot;</span>, <span class="fu">round</span>(resultado<span class="sc">$</span>conf.int, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>IC 95%: 4.933 5.367 </code></pre>
 </div>
@@ -3122,33 +3290,33 @@ Estudio: rendimiento de maíz en el Tolima bajo dos sistemas de riego
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
-<span id="cb54-2"><a href></a>A <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean=</span><span class="fl">6.2</span>, <span class="at">sd=</span><span class="fl">1.0</span>), <span class="dv">2</span>)</span>
-<span id="cb54-3"><a href></a>G <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean=</span><span class="fl">7.0</span>, <span class="at">sd=</span><span class="fl">0.9</span>), <span class="dv">2</span>)</span>
-<span id="cb54-4"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Aspersión: media=&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(A),<span class="dv">2</span>),</span>
-<span id="cb54-5"><a href></a>    <span class="st">&quot;  SE=&quot;</span>, <span class="fu">round</span>(<span class="fu">sd</span>(A)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">30</span>),<span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb44-2"><a href></a>A <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean=</span><span class="fl">6.2</span>, <span class="at">sd=</span><span class="fl">1.0</span>), <span class="dv">2</span>)</span>
+<span id="cb44-3"><a href></a>G <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean=</span><span class="fl">7.0</span>, <span class="at">sd=</span><span class="fl">0.9</span>), <span class="dv">2</span>)</span>
+<span id="cb44-4"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Aspersión: media=&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(A),<span class="dv">2</span>),</span>
+<span id="cb44-5"><a href></a>    <span class="st">&quot;  SE=&quot;</span>, <span class="fu">round</span>(<span class="fu">sd</span>(A)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">30</span>),<span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Aspersión: media= 5.87   SE= 0.132 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Goteo:     media=&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(G),<span class="dv">2</span>),</span>
-<span id="cb56-2"><a href></a>    <span class="st">&quot;  SE=&quot;</span>, <span class="fu">round</span>(<span class="fu">sd</span>(G)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">25</span>),<span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Goteo:     media=&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(G),<span class="dv">2</span>),</span>
+<span id="cb46-2"><a href></a>    <span class="st">&quot;  SE=&quot;</span>, <span class="fu">round</span>(<span class="fu">sd</span>(G)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">25</span>),<span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Goteo:     media= 6.86   SE= 0.169 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href></a>ic_A <span class="ot">&lt;-</span> <span class="fu">mean</span>(A) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">29</span>)<span class="sc">*</span><span class="fu">sd</span>(A)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
-<span id="cb58-2"><a href></a>ic_G <span class="ot">&lt;-</span> <span class="fu">mean</span>(G) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">24</span>)<span class="sc">*</span><span class="fu">sd</span>(G)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">25</span>)</span>
-<span id="cb58-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% Aspersión:&quot;</span>, <span class="fu">round</span>(ic_A,<span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href></a>ic_A <span class="ot">&lt;-</span> <span class="fu">mean</span>(A) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">29</span>)<span class="sc">*</span><span class="fu">sd</span>(A)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
+<span id="cb48-2"><a href></a>ic_G <span class="ot">&lt;-</span> <span class="fu">mean</span>(G) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">24</span>)<span class="sc">*</span><span class="fu">sd</span>(G)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">25</span>)</span>
+<span id="cb48-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% Aspersión:&quot;</span>, <span class="fu">round</span>(ic_A,<span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>IC 95% Aspersión: 5.6 6.14 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% Goteo:    &quot;</span>, <span class="fu">round</span>(ic_G,<span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% Goteo:    &quot;</span>, <span class="fu">round</span>(ic_G,<span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>IC 95% Goteo:     6.51 7.21 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href></a>Sp2 <span class="ot">&lt;-</span> ((<span class="dv">30-1</span>)<span class="sc">*</span><span class="fu">var</span>(A)<span class="sc">+</span>(<span class="dv">25-1</span>)<span class="sc">*</span><span class="fu">var</span>(G))<span class="sc">/</span>(<span class="dv">30</span><span class="sc">+</span><span class="dv">25-2</span>)</span>
-<span id="cb62-2"><a href></a>e_dif <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">53</span>)<span class="sc">*</span><span class="fu">sqrt</span>(Sp2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">30</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">25</span>))</span>
-<span id="cb62-3"><a href></a>dif   <span class="ot">&lt;-</span> <span class="fu">mean</span>(G)<span class="sc">-</span><span class="fu">mean</span>(A)</span>
-<span id="cb62-4"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% diferencia (G-A):&quot;</span>, <span class="fu">round</span>(<span class="fu">c</span>(dif<span class="sc">-</span>e_dif,dif<span class="sc">+</span>e_dif),<span class="dv">2</span>),<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href></a>Sp2 <span class="ot">&lt;-</span> ((<span class="dv">30-1</span>)<span class="sc">*</span><span class="fu">var</span>(A)<span class="sc">+</span>(<span class="dv">25-1</span>)<span class="sc">*</span><span class="fu">var</span>(G))<span class="sc">/</span>(<span class="dv">30</span><span class="sc">+</span><span class="dv">25-2</span>)</span>
+<span id="cb52-2"><a href></a>e_dif <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">53</span>)<span class="sc">*</span><span class="fu">sqrt</span>(Sp2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">30</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">25</span>))</span>
+<span id="cb52-3"><a href></a>dif   <span class="ot">&lt;-</span> <span class="fu">mean</span>(G)<span class="sc">-</span><span class="fu">mean</span>(A)</span>
+<span id="cb52-4"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% diferencia (G-A):&quot;</span>, <span class="fu">round</span>(<span class="fu">c</span>(dif<span class="sc">-</span>e_dif,dif<span class="sc">+</span>e_dif),<span class="dv">2</span>),<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>IC 95% diferencia (G-A): 0.56 1.41 </code></pre>
 </div>
@@ -3220,42 +3388,6 @@ Construya el IC al 95% usando <span class="math inline">\(z\)</span> y luego usa
 </div>
 </div>
 </section>
-<section id="taller-1-solución" class="slide level2">
-<h2>Taller 1: solución</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href></a>mu_real <span class="ot">&lt;-</span> <span class="dv">38</span>; sigma <span class="ot">&lt;-</span> <span class="dv">4</span>; n <span class="ot">&lt;-</span> <span class="dv">16</span>; xbar <span class="ot">&lt;-</span> <span class="fl">39.2</span></span>
-<span id="cb64-2"><a href></a><span class="fu">cat</span>(<span class="st">&quot;E(Xbar) =&quot;</span>, mu_real, <span class="st">&quot;(insesgado: E(Xbar) = mu)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>E(Xbar) = 38 (insesgado: E(Xbar) = mu)</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;SE =&quot;</span>, <span class="fu">round</span>(sigma<span class="sc">/</span><span class="fu">sqrt</span>(n), <span class="dv">4</span>), <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>SE = 1 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href></a><span class="co"># IC con z</span></span>
-<span id="cb68-2"><a href></a>ic_z <span class="ot">&lt;-</span> xbar <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fl">1.96</span><span class="sc">*</span>sigma<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb68-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% (z):&quot;</span>, <span class="fu">round</span>(ic_z, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>IC 95% (z): 37.24 41.16 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href></a><span class="co"># IC con t (n=16, df=15)</span></span>
-<span id="cb70-2"><a href></a>ic_t <span class="ot">&lt;-</span> xbar <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="fl">0.975</span>, n<span class="dv">-1</span>)<span class="sc">*</span>sigma<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb70-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95% (t):&quot;</span>, <span class="fu">round</span>(ic_t, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>IC 95% (t): 37.07 41.33 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;t_15 =&quot;</span>, <span class="fu">round</span>(<span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">15</span>), <span class="dv">3</span>), <span class="st">&quot;vs z = 1.960 -&gt; t es mayor</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>t_15 = 2.131 vs z = 1.960 -&gt; t es mayor</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href></a><span class="co"># Tamaño de muestra para e = 1%</span></span>
-<span id="cb74-2"><a href></a>n_req <span class="ot">&lt;-</span> <span class="fu">ceiling</span>((<span class="fl">1.96</span><span class="sc">*</span>sigma<span class="sc">/</span><span class="dv">1</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb74-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;n para e=±1% al 95%:&quot;</span>, n_req, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>n para e=±1% al 95%: 62 </code></pre>
-</div>
-</div>
-</section>
 <section id="taller-2-ic-para-proporción" class="slide level2">
 <h2>Taller 2: IC para proporción</h2>
 <div class="block-example fragment fade-up" data-fragment-index="1">
@@ -3275,38 +3407,6 @@ Construya el IC al 90% y al 99%.
 ¿Qué <span class="math inline">\(n\)</span> necesitaría para <span class="math inline">\(e = 0.03\)</span> con 95% de confianza?
 </li>
 </ol>
-</div>
-</div>
-</section>
-<section id="taller-2-solución" class="slide level2">
-<h2>Taller 2: solución</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href></a>x <span class="ot">&lt;-</span> <span class="dv">42</span>; n <span class="ot">&lt;-</span> <span class="dv">150</span></span>
-<span id="cb76-2"><a href></a>p_hat <span class="ot">&lt;-</span> x <span class="sc">/</span> n</span>
-<span id="cb76-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;p_hat:&quot;</span>, <span class="fu">round</span>(p_hat, <span class="dv">4</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>p_hat: 0.28 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;n*p_hat =&quot;</span>, n<span class="sc">*</span>p_hat, <span class="st">&quot;y n*(1-p_hat) =&quot;</span>,</span>
-<span id="cb78-2"><a href></a>    n<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_hat), <span class="st">&quot;-&gt; condicion OK</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>n*p_hat = 42 y n*(1-p_hat) = 108 -&gt; condicion OK</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href></a><span class="cf">for</span> (conf <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.99</span>)) {</span>
-<span id="cb80-2"><a href></a>  z  <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>conf)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb80-3"><a href></a>  ic <span class="ot">&lt;-</span> p_hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span>z<span class="sc">*</span><span class="fu">sqrt</span>(p_hat<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_hat)<span class="sc">/</span>n)</span>
-<span id="cb80-4"><a href></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">&quot;IC &quot;</span>,conf<span class="sc">*</span><span class="dv">100</span>,<span class="st">&quot;%: [&quot;</span>,</span>
-<span id="cb80-5"><a href></a>      <span class="fu">round</span>(ic[<span class="dv">1</span>],<span class="dv">3</span>),<span class="st">&quot;, &quot;</span>,<span class="fu">round</span>(ic[<span class="dv">2</span>],<span class="dv">3</span>),<span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span>))</span>
-<span id="cb80-6"><a href></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>IC 90%: [0.22, 0.34]
-IC 99%: [0.186, 0.374]</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href></a>n_req <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fl">1.96</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> p_hat<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p_hat) <span class="sc">/</span> <span class="fl">0.03</span><span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb82-2"><a href></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">n requerido (e=0.03, 95%):&quot;</span>, n_req, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-n requerido (e=0.03, 95%): 861 </code></pre>
 </div>
 </div>
 </section>
@@ -3330,46 +3430,6 @@ Alto (<span class="math inline">\(N_3=300\)</span>, <span class="math inline">\(
 </li>
 </ul>
 <p>Calcule: (1) el estimador estratificado <span class="math inline">\(\bar{x}_{st}\)</span>, (2) su varianza estimada, (3) IC al 95%.</p>
-</div>
-</div>
-</section>
-<section id="taller-3-solución" class="slide level2">
-<h2>Taller 3: solución</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href></a>N <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">300</span>); n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">15</span>)</span>
-<span id="cb84-2"><a href></a>xh <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.8</span>, <span class="fl">3.5</span>, <span class="fl">4.1</span>); sh <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">0.7</span>)</span>
-<span id="cb84-3"><a href></a>N_total <span class="ot">&lt;-</span> <span class="fu">sum</span>(N)</span>
-<span id="cb84-4"><a href></a>Wh <span class="ot">&lt;-</span> N <span class="sc">/</span> N_total</span>
-<span id="cb84-5"><a href></a></span>
-<span id="cb84-6"><a href></a><span class="co"># 1. Estimador estratificado</span></span>
-<span id="cb84-7"><a href></a>xbar_st <span class="ot">&lt;-</span> <span class="fu">sum</span>(Wh <span class="sc">*</span> xh)</span>
-<span id="cb84-8"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Media estratificada:&quot;</span>, <span class="fu">round</span>(xbar_st, <span class="dv">3</span>), <span class="st">&quot;g/kg</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Media estratificada: 3.47 g/kg</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href></a><span class="co"># 2. Varianza estimada (con FPC por estrato)</span></span>
-<span id="cb86-2"><a href></a>var_st <span class="ot">&lt;-</span> <span class="fu">sum</span>(Wh<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> sh<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> n<span class="sc">/</span>N))</span>
-<span id="cb86-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;Var estimada:&quot;</span>, <span class="fu">round</span>(var_st, <span class="dv">5</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Var estimada: 0.00971 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href></a><span class="fu">cat</span>(<span class="st">&quot;SE:&quot;</span>, <span class="fu">round</span>(<span class="fu">sqrt</span>(var_st), <span class="dv">4</span>), <span class="st">&quot;g/kg</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>SE: 0.0985 g/kg</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href></a><span class="co"># 3. IC al 95%</span></span>
-<span id="cb90-2"><a href></a>e <span class="ot">&lt;-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sqrt</span>(var_st)</span>
-<span id="cb90-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;IC 95%: [&quot;</span>, <span class="fu">round</span>(xbar_st<span class="sc">-</span>e,<span class="dv">3</span>), <span class="st">&quot;,&quot;</span>,</span>
-<span id="cb90-4"><a href></a>    <span class="fu">round</span>(xbar_st<span class="sc">+</span>e,<span class="dv">3</span>), <span class="st">&quot;] g/kg</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>IC 95%: [ 3.277 , 3.663 ] g/kg</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href></a><span class="co"># Comparar con MAS equivalente</span></span>
-<span id="cb92-2"><a href></a>var_mas <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="fl">2.8</span>,<span class="dv">15</span>),<span class="fu">rep</span>(<span class="fl">3.5</span>,<span class="dv">20</span>),<span class="fu">rep</span>(<span class="fl">4.1</span>,<span class="dv">15</span>))) <span class="sc">/</span> <span class="fu">sum</span>(n)</span>
-<span id="cb92-3"><a href></a><span class="fu">cat</span>(<span class="st">&quot;DEFF:&quot;</span>, <span class="fu">round</span>(var_st<span class="sc">/</span>var_mas, <span class="dv">3</span>),</span>
-<span id="cb92-4"><a href></a>    <span class="st">&quot;(estratificado es más eficiente)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>DEFF: 1.872 (estratificado es más eficiente)</code></pre>
 </div>
 </div>
 </section>
