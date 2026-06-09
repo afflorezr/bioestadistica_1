@@ -44,525 +44,3739 @@ execute:
 
 ## Contenido
 
+
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Fundamentos</h3>
+
+<h3 class="fragment fade-in" data-fragment-index="1"
+style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">
+Parte I: Pruebas de hipótesis para la diferencia de medias.
+</h3>
+
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Conexión con el proceso de Poisson.</li>
-<li class="fragment fade-in" data-fragment-index="3">FDP y FDA de la Exponencial.</li>
-<li class="fragment fade-in" data-fragment-index="4">Esperanza, varianza y percentiles.</li>
-<li class="fragment fade-in" data-fragment-index="5">Propiedad de falta de memoria.</li>
+<li class="fragment fade-in" data-fragment-index="2">
+Introducción a la comparación de dos poblaciones.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="3">
+Tipos de muestras y planteamiento de hipótesis.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="4">
+Selección del estadístico de prueba.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="5">
+Pruebas para la diferencia de medias.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="6">
+Criterios de decisión.
+</li>
+<li class="fragment fade-in" data-fragment-index="7">
+Ejemplos y código en R.
+</li>
 </ul>
+
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Aplicaciones</h3>
+
+<h3 class="fragment fade-in" data-fragment-index="8"
+style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">
+Parte II: Pruebas de hipótesis para la diferencia de proporciones
+</h3>
+
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Ejemplos en tiempo de vida y espera.</li>
-<li class="fragment fade-in" data-fragment-index="8">Código R: dexp, pexp, qexp.</li>
-<li class="fragment fade-in" data-fragment-index="9">Diagnóstico de ajuste.</li>
-<li class="fragment fade-in" data-fragment-index="10">Errores comunes y taller.</li>
+<li class="fragment fade-in" data-fragment-index="9">
+Diferencia de proporciones.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="10">
+Hipótesis para diferencia de proporciones
+</li>
+
+<li class="fragment fade-in" data-fragment-index="11">
+Estadístico de prueba para diferencia de proporciones.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="12">
+Criterios de decisión.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="13">
+Ejemplos y código en R.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="14">
+Taller en clase.
+</li>
+
 </ul>
+
 </div>
 </div>
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Distribución Exponencial</p>
-<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Modelando tiempos de espera y de vida en sistemas biológicos</p>
 <p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
 </div>
 
-## Motivación: tiempos de espera en agricultura
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Introducción a las Pruebas de Hipótesis para la Diferencia de Medias
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+
+En numerosas investigaciones no basta con analizar una sola población, sino que es necesario comparar dos grupos para determinar si presentan diferencias significativas. Las pruebas de hipótesis para la diferencia de medias permiten evaluar, a partir de información muestral, si las diferencias observadas entre dos poblaciones se deben al azar o reflejan diferencias reales en sus promedios.
+
+</p>
+
+</div>
+
+## Pruebas de Hipótesis para la Diferencia de Medias
+
+<div style="display:grid; grid-template-columns:1.2fr 1fr; gap:24px; align-items:center;">
+
+<div>
+
+<div style="font-size:28px; text-align:justify; line-height:1.6;">
+
+En numerosas investigaciones no basta con analizar una sola población, sino que es necesario comparar dos grupos para determinar si presentan diferencias significativas.
+
+<br>
+
+Las pruebas de hipótesis para la diferencia de medias permiten evaluar si las diferencias observadas entre dos muestras reflejan diferencias reales entre las poblaciones o simplemente variaciones debidas al azar.
+
+</div>
+
+</div>
+
+<div>
+
+<div style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Parámetro de interés
+</div>
+
+<br>
+
+<div style="font-size:34px; text-align:center;">
+
+$$
+\mu_1-\mu_2
+$$
+
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1.5;">
+
+Diferencia entre las medias de dos poblaciones.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-left:8px solid #1b4d2e;">
+
+<div style="font-size:28px; text-align:justify; line-height:1.6;">
+
+El objetivo es determinar si la diferencia poblacional es igual a cero o si existe evidencia estadística suficiente para afirmar que los promedios de ambas poblaciones son diferentes.
+
+</div>
+
+</div>
+
+## Tipos de Muestras
+
+<div style="font-size: 25px; text-align: justify; line-height: 1.6;">
+
+La selección de la prueba estadística depende de la relación existente entre las muestras que se desean comparar.
+
+</div>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Muestras Independientes
+</div>
+
+<div style="font-size:25px; text-align:justify; margin-top:12px;">
+
+Las observaciones de una muestra no tienen relación con las observaciones de la otra.
+
+<br>
+
+<strong>Ejemplo:</strong>
+
+Comparar el rendimiento promedio de dos variedades de maíz sembradas en parcelas diferentes.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Muestras Pareadas
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5; margin-top:12px;">
+
+Cada observación de una muestra está asociada con una observación de la otra.
+
+<br>
+
+<strong>Ejemplo:</strong>
+
+Producción de un cultivo antes y después de aplicar un fertilizante.
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:16px; border-radius:16px; border-left:8px solid #d97706;">
+
+<div style="font-size:25px; text-align:justify; line-height:1.6;">
+
+Identificar correctamente el tipo de muestra es fundamental, ya que determina el estadístico de prueba que debe utilizarse en el análisis.
+
+</div>
+
+</div>
+
+
+## Tipos de Hipótesis para la Diferencia de Medias
+
+<div style="font-size: 26px; text-align: justify; line-height: 1.6;">
+
+El objetivo es determinar si existe evidencia estadística suficiente para afirmar que las medias de dos poblaciones son diferentes.
+
+</div>
+
+
+<div style="font-size: 28px; text-align: center;">
+
+El parámetro de interés es:
+
+$$
+\mu_1-\mu_2
+$$
+
+</div>
+
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:7px solid #1a3a6b;">
+
+<div style="font-size:25px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Dos colas
+</div>
+
+<div style="font-size:22px; text-align:center; line-height:1.7; margin-top:10px;">
+
+$$
+H_0:\mu_1-\mu_2=0
+$$
+
+$$
+H_1:\mu_1-\mu_2\neq0
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:7px solid #1b4d2e;">
+
+<div style="font-size:25px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Cola derecha
+</div>
+
+<div style="font-size:22px; text-align:center; line-height:1.7; margin-top:10px;">
+
+$$
+H_0:\mu_1-\mu_2\leq0
+$$
+
+$$
+H_1:\mu_1-\mu_2>0
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:16px; border-radius:16px; border-top:7px solid #d97706;">
+
+<div style="font-size:25px; font-weight:bold; color:#d97706; text-align:center;">
+Cola izquierda
+</div>
+
+<div style="font-size:22px; text-align:center; line-height:1.7; margin-top:10px;">
+
+$$
+H_0:\mu_1-\mu_2\geq0
+$$
+
+$$
+H_1:\mu_1-\mu_2<0
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:16px; border-radius:16px; border-left:8px solid #475569;">
+
+<div style="font-size:27px; text-align:justify; line-height:1.6;">
+
+En la mayoría de aplicaciones, la hipótesis nula plantea que no existe diferencia entre las medias poblacionales, mientras que la hipótesis alternativa evalúa la presencia de diferencias, aumentos o disminuciones en el parámetro de interés.
+
+</div>
+
+</div>
+
+## Estadístico de Prueba para la Diferencia de Medias
+
+<div style="font-size: 26px; text-align: justify; line-height: 1.6;">
+
+Las pruebas de hipótesis para la diferencia de medias buscan evaluar si la diferencia observada entre dos muestras es suficientemente grande para concluir que existe una diferencia real entre las poblaciones.
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Idea General
+</div>
+
+<div style="font-size:30px; text-align:center; margin-top:15px;">
+
+$$
+\text{Estadístico}
+=
+\frac{Diferencia\ observada - Diferencia\ bajo\ H_0}
+{\text{Error estándar}}
+$$
+
+</div>
+
+</div>
+
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:15px; border-radius:15px; border-top:7px solid #1b4d2e;">
+
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">
+Diferencia observada
+</div>
+
+<div style="font-size:26px; text-align:center; margin-top:10px;">
+
+$$
+\bar{x}_1-\bar{x}_2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:15px; border-radius:15px; border-top:7px solid #d97706;">
+
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#d97706;">
+Hipótesis nula
+</div>
+
+<div style="font-size:22px; text-align:center; line-height:1.6; margin-top:10px;">
+
+Generalmente se plantea que no existe diferencia entre las medias poblacionales.
+
+$$
+H_0:\mu_1-\mu_2=0
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f5f3ff; padding:15px; border-radius:15px; border-top:7px solid #7c3aed;">
+
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#7c3aed;">
+Error estándar
+</div>
+
+<div style="font-size:22px; text-align:center; margin-top:10px;">
+
+Mide la variabilidad de la diferencia entre medias.
+
+</div>
+
+</div>
+
+</div>
+
+## Selección del Estadístico de Prueba
+
+<div style="font-size: 26px; text-align: justify; line-height: 1.6;">
+
+La elección del estadístico de prueba depende del tipo de muestra y de la información disponible sobre las poblaciones.
+
+</div>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:7px solid #1a3a6b;">
+
+<div style="font-size:26px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Prueba Z
+</div>
+
+<div style="font-size:22px; line-height:1.6; margin-top:10px; text-align:justify;">
+
+Se utiliza cuando las desviaciones estándar poblacionales son conocidas.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:7px solid #1b4d2e;">
+
+<div style="font-size:26px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Prueba t
+</div>
+
+<div style="font-size:22px; line-height:1.6; margin-top:10px; text-align:justify;">
+
+Se utiliza cuando las desviaciones estándar poblacionales son desconocidas.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:16px; border-radius:16px; border-top:7px solid #d97706;">
+
+<div style="font-size:26px; font-weight:bold; color:#d97706; text-align:center;">
+t Pareada
+</div>
+
+<div style="font-size:22px; line-height:1.6; margin-top:10px; text-align:justify;">
+
+Se utiliza cuando las observaciones están relacionadas o emparejadas.
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:16px; border-radius:16px; border-left:8px solid #475569;">
+
+<div style="font-size:24px; text-align:justify; line-height:1.6;">
+
+En la práctica, la prueba t de Student es la más utilizada, ya que generalmente las desviaciones estándar poblacionales son desconocidas.
+
+</div>
+
+</div>
+
+## Prueba Z para la Diferencia de Medias
+
+<div style="font-size: 28px; text-align: justify; line-height: 1.6;">
+
+La prueba Z se utiliza para comparar dos medias poblacionales cuando las desviaciones estándar de ambas poblaciones son conocidas.
+
+</div>
+
+
+<div class="block-theorem">
+
+<div class="block-title">
+Estadístico de prueba
+</div>
+
+<div class="block-body" style="font-size:28px; text-align:center;">
+
+$$
+Z=
+\frac{(\bar{x}_1-\bar{x}_2)-(\mu_1-\mu_2)}
+{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}
+$$
+
+</div>
+
+</div>
+
+<div style="font-size:28px; line-height:1.7;">
+
+- $\bar{x}_1,\bar{x}_2$: medias muestrales.
+
+- $\sigma_1,\sigma_2$: desviaciones estándar poblacionales.
+
+- $n_1,n_2$: tamaños muestrales.
+
+- Bajo $H_0$, generalmente: $\mu_1-\mu_2=0$
+
+</div>
+
+
+## Pruebas t para la Diferencia de Medias
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+Cuando las desviaciones estándar poblacionales son desconocidas, la diferencia de medias puede evaluarse mediante una prueba t de Student.
+
+</div>
+
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Muestras Independientes
+
+</div>
+
+<div style="font-size:26px;
+text-align:center;
+margin-top:10px;">
+
+$$
+t=
+\frac{(\bar{x}_1-\bar{x}_2)-(\mu_1-\mu_2)}
+{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}
+$$
+
+</div>
+
+<div style="font-size:22px;
+line-height:1.5;">
+
+• Las muestras provienen de grupos diferentes.
+
+• Se utilizan las desviaciones estándar muestrales:
+
+$$
+s_1,\; s_2
+$$
+
+• Se compara con una distribución t de Student.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Muestras Pareadas
+
+</div>
+
+<div style="font-size:26px;
+text-align:center;
+margin-top:10px;">
+
+$$
+t=
+\frac{\bar d-\mu_d}
+{s_d/\sqrt{n}}
+$$
+
+</div>
+
+<div style="font-size:22px;
+line-height:1.5;">
+• Las observaciones están relacionadas.
+
+• El análisis se realiza sobre las diferencias: $d_i$
+
+• $\bar{d}$: promedio de las diferencias.
+
+• $s_d$: desviación estándar de las diferencias.
+
+• $n$: número de pares.
+
+• Generalmente se contrasta: $H_0:\mu_d=0$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:23px; text-align:center;">
+
+La elección de la prueba depende de si las muestras son independientes o si las observaciones están emparejadas.
+
+</div>
+
+</div>
+
+
+## Criterios de Decisión para la Diferencia de Medias
+
+<div style="font-size: 28px; text-align: justify; line-height: 1.6;">
+
+Una vez calculado el estadístico de prueba, es necesario decidir si existe evidencia suficiente para rechazar la hipótesis nula.
+
+</div>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Región crítica
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1.6; margin-top:10px;">
+
+Comparar el estadístico calculado con los valores críticos.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Valor-p
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1.6; margin-top:10px;">
+  
+Comparar el valor-p con el nivel de significancia.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:18px; border-radius:18px; border-top:8px solid #d97706;">
+
+<div style="font-size:28px; font-weight:bold; color:#d97706; text-align:center;">
+Intervalo de confianza
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1.6; margin-top:10px;">
+
+Verificar si el valor hipotético pertenece al intervalo.
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:16px; border-radius:16px; border-left:8px solid #475569;">
+
+<div style="font-size:28px; text-align:justify; line-height:1.6;">
+
+Los tres criterios deben conducir a la misma conclusión cuando se aplican correctamente.
+
+</div>
+
+</div>
+
+## Criterio de la Región Crítica
+
+<div style="font-size: 28px; text-align: justify; line-height: 1.6;">
+
+La decisión se toma comparando el estadístico calculado con los valores críticos de la distribución correspondiente.
+
+</div>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px;">
+
+<div style="font-size:28px; font-weight:bold; text-align:center;">
+Dos colas
+</div>
+
+<div style="font-size:26px; text-align:center; line-height:1.7;">
+
+Rechazar $H_0$ si:
+
+$$
+|Z|>Z_{\alpha/2}
+$$
+
+o
+
+$$
+|t|>t_{\alpha/2}
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px;">
+
+<div style="font-size:28px; font-weight:bold; text-align:center;">
+Cola derecha
+</div>
+
+<div style="font-size:26px; text-align:center; line-height:1.7;">
+
+Rechazar $H_0$ si:
+
+$$
+Z>Z_{\alpha}
+$$
+
+o
+
+$$
+t>t_{\alpha}
+$$
+ 
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:16px; border-radius:16px;">
+
+<div style="font-size:28px; font-weight:bold; text-align:center;">
+Cola izquierda
+</div>
+
+<div style="font-size:26px; text-align:center; line-height:1.7;">
+
+Rechazar $H_0$ si:
+
+$$
+Z<-Z_{\alpha}
+$$
+
+o
+
+$$
+t<-t_{\alpha}
+$$
+
+</div>
+
+</div>
+
+</div>
+
+## Criterio del Valor-p
+
+<div style="font-size: 30px; text-align: justify; line-height: 1.6;">
+
+El valor-p representa la probabilidad de obtener un resultado igual o más extremo que el observado, suponiendo que la hipótesis nula es verdadera.
+
+</div>
+
+<br>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+
+<div class="block-title">
+Regla de decisión
+</div>
+
+<div class="block-body" style="font-size:30px;">
+
+Si: $p < \alpha$ se rechaza la hipótesis nula.
+
+Si: $p \geq \alpha$ no se rechaza la hipótesis nula.
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e;">
+
+<div style="font-size:28px; text-align:justify; line-height:1.6;">
+
+Mientras más pequeño sea el valor-p, mayor será la evidencia estadística en contra de la hipótesis nula.
+
+</div>
+
+</div>
+
+## Criterio del Intervalo de Confianza
+
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
+
+La prueba de hipótesis puede realizarse verificando si el valor propuesto en la hipótesis nula pertenece al intervalo de confianza de la diferencia de medias.
+
+</div>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Hipótesis nula
+</div>
+
+<div style="font-size:30px; text-align:center; margin-top:20px;">
+
+$$
+H_0:\mu_1-\mu_2=0
+$$
+
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1.5;">
+
+Se evalúa si el valor 0 pertenece al intervalo de confianza.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Regla de decisión
+</div>
+
+<div style="font-size:28px; line-height:1.8; margin-top:10px; text-align:center;">
+
+Si $0$ pertenece al IC:
+
+No se rechaza $H_0$.
+
+<br>
+
+Si $0$ no pertenece al IC:
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+</div>
+
+## Grados de Libertad en la Distribución t
+
+<div style="font-size: 28px; text-align: justify; line-height: 1.6;">
+
+Cuando se utiliza una prueba t de Student, los valores críticos dependen de los grados de libertad (gl), los cuales determinan la forma de la distribución t.
+
+</div>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Muestras Independientes
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1.8; margin-top:15px;">
+
+$$
+gl=n_1+n_2-2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:18px; border-radius:18px; border-top:8px solid #d97706;">
+
+<div style="font-size:28px; font-weight:bold; color:#d97706; text-align:center;">
+Muestras Pareadas
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1.8; margin-top:15px;">
+
+$$
+gl=n-1
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-left:8px solid #1a3a6b;">
+
+<div style="font-size:28px; text-align:justify; line-height:1.6;">
+
+Los grados de libertad se utilizan para obtener el valor crítico de la distribución t en el criterio de región crítica y para calcular el valor-p.
+
+</div>
+
+</div>
+
+
+## Resumen de las Pruebas para la Diferencia de Medias
+
+<div style="font-size: 28px; text-align: justify; line-height: 1.5;">
+
+La selección de la prueba estadística depende del tipo de muestra y de la información disponible sobre las poblaciones.
+
+</div>
+
+<table style="width:100%; font-size:25px; border-collapse:collapse; text-align:center;">
+
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:12px;">Tipo de muestra</th>
+<th style="padding:12px;">Información disponible</th>
+<th style="padding:12px;">Estadístico</th>
+</tr>
+
+<tr style="background-color:#eef4fb;">
+<td style="padding:12px;">Independientes</td>
+<td style="padding:12px;">σ₁ y σ₂ conocidas</td>
+<td style="padding:12px;"><strong>Z</strong></td>
+</tr>
+
+<tr>
+<td style="padding:12px;">Independientes</td>
+<td style="padding:12px;">σ₁ y σ₂ desconocidas</td>
+<td style="padding:12px;"><strong>t de Student</strong></td>
+</tr>
+
+<tr style="background-color:#eef4fb;">
+<td style="padding:12px;">Pareadas</td>
+<td style="padding:12px;">Diferencias entre pares</td>
+<td style="padding:12px;"><strong>t pareada</strong></td>
+</tr>
+
+</table>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-left:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e;">
+Parámetro de interés
+</div>
+
+<div style="font-size:28px; text-align:center; margin-top:10px;">
+
+$$
+\mu_1-\mu_2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:16px; border-radius:16px; border-left:8px solid #d97706;">
+
+<div style="font-size:28px; font-weight:bold; color:#d97706;">
+Hipótesis más común
+</div>
+
+<div style="font-size:28px; text-align:center; margin-top:10px;">
+
+$$
+H_0:\mu_1-\mu_2=0
+$$
+
+</div>
+
+</div>
+
+</div>
+
+## {.center .middle} 
+
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Ejemplos de Pruebas de Hipótesis para la Diferencia de Medias y Aplicación en R
+</p>
+
+## Ejemplo 1
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+
+<div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Un investigador agrícola desea comparar el rendimiento promedio de dos variedades de arroz cultivadas en el Tolima.
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Datos
+</div>
+
+<div style="font-size:24px; text-align:center; line-height:1.7; margin-top:10px;">
+
+$$
+\bar{x}_1=6.8
+$$
+
+$$
+\bar{x}_2=6.2
+$$
+
+$$
+\sigma_1=1.2
+$$
+
+$$
+\sigma_2=1.1
+$$
+
+$$
+n_1=n_2=50
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
+
+<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Pregunta
+</div>
+
+<br>
+
+<div style="font-size:25px; text-align:justify; line-height:1.6;">
+
+¿Existe evidencia estadística para afirmar que los rendimientos promedio de ambas variedades son diferentes?  
+Utilice un nivel de significancia del $5\%$.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+## Solución
 
 <div class="twocol">
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-¿Cuánto tiempo transcurre hasta el primer ataque de mosca de la fruta en un cultivo de mango?
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-¿Cuál es la vida útil de una bomba de riego hasta su primera falla?
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-¿Cuántos días transcurren entre lluvias consecutivas en una región semiárida de la costa colombiana?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-En todos estos casos modelamos el <strong>tiempo hasta que ocurre un evento</strong>, cuando los eventos siguen un proceso de Poisson.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
-La distribución <strong>Exponencial</strong> es el modelo natural para estos tiempos de espera.
-</li>
-</ul>
-</div>
-
-</div>
-
-## Conexión con la Poisson
-
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Proposición: Poisson y Exponencial</div>
-  <div class="block-body">
-  <p>Si el número de eventos en un intervalo sigue una $\text{Poisson}(\lambda t)$, entonces el tiempo $T$ entre eventos consecutivos sigue una distribución $\text{Exponencial}(\lambda)$.</p>
-  </div>
+
+<div class="block-title">
+Paso 1: Hipótesis
 </div>
 
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Ejemplo: si se detectan en promedio 2 focos de plaga por hectárea por semana ($\lambda = 2$), el tiempo entre focos consecutivos sigue Exponencial(2) semanas.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-$E(T) = 1/\lambda = 0.5$ semanas entre focos consecutivos.
-</li>
-</ul>
+<div class="block-body" style="font-size:25px;">
 
-## Distribución exponencial: definición
+$$
+H_0:\mu_1-\mu_2=0
+$$
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: Distribución Exponencial</div>
-  <div class="block-body">
-  <p>Se dice que $T \sim \text{Exp}(\lambda)$ si su FDP es:</p>
-  $$f(t) = \lambda e^{-\lambda t}, \quad t \geq 0$$
-  <p>donde $\lambda > 0$ es la <strong>tasa de ocurrencia</strong> (eventos por unidad de tiempo).</p>
-  </div>
+$$
+H_1:\mu_1-\mu_2\neq0
+$$
+
+Prueba bilateral.
+
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-El soporte es $[0, \infty)$: la variable toma valores positivos.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Verificación: $\int_0^{\infty} \lambda e^{-\lambda t}\,dt = \lambda \cdot \frac{1}{\lambda} = 1$. ✓
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-Notación alternativa: algunos textos usan $\text{Exp}(\beta)$ donde $\beta = 1/\lambda$ es la <strong>escala media</strong>.
-</li>
-</ul>
-
-## FDA de la distribución exponencial
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">FDA: Exponencial($\lambda$)</div>
-  <div class="block-body">
-  $$F(t) = P(T \leq t) = 1 - e^{-\lambda t}, \quad t \geq 0$$
-  </div>
 </div>
 
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Probabilidad de que el evento aún no ocurra en $[0, t]$: $P(T > t) = e^{-\lambda t}$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-$P(a \leq T \leq b) = e^{-\lambda a} - e^{-\lambda b}$.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-La FDA tiene una forma analítica cerrada, a diferencia de la Normal (Clase 16).
-</li>
-</ul>
+<div class="block-example fragment fade-up" data-fragment-index="2">
 
-## Parámetros de la exponencial
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Teorema: E(T), Var(T) y percentiles</div>
-  <div class="block-body">
-  <p>Si $T \sim \text{Exp}(\lambda)$:</p>
-  $$E(T) = \frac{1}{\lambda} \qquad \text{Var}(T) = \frac{1}{\lambda^2} \qquad \sigma_T = \frac{1}{\lambda}$$
-  <p>El percentil $p$: $t_p = -\dfrac{\ln(1-p)}{\lambda}$.</p>
-  </div>
+<div class="block-title">
+Paso 2: Estadístico Z
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Notable: $E(T) = \sigma_T$. La media y la desviación estándar son iguales, lo que implica una distribución muy asimétrica a la derecha.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Mediana: $t_{0.5} = \ln(2)/\lambda \approx 0.693/\lambda$, que es menor que la media $1/\lambda$.
-</li>
-</ul>
+<div class="block-body" style="font-size:24px;">
+Bajo $H_0$, la diferencia entre medias es 0, por lo que el estadístico Z se calcula como:
+$$
+Z=
+\frac{6.8-6.2-(0)}
+{\sqrt{\frac{1.2^2}{50}+\frac{1.1^2}{50}}}
+$$
 
-## Derivación: E(T) de la Exponencial
+$$
+Z=2.61
+$$
 
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Demostración: E(T)</div>
-  <div class="block-body">
-  $$E(T) = \int_0^{\infty} t \cdot \lambda e^{-\lambda t}\,dt$$
-  <p>Integrando por partes con $u = t$, $dv = \lambda e^{-\lambda t}dt$:</p>
-  $$= \left[-t e^{-\lambda t}\right]_0^{\infty} + \int_0^{\infty} e^{-\lambda t}\,dt = 0 + \frac{1}{\lambda} = \frac{1}{\lambda} \quad \blacksquare$$
-  </div>
+Se utiliza una prueba Z porque las desviaciones estándar poblacionales son conocidas.
+
 </div>
 
-## Propiedad de falta de memoria
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Teorema: falta de memoria</div>
-  <div class="block-body">
-  <p>Si $T \sim \text{Exp}(\lambda)$, entonces para todo $s, t \geq 0$:</p>
-  $$P(T > s + t \mid T > s) = P(T > t)$$
-  </div>
 </div>
+
+</div>
+
+## Decisión
 
 <div class="twocol">
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
-<h4 class="fragment fade-in" data-fragment-index="2">Interpretación</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Habiendo esperado $s$ días sin lluvia, la probabilidad de esperar $t$ días más es la misma que si recién empezáramos a esperar.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-La distribución no tiene <strong>memoria</strong>: el historial de espera no cambia la distribución futura.
-</li>
-</ul>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+
+<div class="block-title">
+Región crítica
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="5">Unicidad</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
-La Exponencial es la <strong>única distribución continua</strong> con la propiedad de falta de memoria.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
-Cuando hay desgaste o envejecimiento, esta propiedad no se cumple y se usan otras distribuciones (Weibull, Gamma).
-</li>
-</ul>
+<div class="block-body" style="font-size:25px;">
+
+$$
+|Z|=2.61
+$$
+
+$$
+Z_{crit}=1.96
+$$
+
+Como:
+
+$$
+2.61>1.96
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+
+<div class="block-title">
+Valor-p
+</div>
+
+<div class="block-body" style="font-size:25px;">
+
+$$
+p=0.009
+$$
+
+$$
+p<0.05
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
 </div>
 
 </div>
 
-## Gráfica: FDP y FDA de la Exponencial
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e;">
+
+<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
+Conclusión
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.6; margin-top:10px;">
+
+Existe evidencia estadística para afirmar que las dos variedades de arroz presentan rendimientos promedio diferentes con un nivel de significancia del $5\%$.
+
+</div>
+
+</div>
+
+
+## Código en R
 
 ```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(patchwork)
-lambda <- 2
-t <- seq(0, 4, length.out = 400)
+# Datos
+x1 <- 6.8
+x2 <- 6.2
 
-p1 <- ggplot(data.frame(t, f = dexp(t, lambda)), aes(t, f)) +
-  geom_line(color = "#1b4d2e", linewidth = 1.4) +
-  labs(x = "t", y = "f(t)", title = paste0("FDP: Exp(λ = ", lambda, ")")) +
-  theme_minimal(base_size = 13)
+sigma1 <- 1.2
+sigma2 <- 1.1
 
-p2 <- ggplot(data.frame(t, F = pexp(t, lambda)), aes(t, F)) +
-  geom_line(color = "#1a3a6b", linewidth = 1.4) +
-  geom_hline(yintercept = 0.5, color = "#c0392b", linetype = "dashed") +
-  annotate("text", x = 2.5, y = 0.55, label = "mediana", color = "#c0392b", size = 4) +
-  labs(x = "t", y = "F(t)", title = "FDA: Exp(λ = 2)") +
-  theme_minimal(base_size = 13)
+n1 <- 50
+n2 <- 50
 
-p1 + p2
+# Cálculo del estadístico Z
+z <- (x1 - x2) /
+     sqrt((sigma1^2/n1) +
+          (sigma2^2/n2))
+
+z
+
+# Cálculo del valor-p para una prueba bilateral
+pvalor <- 2 * pnorm(abs(z),
+                    lower.tail = FALSE)
+
+pvalor
 ```
 
-## Ejemplo 1: vida útil de una bomba de riego
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: sistema de riego, Meta</div>
-  <div class="block-body">
-  <p>La vida útil de una bomba de riego centrífuga en condiciones de campo en el Meta sigue una distribución Exponencial con media 3 años. Sea $T$ = tiempo hasta la primera falla (años).</p>
-  </div>
+## Ejemplo 2
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+
+<div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Un investigador desea comparar la producción promedio de café (sacos/ha) entre fincas de Caldas y Huila.
+
 </div>
 
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-$E(T) = 3$ años, entonces $\lambda = 1/3$ fallas por año. $T \sim \text{Exp}(1/3)$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Calcule: (a) $P(T > 2)$, (b) $P(1 \leq T \leq 4)$, (c) mediana de vida útil, (d) percentil 10.
-</li>
-</ul>
+<br>
 
-## Cálculo: vida útil de la bomba
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Datos
+</div>
+
+<div style="font-size:24px; text-align:center; line-height:1.7; margin-top:10px;">
+
+$$
+\bar{x}_1=34.5
+$$
+
+$$
+\bar{x}_2=31.2
+$$
+
+$$
+s_1=4.8
+$$
+
+$$
+s_2=5.1
+$$
+
+$$
+n_1=20,\; n_2=22
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
+
+<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Pregunta
+</div>
+
+<br>
+
+<div style="font-size:25px; text-align:justify; line-height:1.6;">
+
+¿Existe evidencia suficiente para afirmar que la producción promedio de café difiere entre ambos departamentos?  
+Utilice un nivel de significancia del $5\%$.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+## Solución
 
 <div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Probabilidades</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
-$P(T > 2) = e^{-2/3} \approx 0.513$
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
-$P(1 \leq T \leq 4) = e^{-1/3} - e^{-4/3} \approx 0.716 - 0.264 \approx 0.452$
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Percentiles</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
-Mediana: $t_{0.5} = \ln(2) \times 3 \approx 2.08$ años
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
-$P_{10}$: $t_{0.10} = -\ln(0.90) \times 3 \approx 0.316$ años $\approx 115$ días
-</li>
-</ul>
-</div>
-
-</div>
-
-## Código R: distribución exponencial
-
-```{r}
-#| echo: true
-lambda <- 1/3   # tasa = 1/media
-
-# (a) P(T > 2) = 1 - F(2)
-pexp(2, rate = lambda, lower.tail = FALSE)
-
-# (b) P(1 <= T <= 4)
-pexp(4, lambda) - pexp(1, lambda)
-
-# (c) Mediana
-qexp(0.50, rate = lambda)
-
-# (d) Percentil 10
-qexp(0.10, rate = lambda)
-
-# Verificación: E(T) y Var(T)
-set.seed(15)
-sim <- rexp(10000, rate = lambda)
-cat("Media:", round(mean(sim), 3), "  Var:", round(var(sim), 3), "\n")
-```
-
-## Efecto de $\lambda$ en la forma de la distribución
-
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-lambdas <- c(0.5, 1, 2, 4)
-df <- map_dfr(lambdas, function(l) {
-  t <- seq(0, 8, length.out = 300)
-  tibble(t, fdp = dexp(t, l), lambda = paste0("λ = ", l))
-})
-ggplot(df, aes(t, fdp, color = lambda)) +
-  geom_line(linewidth = 1.2) +
-  labs(x = "t", y = "f(t)", color = "Tasa",
-       title = "FDP Exponencial para distintos λ") +
-  theme_minimal(base_size = 13)
-```
-
-## Ejemplo 2: tiempo entre lluvias en la Guajira
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: sequía en La Guajira</div>
-  <div class="block-body">
-  <p>En la región árida de La Guajira, llueve en promedio 0.8 veces por mes durante la temporada seca. El tiempo entre lluvias consecutivas sigue una Exponencial. ¿Cuál es la probabilidad de que pasen más de 2 meses sin lluvia?</p>
-  </div>
-</div>
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-$\lambda = 0.8$ lluvias/mes, $T \sim \text{Exp}(0.8)$. $E(T) = 1/0.8 = 1.25$ meses.
-</li>
-</ul>
-
-```{r}
-#| echo: true
-lambda <- 0.8
-# P(T > 2)
-pexp(2, rate = lambda, lower.tail = FALSE)
-# Mediana
-qexp(0.5, rate = lambda)
-```
-
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Hay aproximadamente un 20.2% de probabilidad de que pasen más de 2 meses sin lluvia.
-</li>
-</ul>
-
-## Diagnóstico: ¿los datos siguen una Exponencial?
-
-```{r}
-#| echo: true
-#| fig-height: 3.5
-# Gráfico QQ-Exponencial
-set.seed(77)
-datos <- rexp(80, rate = 0.5)          # datos simulados
-lambda_est <- 1 / mean(datos)          # estimación MLE de lambda
-
-# QQ-plot contra Exponencial
-library(ggplot2)
-n <- length(datos)
-p_i <- (1:n - 0.5) / n
-q_teorico <- qexp(p_i, rate = lambda_est)
-q_muestral <- sort(datos)
-
-ggplot(data.frame(q_teorico, q_muestral), aes(q_teorico, q_muestral)) +
-  geom_point(color = "#1b4d2e", size = 1.8) +
-  geom_abline(slope = 1, intercept = 0, color = "#c0392b") +
-  labs(x = "Cuantiles teóricos Exp", y = "Cuantiles muestrales",
-       title = "QQ-plot: ajuste Exponencial") +
-  theme_minimal(base_size = 13)
-```
-
-## Estimación de $\lambda$ por máxima verosimilitud
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Proposición: estimador MLE de $\lambda$</div>
-  <div class="block-body">
-  <p>Dado un conjunto de observaciones $t_1, \ldots, t_n$ de una Exponencial($\lambda$), el estimador de máxima verosimilitud es:</p>
-  $$\hat{\lambda} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}$$
-  </div>
+
+<div class="block-title">
+Paso 1: Hipótesis
 </div>
 
-```{r}
-#| echo: true
-# Estimación de lambda desde datos de campo
-tiempos <- c(0.8, 2.1, 1.3, 3.5, 0.4, 1.9, 2.8, 0.7, 4.2, 1.1)
-lambda_mle <- 1 / mean(tiempos)
-cat("Lambda estimado:", round(lambda_mle, 4), "\n")
-cat("Media estimada:", round(1/lambda_mle, 4), "\n")
-```
+<div class="block-body" style="font-size:25px;">
 
-## Errores comunes
+$$
+H_0:\mu_1-\mu_2=0
+$$
 
-<div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes</div>
-  <div class="block-body">
-  <p>La parametrización de la Exponencial puede causar confusión entre $\lambda$ (tasa) y $\beta = 1/\lambda$ (media).</p>
-  </div>
+$$
+H_1:\mu_1-\mu_2\neq0
+$$
+
+Prueba bilateral.
+
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Confundir tasa y media:</strong> si $E(T) = 3$ entonces $\lambda = 1/3$, no $\lambda = 3$. En R, el argumento es <code>rate = lambda</code>, no la media.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Aplicar donde hay envejecimiento:</strong> si la tasa de falla aumenta con el tiempo (desgaste mecánico, senescencia vegetal), la Exponencial no aplica. Use la distribución Weibull.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Confundir $P(T > t)$ con $P(T \geq t)$:</strong> para distribuciones continuas, son iguales. Use <code>pexp(t, rate, lower.tail = FALSE)</code>.
-</li>
-</ul>
-
-## Taller en clase {.center .middle}
-
-## Taller 1: vida de semillas en almacenamiento
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>El tiempo de viabilidad de semillas de arroz almacenadas en condiciones no controladas sigue una distribución Exponencial con media 18 meses. Calcule: (a) $P(T > 24)$, (b) $P(12 \leq T \leq 24)$, (c) el tiempo mínimo que garantiza el 90% de viabilidad.</p>
-  </div>
 </div>
 
-## Taller 1: solución
+<div class="block-example fragment fade-up" data-fragment-index="2">
 
-```{r}
-#| echo: true
-lambda <- 1/18   # tasa = 1/media
-
-# (a) P(T > 24)
-pexp(24, rate = lambda, lower.tail = FALSE)
-
-# (b) P(12 <= T <= 24)
-pexp(24, lambda) - pexp(12, lambda)
-
-# (c) Percentil 90 (90% de las semillas habrán fallado para ese tiempo)
-# Equivalente: tiempo t tal que P(T > t) = 0.90, es decir P(T <= t) = 0.10
-qexp(0.10, rate = lambda)
-```
-
-## Taller 2: falta de memoria
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Una trampa de insectos captura en promedio 1 abeja reina cada 4 horas. El tiempo entre capturas sigue una Exponencial. Si ya pasaron 2 horas desde la última captura, ¿cuál es la probabilidad de capturar una abeja reina en la próxima hora?</p>
-  </div>
+<div class="block-title">
+Paso 2: Estadístico t
 </div>
 
-## Taller 2: solución
+<div class="block-body" style="font-size:23px;">
+Bajo $H_0$, la diferencia entre medias es 0, por lo que el estadístico t se calcula como:
+$$
+t=
+\frac{(34.5-31.2)-(0)}
+{\sqrt{\frac{4.8^2}{20}+\frac{5.1^2}{22}}}
+$$
 
-<ul>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify;">
-$\lambda = 1/4$ capturas/hora. $T \sim \text{Exp}(1/4)$.
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Por la propiedad de <strong>falta de memoria</strong>: $P(T \leq 1 \mid T > 2) = P(T \leq 1)$.
-</li>
-</ul>
+$$
+t=2.15
+$$
 
-```{r}
-#| echo: true
-lambda <- 1/4
-# P(T <= 1) por falta de memoria
-pexp(1, rate = lambda)
-# Verificación directa: P(T <= 3 | T > 2) = P(2 < T <= 3) / P(T > 2)
-(pexp(3, lambda) - pexp(2, lambda)) / pexp(2, lambda, lower.tail = FALSE)
-```
+Como las desviaciones poblacionales son desconocidas, se utiliza una prueba t.
 
-## Taller 3: comparación entre distribuciones
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Dos variedades de frijol se comparan en resistencia a la sequía. La variedad A resiste hasta $T_A \sim \text{Exp}(0.2)$ días y la variedad B hasta $T_B \sim \text{Exp}(0.1)$ días. Compare: (a) tiempos medios de resistencia, (b) $P(T_A > 7)$ vs $P(T_B > 7)$, (c) percentiles 25.</p>
-  </div>
 </div>
 
-## Taller 3: solución
+</div>
 
-```{r}
-#| echo: true
-lambdaA <- 0.2; lambdaB <- 0.1
+</div>
 
-# (a) Medias
-cat("Media A:", 1/lambdaA, "días  Media B:", 1/lambdaB, "días\n")
+<br>
 
-# (b) P(T > 7)
-cat("P(TA > 7):", round(pexp(7, lambdaA, lower.tail=FALSE), 4), "\n")
-cat("P(TB > 7):", round(pexp(7, lambdaB, lower.tail=FALSE), 4), "\n")
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706;">
 
-# (c) Percentil 25
-cat("P25 de TA:", round(qexp(0.25, lambdaA), 3), "días\n")
-cat("P25 de TB:", round(qexp(0.25, lambdaB), 3), "días\n")
-```
+<div style="font-size:24px;">
 
-## Resumen: distribución exponencial
+$$
+gl=n_1+n_2-2=40
+$$
+
+</div>
+
+</div>
+
+## Criterios de Decisión
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:15px; border-radius:15px;">
+
+<div style="font-size:25px; font-weight:bold; text-align:center;">
+Región crítica
+</div>
+
+<div style="font-size:22px; text-align:center; line-height:1.7;">
+
+$$
+|t|=2.16
+$$
+
+$$
+t_{crit}=t_{0.025,40}=2.021
+$$
+
+Como:
+
+$$
+2.16>2.021
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:15px; border-radius:15px;">
+
+<div style="font-size:25px; font-weight:bold; text-align:center;">
+Valor-p
+</div>
+
+<div style="font-size:22px; text-align:center; line-height:1.7;">
+
+$$
+p=0.037
+$$
+
+$$
+p<0.05
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:15px; border-radius:15px;">
+
+<div style="font-size:25px; font-weight:bold; text-align:center;">
+IC 95%
+</div>
+
+<div style="font-size:21px; text-align:center; line-height:1.7;">
+
+$$
+(0.21,\;6.39)
+$$
+
+Como:
+
+$$
+0\notin IC
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e;">
+
+<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
+Conclusión
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.6; margin-top:10px;">
+
+Los tres criterios conducen a la misma decisión. Existe evidencia estadística suficiente para afirmar que la producción promedio de café difiere entre las fincas evaluadas de Caldas y Huila con un nivel de significancia de 0.05.
+
+</div>
+
+</div>
+
+
+
+## Código en R
 
 <div class="twocol">
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 28px;">Fórmulas clave</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">$f(t) = \lambda e^{-\lambda t}$, $t \geq 0$.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">$F(t) = 1 - e^{-\lambda t}$.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">$E(T) = \sigma_T = 1/\lambda$.</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">Falta de memoria: $P(T > s+t \mid T>s) = P(T>t)$.</li>
-</ul>
+<div>
+
+<div class="block-theorem">
+
+<div class="block-title">
+Datos y Estadístico t
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 style="color:#1a3a6b; font-size: 28px;">Uso en R</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;"><code>dexp(t, rate)</code>: densidad.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;"><code>pexp(t, rate)</code>: $P(T \leq t)$.</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;"><code>qexp(p, rate)</code>: percentil $p$.</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px;"><code>rexp(n, rate)</code>: simulación.</li>
-</ul>
-</div>
+<div class="block-body">
+
+```{r}
+# Datos del problema
+xbar1 <- 34.5
+xbar2 <- 31.2
+
+s1 <- 4.8
+s2 <- 5.1
+
+n1 <- 20
+n2 <- 22
+
+# Estadístico t
+t <- (xbar1 - xbar2) /
+     sqrt((s1^2/n1) +
+          (s2^2/n2))
+
+round(t, 2)
+```
+</div> 
+</div> 
+
+
+<div class="block-example"> <div class="block-title"> Grados de libertad </div> <div class="block-body">
+```{r}
+gl <- n1 + n2 - 2
+gl
+```
+
+</div> 
+</div> 
+</div> 
+<div> 
+
+<div class="block-example"> <div class="block-title"> Valor-p </div> <div class="block-body">
+
+```{r}
+# Valor-p bilateral
+
+pvalor <- 2 *
+  pt(abs(t),
+     df = gl,
+     lower.tail = FALSE)
+
+round(pvalor, 3)
+```
+</div> 
+</div> 
+
+<div class="block-theorem"> <div class="block-title"> IC del 95% </div> <div class="block-body">
+```{r}
+# Error estándar
+EE <- sqrt((s1^2/n1) +
+           (s2^2/n2))
+# Valor crítico t
+tcrit <- qt(0.975,
+            df = gl)
+# Intervalo de confianza
+LI <- (xbar1 - xbar2) -
+      tcrit*EE
+
+LS <- (xbar1 - xbar2) +
+      tcrit*EE
+
+round(c(LI, LS), 2)
+
+```
+
+</div> 
+</div> 
+</div> 
+</div> 
+
+<div class="fragment fade-up" style="background-color:#eef7ee; padding:14px; border-radius:14px; border-left:8px solid #1b4d2e;"> <div style="font-size:23px; text-align:center; line-height:1.6;">
+</div> 
+</div> 
+
+
+## Ejemplo 3
+
+<div style="font-size:23px; text-align:justify; line-height:1.5;">
+
+Un investigador evalúa el efecto de un fertilizante biológico sobre el rendimiento de tomate en 15 parcelas de Boyacá.
+
+En cada parcela se registró la producción antes y después de aplicar el fertilizante.
 
 </div>
 
-## Próxima clase
+<div>
 
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 16: Distribución Normal.</strong> La distribución más importante de la estadística. Aparece en errores de medición, caracteres cuantitativos en genética, y como límite de muchas distribuciones (Teorema Central del Límite).</p>
-  </div>
+<table style="width:100%; font-size:17px; text-align:center;">
+
+<tr style="background-color:#dbeafe;">
+<th>Parcela</th>
+<th>Antes</th>
+<th>Después</th>
+<th>d</th>
+</tr>
+
+<tr><td>1</td><td>18</td><td>20</td><td>2</td></tr>
+<tr><td>2</td><td>21</td><td>24</td><td>3</td></tr>
+<tr><td>3</td><td>19</td><td>20</td><td>1</td></tr>
+<tr><td>4</td><td>22</td><td>24</td><td>2</td></tr>
+<tr><td>5</td><td>20</td><td>21</td><td>1</td></tr>
+<tr><td>6</td><td>23</td><td>25</td><td>2</td></tr>
+<tr><td>7</td><td>17</td><td>19</td><td>2</td></tr>
+<tr><td>8</td><td>21</td><td>24</td><td>3</td></tr>
+<tr><td>9</td><td>20</td><td>22</td><td>2</td></tr>
+<tr><td>10</td><td>19</td><td>21</td><td>2</td></tr>
+<tr><td>11</td><td>22</td><td>25</td><td>3</td></tr>
+<tr><td>12</td><td>18</td><td>19</td><td>1</td></tr>
+<tr><td>13</td><td>24</td><td>26</td><td>2</td></tr>
+<tr><td>14</td><td>21</td><td>23</td><td>2</td></tr>
+<tr><td>15</td><td>20</td><td>22</td><td>2</td></tr>
+
+</table>
+
 </div>
-
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Estudiaremos la estandarización $Z = (X - \mu)/\sigma$, el uso de tablas y el cálculo en R con <code>dnorm</code>, <code>pnorm</code>, <code>qnorm</code>.
+<li style="font-size:23px; text-align:justify; line-height:1.5; list-style-type:none;">
+Pregunta: ¿Existe evidencia estadística suficiente para afirmar que el fertilizante modifica la producción promedio de tomate? Use un nivel de significancia del $5\%$.
 </li>
-</ul>
+
+## Solución
+
+<div class="twocol">
+
+<div class="block-theorem">
+
+<div class="block-title">
+Resumen de las diferencias
+</div>
+
+<div class="block-body">
+
+<table style="width:100%; font-size:24px;">
+
+<tr>
+<td><b>Media</b></td>
+<td>$$\bar d=2.0$$</td>
+</tr>
+
+<tr>
+<td><b>Desv. estándar</b></td>
+<td>$$s_d=0.65$$</td>
+</tr>
+
+<tr>
+<td><b>Tamaño muestral</b></td>
+<td>$$n=15$$</td>
+</tr>
+
+<tr>
+<td><b>Nivel de significancia</b></td>
+<td>$$\alpha=0.05$$</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+
+<div class="block-title">
+Paso 1: Hipótesis
+</div>
+
+<div class="block-body" style="font-size:24px; line-height:1.6;">
+
+$$
+H_0:\mu_d=0
+$$
+
+$$
+H_1:\mu_d\neq0
+$$
+
+<br>
+
+Prueba bilateral.
+
+</div>
+
+</div>
+</div>
+
+## Prueba t para muestras pareadas
+
+<div class="block-example fragment fade-up" data-fragment-index="3">
+<div class="block-title">
+Paso 2: Estadístico de prueba
+</div>
+
+<div class="block-body" style="font-size:24px; line-height:1.5;">
+
+Como las observaciones son dependientes (antes y después en las mismas parcelas), se utiliza una prueba t para muestras pareadas.
+
+<br>
+
+El estadístico de prueba bajo $H_0$ es:
+
+$$
+t=
+\frac{\bar d}{s_d/\sqrt{n}}
+$$
+
+Sustituyendo:
+
+$$
+t=
+\frac{2.0}{0.65/\sqrt{15}}
+$$
+
+$$
+t=11.92
+$$
+
+</div>
+
+</div>
+
+## Criterios de decisión
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+
+<div class="block-title">
+Valor crítico
+</div>
+
+<div class="block-body" style="font-size:22px; line-height:1.6;">
+
+$$
+gl=n-1=14
+$$
+
+$$
+t_{crit}=t_{0.025,14}=2.145
+$$
+
+Como:
+
+$$
+|t|=11.92
+$$
+
+$$
+11.92>2.145
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+
+<div class="block-title">
+Valor-p
+</div>
+
+<div class="block-body" style="font-size:22px; line-height:1.6;">
+
+$$
+p<0.0001
+$$
+
+Como:
+
+$$
+p<0.05
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="3">
+
+<div class="block-title">
+Intervalo de confianza
+</div>
+
+<div class="block-body" style="font-size:22px; line-height:1.6;">
+
+$$
+IC_{95\%}
+=
+(1.64,\;2.36)
+$$
+
+Como:
+
+$$
+0\notin IC
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:18px;">
+
+<div style="font-size:28px;
+font-weight:bold;
+color:#1b4d2e;">
+
+Conclusión
+
+</div>
+
+<div style="font-size:24px;
+text-align:justify;
+line-height:1.5;
+margin-top:8px;">
+
+Dado que $|t|>t_{crit}$, el valor-p es menor que $\alpha$ y el intervalo de confianza no contiene al cero, se rechaza $H_0$. Por lo tanto, existe evidencia estadística suficiente para concluir que el fertilizante modificó la producción promedio de tomate.
+
+</div>
+
+</div>
+
+## Codigo en R
+
+<div class="twocol">
+
+<div>
+
+```{r}
+# Producción antes del fertilizante
+antes <- c(
+18,21,19,22,20,23,17,21,20,19,22,18,24,21,20
+)
+# Producción después del fertilizante
+despues <- c(
+20,24,20,24,21,25,19,24,22,21,25,19,26,23,22
+)
+# Diferencias
+d <- despues - antes
+# Media de las diferencias
+mean(d)
+# Desviación estándar
+sd(d)
+
+```
+</div> 
+
+<div>
+```{r}
+
+# Prueba t pareada
+t.test(
+  despues,
+  antes,
+  paired = TRUE,
+  conf.level = 0.95
+)
+```
+
+</div> 
+</div>
+
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Pruebas de Hipótesis para la Diferencia de Proporciones
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+
+En numerosas investigaciones es necesario comparar la frecuencia con la que ocurre un evento en dos poblaciones o grupos. Las pruebas de hipótesis para la diferencia de proporciones permiten evaluar, a partir de información muestral, si las diferencias observadas entre dos porcentajes son estadísticamente significativas o si pueden atribuirse a la variabilidad propia del muestreo.
+
+Estas pruebas tienen aplicaciones en diversas áreas, como la evaluación de tratamientos, la comparación de métodos, el análisis de características poblacionales y el estudio de fenómenos biológicos, agrícolas y ambientales.
+
+</p>
+
+</div>
+
+
+## Diferencia de proporciones
+
+<div style="font-size:28px; text-align:justify; line-height:1.5;">
+
+Sean $p_1$ y $p_2$ las proporciones poblacionales de dos grupos independientes.
+
+El objetivo es determinar si existe evidencia estadística suficiente para afirmar que ambas poblaciones presentan proporciones diferentes respecto a una característica de interés.
+
+</div>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px;
+font-weight:bold;
+color:#1a3a6b;
+text-align:center;">
+
+Parámetros
+
+</div>
+
+<div style="font-size:25px;
+text-align:center;
+line-height:1.8;">
+
+$$
+p_1
+$$
+
+Proporción del grupo 1
+
+$$
+p_2
+$$
+
+Proporción del grupo 2
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px;
+font-weight:bold;
+color:#1b4d2e;
+text-align:center;">
+
+Parámetro de interés
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:2;">
+
+$$
+p_1-p_2
+$$
+
+Diferencia entre las proporciones poblacionales.
+
+</div>
+
+</div>
+
+</div>
+
+## Hipótesis para la diferencia de proporciones
+
+<div style="font-size:28px; text-align:center; line-height:1.5; margin-bottom:20px;">
+
+Se desea evaluar si dos poblaciones presentan la misma proporción respecto a una característica de interés.
+
+<br>
+
+El parámetro que se compara es:
+
+$$
+p_1-p_2
+$$
+
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #1a3a6b;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Bilateral
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.8;">
+
+$$
+H_0:p_1=p_2
+$$
+
+$$
+H_1:p_1\neq p_2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #1b4d2e;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Cola derecha
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.8;">
+
+$$
+H_0:p_1\leq p_2
+$$
+
+$$
+H_1:p_1>p_2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #d97706;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Cola izquierda
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.8;">
+
+$$
+H_0:p_1\geq p_2
+$$
+
+$$
+H_1:p_1<p_2
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="font-size:22px;
+text-align:center;
+margin-top:18px;
+color:#4b5563;">
+
+La hipótesis alternativa depende de la pregunta de investigación.
+
+</div>
+
+## Proporciones muestrales
+
+<div style="font-size:28px; text-align:justify; line-height:1.5;">
+
+Las proporciones poblacionales se estiman mediante las proporciones muestrales:
+
+</div>
+
+<br>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div style="background-color:#eef4fb;
+padding:16px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Grupo 1
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.7;">
+
+$$
+\hat p_1=\frac{x_1}{n_1}
+$$
+
+$x_1$: éxitos
+
+$n_1$: muestra
+
+</div>
+
+</div>
+
+<div style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Grupo 2
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.7;">
+
+$$
+\hat p_2=\frac{x_2}{n_2}
+$$
+
+$x_2$: éxitos
+
+$n_2$: muestra
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:24px; text-align:center;">
+
+La diferencia observada entre las muestras es:
+
+$$
+\hat p_1-\hat p_2
+$$
+
+</div>
+
+</div>
+
+## Estadístico de prueba
+
+<div style="font-size:28px; text-align:justify; line-height:1.5;">
+
+La diferencia observada entre las proporciones muestrales se compara con la variabilidad esperada bajo la hipótesis nula mediante el siguiente estadístico:
+
+</div>
+
+<div style="background-color:#eef4fb;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;
+text-align:center;">
+
+$$
+Z=
+\frac{\hat p_1-\hat p_2}
+{\sqrt{
+\frac{\hat p_1(1-\hat p_1)}{n_1}
++
+\frac{\hat p_2(1-\hat p_2)}{n_2}
+}}
+$$
+
+</div>
+
+</div>
+<br>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div style="background-color:#eef7ee;padding:16px;border-radius:16px;border-left:8px solid #1b4d2e;">
+
+<div style="font-size:24px;">
+
+$$
+\hat p_1,\hat p_2
+$$
+
+Proporciones muestrales observadas.
+
+</div>
+
+</div>
+
+<div style="background-color:#fff7e8;padding:16px;border-radius:16px;border-left:8px solid #d97706;">
+
+<div style="font-size:24px;">
+
+$$
+n_1,n_2
+$$
+
+Tamaños de muestra de cada grupo.
+
+</div>
+
+</div>
+
+</div>
+
+<div style="font-size:22px;text-align:center;color:#4b5563;">
+
+Bajo $H_0$, el estadístico sigue aproximadamente una distribución normal estándar.
+
+</div>
+
+## Supuestos de la prueba
+
+<div style="font-size:28px; text-align:justify; line-height:1.5;">
+
+Antes de aplicar la prueba de hipótesis para la diferencia de proporciones, es necesario verificar que se cumplan ciertas condiciones.
+
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Muestras independientes
+
+</div>
+
+<div style="font-size:22px;
+line-height:1.5;
+text-align:center;">
+
+Las dos muestras deben seleccionarse de forma independiente.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Tamaño muestral
+
+</div>
+
+<div style="font-size:22px;
+line-height:1.5;
+text-align:center;">
+
+Cada muestra debe contener suficientes observaciones para garantizar la aproximación normal.
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:18px;
+border-radius:16px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:24px;
+font-weight:bold;
+color:#d97706;">
+
+Verificación práctica
+
+</div>
+
+<div style="font-size:22px;
+line-height:1.6;
+text-align:center;">
+
+Se recomienda comprobar que existan al menos 5 éxitos y 5 fracasos en cada grupo:
+
+$$
+n_1\hat p_1 \geq 5
+\qquad
+n_1(1-\hat p_1)\geq 5
+$$
+
+$$
+n_2\hat p_2 \geq 5
+\qquad
+n_2(1-\hat p_2)\geq 5
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"style="font-size:21px;text-align:center;color:#4b5563;">
+
+Si estas condiciones no se cumplen, la aproximación normal puede no ser adecuada y podrían requerirse pruebas exactas.
+
+</div>
+
+
+## Criterios de decisión
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"style="background-color:#eef4fb;padding:16px;border-radius:16px;border-top:7px solid #1a3a6b;">
+
+<div style="font-size:26px;font-weight:bold;text-align:center;color:#1a3a6b;">
+
+Valor crítico
+
+</div>
+
+<div style="font-size:26px;text-align:center;line-height:1.6;">
+
+Se compara el estadístico
+
+$$
+Z
+$$
+
+con el valor crítico de la distribución normal estándar.
+
+<br>
+
+Se rechaza $H_0$ cuando $Z$ pertenece a la región crítica.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-top:7px solid #1b4d2e;">
+
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Valor-p
+
+</div>
+
+<div style="font-size:26px;
+text-align:center;
+line-height:1.6;">
+
+Se calcula la probabilidad de obtener un resultado tan extremo como el observado bajo $H_0$.
+
+<br>
+
+Se rechaza $H_0$ cuando:
+
+$$
+\text{Valor-p}<\alpha
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:16px;
+border-top:7px solid #d97706;">
+
+<div style="font-size:26px;font-weight:bold;text-align:center;color:#d97706;">
+
+Intervalo de confianza
+
+</div>
+
+<div style="font-size:26px;text-align:center;line-height:1.6;">
+
+Se construye un intervalo para:
+
+$$
+p_1-p_2
+$$
+
+<br>
+
+Se rechaza $H_0$ si el valor
+
+$$
+0
+$$
+
+no pertenece al intervalo.
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="4"style="font-size:26px;text-align:center;color:#4b5563;">
+
+Los tres criterios conducen a la misma decisión cuando se utiliza el mismo nivel de significancia.
+
+</div>
+
+
+## Regiones críticas según la hipótesis alternativa
+<div style="font-size:28px; text-align:center; line-height:1.5; margin-bottom:18px;">
+
+La región crítica depende de la forma de la hipótesis alternativa y determina cuándo se rechaza la hipótesis nula.
+
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #1a3a6b;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Bilateral
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.7;">
+
+$$
+H_1:p_1\neq p_2
+$$
+
+Rechazar si:
+
+$$
+|Z|>Z_{\alpha/2}
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #1b4d2e;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Cola derecha
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.7;">
+
+$$
+H_1:p_1>p_2
+$$
+
+Rechazar si:
+
+$$
+Z>Z_{\alpha}
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #d97706;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Cola izquierda
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.7;">
+
+$$
+H_1:p_1<p_2
+$$
+
+Rechazar si:
+
+$$
+Z<-Z_{\alpha}
+$$
+
+</div>
+
+</div>
+
+</div>
+
+## {.center .middle} 
+
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Ejemplos de Pruebas de Hipótesis para la Diferencia de Proporciones y Aplicación en R
+</p>
+
+## Ejemplo 1
+
+<div style="font-size:28px; text-align:justify; line-height:1.5;">
+
+Un investigador agrícola desea comparar la proporción de germinación de dos variedades de semillas de maíz.
+
+Se seleccionan aleatoriamente 200 semillas de cada variedad y se obtienen los siguientes resultados:
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+<div style="text-align:center;">
+
+<div style="font-size:25px; font-weight:bold; color:#1a3a6b;">
+Variedad A
+</div>
+
+$$
+x_1=170
+$$
+
+$$
+n_1=200
+$$
+
+</div>
+
+<div style="text-align:center;">
+
+<div style="font-size:25px; font-weight:bold; color:#1b4d2e;">
+Variedad B
+</div>
+
+$$
+x_2=145
+$$
+
+$$
+n_2=200
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;">
+
+<div style="font-size:28px;">
+
+¿Existe evidencia estadística suficiente para afirmar que las proporciones de germinación son diferentes?
+
+</div>
+
+</div>
+
+
+
+## Solución
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"style="background-color:#eef4fb;padding:18px;border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Paso 1: Hipótesis
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.8;">
+
+$$
+H_0:p_1=p_2
+$$
+
+$$
+H_1:p_1\neq p_2
+$$
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;">
+
+Prueba bilateral.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"style="background-color:#eef7ee;padding:18px;border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Paso 2: Estadístico Z
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;">
+
+$$
+\hat p_1=\frac{170}{200}=0.85
+$$
+
+$$
+\hat p_2=\frac{145}{200}=0.725
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="3"style="background-color:#fff7e8;padding:18px;border-radius:18px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:24px;
+text-align:center;">
+
+Bajo $H_0$, el estadístico Z se calcula como:
+
+$$
+Z=
+\frac{(0.85-0.725)-(0)}
+{\sqrt{\frac{0.85(0.15)}{200}
++
+\frac{0.725(0.275)}{200}}}
+=
+3.10
+$$
+
+</div>
+
+</div>
+
+
+## Criterios de decisión
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px">
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:16px;
+border-radius:16px;
+border-top:7px solid #1a3a6b;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;">
+
+Valor crítico
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+
+$$
+\alpha=0.05
+$$
+
+$$
+\pm1.96
+$$
+
+Como:
+
+$$
+|3.10|>1.96
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-top:7px solid #1b4d2e;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;">
+
+Valor-p
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+
+$$
+Valor\text{-}p
+=
+0.002
+$$
+
+Como:
+
+$$
+0.002<0.05
+$$
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8;
+padding:16px;
+border-radius:16px;
+border-top:7px solid #d97706;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;">
+
+Intervalo
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+
+$$
+(0.046,\;0.204)
+$$
+
+El valor 0 no pertenece al intervalo.
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="fragment fade-up" data-fragment-index="4" style="font-size:22px;
+text-align:center;
+color:#4b5563;">
+
+Los tres criterios conducen a la misma decisión.
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#eef7ee;padding:24px;border-radius:18px;border-left:10px solid #1b4d2e;">
+
+<div style="font-size:28px;text-align:justify;line-height:1.6;">
+
+<div style="font-size:30px;font-weight:bold;color:#1b4d2e;margin-bottom:12px;">
+
+Conclusión
+
+</div>
+
+
+Existe evidencia estadística suficiente para afirmar que las proporciones de germinación de las dos variedades de maíz son diferentes.
+
+</div>
+
+</div>
+
+
+## Código en R
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+
+<div style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #1a3a6b;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Paso 1
+
+</div>
+
+```{r}
+# Datos
+x1 <- 170
+x2 <- 145
+
+n1 <- 200
+n2 <- 200
+
+p1 <- x1/n1
+p2 <- x2/n2
+```
+
+<div style="font-size:18px;">
+
+Calcular las proporciones muestrales.
+
+</div>
+
+</div>
+
+<div style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #1b4d2e;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Paso 2
+
+</div>
+
+```{r}
+dif <- p1-p2
+
+se <- sqrt(
+(p1*(1-p1))/n1 +
+(p2*(1-p2))/n2
+)
+
+z <- dif/se
+round(z, 2)
+pvalor <- 2*pnorm(
+abs(z),
+lower.tail=FALSE
+)
+round(pvalor, 4)
+```
+
+<div style="font-size:18px;">
+
+Obtener el estadístico Z y el valor-p.
+
+</div>
+
+</div>
+
+<div style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:7px solid #d97706;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Paso 3
+
+</div>
+
+```{r}
+alpha <- 0.05
+
+zcrit <- qnorm(
+1-alpha/2
+)
+
+li <- dif-zcrit*se
+ls <- dif+zcrit*se
+
+round(c(li, ls), 3)
+```
+
+<div style="font-size:18px;">
+
+Construir el intervalo de confianza.
+
+</div>
+
+</div>
+
+</div>
+
+
+## Ejemplo 2
+
+<div style="font-size:28px; text-align:justify; line-height:1.5;">
+
+Una empresa agrícola implementa una nueva tecnología de monitoreo y control de humedad en semilleros de tomate.
+
+El objetivo es determinar si esta tecnología aumenta la proporción de semillas que germinan correctamente en comparación con el método tradicional.
+
+</div>
+<br>
+<div class="fragment fade-up" data-fragment-index="1">
+
+<table style="width:100%;
+font-size:24px;
+text-align:center;
+border-collapse:collapse;">
+
+<tr style="background-color:#dbeafe;">
+
+<th style="padding:12px;">Método</th>
+<th style="padding:12px;">Semillas germinadas</th>
+<th style="padding:12px;">Total evaluadas</th>
+
+</tr>
+
+<tr>
+
+<td style="padding:12px;">Tradicional</td>
+<td style="padding:12px;">150</td>
+<td style="padding:12px;">180</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:12px;">Nueva tecnología</td>
+<td style="padding:12px;">205</td>
+<td style="padding:12px;">230</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<br>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:28px;">
+
+¿Existe evidencia estadística suficiente para afirmar que la nueva tecnología incrementa la proporción de germinación?
+
+</div>
+
+</div>
+
+## Solución
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Hipótesis
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.7;">
+
+$$
+\Delta=p_2-p_1
+$$
+
+$$
+H_0:\Delta\le0
+$$
+
+$$
+H_1:\Delta>0
+$$
+
+</div>
+
+<div style="font-size:20px;
+text-align:center;">
+
+Prueba unilateral de cola derecha.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Proporciones muestrales
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.7;">
+
+$$
+\hat p_1=\frac{150}{180}=0.833
+$$
+
+$$
+\hat p_2=\frac{205}{230}=0.891
+$$
+
+$$
+\hat p_2-\hat p_1=0.058
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:22px;
+text-align:center;">
+
+La diferencia observada es positiva, lo que sugiere que la nueva tecnología presenta una mayor proporción de germinación.
+
+</div>
+
+</div>
+
+## Estadístico de prueba
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:16px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Fórmula
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.6;">
+
+Bajo $H_0$ el estadístico Z se calcula como:
+
+$$
+Z=
+\frac{(\hat p_2-\hat p_1)-0}
+{\sqrt{
+\frac{\hat p_1(1-\hat p_1)}{n_1}
++
+\frac{\hat p_2(1-\hat p_2)}{n_2}
+}}
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Sustitución
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.6;">
+
+$$
+Z=
+\frac{(0.891-0.833)-0}
+{\sqrt{
+\frac{0.891(0.109)}{230}
++
+\frac{0.833(0.167)}{180}
+}}
+$$
+$$=1.68$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Resultado
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.8;">
+
+$$
+Z=1.68
+$$
+
+El valor obtenido será utilizado para aplicar los criterios de decisión de la prueba.
+
+</div>
+
+</div>
+
+</div>
+
+## Criterios de decisión y conclusión
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Valor crítico
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.8;">
+
+$$
+\alpha=0.05
+$$
+
+$$
+Z_{0.05}=1.645
+$$
+
+Como: $1.68>1.645$
+
+se rechaza $H_0$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Valor-p
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.8;">
+
+$$
+p=P(Z>1.68)
+$$
+
+$$
+p\approx0.047
+$$
+
+Como: $0.047<0.05$
+
+se rechaza $H_0$
+
+</div>
+
+</div>
+
+</div>
+<br>
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee;
+padding:22px;
+border-radius:18px;
+border-left:10px solid #1b4d2e;">
+
+<div style="font-size:30px;
+font-weight:bold;
+color:#1b4d2e;
+margin-bottom:12px;">
+
+Conclusión
+
+</div>
+
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.6;">
+
+Al nivel de significancia del 5%, existe evidencia estadística suficiente para sugerir que la nueva tecnología incrementa la proporción de germinación de semillas de tomate respecto al método tradicional.  
+
+Sin embargo, la evidencia es moderada, ya que el estadístico de prueba se encuentra próximo al valor crítico de decisión.
+
+</div>
+
+</div>
+
+## Código en R
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+<div>
+
+```{r}
+x1 <- 150; n1 <- 180
+x2 <- 205; n2 <- 230
+
+p1 <- round(x1/n1, 3)
+p2 <- round(x2/n2, 3)
+
+dif <- p2 - p1
+
+p1
+p2
+dif
+```
+
+</div>
+
+<div>
+
+```{r}
+se <- sqrt(
+ (p1*(1-p1))/n1 +
+ (p2*(1-p2))/n2
+)
+
+z <- dif/se
+round(z, 2)
+
+round(qnorm(0.95), 3)
+
+round(pnorm(
+ z,
+ lower.tail = FALSE
+), 3)
+```
+
+</div>
+
+</div>
+
+## Taller en Clase {.center .middle}
+
+## 
+
+<div style="background-color:#eef4fb;
+padding:24px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;
+font-weight:bold;
+color:#1a3a6b;
+margin-bottom:12px;">
+
+Instrucciones
+
+</div>
+
+<div style="font-size:26px;
+line-height:1.7;">
+
+Para cada ejercicio:
+
+<ol>
+<li>Plantee las hipótesis nula y alternativa.</li>
+<li>Identifique el tipo de prueba de hipótesis.</li>
+<li>Aplique el criterio de decisión utilizando los estadísticos suministrados.</li>
+<li>Indique si se rechaza o no la hipótesis nula.</li>
+<li>Redacte una conclusión en el contexto del problema.</li>
+</ol>
+
+</div>
+
+</div>
+
+## Ejercicio 1
+
+<div style="background-color:#eef4fb;
+padding:22px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;
+font-weight:bold;
+color:#1a3a6b;
+margin-bottom:12px;">
+
+Problema
+
+</div>
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+
+Un investigador agrícola desea determinar si dos variedades de aguacate Hass presentan diferencias en su rendimiento promedio por hectárea.
+
+Se seleccionan dos muestras independientes y se obtienen:
+
+</div>
+
+<br>
+
+<table style="width:100%; font-size:23px; text-align:center;">
+<tr>
+<th>Variedad</th>
+<th>Media (t/ha)</th>
+<th>Desv. Est.</th>
+<th>Muestra</th>
+</tr>
+
+<tr>
+<td>A</td>
+<td>3.8</td>
+<td>0.50</td>
+<td>25</td>
+</tr>
+
+<tr>
+<td>B</td>
+<td>4.1</td>
+<td>0.60</td>
+<td>30</td>
+</tr>
+
+</table>
+
+</div>
+
+<br>
+
+<div style="background-color:#fff7e8;
+padding:18px;
+border-radius:16px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:24px;text-align:center;">
+
+Utilice:
+
+
+$t_{0.025,53}=2.01$ y $\alpha=0.05$
+
+</div>
+
+</div>
+
+## Ejercicio 2
+
+<div style="background-color:#eef7ee;
+padding:22px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px;
+font-weight:bold;
+color:#1b4d2e;
+margin-bottom:12px;">
+
+Problema
+
+</div>
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+
+Una empresa agrícola afirma que un nuevo biofertilizante aumenta el rendimiento promedio de mora de Castilla respecto al manejo convencional.
+
+Los resultados obtenidos fueron:
+
+</div>
+
+<br>
+
+<table style="width:100%; font-size:23px; text-align:center;">
+<tr>
+<th>Tratamiento</th>
+<th>Media (kg/parcela)</th>
+<th>Desv. Est.</th>
+<th>Muestra</th>
+</tr>
+
+<tr>
+<td>Convencional</td>
+<td>42</td>
+<td>5.2</td>
+<td>20</td>
+</tr>
+
+<tr>
+<td>Biofertilizante</td>
+<td>46</td>
+<td>6.1</td>
+<td>22</td>
+</tr>
+
+</table>
+
+</div>
+
+<br>
+
+<div style="background-color:#fff7e8;
+padding:18px;
+border-radius:16px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:24px;text-align:center;">
+
+Utilice:
+
+
+$t_{0.05,40}=1.68$ y $\alpha=0.05$
+
+</div>
+
+</div>
+
+## Ejercicio 3
+
+<div style="background-color:#eef4fb;
+padding:22px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;
+font-weight:bold;
+color:#1a3a6b;
+margin-bottom:12px;">
+
+Problema
+
+</div>
+
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.6;">
+
+En un cultivo de caña panelera se desea verificar si un sistema de riego inteligente reduce el consumo promedio de agua.
+
+Se registró el consumo semanal de agua (m³) en las mismas parcelas antes y después de implementar el sistema.
+
+</div>
+
+<table style="width:50%; font-size:21px; text-align:center;">
+<tr>
+<th>Parcela</th>
+<th>Antes</th>
+<th>Después</th>
+<th>d = Después − Antes</th>
+</tr>
+
+<tr><td>1</td><td>120</td><td>104</td><td></td></tr>
+<tr><td>2</td><td>135</td><td>119</td><td></td></tr>
+<tr><td>3</td><td>128</td><td>110</td><td></td></tr>
+<tr><td>4</td><td>142</td><td>121</td><td></td></tr>
+<tr><td>5</td><td>130</td><td>113</td><td></td></tr>
+<tr><td>6</td><td>125</td><td>107</td><td></td></tr>
+<tr><td>7</td><td>138</td><td>118</td><td></td></tr>
+<tr><td>8</td><td>132</td><td>116</td><td></td></tr>
+<tr><td>9</td><td>127</td><td>111</td><td></td></tr>
+<tr><td>10</td><td>140</td><td>121</td><td></td></tr>
+
+</table>
+<div style="font-size:23px;">
+
+Utilice: $t_{0.05,9}=-1.833$ y $\alpha=0.05$
+
+</div>
+
+</div>
+
+
+## Ejercicio 4
+
+<div style="background-color:#eef7ee;
+padding:22px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px;
+font-weight:bold;
+color:#1b4d2e;
+margin-bottom:12px;">
+
+Problema
+
+</div>
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+
+Dos tratamientos de pregerminación se aplican a semillas de maracuyá para evaluar cuál presenta una mayor proporción de germinación.
+
+</div>
+
+<br>
+
+<table style="width:100%; font-size:23px; text-align:center;">
+<tr>
+<th>Tratamiento</th>
+<th>Germinadas</th>
+<th>Total</th>
+</tr>
+
+<tr>
+<td>A</td>
+<td>168</td>
+<td>200</td>
+</tr>
+
+<tr>
+<td>B</td>
+<td>186</td>
+<td>210</td>
+</tr>
+
+</table>
+
+</div>
+
+<br>
+
+<div style="background-color:#fff7e8;
+padding:18px;
+border-radius:16px;
+border-left:8px solid #d97706;">
+
+<div style="font-size:24px;">
+
+Utilice:
+
+$Z_{0.05}=1.645$ y $\alpha=0.05$
+
+</div>
+
+</div>
