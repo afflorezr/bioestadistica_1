@@ -840,10 +840,10 @@ $$H_1:p < p_0$$
 </div>
 </div>
 
-<div class="card twocol fragment fade-up" data-fragment-index="5">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 5px; align-items: start;">
 
-<div>
-<div class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; font-weight: bold; text-align: center;">
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#f3f4f6; padding: 14px; border-radius: 14px;">
+<div style="font-size: 26px; font-weight: bold; text-align: center;">
 Estadístico de Prueba
 </div>
 
@@ -852,13 +852,91 @@ $$Z = \frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}$$
 </div>
 </div>
 
-<div class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; margin-top: 8px; line-height: 1.4;">
+<div class="fragment fade-up" data-fragment-index="6" style="background-color:#f3f4f6; padding: 14px; border-radius: 14px; font-size: 24px; line-height: 1.4;">
 
 - $\hat{p}$ : proporción muestral
 - $p_0$ : proporción propuesta
 - $n$ : tamaño muestral
 
 </div>
+
+<div class="fragment fade-up" data-fragment-index="7" style="background-color:#eef4fb; padding: 14px; border-radius: 14px; border-top: 7px solid #1a3a6b;">
+<div style="font-size: 24px; font-weight: bold; color:#1a3a6b; text-align: center; margin-bottom: 6px;">
+Condición de validez
+</div>
+<div style="font-size: 21px; text-align: center; line-height: 1.6;">
+La aproximación normal es válida cuando
+$$np_0 \geq 5 \quad \text{y} \quad n(1-p_0) \geq 5$$
+</div>
+</div>
+
+</div>
+
+
+## Selección del estadístico de prueba
+
+<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.4;">
+La elección del estadístico de prueba depende principalmente del tamaño de la muestra y del conocimiento de la desviación estándar poblacional.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:15px;">
+
+<div class="fragment fade-right" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Estadístico $Z$
+</div>
+
+<div style="font-size:24px; margin-top:12px; text-align:justify; line-height:1.5;">
+
+Se utiliza cuando:
+
+- La desviación estándar poblacional $\sigma$ es conocida.
+</div>
+
+<div style="font-size:24px; text-align:center;">
+
+$$
+Z = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-left" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:16px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Estadístico $t$
+</div>
+
+<div style="font-size:24px; margin-top:12px; text-align:justify; line-height:1.5;">
+
+Se utiliza cuando:
+
+- $\sigma$ es desconocida.
+- Se reemplaza $\small \sigma$ por la desviación estándar muestral $\small s$.
+</div>
+<div style="font-size:24px; text-align:center;">
+
+$$
+t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
+$$
+
+</div>
+
+</div>
+
+</div>
+<div class="fragment fade-up" data-fragment-index="3"
+style="margin-top:15px;background-color:#fff7e8; padding:16px; border-radius:16px; border-left:8px solid #d97706;">
+
+<p style="font-size:24px; text-align:justify; line-height:1;">
+En pruebas para proporciones, generalmente se utiliza la distribución normal estándar cuando el tamaño muestral es suficientemente grande.
+</p>
+
 </div>
 
 
@@ -1169,158 +1247,6 @@ Mientras menor sea el valor$-p$, mayor será la evidencia estadística en contra
 
 </div>
 
-## Selección del estadístico de prueba
-
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.4;">
-La elección del estadístico de prueba depende principalmente del tamaño de la muestra y del conocimiento de la desviación estándar poblacional.
-</div>
-
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:15px;">
-
-<div class="fragment fade-right" data-fragment-index="1"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-
-<div style="font-size:30px; font-weight:bold; color:#1a3a6b; text-align:center;">
-Estadístico $Z$
-</div>
-
-<div style="font-size:24px; margin-top:12px; text-align:justify; line-height:1.5;">
-
-Se utiliza cuando:
-
-- La desviación estándar poblacional $\sigma$ es conocida.
-</div>
-
-<div style="font-size:24px; text-align:center;">
-
-$$
-Z = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
-$$
-
-</div>
-
-</div>
-
-<div class="fragment fade-left" data-fragment-index="2"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-top:8px solid #1b4d2e;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Estadístico $t$
-</div>
-
-<div style="font-size:24px; margin-top:12px; text-align:justify; line-height:1.5;">
-
-Se utiliza cuando:
-
-- $\sigma$ es desconocida.
-- Se reemplaza $\small \sigma$ por la desviación estándar muestral $\small s$.
-</div>
-<div style="font-size:24px; text-align:center;">
-
-$$
-t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
-$$
-
-</div>
-
-</div>
-
-</div>
-<div class="fragment fade-up" data-fragment-index="3"
-style="margin-top:15px;background-color:#fff7e8; padding:16px; border-radius:16px; border-left:8px solid #d97706;">
-
-<p style="font-size:24px; text-align:justify; line-height:1;">
-En pruebas para proporciones, generalmente se utiliza la distribución normal estándar cuando el tamaño muestral es suficientemente grande.
-</p>
-
-</div>
-
-
-## Condiciones para pruebas de proporciones
-
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.5;">
-
-En pruebas de hipótesis para proporciones, la distribución normal estándar puede utilizarse cuando el tamaño de muestra es suficientemente grande.
-
-</div>
-
-<br>
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:22px; border-radius:18px; border-top:8px solid #1a3a6b;">
-
-<div style="font-size: 30px; font-weight: bold; color:#1a3a6b; text-align:center;">
-Condiciones de aproximación normal
-</div>
-
-<br>
-
-<div style="font-size: 30px; text-align:center; line-height:1.8;">
-
-$$
-np \geq 5
-$$
-
-$$
-n(1-p)\geq 5
-$$
-
-</div>
-
-</div>
-
-<br>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e;">
-
-<div style="font-size:24px; text-align:justify; line-height:1.5;">
-
-Estas condiciones permiten aproximar la distribución muestral de la proporción mediante una distribución normal.
-
-</div>
-
-</div>
-
-
-## ¿Qué ocurre si la muestra es pequeña?
-
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.5;">
-
-Cuando el tamaño de muestra es pequeño, la distribución muestral de la proporción puede no aproximarse adecuadamente a una distribución normal.
-
-</div>
-
-<br>
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#fff7e8; padding:20px; border-radius:18px; border-top:8px solid #d97706;">
-
-<div style="font-size:26px; text-align:justify; line-height:1.6;">
-
-Esto puede generar:
-
-- Valores-p incorrectos.
-- Intervalos de confianza poco precisos.
-- Decisiones estadísticas no confiables.
-
-</div>
-
-</div>
-
-<br>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-left:8px solid #1a3a6b;">
-
-<div style="font-size:25px; text-align:justify; line-height:1.5;">
-
-En estos casos, pueden utilizarse métodos exactos, como la prueba binomial exacta.
-
-</div>
-
-</div>
-
 
 ## {.center .middle}
 
@@ -1334,11 +1260,9 @@ En estos casos, pueden utilizarse métodos exactos, como la prueba binomial exac
 
 ## Comparando hipótesis: la idea central
 
-<div style="font-size: 28px; text-align: justify; margin-top: 10px; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; margin-top: 50px; line-height: 1.5;">
 En toda prueba de hipótesis se compite entre dos explicaciones de los datos. La pregunta clave es: ¿cuál hipótesis explica mejor lo que observamos?
 </div>
-
-<br>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 15px;">
 
@@ -1360,8 +1284,6 @@ style="background-color: #eef4fb; padding: 18px; border-radius: 16px; border-top
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="3"
 style="background-color: #fff7e8; padding: 18px; border-radius: 16px; border-left: 8px solid #d97706;">
 <div style="font-size: 26px; text-align: justify; line-height: 1.5;">
@@ -1372,8 +1294,8 @@ Si los datos son <strong>mucho más verosímiles bajo $H_1$</strong> que bajo $H
 ## Lema de Neyman-Pearson
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Lema de Neyman-Pearson (1933)</div>
-<div class="block-body" style="font-size: 27px; line-height: 1.5;">
+<div class="block-title" style="font-size: 30px;">Lema de Neyman-Pearson (1933)</div>
+<div class="block-body" style="font-size: 30px; line-height: 1.5;">
 Para contrastar dos hipótesis simples $H_0: \theta = \theta_0$ frente a $H_1: \theta = \theta_1$, la prueba más poderosa con nivel $\alpha$ fijo rechaza $H_0$ cuando:
 
 $$\Lambda = \frac{L(\theta_0 \mid \mathbf{x})}{L(\theta_1 \mid \mathbf{x})} \leq k$$
@@ -1382,23 +1304,18 @@ donde $k$ se determina de modo que $P(\text{rechazar } H_0 \mid H_0 \text{ verda
 </div>
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="2"
 style="background-color: #eef7ee; padding: 16px; border-radius: 14px; border-left: 8px solid #1b4d2e;">
-<div style="font-size: 25px; text-align: justify; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
 <strong>Interpretación:</strong> $\Lambda$ pequeño significa que los datos son mucho más verosímiles bajo $H_1$ que bajo $H_0$. El lema garantiza que rechazar cuando $\Lambda$ es pequeño es <strong>la estrategia más eficaz posible</strong> para detectar una diferencia real con un nivel de error controlado.
 </div>
 </div>
 
 ## Lema de Neyman-Pearson: intuición
 
-<div style="font-size: 26px; text-align: justify; margin-top: 8px; line-height: 1.5;">
-Un agrónomo evalúa si un lote tiene tasa de germinación $p = 0.70$ ($H_0$) o $p = 0.90$ ($H_1$). Prueba 100 semillas.
+<div style="font-size: 30px; text-align: justify; margin-top: 50px; line-height: 1.5;">
+Un agrónomo evalúa si un lote tiene tasa de germinación $p = 0.70$ ($\small H_0$) o $p = 0.90$ ($\small H_1$). Prueba 100 semillas.
 </div>
-
-<br>
-
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
 
 <div class="fragment fade-right" data-fragment-index="1"
@@ -1422,23 +1339,21 @@ style="background-color: #eef7ee; padding: 18px; border-radius: 16px; border-top
 - Conclusión: la tasa es compatible con 70%.
 </div>
 </div>
-
 </div>
 
-<br>
 
 <div class="fragment fade-up" data-fragment-index="3"
 style="background-color:#fff7e8; padding:16px; border-radius:14px; border-left:8px solid #d97706;">
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-Los estadísticos Z, t y χ² que usamos son consecuencias directas del lema de Neyman-Pearson aplicado al modelo normal. <strong>Usarlos es estadísticamente óptimo.</strong>
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
+Los estadísticos $Z$, $t$ y $\chi^{2}$ que usamos son consecuencias directas del lema de Neyman-Pearson aplicado al modelo normal. <strong>Usarlos es estadísticamente óptimo.</strong>
 </div>
 </div>
 
 ## Razón de Verosimilitud: LRT
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">Prueba de Razón de Verosimilitud (LRT)</div>
-<div class="block-body" style="font-size: 27px; line-height: 1.5;">
+<div class="block-title" style="font-size: 30px;">Prueba de Razón de Verosimilitud (LRT)</div>
+<div class="block-body" style="font-size: 30px; line-height: 1.5;">
 Generaliza el lema de Neyman-Pearson para hipótesis compuestas. El estadístico compara cuán bien explica $H_0$ los datos frente al mejor ajuste posible:
 
 $$\Lambda = \frac{L(\hat{\theta}_{H_0} \mid \mathbf{x})}{L(\hat{\theta} \mid \mathbf{x})}$$
@@ -1446,8 +1361,6 @@ $$\Lambda = \frac{L(\hat{\theta}_{H_0} \mid \mathbf{x})}{L(\hat{\theta} \mid \ma
 Se rechaza $H_0$ cuando $\Lambda \leq k$, es decir, cuando $H_0$ explica mucho peor los datos que la mejor alternativa posible.
 </div>
 </div>
-
-<br>
 
 <div class="fragment fade-up" data-fragment-index="2"
 style="background-color:#eef4fb; padding:16px; border-radius:14px; border-left:8px solid #1a3a6b;">
@@ -1458,11 +1371,9 @@ style="background-color:#eef4fb; padding:16px; border-radius:14px; border-left:8
 
 ## LRT: Conexión con las pruebas habituales
 
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.4;">
+<div style="font-size: 30px; text-align: justify; margin-top: 50px; line-height: 1.4;">
 Las pruebas que hemos estudiado son casos particulares del LRT bajo el modelo normal.
 </div>
-
-<br>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
 
@@ -1494,23 +1405,72 @@ $$\chi^2 = \frac{(n-1)s^2}{\sigma_0^2}$$
 </div>
 
 </div>
-
-<br>
-
 <div class="fragment fade-up" data-fragment-index="4"
 style="background-color:#f8fafc; padding:16px; border-radius:14px; border-left:8px solid #475569;">
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
 El LRT proporciona un método sistemático para derivar estadísticos de prueba óptimos. No es necesario adivinar el estadístico correcto: el LRT lo genera a partir del modelo probabilístico de los datos.
+</div>
+</div>
+
+
+
+
+## Ejemplo: Prueba de hipótesis con LRT
+
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 24px; text-align: justify; line-height: 1.3; margin-bottom: 10px;">
+Una finca productora de aguacate Hass afirma que el peso promedio del fruto es de 200 g. En una muestra de $\small n=36$ frutos se obtuvo $\small \bar{x}=194$ g, con $\small \sigma=15$ g (conocida) y $\small \alpha=0.05$. ¿Hay evidencia de que el peso promedio es diferente de 200 g?
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size: 21px; line-height: 1.3; margin-bottom: 10px;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0:\mu=200 \qquad H_1:\mu\neq200$$
+Es decir, $\Theta_0=\{200\}$ (un único valor posible) y $\Theta=\mathbb{R}$ (todos los valores posibles).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size: 19px; line-height: 1.4;">
+<strong style="color:#1b4d2e;">Paso 2. Fórmula de $\lambda(\mathbf{x})$:</strong>
+En $\Theta_0$ la única opción es $\mu_0=200$; en $\Theta$ la verosimilitud se maximiza en $\hat\mu=\bar{x}$. Como ambas son densidades normales con la misma $\sigma$, $\lambda$ es exactamente <strong>el cociente de esas dos normales</strong>:
+$$\lambda(\mathbf{x})=\frac{L(\mu_0)}{L(\hat\mu)}=\frac{(2\pi\sigma^2)^{-n/2}\exp\!\left(-\dfrac{\sum(x_i-\mu_0)^2}{2\sigma^2}\right)}{(2\pi\sigma^2)^{-n/2}\exp\!\left(-\dfrac{\sum(x_i-\hat\mu)^2}{2\sigma^2}\right)}=\exp\!\left(-\frac{n(\bar{x}-\mu_0)^2}{2\sigma^2}\right)$$
+El factor $(2\pi\sigma^2)^{-n/2}$ es igual en ambas normales y se cancela; solo queda la diferencia entre los dos exponentes.
+</div>
+
+## Ejemplo: cálculo de $\lambda$ y decisión
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top: 10px; align-items:start;">
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 17px; line-height: 1.25;">
+<strong style="color:#1a3a6b;">Paso 3. Cálculo numérico:</strong>
+Con $\bar{x}=194$, $\mu_0=200$, $\sigma=15$, $n=36$:
+$$\lambda(\mathbf{x})=\exp\!\left(-\frac{36(194-200)^2}{2(15)^2}\right)\approx 0.056$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 17px; line-height: 1.25;">
+<strong style="color:#1b4d2e;">Paso 4. Simplificación:</strong>
+Un $\lambda$ pequeño equivale a $|Z|$ grande, donde
+$$Z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{194-200}{15/\sqrt{36}}=-2.4$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 17px; line-height: 1.25;">
+<strong style="color:#1a3a6b;">Paso 5. Decisión:</strong>
+Para $\alpha=0.05$, $|Z_{crit}|=1.96$.
+$$|Z_{cal}|=2.4 > 1.96 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee; padding:12px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:14px;">
+<div style="font-size:22px; font-weight:bold; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:20px; text-align:justify; line-height:1.4; margin-top:6px;">
+La razón de verosimilitud conduce al mismo estadístico $Z$ que ya conocíamos: existe evidencia de que el peso promedio del aguacate Hass es diferente de 200 g.
 </div>
 </div>
 
 ## Pruebas UI e IU
 
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; margin-top: 50px; line-height: 1.5;">
 En agricultura es frecuente evaluar varias condiciones simultáneamente: rendimiento, humedad, calidad, resistencia. Existen dos estrategias formales para combinar estas evaluaciones.
 </div>
-
-<br>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 10px;">
 
@@ -1538,12 +1498,12 @@ $H_0$ admite que alguna condición falle. Se rechaza $H_0$ solo si <strong>todas
 
 ## UI vs IU: cuándo usar cada una
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 50px;">
 
 <div class="fragment fade-right" data-fragment-index="1"
 style="background-color:#eef4fb; padding:20px; border-radius:16px; border-left:8px solid #1a3a6b;">
 <div style="font-size: 28px; font-weight: bold; color: #1a3a6b; margin-bottom: 12px;">Prueba UI</div>
-<div style="font-size: 24px; line-height: 1.7; text-align: justify;">
+<div style="font-size: 26px; line-height: 1.7; text-align: justify;">
 - Se usa para certificar que **todo** cumple estándares.
 - Rechazar es fácil: basta una sola falla.
 - **Conservadora** para aprobar.
@@ -1554,7 +1514,7 @@ style="background-color:#eef4fb; padding:20px; border-radius:16px; border-left:8
 <div class="fragment fade-left" data-fragment-index="2"
 style="background-color:#eef7ee; padding:20px; border-radius:16px; border-left:8px solid #1b4d2e;">
 <div style="font-size: 28px; font-weight: bold; color: #1b4d2e; margin-bottom: 12px;">Prueba IU</div>
-<div style="font-size: 24px; line-height: 1.7; text-align: justify;">
+<div style="font-size: 26px; line-height: 1.7; text-align: justify;">
 - Se usa para demostrar equivalencia entre tratamientos.
 - Rechazar requiere fallos en todos los criterios.
 - **Conservadora** para rechazar.
@@ -1564,26 +1524,22 @@ style="background-color:#eef7ee; padding:20px; border-radius:16px; border-left:8
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="3"
 style="background-color:#fff7e8; padding:16px; border-radius:14px; border-left:8px solid #d97706;">
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
 <strong>Regla práctica:</strong> use UI cuando quiera proteger la calidad (todo debe funcionar bien); use IU cuando quiera demostrar equivalencia entre tratamientos o variedades.
 </div>
 </div>
 
 ## Prueba de hipótesis para la varianza
 
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; margin-top: 40px; line-height: 1.5;">
 En muchas situaciones agrícolas, la <strong>variabilidad</strong> es tan importante como el promedio: semillas de tamaño uniforme, dosis consistentes de insumos, rendimientos homogéneos entre parcelas.
 </div>
 
-<br>
-
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">Estadístico de prueba para la varianza</div>
-<div class="block-body" style="font-size: 27px; line-height: 1.5;">
+<div class="block-title" style="font-size: 30px;">Estadístico de prueba para la varianza</div>
+<div class="block-body" style="font-size: 28px; line-height: 1.5;">
 Sea $X_1, \ldots, X_n$ una muestra de una población $N(\mu, \sigma^2)$. Para contrastar $H_0: \sigma^2 = \sigma_0^2$, se usa:
 
 $$\chi^2 = \frac{(n-1)s^2}{\sigma_0^2}$$
@@ -1592,22 +1548,18 @@ Bajo $H_0$, este estadístico sigue una distribución $\chi^2$ con $n-1$ grados 
 </div>
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="2"
 style="background-color:#eef7ee; padding:14px; border-radius:14px; border-left:8px solid #1b4d2e;">
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
+<div style="font-size: 28px; text-align: justify; line-height: 1.5;">
 Si la varianza muestral $s^2$ es mucho mayor o menor que $\sigma_0^2$, el estadístico se aleja del valor esperado y se genera evidencia para rechazar $H_0$.
 </div>
 </div>
 
 ## Reglas de decisión: varianza poblacional
 
-<div style="font-size: 26px; text-align: justify; margin-top: 10px; line-height: 1.4;">
-La región crítica depende de la dirección de la hipótesis alternativa. A diferencia de Z y t, la distribución χ² no es simétrica.
+<div style="font-size: 30px; text-align: justify; margin-top: 40px; line-height: 1.4;">
+La región crítica depende de la dirección de la hipótesis alternativa. A diferencia de $Z$ y $t$, la distribución $\small \chi^{2}$ no es simétrica.
 </div>
-
-<br>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
 
@@ -1649,97 +1601,42 @@ La variabilidad observada es menor a la esperada.
 
 ## Ejemplo: Prueba para la varianza
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 26px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Una empresa procesadora de arroz exige que la varianza del peso de los bultos no supere $\small 4\,kg^{2}$. En una muestra de $\small n=20$ bultos se obtuvo $\small s^{2}=6.1\,kg^{2}$. Con $\small \sigma_0^{2}=4\,kg^{2}$ y $\small \alpha=0.05$, ¿hay evidencia de que la varianza poblacional supera los $\small 4\,kg^{2}$?
+</p>
 
-<div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px;">
 
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-Una empresa procesadora de arroz en el Tolima exige que la varianza en el peso de los bultos no supere 4 kg². Un control de calidad sobre 20 bultos arroja una varianza muestral de 6.1 kg².
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 20px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0: \sigma^2 \leq 4 \qquad H_1: \sigma^2 > 4$$
+Prueba de cola derecha.
 </div>
 
-<br>
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">Datos</div>
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
-$$n = 20 \qquad s^2 = 6.1 \text{ kg}^2$$
-$$\sigma_0^2 = 4 \text{ kg}^2 \qquad \alpha = 0.05$$
-</div>
-</div>
-
-</div>
-
-<div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">Pregunta</div>
-<br>
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-¿Existe evidencia suficiente para afirmar que la varianza en el peso de los bultos supera los 4 kg²?
-</div>
-</div>
-
-</div>
-
-</div>
-
-## Solución: cálculo del estadístico
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 1: Planteamiento de hipótesis</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-$$H_0: \sigma^2 \leq 4$$
-$$H_1: \sigma^2 > 4$$
-Se trata de una prueba de cola derecha.
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 2: Estadístico de prueba</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-$$\chi^2 = \frac{(n-1)s^2}{\sigma_0^2} = \frac{19 \times 6.1}{4}$$
-$$\chi^2 = 28.98$$
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong>
+$$\chi^{2}_{cal} = \frac{(n-1)s^2}{\sigma_0^2} = \frac{19 \times 6.1}{4} = 28.98$$
 con $n - 1 = 19$ grados de libertad.
 </div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong>
+Con $\alpha = 0.05$ y $gl = 19$: $\chi^2_{0.05,\,19} = 30.14$
+$$\chi^2_{cal} = 28.98 < 30.14 \;\Rightarrow\; \text{No se rechaza } H_0$$
 </div>
 
-</div>
-
-## Decisión: Prueba para la varianza
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 3: Criterio de decisión</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-Con $\alpha = 0.05$ y $gl = 19$:
-$$\chi^2_{0.05,\,19} = 30.14$$
-Como:
-$$\chi^2_{cal} = 28.98 < 30.14$$
-No se rechaza $H_0$.
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 4: Valor-p</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong>
 $$p = P(\chi^2_{19} > 28.98) \approx 0.066$$
-Como:
-$$p = 0.066 > 0.05$$
-No se rechaza la hipótesis nula.
-</div>
+$$p = 0.066 > 0.05 \;\Rightarrow\; \text{No se rechaza } H_0$$
 </div>
 
 </div>
 
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">Conclusión</div>
-<div style="font-size:26px; text-align:justify; line-height:1.6; margin-top:10px;">
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:26px; font-weight:bold; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:26px; text-align:justify; line-height:1.3; margin-top:4px;">
 No existe evidencia estadística suficiente para afirmar que la varianza en el peso de los bultos de arroz supera los 4 kg². El nivel de variabilidad observado es compatible con el estándar exigido por la empresa.
 </div>
 </div>
@@ -1798,197 +1695,46 @@ Estas distribuciones son fundamentales en inferencia estadística y sirven como 
 
 ## Ejemplos y aplicaciones en R {.center .middle}
 
-## Ejemplo 1
+## Ejemplo 1: Producción de café
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 28px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Una cooperativa cafetera en Caldas afirma que la producción promedio de café es de 32 sacos por hectárea. En una muestra de $\small n=40$ fincas se obtuvo $\small \bar{x}=29.8$ sacos, con $\small \sigma=5$ conocida y $\small \alpha=0.05$. ¿Hay evidencia suficiente para afirmar que la producción promedio es diferente de 32 sacos por hectárea?
+</p>
 
-<div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
 
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-
-Una cooperativa cafetera en Caldas afirma que la producción promedio de café es de 32 sacos por hectárea.
-
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0:\mu=32 \qquad H_1:\mu\neq32$$
+Prueba de dos colas.
 </div>
 
-<br>
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-Datos
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong>
+Prueba $Z$ ($\sigma$ conocida, $n$ grande):
+$$Z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{29.8-32}{5/\sqrt{40}}=-2.78$$
 </div>
 
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong>
+Para $\alpha=0.05$ (dos colas), valores críticos $\pm1.96$.
+$$Z_{cal}=-2.78 < Z_{crit}=-1.96 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
 
-$$
-\bar{x}=29.8
-$$
-
-$$
-\sigma=5
-$$
-
-$$
-n=40
-$$
-
-$$
-\alpha=0.05
-$$
-
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong>
+$$p=2P(Z>|-2.78|)\approx 0.0054$$
+$$p < 0.05 \;\Rightarrow\; \text{se rechaza } H_0$$
 </div>
 
 </div>
 
-</div>
-
-<div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Pregunta
-</div>
-
-<br>
-
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-
-¿Existe evidencia suficiente para afirmar que la producción promedio es diferente de 32 sacos por hectárea?
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-## Solución 
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 1: Planteamiento de hipótesis</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-$$
-H_0:\mu=32
-$$
-
-$$
-H_1:\mu\neq32
-$$
-
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-
-Se trata de una prueba de dos colas.
-
-</div>
-
-
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 2: Estadístico de prueba</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-Como la desviación estándar poblacional es conocida y la muestra es grande, se utiliza una prueba Z.  
-Bajo $H_0$, el estadístico de prueba se calcula como:
-<br>
-
-<div style="font-size: 28px; text-align: center; line-height: 1.8;">
-
-$$
-Z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
-$$
-
-$$
-Z=\frac{29.8-32}{5/\sqrt{40}}
-$$
-
-$$
-Z=-2.78
-$$
-
-</div>
-
-
-</div>
-</div>
-
-</div>
-
-
-## Reglas de decisión 
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 3: Criterio de decisión</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-Para una prueba bilateral con: $\alpha=0.05$
-
-los valores críticos son: $\pm1.96$
-
-
-<div style="font-size: 28px; text-align: center; line-height: 1.6;">
-
-Como:
-
-$$
-Z_{cal}=-2.78<Z_{crit}=-1.96
-$$
-
-se rechaza $H_0$.
-
-</div>
-
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 4: Valor-p</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-$$
-p=2P(Z>|-2.78|)
-$$
-
-$$
-p\approx0.0054
-$$
-<br>
-
-<div style="font-size: 28px; text-align: center; line-height: 1.8;">
-Como:
-
-$$
-p<0.05
-$$
-
-se rechaza la hipótesis nula.
-
-</div>
-
-</div>
-</div>
-
-</div>
-
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-Conclusión
-</div>
-
-<div style="font-size:26px; text-align:justify; line-height:1.6; margin-top:10px;">
-
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:20px; font-weight:bold; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:28px; text-align:justify; line-height:1.3; margin-top:4px;">
 Existe evidencia estadística suficiente para afirmar que la producción promedio de café por hectárea en las fincas evaluadas es diferente de 32 sacos.
-
 </div>
-
 </div>
 
 
@@ -2009,203 +1755,46 @@ pvalor
 ```
 
 
-## Ejemplo 2
+## Ejemplo 2: Rendimiento de papa criolla
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 19px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Un grupo de investigadores agrícolas en Boyacá desea verificar si el rendimiento promedio de papa criolla es menor a 18 toneladas por hectárea. En una muestra de $\small n=15$ fincas se obtuvo $\small \bar{x}=16.9$ con $\small s=2.4$ (desconocida) y $\small \alpha=0.05$. ¿Hay evidencia de que el rendimiento promedio es menor a 18 t/ha?
+</p>
 
-<div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
 
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-
-Un grupo de investigadores agrícolas en Boyacá desea verificar si el rendimiento promedio de papa criolla es menor a 18 toneladas por hectárea.
-
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0:\mu\geq18 \qquad H_1:\mu<18$$
+Prueba de cola izquierda.
 </div>
 
-<br>
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-Datos
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong>
+Prueba $t$ de Student ($\sigma$ desconocida, $n$ pequeña):
+$$t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}=\frac{16.9-18}{2.4/\sqrt{15}}=-1.77$$
 </div>
 
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong>
+Para $\alpha=0.05$ y $gl=14$, valor crítico $t_{0.05,14}=-1.761$.
+$$t_{cal}=-1.77 < t_{crit}=-1.761 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
 
-$$
-\bar{x}=16.9
-$$
-
-$$
-s=2.4
-$$
-
-$$
-n=15
-$$
-
-$$
-\alpha=0.05
-$$
-
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong>
+$$p=P(T<-1.77)\approx 0.049$$
+$$p < 0.05 \;\Rightarrow\; \text{se rechaza } H_0$$
 </div>
 
 </div>
 
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:20px; font-weight:bold; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:18px; text-align:justify; line-height:1.3; margin-top:4px;">
+Aunque el valor-p es ligeramente menor que 0.05, existe evidencia para rechazar $H_0$ y concluir que el rendimiento promedio de papa criolla es menor a 18 t/ha. Sin embargo, la evidencia es débil, pues el valor-p está muy cerca del nivel de significancia.
 </div>
-
-<div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Pregunta
-</div>
-
-<br>
-
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-
-¿Existe evidencia suficiente para afirmar que el rendimiento promedio es menor a 18 toneladas por hectárea?
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-## Solución
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 1: Planteamiento de hipótesis</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-
-$$
-H_0:\mu\geq18
-$$
-
-$$
-H_1:\mu<18
-$$
-
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-
-Se trata de una prueba de cola izquierda.
-
-</div>
-
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 2: Estadístico de prueba</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-
-Como la desviación estándar poblacional es desconocida y la muestra es pequeña, se utiliza una prueba t de Student.
-
-<br>
-
-<div style="font-size: 28px; text-align: center; line-height: 1.8;">
-
-$$
-t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}
-$$
-
-$$
-t=\frac{16.9-18}{2.4/\sqrt{15}}
-$$
-
-$$
-t=-1.77
-$$
-
-</div>
-
-</div>
-</div>
-
-</div>
-
-## Reglas de decisión
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 3: Criterio de decisión</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-
-Para: $\alpha=0.05$ y $gl=n-1=14$
-
-el valor crítico es:
-
-$$
-t_{0.05,14}=-1.761
-$$
-
-<div style="font-size: 28px; text-align: center; line-height: 1.6;">
-
-Como:
-
-$$
-t_{cal}=-1.77<t_{crit}=-1.761
-$$
-
-se rechaza $H_0$.
-
-</div>
-
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 4: Valor-p</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-
-$$
-p=P(T<-1.77)
-$$
-
-$$
-p\approx0.049
-$$
-
-<br>
-
-<div style="font-size: 28px; text-align: center; line-height: 1.8;">
-
-Como:
-
-$$
-p<0.05
-$$
-
-se rechaza la hipótesis nula.
-
-</div>
-
-</div>
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-Conclusión
-</div>
-
-<div style="font-size:26px; text-align:justify; line-height:1.6; margin-top:10px;">
-
-Aunque el valor-p es ligeramente menor que 0.05, existe evidencia estadística para rechazar $H_0$ y concluir que el rendimiento promedio de papa criolla es menor a 18 toneladas por hectárea. Sin embargo, la evidencia estadística es débil, ya que el valor-p se encuentra muy cercano al nivel de significancia.
-
-</div>
-
 </div>
 
 ## Código en R
@@ -2224,215 +1813,46 @@ pt(t, df = n-1)
 ```
 
 
-## Ejemplo 3
+## Ejemplo 3: Insectos por planta en caña
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 19px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Un investigador agrícola en el Valle del Cauca estudia el número promedio de insectos por planta en caña de azúcar (se asume distribución Poisson). En una muestra de $\small n=50$ plantas se obtuvo $\small \bar{x}=7.1$, con $\small \mu_0=6$ y $\small \alpha=0.05$. ¿Hay evidencia de que el número promedio de insectos es mayor a 6?
+</p>
 
-<div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
 
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-
-Un investigador agrícola en el Valle del Cauca estudia el número promedio de insectos por planta en un cultivo de caña de azúcar.
-
-Se asume que el número de insectos sigue una distribución Poisson.
-
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0:\mu\leq6 \qquad H_1:\mu>6$$
+Prueba de cola derecha.
 </div>
 
-<br>
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-Datos
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong>
+En Poisson $Var(X)=\mu$, luego $\sigma=\sqrt{\mu_0}=\sqrt{6}$:
+$$Z=\frac{\bar{x}-\mu_0}{\sqrt{\mu_0/n}}=\frac{7.1-6}{\sqrt{6/50}}=3.18$$
 </div>
 
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong>
+Para $\alpha=0.05$, valor crítico $Z_{0.05}=1.645$.
+$$Z_{cal}=3.18 > Z_{0.05}=1.645 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
 
-$$
-\bar{x}=7.1
-$$
-
-$$
-\mu_0=6
-$$
-
-$$
-n=50
-$$
-
-$$
-\alpha=0.05
-$$
-
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Intervalo de confianza (95%):</strong>
+$$IC=(6.42,\ 7.78)$$
+$$6 \notin IC \;\Rightarrow\; \text{se rechaza } H_0$$
 </div>
 
 </div>
 
-</div>
-
-<div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Pregunta
-</div>
-
-<br>
-
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-
-¿Existe evidencia suficiente para afirmar que el número promedio de insectos por planta es mayor a 6?
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-## Solución
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 1: Planteamiento de hipótesis</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-
-$$
-H_0:\mu\leq6
-$$
-
-$$
-H_1:\mu>6
-$$
-
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-
-Se trata de una prueba de cola derecha.
-
-</div>
-
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 2: Estadístico de prueba</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-
-Para una distribución Poisson:
-
-$$
-Var(X)=\mu
-$$
-
-por lo tanto:
-
-$$
-\sigma=\sqrt{\mu_0}=\sqrt{6}
-$$
-
-<br>
-
-<div style="font-size: 27px; text-align: center; line-height: 1.8;">
-Estadístico de prueba: Bajo $H_0$, se calcula como:
-$$
-Z=\frac{\bar{x}-\mu_0}{\sqrt{\mu_0/n}}
-$$
-
-$$
-Z=\frac{7.1-6}{\sqrt{6/50}}
-$$
-
-$$
-Z=3.18
-$$
-
-</div>
-
-</div>
-</div>
-
-</div>
-
-## Reglas de decisión
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 3: Criterio de decisión</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-
-Para: $\alpha=0.05$
-
-el valor crítico es:
-
-$$
-Z_{0.05}=1.645
-$$
-
-<div style="font-size: 27px; text-align: center; line-height: 1.6;">
-
-Como:
-
-$$
-Z_{cal}=3.18>Z_{0.05}=1.645
-$$
-
-se rechaza $H_0$.
-
-</div>
-
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 4: Intervalo de confianza</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-
-Aplicando el criterio del intervalo de confianza, al 95% se tiene que:
-
-<br>
-
-<div style="font-size: 27px; text-align: center; line-height: 1.8;">
-
-$$
-IC=(6.42,\ 7.78)
-$$
-
-</div>
-
-<br>
-
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-
-Como: $6\notin IC$
-
-se rechaza la hipótesis nula.
-
-</div>
-
-</div>
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-Conclusión
-</div>
-
-<div style="font-size:25px; text-align:justify; line-height:1.6; margin-top:10px;">
-
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:20px; font-weight:bold; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:18px; text-align:justify; line-height:1.3; margin-top:4px;">
 Existe evidencia estadística suficiente para afirmar que el número promedio de insectos por planta en los cultivos evaluados es mayor a 6.
-
 </div>
-
 </div>
 
 ## Código en R
@@ -2455,213 +1875,47 @@ c(LI, LS)
 ```
 
 
-## Ejemplo 4
+## Ejemplo 4: Germinación de semillas de maíz
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 19px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Una empresa agrícola en Córdoba afirma que el 85% de las semillas de maíz germinan correctamente. Se evalúan $\small n=200$ semillas y $\small 160$ germinan ($\small \hat{p}=0.80$), con $\small p_0=0.85$ y $\small \alpha=0.05$. ¿Hay evidencia de que la proporción de germinación es menor al 85%?
+</p>
 
-<div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
 
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-
-Una empresa agrícola en Córdoba afirma que el 85% de las semillas de maíz germinan correctamente.
-
-Se evalúan 200 semillas y 160 germinan de forma adecuada.
-
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0:p\geq0.85 \qquad H_1:p<0.85$$
+Prueba de cola izquierda.
 </div>
 
-<br>
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-Datos
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong>
+Muestra grande, aproximación normal:
+$$Z=\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}=\frac{0.80-0.85}{\sqrt{\frac{0.85(0.15)}{200}}}=-1.98$$
 </div>
 
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong>
+Para $\alpha=0.05$, valor crítico $Z_{0.05}=-1.645$.
+$$Z_{cal}=-1.98 < -1.645 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
 
-$$
-\hat{p}=\frac{160}{200}=0.80
-$$
-
-$$
-p_0=0.85
-$$
-
-$$
-n=200
-$$
-
-$$
-\alpha=0.05
-$$
-
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong>
+$$p=P(Z<-1.98)\approx 0.024$$
+$$p < 0.05 \;\Rightarrow\; \text{se rechaza } H_0$$
 </div>
 
 </div>
 
-</div>
-
-<div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Pregunta
-</div>
-
-<br>
-
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-
-¿Existe evidencia suficiente para afirmar que la proporción de germinación es menor al 85%?
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-## Solución
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 1: Planteamiento de hipótesis</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-
-$$
-H_0:p\geq0.85
-$$
-
-$$
-H_1:p<0.85
-$$
-
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-
-Se trata de una prueba de cola izquierda.
-
-</div>
-
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 2: Estadístico de prueba</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-
-Como la muestra es grande, se utiliza la aproximación normal.
-
-</div>
-
-<br>
-
-<div style="font-size: 27px; text-align: center; line-height: 1.8;">
-
-$$
-Z=\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}
-$$
-
-$$
-Z=\frac{0.80-0.85}{\sqrt{\frac{0.85(0.15)}{200}}}
-$$
-
-$$
-Z=-1.98
-$$
-
-</div>
-
-</div>
-</div>
-
-</div>
-
-## Reglas de decisión
-
-<div class="twocol" style="margin-top: 10px;">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">Paso 3: Criterio de decisión</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-
-Para:
-
-$\alpha=0.05$
-
-el valor crítico es:
-
-$$
-Z_{0.05}=-1.645
-$$
-
-<div style="font-size: 27px; text-align: center; line-height: 1.6;">
-
-Como:
-
-$$
-Z_{cal}=-1.98<-1.645
-$$
-
-se rechaza $H_0$.
-
-</div>
-
-</div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">Paso 4: Valor-p</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-
-$$
-p=P(Z<-1.98)
-$$
-
-$$
-p\approx0.024
-$$
-
-<br>
-
-<div style="font-size: 27px; text-align: center; line-height: 1.8;">
-
-Como:
-
-$$
-p<0.05
-$$
-
-se rechaza la hipótesis nula.
-
-</div>
-
-</div>
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-Conclusión
-</div>
-
-<div style="font-size:25px; text-align:justify; line-height:1.6; margin-top:10px;">
-
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:20px; font-weight:bold; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:18px; text-align:justify; line-height:1.3; margin-top:4px;">
 Existe evidencia estadística suficiente para afirmar que la proporción de germinación de semillas de maíz es menor al 85%.
-
 </div>
-
 </div>
-
 
 
 ## Representación gráfica de la decisión
@@ -2765,7 +2019,9 @@ legend(
 
 
 ## Código en R
+
 <div style="font-size: 28px;">
+
 ```{r}
 x <- 160
 n <- 200
@@ -2793,14 +2049,9 @@ prop.test(x = x, n = n, p = p0, alternative = "less",correct = FALSE)
 <div style="font-size: 25px; text-align: justify; line-height: 1.6;">
 
 Las pruebas de hipótesis permiten tomar decisiones estadísticas sobre parámetros poblacionales a partir de información muestral.
-
-Durante la clase se estudiaron los principales elementos que conforman una prueba de hipótesis y los criterios utilizados para aceptar o rechazar una hipótesis nula.
-
 </div>
 
-<br>
-
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
 
 <div class="fragment fade-up" data-fragment-index="1"
 style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
@@ -2809,7 +2060,7 @@ style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8p
 Conceptos fundamentales
 </div>
 
-<div style="font-size:24px; line-height:1.6; margin-top:12px;">
+<div style="font-size:24px; line-height:1; margin-top:12px;">
 
 - Hipótesis nula y alternativa  
 - Nivel de significancia  
@@ -2829,7 +2080,7 @@ style="background-color:#eef7ee; padding:18px; border-radius:16px; border-top:8p
 Criterios de decisión
 </div>
 
-<div style="font-size:24px; line-height:1.6; margin-top:12px;">
+<div style="font-size:24px; line-height:1; margin-top:12px;">
 
 - Comparación con valores críticos  
 - Uso del valor-p  
@@ -2842,8 +2093,6 @@ Criterios de decisión
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="3"
 style="background-color:#fff7e8; padding:20px; border-radius:18px; border-left:8px solid #d97706;">
 
@@ -2851,19 +2100,18 @@ style="background-color:#fff7e8; padding:20px; border-radius:18px; border-left:8
 Ideas clave
 </div>
 
-<div style="font-size:24px; text-align:justify; line-height:1.7; margin-top:10px;">
+<div style="font-size:24px; text-align:justify; line-height:1;">
 
 - La decisión estadística depende de la evidencia aportada por la muestra.  
 
-- Rechazar \(H_0\) no significa que sea falsa de manera absoluta, sino que existe suficiente evidencia estadística en su contra.  
+- Rechazar $\small H_0$ no significa que sea falsa, sino que existe suficiente evidencia estadística en su contra.  
 
 - Los diferentes criterios de decisión deben conducir a conclusiones consistentes cuando se aplican correctamente.  
 
-- La selección del estadístico de prueba depende del parámetro estudiado, el tamaño muestral y la distribución de probabilidad utilizada.
-
 </div>
 
 </div>
+
 
 ## Resumen general de pruebas de hipótesis
 
@@ -2888,14 +2136,11 @@ La siguiente tabla resume los principales elementos utilizados en las pruebas de
 
 ## Regiones críticas en pruebas de hipótesis
 
-<div style="font-size:24px; text-align: justify; line-height:1.5;">
+<div style="font-size:28px; text-align: justify; line-height:1.5;">
 
-La ubicación de la región crítica depende de la hipótesis alternativa planteada.  
-Esta región contiene los valores del estadístico de prueba que conducen al rechazo de $H_0$.
+La ubicación de la región crítica depende de la hipótesis alternativa planteada. Esta región contiene los valores del estadístico de prueba que conducen al rechazo de $\small H_0$.
 
 </div>
-
-<br>
 
 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
 
@@ -2970,8 +2215,6 @@ Se utiliza para evaluar disminuciones o reducciones.
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="4"
 style="background-color:#f8fafc; padding:18px; border-radius:16px; border-left:8px solid #475569;">
 
@@ -2993,164 +2236,43 @@ La elección correcta del tipo de prueba depende directamente del objetivo del e
 
 Resuelva los siguientes ejercicios aplicando:
 
-- Planteamiento de hipótesis  
-- Selección del estadístico de prueba  
-- Cálculo del estadístico  
-- Criterio de decisión  
-- Valor-p  
-- Conclusión estadística  
-
-Utilice un nivel de significancia de:
-
-$$
-\alpha=0.05
-$$
-
+<ul style="padding-left:20px">
+<li>Planteamiento de hipótesis</li>  
+<li>Selección del estadístico de prueba</li>  
+<li>Cálculo del estadístico</li> 
+<li>Criterio de decisión</li>  
+<li>Valor$-p$</li>  
+<li>Conclusión estadística</li>  
+</ul>
+Utilice un nivel de significancia de: $\small \alpha=0.05$
 </div>
 
 
 
-## Punto 1
+## Ejercicios propuestos
 
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-
-Una asociación cafetera en Antioquia afirma que la producción promedio de café es de 35 sacos por hectárea.
-
-Se seleccionan 49 fincas y se obtiene:
-
-$$
-\bar{x}=33.2
-$$
-
-La desviación estándar poblacional es:
-
-$$
-\sigma=4.5
-$$
-
-</div>
-
-<br>
-
-<div style="font-size: 28px;">
-
-Determine si existe evidencia suficiente para afirmar que la producción promedio es menor a 35 sacos por hectárea.
-
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:24px; text-align: justify; line-height: 1.4;">
+<strong style="color:#1a3a6b;">Punto 1.</strong> Una asociación cafetera afirma que la producción promedio de café es de 35 sacos por hectárea. En 49 fincas se obtiene $\small \bar{x}=33.2$ con $\small \sigma=4.5$. ¿Es la producción promedio menor a 35 sacos/ha?
 </div>
 
 
-
-## Punto 2
-
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-
-Un investigador agrícola en Nariño estudia el peso promedio de bultos de papa.
-
-Se toma una muestra de:
-
-$$
-n=16
-$$
-
-y se obtiene:
-
-$$
-\bar{x}=48.5 \text{ kg}
-$$
-
-$$
-s=3.2 \text{ kg}
-$$
-
-Se desea verificar si el peso promedio es diferente de:
-
-$$
-50 \text{ kg}
-$$
-
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:24px; text-align: justify; line-height: 1.4;">
+<strong style="color:#1b4d2e;">Punto 2.</strong> Un investigador en Nariño estudia el peso de bultos de papa. En $\small n=16$ bultos se obtiene $\small \bar{x}=48.5$ kg con $\small s=3.2$ kg. ¿Es el peso promedio diferente de $\small 50$ kg?
 </div>
 
-
-
-## Punto 3
-
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-
-En un cultivo de arroz en Tolima, el número promedio de insectos por planta sigue una distribución Poisson.
-
-En una muestra de 60 plantas se obtiene:
-
-$$
-\bar{x}=5.8
-$$
-
-Se desea verificar si el promedio de insectos por planta es mayor a:
-
-$$
-5
-$$
-
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:24px; text-align: justify; line-height: 1.4;">
+<strong style="color:#d97706;">Punto 3.</strong> En un cultivo de arroz en Tolima, el número de insectos por planta sigue Poisson. En 60 plantas se obtiene $\small \bar{x}=5.8$. ¿Es el promedio de insectos mayor a $\small 5$?
 </div>
 
----
-
-## Punto 4
-
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-
-Una empresa de semillas afirma que el 90% de las semillas de tomate germinan correctamente.
-
-Se evalúan:
-
-$$
-n=250
-$$
-
-semillas y 210 germinan adecuadamente.
-
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef4fb; padding:16px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:24px; text-align: justify; line-height: 1.5;">
+<strong style="color:#1a3a6b;">Punto 4.</strong> Una empresa de semillas afirma que el 90% de las semillas de tomate germinan correctamente. Se evalúan $\small n=250$ semillas y 210 germinan adecuadamente. ¿Es la proporción de germinación menor al 90%?
 </div>
 
-<br>
-
-<div style="font-size: 28px;">
-
-Determine si existe evidencia suficiente para afirmar que la proporción de germinación es menor al 90%.
-
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:16px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:24px; text-align: justify; line-height: 1.5;">
+<strong style="color:#1b4d2e;">Punto 5.</strong> Un grupo de agrónomos en el Meta afirma que el rendimiento promedio de maíz es de 6 toneladas por hectárea. En $\small n=36$ parcelas se obtiene $\small \bar{x}=6.7$ con $\small \sigma=1.8$. ¿Es el rendimiento promedio superior a 6 t/ha?
 </div>
-
-
-
-## Punto 5
-
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-
-Un grupo de agrónomos en el Meta afirma que el rendimiento promedio de maíz es de 6 toneladas por hectárea.
-
-Se seleccionan:
-
-$$
-n=36
-$$
-
-parcelas y se obtiene:
-
-$$
-\bar{x}=6.7
-$$
-
-La desviación estándar poblacional es:
-
-$$
-\sigma=1.8
-$$
-
-</div>
-
-<br>
-
-<div style="font-size: 28px;">
-
-¿Existe evidencia suficiente para afirmar que el rendimiento promedio es superior a 6 toneladas por hectárea?
-
-</div>
-
