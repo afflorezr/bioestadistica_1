@@ -759,22 +759,76 @@ La prueba de hipótesis para la proporción permite evaluar afirmaciones sobre l
 </div>
 </div>
 </div>
-<div class="card twocol fragment fade-up" data-fragment-index="5">
-<div>
-<div class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; font-weight: bold; text-align: center;">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 5px; align-items: start;">
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#f3f4f6; padding: 14px; border-radius: 14px;">
+<div style="font-size: 26px; font-weight: bold; text-align: center;">
 <p>Estadístico de Prueba</p>
 </div>
 <div style="font-size: 22px; margin-top: 8px; text-align: center;">
 <p><span class="math display">\[Z = \frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}\]</span></p>
 </div>
 </div>
-<div class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; margin-top: 8px; line-height: 1.4;">
+<div class="fragment fade-up" data-fragment-index="6" style="background-color:#f3f4f6; padding: 14px; border-radius: 14px; font-size: 24px; line-height: 1.4;">
 <ul>
 <li><span class="math inline">\(\hat{p}\)</span> : proporción muestral</li>
 <li><span class="math inline">\(p_0\)</span> : proporción propuesta</li>
 <li><span class="math inline">\(n\)</span> : tamaño muestral</li>
 </ul>
 </div>
+<div class="fragment fade-up" data-fragment-index="7" style="background-color:#eef4fb; padding: 14px; border-radius: 14px; border-top: 7px solid #1a3a6b;">
+<div style="font-size: 24px; font-weight: bold; color:#1a3a6b; text-align: center; margin-bottom: 6px;">
+<p>Condición de validez</p>
+</div>
+<div style="font-size: 21px; text-align: center; line-height: 1.6;">
+<p>La aproximación normal es válida cuando <span class="math display">\[np_0 \geq 5 \quad \text{y} \quad n(1-p_0) \geq 5\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="selección-del-estadístico-de-prueba" class="slide level2">
+<h2>Selección del estadístico de prueba</h2>
+<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.4;">
+<p>La elección del estadístico de prueba depende principalmente del tamaño de la muestra y del conocimiento de la desviación estándar poblacional.</p>
+</div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:15px;">
+<div class="fragment fade-right" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:30px; font-weight:bold; color:#1a3a6b; text-align:center;">
+<p>Estadístico <span class="math inline">\(Z\)</span></p>
+</div>
+<div style="font-size:24px; margin-top:12px; text-align:justify; line-height:1.5;">
+<p>Se utiliza cuando:</p>
+<ul>
+<li>La desviación estándar poblacional <span class="math inline">\(\sigma\)</span> es conocida.</li>
+</ul>
+</div>
+<div style="font-size:24px; text-align:center;">
+<p><span class="math display">\[
+Z = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-left" data-fragment-index="2" style="background-color:#eef7ee; padding:18px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
+<p>Estadístico <span class="math inline">\(t\)</span></p>
+</div>
+<div style="font-size:24px; margin-top:12px; text-align:justify; line-height:1.5;">
+<p>Se utiliza cuando:</p>
+<ul>
+<li><span class="math inline">\(\sigma\)</span> es desconocida.</li>
+<li>Se reemplaza <span class="math inline">\(\small \sigma\)</span> por la desviación estándar muestral <span class="math inline">\(\small s\)</span>.</li>
+</ul>
+</div>
+<div style="font-size:24px; text-align:center;">
+<p><span class="math display">\[
+t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="margin-top:15px;background-color:#fff7e8; padding:16px; border-radius:16px; border-left:8px solid #d97706;">
+<p style="font-size:24px; text-align:justify; line-height:1;">
+En pruebas para proporciones, generalmente se utiliza la distribución normal estándar cuando el tamaño muestral es suficientemente grande.
+</p>
 </div>
 </section>
 <section id="criterios-de-decisión" class="slide level2">
@@ -955,102 +1009,6 @@ Definición
 <p>Mientras menor sea el valor<span class="math inline">\(-p\)</span>, mayor será la evidencia estadística en contra de la hipótesis nula.</p>
 </div>
 </section>
-<section id="selección-del-estadístico-de-prueba" class="slide level2">
-<h2>Selección del estadístico de prueba</h2>
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.4;">
-<p>La elección del estadístico de prueba depende principalmente del tamaño de la muestra y del conocimiento de la desviación estándar poblacional.</p>
-</div>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:15px;">
-<div class="fragment fade-right" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-<div style="font-size:30px; font-weight:bold; color:#1a3a6b; text-align:center;">
-<p>Estadístico <span class="math inline">\(Z\)</span></p>
-</div>
-<div style="font-size:24px; margin-top:12px; text-align:justify; line-height:1.5;">
-<p>Se utiliza cuando:</p>
-<ul>
-<li>La desviación estándar poblacional <span class="math inline">\(\sigma\)</span> es conocida.</li>
-</ul>
-</div>
-<div style="font-size:24px; text-align:center;">
-<p><span class="math display">\[
-Z = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
-\]</span></p>
-</div>
-</div>
-<div class="fragment fade-left" data-fragment-index="2" style="background-color:#eef7ee; padding:18px; border-radius:16px; border-top:8px solid #1b4d2e;">
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-<p>Estadístico <span class="math inline">\(t\)</span></p>
-</div>
-<div style="font-size:24px; margin-top:12px; text-align:justify; line-height:1.5;">
-<p>Se utiliza cuando:</p>
-<ul>
-<li><span class="math inline">\(\sigma\)</span> es desconocida.</li>
-<li>Se reemplaza <span class="math inline">\(\small \sigma\)</span> por la desviación estándar muestral <span class="math inline">\(\small s\)</span>.</li>
-</ul>
-</div>
-<div style="font-size:24px; text-align:center;">
-<p><span class="math display">\[
-t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
-\]</span></p>
-</div>
-</div>
-</div>
-<div class="fragment fade-up" data-fragment-index="3" style="margin-top:15px;background-color:#fff7e8; padding:16px; border-radius:16px; border-left:8px solid #d97706;">
-<p style="font-size:24px; text-align:justify; line-height:1;">
-En pruebas para proporciones, generalmente se utiliza la distribución normal estándar cuando el tamaño muestral es suficientemente grande.
-</p>
-</div>
-</section>
-<section id="condiciones-para-pruebas-de-proporciones" class="slide level2">
-<h2>Condiciones para pruebas de proporciones</h2>
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.5;">
-<p>En pruebas de hipótesis para proporciones, la distribución normal estándar puede utilizarse cuando el tamaño de muestra es suficientemente grande.</p>
-</div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:22px; border-radius:18px; border-top:8px solid #1a3a6b;">
-<div style="font-size: 30px; font-weight: bold; color:#1a3a6b; text-align:center;">
-<p>Condiciones de aproximación normal</p>
-</div>
-<p><br></p>
-<div style="font-size: 30px; text-align:center; line-height:1.8;">
-<p><span class="math display">\[
-np \geq 5
-\]</span></p>
-<p><span class="math display">\[
-n(1-p)\geq 5
-\]</span></p>
-</div>
-</div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e;">
-<div style="font-size:24px; text-align:justify; line-height:1.5;">
-<p>Estas condiciones permiten aproximar la distribución muestral de la proporción mediante una distribución normal.</p>
-</div>
-</div>
-</section>
-<section id="qué-ocurre-si-la-muestra-es-pequeña" class="slide level2">
-<h2>¿Qué ocurre si la muestra es pequeña?</h2>
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.5;">
-<p>Cuando el tamaño de muestra es pequeño, la distribución muestral de la proporción puede no aproximarse adecuadamente a una distribución normal.</p>
-</div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="1" style="background-color:#fff7e8; padding:20px; border-radius:18px; border-top:8px solid #d97706;">
-<div style="font-size:26px; text-align:justify; line-height:1.6;">
-<p>Esto puede generar:</p>
-<ul>
-<li>Valores-p incorrectos.</li>
-<li>Intervalos de confianza poco precisos.</li>
-<li>Decisiones estadísticas no confiables.</li>
-</ul>
-</div>
-</div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-left:8px solid #1a3a6b;">
-<div style="font-size:25px; text-align:justify; line-height:1.5;">
-<p>En estos casos, pueden utilizarse métodos exactos, como la prueba binomial exacta.</p>
-</div>
-</div>
-</section>
 <section id="section-2" class="slide level2 center middle">
 <h2></h2>
 <div style="text-align: center; margin-top: 40px;">
@@ -1064,10 +1022,9 @@ Métodos para Construir Pruebas
 </section>
 <section id="comparando-hipótesis-la-idea-central" class="slide level2">
 <h2>Comparando hipótesis: la idea central</h2>
-<div style="font-size: 28px; text-align: justify; margin-top: 10px; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; margin-top: 50px; line-height: 1.5;">
 <p>En toda prueba de hipótesis se compite entre dos explicaciones de los datos. La pregunta clave es: ¿cuál hipótesis explica mejor lo que observamos?</p>
 </div>
-<p><br></p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 15px;">
 <div class="fragment fade-right" data-fragment-index="1" style="background-color: #eef7ee; padding: 18px; border-radius: 16px; border-top: 8px solid #1b4d2e;">
 <div style="font-size: 30px; font-weight: bold; color: #1b4d2e; text-align: center;">
@@ -1086,7 +1043,6 @@ Verosimilitud de <span class="math inline">\(H_1\)</span>
 </div>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="3" style="background-color: #fff7e8; padding: 18px; border-radius: 16px; border-left: 8px solid #d97706;">
 <div style="font-size: 26px; text-align: justify; line-height: 1.5;">
 <p>Si los datos son <strong>mucho más verosímiles bajo <span class="math inline">\(H_1\)</span></strong> que bajo <span class="math inline">\(H_0\)</span>, existe evidencia para rechazar <span class="math inline">\(H_0\)</span>. El cociente de estas verosimilitudes es la base de los métodos óptimos de prueba.</p>
@@ -1096,28 +1052,26 @@ Verosimilitud de <span class="math inline">\(H_1\)</span>
 <section id="lema-de-neyman-pearson" class="slide level2">
 <h2>Lema de Neyman-Pearson</h2>
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
+<div class="block-title" style="font-size: 30px;">
 Lema de Neyman-Pearson (1933)
 </div>
-<div class="block-body" style="font-size: 27px; line-height: 1.5;">
+<div class="block-body" style="font-size: 30px; line-height: 1.5;">
 <p>Para contrastar dos hipótesis simples <span class="math inline">\(H_0: \theta = \theta_0\)</span> frente a <span class="math inline">\(H_1: \theta = \theta_1\)</span>, la prueba más poderosa con nivel <span class="math inline">\(\alpha\)</span> fijo rechaza <span class="math inline">\(H_0\)</span> cuando:</p>
 <p><span class="math display">\[\Lambda = \frac{L(\theta_0 \mid \mathbf{x})}{L(\theta_1 \mid \mathbf{x})} \leq k\]</span></p>
 <p>donde <span class="math inline">\(k\)</span> se determina de modo que <span class="math inline">\(P(\text{rechazar } H_0 \mid H_0 \text{ verdadera}) = \alpha\)</span>.</p>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="2" style="background-color: #eef7ee; padding: 16px; border-radius: 14px; border-left: 8px solid #1b4d2e;">
-<div style="font-size: 25px; text-align: justify; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
 <p><strong>Interpretación:</strong> <span class="math inline">\(\Lambda\)</span> pequeño significa que los datos son mucho más verosímiles bajo <span class="math inline">\(H_1\)</span> que bajo <span class="math inline">\(H_0\)</span>. El lema garantiza que rechazar cuando <span class="math inline">\(\Lambda\)</span> es pequeño es <strong>la estrategia más eficaz posible</strong> para detectar una diferencia real con un nivel de error controlado.</p>
 </div>
 </div>
 </section>
 <section id="lema-de-neyman-pearson-intuición" class="slide level2">
 <h2>Lema de Neyman-Pearson: intuición</h2>
-<div style="font-size: 26px; text-align: justify; margin-top: 8px; line-height: 1.5;">
-<p>Un agrónomo evalúa si un lote tiene tasa de germinación <span class="math inline">\(p = 0.70\)</span> (<span class="math inline">\(H_0\)</span>) o <span class="math inline">\(p = 0.90\)</span> (<span class="math inline">\(H_1\)</span>). Prueba 100 semillas.</p>
+<div style="font-size: 30px; text-align: justify; margin-top: 50px; line-height: 1.5;">
+<p>Un agrónomo evalúa si un lote tiene tasa de germinación <span class="math inline">\(p = 0.70\)</span> (<span class="math inline">\(\small H_0\)</span>) o <span class="math inline">\(p = 0.90\)</span> (<span class="math inline">\(\small H_1\)</span>). Prueba 100 semillas.</p>
 </div>
-<p><br></p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
 <div class="fragment fade-right" data-fragment-index="1" style="background-color: #eef4fb; padding: 18px; border-radius: 16px; border-top: 8px solid #1a3a6b;">
 <div style="font-size: 26px; font-weight: bold; color: #1a3a6b; text-align: center;">
@@ -1146,26 +1100,24 @@ Observa: 68 germinan
 </div>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8; padding:16px; border-radius:14px; border-left:8px solid #d97706;">
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-<p>Los estadísticos Z, t y χ² que usamos son consecuencias directas del lema de Neyman-Pearson aplicado al modelo normal. <strong>Usarlos es estadísticamente óptimo.</strong></p>
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
+<p>Los estadísticos <span class="math inline">\(Z\)</span>, <span class="math inline">\(t\)</span> y <span class="math inline">\(\chi^{2}\)</span> que usamos son consecuencias directas del lema de Neyman-Pearson aplicado al modelo normal. <strong>Usarlos es estadísticamente óptimo.</strong></p>
 </div>
 </div>
 </section>
 <section id="razón-de-verosimilitud-lrt" class="slide level2">
 <h2>Razón de Verosimilitud: LRT</h2>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
+<div class="block-title" style="font-size: 30px;">
 Prueba de Razón de Verosimilitud (LRT)
 </div>
-<div class="block-body" style="font-size: 27px; line-height: 1.5;">
+<div class="block-body" style="font-size: 30px; line-height: 1.5;">
 <p>Generaliza el lema de Neyman-Pearson para hipótesis compuestas. El estadístico compara cuán bien explica <span class="math inline">\(H_0\)</span> los datos frente al mejor ajuste posible:</p>
 <p><span class="math display">\[\Lambda = \frac{L(\hat{\theta}_{H_0} \mid \mathbf{x})}{L(\hat{\theta} \mid \mathbf{x})}\]</span></p>
 <p>Se rechaza <span class="math inline">\(H_0\)</span> cuando <span class="math inline">\(\Lambda \leq k\)</span>, es decir, cuando <span class="math inline">\(H_0\)</span> explica mucho peor los datos que la mejor alternativa posible.</p>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; padding:16px; border-radius:14px; border-left:8px solid #1a3a6b;">
 <div style="font-size: 25px; text-align: justify; line-height: 1.5;">
 <p><strong>Resultado práctico:</strong> bajo condiciones regulares, el estadístico <span class="math inline">\(-2\ln(\Lambda)\)</span> sigue aproximadamente una distribución <span class="math inline">\(\chi^2\)</span> con grados de libertad igual al número de parámetros restringidos por <span class="math inline">\(H_0\)</span>. Esto permite obtener valores críticos de forma sencilla.</p>
@@ -1174,10 +1126,9 @@ Prueba de Razón de Verosimilitud (LRT)
 </section>
 <section id="lrt-conexión-con-las-pruebas-habituales" class="slide level2">
 <h2>LRT: Conexión con las pruebas habituales</h2>
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.4;">
+<div style="font-size: 30px; text-align: justify; margin-top: 50px; line-height: 1.4;">
 <p>Las pruebas que hemos estudiado son casos particulares del LRT bajo el modelo normal.</p>
 </div>
-<p><br></p>
 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
 <div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:16px; border-radius:14px; border-top:7px solid #1b4d2e;">
 <div style="font-size: 26px; font-weight: bold; color: #1b4d2e; text-align: center;">
@@ -1204,19 +1155,51 @@ Prueba χ²
 </div>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="4" style="background-color:#f8fafc; padding:16px; border-radius:14px; border-left:8px solid #475569;">
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
 <p>El LRT proporciona un método sistemático para derivar estadísticos de prueba óptimos. No es necesario adivinar el estadístico correcto: el LRT lo genera a partir del modelo probabilístico de los datos.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-prueba-de-hipótesis-con-lrt" class="slide level2">
+<h2>Ejemplo: Prueba de hipótesis con LRT</h2>
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 24px; text-align: justify; line-height: 1.3; margin-bottom: 10px;">
+Una finca productora de aguacate Hass afirma que el peso promedio del fruto es de 200 g. En una muestra de <span class="math inline">\(\small n=36\)</span> frutos se obtuvo <span class="math inline">\(\small \bar{x}=194\)</span> g, con <span class="math inline">\(\small \sigma=15\)</span> g (conocida) y <span class="math inline">\(\small \alpha=0.05\)</span>. ¿Hay evidencia de que el peso promedio es diferente de 200 g?
+</p>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size: 21px; line-height: 1.3; margin-bottom: 10px;">
+<p><strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong> <span class="math display">\[H_0:\mu=200 \qquad H_1:\mu\neq200\]</span> Es decir, <span class="math inline">\(\Theta_0=\{200\}\)</span> (un único valor posible) y <span class="math inline">\(\Theta=\mathbb{R}\)</span> (todos los valores posibles).</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size: 19px; line-height: 1.4;">
+<p><strong style="color:#1b4d2e;">Paso 2. Fórmula de <span class="math inline">\(\lambda(\mathbf{x})\)</span>:</strong> En <span class="math inline">\(\Theta_0\)</span> la única opción es <span class="math inline">\(\mu_0=200\)</span>; en <span class="math inline">\(\Theta\)</span> la verosimilitud se maximiza en <span class="math inline">\(\hat\mu=\bar{x}\)</span>. Como ambas son densidades normales con la misma <span class="math inline">\(\sigma\)</span>, <span class="math inline">\(\lambda\)</span> es exactamente <strong>el cociente de esas dos normales</strong>: <span class="math display">\[\lambda(\mathbf{x})=\frac{L(\mu_0)}{L(\hat\mu)}=\frac{(2\pi\sigma^2)^{-n/2}\exp\!\left(-\dfrac{\sum(x_i-\mu_0)^2}{2\sigma^2}\right)}{(2\pi\sigma^2)^{-n/2}\exp\!\left(-\dfrac{\sum(x_i-\hat\mu)^2}{2\sigma^2}\right)}=\exp\!\left(-\frac{n(\bar{x}-\mu_0)^2}{2\sigma^2}\right)\]</span> El factor <span class="math inline">\((2\pi\sigma^2)^{-n/2}\)</span> es igual en ambas normales y se cancela; solo queda la diferencia entre los dos exponentes.</p>
+</div>
+</section>
+<section id="ejemplo-cálculo-de-lambda-y-decisión" class="slide level2">
+<h2>Ejemplo: cálculo de <span class="math inline">\(\lambda\)</span> y decisión</h2>
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top: 10px; align-items:start;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 17px; line-height: 1.25;">
+<p><strong style="color:#1a3a6b;">Paso 3. Cálculo numérico:</strong> Con <span class="math inline">\(\bar{x}=194\)</span>, <span class="math inline">\(\mu_0=200\)</span>, <span class="math inline">\(\sigma=15\)</span>, <span class="math inline">\(n=36\)</span>: <span class="math display">\[\lambda(\mathbf{x})=\exp\!\left(-\frac{36(194-200)^2}{2(15)^2}\right)\approx 0.056\]</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 17px; line-height: 1.25;">
+<p><strong style="color:#1b4d2e;">Paso 4. Simplificación:</strong> Un <span class="math inline">\(\lambda\)</span> pequeño equivale a <span class="math inline">\(|Z|\)</span> grande, donde <span class="math display">\[Z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{194-200}{15/\sqrt{36}}=-2.4\]</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 17px; line-height: 1.25;">
+<p><strong style="color:#1a3a6b;">Paso 5. Decisión:</strong> Para <span class="math inline">\(\alpha=0.05\)</span>, <span class="math inline">\(|Z_{crit}|=1.96\)</span>. <span class="math display">\[|Z_{cal}|=2.4 &gt; 1.96 \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; padding:12px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:14px;">
+<div style="font-size:22px; font-weight:bold; color:#1b4d2e;">
+Conclusión
+</div>
+<div style="font-size:20px; text-align:justify; line-height:1.4; margin-top:6px;">
+<p>La razón de verosimilitud conduce al mismo estadístico <span class="math inline">\(Z\)</span> que ya conocíamos: existe evidencia de que el peso promedio del aguacate Hass es diferente de 200 g.</p>
 </div>
 </div>
 </section>
 <section id="pruebas-ui-e-iu" class="slide level2">
 <h2>Pruebas UI e IU</h2>
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; margin-top: 50px; line-height: 1.5;">
 <p>En agricultura es frecuente evaluar varias condiciones simultáneamente: rendimiento, humedad, calidad, resistencia. Existen dos estrategias formales para combinar estas evaluaciones.</p>
 </div>
-<p><br></p>
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 10px;">
 <div class="fragment fade-right" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
 <div style="font-size: 28px; font-weight: bold; color: #1a3a6b; text-align: center;">
@@ -1240,12 +1223,12 @@ Intersección-Unión (IU)
 </section>
 <section id="ui-vs-iu-cuándo-usar-cada-una" class="slide level2">
 <h2>UI vs IU: cuándo usar cada una</h2>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 50px;">
 <div class="fragment fade-right" data-fragment-index="1" style="background-color:#eef4fb; padding:20px; border-radius:16px; border-left:8px solid #1a3a6b;">
 <div style="font-size: 28px; font-weight: bold; color: #1a3a6b; margin-bottom: 12px;">
 Prueba UI
 </div>
-<div style="font-size: 24px; line-height: 1.7; text-align: justify;">
+<div style="font-size: 26px; line-height: 1.7; text-align: justify;">
 <ul>
 <li>Se usa para certificar que <strong>todo</strong> cumple estándares.</li>
 <li>Rechazar es fácil: basta una sola falla.</li>
@@ -1258,7 +1241,7 @@ Prueba UI
 <div style="font-size: 28px; font-weight: bold; color: #1b4d2e; margin-bottom: 12px;">
 Prueba IU
 </div>
-<div style="font-size: 24px; line-height: 1.7; text-align: justify;">
+<div style="font-size: 26px; line-height: 1.7; text-align: justify;">
 <ul>
 <li>Se usa para demostrar equivalencia entre tratamientos.</li>
 <li>Rechazar requiere fallos en todos los criterios.</li>
@@ -1268,42 +1251,38 @@ Prueba IU
 </div>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8; padding:16px; border-radius:14px; border-left:8px solid #d97706;">
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
 <p><strong>Regla práctica:</strong> use UI cuando quiera proteger la calidad (todo debe funcionar bien); use IU cuando quiera demostrar equivalencia entre tratamientos o variedades.</p>
 </div>
 </div>
 </section>
 <section id="prueba-de-hipótesis-para-la-varianza" class="slide level2">
 <h2>Prueba de hipótesis para la varianza</h2>
-<div style="font-size: 27px; text-align: justify; margin-top: 10px; line-height: 1.5;">
+<div style="font-size: 30px; text-align: justify; margin-top: 40px; line-height: 1.5;">
 <p>En muchas situaciones agrícolas, la <strong>variabilidad</strong> es tan importante como el promedio: semillas de tamaño uniforme, dosis consistentes de insumos, rendimientos homogéneos entre parcelas.</p>
 </div>
-<p><br></p>
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
+<div class="block-title" style="font-size: 30px;">
 Estadístico de prueba para la varianza
 </div>
-<div class="block-body" style="font-size: 27px; line-height: 1.5;">
+<div class="block-body" style="font-size: 28px; line-height: 1.5;">
 <p>Sea <span class="math inline">\(X_1, \ldots, X_n\)</span> una muestra de una población <span class="math inline">\(N(\mu, \sigma^2)\)</span>. Para contrastar <span class="math inline">\(H_0: \sigma^2 = \sigma_0^2\)</span>, se usa:</p>
 <p><span class="math display">\[\chi^2 = \frac{(n-1)s^2}{\sigma_0^2}\]</span></p>
 <p>Bajo <span class="math inline">\(H_0\)</span>, este estadístico sigue una distribución <span class="math inline">\(\chi^2\)</span> con <span class="math inline">\(n-1\)</span> grados de libertad.</p>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; padding:14px; border-radius:14px; border-left:8px solid #1b4d2e;">
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
+<div style="font-size: 28px; text-align: justify; line-height: 1.5;">
 <p>Si la varianza muestral <span class="math inline">\(s^2\)</span> es mucho mayor o menor que <span class="math inline">\(\sigma_0^2\)</span>, el estadístico se aleja del valor esperado y se genera evidencia para rechazar <span class="math inline">\(H_0\)</span>.</p>
 </div>
 </div>
 </section>
 <section id="reglas-de-decisión-varianza-poblacional" class="slide level2">
 <h2>Reglas de decisión: varianza poblacional</h2>
-<div style="font-size: 26px; text-align: justify; margin-top: 10px; line-height: 1.4;">
-<p>La región crítica depende de la dirección de la hipótesis alternativa. A diferencia de Z y t, la distribución χ² no es simétrica.</p>
+<div style="font-size: 30px; text-align: justify; margin-top: 40px; line-height: 1.4;">
+<p>La región crítica depende de la dirección de la hipótesis alternativa. A diferencia de <span class="math inline">\(Z\)</span> y <span class="math inline">\(t\)</span>, la distribución <span class="math inline">\(\small \chi^{2}\)</span> no es simétrica.</p>
 </div>
-<p><br></p>
 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
 <div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b;">
 <div style="font-size: 24px; font-weight: bold; color: #1a3a6b; text-align: center;">
@@ -1333,80 +1312,28 @@ Cola izquierda
 </section>
 <section id="ejemplo-prueba-para-la-varianza" class="slide level2">
 <h2>Ejemplo: Prueba para la varianza</h2>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
-<div>
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-<p>Una empresa procesadora de arroz en el Tolima exige que la varianza en el peso de los bultos no supere 4 kg². Un control de calidad sobre 20 bultos arroja una varianza muestral de 6.1 kg².</p>
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 26px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Una empresa procesadora de arroz exige que la varianza del peso de los bultos no supere <span class="math inline">\(\small 4\,kg^{2}\)</span>. En una muestra de <span class="math inline">\(\small n=20\)</span> bultos se obtuvo <span class="math inline">\(\small s^{2}=6.1\,kg^{2}\)</span>. Con <span class="math inline">\(\small \sigma_0^{2}=4\,kg^{2}\)</span> y <span class="math inline">\(\small \alpha=0.05\)</span>, ¿hay evidencia de que la varianza poblacional supera los <span class="math inline">\(\small 4\,kg^{2}\)</span>?
+</p>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 20px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong> <span class="math display">\[H_0: \sigma^2 \leq 4 \qquad H_1: \sigma^2 &gt; 4\]</span> Prueba de cola derecha.</p>
 </div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-Datos
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong> <span class="math display">\[\chi^{2}_{cal} = \frac{(n-1)s^2}{\sigma_0^2} = \frac{19 \times 6.1}{4} = 28.98\]</span> con <span class="math inline">\(n - 1 = 19\)</span> grados de libertad.</p>
 </div>
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
-<p><span class="math display">\[n = 20 \qquad s^2 = 6.1 \text{ kg}^2\]</span> <span class="math display">\[\sigma_0^2 = 4 \text{ kg}^2 \qquad \alpha = 0.05\]</span></p>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong> Con <span class="math inline">\(\alpha = 0.05\)</span> y <span class="math inline">\(gl = 19\)</span>: <span class="math inline">\(\chi^2_{0.05,\,19} = 30.14\)</span> <span class="math display">\[\chi^2_{cal} = 28.98 &lt; 30.14 \;\Rightarrow\; \text{No se rechaza } H_0\]</span></p>
 </div>
-</div>
-</div>
-<div>
-<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Pregunta
-</div>
-<br>
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-<p>¿Existe evidencia suficiente para afirmar que la varianza en el peso de los bultos supera los 4 kg²?</p>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong> <span class="math display">\[p = P(\chi^2_{19} &gt; 28.98) \approx 0.066\]</span> <span class="math display">\[p = 0.066 &gt; 0.05 \;\Rightarrow\; \text{No se rechaza } H_0\]</span></p>
 </div>
 </div>
-</div>
-</div>
-</section>
-<section id="solución-cálculo-del-estadístico" class="slide level2">
-<h2>Solución: cálculo del estadístico</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 1: Planteamiento de hipótesis
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[H_0: \sigma^2 \leq 4\]</span> <span class="math display">\[H_1: \sigma^2 &gt; 4\]</span> Se trata de una prueba de cola derecha.</p>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 2: Estadístico de prueba
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[\chi^2 = \frac{(n-1)s^2}{\sigma_0^2} = \frac{19 \times 6.1}{4}\]</span> <span class="math display">\[\chi^2 = 28.98\]</span> con <span class="math inline">\(n - 1 = 19\)</span> grados de libertad.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="decisión-prueba-para-la-varianza" class="slide level2">
-<h2>Decisión: Prueba para la varianza</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 3: Criterio de decisión
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p>Con <span class="math inline">\(\alpha = 0.05\)</span> y <span class="math inline">\(gl = 19\)</span>: <span class="math display">\[\chi^2_{0.05,\,19} = 30.14\]</span> Como: <span class="math display">\[\chi^2_{cal} = 28.98 &lt; 30.14\]</span> No se rechaza <span class="math inline">\(H_0\)</span>.</p>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 4: Valor-p
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[p = P(\chi^2_{19} &gt; 28.98) \approx 0.066\]</span> Como: <span class="math display">\[p = 0.066 &gt; 0.05\]</span> No se rechaza la hipótesis nula.</p>
-</div>
-</div>
-</div>
-<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:26px; font-weight:bold; color:#1b4d2e;">
 Conclusión
 </div>
-<div style="font-size:26px; text-align:justify; line-height:1.6; margin-top:10px;">
+<div style="font-size:26px; text-align:justify; line-height:1.3; margin-top:4px;">
 <p>No existe evidencia estadística suficiente para afirmar que la varianza en el peso de los bultos de arroz supera los 4 kg². El nivel de variabilidad observado es compatible con el estándar exigido por la empresa.</p>
 </div>
 </div>
@@ -1517,133 +1444,30 @@ Conclusión
 <section id="ejemplos-y-aplicaciones-en-r" class="slide level2 center middle">
 <h2>Ejemplos y aplicaciones en R</h2>
 </section>
-<section id="ejemplo-1-1" class="slide level2">
-<h2>Ejemplo 1</h2>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
-<div>
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-<p>Una cooperativa cafetera en Caldas afirma que la producción promedio de café es de 32 sacos por hectárea.</p>
+<section id="ejemplo-1-producción-de-café" class="slide level2">
+<h2>Ejemplo 1: Producción de café</h2>
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 28px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Una cooperativa cafetera en Caldas afirma que la producción promedio de café es de 32 sacos por hectárea. En una muestra de <span class="math inline">\(\small n=40\)</span> fincas se obtuvo <span class="math inline">\(\small \bar{x}=29.8\)</span> sacos, con <span class="math inline">\(\small \sigma=5\)</span> conocida y <span class="math inline">\(\small \alpha=0.05\)</span>. ¿Hay evidencia suficiente para afirmar que la producción promedio es diferente de 32 sacos por hectárea?
+</p>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong> <span class="math display">\[H_0:\mu=32 \qquad H_1:\mu\neq32\]</span> Prueba de dos colas.</p>
 </div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-<p>Datos</p>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong> Prueba <span class="math inline">\(Z\)</span> (<span class="math inline">\(\sigma\)</span> conocida, <span class="math inline">\(n\)</span> grande): <span class="math display">\[Z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{29.8-32}{5/\sqrt{40}}=-2.78\]</span></p>
 </div>
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
-<p><span class="math display">\[
-\bar{x}=29.8
-\]</span></p>
-<p><span class="math display">\[
-\sigma=5
-\]</span></p>
-<p><span class="math display">\[
-n=40
-\]</span></p>
-<p><span class="math display">\[
-\alpha=0.05
-\]</span></p>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong> Para <span class="math inline">\(\alpha=0.05\)</span> (dos colas), valores críticos <span class="math inline">\(\pm1.96\)</span>. <span class="math display">\[Z_{cal}=-2.78 &lt; Z_{crit}=-1.96 \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong> <span class="math display">\[p=2P(Z&gt;|-2.78|)\approx 0.0054\]</span> <span class="math display">\[p &lt; 0.05 \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
 </div>
 </div>
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:20px; font-weight:bold; color:#1b4d2e;">
+Conclusión
 </div>
-<div>
-<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-<p>Pregunta</p>
-</div>
-<p><br></p>
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-<p>¿Existe evidencia suficiente para afirmar que la producción promedio es diferente de 32 sacos por hectárea?</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="solución" class="slide level2">
-<h2>Solución</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 1: Planteamiento de hipótesis
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[
-H_0:\mu=32
-\]</span></p>
-<p><span class="math display">\[
-H_1:\mu\neq32
-\]</span></p>
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-<p>Se trata de una prueba de dos colas.</p>
-</div>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 2: Estadístico de prueba
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p>Como la desviación estándar poblacional es conocida y la muestra es grande, se utiliza una prueba Z.<br>
-Bajo <span class="math inline">\(H_0\)</span>, el estadístico de prueba se calcula como: <br></p>
-<div style="font-size: 28px; text-align: center; line-height: 1.8;">
-<p><span class="math display">\[
-Z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
-\]</span></p>
-<p><span class="math display">\[
-Z=\frac{29.8-32}{5/\sqrt{40}}
-\]</span></p>
-<p><span class="math display">\[
-Z=-2.78
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="reglas-de-decisión" class="slide level2">
-<h2>Reglas de decisión</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 3: Criterio de decisión
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p>Para una prueba bilateral con: <span class="math inline">\(\alpha=0.05\)</span></p>
-<p>los valores críticos son: <span class="math inline">\(\pm1.96\)</span></p>
-<div style="font-size: 28px; text-align: center; line-height: 1.6;">
-<p>Como:</p>
-<p><span class="math display">\[
-Z_{cal}=-2.78&lt;Z_{crit}=-1.96
-\]</span></p>
-<p>se rechaza <span class="math inline">\(H_0\)</span>.</p>
-</div>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 4: Valor-p
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[
-p=2P(Z&gt;|-2.78|)
-\]</span></p>
-<p><span class="math display">\[
-p\approx0.0054
-\]</span> <br></p>
-<div style="font-size: 28px; text-align: center; line-height: 1.8;">
-<p>Como:</p>
-<p><span class="math display">\[
-p&lt;0.05
-\]</span></p>
-<p>se rechaza la hipótesis nula.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-<p>Conclusión</p>
-</div>
-<div style="font-size:26px; text-align:justify; line-height:1.6; margin-top:10px;">
+<div style="font-size:28px; text-align:justify; line-height:1.3; margin-top:4px;">
 <p>Existe evidencia estadística suficiente para afirmar que la producción promedio de café por hectárea en las fincas evaluadas es diferente de 32 sacos.</p>
 </div>
 </div>
@@ -1668,138 +1492,31 @@ p&lt;0.05
 </div>
 </div>
 </section>
-<section id="ejemplo-2" class="slide level2">
-<h2>Ejemplo 2</h2>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
-<div>
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-<p>Un grupo de investigadores agrícolas en Boyacá desea verificar si el rendimiento promedio de papa criolla es menor a 18 toneladas por hectárea.</p>
+<section id="ejemplo-2-rendimiento-de-papa-criolla" class="slide level2">
+<h2>Ejemplo 2: Rendimiento de papa criolla</h2>
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 19px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Un grupo de investigadores agrícolas en Boyacá desea verificar si el rendimiento promedio de papa criolla es menor a 18 toneladas por hectárea. En una muestra de <span class="math inline">\(\small n=15\)</span> fincas se obtuvo <span class="math inline">\(\small \bar{x}=16.9\)</span> con <span class="math inline">\(\small s=2.4\)</span> (desconocida) y <span class="math inline">\(\small \alpha=0.05\)</span>. ¿Hay evidencia de que el rendimiento promedio es menor a 18 t/ha?
+</p>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong> <span class="math display">\[H_0:\mu\geq18 \qquad H_1:\mu&lt;18\]</span> Prueba de cola izquierda.</p>
 </div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-<p>Datos</p>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong> Prueba <span class="math inline">\(t\)</span> de Student (<span class="math inline">\(\sigma\)</span> desconocida, <span class="math inline">\(n\)</span> pequeña): <span class="math display">\[t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}=\frac{16.9-18}{2.4/\sqrt{15}}=-1.77\]</span></p>
 </div>
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
-<p><span class="math display">\[
-\bar{x}=16.9
-\]</span></p>
-<p><span class="math display">\[
-s=2.4
-\]</span></p>
-<p><span class="math display">\[
-n=15
-\]</span></p>
-<p><span class="math display">\[
-\alpha=0.05
-\]</span></p>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong> Para <span class="math inline">\(\alpha=0.05\)</span> y <span class="math inline">\(gl=14\)</span>, valor crítico <span class="math inline">\(t_{0.05,14}=-1.761\)</span>. <span class="math display">\[t_{cal}=-1.77 &lt; t_{crit}=-1.761 \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong> <span class="math display">\[p=P(T&lt;-1.77)\approx 0.049\]</span> <span class="math display">\[p &lt; 0.05 \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
 </div>
 </div>
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:20px; font-weight:bold; color:#1b4d2e;">
+Conclusión
 </div>
-<div>
-<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-<p>Pregunta</p>
-</div>
-<p><br></p>
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-<p>¿Existe evidencia suficiente para afirmar que el rendimiento promedio es menor a 18 toneladas por hectárea?</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="solución-1" class="slide level2">
-<h2>Solución</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 1: Planteamiento de hipótesis
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[
-H_0:\mu\geq18
-\]</span></p>
-<p><span class="math display">\[
-H_1:\mu&lt;18
-\]</span></p>
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-<p>Se trata de una prueba de cola izquierda.</p>
-</div>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 2: Estadístico de prueba
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p>Como la desviación estándar poblacional es desconocida y la muestra es pequeña, se utiliza una prueba t de Student.</p>
-<p><br></p>
-<div style="font-size: 28px; text-align: center; line-height: 1.8;">
-<p><span class="math display">\[
-t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}
-\]</span></p>
-<p><span class="math display">\[
-t=\frac{16.9-18}{2.4/\sqrt{15}}
-\]</span></p>
-<p><span class="math display">\[
-t=-1.77
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="reglas-de-decisión-1" class="slide level2">
-<h2>Reglas de decisión</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 3: Criterio de decisión
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p>Para: <span class="math inline">\(\alpha=0.05\)</span> y <span class="math inline">\(gl=n-1=14\)</span></p>
-<p>el valor crítico es:</p>
-<p><span class="math display">\[
-t_{0.05,14}=-1.761
-\]</span></p>
-<div style="font-size: 28px; text-align: center; line-height: 1.6;">
-<p>Como:</p>
-<p><span class="math display">\[
-t_{cal}=-1.77&lt;t_{crit}=-1.761
-\]</span></p>
-<p>se rechaza <span class="math inline">\(H_0\)</span>.</p>
-</div>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 4: Valor-p
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[
-p=P(T&lt;-1.77)
-\]</span></p>
-<p><span class="math display">\[
-p\approx0.049
-\]</span></p>
-<p><br></p>
-<div style="font-size: 28px; text-align: center; line-height: 1.8;">
-<p>Como:</p>
-<p><span class="math display">\[
-p&lt;0.05
-\]</span></p>
-<p>se rechaza la hipótesis nula.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-<p>Conclusión</p>
-</div>
-<div style="font-size:26px; text-align:justify; line-height:1.6; margin-top:10px;">
-<p>Aunque el valor-p es ligeramente menor que 0.05, existe evidencia estadística para rechazar <span class="math inline">\(H_0\)</span> y concluir que el rendimiento promedio de papa criolla es menor a 18 toneladas por hectárea. Sin embargo, la evidencia estadística es débil, ya que el valor-p se encuentra muy cercano al nivel de significancia.</p>
+<div style="font-size:18px; text-align:justify; line-height:1.3; margin-top:4px;">
+<p>Aunque el valor-p es ligeramente menor que 0.05, existe evidencia para rechazar <span class="math inline">\(H_0\)</span> y concluir que el rendimiento promedio de papa criolla es menor a 18 t/ha. Sin embargo, la evidencia es débil, pues el valor-p está muy cerca del nivel de significancia.</p>
 </div>
 </div>
 </section>
@@ -1822,143 +1539,30 @@ p&lt;0.05
 </div>
 </div>
 </section>
-<section id="ejemplo-3" class="slide level2">
-<h2>Ejemplo 3</h2>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
-<div>
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-<p>Un investigador agrícola en el Valle del Cauca estudia el número promedio de insectos por planta en un cultivo de caña de azúcar.</p>
-<p>Se asume que el número de insectos sigue una distribución Poisson.</p>
+<section id="ejemplo-3-insectos-por-planta-en-caña" class="slide level2">
+<h2>Ejemplo 3: Insectos por planta en caña</h2>
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 19px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Un investigador agrícola en el Valle del Cauca estudia el número promedio de insectos por planta en caña de azúcar (se asume distribución Poisson). En una muestra de <span class="math inline">\(\small n=50\)</span> plantas se obtuvo <span class="math inline">\(\small \bar{x}=7.1\)</span>, con <span class="math inline">\(\small \mu_0=6\)</span> y <span class="math inline">\(\small \alpha=0.05\)</span>. ¿Hay evidencia de que el número promedio de insectos es mayor a 6?
+</p>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong> <span class="math display">\[H_0:\mu\leq6 \qquad H_1:\mu&gt;6\]</span> Prueba de cola derecha.</p>
 </div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-<p>Datos</p>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong> En Poisson <span class="math inline">\(Var(X)=\mu\)</span>, luego <span class="math inline">\(\sigma=\sqrt{\mu_0}=\sqrt{6}\)</span>: <span class="math display">\[Z=\frac{\bar{x}-\mu_0}{\sqrt{\mu_0/n}}=\frac{7.1-6}{\sqrt{6/50}}=3.18\]</span></p>
 </div>
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
-<p><span class="math display">\[
-\bar{x}=7.1
-\]</span></p>
-<p><span class="math display">\[
-\mu_0=6
-\]</span></p>
-<p><span class="math display">\[
-n=50
-\]</span></p>
-<p><span class="math display">\[
-\alpha=0.05
-\]</span></p>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong> Para <span class="math inline">\(\alpha=0.05\)</span>, valor crítico <span class="math inline">\(Z_{0.05}=1.645\)</span>. <span class="math display">\[Z_{cal}=3.18 &gt; Z_{0.05}=1.645 \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 4. Intervalo de confianza (95%):</strong> <span class="math display">\[IC=(6.42,\ 7.78)\]</span> <span class="math display">\[6 \notin IC \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
 </div>
 </div>
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:20px; font-weight:bold; color:#1b4d2e;">
+Conclusión
 </div>
-<div>
-<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-<p>Pregunta</p>
-</div>
-<p><br></p>
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-<p>¿Existe evidencia suficiente para afirmar que el número promedio de insectos por planta es mayor a 6?</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="solución-2" class="slide level2">
-<h2>Solución</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 1: Planteamiento de hipótesis
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[
-H_0:\mu\leq6
-\]</span></p>
-<p><span class="math display">\[
-H_1:\mu&gt;6
-\]</span></p>
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-<p>Se trata de una prueba de cola derecha.</p>
-</div>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 2: Estadístico de prueba
-</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-<p>Para una distribución Poisson:</p>
-<p><span class="math display">\[
-Var(X)=\mu
-\]</span></p>
-<p>por lo tanto:</p>
-<p><span class="math display">\[
-\sigma=\sqrt{\mu_0}=\sqrt{6}
-\]</span></p>
-<p><br></p>
-<div style="font-size: 27px; text-align: center; line-height: 1.8;">
-<p>Estadístico de prueba: Bajo <span class="math inline">\(H_0\)</span>, se calcula como: <span class="math display">\[
-Z=\frac{\bar{x}-\mu_0}{\sqrt{\mu_0/n}}
-\]</span></p>
-<p><span class="math display">\[
-Z=\frac{7.1-6}{\sqrt{6/50}}
-\]</span></p>
-<p><span class="math display">\[
-Z=3.18
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="reglas-de-decisión-2" class="slide level2">
-<h2>Reglas de decisión</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 3: Criterio de decisión
-</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-<p>Para: <span class="math inline">\(\alpha=0.05\)</span></p>
-<p>el valor crítico es:</p>
-<p><span class="math display">\[
-Z_{0.05}=1.645
-\]</span></p>
-<div style="font-size: 27px; text-align: center; line-height: 1.6;">
-<p>Como:</p>
-<p><span class="math display">\[
-Z_{cal}=3.18&gt;Z_{0.05}=1.645
-\]</span></p>
-<p>se rechaza <span class="math inline">\(H_0\)</span>.</p>
-</div>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 4: Intervalo de confianza
-</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-<p>Aplicando el criterio del intervalo de confianza, al 95% se tiene que:</p>
-<p><br></p>
-<div style="font-size: 27px; text-align: center; line-height: 1.8;">
-<p><span class="math display">\[
-IC=(6.42,\ 7.78)
-\]</span></p>
-</div>
-<p><br></p>
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-<p>Como: <span class="math inline">\(6\notin IC\)</span></p>
-<p>se rechaza la hipótesis nula.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-<p>Conclusión</p>
-</div>
-<div style="font-size:25px; text-align:justify; line-height:1.6; margin-top:10px;">
+<div style="font-size:18px; text-align:justify; line-height:1.3; margin-top:4px;">
 <p>Existe evidencia estadística suficiente para afirmar que el número promedio de insectos por planta en los cultivos evaluados es mayor a 6.</p>
 </div>
 </div>
@@ -1988,141 +1592,30 @@ IC=(6.42,\ 7.78)
 </div>
 </div>
 </section>
-<section id="ejemplo-4" class="slide level2">
-<h2>Ejemplo 4</h2>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
-<div>
-<div style="font-size: 24px; text-align: justify; line-height: 1.5;">
-<p>Una empresa agrícola en Córdoba afirma que el 85% de las semillas de maíz germinan correctamente.</p>
-<p>Se evalúan 200 semillas y 160 germinan de forma adecuada.</p>
+<section id="ejemplo-4-germinación-de-semillas-de-maíz" class="slide level2">
+<h2>Ejemplo 4: Germinación de semillas de maíz</h2>
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 19px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Una empresa agrícola en Córdoba afirma que el 85% de las semillas de maíz germinan correctamente. Se evalúan <span class="math inline">\(\small n=200\)</span> semillas y <span class="math inline">\(\small 160\)</span> germinan (<span class="math inline">\(\small \hat{p}=0.80\)</span>), con <span class="math inline">\(\small p_0=0.85\)</span> y <span class="math inline">\(\small \alpha=0.05\)</span>. ¿Hay evidencia de que la proporción de germinación es menor al 85%?
+</p>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong> <span class="math display">\[H_0:p\geq0.85 \qquad H_1:p&lt;0.85\]</span> Prueba de cola izquierda.</p>
 </div>
-<p><br></p>
-<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-<div style="font-size: 28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-<p>Datos</p>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong> Muestra grande, aproximación normal: <span class="math display">\[Z=\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}=\frac{0.80-0.85}{\sqrt{\frac{0.85(0.15)}{200}}}=-1.98\]</span></p>
 </div>
-<div style="font-size: 26px; text-align:center; line-height:1.7; margin-top:10px;">
-<p><span class="math display">\[
-\hat{p}=\frac{160}{200}=0.80
-\]</span></p>
-<p><span class="math display">\[
-p_0=0.85
-\]</span></p>
-<p><span class="math display">\[
-n=200
-\]</span></p>
-<p><span class="math display">\[
-\alpha=0.05
-\]</span></p>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong> Para <span class="math inline">\(\alpha=0.05\)</span>, valor crítico <span class="math inline">\(Z_{0.05}=-1.645\)</span>. <span class="math display">\[Z_{cal}=-1.98 &lt; -1.645 \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 18px; line-height: 1.2;">
+<p><strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong> <span class="math display">\[p=P(Z&lt;-1.98)\approx 0.024\]</span> <span class="math display">\[p &lt; 0.05 \;\Rightarrow\; \text{se rechaza } H_0\]</span></p>
 </div>
 </div>
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:20px; font-weight:bold; color:#1b4d2e;">
+Conclusión
 </div>
-<div>
-<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-<div style="font-size: 30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-<p>Pregunta</p>
-</div>
-<p><br></p>
-<div style="font-size: 25px; text-align:justify; line-height:1.6;">
-<p>¿Existe evidencia suficiente para afirmar que la proporción de germinación es menor al 85%?</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="solución-3" class="slide level2">
-<h2>Solución</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 1: Planteamiento de hipótesis
-</div>
-<div class="block-body" style="font-size: 25px; line-height: 1.4;">
-<p><span class="math display">\[
-H_0:p\geq0.85
-\]</span></p>
-<p><span class="math display">\[
-H_1:p&lt;0.85
-\]</span></p>
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-<p>Se trata de una prueba de cola izquierda.</p>
-</div>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 2: Estadístico de prueba
-</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-<div style="font-size: 26px; text-align: justify; line-height: 1.5;">
-<p>Como la muestra es grande, se utiliza la aproximación normal.</p>
-</div>
-<p><br></p>
-<div style="font-size: 27px; text-align: center; line-height: 1.8;">
-<p><span class="math display">\[
-Z=\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}
-\]</span></p>
-<p><span class="math display">\[
-Z=\frac{0.80-0.85}{\sqrt{\frac{0.85(0.15)}{200}}}
-\]</span></p>
-<p><span class="math display">\[
-Z=-1.98
-\]</span></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="reglas-de-decisión-3" class="slide level2">
-<h2>Reglas de decisión</h2>
-<div class="twocol" style="margin-top: 10px;">
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Paso 3: Criterio de decisión
-</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-<p>Para:</p>
-<p><span class="math inline">\(\alpha=0.05\)</span></p>
-<p>el valor crítico es:</p>
-<p><span class="math display">\[
-Z_{0.05}=-1.645
-\]</span></p>
-<div style="font-size: 27px; text-align: center; line-height: 1.6;">
-<p>Como:</p>
-<p><span class="math display">\[
-Z_{cal}=-1.98&lt;-1.645
-\]</span></p>
-<p>se rechaza <span class="math inline">\(H_0\)</span>.</p>
-</div>
-</div>
-</div>
-<div class="block-example fragment fade-up" data-fragment-index="2">
-<div class="block-title">
-Paso 4: Valor-p
-</div>
-<div class="block-body" style="font-size: 24px; line-height: 1.4;">
-<p><span class="math display">\[
-p=P(Z&lt;-1.98)
-\]</span></p>
-<p><span class="math display">\[
-p\approx0.024
-\]</span></p>
-<p><br></p>
-<div style="font-size: 27px; text-align: center; line-height: 1.8;">
-<p>Como:</p>
-<p><span class="math display">\[
-p&lt;0.05
-\]</span></p>
-<p>se rechaza la hipótesis nula.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e; margin-top:18px;">
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-<p>Conclusión</p>
-</div>
-<div style="font-size:25px; text-align:justify; line-height:1.6; margin-top:10px;">
+<div style="font-size:18px; text-align:justify; line-height:1.3; margin-top:4px;">
 <p>Existe evidencia estadística suficiente para afirmar que la proporción de germinación de semillas de maíz es menor al 85%.</p>
 </div>
 </div>
@@ -2178,15 +1671,13 @@ sample estimates:
 <h2>Resumen de la clase</h2>
 <div style="font-size: 25px; text-align: justify; line-height: 1.6;">
 <p>Las pruebas de hipótesis permiten tomar decisiones estadísticas sobre parámetros poblacionales a partir de información muestral.</p>
-<p>Durante la clase se estudiaron los principales elementos que conforman una prueba de hipótesis y los criterios utilizados para aceptar o rechazar una hipótesis nula.</p>
 </div>
-<p><br></p>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
 <div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
 <div style="font-size:30px; font-weight:bold; color:#1a3a6b; text-align:center;">
 <p>Conceptos fundamentales</p>
 </div>
-<div style="font-size:24px; line-height:1.6; margin-top:12px;">
+<div style="font-size:24px; line-height:1; margin-top:12px;">
 <ul>
 <li>Hipótesis nula y alternativa<br>
 </li>
@@ -2206,7 +1697,7 @@ sample estimates:
 <div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
 <p>Criterios de decisión</p>
 </div>
-<div style="font-size:24px; line-height:1.6; margin-top:12px;">
+<div style="font-size:24px; line-height:1; margin-top:12px;">
 <ul>
 <li>Comparación con valores críticos<br>
 </li>
@@ -2219,17 +1710,15 @@ sample estimates:
 </div>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8; padding:20px; border-radius:18px; border-left:8px solid #d97706;">
 <div style="font-size:30px; font-weight:bold; color:#d97706;">
 <p>Ideas clave</p>
 </div>
-<div style="font-size:24px; text-align:justify; line-height:1.7; margin-top:10px;">
+<div style="font-size:24px; text-align:justify; line-height:1;">
 <ul>
 <li><p>La decisión estadística depende de la evidencia aportada por la muestra.</p></li>
-<li><p>Rechazar (H_0) no significa que sea falsa de manera absoluta, sino que existe suficiente evidencia estadística en su contra.</p></li>
+<li><p>Rechazar <span class="math inline">\(\small H_0\)</span> no significa que sea falsa, sino que existe suficiente evidencia estadística en su contra.</p></li>
 <li><p>Los diferentes criterios de decisión deben conducir a conclusiones consistentes cuando se aplican correctamente.</p></li>
-<li><p>La selección del estadístico de prueba depende del parámetro estudiado, el tamaño muestral y la distribución de probabilidad utilizada.</p></li>
 </ul>
 </div>
 </div>
@@ -2286,11 +1775,9 @@ sample estimates:
 </section>
 <section id="regiones-críticas-en-pruebas-de-hipótesis" class="slide level2">
 <h2>Regiones críticas en pruebas de hipótesis</h2>
-<div style="font-size:24px; text-align: justify; line-height:1.5;">
-<p>La ubicación de la región crítica depende de la hipótesis alternativa planteada.<br>
-Esta región contiene los valores del estadístico de prueba que conducen al rechazo de <span class="math inline">\(H_0\)</span>.</p>
+<div style="font-size:28px; text-align: justify; line-height:1.5;">
+<p>La ubicación de la región crítica depende de la hipótesis alternativa planteada. Esta región contiene los valores del estadístico de prueba que conducen al rechazo de <span class="math inline">\(\small H_0\)</span>.</p>
 </div>
-<p><br></p>
 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
 <div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:7px solid #1a3a6b;">
 <div style="font-size:26px; font-weight:bold; color:#1a3a6b; text-align:center;">
@@ -2332,7 +1819,6 @@ H_1:\theta&lt;\theta_0
 </div>
 </div>
 </div>
-<p><br></p>
 <div class="fragment fade-up" data-fragment-index="4" style="background-color:#f8fafc; padding:18px; border-radius:16px; border-left:8px solid #475569;">
 <div style="font-size:24px; text-align:justify; line-height:1.6;">
 <p>La elección correcta del tipo de prueba depende directamente del objetivo del estudio y de la hipótesis alternativa planteada por el investigador.</p>
@@ -2346,113 +1832,45 @@ H_1:\theta&lt;\theta_0
 <h2>Pruebas de hipótesis para la media y la proporción</h2>
 <div style="font-size: 25px; text-align: justify; line-height: 1.6;">
 <p>Resuelva los siguientes ejercicios aplicando:</p>
-<ul>
-<li>Planteamiento de hipótesis<br>
+<ul style="padding-left:20px">
+<li>
+Planteamiento de hipótesis
 </li>
-<li>Selección del estadístico de prueba<br>
+<li>
+Selección del estadístico de prueba
 </li>
-<li>Cálculo del estadístico<br>
+<li>
+Cálculo del estadístico
 </li>
-<li>Criterio de decisión<br>
+<li>
+Criterio de decisión
 </li>
-<li>Valor-p<br>
+<li>
+Valor<span class="math inline">\(-p\)</span>
 </li>
-<li>Conclusión estadística</li>
+<li>
+Conclusión estadística
+</li>
 </ul>
-<p>Utilice un nivel de significancia de:</p>
-<p><span class="math display">\[
-\alpha=0.05
-\]</span></p>
+<p>Utilice un nivel de significancia de: <span class="math inline">\(\small \alpha=0.05\)</span></p>
 </div>
 </section>
-<section id="punto-1" class="slide level2">
-<h2>Punto 1</h2>
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-<p>Una asociación cafetera en Antioquia afirma que la producción promedio de café es de 35 sacos por hectárea.</p>
-<p>Se seleccionan 49 fincas y se obtiene:</p>
-<p><span class="math display">\[
-\bar{x}=33.2
-\]</span></p>
-<p>La desviación estándar poblacional es:</p>
-<p><span class="math display">\[
-\sigma=4.5
-\]</span></p>
+<section id="ejercicios-propuestos" class="slide level2">
+<h2>Ejercicios propuestos</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:24px; text-align: justify; line-height: 1.4;">
+<p><strong style="color:#1a3a6b;">Punto 1.</strong> Una asociación cafetera afirma que la producción promedio de café es de 35 sacos por hectárea. En 49 fincas se obtiene <span class="math inline">\(\small \bar{x}=33.2\)</span> con <span class="math inline">\(\small \sigma=4.5\)</span>. ¿Es la producción promedio menor a 35 sacos/ha?</p>
 </div>
-<p><br></p>
-<div style="font-size: 28px;">
-<p>Determine si existe evidencia suficiente para afirmar que la producción promedio es menor a 35 sacos por hectárea.</p>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:24px; text-align: justify; line-height: 1.4;">
+<p><strong style="color:#1b4d2e;">Punto 2.</strong> Un investigador en Nariño estudia el peso de bultos de papa. En <span class="math inline">\(\small n=16\)</span> bultos se obtiene <span class="math inline">\(\small \bar{x}=48.5\)</span> kg con <span class="math inline">\(\small s=3.2\)</span> kg. ¿Es el peso promedio diferente de <span class="math inline">\(\small 50\)</span> kg?</p>
 </div>
-</section>
-<section id="punto-2" class="slide level2">
-<h2>Punto 2</h2>
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-<p>Un investigador agrícola en Nariño estudia el peso promedio de bultos de papa.</p>
-<p>Se toma una muestra de:</p>
-<p><span class="math display">\[
-n=16
-\]</span></p>
-<p>y se obtiene:</p>
-<p><span class="math display">\[
-\bar{x}=48.5 \text{ kg}
-\]</span></p>
-<p><span class="math display">\[
-s=3.2 \text{ kg}
-\]</span></p>
-<p>Se desea verificar si el peso promedio es diferente de:</p>
-<p><span class="math display">\[
-50 \text{ kg}
-\]</span></p>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:24px; text-align: justify; line-height: 1.4;">
+<p><strong style="color:#d97706;">Punto 3.</strong> En un cultivo de arroz en Tolima, el número de insectos por planta sigue Poisson. En 60 plantas se obtiene <span class="math inline">\(\small \bar{x}=5.8\)</span>. ¿Es el promedio de insectos mayor a <span class="math inline">\(\small 5\)</span>?</p>
 </div>
-</section>
-<section id="punto-3" class="slide level2">
-<h2>Punto 3</h2>
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-<p>En un cultivo de arroz en Tolima, el número promedio de insectos por planta sigue una distribución Poisson.</p>
-<p>En una muestra de 60 plantas se obtiene:</p>
-<p><span class="math display">\[
-\bar{x}=5.8
-\]</span></p>
-<p>Se desea verificar si el promedio de insectos por planta es mayor a:</p>
-<p><span class="math display">\[
-5
-\]</span></p>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef4fb; padding:16px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:24px; text-align: justify; line-height: 1.5;">
+<p><strong style="color:#1a3a6b;">Punto 4.</strong> Una empresa de semillas afirma que el 90% de las semillas de tomate germinan correctamente. Se evalúan <span class="math inline">\(\small n=250\)</span> semillas y 210 germinan adecuadamente. ¿Es la proporción de germinación menor al 90%?</p>
 </div>
-</section>
-<section id="punto-4" class="slide level2">
-<h2>Punto 4</h2>
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-<p>Una empresa de semillas afirma que el 90% de las semillas de tomate germinan correctamente.</p>
-<p>Se evalúan:</p>
-<p><span class="math display">\[
-n=250
-\]</span></p>
-<p>semillas y 210 germinan adecuadamente.</p>
-</div>
-<p><br></p>
-<div style="font-size: 28px;">
-<p>Determine si existe evidencia suficiente para afirmar que la proporción de germinación es menor al 90%.</p>
-</div>
-</section>
-<section id="punto-5" class="slide level2">
-<h2>Punto 5</h2>
-<div style="font-size: 27px; text-align: justify; line-height: 1.7;">
-<p>Un grupo de agrónomos en el Meta afirma que el rendimiento promedio de maíz es de 6 toneladas por hectárea.</p>
-<p>Se seleccionan:</p>
-<p><span class="math display">\[
-n=36
-\]</span></p>
-<p>parcelas y se obtiene:</p>
-<p><span class="math display">\[
-\bar{x}=6.7
-\]</span></p>
-<p>La desviación estándar poblacional es:</p>
-<p><span class="math display">\[
-\sigma=1.8
-\]</span></p>
-</div>
-<p><br></p>
-<div style="font-size: 28px;">
-<p>¿Existe evidencia suficiente para afirmar que el rendimiento promedio es superior a 6 toneladas por hectárea?</p>
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#eef7ee; padding:16px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:24px; text-align: justify; line-height: 1.5;">
+<p><strong style="color:#1b4d2e;">Punto 5.</strong> Un grupo de agrónomos en el Meta afirma que el rendimiento promedio de maíz es de 6 toneladas por hectárea. En <span class="math inline">\(\small n=36\)</span> parcelas se obtiene <span class="math inline">\(\small \bar{x}=6.7\)</span> con <span class="math inline">\(\small \sigma=1.8\)</span>. ¿Es el rendimiento promedio superior a 6 t/ha?</p>
 </div>
 
 </section>
