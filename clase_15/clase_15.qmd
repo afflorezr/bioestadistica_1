@@ -45,12 +45,12 @@ execute:
 ## Contenido
 
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 28px; align-items: start;">
 
 <div>
 
 <h3 class="fragment fade-in" data-fragment-index="1"
-style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">
+style="font-size: 30px; margin-bottom: 14px; color: #1b4d2e;">
 Parte I: Pruebas de hipótesis para la diferencia de medias.
 </h3>
 
@@ -84,7 +84,7 @@ Ejemplos y código en R.
 <div>
 
 <h3 class="fragment fade-in" data-fragment-index="8"
-style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">
+style="font-size: 30px; margin-bottom: 14px; color: #1a3a6b;">
 Parte II: Pruebas de hipótesis para la diferencia de proporciones
 </h3>
 
@@ -109,7 +109,40 @@ Criterios de decisión.
 Ejemplos y código en R.
 </li>
 
-<li class="fragment fade-in" data-fragment-index="14">
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="15"
+style="font-size: 30px; margin-bottom: 14px; color: #79260d;">
+Parte III: Error tipo I, error tipo II potencia de la prueba y razón de varianzas.
+</h3>
+
+<ul>
+<li class="fragment fade-in" data-fragment-index="16">
+Introducción
+</li>
+
+<li class="fragment fade-in" data-fragment-index="17">
+Error tipo I, error tipo II (Definiciones)
+</li>
+
+<li class="fragment fade-in" data-fragment-index="18">
+Tabla de decisiones
+</li>
+
+<li class="fragment fade-in" data-fragment-index="19">
+Potencia
+</li>
+
+<li class="fragment fade-in" data-fragment-index="20">
+Relación α, β y potencia.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="21">
+Prueba de hipotesis para la razón de varianzas.
+</li>
+<li class="fragment fade-in" data-fragment-index="22">
 Taller en clase.
 </li>
 
@@ -3481,6 +3514,2224 @@ round(pnorm(
 
 </div>
 
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<div style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Errores Tipo I y Tipo II
+</div>
+
+<div style="font-size: 32px;color: #071327;font-weight: 600;margin-top: 10px;text-align: justify;line-height: 1.7;">
+
+Las decisiones en una prueba de hipótesis se basan en información obtenida de una muestra. Por esta razón, siempre existe la posibilidad de cometer errores al concluir sobre una población. Los errores más importantes son el <b>Error Tipo I</b> y el <b>Error Tipo II</b>, los cuales determinan la confiabilidad de una prueba estadística.
+
+</div>
+
+</div>
+
+## ¿Por qué pueden ocurrir errores?
+
+<div style="font-size:27px;
+text-align:justify;
+line-height:1.6;">
+
+Las pruebas de hipótesis utilizan información obtenida de una muestra para tomar decisiones sobre una población. Sin embargo, distintas muestras pueden producir resultados diferentes debido a la variabilidad inherente al proceso de muestreo.
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Población
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Contiene el valor real del parámetro que se desea estudiar.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Muestra
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Proporciona una estimación del parámetro, pero está sujeta a variabilidad.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.5;">
+
+Como las decisiones se basan en muestras y no en toda la población, siempre existe la posibilidad de tomar una decisión incorrecta.
+
+</div>
+
+</div>
+
+
+## Errores en las pruebas de hipótesis
+
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.6;">
+
+Las decisiones en una prueba de hipótesis se basan en información muestral. Por esta razón, siempre existe la posibilidad de tomar una decisión incorrecta respecto a la realidad de la población.
+
+</div>
+
+<br>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+
+Error Tipo I
+
+</div>
+
+<div style="font-size:34px;
+font-weight:bold;
+text-align:center;
+margin-top:10px;">
+
+$$
+\alpha
+$$
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+Rechazar una hipótesis nula verdadera.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Error Tipo II
+
+</div>
+
+<div style="font-size:34px;
+font-weight:bold;
+text-align:center;
+margin-top:10px;">
+
+$$
+\beta
+$$
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+No rechazar una hipótesis nula falsa.
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;">
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.6;">
+
+Toda prueba de hipótesis busca controlar la probabilidad de cometer estos errores.
+
+</div>
+
+</div>
+
+## Posibles decisiones en una prueba de hipótesis
+
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.5;">
+
+La decisión tomada por el investigador puede coincidir o no con la realidad, generando cuatro posibles escenarios.
+
+</div>
+
+<table style="width:100%;
+font-size:22px;
+text-align:center;
+border-collapse:collapse;
+margin-top:10px;">
+
+<tr style="background-color:#dbeafe;">
+<th style="padding:8px;"></th>
+<th style="padding:8px;">$H_0$ verdadera</th>
+<th style="padding:8px;">$H_0$ falsa</th>
+</tr>
+
+<tr>
+
+<td style="padding:10px;font-weight:bold;">
+No rechazar $H_0$
+</td>
+
+<td style="background-color:#eef7ee;padding:10px;">
+
+✓ Decisión correcta
+
+</td>
+
+<td style="background-color:#fff7e8;padding:10px;">
+
+Error Tipo II
+
+<br>
+
+$$(\beta)$$
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;font-weight:bold;">
+Rechazar $H_0$
+</td>
+
+<td style="background-color:#fdecec;padding:10px;">
+
+Error Tipo I
+
+<br>
+
+$$(\alpha)$$
+
+</td>
+
+<td style="background-color:#eef7ee;padding:10px;">
+
+✓ Decisión correcta
+
+</td>
+
+</tr>
+
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1a3a6b;
+margin-top:12px;">
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.4;">
+
+Las probabilidades de cometer estos errores se representan mediante
+$\alpha$ y $\beta$.
+
+</div>
+
+</div>
+
+
+## Interpretación de $\alpha$ y $\beta$
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+
+Las probabilidades asociadas a los errores Tipo I y Tipo II permiten cuantificar el riesgo de tomar una decisión incorrecta en una prueba de hipótesis.
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+
+$$
+\alpha
+$$
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+Probabilidad de cometer un Error Tipo I.
+
+<br>
+
+Representa el riesgo de rechazar una hipótesis nula que en realidad es verdadera.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+$$
+\beta
+$$
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+Probabilidad de cometer un Error Tipo II.
+
+<br>
+
+Representa el riesgo de no detectar un efecto o diferencia que realmente existe.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.5;">
+
+Por convención, suele utilizarse
+
+$$
+\alpha = 0.05
+$$
+
+lo que implica aceptar un riesgo del 5% de cometer un Error Tipo I.
+
+</div>
+
+</div>
+
+## Ejemplo: Errores en una prueba de hipótesis
+
+<div style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.5;">
+
+Un investigador desea evaluar si un nuevo fertilizante aumenta el rendimiento promedio de un cultivo de fresa.
+
+</div>
+
+<div style="font-size:23px;
+text-align:center;
+margin-top:10px;">
+
+$H_0$: El fertilizante no aumenta el rendimiento.
+
+<br>
+
+$H_1$: El fertilizante aumenta el rendimiento.
+
+</div>
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+
+Error Tipo I ($\alpha$)
+
+</div>
+
+<div style="font-size:21px;
+text-align:justify;
+line-height:1.5;">
+
+Se concluye que el fertilizante mejora el rendimiento y se rechaza $H_0$, cuando en realidad no produce ningún efecto. 
+Interpretación: Se recomienda un fertilizante que realmente no funciona.  
+Consecuencia: pérdidas económicas para los productores.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Error Tipo II ($\beta$)
+
+</div>
+
+<div style="font-size:21px;
+text-align:justify;
+line-height:1.5;">
+
+Se concluye que el fertilizante no mejora el rendimiento y no se rechaza $H_0$, cuando en realidad sí produce una mejora.  
+Interpretación: Se descarta un fertilizante que realmente sí funciona.  
+Consecuencia: se pierde una oportunidad de aumentar la producción.
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+Toda prueba de hipótesis implica un riesgo de error; por ello, es importante comprender y controlar las probabilidades asociadas a los errores Tipo I y Tipo II.
+
+</div>
+
+</div>
+
+## Potencia estadística
+
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.6;">
+
+Además de controlar el riesgo de cometer errores, es importante que una prueba tenga capacidad para detectar diferencias o efectos reales cuando estos existen.
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Definición
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.7;">
+
+La potencia es la probabilidad de rechazar correctamente $H_0$ cuando realmente es falsa.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Relación con el Error Tipo II
+
+</div>
+
+<div style="font-size:26px;
+text-align:center;
+line-height:1.8;">
+
+$$
+\text{Potencia}=1-\beta
+$$
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Como $\beta$ representa la probabilidad de cometer un Error Tipo II, la potencia corresponde a la probabilidad de detectar correctamente un efecto o diferencia real.
+
+</div>
+
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+Por ejemplo: si $\beta=0.20$, entonces la potencia es $0.80$, lo que significa que existe un 80% de probabilidad de detectar un efecto real.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.5;">
+A menor probabilidad de cometer un Error Tipo II,mayor será la potencia de la prueba.
+</div>
+
+</div>
+
+
+## Factores que afectan la potencia
+
+<div class="fragment fade-up" data-fragment-index="1" style="font-size:28px;
+text-align:justify;
+line-height:1.6;">
+
+La potencia de una prueba no es fija. Su valor depende de varios factores relacionados con el diseño del estudio y las características de la población.
+
+</div>
+<br>
+<table class="fragment fade-up" data-fragment-index="2" style="width:100%; font-size:28px;">
+
+<tr style="background-color:#dbeafe;">
+<th>Factor</th>
+<th>Efecto sobre la potencia</th>
+</tr>
+
+<tr>
+<td>Tamaño de muestra</td>
+<td>$n \uparrow \Rightarrow$ Potencia $\uparrow$</td>
+</tr>
+
+<tr>
+<td>Nivel de significancia</td>
+<td>$\alpha \uparrow \Rightarrow$ Potencia $\uparrow$</td>
+</tr>
+
+<tr>
+<td>Variabilidad</td>
+<td>$\sigma \downarrow \Rightarrow$ Potencia $\uparrow$</td>
+</tr>
+
+<tr>
+<td>Tamaño del efecto</td>
+<td>Efecto $\uparrow \Rightarrow$ Potencia $\uparrow$</td>
+</tr>
+
+</table>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+En general, una prueba tendrá mayor capacidad para detectar efectos reales cuando la información disponible sea más precisa y abundante.
+
+</div>
+
+</div>
+
+
+## Función de potencia
+
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.5;">
+
+La potencia de una prueba no suele ser un valor fijo. Su magnitud depende del valor real del parámetro poblacional.
+
+La función de potencia describe la probabilidad de rechazar la hipótesis nula para cada posible valor del parámetro de interés.
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;
+margin-top:12px;">
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+Cuando el parámetro real es muy cercano al valor planteado en $H_0$, resulta más difícil detectar diferencias y la potencia suele ser menor.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;
+margin-top:12px;">
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+A medida que el parámetro se aleja del valor establecido en $H_0$, la evidencia en contra de la hipótesis nula aumenta y la potencia tiende a incrementarse.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:12px;">
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+La función de potencia permite evaluar la capacidad de una prueba para detectar distintos tamaños de efecto y comparar diferentes diseños de estudio.
+
+</div>
+
+</div>
+
+## Definición de la función de potencia
+
+<div class="fragment fade-up" data-fragment-index="1"style="font-size:28px;
+text-align:justify;
+line-height:1.6;
+background-color:#f4f8ff;
+padding:18px;
+border-left:6px solid #2b6cb0;
+border-radius:10px;">
+
+La función de potencia de una prueba estadística se define como:
+
+$$
+\pi(\theta) = P(\text{rechazar } H_0 \mid \theta)
+$$
+
+donde $(\theta)$ representa el valor real del parámetro poblacional.
+
+Esta función mide la probabilidad de detectar un efecto cuando este realmente existe.
+
+</div>
+
+
+
+<div class="fragment fade-up" data-fragment-index="2" style="font-size:28px;
+text-align:justify;
+line-height:1.6;
+background-color:#fff7ed;
+padding:18px;
+border-left:6px solid #ed8936;border-radius:10px;margin-top:10px;">
+
+La potencia está relacionada con el error tipo II $(\beta)$ a través de la siguiente relación:
+
+$$
+\text{Potencia} = 1 - \beta
+$$
+
+Un aumento en la potencia implica una menor probabilidad de no detectar un efecto real.
+
+</div>
+
+
+## Representación gráfica de la función de potencia
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;
+background-color:#f4f8ff;
+padding:18px;
+border-left:6px solid #2b6cb0;
+border-radius:10px;">
+
+La función de potencia se representa como una curva creciente.
+
+A medida que el valor del parámetro se aleja de $(H_0)$, aumenta la probabilidad de rechazarla.
+
+</div>
+
+```{r, echo=FALSE, fig.width=30, fig.height=10}
+theta <- seq(0, 1, by = 0.1)
+
+power <- c(0.05, 0.10, 0.25, 0.50, 0.80,
+           0.95, 0.98, 0.995, 0.999, 1, 1)
+
+library(ggplot2)
+
+df <- data.frame(theta, power)
+
+ggplot(df, aes(theta, power)) +
+  geom_line(linewidth = 2, colour = "steelblue") +
+  geom_point(size = 4, colour = "steelblue") +
+  labs(
+    title = "Curva de función de potencia",
+    x = expression("Valor del parámetro ("*theta*")"),
+    y = "Potencia"
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, 0.2)
+  ) +
+  theme_minimal(base_size = 20) +
+  theme(
+    plot.title = element_text(
+      size = 28,
+      face = "bold",
+      hjust = 0.5
+    ),
+    axis.title = element_text(size = 25),
+    axis.text = element_text(size = 25)
+  )
+```
+
+
+## Efecto del tamaño de muestra sobre la potencia
+
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.5;">
+
+El tamaño de muestra es uno de los factores que más influye en la potencia de una prueba estadística.
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;
+margin-top:12px;">
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+Al aumentar el tamaño de muestra, disminuye la variabilidad de los estimadores y resulta más fácil detectar diferencias reales.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;
+margin-top:12px;">
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+Por esta razón, pruebas realizadas con muestras más grandes suelen presentar una mayor potencia.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:12px;">
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+En general:
+
+<br><br>
+
+$n \uparrow \quad \Longrightarrow \quad \beta \downarrow \quad \Longrightarrow \quad \text{Potencia} \uparrow$
+
+</div>
+
+</div>
+
+## Grafico del efecto del tamaño de muestra sobre la potencia
+
+
+```{r, echo=FALSE, fig.width=30, fig.height=8}
+library(ggplot2)
+
+theta <- seq(0, 1, by = 0.01)
+
+datos <- rbind(
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(20)*3),  n = "n = 20"),
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(50)*3),  n = "n = 50"),
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(100)*3), n = "n = 100")
+)
+
+ggplot(datos,
+       aes(theta, potencia,
+           linetype = n)) +
+  geom_line(linewidth = 1.4) +
+  geom_vline(xintercept = 0.5,
+             linetype = "dashed") +
+  labs(
+    x = expression(theta),
+    y = "Potencia",
+    title = "Efecto del tamaño de muestra sobre la potencia"
+  ) +
+  theme_minimal(base_size = 18) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(hjust = 0.5)
+  )
+```
+
+<div style="font-size:22px;
+text-align:center;
+margin-top:10px;">
+
+A medida que aumenta el tamaño de muestra, la potencia crece más rápidamente y la prueba tiene mayor capacidad para detectar diferencias reales.
+
+</div>
+
+## Ejemplo: Determinación del tamaño de muestra
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;">
+
+<!-- Columna izquierda -->
+
+<div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:25px;
+font-weight:bold;
+color:#1a3a6b;
+margin-bottom:10px;">
+
+Problema
+
+</div>
+
+<div style="font-size:22px;
+text-align:justify;
+line-height:1.5;">
+
+Un investigador desea evaluar un nuevo fertilizante en cultivos de fresa.
+
+Se considera importante detectar una diferencia mínima de:
+
+$$
+d=4 \text{ toneladas/ha}
+$$
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:24px;
+font-weight:bold;
+color:#1b4d2e;
+margin-bottom:8px;">
+
+Datos
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+
+$$
+\sigma=8
+$$
+
+$$
+\alpha=0.05
+\qquad
+\text{Potencia}=0.80
+$$
+
+$$\beta=0.20$$
+
+$$
+Z_{\alpha/2}=1.96
+\qquad
+Z_{\beta}=0.84
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Columna derecha -->
+
+<div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:24px;
+font-weight:bold;
+color:#d97706;
+margin-bottom:8px;">
+
+Cálculo
+
+</div>
+
+<div style="font-size:20px;
+text-align:center;
+line-height:1.6;">
+
+$$
+n=
+\left(
+\frac{(Z_{\alpha/2}+Z_{\beta})\sigma}
+{d}
+\right)^2
+$$
+
+$$
+n=
+\left(
+\frac{(1.96+0.84)(8)}
+{4}
+\right)^2
+$$
+
+$$
+n=31.36
+\approx 32
+$$
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;">
+
+<div style="font-size:22px;
+text-align:justify;
+line-height:1.5;">
+
+Se requieren al menos
+
+$$
+32
+$$
+
+unidades experimentales para detectar una diferencia de 4 toneladas/ha con un nivel de significancia del 5% y una potencia del 80%.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+## Resumen: Errores, potencia y tamaño de muestra
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Error Tipo I
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Rechazar $H_0$
+
+cuando es verdadera.
+
+Controlado por:
+
+$$
+\alpha
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+
+Error Tipo II
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+No rechazar $H_0$
+
+cuando es falsa.
+
+Representado por:
+
+$$
+\beta
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Potencia
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Probabilidad de detectar una diferencia real.
+
+$$
+1-\beta
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Tamaño de muestra
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Principal herramienta para aumentar la potencia.
+
+$$
+n\uparrow
+\Rightarrow
+\beta\downarrow
+\Rightarrow
+\text{Potencia}\uparrow
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+
+Una prueba estadística confiable busca controlar el Error Tipo I y minimizar el Error Tipo II mediante un tamaño de muestra adecuado y una potencia suficiente.
+
+</div>
+
+</div>
+
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<div style="font-size: 40px; font-weight: bold; color: #3b82f6;">
+Pruebas de Hipótesis para la Razón de Varianzas
+</div>
+
+<div style="font-size: 30px;color: #071327;font-weight: 600;margin-top: 10px;text-align: justify;line-height: 1.7;">
+En numerosas investigaciones es importante comparar la variabilidad de dos poblaciones. Más allá de analizar diferencias entre medias, en muchos casos resulta necesario determinar si los datos presentan niveles de dispersión similares o si una población es significativamente más variable que otra.
+
+Las pruebas de hipótesis para la razón de varianzas permiten evaluar estas diferencias mediante la comparación de las varianzas poblacionales y constituyen una herramienta fundamental en el análisis estadístico y el diseño de experimentos.
+
+</div>
+
+</div>
+
+## ¿Para qué sirve la prueba de razón de varianzas?
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+
+En muchos estudios no solo interesa comparar promedios, sino también analizar la variabilidad de los datos. La prueba para la razón de varianzas permite determinar si dos poblaciones presentan niveles de dispersión similares o si una de ellas es significativamente más variable que la otra.
+
+</div>
+<br>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+¿Qué compara?
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+La variabilidad de dos poblaciones independientes.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+¿Por qué es importante?
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Permite verificar si ambas poblaciones presentan una dispersión similar.
+
+</div>
+
+</div>
+
+</div>
+<br>
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Esta prueba constituye una herramienta fundamental en ANOVA y Diseño de Experimentos.
+
+</div>
+
+</div>
+
+## ¿Cuándo se utiliza?
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+
+La prueba de razón de varianzas se utiliza cuando se desea comparar la dispersión de dos poblaciones y verificar si presentan niveles de variabilidad estadísticamente similares.
+
+</div>
+
+<br>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:22px;
+text-align:center;">
+
+✓ Dos muestras independientes
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:22px;
+text-align:center;">
+
+✓ Datos cuantitativos
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:22px;
+text-align:center;">
+
+✓ Comparación de varianzas
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:22px;
+text-align:center;">
+
+✓ Poblaciones aproximadamente normales
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+La normalidad es un supuesto importante para que la distribución F sea válida.
+
+</div>
+
+</div>
+
+## Parámetros de interés
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+
+El objetivo de esta prueba consiste en comparar la variabilidad de dos poblaciones mediante sus varianzas poblacionales.
+
+La varianza mide el grado de dispersión de los datos respecto a su media. Valores grandes indican mayor variabilidad, mientras que valores pequeños reflejan observaciones más homogéneas.
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Población 1
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.8;">
+
+$$
+\sigma_1^2
+$$
+
+</div>
+
+<div style="font-size:20px;
+text-align:center;
+line-height:1.4;">
+
+Varianza poblacional del primer grupo.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Población 2
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.8;">
+
+$$
+\sigma_2^2
+$$
+
+</div>
+
+<div style="font-size:20px;
+text-align:center;
+line-height:1.4;">
+
+Varianza poblacional del segundo grupo.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Como las varianzas poblacionales son desconocidas, la inferencia se realiza utilizando las varianzas muestrales
+
+$$
+s_1^2
+\qquad \text{y} \qquad
+s_2^2
+$$
+
+obtenidas a partir de muestras independientes.
+
+</div>
+
+</div>
+
+## Hipótesis de investigación
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+
+La formulación de las hipótesis depende de la pregunta de investigación planteada. En la comparación de varianzas pueden realizarse pruebas bilaterales o unilaterales.
+
+</div>
+
+<br>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:14px;
+margin-top:14px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Bilateral
+
+</div>
+
+<div style="font-size:21px;
+text-align:center;
+line-height:1.6;">
+
+$$
+H_0:\sigma_1^2=\sigma_2^2
+$$
+
+$$
+H_1:\sigma_1^2\neq\sigma_2^2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Cola derecha
+
+</div>
+
+<div style="font-size:21px;
+text-align:center;
+line-height:1.6;">
+
+$$
+H_0:\sigma_1^2\leq\sigma_2^2
+$$
+
+$$
+H_1:\sigma_1^2>\sigma_2^2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Cola izquierda
+
+</div>
+
+<div style="font-size:21px;
+text-align:center;
+line-height:1.6;">
+
+$$
+H_0:\sigma_1^2\geq\sigma_2^2
+$$
+
+$$
+H_1:\sigma_1^2<\sigma_2^2
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:center;">
+
+En la práctica, la prueba bilateral es la más utilizada para evaluar la homogeneidad de varianzas.
+
+</div>
+
+</div>
+
+
+## Distribución F y estadístico de prueba
+
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.6;">
+
+La prueba para la razón de varianzas utiliza la distribución F de Fisher-Snedecor, la cual se obtiene a partir de la razón entre dos varianzas muestrales provenientes de poblaciones normales e independientes.
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;
+margin-top:12px;">
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.8;">
+
+$$
+F=\frac{s_1^2}{s_2^2}
+$$
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Por convención, suele colocarse la mayor varianza en el numerador para obtener valores de:
+
+$$
+F \geq 1
+$$
+
+</div>
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:23px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Numerador
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+
+$$
+gl_1=n_1-1
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:23px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Denominador
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+
+$$
+gl_2=n_2-1
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+
+Si las varianzas poblacionales son iguales, se espera que el estadístico F tome valores cercanos a 1. Valores muy alejados de 1 constituyen evidencia en contra de la hipótesis nula.
+
+</div>
+
+</div>
+
+## Hipótesis y criterio de decisión
+
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.6;">
+
+Una vez calculado el estadístico de prueba, la decisión se toma comparando el valor observado con un valor crítico obtenido de la distribución F de Fisher-Snedecor.
+
+</div>
+
+<br>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:16px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Hipótesis nula
+
+</div>
+
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+
+$$
+H_0:\sigma_1^2=\sigma_2^2
+$$
+
+</div>
+
+<div style="font-size:18px;
+text-align:center;">
+
+Igual variabilidad.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Hipótesis alterna
+
+</div>
+
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+
+$$
+H_1:\sigma_1^2\neq\sigma_2^2
+$$
+
+</div>
+
+<div style="font-size:18px;
+text-align:center;">
+
+Diferente variabilidad.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Regla de decisión
+
+</div>
+
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+
+Si
+
+$$
+F_{calc}>F_{\alpha/2,gl_1,gl_2}
+$$
+
+</div>
+
+<div style="font-size:18px;
+text-align:center;">
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+Valores grandes de $F$ indican que las diferencias observadas entre las varianzas son demasiado importantes para atribuirse únicamente al azar.
+
+</div>
+
+</div>
+
+
+## Ejemplo
+
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.6;">
+
+Un investigador agrícola desea comparar la variabilidad del rendimiento de fresa obtenida bajo dos sistemas de riego.
+
+Para ello selecciona dos muestras independientes y obtiene la siguiente información:
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Sistema A
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.8;">
+
+$$
+s_A^2=18.5
+$$
+
+$$
+n_A=15
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Sistema B
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.8;">
+
+$$
+s_B^2=8.2
+$$
+
+$$
+n_B=12
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:center;">
+
+Nivel de significancia: $\alpha=0.05$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+
+Contrastar:
+
+$$
+H_0:\sigma_A^2=\sigma_B^2
+$$
+
+$$
+H_1:\sigma_A^2\neq\sigma_B^2
+$$
+
+</div>
+
+</div>
+
+## Solución
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Estadístico de prueba
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.8;">
+
+$$
+F=\frac{s_A^2}{s_B^2}
+$$
+$$
+F=\frac{18.5}{8.2}
+$$
+
+$$
+F=2.26
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Valor crítico
+
+</div>
+
+<div style="font-size:21px;
+text-align:center;
+line-height:1.7;">
+
+$$
+gl_1=14
+$$
+
+$$
+gl_2=11
+$$
+
+$$
+F_{crit}=F_{0.025,14,11}=3.29
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:center;">
+
+Como
+
+$$
+2.26 < 3.29
+$$
+
+no se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:22px;
+text-align:justify;
+line-height:1.5;">
+
+Con un nivel de significancia del 5%, no existe evidencia estadística suficiente para afirmar que los sistemas de riego presentan variabilidades diferentes en el rendimiento de fresa.
+
+</div>
+
+</div>
+
+
+
+## Código en R
+
+
+```{r}
+# Datos
+s1 <- 18.5 ; n1 <- 15
+s2 <- 8.2 ; n2 <- 12
+alpha <- 0.05
+# F observado
+Fcalc <- s1/s2
+# grados de libertad
+gl1 <- n1 - 1
+gl2 <- n2 - 1
+# F crítico
+Fcrit <- qf(1 - alpha/2, df1 = gl1, df2 = gl2)
+
+Fcalc
+Fcrit
+```
+
+
+
+
+
 ## Taller en Clase {.center .middle}
 
 ## 
@@ -3780,3 +6031,4 @@ $Z_{0.05}=1.645$ y $\alpha=0.05$
 </div>
 
 </div>
+

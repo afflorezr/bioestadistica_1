@@ -237,10 +237,9 @@
 </section>
 <section id="contenido" class="slide level2">
 <h2>Contenido</h2>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 28px; align-items: start;">
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">
-<<<<<<< HEAD
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 30px; margin-bottom: 14px; color: #1b4d2e;">
 Parte I: Pruebas de hipótesis para la diferencia de medias.
 </h3>
 <ul>
@@ -261,28 +260,11 @@ Criterios de decisión.
 </li>
 <li class="fragment fade-in" data-fragment-index="7">
 Ejemplos y código en R.
-=======
-Parte I: Fundamentos
-</h3>
-<ul>
-<li class="fragment fade-in" data-fragment-index="2">
-Conexión con el proceso de Poisson.
-</li>
-<li class="fragment fade-in" data-fragment-index="3">
-FDP y FDA de la Exponencial.
-</li>
-<li class="fragment fade-in" data-fragment-index="4">
-Esperanza, varianza y percentiles.
-</li>
-<li class="fragment fade-in" data-fragment-index="5">
-Propiedad de falta de memoria.
->>>>>>> 536ba55f831015feb6d2bd503545c230d6f5a81c
 </li>
 </ul>
 </div>
 <div>
-<<<<<<< HEAD
-<h3 class="fragment fade-in" data-fragment-index="8" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">
+<h3 class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; margin-bottom: 14px; color: #1a3a6b;">
 Parte II: Pruebas de hipótesis para la diferencia de proporciones
 </h3>
 <ul>
@@ -301,45 +283,43 @@ Criterios de decisión.
 <li class="fragment fade-in" data-fragment-index="13">
 Ejemplos y código en R.
 </li>
-<li class="fragment fade-in" data-fragment-index="14">
-Taller en clase.
-=======
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">
-Parte II: Aplicaciones
+</ul>
+</div>
+<div>
+<h3 class="fragment fade-in" data-fragment-index="15" style="font-size: 30px; margin-bottom: 14px; color: #79260d;">
+Parte III: Error tipo I, error tipo II potencia de la prueba y razón de varianzas.
 </h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">
-Ejemplos en tiempo de vida y espera.
+<li class="fragment fade-in" data-fragment-index="16">
+Introducción
 </li>
-<li class="fragment fade-in" data-fragment-index="8">
-Código R: dexp, pexp, qexp.
+<li class="fragment fade-in" data-fragment-index="17">
+Error tipo I, error tipo II (Definiciones)
 </li>
-<li class="fragment fade-in" data-fragment-index="9">
-Diagnóstico de ajuste.
+<li class="fragment fade-in" data-fragment-index="18">
+Tabla de decisiones
 </li>
-<li class="fragment fade-in" data-fragment-index="10">
-Errores comunes y taller.
->>>>>>> 536ba55f831015feb6d2bd503545c230d6f5a81c
+<li class="fragment fade-in" data-fragment-index="19">
+Potencia
+</li>
+<li class="fragment fade-in" data-fragment-index="20">
+Relación α, β y potencia.
+</li>
+<li class="fragment fade-in" data-fragment-index="21">
+Prueba de hipotesis para la razón de varianzas.
+</li>
+<li class="fragment fade-in" data-fragment-index="22">
+Taller en clase.
 </li>
 </ul>
 </div>
 </div>
 <div style="text-align: center; margin-top: 40px;">
-<<<<<<< HEAD
-=======
-<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
-Distribución Exponencial
-</p>
-<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
-Modelando tiempos de espera y de vida en sistemas biológicos
-</p>
->>>>>>> 536ba55f831015feb6d2bd503545c230d6f5a81c
 <p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">
 Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá
 </p>
 </div>
 </section>
-<<<<<<< HEAD
 <section id="section" class="slide level2 center middle">
 <h2></h2>
 <div style="text-align: center; margin-top: 40px;">
@@ -2870,10 +2850,1493 @@ line-height:1.6;">
 </div>
 </div>
 </section>
+<section id="section-4" class="slide level2 center middle">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<div style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+<p>Errores Tipo I y Tipo II</p>
+</div>
+<div style="font-size: 32px;color: #071327;font-weight: 600;margin-top: 10px;text-align: justify;line-height: 1.7;">
+<p>Las decisiones en una prueba de hipótesis se basan en información obtenida de una muestra. Por esta razón, siempre existe la posibilidad de cometer errores al concluir sobre una población. Los errores más importantes son el <b>Error Tipo I</b> y el <b>Error Tipo II</b>, los cuales determinan la confiabilidad de una prueba estadística.</p>
+</div>
+</div>
+</section>
+<section id="por-qué-pueden-ocurrir-errores" class="slide level2">
+<h2>¿Por qué pueden ocurrir errores?</h2>
+<div style="font-size:27px;
+text-align:justify;
+line-height:1.6;">
+<p>Las pruebas de hipótesis utilizan información obtenida de una muestra para tomar decisiones sobre una población. Sin embargo, distintas muestras pueden producir resultados diferentes debido a la variabilidad inherente al proceso de muestreo.</p>
+</div>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>Población</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Contiene el valor real del parámetro que se desea estudiar.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+<div style="font-size:26px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p>Muestra</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Proporciona una estimación del parámetro, pero está sujeta a variabilidad.</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:24px;
+text-align:center;
+line-height:1.5;">
+<p>Como las decisiones se basan en muestras y no en toda la población, siempre existe la posibilidad de tomar una decisión incorrecta.</p>
+</div>
+</div>
+</section>
+<section id="errores-en-las-pruebas-de-hipótesis" class="slide level2">
+<h2>Errores en las pruebas de hipótesis</h2>
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.6;">
+<p>Las decisiones en una prueba de hipótesis se basan en información muestral. Por esta razón, siempre existe la posibilidad de tomar una decisión incorrecta respecto a la realidad de la población.</p>
+</div>
+<p><br></p>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#fdecec;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+<p>Error Tipo I</p>
+</div>
+<div style="font-size:34px;
+font-weight:bold;
+text-align:center;
+margin-top:10px;">
+<p><span class="math display">\[
+\alpha
+\]</span></p>
+</div>
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>Rechazar una hipótesis nula verdadera.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p>Error Tipo II</p>
+</div>
+<div style="font-size:34px;
+font-weight:bold;
+text-align:center;
+margin-top:10px;">
+<p><span class="math display">\[
+\beta
+\]</span></p>
+</div>
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>No rechazar una hipótesis nula falsa.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;">
+<div style="font-size:28px;
+text-align:center;
+line-height:1.6;">
+<p>Toda prueba de hipótesis busca controlar la probabilidad de cometer estos errores.</p>
+</div>
+</div>
+</section>
+<section id="posibles-decisiones-en-una-prueba-de-hipótesis" class="slide level2">
+<h2>Posibles decisiones en una prueba de hipótesis</h2>
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.5;">
+<p>La decisión tomada por el investigador puede coincidir o no con la realidad, generando cuatro posibles escenarios.</p>
+</div>
+<table style="width:100%;
+font-size:22px;
+text-align:center;
+border-collapse:collapse;
+margin-top:10px;">
+<tbody><tr style="background-color:#dbeafe;">
+<th style="padding:8px;">
+</th>
+<th style="padding:8px;">
+<span class="math inline">\(H_0\)</span> verdadera
+</th>
+<th style="padding:8px;">
+<span class="math inline">\(H_0\)</span> falsa
+</th>
+</tr>
+<tr>
+<td style="padding:10px;font-weight:bold;">
+No rechazar <span class="math inline">\(H_0\)</span>
+</td>
+<td style="background-color:#eef7ee;padding:10px;">
+<p>✓ Decisión correcta</p>
+</td>
+<td style="background-color:#fff7e8;padding:10px;">
+<p>Error Tipo II</p>
+<p><br></p>
+<p><span class="math display">\[(\beta)\]</span></p>
+</td>
+</tr>
+<tr>
+<td style="padding:10px;font-weight:bold;">
+Rechazar <span class="math inline">\(H_0\)</span>
+</td>
+<td style="background-color:#fdecec;padding:10px;">
+<p>Error Tipo I</p>
+<p><br></p>
+<p><span class="math display">\[(\alpha)\]</span></p>
+</td>
+<td style="background-color:#eef7ee;padding:10px;">
+<p>✓ Decisión correcta</p>
+</td>
+</tr>
+</tbody></table>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1a3a6b;
+margin-top:12px;">
+<div style="font-size:28px;
+text-align:center;
+line-height:1.4;">
+<p>Las probabilidades de cometer estos errores se representan mediante <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="interpretación-de-alpha-y-beta" class="slide level2">
+<h2>Interpretación de <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span></h2>
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+<p>Las probabilidades asociadas a los errores Tipo I y Tipo II permiten cuantificar el riesgo de tomar una decisión incorrecta en una prueba de hipótesis.</p>
+</div>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:14px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#fdecec;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+<p><span class="math display">\[
+\alpha
+\]</span></p>
+</div>
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>Probabilidad de cometer un Error Tipo I.</p>
+<p><br></p>
+<p>Representa el riesgo de rechazar una hipótesis nula que en realidad es verdadera.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p><span class="math display">\[
+\beta
+\]</span></p>
+</div>
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>Probabilidad de cometer un Error Tipo II.</p>
+<p><br></p>
+<p>Representa el riesgo de no detectar un efecto o diferencia que realmente existe.</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:24px;
+text-align:center;
+line-height:1.5;">
+<p>Por convención, suele utilizarse</p>
+<p><span class="math display">\[
+\alpha = 0.05
+\]</span></p>
+<p>lo que implica aceptar un riesgo del 5% de cometer un Error Tipo I.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-errores-en-una-prueba-de-hipótesis" class="slide level2">
+<h2>Ejemplo: Errores en una prueba de hipótesis</h2>
+<div style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.5;">
+<p>Un investigador desea evaluar si un nuevo fertilizante aumenta el rendimiento promedio de un cultivo de fresa.</p>
+</div>
+<div style="font-size:23px;
+text-align:center;
+margin-top:10px;">
+<p><span class="math inline">\(H_0\)</span>: El fertilizante no aumenta el rendimiento.</p>
+<p><br></p>
+<p><span class="math inline">\(H_1\)</span>: El fertilizante aumenta el rendimiento.</p>
+</div>
+</div>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#fdecec;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+<p>Error Tipo I (<span class="math inline">\(\alpha\)</span>)</p>
+</div>
+<div style="font-size:21px;
+text-align:justify;
+line-height:1.5;">
+<p>Se concluye que el fertilizante mejora el rendimiento y se rechaza <span class="math inline">\(H_0\)</span>, cuando en realidad no produce ningún efecto. Interpretación: Se recomienda un fertilizante que realmente no funciona.<br>
+Consecuencia: pérdidas económicas para los productores.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p>Error Tipo II (<span class="math inline">\(\beta\)</span>)</p>
+</div>
+<div style="font-size:21px;
+text-align:justify;
+line-height:1.5;">
+<p>Se concluye que el fertilizante no mejora el rendimiento y no se rechaza <span class="math inline">\(H_0\)</span>, cuando en realidad sí produce una mejora.<br>
+Interpretación: Se descarta un fertilizante que realmente sí funciona.<br>
+Consecuencia: se pierde una oportunidad de aumentar la producción.</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>Toda prueba de hipótesis implica un riesgo de error; por ello, es importante comprender y controlar las probabilidades asociadas a los errores Tipo I y Tipo II.</p>
+</div>
+</div>
+</section>
+<section id="potencia-estadística" class="slide level2">
+<h2>Potencia estadística</h2>
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.6;">
+<p>Además de controlar el riesgo de cometer errores, es importante que una prueba tenga capacidad para detectar diferencias o efectos reales cuando estos existen.</p>
+</div>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:14px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>Definición</p>
+</div>
+<div style="font-size:24px;
+text-align:center;
+line-height:1.7;">
+<p>La potencia es la probabilidad de rechazar correctamente <span class="math inline">\(H_0\)</span> cuando realmente es falsa.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+<p>Relación con el Error Tipo II</p>
+</div>
+<div style="font-size:26px;
+text-align:center;
+line-height:1.8;">
+<p><span class="math display">\[
+\text{Potencia}=1-\beta
+\]</span></p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Como <span class="math inline">\(\beta\)</span> representa la probabilidad de cometer un Error Tipo II, la potencia corresponde a la probabilidad de detectar correctamente un efecto o diferencia real.</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+<p>Por ejemplo: si <span class="math inline">\(\beta=0.20\)</span>, entonces la potencia es <span class="math inline">\(0.80\)</span>, lo que significa que existe un 80% de probabilidad de detectar un efecto real.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.5;">
+<p>A menor probabilidad de cometer un Error Tipo II,mayor será la potencia de la prueba.</p>
+</div>
+</div>
+</section>
+<section id="factores-que-afectan-la-potencia" class="slide level2">
+<h2>Factores que afectan la potencia</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="font-size:28px;
+text-align:justify;
+line-height:1.6;">
+<p>La potencia de una prueba no es fija. Su valor depende de varios factores relacionados con el diseño del estudio y las características de la población.</p>
+</div>
+<br>
+<table class="fragment fade-up" data-fragment-index="2" style="width:100%; font-size:28px;">
+<tbody><tr style="background-color:#dbeafe;">
+<th>
+Factor
+</th>
+<th>
+Efecto sobre la potencia
+</th>
+</tr>
+<tr>
+<td>
+Tamaño de muestra
+</td>
+<td>
+<span class="math inline">\(n \uparrow \Rightarrow\)</span> Potencia <span class="math inline">\(\uparrow\)</span>
+</td>
+</tr>
+<tr>
+<td>
+Nivel de significancia
+</td>
+<td>
+<span class="math inline">\(\alpha \uparrow \Rightarrow\)</span> Potencia <span class="math inline">\(\uparrow\)</span>
+</td>
+</tr>
+<tr>
+<td>
+Variabilidad
+</td>
+<td>
+<span class="math inline">\(\sigma \downarrow \Rightarrow\)</span> Potencia <span class="math inline">\(\uparrow\)</span>
+</td>
+</tr>
+<tr>
+<td>
+Tamaño del efecto
+</td>
+<td>
+Efecto <span class="math inline">\(\uparrow \Rightarrow\)</span> Potencia <span class="math inline">\(\uparrow\)</span>
+</td>
+</tr>
+</tbody></table>
+<p><br></p>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+<p>En general, una prueba tendrá mayor capacidad para detectar efectos reales cuando la información disponible sea más precisa y abundante.</p>
+</div>
+</div>
+</section>
+<section id="función-de-potencia" class="slide level2">
+<h2>Función de potencia</h2>
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.5;">
+<p>La potencia de una prueba no suele ser un valor fijo. Su magnitud depende del valor real del parámetro poblacional.</p>
+<p>La función de potencia describe la probabilidad de rechazar la hipótesis nula para cada posible valor del parámetro de interés.</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;
+margin-top:12px;">
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>Cuando el parámetro real es muy cercano al valor planteado en <span class="math inline">\(H_0\)</span>, resulta más difícil detectar diferencias y la potencia suele ser menor.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;
+margin-top:12px;">
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>A medida que el parámetro se aleja del valor establecido en <span class="math inline">\(H_0\)</span>, la evidencia en contra de la hipótesis nula aumenta y la potencia tiende a incrementarse.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:12px;">
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>La función de potencia permite evaluar la capacidad de una prueba para detectar distintos tamaños de efecto y comparar diferentes diseños de estudio.</p>
+</div>
+</div>
+</section>
+<section id="definición-de-la-función-de-potencia" class="slide level2">
+<h2>Definición de la función de potencia</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="font-size:28px;
+text-align:justify;
+line-height:1.6;
+background-color:#f4f8ff;
+padding:18px;
+border-left:6px solid #2b6cb0;
+border-radius:10px;">
+<p>La función de potencia de una prueba estadística se define como:</p>
+<p><span class="math display">\[
+\pi(\theta) = P(\text{rechazar } H_0 \mid \theta)
+\]</span></p>
+<p>donde <span class="math inline">\((\theta)\)</span> representa el valor real del parámetro poblacional.</p>
+<p>Esta función mide la probabilidad de detectar un efecto cuando este realmente existe.</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="font-size:28px;
+text-align:justify;
+line-height:1.6;
+background-color:#fff7ed;
+padding:18px;
+border-left:6px solid #ed8936;border-radius:10px;margin-top:10px;">
+<p>La potencia está relacionada con el error tipo II <span class="math inline">\((\beta)\)</span> a través de la siguiente relación:</p>
+<p><span class="math display">\[
+\text{Potencia} = 1 - \beta
+\]</span></p>
+<p>Un aumento en la potencia implica una menor probabilidad de no detectar un efecto real.</p>
+</div>
+</section>
+<section id="representación-gráfica-de-la-función-de-potencia" class="slide level2">
+<h2>Representación gráfica de la función de potencia</h2>
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;
+background-color:#f4f8ff;
+padding:18px;
+border-left:6px solid #2b6cb0;
+border-radius:10px;">
+<p>La función de potencia se representa como una curva creciente.</p>
+<p>A medida que el valor del parámetro se aleja de <span class="math inline">\((H_0)\)</span>, aumenta la probabilidad de rechazarla.</p>
+</div>
+
+<img data-src="clase_15_files/figure-revealjs/unnamed-chunk-13-1.png" width="2880" class="r-stretch"></section>
+<section id="efecto-del-tamaño-de-muestra-sobre-la-potencia" class="slide level2">
+<h2>Efecto del tamaño de muestra sobre la potencia</h2>
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.5;">
+<p>El tamaño de muestra es uno de los factores que más influye en la potencia de una prueba estadística.</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;
+margin-top:12px;">
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>Al aumentar el tamaño de muestra, disminuye la variabilidad de los estimadores y resulta más fácil detectar diferencias reales.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;
+margin-top:12px;">
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>Por esta razón, pruebas realizadas con muestras más grandes suelen presentar una mayor potencia.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:12px;">
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>En general:</p>
+<p><br><br></p>
+<p><span class="math inline">\(n \uparrow \quad \Longrightarrow \quad \beta \downarrow \quad \Longrightarrow \quad \text{Potencia} \uparrow\)</span></p>
+</div>
+</div>
+</section>
+<section id="grafico-del-efecto-del-tamaño-de-muestra-sobre-la-potencia" class="slide level2">
+<h2>Grafico del efecto del tamaño de muestra sobre la potencia</h2>
+
+<img data-src="clase_15_files/figure-revealjs/unnamed-chunk-14-1.png" width="2880" class="r-stretch"><div style="font-size:22px;
+text-align:center;
+margin-top:10px;">
+<p>A medida que aumenta el tamaño de muestra, la potencia crece más rápidamente y la prueba tiene mayor capacidad para detectar diferencias reales.</p>
+</div>
+</section>
+<section id="ejemplo-determinación-del-tamaño-de-muestra" class="slide level2">
+<h2>Ejemplo: Determinación del tamaño de muestra</h2>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;">
+<!-- Columna izquierda -->
+<div>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:25px;
+font-weight:bold;
+color:#1a3a6b;
+margin-bottom:10px;">
+<p>Problema</p>
+</div>
+<div style="font-size:22px;
+text-align:justify;
+line-height:1.5;">
+<p>Un investigador desea evaluar un nuevo fertilizante en cultivos de fresa.</p>
+<p>Se considera importante detectar una diferencia mínima de:</p>
+<p><span class="math display">\[
+d=4 \text{ toneladas/ha}
+\]</span></p>
+</div>
+</div>
+<p><br></p>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:24px;
+font-weight:bold;
+color:#1b4d2e;
+margin-bottom:8px;">
+<p>Datos</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+<p><span class="math display">\[
+\sigma=8
+\]</span></p>
+<p><span class="math display">\[
+\alpha=0.05
+\qquad
+\text{Potencia}=0.80
+\]</span></p>
+<p><span class="math display">\[\beta=0.20\]</span></p>
+<p><span class="math display">\[
+Z_{\alpha/2}=1.96
+\qquad
+Z_{\beta}=0.84
+\]</span></p>
+</div>
+</div>
+</div>
+<!-- Columna derecha -->
+<div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+<div style="font-size:24px;
+font-weight:bold;
+color:#d97706;
+margin-bottom:8px;">
+<p>Cálculo</p>
+</div>
+<div style="font-size:20px;
+text-align:center;
+line-height:1.6;">
+<p><span class="math display">\[
+n=
+\left(
+\frac{(Z_{\alpha/2}+Z_{\beta})\sigma}
+{d}
+\right)^2
+\]</span></p>
+<p><span class="math display">\[
+n=
+\left(
+\frac{(1.96+0.84)(8)}
+{4}
+\right)^2
+\]</span></p>
+<p><span class="math display">\[
+n=31.36
+\approx 32
+\]</span></p>
+</div>
+</div>
+<p><br></p>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;">
+<div style="font-size:22px;
+text-align:justify;
+line-height:1.5;">
+<p>Se requieren al menos</p>
+<p><span class="math display">\[
+32
+\]</span></p>
+<p>unidades experimentales para detectar una diferencia de 4 toneladas/ha con un nivel de significancia del 5% y una potencia del 80%.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="resumen-errores-potencia-y-tamaño-de-muestra" class="slide level2">
+<h2>Resumen: Errores, potencia y tamaño de muestra</h2>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>Error Tipo I</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Rechazar <span class="math inline">\(H_0\)</span></p>
+<p>cuando es verdadera.</p>
+<p>Controlado por:</p>
+<p><span class="math display">\[
+\alpha
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fdecec;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+<p>Error Tipo II</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>No rechazar <span class="math inline">\(H_0\)</span></p>
+<p>cuando es falsa.</p>
+<p>Representado por:</p>
+<p><span class="math display">\[
+\beta
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+<p>Potencia</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Probabilidad de detectar una diferencia real.</p>
+<p><span class="math display">\[
+1-\beta
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p>Tamaño de muestra</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Principal herramienta para aumentar la potencia.</p>
+<p><span class="math display">\[
+n\uparrow
+\Rightarrow
+\beta\downarrow
+\Rightarrow
+\text{Potencia}\uparrow
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="5" style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:23px;
+text-align:center;
+line-height:1.5;">
+<p>Una prueba estadística confiable busca controlar el Error Tipo I y minimizar el Error Tipo II mediante un tamaño de muestra adecuado y una potencia suficiente.</p>
+</div>
+</div>
+</section>
+<section id="section-5" class="slide level2 center middle">
+<h2></h2>
+<div style="text-align: center; margin-top: 40px;">
+<div style="font-size: 40px; font-weight: bold; color: #3b82f6;">
+<p>Pruebas de Hipótesis para la Razón de Varianzas</p>
+</div>
+<div style="font-size: 30px;color: #071327;font-weight: 600;margin-top: 10px;text-align: justify;line-height: 1.7;">
+<p>En numerosas investigaciones es importante comparar la variabilidad de dos poblaciones. Más allá de analizar diferencias entre medias, en muchos casos resulta necesario determinar si los datos presentan niveles de dispersión similares o si una población es significativamente más variable que otra.</p>
+<p>Las pruebas de hipótesis para la razón de varianzas permiten evaluar estas diferencias mediante la comparación de las varianzas poblacionales y constituyen una herramienta fundamental en el análisis estadístico y el diseño de experimentos.</p>
+</div>
+</div>
+</section>
+<section id="para-qué-sirve-la-prueba-de-razón-de-varianzas" class="slide level2">
+<h2>¿Para qué sirve la prueba de razón de varianzas?</h2>
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+<p>En muchos estudios no solo interesa comparar promedios, sino también analizar la variabilidad de los datos. La prueba para la razón de varianzas permite determinar si dos poblaciones presentan niveles de dispersión similares o si una de ellas es significativamente más variable que la otra.</p>
+</div>
+<br>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+<div class="fragment fade-up" style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>¿Qué compara?</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>La variabilidad de dos poblaciones independientes.</p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+<p>¿Por qué es importante?</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Permite verificar si ambas poblaciones presentan una dispersión similar.</p>
+</div>
+</div>
+</div>
+<br>
+<div class="fragment fade-up" style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Esta prueba constituye una herramienta fundamental en ANOVA y Diseño de Experimentos.</p>
+</div>
+</div>
+</section>
+<section id="cuándo-se-utiliza" class="slide level2">
+<h2>¿Cuándo se utiliza?</h2>
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+<p>La prueba de razón de varianzas se utiliza cuando se desea comparar la dispersión de dos poblaciones y verificar si presentan niveles de variabilidad estadísticamente similares.</p>
+</div>
+<p><br></p>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+<div class="fragment fade-up" style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:22px;
+text-align:center;">
+<p>✓ Dos muestras independientes</p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:22px;
+text-align:center;">
+<p>✓ Datos cuantitativos</p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+<div style="font-size:22px;
+text-align:center;">
+<p>✓ Comparación de varianzas</p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #b91c1c;">
+<div style="font-size:22px;
+text-align:center;">
+<p>✓ Poblaciones aproximadamente normales</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<div class="fragment fade-up" style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>La normalidad es un supuesto importante para que la distribución F sea válida.</p>
+</div>
+</div>
+</section>
+<section id="parámetros-de-interés" class="slide level2">
+<h2>Parámetros de interés</h2>
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+<p>El objetivo de esta prueba consiste en comparar la variabilidad de dos poblaciones mediante sus varianzas poblacionales.</p>
+<p>La varianza mide el grado de dispersión de los datos respecto a su media. Valores grandes indican mayor variabilidad, mientras que valores pequeños reflejan observaciones más homogéneas.</p>
+</div>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+<div class="fragment fade-up" style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>Población 1</p>
+</div>
+<div style="font-size:28px;
+text-align:center;
+line-height:1.8;">
+<p><span class="math display">\[
+\sigma_1^2
+\]</span></p>
+</div>
+<div style="font-size:20px;
+text-align:center;
+line-height:1.4;">
+<p>Varianza poblacional del primer grupo.</p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+<p>Población 2</p>
+</div>
+<div style="font-size:28px;
+text-align:center;
+line-height:1.8;">
+<p><span class="math display">\[
+\sigma_2^2
+\]</span></p>
+</div>
+<div style="font-size:20px;
+text-align:center;
+line-height:1.4;">
+<p>Varianza poblacional del segundo grupo.</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#fff7e8;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Como las varianzas poblacionales son desconocidas, la inferencia se realiza utilizando las varianzas muestrales</p>
+<p><span class="math display">\[
+s_1^2
+\qquad \text{y} \qquad
+s_2^2
+\]</span></p>
+<p>obtenidas a partir de muestras independientes.</p>
+</div>
+</div>
+</section>
+<section id="hipótesis-de-investigación" class="slide level2">
+<h2>Hipótesis de investigación</h2>
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;">
+<p>La formulación de las hipótesis depende de la pregunta de investigación planteada. En la comparación de varianzas pueden realizarse pruebas bilaterales o unilaterales.</p>
+</div>
+<p><br></p>
+<div style="display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:14px;
+margin-top:14px;">
+<div class="fragment fade-up" style="background-color:#eef4fb;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>Bilateral</p>
+</div>
+<div style="font-size:21px;
+text-align:center;
+line-height:1.6;">
+<p><span class="math display">\[
+H_0:\sigma_1^2=\sigma_2^2
+\]</span></p>
+<p><span class="math display">\[
+H_1:\sigma_1^2\neq\sigma_2^2
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#eef7ee;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+<p>Cola derecha</p>
+</div>
+<div style="font-size:21px;
+text-align:center;
+line-height:1.6;">
+<p><span class="math display">\[
+H_0:\sigma_1^2\leq\sigma_2^2
+\]</span></p>
+<p><span class="math display">\[
+H_1:\sigma_1^2&gt;\sigma_2^2
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#fff7e8;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p>Cola izquierda</p>
+</div>
+<div style="font-size:21px;
+text-align:center;
+line-height:1.6;">
+<p><span class="math display">\[
+H_0:\sigma_1^2\geq\sigma_2^2
+\]</span></p>
+<p><span class="math display">\[
+H_1:\sigma_1^2&lt;\sigma_2^2
+\]</span></p>
+</div>
+</div>
+</div>
+<br>
+<div class="fragment fade-up" style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:center;">
+<p>En la práctica, la prueba bilateral es la más utilizada para evaluar la homogeneidad de varianzas.</p>
+</div>
+</div>
+</section>
+<section id="distribución-f-y-estadístico-de-prueba" class="slide level2">
+<h2>Distribución F y estadístico de prueba</h2>
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.6;">
+<p>La prueba para la razón de varianzas utiliza la distribución F de Fisher-Snedecor, la cual se obtiene a partir de la razón entre dos varianzas muestrales provenientes de poblaciones normales e independientes.</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;
+margin-top:12px;">
+<div style="font-size:30px;
+text-align:center;
+line-height:1.8;">
+<p><span class="math display">\[
+F=\frac{s_1^2}{s_2^2}
+\]</span></p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Por convención, suele colocarse la mayor varianza en el numerador para obtener valores de:</p>
+<p><span class="math display">\[
+F \geq 1
+\]</span></p>
+</div>
+</div>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+margin-top:14px;">
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:23px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+<p>Numerador</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+<p><span class="math display">\[
+gl_1=n_1-1
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+<div style="font-size:23px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p>Denominador</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+<p><span class="math display">\[
+gl_2=n_2-1
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:center;
+line-height:1.5;">
+<p>Si las varianzas poblacionales son iguales, se espera que el estadístico F tome valores cercanos a 1. Valores muy alejados de 1 constituyen evidencia en contra de la hipótesis nula.</p>
+</div>
+</div>
+</section>
+<section id="hipótesis-y-criterio-de-decisión" class="slide level2">
+<h2>Hipótesis y criterio de decisión</h2>
+<div style="font-size:28px;
+text-align:justify;
+line-height:1.6;">
+<p>Una vez calculado el estadístico de prueba, la decisión se toma comparando el valor observado con un valor crítico obtenido de la distribución F de Fisher-Snedecor.</p>
+</div>
+<p><br></p>
+<div style="display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:16px;
+margin-top:14px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>Hipótesis nula</p>
+</div>
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+<p><span class="math display">\[
+H_0:\sigma_1^2=\sigma_2^2
+\]</span></p>
+</div>
+<div style="font-size:18px;
+text-align:center;">
+<p>Igual variabilidad.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+<p>Hipótesis alterna</p>
+</div>
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+<p><span class="math display">\[
+H_1:\sigma_1^2\neq\sigma_2^2
+\]</span></p>
+</div>
+<div style="font-size:18px;
+text-align:center;">
+<p>Diferente variabilidad.</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p>Regla de decisión</p>
+</div>
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+<p>Si</p>
+<p><span class="math display">\[
+F_{calc}&gt;F_{\alpha/2,gl_1,gl_2}
+\]</span></p>
+</div>
+<div style="font-size:18px;
+text-align:center;">
+<p>Se rechaza <span class="math inline">\(H_0\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+<p>Valores grandes de <span class="math inline">\(F\)</span> indican que las diferencias observadas entre las varianzas son demasiado importantes para atribuirse únicamente al azar.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo" class="slide level2">
+<h2>Ejemplo</h2>
+<div style="font-size:25px;
+text-align:justify;
+line-height:1.6;">
+<p>Un investigador agrícola desea comparar la variabilidad del rendimiento de fresa obtenida bajo dos sistemas de riego.</p>
+<p>Para ello selecciona dos muestras independientes y obtiene la siguiente información:</p>
+</div>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+<div class="fragment fade-up" style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>Sistema A</p>
+</div>
+<div style="font-size:24px;
+text-align:center;
+line-height:1.8;">
+<p><span class="math display">\[
+s_A^2=18.5
+\]</span></p>
+<p><span class="math display">\[
+n_A=15
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+<p>Sistema B</p>
+</div>
+<div style="font-size:24px;
+text-align:center;
+line-height:1.8;">
+<p><span class="math display">\[
+s_B^2=8.2
+\]</span></p>
+<p><span class="math display">\[
+n_B=12
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:center;">
+<p>Nivel de significancia: <span class="math inline">\(\alpha=0.05\)</span></p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:center;
+line-height:1.6;">
+<p>Contrastar:</p>
+<p><span class="math display">\[
+H_0:\sigma_A^2=\sigma_B^2
+\]</span></p>
+<p><span class="math display">\[
+H_1:\sigma_A^2\neq\sigma_B^2
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="solución-5" class="slide level2">
+<h2>Solución</h2>
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;">
+<div class="fragment fade-up" style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+<p>Estadístico de prueba</p>
+</div>
+<div style="font-size:22px;
+text-align:center;
+line-height:1.8;">
+<p><span class="math display">\[
+F=\frac{s_A^2}{s_B^2}
+\]</span> <span class="math display">\[
+F=\frac{18.5}{8.2}
+\]</span></p>
+<p><span class="math display">\[
+F=2.26
+\]</span></p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+<p>Valor crítico</p>
+</div>
+<div style="font-size:21px;
+text-align:center;
+line-height:1.7;">
+<p><span class="math display">\[
+gl_1=14
+\]</span></p>
+<p><span class="math display">\[
+gl_2=11
+\]</span></p>
+<p><span class="math display">\[
+F_{crit}=F_{0.025,14,11}=3.29
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:center;">
+<p>Como</p>
+<p><span class="math display">\[
+2.26 &lt; 3.29
+\]</span></p>
+<p>no se rechaza <span class="math inline">\(H_0\)</span>.</p>
+</div>
+</div>
+<div class="fragment fade-up" style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+<div style="font-size:22px;
+text-align:justify;
+line-height:1.5;">
+<p>Con un nivel de significancia del 5%, no existe evidencia estadística suficiente para afirmar que los sistemas de riego presentan variabilidades diferentes en el rendimiento de fresa.</p>
+</div>
+</div>
+</section>
+<section id="código-en-r-4" class="slide level2">
+<h2>Código en R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># Datos</span></span>
+<span id="cb38-2"><a href=""></a>s1 <span class="ot">&lt;-</span> <span class="fl">18.5</span> ; n1 <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb38-3"><a href=""></a>s2 <span class="ot">&lt;-</span> <span class="fl">8.2</span> ; n2 <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb38-4"><a href=""></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb38-5"><a href=""></a><span class="co"># F observado</span></span>
+<span id="cb38-6"><a href=""></a>Fcalc <span class="ot">&lt;-</span> s1<span class="sc">/</span>s2</span>
+<span id="cb38-7"><a href=""></a><span class="co"># grados de libertad</span></span>
+<span id="cb38-8"><a href=""></a>gl1 <span class="ot">&lt;-</span> n1 <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb38-9"><a href=""></a>gl2 <span class="ot">&lt;-</span> n2 <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb38-10"><a href=""></a><span class="co"># F crítico</span></span>
+<span id="cb38-11"><a href=""></a>Fcrit <span class="ot">&lt;-</span> <span class="fu">qf</span>(<span class="dv">1</span> <span class="sc">-</span> alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df1 =</span> gl1, <span class="at">df2 =</span> gl2)</span>
+<span id="cb38-12"><a href=""></a></span>
+<span id="cb38-13"><a href=""></a>Fcalc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.256098</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>Fcrit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.35881</code></pre>
+</div>
+</div>
+</section>
 <section id="taller-en-clase" class="slide level2 center middle">
 <h2>Taller en Clase</h2>
 </section>
-<section id="section-4" class="slide level2">
+<section id="section-6" class="slide level2">
 <h2></h2>
 <div style="background-color:#eef4fb;
 padding:24px;
@@ -3291,602 +4754,6 @@ border-left:8px solid #d97706;">
 <p><span class="math inline">\(Z_{0.05}=1.645\)</span> y <span class="math inline">\(\alpha=0.05\)</span></p>
 </div>
 </div>
-=======
-<section id="motivación-tiempos-de-espera-en-agricultura" class="slide level2">
-<h2>Motivación: tiempos de espera en agricultura</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-¿Cuánto tiempo transcurre hasta el primer ataque de mosca de la fruta en un cultivo de mango?
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-¿Cuál es la vida útil de una bomba de riego hasta su primera falla?
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-¿Cuántos días transcurren entre lluvias consecutivas en una región semiárida de la costa colombiana?
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-En todos estos casos modelamos el <strong>tiempo hasta que ocurre un evento</strong>, cuando los eventos siguen un proceso de Poisson.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 28px; text-align: justify;">
-La distribución <strong>Exponencial</strong> es el modelo natural para estos tiempos de espera.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="conexión-con-la-poisson" class="slide level2">
-<h2>Conexión con la Poisson</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Proposición: Poisson y Exponencial
-</div>
-<div class="block-body">
-<p>
-Si el número de eventos en un intervalo sigue una <span class="math inline">\(\text{Poisson}(\lambda t)\)</span>, entonces el tiempo <span class="math inline">\(T\)</span> entre eventos consecutivos sigue una distribución <span class="math inline">\(\text{Exponencial}(\lambda)\)</span>.
-</p>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Ejemplo: si se detectan en promedio 2 focos de plaga por hectárea por semana (<span class="math inline">\(\lambda = 2\)</span>), el tiempo entre focos consecutivos sigue Exponencial(2) semanas.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(E(T) = 1/\lambda = 0.5\)</span> semanas entre focos consecutivos.
-</li>
-</ul>
-</section>
-<section id="distribución-exponencial-definición" class="slide level2">
-<h2>Distribución exponencial: definición</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Definición: Distribución Exponencial
-</div>
-<div class="block-body">
-<p>
-Se dice que <span class="math inline">\(T \sim \text{Exp}(\lambda)\)</span> si su FDP es:
-</p>
-<span class="math display">\[f(t) = \lambda e^{-\lambda t}, \quad t \geq 0\]</span>
-<p>
-donde <span class="math inline">\(\lambda &gt; 0\)</span> es la <strong>tasa de ocurrencia</strong> (eventos por unidad de tiempo).
-</p>
-</div>
-</div>
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-El soporte es <span class="math inline">\([0, \infty)\)</span>: la variable toma valores positivos.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Verificación: <span class="math inline">\(\int_0^{\infty} \lambda e^{-\lambda t}\,dt = \lambda \cdot \frac{1}{\lambda} = 1\)</span>. ✓
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-Notación alternativa: algunos textos usan <span class="math inline">\(\text{Exp}(\beta)\)</span> donde <span class="math inline">\(\beta = 1/\lambda\)</span> es la <strong>escala media</strong>.
-</li>
-</ul>
-</section>
-<section id="fda-de-la-distribución-exponencial" class="slide level2">
-<h2>FDA de la distribución exponencial</h2>
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-FDA: Exponencial(<span class="math inline">\(\lambda\)</span>)
-</div>
-<div class="block-body">
-<span class="math display">\[F(t) = P(T \leq t) = 1 - e^{-\lambda t}, \quad t \geq 0\]</span>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Probabilidad de que el evento aún no ocurra en <span class="math inline">\([0, t]\)</span>: <span class="math inline">\(P(T &gt; t) = e^{-\lambda t}\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(P(a \leq T \leq b) = e^{-\lambda a} - e^{-\lambda b}\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-La FDA tiene una forma analítica cerrada, a diferencia de la Normal (Clase 16).
-</li>
-</ul>
-</section>
-<section id="parámetros-de-la-exponencial" class="slide level2">
-<h2>Parámetros de la exponencial</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Teorema: E(T), Var(T) y percentiles
-</div>
-<div class="block-body">
-<p>
-Si <span class="math inline">\(T \sim \text{Exp}(\lambda)\)</span>:
-</p>
-<span class="math display">\[E(T) = \frac{1}{\lambda} \qquad \text{Var}(T) = \frac{1}{\lambda^2} \qquad \sigma_T = \frac{1}{\lambda}\]</span>
-<p>
-El percentil <span class="math inline">\(p\)</span>: <span class="math inline">\(t_p = -\dfrac{\ln(1-p)}{\lambda}\)</span>.
-</p>
-</div>
-</div>
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Notable: <span class="math inline">\(E(T) = \sigma_T\)</span>. La media y la desviación estándar son iguales, lo que implica una distribución muy asimétrica a la derecha.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Mediana: <span class="math inline">\(t_{0.5} = \ln(2)/\lambda \approx 0.693/\lambda\)</span>, que es menor que la media <span class="math inline">\(1/\lambda\)</span>.
-</li>
-</ul>
-</section>
-<section id="derivación-et-de-la-exponencial" class="slide level2">
-<h2>Derivación: E(T) de la Exponencial</h2>
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Demostración: E(T)
-</div>
-<div class="block-body">
-<span class="math display">\[E(T) = \int_0^{\infty} t \cdot \lambda e^{-\lambda t}\,dt\]</span>
-<p>
-Integrando por partes con <span class="math inline">\(u = t\)</span>, <span class="math inline">\(dv = \lambda e^{-\lambda t}dt\)</span>:
-</p>
-<span class="math display">\[= \left[-t e^{-\lambda t}\right]_0^{\infty} + \int_0^{\infty} e^{-\lambda t}\,dt = 0 + \frac{1}{\lambda} = \frac{1}{\lambda} \quad \blacksquare\]</span>
-</div>
-</div>
-</section>
-<section id="propiedad-de-falta-de-memoria" class="slide level2">
-<h2>Propiedad de falta de memoria</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Teorema: falta de memoria
-</div>
-<div class="block-body">
-<p>
-Si <span class="math inline">\(T \sim \text{Exp}(\lambda)\)</span>, entonces para todo <span class="math inline">\(s, t \geq 0\)</span>:
-</p>
-<span class="math display">\[P(T &gt; s + t \mid T &gt; s) = P(T &gt; t)\]</span>
-</div>
-</div>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
-<h4 class="fragment fade-in" data-fragment-index="2">
-Interpretación
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Habiendo esperado <span class="math inline">\(s\)</span> días sin lluvia, la probabilidad de esperar <span class="math inline">\(t\)</span> días más es la misma que si recién empezáramos a esperar.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-La distribución no tiene <strong>memoria</strong>: el historial de espera no cambia la distribución futura.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="5">
-Unicidad
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
-La Exponencial es la <strong>única distribución continua</strong> con la propiedad de falta de memoria.
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
-Cuando hay desgaste o envejecimiento, esta propiedad no se cumple y se usan otras distribuciones (Weibull, Gamma).
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="gráfica-fdp-y-fda-de-la-exponencial" class="slide level2">
-<h2>Gráfica: FDP y FDA de la Exponencial</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
-<span id="cb1-2"><a href=""></a>lambda <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb1-3"><a href=""></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">400</span>)</span>
-<span id="cb1-4"><a href=""></a></span>
-<span id="cb1-5"><a href=""></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(t, <span class="at">f =</span> <span class="fu">dexp</span>(t, lambda)), <span class="fu">aes</span>(t, f)) <span class="sc">+</span></span>
-<span id="cb1-6"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#1b4d2e"</span>, <span class="at">linewidth =</span> <span class="fl">1.4</span>) <span class="sc">+</span></span>
-<span id="cb1-7"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"t"</span>, <span class="at">y =</span> <span class="st">"f(t)"</span>, <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"FDP: Exp(λ = "</span>, lambda, <span class="st">")"</span>)) <span class="sc">+</span></span>
-<span id="cb1-8"><a href=""></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
-<span id="cb1-9"><a href=""></a></span>
-<span id="cb1-10"><a href=""></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(t, <span class="at">F =</span> <span class="fu">pexp</span>(t, lambda)), <span class="fu">aes</span>(t, F)) <span class="sc">+</span></span>
-<span id="cb1-11"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#1a3a6b"</span>, <span class="at">linewidth =</span> <span class="fl">1.4</span>) <span class="sc">+</span></span>
-<span id="cb1-12"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"#c0392b"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb1-13"><a href=""></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">2.5</span>, <span class="at">y =</span> <span class="fl">0.55</span>, <span class="at">label =</span> <span class="st">"mediana"</span>, <span class="at">color =</span> <span class="st">"#c0392b"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb1-14"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"t"</span>, <span class="at">y =</span> <span class="st">"F(t)"</span>, <span class="at">title =</span> <span class="st">"FDA: Exp(λ = 2)"</span>) <span class="sc">+</span></span>
-<span id="cb1-15"><a href=""></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
-<span id="cb1-16"><a href=""></a></span>
-<span id="cb1-17"><a href=""></a>p1 <span class="sc">+</span> p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="clase_15_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"></section>
-<section id="ejemplo-1-vida-útil-de-una-bomba-de-riego" class="slide level2">
-<h2>Ejemplo 1: vida útil de una bomba de riego</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Ejemplo: sistema de riego, Meta
-</div>
-<div class="block-body">
-<p>
-La vida útil de una bomba de riego centrífuga en condiciones de campo en el Meta sigue una distribución Exponencial con media 3 años. Sea <span class="math inline">\(T\)</span> = tiempo hasta la primera falla (años).
-</p>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(E(T) = 3\)</span> años, entonces <span class="math inline">\(\lambda = 1/3\)</span> fallas por año. <span class="math inline">\(T \sim \text{Exp}(1/3)\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Calcule: (a) <span class="math inline">\(P(T &gt; 2)\)</span>, (b) <span class="math inline">\(P(1 \leq T \leq 4)\)</span>, (c) mediana de vida útil, (d) percentil 10.
-</li>
-</ul>
-</section>
-<section id="cálculo-vida-útil-de-la-bomba" class="slide level2">
-<h2>Cálculo: vida útil de la bomba</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">
-Probabilidades
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
-<span class="math inline">\(P(T &gt; 2) = e^{-2/3} \approx 0.513\)</span>
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
-<span class="math inline">\(P(1 \leq T \leq 4) = e^{-1/3} - e^{-4/3} \approx 0.716 - 0.264 \approx 0.452\)</span>
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">
-Percentiles
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
-Mediana: <span class="math inline">\(t_{0.5} = \ln(2) \times 3 \approx 2.08\)</span> años
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
-<span class="math inline">\(P_{10}\)</span>: <span class="math inline">\(t_{0.10} = -\ln(0.90) \times 3 \approx 0.316\)</span> años <span class="math inline">\(\approx 115\)</span> días
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="código-r-distribución-exponencial" class="slide level2">
-<h2>Código R: distribución exponencial</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>lambda <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>   <span class="co"># tasa = 1/media</span></span>
-<span id="cb2-2"><a href=""></a></span>
-<span id="cb2-3"><a href=""></a><span class="co"># (a) P(T &gt; 2) = 1 - F(2)</span></span>
-<span id="cb2-4"><a href=""></a><span class="fu">pexp</span>(<span class="dv">2</span>, <span class="at">rate =</span> lambda, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5134171</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># (b) P(1 &lt;= T &lt;= 4)</span></span>
-<span id="cb4-2"><a href=""></a><span class="fu">pexp</span>(<span class="dv">4</span>, lambda) <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">1</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4529342</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co"># (c) Mediana</span></span>
-<span id="cb6-2"><a href=""></a><span class="fu">qexp</span>(<span class="fl">0.50</span>, <span class="at">rate =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.079442</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># (d) Percentil 10</span></span>
-<span id="cb8-2"><a href=""></a><span class="fu">qexp</span>(<span class="fl">0.10</span>, <span class="at">rate =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3160815</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># Verificación: E(T) y Var(T)</span></span>
-<span id="cb10-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">15</span>)</span>
-<span id="cb10-3"><a href=""></a>sim <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">10000</span>, <span class="at">rate =</span> lambda)</span>
-<span id="cb10-4"><a href=""></a><span class="fu">cat</span>(<span class="st">"Media:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(sim), <span class="dv">3</span>), <span class="st">"  Var:"</span>, <span class="fu">round</span>(<span class="fu">var</span>(sim), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Media: 2.991   Var: 9.257 </code></pre>
-</div>
-</div>
-</section>
-<section id="efecto-de-lambda-en-la-forma-de-la-distribución" class="slide level2">
-<h2>Efecto de <span class="math inline">\(\lambda\)</span> en la forma de la distribución</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-2"><a href=""></a>lambdas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
-<span id="cb12-3"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(lambdas, <span class="cf">function</span>(l) {</span>
-<span id="cb12-4"><a href=""></a>  t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="at">length.out =</span> <span class="dv">300</span>)</span>
-<span id="cb12-5"><a href=""></a>  <span class="fu">tibble</span>(t, <span class="at">fdp =</span> <span class="fu">dexp</span>(t, l), <span class="at">lambda =</span> <span class="fu">paste0</span>(<span class="st">"λ = "</span>, l))</span>
-<span id="cb12-6"><a href=""></a>})</span>
-<span id="cb12-7"><a href=""></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(t, fdp, <span class="at">color =</span> lambda)) <span class="sc">+</span></span>
-<span id="cb12-8"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb12-9"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"t"</span>, <span class="at">y =</span> <span class="st">"f(t)"</span>, <span class="at">color =</span> <span class="st">"Tasa"</span>,</span>
-<span id="cb12-10"><a href=""></a>       <span class="at">title =</span> <span class="st">"FDP Exponencial para distintos λ"</span>) <span class="sc">+</span></span>
-<span id="cb12-11"><a href=""></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="clase_15_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
-<section id="ejemplo-2-tiempo-entre-lluvias-en-la-guajira" class="slide level2">
-<h2>Ejemplo 2: tiempo entre lluvias en la Guajira</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Ejemplo: sequía en La Guajira
-</div>
-<div class="block-body">
-<p>
-En la región árida de La Guajira, llueve en promedio 0.8 veces por mes durante la temporada seca. El tiempo entre lluvias consecutivas sigue una Exponencial. ¿Cuál es la probabilidad de que pasen más de 2 meses sin lluvia?
-</p>
-</div>
-</div>
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<span class="math inline">\(\lambda = 0.8\)</span> lluvias/mes, <span class="math inline">\(T \sim \text{Exp}(0.8)\)</span>. <span class="math inline">\(E(T) = 1/0.8 = 1.25\)</span> meses.
-</li>
-</ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>lambda <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
-<span id="cb13-2"><a href=""></a><span class="co"># P(T &gt; 2)</span></span>
-<span id="cb13-3"><a href=""></a><span class="fu">pexp</span>(<span class="dv">2</span>, <span class="at">rate =</span> lambda, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2018965</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Mediana</span></span>
-<span id="cb15-2"><a href=""></a><span class="fu">qexp</span>(<span class="fl">0.5</span>, <span class="at">rate =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.866434</code></pre>
-</div>
-</div>
-<ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Hay aproximadamente un 20.2% de probabilidad de que pasen más de 2 meses sin lluvia.
-</li>
-</ul>
-</section>
-<section id="diagnóstico-los-datos-siguen-una-exponencial" class="slide level2">
-<h2>Diagnóstico: ¿los datos siguen una Exponencial?</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># Gráfico QQ-Exponencial</span></span>
-<span id="cb17-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">77</span>)</span>
-<span id="cb17-3"><a href=""></a>datos <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">80</span>, <span class="at">rate =</span> <span class="fl">0.5</span>)          <span class="co"># datos simulados</span></span>
-<span id="cb17-4"><a href=""></a>lambda_est <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">mean</span>(datos)          <span class="co"># estimación MLE de lambda</span></span>
-<span id="cb17-5"><a href=""></a></span>
-<span id="cb17-6"><a href=""></a><span class="co"># QQ-plot contra Exponencial</span></span>
-<span id="cb17-7"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb17-8"><a href=""></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(datos)</span>
-<span id="cb17-9"><a href=""></a>p_i <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">:</span>n <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">/</span> n</span>
-<span id="cb17-10"><a href=""></a>q_teorico <span class="ot">&lt;-</span> <span class="fu">qexp</span>(p_i, <span class="at">rate =</span> lambda_est)</span>
-<span id="cb17-11"><a href=""></a>q_muestral <span class="ot">&lt;-</span> <span class="fu">sort</span>(datos)</span>
-<span id="cb17-12"><a href=""></a></span>
-<span id="cb17-13"><a href=""></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(q_teorico, q_muestral), <span class="fu">aes</span>(q_teorico, q_muestral)) <span class="sc">+</span></span>
-<span id="cb17-14"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#1b4d2e"</span>, <span class="at">size =</span> <span class="fl">1.8</span>) <span class="sc">+</span></span>
-<span id="cb17-15"><a href=""></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"#c0392b"</span>) <span class="sc">+</span></span>
-<span id="cb17-16"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cuantiles teóricos Exp"</span>, <span class="at">y =</span> <span class="st">"Cuantiles muestrales"</span>,</span>
-<span id="cb17-17"><a href=""></a>       <span class="at">title =</span> <span class="st">"QQ-plot: ajuste Exponencial"</span>) <span class="sc">+</span></span>
-<span id="cb17-18"><a href=""></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="clase_15_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
-<section id="estimación-de-lambda-por-máxima-verosimilitud" class="slide level2">
-<h2>Estimación de <span class="math inline">\(\lambda\)</span> por máxima verosimilitud</h2>
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Proposición: estimador MLE de <span class="math inline">\(\lambda\)</span>
-</div>
-<div class="block-body">
-<p>
-Dado un conjunto de observaciones <span class="math inline">\(t_1, \ldots, t_n\)</span> de una Exponencial(<span class="math inline">\(\lambda\)</span>), el estimador de máxima verosimilitud es:
-</p>
-<span class="math display">\[\hat{\lambda} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}\]</span>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># Estimación de lambda desde datos de campo</span></span>
-<span id="cb18-2"><a href=""></a>tiempos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">2.1</span>, <span class="fl">1.3</span>, <span class="fl">3.5</span>, <span class="fl">0.4</span>, <span class="fl">1.9</span>, <span class="fl">2.8</span>, <span class="fl">0.7</span>, <span class="fl">4.2</span>, <span class="fl">1.1</span>)</span>
-<span id="cb18-3"><a href=""></a>lambda_mle <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">mean</span>(tiempos)</span>
-<span id="cb18-4"><a href=""></a><span class="fu">cat</span>(<span class="st">"Lambda estimado:"</span>, <span class="fu">round</span>(lambda_mle, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Lambda estimado: 0.5319 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"Media estimada:"</span>, <span class="fu">round</span>(<span class="dv">1</span><span class="sc">/</span>lambda_mle, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Media estimada: 1.88 </code></pre>
-</div>
-</div>
-</section>
-<section id="errores-comunes" class="slide level2">
-<h2>Errores comunes</h2>
-<div class="block-alert fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Advertencia: errores frecuentes
-</div>
-<div class="block-body">
-<p>
-La parametrización de la Exponencial puede causar confusión entre <span class="math inline">\(\lambda\)</span> (tasa) y <span class="math inline">\(\beta = 1/\lambda\)</span> (media).
-</p>
-</div>
-</div>
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Confundir tasa y media:</strong> si <span class="math inline">\(E(T) = 3\)</span> entonces <span class="math inline">\(\lambda = 1/3\)</span>, no <span class="math inline">\(\lambda = 3\)</span>. En R, el argumento es <code>rate = lambda</code>, no la media.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Aplicar donde hay envejecimiento:</strong> si la tasa de falla aumenta con el tiempo (desgaste mecánico, senescencia vegetal), la Exponencial no aplica. Use la distribución Weibull.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Confundir <span class="math inline">\(P(T &gt; t)\)</span> con <span class="math inline">\(P(T \geq t)\)</span>:</strong> para distribuciones continuas, son iguales. Use <code>pexp(t, rate, lower.tail = FALSE)</code>.
-</li>
-</ul>
-</section>
-<section id="taller-en-clase" class="slide level2 center middle">
-<h2>Taller en clase</h2>
-</section>
-<section id="taller-1-vida-de-semillas-en-almacenamiento" class="slide level2">
-<h2>Taller 1: vida de semillas en almacenamiento</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Problema
-</div>
-<div class="block-body">
-<p>
-El tiempo de viabilidad de semillas de arroz almacenadas en condiciones no controladas sigue una distribución Exponencial con media 18 meses. Calcule: (a) <span class="math inline">\(P(T &gt; 24)\)</span>, (b) <span class="math inline">\(P(12 \leq T \leq 24)\)</span>, (c) el tiempo mínimo que garantiza el 90% de viabilidad.
-</p>
-</div>
-</div>
-</section>
-<section id="taller-1-solución" class="slide level2">
-<h2>Taller 1: solución</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>lambda <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">18</span>   <span class="co"># tasa = 1/media</span></span>
-<span id="cb22-2"><a href=""></a></span>
-<span id="cb22-3"><a href=""></a><span class="co"># (a) P(T &gt; 24)</span></span>
-<span id="cb22-4"><a href=""></a><span class="fu">pexp</span>(<span class="dv">24</span>, <span class="at">rate =</span> lambda, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2635971</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="co"># (b) P(12 &lt;= T &lt;= 24)</span></span>
-<span id="cb24-2"><a href=""></a><span class="fu">pexp</span>(<span class="dv">24</span>, lambda) <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">12</span>, lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.24982</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="co"># (c) Percentil 90 (90% de las semillas habrán fallado para ese tiempo)</span></span>
-<span id="cb26-2"><a href=""></a><span class="co"># Equivalente: tiempo t tal que P(T &gt; t) = 0.90, es decir P(T &lt;= t) = 0.10</span></span>
-<span id="cb26-3"><a href=""></a><span class="fu">qexp</span>(<span class="fl">0.10</span>, <span class="at">rate =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.896489</code></pre>
-</div>
-</div>
-</section>
-<section id="taller-2-falta-de-memoria" class="slide level2">
-<h2>Taller 2: falta de memoria</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Problema
-</div>
-<div class="block-body">
-<p>
-Una trampa de insectos captura en promedio 1 abeja reina cada 4 horas. El tiempo entre capturas sigue una Exponencial. Si ya pasaron 2 horas desde la última captura, ¿cuál es la probabilidad de capturar una abeja reina en la próxima hora?
-</p>
-</div>
-</div>
-</section>
-<section id="taller-2-solución" class="slide level2">
-<h2>Taller 2: solución</h2>
-<ul>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify;">
-<span class="math inline">\(\lambda = 1/4\)</span> capturas/hora. <span class="math inline">\(T \sim \text{Exp}(1/4)\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Por la propiedad de <strong>falta de memoria</strong>: <span class="math inline">\(P(T \leq 1 \mid T &gt; 2) = P(T \leq 1)\)</span>.
-</li>
-</ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>lambda <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span></span>
-<span id="cb28-2"><a href=""></a><span class="co"># P(T &lt;= 1) por falta de memoria</span></span>
-<span id="cb28-3"><a href=""></a><span class="fu">pexp</span>(<span class="dv">1</span>, <span class="at">rate =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2211992</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="co"># Verificación directa: P(T &lt;= 3 | T &gt; 2) = P(2 &lt; T &lt;= 3) / P(T &gt; 2)</span></span>
-<span id="cb30-2"><a href=""></a>(<span class="fu">pexp</span>(<span class="dv">3</span>, lambda) <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">2</span>, lambda)) <span class="sc">/</span> <span class="fu">pexp</span>(<span class="dv">2</span>, lambda, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2211992</code></pre>
-</div>
-</div>
-</section>
-<section id="taller-3-comparación-entre-distribuciones" class="slide level2">
-<h2>Taller 3: comparación entre distribuciones</h2>
-<div class="block-example fragment fade-up" data-fragment-index="1">
-<div class="block-title">
-Problema
-</div>
-<div class="block-body">
-<p>
-Dos variedades de frijol se comparan en resistencia a la sequía. La variedad A resiste hasta <span class="math inline">\(T_A \sim \text{Exp}(0.2)\)</span> días y la variedad B hasta <span class="math inline">\(T_B \sim \text{Exp}(0.1)\)</span> días. Compare: (a) tiempos medios de resistencia, (b) <span class="math inline">\(P(T_A &gt; 7)\)</span> vs <span class="math inline">\(P(T_B &gt; 7)\)</span>, (c) percentiles 25.
-</p>
-</div>
-</div>
-</section>
-<section id="taller-3-solución" class="slide level2">
-<h2>Taller 3: solución</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>lambdaA <span class="ot">&lt;-</span> <span class="fl">0.2</span>; lambdaB <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
-<span id="cb32-2"><a href=""></a></span>
-<span id="cb32-3"><a href=""></a><span class="co"># (a) Medias</span></span>
-<span id="cb32-4"><a href=""></a><span class="fu">cat</span>(<span class="st">"Media A:"</span>, <span class="dv">1</span><span class="sc">/</span>lambdaA, <span class="st">"días  Media B:"</span>, <span class="dv">1</span><span class="sc">/</span>lambdaB, <span class="st">"días</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Media A: 5 días  Media B: 10 días</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="co"># (b) P(T &gt; 7)</span></span>
-<span id="cb34-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(TA &gt; 7):"</span>, <span class="fu">round</span>(<span class="fu">pexp</span>(<span class="dv">7</span>, lambdaA, <span class="at">lower.tail=</span><span class="cn">FALSE</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(TA &gt; 7): 0.2466 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"P(TB &gt; 7):"</span>, <span class="fu">round</span>(<span class="fu">pexp</span>(<span class="dv">7</span>, lambdaB, <span class="at">lower.tail=</span><span class="cn">FALSE</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P(TB &gt; 7): 0.4966 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># (c) Percentil 25</span></span>
-<span id="cb38-2"><a href=""></a><span class="fu">cat</span>(<span class="st">"P25 de TA:"</span>, <span class="fu">round</span>(<span class="fu">qexp</span>(<span class="fl">0.25</span>, lambdaA), <span class="dv">3</span>), <span class="st">"días</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P25 de TA: 1.438 días</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">cat</span>(<span class="st">"P25 de TB:"</span>, <span class="fu">round</span>(<span class="fu">qexp</span>(<span class="fl">0.25</span>, lambdaB), <span class="dv">3</span>), <span class="st">"días</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>P25 de TB: 2.877 días</code></pre>
-</div>
-</div>
-</section>
-<section id="resumen-distribución-exponencial" class="slide level2">
-<h2>Resumen: distribución exponencial</h2>
-<div class="twocol">
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 28px;">
-Fórmulas clave
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
-<span class="math inline">\(f(t) = \lambda e^{-\lambda t}\)</span>, <span class="math inline">\(t \geq 0\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
-<span class="math inline">\(F(t) = 1 - e^{-\lambda t}\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">
-<span class="math inline">\(E(T) = \sigma_T = 1/\lambda\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
-Falta de memoria: <span class="math inline">\(P(T &gt; s+t \mid T&gt;s) = P(T&gt;t)\)</span>.
-</li>
-</ul>
-</div>
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 style="color:#1a3a6b; font-size: 28px;">
-Uso en R
-</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
-<code>dexp(t, rate)</code>: densidad.
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">
-<code>pexp(t, rate)</code>: <span class="math inline">\(P(T \leq t)\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">
-<code>qexp(p, rate)</code>: percentil <span class="math inline">\(p\)</span>.
-</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px;">
-<code>rexp(n, rate)</code>: simulación.
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="próxima-clase" class="slide level2">
-<h2>Próxima clase</h2>
-<div class="block-note fragment fade-up" data-fragment-index="1">
-<div class="block-body">
-<p>
-<strong>Clase 16: Distribución Normal.</strong> La distribución más importante de la estadística. Aparece en errores de medición, caracteres cuantitativos en genética, y como límite de muchas distribuciones (Teorema Central del Límite).
-</p>
-</div>
-</div>
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Estudiaremos la estandarización <span class="math inline">\(Z = (X - \mu)/\sigma\)</span>, el uso de tablas y el cálculo en R con <code>dnorm</code>, <code>pnorm</code>, <code>qnorm</code>.
-</li>
-</ul>
->>>>>>> 536ba55f831015feb6d2bd503545c230d6f5a81c
 
 </section>
     </div>
@@ -3928,11 +4795,7 @@ Estudiaremos la estandarización <span class="math inline">\(Z = (X - \mu)/\sigm
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-<<<<<<< HEAD
 'multiplex': {"secret":null,"id":"e901ae37b0c95866ad4a1867ceef07eb43aa44a7eb7de956bc6fc3f222436f91","url":"https://multiplex.up.railway.app/"},
-=======
-'multiplex': {"secret":null,"id":"845c21c3d5775ec9fb3b1c281923d402b8186477bf53bbeb2ca87e17ca86d352","url":"https://multiplex.up.railway.app/"},
->>>>>>> 536ba55f831015feb6d2bd503545c230d6f5a81c
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -4113,7 +4976,6 @@ Estudiaremos la estandarización <span class="math inline">\(Z = (X - \mu)/\sigm
       });
     </script>
     
-<<<<<<< HEAD
 
     <script>
 
@@ -4189,45 +5051,6 @@ Estudiaremos la estandarización <span class="math inline">\(Z = (X - \mu)/\sigm
 
     
 
-=======
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
->>>>>>> 536ba55f831015feb6d2bd503545c230d6f5a81c
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
