@@ -887,7 +887,7 @@ font-size:42px;
 font-weight:bold;
 color:#1a3a6b;">
 <p><span class="math display">\[
-Y=\beta_0+\beta_1X+\varepsilon
+Y=\beta_0+\beta_1X+e
 \]</span></p>
 </div>
 <div style="display:flex; gap:15px; margin-top:20px;">
@@ -944,7 +944,7 @@ font-size:40px;
 font-weight:bold;
 color:#1a3a6b;">
 <p><span class="math display">\[
-Y_i=\beta_0+\beta_1X_i+\varepsilon_i
+Y_i=\beta_0+\beta_1X_i+e_i
 \]</span></p>
 </div>
 <table class="fragment fade-in" data-fragment-index="4" style="
@@ -994,7 +994,7 @@ Pendiente de la recta de regresión.
 </tr>
 <tr>
 <td style="padding:10px; border:1px solid #d1d5db; text-align:center;">
-<b><span class="math inline">\(\varepsilon_i\)</span></b>
+<b><span class="math inline">\(e_i\)</span></b>
 </td>
 <td style="padding:10px; border:1px solid #d1d5db;">
 Error aleatorio asociado a la observación.
@@ -1071,7 +1071,7 @@ margin-top:20px;
 font-size:54px;
 font-weight:bold;
 color:#1e3a8a;">
-<p>Estimación y Aplicación</p>
+<p>Estimación</p>
 </div>
 <div class="fragment fade-in" data-fragment-index="3" style="
 margin-top:30px;
@@ -1085,7 +1085,7 @@ border-radius:10px;">
 margin-top:35px;
 font-size:24px;
 color:#475569;">
-<p>Estimación de parámetros │ Valores ajustados y residuos │ Método de mínimos cuadrados │ Estimación de coeficientes │ Aplicación en R</p>
+<p>Estimación de parámetros │ Valores ajustados y residuos │ Método de mínimos cuadrados │ Estimación de coeficientes │ Coeficiente de determinación</p>
 </div>
 </div>
 </section>
@@ -1115,7 +1115,7 @@ text-align:center;">
 Modelo Poblacional
 </h3>
 <p><span class="math display">\[
-Y_i=\beta_0+\beta_1X_i+\varepsilon_i
+Y_i=\beta_0+\beta_1X_i+e_i
 \]</span></p>
 </div>
 <div class="fragment fade-in" data-fragment-index="4" style="
@@ -1485,47 +1485,147 @@ font-size:21px;
 </div>
 </div>
 </section>
-<section id="residuos-del-modelo" class="slide level2">
-<h2>Residuos del modelo</h2>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div style="
+height:500px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;">
 <div class="fragment fade-in" data-fragment-index="1" style="
 font-size:28px;
-text-align:justify;
-">
-<p>Los residuos representan la diferencia entre los valores observados y los valores estimados por el modelo de regresión.</p>
-<p>Su análisis permite evaluar la calidad del ajuste y verificar si los supuestos del modelo son razonables.</p>
+font-weight:600;
+color:#64748b;
+letter-spacing:2px;">
+<p>TERCERA PARTE</p>
 </div>
 <div class="fragment fade-in" data-fragment-index="2" style="
 margin-top:20px;
-padding:15px;
-background:#eff6ff;
+font-size:54px;
+font-weight:bold;
+color:#1e3a8a;">
+<p>Validación Estadística del Modelo</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="
+margin-top:30px;
+width:70%;
+height:4px;
+background:#3b82f6;
+border-radius:10px;">
+
+</div>
+<div class="fragment fade-in" data-fragment-index="4" style="
+margin-top:35px;
+font-size:24px;
+color:#475569;">
+<p>Supuestos del modelo │ Diagnósticos del modelo │ Inferencia sobre los coeficientes │ Códigos usados en R │ Ejemplo de aplicación │ Taller en Clase.</p>
+</div>
+</div>
+</section>
+<section id="importancia-de-los-residuos-para-la-validación-del-modelo" class="slide level2">
+<h2>Importancia de los Residuos para la Validación del Modelo</h2>
+<div class="fragment fade-in" data-fragment-index="1" style="
+margin-top:10px;
+padding:18px;
+background:#f8fafc;
+border-radius:14px;
 border-left:6px solid #2563eb;
-font-size:28px;
+font-size:24px;
+text-align:justify;
+line-height:1.5;
+">
+<p>Los <b>residuos</b> representan la diferencia entre los valores observados y los valores estimados por el modelo de regresión.</p>
+<p>Su análisis permite evaluar la calidad del ajuste y constituye la base para verificar si los supuestos estadísticos del modelo son razonables.</p>
+<div style="
+margin-top:10px;
+text-align:center;
+font-size:18px;
+color:#64748b;
+font-style:italic;
+">
+<p><span class="math display">\[e_i = y_i - \hat{y}_i\]</span></p>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:20px;
+">
+<div style="
+background:#eff6ff;
+padding:18px;
+border-radius:14px;
 text-align:center;
 ">
-<p><span class="math display">\[
-e_i = y_i - \hat{y}_i
-\]</span></p>
+<div style="
+font-size:25px;
+font-weight:700;
+color:#1d4ed8;
+margin-bottom:8px;
+">
+<p>Linealidad</p>
+</div>
+<div style="
+font-size:25px;
+">
+<p>Los residuos ayudan a identificar patrones que indiquen una relación mal especificada.</p>
+</div>
+</div>
+<div style="
+background:#f0fdf4;
+padding:18px;
+border-radius:14px;
+text-align:center;
+">
+<div style="
+font-size:25px;
+font-weight:700;
+color:#15803d;
+margin-bottom:8px;
+">
+<p>Varianza Constante</p>
+</div>
+<div style="
+font-size:25px;
+">
+<p>Permiten verificar si la dispersión de los errores permanece estable.</p>
+</div>
+</div>
+<div style="
+background:#fffbeb;
+padding:18px;
+border-radius:14px;
+text-align:center;
+">
+<div style="
+font-size:25px;
+font-weight:700;
+color:#b45309;
+margin-bottom:8px;
+">
+<p>Normalidad e Independencia</p>
+</div>
+<div style="
+font-size:25px;
+">
+<p>Su comportamiento permite validar los supuestos necesarios para la inferencia.</p>
+</div>
+</div>
 </div>
 <div class="fragment fade-in" data-fragment-index="3" style="
 margin-top:20px;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-font-size:28px;
+padding:16px;
+background:linear-gradient(90deg,#dbeafe,#eff6ff);
+border-radius:14px;
+font-size:24px;
+font-weight:600;
+color:#1e3a8a;
+text-align:center;
 ">
-<ul>
-<li>
-Si el residuo es cercano a cero, la predicción es precisa.
-</li>
-<br>
-<li>
-Residuos grandes indican errores de predicción importantes.
-</li>
-<br>
-<li>
-Los supuestos de regresión se verifican a partir del comportamiento de los residuos.
-</li>
-</ul>
+<p>Los supuestos del modelo se evalúan a partir del comportamiento de los residuos.</p>
 </div>
 </section>
 <section id="supuestos-del-modelo-de-regresión-lineal-simple" class="slide level2">

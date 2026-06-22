@@ -1171,7 +1171,7 @@ font-weight:bold;
 color:#1a3a6b;">
 
 $$
-Y=\beta_0+\beta_1X+\varepsilon
+Y=\beta_0+\beta_1X+e
 $$
 
 </div>
@@ -1260,7 +1260,7 @@ font-weight:bold;
 color:#1a3a6b;">
 
 $$
-Y_i=\beta_0+\beta_1X_i+\varepsilon_i
+Y_i=\beta_0+\beta_1X_i+e_i
 $$
 
 </div>
@@ -1325,7 +1325,7 @@ Pendiente de la recta de regresión.
 
 <tr>
 <td style="padding:10px; border:1px solid #d1d5db; text-align:center;">
-<b>$\varepsilon_i$</b>
+<b>$e_i$</b>
 </td>
 
 <td style="padding:10px; border:1px solid #d1d5db;">
@@ -1577,7 +1577,7 @@ font-size:54px;
 font-weight:bold;
 color:#1e3a8a;">
 
-Estimación y Aplicación
+Estimación
 
 </div>
 
@@ -1607,7 +1607,7 @@ Método de mínimos cuadrados
 │
 Estimación de coeficientes
 │
-Aplicación en R
+Coeficiente de determinación
 
 </div>
 
@@ -1648,7 +1648,7 @@ Modelo Poblacional
 </h3>
 
 $$
-Y_i=\beta_0+\beta_1X_i+\varepsilon_i
+Y_i=\beta_0+\beta_1X_i+e_i
 $$
 
 </div>
@@ -2230,55 +2230,229 @@ font-size:21px;
 
 </div>
 
-## Residuos del modelo
+
+## 
+
+<div style="
+height:500px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;">
 
 <div class="fragment fade-in"
-data-fragment-index="1"style="
+data-fragment-index="1"
+style="
 font-size:28px;
-text-align:justify;
-">
+font-weight:600;
+color:#64748b;
+letter-spacing:2px;">
 
-Los residuos representan la diferencia entre los valores observados y los valores estimados por el modelo de regresión.
-
-Su análisis permite evaluar la calidad del ajuste y verificar si los supuestos del modelo son razonables.
+TERCERA PARTE
 
 </div>
 
 <div class="fragment fade-in"
-data-fragment-index="2" style="
+data-fragment-index="2"
+style="
 margin-top:20px;
-padding:15px;
-background:#eff6ff;
+font-size:54px;
+font-weight:bold;
+color:#1e3a8a;">
+
+Validación Estadística del Modelo
+
+</div>
+
+<div class="fragment fade-in"
+data-fragment-index="3"
+style="
+margin-top:30px;
+width:70%;
+height:4px;
+background:#3b82f6;
+border-radius:10px;">
+
+</div>
+
+<div class="fragment fade-in"
+data-fragment-index="4"
+style="
+margin-top:35px;
+font-size:24px;
+color:#475569;">
+
+Supuestos del modelo
+│
+Diagnósticos del modelo
+│
+Inferencia sobre los coeficientes
+│
+Códigos usados en R
+│
+Ejemplo de aplicación
+│
+Taller en Clase.
+
+</div>
+
+</div>
+
+
+## Importancia de los Residuos para la Validación del Modelo
+
+<div class="fragment fade-in"
+data-fragment-index="1"
+style="
+margin-top:10px;
+padding:18px;
+background:#f8fafc;
+border-radius:14px;
 border-left:6px solid #2563eb;
-font-size:28px;
+font-size:24px;
+text-align:justify;
+line-height:1.5;
+">
+
+Los <b>residuos</b> representan la diferencia entre los valores observados y los valores estimados por el modelo de regresión.
+
+Su análisis permite evaluar la calidad del ajuste y constituye la base para verificar si los supuestos estadísticos del modelo son razonables.
+
+<div style="
+margin-top:10px;
+text-align:center;
+font-size:18px;
+color:#64748b;
+font-style:italic;
+">
+
+$$e_i = y_i - \hat{y}_i$$
+
+</div>
+
+</div>
+
+
+
+<div class="fragment fade-in"
+data-fragment-index="2"
+style="
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:20px;
+">
+
+
+<div style="
+background:#eff6ff;
+padding:18px;
+border-radius:14px;
 text-align:center;
 ">
 
-$$
-e_i = y_i - \hat{y}_i
-$$
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="3" style="
-margin-top:20px;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-font-size:28px;
+<div style="
+font-size:25px;
+font-weight:700;
+color:#1d4ed8;
+margin-bottom:8px;
 ">
 
-<ul>
-<li>Si el residuo es cercano a cero, la predicción es precisa.</li>
-<br>
-<li>Residuos grandes indican errores de predicción importantes.</li>
-<br>
-<li>Los supuestos de regresión se verifican a partir del comportamiento de los residuos.</li>
-</ul>
+Linealidad
 
 </div>
 
+<div style="
+font-size:25px;
+">
+
+Los residuos ayudan a identificar patrones que indiquen una relación mal especificada.
+
+</div>
+
+</div>
+
+
+
+<div style="
+background:#f0fdf4;
+padding:18px;
+border-radius:14px;
+text-align:center;
+">
+
+<div style="
+font-size:25px;
+font-weight:700;
+color:#15803d;
+margin-bottom:8px;
+">
+
+Varianza Constante
+
+</div>
+
+<div style="
+font-size:25px;
+">
+
+Permiten verificar si la dispersión de los errores permanece estable.
+
+</div>
+
+</div>
+
+
+
+<div style="
+background:#fffbeb;
+padding:18px;
+border-radius:14px;
+text-align:center;
+">
+
+<div style="
+font-size:25px;
+font-weight:700;
+color:#b45309;
+margin-bottom:8px;
+">
+
+Normalidad e Independencia
+
+</div>
+
+<div style="
+font-size:25px;
+">
+
+Su comportamiento permite validar los supuestos necesarios para la inferencia.
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="fragment fade-in"
+data-fragment-index="3"
+style="
+margin-top:20px;
+padding:16px;
+background:linear-gradient(90deg,#dbeafe,#eff6ff);
+border-radius:14px;
+font-size:24px;
+font-weight:600;
+color:#1e3a8a;
+text-align:center;
+">
+
+Los supuestos del modelo se evalúan a partir del comportamiento de los residuos.
+
+</div>
 
 ## Supuestos del modelo de regresión lineal simple
 
