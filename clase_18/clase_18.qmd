@@ -1,7 +1,7 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
@@ -37,493 +37,1493 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 18 {.center .middle}
 
 ## Contenido
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 26px; margin-top: 20px; font-size: 22px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El estadístico como variable aleatoria</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 26px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El modelo de Análisis de Varianza</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Estadístico y distribución muestral.</li>
-<li class="fragment fade-in" data-fragment-index="3">Distribución de la media muestral.</li>
-<li class="fragment fade-in" data-fragment-index="4">Error estándar.</li>
-<li class="fragment fade-in" data-fragment-index="5">Simulación de distribuciones muestrales.</li>
+<li class="fragment fade-in" data-fragment-index="2">Motivación: comparar más de dos tratamientos.</li>
+<li class="fragment fade-in" data-fragment-index="3">Ejemplo introductorio.</li>
+<li class="fragment fade-in" data-fragment-index="4">Idea del análisis de varianza.</li>
+<li class="fragment fade-in" data-fragment-index="5">Modelo de efectos fijos.</li>
+<li class="fragment fade-in" data-fragment-index="6">Descomposición y cálculo de la suma de cuadrados.</li>
+<li class="fragment fade-in" data-fragment-index="7">Tabla ANOVA y estadístico F.</li>
+<li class="fragment fade-in" data-fragment-index="8">Estimación de parámetros y datos no balanceados.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Otras distribuciones muestrales</h3>
+<h3 class="fragment fade-in" data-fragment-index="9" style="font-size: 26px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Verificación y comparación de medias</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Distribución de la proporción muestral.</li>
-<li class="fragment fade-in" data-fragment-index="8">Distribución de la varianza muestral.</li>
-<li class="fragment fade-in" data-fragment-index="9">Distribuciones chi-cuadrado, t y F.</li>
-<li class="fragment fade-in" data-fragment-index="10">Aplicaciones y taller.</li>
+<li class="fragment fade-in" data-fragment-index="10">Supuestos del modelo y residuos.</li>
+<li class="fragment fade-in" data-fragment-index="11">Diagnóstico gráfico de residuos.</li>
+<li class="fragment fade-in" data-fragment-index="12">Contrastes y contrastes ortogonales.</li>
+<li class="fragment fade-in" data-fragment-index="13">Método de Scheffé.</li>
+<li class="fragment fade-in" data-fragment-index="14">Comparación de pares: Tukey.</li>
+<li class="fragment fade-in" data-fragment-index="15">Comparación con un control: Dunnett.</li>
 </ul>
 </div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="16" style="font-size: 26px; margin-bottom: 14px; color: #79260d;">Parte III: Software, tamaño de muestra y dispersión</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="17">Salida de un programa estadístico.</li>
+<li class="fragment fade-in" data-fragment-index="18">Determinación del tamaño de muestra.</li>
+<li class="fragment fade-in" data-fragment-index="19">Curvas características de operación.</li>
+<li class="fragment fade-in" data-fragment-index="20">Métodos de cálculo del tamaño de muestra.</li>
+<li class="fragment fade-in" data-fragment-index="21">Efectos de dispersión.</li>
+</ul>
 </div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="22" style="font-size: 26px; margin-bottom: 14px; color: #5b21b6;">Parte IV: Enfoques alternativos</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="23">Método de Kruskal-Wallis.</li>
+<li class="fragment fade-in" data-fragment-index="24">Transformación de rangos.</li>
+<li class="fragment fade-in" data-fragment-index="25">Resumen general y taller en clase.</li>
+</ul>
+</div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Distribuciones Muestrales</p>
-<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">La variabilidad de los estadísticos de muestra a muestra</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Análisis de Varianza
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Hasta ahora hemos comparado dos poblaciones. ¿Qué ocurre cuando es necesario comparar tres, cuatro o más tratamientos al mismo tiempo?
+</p>
+
 </div>
 
-## El problema de la variabilidad muestral
+## Comparar más de dos tratamientos
+
+<div style="font-size:28px; text-align:justify; line-height:1.3;">
+
+En la práctica agrícola es muy común evaluar **varios tratamientos** de manera simultánea: distintas variedades de semilla, niveles de fertilización, sistemas de riego o densidades de siembra. Una idea intuitiva sería comparar cada par de tratamientos con una prueba $t$: con $a=4$ tratamientos existen $\binom{4}{2}=6$ comparaciones posibles, pero esto acumula el error.
+
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:30px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; font-size:26px; text-align:justify;">
+Comparar el rendimiento del café bajo cuatro fertilizantes requiere comparar <strong>cuatro medias</strong> al mismo tiempo, no solo dos.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-top:7px solid #b91c1c; font-size:26px; text-align:justify;">
+<strong style="color:#b91c1c;">Error global inflado:</strong> con $\alpha=0.05$ por prueba, la probabilidad de cometer <strong>al menos un</strong> Error Tipo I en las 6 pruebas puede superar el 25%, aunque $H_0$ sea verdadera en todos los casos.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:30px; font-size:28px; text-align:justify;">
+La solución: **ANOVA**. Permite comparar varias medias en una sola prueba global, controlando el nivel de significancia. Además, es una herramienta clave del **Diseño de Experimentos**, porque ayuda a planear, ejecutar y analizar estudios comparativos de forma rigurosa.
+</div>
+
+## Ejemplo
+
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 30px; text-align: justify; line-height: 1.3; margin-top: 40px;">
+
+Un agrónomo desea comparar el efecto de cuatro tratamientos de fertilización sobre el rendimiento del café (sacos/ha): un grupo <strong>Control</strong> (sin fertilizante), <strong>Foliar</strong>, <strong>Orgánico</strong> y <strong>NPK</strong>. Se asignan aleatoriamente 6 parcelas a cada tratamiento ($n_i=6$, $N=24$ en total).
+</p>
+
+```{r}
+#| label: setup-datos
+#| include: false
+niveles <- c("Control", "Foliar", "Organico", "NPK")
+medias  <- c(29, 33, 35, 41)
+
+set.seed(2024)
+trat <- factor(rep(niveles, each = 6), levels = niveles)
+rendimiento <- numeric(0)
+for (mu in medias) rendimiento <- c(rendimiento, round(rnorm(6, mu, 1.8), 1))
+
+datos <- data.frame(trat, rendimiento)
+modelo <- aov(rendimiento ~ trat, data = datos)
+```
+
+<table class="fragment fade-up" data-fragment-index="1"  style="width:100%; font-size:20px; text-align:center; margin-top:40px; border-collapse:collapse;">
+<tr style="background-color:#dbeafe;">
+<th>Parcela</th><th>Control</th><th>Foliar</th><th>Orgánico</th><th>NPK</th>
+</tr>
+<tr><td>1</td><td>30.8</td><td>34.0</td><td>36.5</td><td>38.1</td></tr>
+<tr><td>2</td><td>29.8</td><td>32.8</td><td>35.5</td><td>37.4</td></tr>
+<tr><td>3</td><td>28.8</td><td>30.8</td><td>29.1</td><td>43.1</td></tr>
+<tr><td>4</td><td>28.6</td><td>31.0</td><td>34.7</td><td>41.6</td></tr>
+<tr><td>5</td><td>31.1</td><td>30.0</td><td>33.3</td><td>42.9</td></tr>
+<tr><td>6</td><td>31.3</td><td>33.8</td><td>35.8</td><td>40.6</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:40px;">
+<div style="font-size:30px; text-align:center;">
+¿Existe evidencia estadística de que el tipo de fertilizante afecta el rendimiento promedio del café?
+</div>
+</div>
+
+## Paso 1: estadísticas descriptivas
+
+<div class="fragment fade-up" data-fragment-index="0" style="font-size:30px; text-align:justify; line-height:1.4; margin-bottom:20px;">
+Antes de calcular el ANOVA, es indispensable describir cada grupo: su media, su variabilidad y su tamaño muestral.
+</div>
+
+<table class="fragment fade-up" data-fragment-index="0" style="width:100%; font-size:24px; text-align:center; margin-top:20px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Tratamiento</th>
+<th style="padding:8px;">$n_i$</th>
+<th style="padding:8px;">$\bar y_{i.}$</th>
+<th style="padding:8px;">$s_i$</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Control</td><td style="padding:8px;">6</td><td style="padding:8px;">30.07</td><td style="padding:8px;">1.18</td></tr>
+<tr><td style="padding:8px;">Foliar</td><td style="padding:8px;">6</td><td style="padding:8px;">32.07</td><td style="padding:8px;">1.69</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Orgánico</td><td style="padding:8px;">6</td><td style="padding:8px;">34.15</td><td style="padding:8px;">2.71</td></tr>
+<tr><td style="padding:8px;">NPK</td><td style="padding:8px;">6</td><td style="padding:8px;">40.62</td><td style="padding:8px;">2.41</td></tr>
+</table>
 
 <div class="twocol">
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Si tomamos una muestra de 30 plantas de café en Huila y calculamos $\bar{x} = 1.8$ kg/planta, ¿qué tan cercano es este valor al promedio real de la población $\mu$?
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Si tomamos otra muestra diferente de 30 plantas, obtendremos otro valor $\bar{x}$, probablemente distinto al primero.
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-La <strong>distribución muestral</strong> de un estadístico describe cómo varía ese estadístico al repetir el proceso de muestreo muchas veces.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-Conocer esta distribución es el fundamento de toda la inferencia estadística.
-</li>
-</ul>
-</div>
-
-</div>
-
-## Definición: distribución muestral
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: distribución muestral</div>
-  <div class="block-body">
-  <p>La <strong>distribución muestral</strong> de un estadístico $T = T(X_1, \ldots, X_n)$ es la distribución de probabilidad de $T$ sobre todas las posibles muestras de tamaño $n$ extraídas de la población.</p>
-  </div>
-</div>
-
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El estadístico más importante: la <strong>media muestral</strong> $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-$\bar{X}$ es una variable aleatoria: su valor cambia con cada muestra. Su distribución se denomina <strong>distribución de la media muestral</strong>.
-</li>
-</ul>
-
-## Distribución de $\bar{X}$: población Normal
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Teorema: distribución de $\bar{X}$ si $X \sim N(\mu, \sigma^2)$</div>
-  <div class="block-body">
-  <p>Si $X_1, \ldots, X_n$ son independientes con distribución $N(\mu, \sigma^2)$, entonces:</p>
-  $$\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i \sim N\!\left(\mu,\; \frac{\sigma^2}{n}\right)$$
-  </div>
-</div>
-
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-$E(\bar{X}) = \mu$: la media muestral es un estimador <strong>insesgado</strong> de la media poblacional.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-$\text{Var}(\bar{X}) = \sigma^2/n$: la varianza de $\bar{X}$ disminuye al aumentar $n$.
-</li>
-</ul>
-
-## Error estándar de la media
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: error estándar</div>
-  <div class="block-body">
-  <p>El <strong>error estándar</strong> (EE) de la media muestral es la desviación estándar de su distribución muestral:</p>
-  $$EE(\bar{X}) = \frac{\sigma}{\sqrt{n}}$$
-  <p>Cuando $\sigma$ es desconocida se estima como $\hat{EE} = s/\sqrt{n}$, donde $s$ es la desviación estándar muestral.</p>
-  </div>
-</div>
-
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-El EE mide la <strong>precisión</strong> de la estimación: cuanto menor, más precisa.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Para reducir el EE a la mitad se necesita <strong>cuadruplicar</strong> el tamaño de muestra.
-</li>
-</ul>
-
-## Simulación: distribución muestral de $\bar{X}$
+<div class="fragment fade-up" data-fragment-index="1">
 
 ```{r}
-#| echo: true
-#| fig-height: 4
+#| label: boxplot-descriptivo
+#| echo: false
+#| fig-height: 3.2
+
 library(ggplot2)
-set.seed(18)
-mu <- 1.8; sigma <- 0.5; n <- 30; B <- 5000
-
-# Simular 5000 medias muestrales
-medias <- replicate(B, mean(rnorm(n, mu, sigma)))
-
-ggplot(data.frame(x = medias), aes(x)) +
-  geom_histogram(aes(y = after_stat(density)), bins = 50,
-                 fill = "#1b4d2e", color = "white", alpha = 0.8) +
-  stat_function(fun = dnorm,
-                args = list(mean = mu, sd = sigma/sqrt(n)),
-                color = "#c0392b", linewidth = 1.3) +
-  labs(x = expression(bar(X)), y = "Densidad",
-       title = paste0("Distribución muestral de X̄: N(", mu, ", ", sigma^2/n, ")")) +
-  theme_minimal(base_size = 13)
+ggplot(datos, aes(x = trat, y = rendimiento, fill = trat)) +
+  geom_boxplot(width = 0.55, alpha = 0.85, color = "#1a3a6b", outlier.color = "#b91c1c") +
+  geom_jitter(width = 0.08, size = 1.8, color = "#1a3a6b", alpha = 0.6) +
+  scale_fill_manual(values = c("#cbd5e1", "#dbeafe", "#d6f0dd", "#fde68a")) +
+  labs(x = "Tratamiento", y = "Rendimiento (sacos/ha)",
+       title = "Rendimiento de café por tratamiento") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b"))
 ```
+</div>
 
-## Efecto de $n$ en la distribución de $\bar{X}$
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:28px; text-align:justify;">
+Las medias muestrales difieren notablemente entre tratamientos, pero también hay variabilidad dentro de cada uno. El ANOVA cuantifica si esa diferencia es real o atribuible al azar.
+</div>
+
+</div>
+
+## Análisis de varianza
+
+<div style="font-size:30px; text-align:justify; line-height:1.2;margin-top:30px;">
+La idea central del ANOVA es descomponer la <strong>variabilidad total</strong> de los datos en dos fuentes: la variabilidad <strong>entre</strong> tratamientos y la variabilidad <strong>dentro</strong> de cada tratamiento.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:40px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Variabilidad entre tratamientos</div>
+<div style="font-size:28px; text-align:justify; line-height:1.4; margin-top:8px;">
+Diferencias entre las medias de los distintos tratamientos. Si es grande respecto a la variabilidad dentro, sugiere un efecto real del tratamiento.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Variabilidad dentro de tratamientos</div>
+<div style="font-size:28px; text-align:justify; line-height:1.4; margin-top:8px;">
+Diferencias entre observaciones que reciben el <strong>mismo</strong> tratamiento. Refleja el error experimental o aleatorio.
+</div>
+</div>
+
+</div>
+
+<div class="twocol">
+
+
+<div class="fragment fade-up" data-fragment-index="3">
 
 ```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-mu <- 1.8; sigma <- 0.5; B <- 3000
-ns <- c(5, 15, 30, 100)
-
-df <- map_dfr(ns, function(n) {
-  set.seed(18)
-  tibble(xbar = replicate(B, mean(rnorm(n, mu, sigma))),
-         n = paste0("n = ", n))
-})
-
-ggplot(df, aes(x = xbar, fill = n)) +
-  geom_histogram(aes(y = after_stat(density)), bins = 40,
-                 color = "white", alpha = 0.8) +
-  facet_wrap(~n, scales = "free_y") +
-  labs(x = expression(bar(X)), y = "Densidad",
-       title = "Distribución muestral de X̄ para distintos n") +
-  theme_minimal(base_size = 12) + theme(legend.position = "none")
-```
-
-## Estandarización de $\bar{X}$
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Corolario: estandarización de $\bar{X}$</div>
-  <div class="block-body">
-  <p>Si $X_i \sim N(\mu, \sigma^2)$ i.i.d., entonces:</p>
-  $$Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1)$$
-  </div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Ejemplo: producción de leche</div>
-  <div class="block-body">
-  <p>La producción diaria de leche en fincas de Nariño sigue $N(12, 4)$ litros. Si $n = 25$: ¿cuál es $P(\bar{X} > 12.5)$?</p>
-  </div>
-</div>
-
-```{r}
-#| echo: true
-mu <- 12; sigma <- 2; n <- 25
-pnorm(12.5, mean = mu, sd = sigma/sqrt(n), lower.tail = FALSE)
-```
-
-## Distribución de la proporción muestral
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Teorema: distribución de $\hat{p}$</div>
-  <div class="block-body">
-  <p>Si $X \sim \text{Bin}(n, p)$ y $\hat{p} = X/n$, entonces:</p>
-  $$E(\hat{p}) = p \qquad \text{Var}(\hat{p}) = \frac{p(1-p)}{n}$$
-  <p>Para $n$ grande (condición: $np \geq 5$ y $n(1-p) \geq 5$): $\hat{p} \approx N\!\left(p,\, \frac{p(1-p)}{n}\right)$.</p>
-  </div>
-</div>
-
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-$\hat{p}$ es un estimador insesgado de $p$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Su error estándar es $EE(\hat{p}) = \sqrt{p(1-p)/n}$.
-</li>
-</ul>
-
-## Distribución chi-cuadrado
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: distribución $\chi^2_\nu$</div>
-  <div class="block-body">
-  <p>Si $Z_1, \ldots, Z_\nu$ son independientes con distribución $N(0,1)$, entonces:</p>
-  $$Q = Z_1^2 + Z_2^2 + \cdots + Z_\nu^2 \sim \chi^2_\nu$$
-  <p>con $\nu$ <strong>grados de libertad</strong>. Se cumple: $E(Q) = \nu$, $\text{Var}(Q) = 2\nu$.</p>
-  </div>
-</div>
-
-<div class="block-theorem fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Aplicación: varianza muestral</div>
-  <div class="block-body">
-  <p>Si $X_i \sim N(\mu, \sigma^2)$ i.i.d., entonces: $\dfrac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$.</p>
-  </div>
-</div>
-
-## Distribución $t$ de Student
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: distribución $t_\nu$</div>
-  <div class="block-body">
-  <p>Si $Z \sim N(0,1)$ y $Q \sim \chi^2_\nu$ son independientes:</p>
-  $$T = \frac{Z}{\sqrt{Q/\nu}} \sim t_\nu$$
-  </div>
-</div>
-
-<div class="block-theorem fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Aplicación: media con $\sigma$ desconocida</div>
-  <div class="block-body">
-  <p>Si $X_i \sim N(\mu, \sigma^2)$ i.i.d. con $\sigma$ desconocida:</p>
-  $$T = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$$
-  </div>
-</div>
-
-## Distribución $t$: propiedades y comparación con $N(0,1)$
-
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-x <- seq(-5, 5, length.out = 400)
-df <- bind_rows(
-  tibble(x, f = dnorm(x), dist = "N(0,1)"),
-  tibble(x, f = dt(x, df = 3), dist = "t(3)"),
-  tibble(x, f = dt(x, df = 10), dist = "t(10)"),
-  tibble(x, f = dt(x, df = 30), dist = "t(30)")
-)
-ggplot(df, aes(x, f, color = dist)) +
-  geom_line(linewidth = 1.2) +
-  labs(x = "t", y = "f(t)", color = NULL,
-       title = "Distribución t vs Normal estándar") +
-  theme_minimal(base_size = 13) +
-  theme(legend.position = "top")
-```
-
-## Distribución F de Fisher-Snedecor
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: distribución $F_{\nu_1, \nu_2}$</div>
-  <div class="block-body">
-  <p>Si $Q_1 \sim \chi^2_{\nu_1}$ y $Q_2 \sim \chi^2_{\nu_2}$ son independientes:</p>
-  $$F = \frac{Q_1/\nu_1}{Q_2/\nu_2} \sim F_{\nu_1,\nu_2}$$
-  </div>
-</div>
-
-<div class="block-note fragment fade-up" data-fragment-index="2">
-  <div class="block-body">
-  <p>La distribución $F$ aparece en la comparación de varianzas (Clase 27) y en el análisis de varianza (Clase 30). Si $T \sim t_\nu$, entonces $T^2 \sim F_{1,\nu}$.</p>
-  </div>
-</div>
-
-## Relación entre distribuciones muestrales
-
-<div class="fragment fade-in" data-fragment-index="1" style="text-align: center; margin-top: 20px;">
-
-```{r}
+#| label: medias-vs-gran-media
 #| echo: false
 #| fig-height: 3
 library(ggplot2)
-df_rel <- data.frame(
-  dist = c("Normal\nN(0,1)", "Chi-cuadrado\nχ²(ν)", "t de Student\nt(ν)", "F de Fisher\nF(ν₁,ν₂)"),
-  x    = c(2, 4, 2, 4),
-  y    = c(3, 3, 1, 1)
-)
-ggplot(df_rel, aes(x, y, label = dist)) +
-  geom_label(size = 4.5, fill = c("#dce9f7","#d6f0dd","#fad8d8","#f3f4f6"),
-             color = "#1a3a6b", fontface = "bold") +
-  annotate("segment", x=2.6, xend=3.3, y=3, yend=3, arrow=arrow(length=unit(0.2,"cm"))) +
-  annotate("text", x=3, y=3.2, label="Z²", size=4) +
-  annotate("segment", x=3, xend=3, y=2.7, yend=1.3, arrow=arrow(length=unit(0.2,"cm"))) +
-  annotate("segment", x=3.5, xend=3.9, y=3, yend=1.3, arrow=arrow(length=unit(0.2,"cm"))) +
-  xlim(1, 5.5) + ylim(0.5, 4) +
-  theme_void()
+medias_grupo <- aggregate(rendimiento ~ trat, data = datos, FUN = mean)
+gran_media <- mean(datos$rendimiento)
+
+ggplot(medias_grupo, aes(x = trat, y = rendimiento)) +
+  geom_col(fill = "#dbeafe", color = "#1a3a6b", width = 0.6) +
+  geom_hline(yintercept = gran_media, color = "#b91c1c", linewidth = 1, linetype = "dashed") +
+  annotate("text", x = nrow(medias_grupo), y = gran_media + 1.5,
+           label = "Media general", color = "#b91c1c", size = 4) +
+  scale_y_continuous(limits = c(0, 45)) +
+  labs(x = NULL, y = "Rendimiento promedio (sacos/ha)",
+       title = "Medias de tratamiento y media general") +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b"))
 ```
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:28px; text-align:justify;">
+Si la variabilidad <strong>entre</strong> tratamientos es mucho mayor que la variabilidad <strong>dentro</strong>, existe evidencia de que al menos un tratamiento difiere de los demás.
+</div>
 
 </div>
 
-## Valores críticos en R
+## Modelo de efectos fijos
 
-```{r}
-#| echo: true
-# Cuantiles de la distribución t
-qt(0.975, df = 9)    # t crítico para IC 95%, n=10
-qt(0.975, df = 29)   # t crítico para IC 95%, n=30
-
-# Cuantil chi-cuadrado
-qchisq(0.975, df = 9)   # chi² superior al 97.5%
-qchisq(0.025, df = 9)   # chi² inferior al 2.5%
-
-# Cuantil F
-qf(0.95, df1 = 3, df2 = 20)  # F crítico ANOVA 4 grupos, 24 obs
-```
-
-## Ejemplo: rendimiento de soya, precisión del estimador
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: soya en el Tolima</div>
-  <div class="block-body">
-  <p>El rendimiento de soya en el Tolima sigue $N(\mu = 2.5\,\text{t/ha}, \sigma = 0.4\,\text{t/ha})$. Si $n = 16$ parcelas, calcule: (a) $P(\bar{X} > 2.7)$, (b) el valor $c$ tal que $P(\bar{X} \leq c) = 0.95$.</p>
-  </div>
+<div style="font-size:30px; text-align:justify; line-height:1.2;">
+El **ANOVA** de un factor con $a$ tratamientos se representa mediante el siguiente modelo lineal estadístico:
 </div>
 
-```{r}
-#| echo: true
-mu <- 2.5; sigma <- 0.4; n <- 16
-ee <- sigma / sqrt(n)
-cat("Error estándar:", ee, "\n")
-
-# (a)
-pnorm(2.7, mu, ee, lower.tail = FALSE)
-
-# (b)
-qnorm(0.95, mu, ee)
-```
-
-## Errores comunes
-
-<div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes</div>
-  <div class="block-body">
-  <p>Confundir la distribución poblacional con la distribución muestral del estadístico.</p>
-  </div>
-</div>
-
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>$\sigma$ vs $\sigma/\sqrt{n}$:</strong> la desviación estándar de $\bar{X}$ es $\sigma/\sqrt{n}$, no $\sigma$. El error estándar siempre es menor.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Usar $N(0,1)$ cuando $\sigma$ es desconocida:</strong> si $\sigma$ no se conoce y $n$ es pequeño, se debe usar la distribución $t_{n-1}$, no la Normal.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Grados de libertad:</strong> para la varianza muestral son $n-1$, no $n$. En R: <code>qt(p, df = n-1)</code>.
-</li>
-</ul>
-
-## Taller en clase {.center .middle}
-
-## Taller 1: distribución de $\bar{X}$
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>El peso al sacrificio de cerdos en Antioquia sigue $N(\mu = 95\,\text{kg}, \sigma = 8\,\text{kg})$. Se toma una muestra aleatoria de $n = 25$ cerdos. Calcule: (a) $P(\bar{X} > 97)$, (b) $P(93 \leq \bar{X} \leq 97)$, (c) $EE(\bar{X})$, (d) el percentil 10 de $\bar{X}$.</p>
-  </div>
-</div>
-
-## Taller 1: solución
-
-```{r}
-#| echo: true
-mu <- 95; sigma <- 8; n <- 25
-ee <- sigma / sqrt(n)
-cat("EE =", ee, "\n")
-
-# (a) P(Xbar > 97)
-pnorm(97, mu, ee, lower.tail = FALSE)
-
-# (b) P(93 <= Xbar <= 97)
-pnorm(97, mu, ee) - pnorm(93, mu, ee)
-
-# (d) Percentil 10 de Xbar
-qnorm(0.10, mu, ee)
-```
-
-## Taller 2: simulación de la distribución muestral
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Simule 4000 medias muestrales de tamaño $n = 20$ de una distribución Exponencial(0.5). Grafique el histograma y compare la media y varianza simuladas con los valores teóricos de la distribución muestral.</p>
-  </div>
-</div>
-
-## Taller 2: solución
-
-```{r}
-#| echo: true
-#| fig-height: 3.5
-lambda <- 0.5; n <- 20; B <- 4000
-mu_pob <- 1/lambda; sigma_pob <- 1/lambda
-set.seed(18)
-medias_exp <- replicate(B, mean(rexp(n, lambda)))
-
-cat("Media teórica:", mu_pob, "  Simulada:", round(mean(medias_exp), 4), "\n")
-cat("Var teórica:", sigma_pob^2/n, "  Simulada:", round(var(medias_exp), 4), "\n")
-
-library(ggplot2)
-ggplot(data.frame(x = medias_exp), aes(x)) +
-  geom_histogram(aes(y = after_stat(density)), bins = 40,
-                 fill = "#1a3a6b", color = "white", alpha = 0.8) +
-  labs(x = "Media muestral", title = "Distribución muestral: Exp(0.5), n=20") +
-  theme_minimal(base_size = 13)
-```
-
-## Taller 3: proporción muestral
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En una encuesta sobre adopción de BPA (Buenas Prácticas Agrícolas) en el Tolima, $p = 0.40$ de los agricultores las ha adoptado. Si se encuestan $n = 100$ agricultores, calcule: (a) $E(\hat{p})$, $EE(\hat{p})$, (b) $P(\hat{p} > 0.50)$, (c) $P(0.35 \leq \hat{p} \leq 0.45)$.</p>
-  </div>
-</div>
-
-## Taller 3: solución
-
-```{r}
-#| echo: true
-p <- 0.40; n <- 100
-ee_phat <- sqrt(p*(1-p)/n)
-cat("E(p̂):", p, "  EE(p̂):", ee_phat, "\n")
-
-# (b) P(p̂ > 0.50)
-pnorm(0.50, p, ee_phat, lower.tail = FALSE)
-
-# (c) P(0.35 <= p̂ <= 0.45)
-pnorm(0.45, p, ee_phat) - pnorm(0.35, p, ee_phat)
-```
-
-## Resumen: distribuciones muestrales
+<div class="block-theorem fragment fade-up" data-fragment-index="1" style="border-radius:12px;">
+<div class="block-body" style="font-size:28px; text-align:center;">
 
 <div class="twocol">
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 26px;">Estadístico y distribución</h4>
+<div class="fragment fade-up" data-fragment-index="2">
+$$
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}
+\qquad
+\begin{cases}
+i=1,\ldots,a \\
+j=1,\ldots,n_i
+\end{cases}
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="font-size:25px; line-height:1.1;">
 <ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px;">$\bar{X} \sim N(\mu, \sigma^2/n)$ si $X_i \sim N(\mu,\sigma^2)$.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">$EE(\bar{X}) = \sigma/\sqrt{n}$.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">$(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$.</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">$(\bar{X}-\mu)/(S/\sqrt{n}) \sim t_{n-1}$.</li>
+<li>$y_{ij}$: observación $j$ del tratamiento $i$.</li>
+<li>$\mu$: media general.</li> 
+<li>$\tau_i=\mu_i-\mu$: efecto del tratamiento $i$.</li>
+<li>$\varepsilon_{ij}$: error aleatorio, $\varepsilon_{ij} \sim N(0,\sigma^2)$ independientes.</li>
+<li>Restricción usual: $\sum_{i=1}^a n_i\tau_i = 0$.</li>
 </ul>
 </div>
+</div>
+</div>
+</div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 style="color:#1a3a6b; font-size: 26px;">Funciones R clave</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;"><code>pnorm, qnorm</code>: Normal.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;"><code>pt, qt</code>: $t$ de Student.</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;"><code>pchisq, qchisq</code>: chi-cuadrado.</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px;"><code>pf, qf</code>: F de Fisher.</li>
-</ul>
+
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:8px;">
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-top:6px solid #1a3a6b; font-size:24PX; text-align:center;">
+<strong>Normalidad</strong><br>$\varepsilon_{ij}\sim N(0,\sigma^2)$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-top:6px solid #1b4d2e; font-size:24PX; text-align:center;">
+<strong>Homogeneidad</strong><br>Varianza $\sigma^2$ constante
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-top:6px solid #d97706; font-size:24PX; text-align:center;">
+<strong>Independencia</strong><br>Asignación aleatoria
 </div>
 
 </div>
 
-## Próxima clase
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 19: Teorema Central del Límite.</strong> ¿Por qué $\bar{X}$ se distribuye aproximadamente Normal incluso cuando la población no es Normal? El TCL es el resultado más importante de la estadística matemática.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="6"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:24px; text-align:center;">
+$$H_0:\tau_1=\tau_2=\cdots=\tau_a=0 \qquad \text{vs.} \qquad H_1: \text{algún } \tau_i \neq 0 \qquad \big(\text{equivalente a } H_0:\mu_1=\cdots=\mu_a\big)$$
 </div>
 
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Veremos la demostración intuitiva, las condiciones de aplicación y la aproximación Normal a distribuciones discretas.
-</li>
-</ul>
+## Descomposición de la suma de cuadrados
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:5px; border-radius:10px; border-left:6px solid #475569; margin-top:6px; font-size:26px; text-align:justify;">
+
+El modelo $\small y_{ij}=\mu+\tau_i+\varepsilon_{ij}$ no se observa directamente: $\small \mu$, $\small \tau_i$ y $\small \varepsilon_{ij}$ se <strong>estiman</strong> con promedios.
+
+<div style="font-size:24px;">
+
+$$\hat\mu=\bar y_{..} \qquad \hat\mu+\hat\tau_i=\bar y_{i.} \qquad \hat\varepsilon_{ij}=y_{ij}-\bar y_{i.}$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:8px; border-radius:10px; border-top:6px solid #1a3a6b; margin-top:6px; font-size:26px; text-align:justify;">
+Para cada dato, $\small y_{ij}-\bar y_{..}$ mide su variación total respecto a la media general, y puede partirse en dos piezas:
+
+<div style="font-size:22px;">
+$$y_{ij}-\bar y_{..}=\underbrace{(\bar y_{i.}-\bar y_{..})}_{\text{variación por tratamiento}}+\underbrace{(y_{ij}-\bar y_{i.})}_{\text{variación por error}}$$
+</div>
+</div>
+
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="margin-top:20px;font-size:28px; text-align:justify; line-height:1.2;">
+Elevando al cuadrado y sumando sobre todas las observaciones, la variabilidad total se descompone en dos componentes:
+</div>
+
+
+<div class="twocol">
+<div class="block-definition fragment fade-up" data-fragment-index="3">
+<div class="block-body" style="font-size:20px; text-align:center;">
+$$
+\underbrace{\sum_{i=1}^a\sum_{j=1}^{n_i}(y_{ij}-\bar y_{..})^2}_{SC_T}
+=
+\underbrace{\sum_{i=1}^a n_i(\bar y_{i.}-\bar y_{..})^2}_{SC_{Trat}}
++
+\underbrace{\sum_{i=1}^a\sum_{j=1}^{n_i}(y_{ij}-\bar y_{i.})^2}_{SC_E}
+$$
+</div>
+</div>
+
+<div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef4fb; padding:8px; border-radius:10px; border-top:6px solid #1a3a6b; font-size:26px; text-align:justify;">
+$\small SC_{Trat}$: variabilidad explicada por el tratamiento (entre grupos).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:10px; border-top:6px solid #1b4d2e; font-size:26px; text-align:justify;">
+$\small SC_E$: variabilidad no explicada, o error (dentro de los grupos).
+</div>
+
+</div>
+
+</div>
+
+
+
+
+## Suma de cuadrados
+
+<div style="font-size:28px; text-align:justify; line-height:1.4; margin-bottom:20px;">
+Con la media general $\bar y_{..}=34.225$ y las $N=24$ observaciones del ejemplo, se calcula primero $SC_T$:
+</div>
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:28px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Paso 1. Media general:</strong>
+
+<div style="font-size:20px;">
+$$\bar y_{..}=\frac{\sum_{i}\sum_j y_{ij}}{N}=\frac{821.4}{24}=34.225$$
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:28px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1b4d2e;">Paso 2. Suma de cuadrados total:</strong>
+
+<div style="font-size:20px;">
+
+$$SC_T=\sum_{i=1}^4\sum_{j=1}^6 (y_{ij}-34.225)^2=463.73$$
+</div>
+</div>
+</div>
+
+<div class="twocol">
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:28px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Paso 3. Suma de cuadrados de tratamiento:</strong>
+
+<div style="font-size:20px;">
+
+$$SC_{Trat}=6\sum_{i=1}^4 (\bar y_{i.}-34.225)^2$$
+\begin{aligned}
+SC_{Trat}
+&= 6\big[(30.07-34.23)^2+(32.07-34.23)^2 \\
+&\quad +(34.15-34.23)^2+(40.62-34.23)^2\big] \\
+&= 376.86
+\end{aligned}
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:28px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1b4d2e;">Paso 4. Suma de cuadrados del error:</strong>
+
+<div style="font-size:20px;">
+$$SC_E=SC_T-SC_{Trat}=463.73-376.86=86.87$$
+</div>
+</div>
+</div>
+
+
+## Tabla ANOVA y estadístico $F$
+
+<div style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.3;">
+Cada suma de cuadrados se divide por sus grados de libertad para obtener un cuadrado medio (CM). El estadístico de prueba es el cociente entre los cuadrados medios:
+</div>
+
+<table style="width:100%; font-size:26px; border-collapse:collapse; text-align:center; margin-top:30px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th>
+<th style="padding:8px;">SC</th>
+<th style="padding:8px;">gl</th>
+<th style="padding:8px;">CM</th>
+<th style="padding:8px;">F</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Tratamiento</td>
+<td style="padding:8px;">$SC_{Trat}$</td>
+<td style="padding:8px;">$a-1$</td>
+<td style="padding:8px;">$CM_{Trat}=\frac{SC_{Trat}}{a-1}$</td>
+<td style="padding:8px;" rowspan="2">$F=\dfrac{CM_{Trat}}{CM_E}$</td>
+</tr>
+<tr>
+<td style="padding:8px;">Error</td>
+<td style="padding:8px;">$SC_E$</td>
+<td style="padding:8px;">$N-a$</td>
+<td style="padding:8px;">$CM_E=\frac{SC_E}{N-a}$</td>
+</tr>
+<tr style="background-color:#eef7ee;">
+<td style="padding:8px;">Total</td>
+<td style="padding:8px;">$SC_T$</td>
+<td style="padding:8px;">$N-1$</td>
+<td style="padding:8px;"></td>
+<td style="padding:8px;"></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:20px; font-size:26px; text-align:center;">
+Bajo $H_0$, $F=\dfrac{CM_{Trat}}{CM_E}\sim F_{a-1,\,N-a}$. Se rechaza $H_0$ si $F_{calc}>F_{\alpha,\,a-1,\,N-a}$.
+</div>
+
+## Resultado del ejemplo: tabla ANOVA completa
+
+<table style="margin-top:40px;width:100%; font-size:24px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th>
+<th style="padding:8px;">$SC$</th>
+<th style="padding:8px;">$gl$</th>
+<th style="padding:8px;">$CM$</th>
+<th style="padding:8px;">$F$</th>
+<th style="padding:8px;">valor$-p$</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Tratamiento</td>
+<td style="padding:8px;">376.86</td>
+<td style="padding:8px;">3</td>
+<td style="padding:8px;">125.62</td>
+<td style="padding:8px;" rowspan="2">28.92</td>
+<td style="padding:8px;" rowspan="2">$1.79\times10^{-7}$</td>
+</tr>
+<tr>
+<td style="padding:8px;">Error</td>
+<td style="padding:8px;">86.87</td>
+<td style="padding:8px;">20</td>
+<td style="padding:8px;">4.34</td>
+</tr>
+<tr style="background-color:#eef7ee;">
+<td style="padding:8px;">Total</td>
+<td style="padding:8px;">463.73</td>
+<td style="padding:8px;">23</td>
+<td style="padding:8px;"></td>
+<td style="padding:8px;"></td>
+<td style="padding:8px;"></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:21px; text-align:center;">
+$CM_{Trat}=376.86/3=125.62$, &nbsp; $CM_E=86.87/20=4.34$, &nbsp; $F=125.62/4.34=28.92$.
+</div>
+
+<div style="margin-top:20px;display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Criterio de decisión</div>
+<div style="font-size:21px; text-align:center; line-height:1.5; margin-top:8px;">
+$$F_{calc}=28.92 > F_{0.05,3,20}=3.10$$
+$$\text{valor-p}=1.79\times10^{-7}<0.05$$
+
+Se rechaza $H_0$.
+
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:21px; text-align:justify; line-height:1.4; margin-top:8px;">
+Existe evidencia estadística suficiente para afirmar que al menos un tratamiento de fertilización produce un rendimiento promedio diferente en el cultivo de café.
+</div>
+</div>
+</div>
+
+
+## Estimación de los parámetros del modelo
+
+<div style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.4;">
+Los parámetros del modelo de efectos fijos se estiman por mínimos cuadrados, utilizando los promedios muestrales:
+</div>
+
+<table style="width:100%; font-size:28px; text-align:center; margin-top:20px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Parámetro</th><th style="padding:8px;">Estimador</th><th style="padding:8px;">Valor</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$\mu$</td><td style="padding:8px;">$\hat\mu=\bar y_{..}$</td><td style="padding:8px;">34.23</td></tr>
+<tr><td style="padding:8px;">$\tau_{Control}$</td><td style="padding:8px;">$\bar y_{1.}-\bar y_{..}$</td><td style="padding:8px;">-4.16</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$\tau_{Foliar}$</td><td style="padding:8px;">$\bar y_{2.}-\bar y_{..}$</td><td style="padding:8px;">-2.16</td></tr>
+<tr><td style="padding:8px;">$\tau_{Organico}$</td><td style="padding:8px;">$\bar y_{3.}-\bar y_{..}$</td><td style="padding:8px;">-0.08</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$\tau_{NPK}$</td><td style="padding:8px;">$\bar y_{4.}-\bar y_{..}$</td><td style="padding:8px;">6.39</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:20px; font-size:28px; text-align:justify;">
+El tratamiento NPK presenta el mayor efecto estimado ($\hat\tau_{NPK}=6.39$): su rendimiento promedio supera la media general en 6.39 sacos/ha.
+</div>
+
+## Datos no balanceados
+
+<div style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.2;">
+En la práctica, no siempre es posible obtener el mismo número de observaciones $n_i$ en cada tratamiento (parcelas perdidas, animales enfermos, plantas que no germinaron). A esto se le llama <strong>diseño no balanceado</strong>.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; font-size:28px; text-align:justify; line-height:1.5;">
+Las fórmulas se ajustan reemplazando $n$ por $\small n_i$ en $\small SC_{Trat}=\sum_i n_i(\bar y_{i.}-\bar y_{..})^2$, y usando $\small N=\sum_i n_i$ en lugar de $\small a\cdot n$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e; font-size:28px; text-align:justify; line-height:1.5;">
+Por ejemplo, si en el Control se pierden 2 parcelas ($\small n_1=4$), el resto del cálculo procede igual, solo cambiando $\small n_i$ y $N$.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:28px; text-align:justify;">
+Un diseño muy desbalanceado reduce la potencia de la prueba; se recomienda planear tamaños de muestra similares entre tratamientos.
+</div>
+
+## Errores comunes: fundamentos del ANOVA
+
+<div style="margin-top:40px;" class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-body" style="font-size:30px; line-height:1.4;">
+- Rechazar $H_0$ y concluir que <strong>todos</strong> los tratamientos son diferentes entre sí (el ANOVA solo indica que al menos uno difiere).
+- Confundir el factor (variable cualitativa, ej. tipo de fertilizante) con la variable de respuesta (rendimiento).
+- Aplicar el ANOVA sin verificar los supuestos de normalidad e igualdad de varianzas.
+- Olvidar que $SC_T = SC_{Trat} + SC_E$ siempre debe cumplirse; es una buena forma de verificar los cálculos.
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Verificación del modelo y comparación de medias
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Antes de confiar en los resultados del ANOVA es necesario verificar sus supuestos; después, identificar cuáles tratamientos difieren entre sí.
+</p>
+
+</div>
+
+## Supuestos del modelo
+
+<div style="margin-top:50px;font-size:30px; text-align:justify; line-height:1.2;">
+La validez del **ANOVA** depende de que se cumplan los supuestos del modelo de efectos fijos, los cuales se verifican mediante el análisis de los <strong>residuos</strong> $\small e_{ij}=y_{ij}-\hat y_{ij}=y_{ij}-\bar y_{i.}$.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:40px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:26px; text-align:center; line-height:1.4;">
+<strong>Normalidad</strong><br>QQ-plot y prueba de Shapiro-Wilk
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:26px; text-align:center; line-height:1.4;">
+<strong>Homogeneidad</strong><br>Residuos vs. ajustados y prueba de Bartlett
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:26px; text-align:center; line-height:1.4;">
+<strong>Independencia</strong><br>Residuos en el orden de recolección
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:20px; font-size:30px; text-align:center;">
+Si alguno de estos supuestos falla seriamente, el valor-p del ANOVA puede no ser confiable.
+</div>
+
+## Supuesto de normalidad
+
+<div style="margin-top:50px;font-size:30px; text-align:justify; line-height:1.2;">
+La normalidad de los residuos se evalúa con un gráfico de probabilidad normal (QQ-plot) y, de forma más formal, con la prueba de <strong>Shapiro-Wilk</strong>.
+</div>
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="0">
+```{r}
+#| label: qqplot-residuos
+#| echo: false
+#| fig-height: 3.2
+library(ggplot2)
+ggplot(data.frame(resid = residuals(modelo)), aes(sample = resid)) +
+  stat_qq(color = "#1a3a6b", size = 1.8) +
+  stat_qq_line(color = "#b91c1c", linewidth = 1) +
+  labs(x = "Cuantiles teóricos", y = "Residuos",
+       title = "Gráfico de probabilidad normal de los residuos") +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b", size = 13))
+```
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:26px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Prueba de Shapiro-Wilk:</strong>
+$$H_0: \text{los residuos siguen una distribución normal}$$
+$$W=0.934 \qquad \text{valor-p}=0.118$$
+</div>
+
+</div>
+
+
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:28px; text-align:center;">
+Como valor$-p =0.118>0.05$, no hay evidencia para rechazar la normalidad de los residuos: el supuesto se cumple razonablemente.
+</div>
+
+## Residuos en secuencia y residuos versus ajustados
+
+<div style="font-size:30px; text-align:justify; line-height:1.2; margin-bottom:6px;">
+Graficar los residuos en el orden de recolección permite detectar tendencias no controladas (ej. condiciones climáticas cambiantes); graficarlos contra los valores ajustados permite detectar heterocedasticidad.
+</div>
+
+```{r}
+#| label: residuos-diagnostico
+#| echo: false
+#| fig-height: 3.3
+#| fig-align: center
+
+library(ggplot2)
+library(patchwork)
+
+df_res <- data.frame(orden = seq_along(residuals(modelo)),
+                      ajustados = fitted(modelo),
+                      residuo = residuals(modelo))
+
+p1 <- ggplot(df_res, aes(orden, residuo)) +
+  geom_line(color = "#1a3a6b") +
+  geom_point(color = "#1a3a6b", size = 2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#b91c1c") +
+  labs(x = "Orden de recolección", y = "Residuo", title = "Secuencia temporal") +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
+
+p2 <- ggplot(df_res, aes(ajustados, residuo)) +
+  geom_point(color = "#1b4d2e", size = 2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#b91c1c") +
+  labs(x = "Valores ajustados", y = "Residuo", title = "Residuos vs. ajustados") +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 12))
+
+p1 + p2
+```
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; font-size:26px; text-align:center;">
+Sin patrón sistemático en el tiempo: respalda el supuesto de independencia.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; font-size:26px; text-align:center;">
+Dispersión similar en todos los niveles (sin forma de embudo): respalda la homogeneidad de varianza.
+</div>
+
+</div>
+
+## Residuos versus otras variables
+
+<div style="margin-top:60px;font-size:30px; text-align:justify; line-height:1.2;">
+También es útil graficar los residuos contra variables que no forman parte del modelo, como la altitud de la finca o la fecha de siembra, para detectar fuentes de variación no controladas.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; margin-top:14px; font-size:30px; text-align:justify; line-height:1.2;">
+Si los residuos muestran un patrón respecto a la altitud, esta variable debería incluirse en el modelo, por ejemplo como bloque o covariable.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:10px; font-size:30px; text-align:justify;">
+Ignorar una fuente de variación conocida (como la altitud) puede inflar el error experimental y reducir la potencia del **ANOVA**.
+</div>
+
+## Homogeneidad de varianza: prueba de Bartlett
+
+<div style="margin-top:50px;font-size:30px; text-align:justify; line-height:1.2;">
+La prueba de <strong>Bartlett</strong> contrasta formalmente si las varianzas de los $a$ tratamientos son iguales:
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:26px;">Hipótesis de Bartlett</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$H_0:\sigma_1^2=\sigma_2^2=\sigma_3^2=\sigma_4^2 \qquad \text{vs.} \qquad H_1: \text{alguna difiere}$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:22px; text-align:center; margin-top:8px;">
+$$K^2=3.44 \qquad gl=3 \qquad \text{valor-p}=0.329$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:30px; text-align:justify">
+Como valor-p $=0.329>0.05$, no hay evidencia para rechazar la igualdad de varianzas: el supuesto de homogeneidad se cumple.
+</div>
+
+## Comparaciones entre medias de tratamiento
+
+<div style="font-size:28px; text-align:justify; line-height:1.2;">
+Una vez que el **ANOVA** detecta diferencias significativas, surge la pregunta natural: <strong>¿cuáles tratamientos difieren entre sí?</strong> Para responderla se utilizan las comparaciones múltiples.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:28px; text-align:justify;">
+Realizar muchas pruebas $t$ no planeadas infla la tasa de error global; por ello se requieren métodos que controlen el error conjunto.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="font-size:28px; text-align:justify; line-height:1.2; margin-top:8px;">
+Una forma sencilla de comparar visualmente los tratamientos es graficar sus medias junto con un intervalo de confianza aproximado.
+</div>
+
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="3">
+
+```{r}
+#| label: comparacion-grafica
+#| echo: false
+#| fig-height: 3.2
+library(ggplot2)
+resumen_i <- aggregate(rendimiento ~ trat, data = datos,
+                        FUN = function(x) c(media = mean(x), ee = sd(x)/sqrt(length(x))))
+resumen_i <- do.call(data.frame, resumen_i)
+
+ggplot(resumen_i, aes(x = trat, y = rendimiento.media)) +
+  geom_point(color = "#1a3a6b", size = 3) +
+  geom_errorbar(aes(ymin = rendimiento.media - 2*rendimiento.ee,
+                     ymax = rendimiento.media + 2*rendimiento.ee),
+                width = 0.15, color = "#1a3a6b") +
+  scale_y_continuous(limits = c(25, 45)) +
+  labs(x = "Tratamiento", y = "Rendimiento promedio (sacos/ha)",
+       title = "Medias por tratamiento con error estándar") +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b", size = 13))
+```
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:28px; text-align:justify;">
+Cuando los intervalos no se superponen, hay evidencia visual de diferencia; cuando sí se superponen, la diferencia es incierta y debe confirmarse formalmente.
+</div>
+</div>
+
+
+## Contrastes
+
+<div style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.2;">
+Un <strong>contraste</strong> es una combinación lineal de las medias de tratamiento cuyos coeficientes suman cero. Permite probar hipótesis específicas planteadas antes del experimento.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Contraste</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$C=\sum_{i=1}^a c_i\,\bar y_{i.} \qquad \text{con} \qquad \sum_{i=1}^a c_i=0$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:28px; text-align:justify;">
+Pregunta de interés: ¿el Control rinde menos que el <strong>promedio</strong> de los tratamientos fertilizados?
+
+<div style="font-size:21px;">
+$$C=\bar y_{Control}-\tfrac{1}{3}(\bar y_{Foliar}+\bar y_{Organico}+\bar y_{NPK}) \qquad c=\Big(1,-\tfrac13,-\tfrac13,-\tfrac13\Big)$$
+</div>
+</div>
+
+## Cálculo de un contraste: ejemplo completo
+
+
+<div class="twocol" style="margin-top:50px;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size:28px; line-height:1.3;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+
+<div style="font-size:22px;">
+
+$$H_0: C=0 \qquad H_1: C\neq 0$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size:28px; line-height:1.3; margin-top:6px;">
+<strong style="color:#1b4d2e;">Paso 2. Valor del contraste y error estándar:</strong>
+
+<div style="font-size:19px;">
+$$C=30.07-\tfrac13(32.07+34.15+40.62)=-5.54$$
+$$EE(C)=\sqrt{CM_E\sum_i \frac{c_i^2}{n_i}}=\sqrt{4.34\Big(\tfrac{1}{6}+\tfrac{3}{6}\cdot\tfrac19\Big)}=0.98$$
+</div>
+</div>
+</div>
+
+<div class="twocol">
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size:28px; line-height:1.3; margin-top:6px;">
+<strong style="color:#1a3a6b;">Paso 3. Estadístico y criterio:</strong>
+
+<div style="font-size:19px;">
+$$t=\frac{C}{EE(C)}=\frac{-5.54}{0.98}=-5.64 \qquad t_{0.025,20}=2.086$$
+$$|t|=5.64>2.086 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:28px; text-align:justify; line-height:1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Conclusión:</strong> existe evidencia estadística suficiente para afirmar que el rendimiento del Control es significativamente menor que el promedio de los tratamientos fertilizados.
+</div>
+</div>
+
+## Contrastes ortogonales
+
+<div style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.2;">
+Dos contrastes con coeficientes $\small c_i$ y $\small d_i$ son <strong>ortogonales</strong> si $\small \sum_i c_i d_i = 0$. Un conjunto de $\small a-1$ contrastes ortogonales descompone $\small SC_{Trat}$ en partes independientes, cada una con 1 grado de libertad.
+</div>
+
+<div class="twocol">
+<table style="width:100%; font-size:24px; text-align:center; margin-top:24px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Contraste</th><th>Control</th><th>Foliar</th><th>Orgánico</th><th>NPK</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Control vs. fertilizados</td><td>3</td><td>-1</td><td>-1</td><td>-1</td></tr>
+<tr><td style="padding:6px;">Foliar vs. (Orgánico, NPK)</td><td>0</td><td>2</td><td>-1</td><td>-1</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Orgánico vs. NPK</td><td>0</td><td>0</td><td>1</td><td>-1</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:28px; text-align:justify;">
+Este conjunto de 3 contrastes ortogonales permite descomponer los 3 grados de libertad de $\small SC_{Trat}$ en preguntas de investigación específicas e independientes.
+</div>
+</div>
+
+
+## Método de Scheffé
+
+<div style="margin-top:70px;font-size:30px; text-align:justify; line-height:1.2;">
+El método de Scheffé permite construir intervalos de confianza simultáneos para <strong>cualquier</strong> contraste, incluso contrastes no planeados de antemano, controlando el error global en $\alpha$.
+</div>
+
+<div class="twocol">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Criterio de Scheffé</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+$$
+S_{\alpha}=\sqrt{(a-1)\,F_{\alpha,a-1,N-a}}
+$$
+Se rechaza $H_0$ si $|t|>S_\alpha$.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:24px; text-align:center; margin-top:8px;">
+Aplicado al contraste anterior: $S_{0.05}=\sqrt{3\times3.10}=3.05$
+$$|t|=5.64 > S_{0.05}=3.05 \;\Rightarrow\; \text{se confirma el rechazo de } H_0$$
+</div>
+
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:28px; text-align:justify;">
+Por ser más conservador que una prueba $t$ simple, Scheffé se recomienda solo cuando se desean evaluar muchos contrastes no planeados.
+</div>
+
+## Comparación de pares de medias: Tukey
+
+<div style="margin-top:30px;font-size:30px; text-align:justify; line-height:1.2;">
+La prueba de <strong>Tukey (HSD)</strong> es el método más utilizado para comparar <strong>todos los pares</strong> de medias de tratamiento, controlando el error global tipo I en $\alpha$.
+</div>
+
+
+<div class="twocol">
+<table style="width:100%; font-size:19px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Comparación</th><th>Diferencia</th><th>IC 95%</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Foliar - Control</td><td>2.00</td><td>(-1.37, 5.37)</td><td>0.369</td></tr>
+<tr><td style="padding:6px;">Orgánico - Control</td><td>4.08</td><td>(0.72, 7.45)</td><td>0.014</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK - Control</td><td>10.55</td><td>(7.18, 13.92)</td><td>&lt;0.0001</td></tr>
+<tr><td style="padding:6px;">Orgánico - Foliar</td><td>2.08</td><td>(-1.28, 5.45)</td><td>0.334</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK - Foliar</td><td>8.55</td><td>(5.18, 11.92)</td><td>&lt;0.0001</td></tr>
+<tr><td style="padding:6px;">NPK - Orgánico</td><td>6.47</td><td>(3.10, 9.83)</td><td>0.0002</td></tr>
+</table>
+
+<div>
+
+```{r}
+#| label: tukey-plot
+#| echo: false
+#| fig-height: 3.4
+library(ggplot2)
+tukey_df <- as.data.frame(TukeyHSD(modelo)$trat)
+tukey_df$comparacion <- rownames(tukey_df)
+tukey_df$significativo <- ifelse(tukey_df$`p adj` < 0.05, "Sí", "No")
+
+ggplot(tukey_df, aes(x = diff, y = comparacion, color = significativo)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray40") +
+  geom_pointrange(aes(xmin = lwr, xmax = upr), size = 0.8, fatten = 3) +
+  scale_color_manual(values = c("Sí" = "#1a3a6b", "No" = "#94a3b8")) +
+  labs(x = "Diferencia de medias (IC 95%)", y = NULL,
+       title = "Intervalos de Tukey para las diferencias de medias", color = "Significativo") +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b", size = 12),
+        legend.position = "bottom")
+```
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:28px; text-align:justify; line-height:1.2;">
+Los intervalos que no contienen el cero indican pares con diferencias significativas: <strong>NPK</strong> difiere de los tres tratamientos restantes, y <strong>Orgánico</strong> difiere del Control. Foliar no se distingue claramente del Control ni del Orgánico.
+</div>
+
+## Tratamientos con un control: Dunnett
+
+<div style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.2;">
+Cuando interesa comparar cada tratamiento únicamente contra un grupo <strong>Control</strong> (y no entre ellos), la prueba de <strong>Dunnett</strong> es más potente que Tukey, pues realiza menos comparaciones.
+</div>
+
+<table style="width:100%; font-size:24px; text-align:center; margin-top:20px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Comparación</th><th>Diferencia</th><th>IC 95% Dunnett</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Foliar - Control</td><td>2.00</td><td>(-1.05, 5.05)</td><td>0.256</td></tr>
+<tr><td style="padding:6px;">Orgánico - Control</td><td>4.08</td><td>(1.03, 7.14)</td><td>0.008</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK - Control</td><td>10.55</td><td>(7.50, 13.60)</td><td>&lt;0.001</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:10px; font-size:30px; text-align:justify;">
+Nótese que el valor-p de Orgánico-Control es menor con Dunnett (0.008) que con Tukey (0.014): al hacer menos comparaciones, Dunnett tiene mayor potencia para este objetivo específico.
+</div>
+
+## Errores comunes: comparaciones múltiples
+
+<div class="block-alert fragment fade-up" data-fragment-index="1" style="margin-top:70px;">
+<div class="block-body" style="font-size:30px; line-height:1.4;">
+- Aplicar pruebas $t$ por pares sin ajuste, en lugar de Tukey, Scheffé o Dunnett.
+- Usar Tukey cuando el objetivo real es comparar contra un único control (Dunnett es más potente en ese caso).
+- Interpretar diferencias significativas en Tukey sin verificar primero que el ANOVA global fue significativo.
+- Confundir un contraste planeado de antemano con una comparación exploratoria (esta última requiere Scheffé o Tukey, no una prueba t simple).
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 44px; font-weight: bold; color: #3b82f6;">
+Salida de software, tamaño de muestra y efectos de dispersión
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Cómo se interpreta la salida de un software estadístico y cuántas observaciones se necesitan antes de iniciar el experimento?
+</p>
+
+</div>
+
+## Salida de un programa estadístico
+
+<div style="font-size:30px; text-align:justify; line-height:1.2; margin-bottom:50px;">
+La mayoría del software estadístico (R, Minitab, SAS, SPSS) presenta la tabla ANOVA con la misma estructura básica. Es fundamental saber leerla correctamente, sin importar el programa utilizado.
+</div>
+
+<table style="width:100%; font-size:24px; text-align:center; margin-top:20px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Columna típica</th>
+<th style="padding:8px;">Significado</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;"><code>Df</code> / <code>gl</code></td><td style="padding:8px;">Grados de libertad de cada fuente</td></tr>
+<tr><td style="padding:8px;"><code>Sum Sq</code> / <code>SC</code></td><td style="padding:8px;">Suma de cuadrados</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;"><code>Mean Sq</code> / <code>CM</code></td><td style="padding:8px;">Cuadrado medio (SC / gl)</td></tr>
+<tr><td style="padding:8px;"><code>F value</code></td><td style="padding:8px;">Estadístico de prueba</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;"><code>Pr(&gt;F)</code> / valor-p</td><td style="padding:8px;">Probabilidad de obtener un F tan extremo bajo $H_0$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:20px; font-size:28px; text-align:justify;">
+Sin importar el software, la regla de decisión es siempre la misma: se rechaza $H_0$ si el valor-p es menor que $\alpha$.
+</div>
+
+## Determinación del tamaño de muestra
+
+<div style="margin-top:60px;font-size:30px; text-align:justify; line-height:1.2;">
+Antes de ejecutar el experimento, es importante determinar cuántas repeticiones $n$ por tratamiento se necesitan para detectar una diferencia de interés con una potencia adecuada.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:40px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:28px; text-align:justify; line-height:1.2;">
+Un $n$ insuficiente puede llevar a no detectar diferencias reales (Error Tipo II, $\beta$ alto).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:28px; text-align:justify; line-height:1.2;">
+Un $n$ excesivo desperdicia recursos (parcelas, animales, tiempo, dinero).
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:40px; font-size:30px; text-align:center;">
+Existen tres enfoques clásicos: curvas características de operación, especificación de un incremento de $\sigma$, y el método del intervalo de confianza.
+</div>
+
+## Curvas características de operación
+
+<div style="margin-top:30px;font-size:30px; text-align:justify; line-height:1.4;">
+Las <strong>curvas características de operación</strong> (curvas OC) relacionan la probabilidad de cometer un Error Tipo II ($\small \beta$) con el tamaño de muestra y la magnitud de las diferencias entre tratamientos.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="0" style="margin-top:20px;">
+
+```{r}
+#| label: curva-oc
+#| echo: false
+#| fig-height: 3.6
+#| fig-width: 8
+#| fig-align: center
+library(ggplot2)
+ns <- 4:20
+sigma <- 2.08
+deltas <- c(2, 4, 6)
+
+oc_df <- do.call(rbind, lapply(deltas, function(d) {
+  bv <- (d^2) * (3/16)
+  pot <- sapply(ns, function(n) {
+    tryCatch(power.anova.test(groups = 4, n = n, between.var = bv,
+                               within.var = sigma^2)$power,
+             error = function(e) NA)
+  })
+  data.frame(n = ns, potencia = pot, delta = paste0("δ = ", d))
+}))
+
+ggplot(oc_df, aes(x = n, y = potencia, color = delta)) +
+  geom_line(linewidth = 1.3) +
+  geom_hline(yintercept = 0.8, linetype = "dashed", color = "gray40") +
+  scale_color_manual(values = c("#1a3a6b", "#1b4d2e", "#d97706")) +
+  scale_x_continuous(breaks = seq(4, 20, 4)) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
+  labs(x = "n (por tratamiento)", y = "Potencia (1 - β)", color = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(legend.position = "top",
+        legend.text = element_text(size = 16),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 15))
+```
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; font-size:30px; text-align:justify;">
+A mayor diferencia $\delta$ a detectar, se necesita un $n$ menor para alcanzar la misma potencia; a menor $\delta$, se requiere un $n$ mucho mayor.
+</div>
+
+
+## Especificación de un incremento de la desviación estándar
+
+<div style="margin-top:50px;font-size:30px; text-align:justify; line-height:1.2;">
+Una alternativa para definir el tamaño del efecto es expresarlo como un múltiplo de la desviación estándar del error ($\sigma$), en lugar de una unidad de medida específica.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:28px; text-align:justify; margin-top:30px;">
+Ejemplo: con $\sigma\approx2.08$ sacos/ha (estimado del experimento), detectar un efecto de $\delta=1.5\sigma\approx3.1$ sacos/ha equivale a una diferencia moderadamente grande entre tratamientos.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:30px; font-size:28px; text-align:center;">
+Expresar el efecto en unidades de $\sigma$ facilita comparar la planeación de tamaño de muestra entre experimentos con escalas de medición distintas.
+</div>
+
+## Método del intervalo de confianza
+
+<div style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.4;">
+Una forma práctica de planear el tamaño de muestra es fijar el ancho deseado del intervalo de confianza para la diferencia entre dos medias de tratamiento y despejar $n$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:30px; text-align:justify; margin-top:40px;">
+Si se desea un intervalo de confianza del 95% para $\small \mu_i-\mu_j$ con un ancho total no mayor a 4 sacos/ha, y $\small \sigma\approx2.08$, se despeja $n$ de:
+
+<div style="font-size:22px;">
+
+$$\text{ancho}=2\,t_{\alpha/2,N-a}\sqrt{\frac{2\sigma^2}{n}}\leq 4$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:20px; font-size:30px; text-align:justify;">
+Este enfoque es más intuitivo para los investigadores que las curvas OC, ya que se expresa directamente en las unidades originales de la variable de respuesta.
+</div>
+
+## Tamaño de muestra para el experimento del café
+
+<div style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.4;">
+Suponga que el agrónomo desea detectar una diferencia mínima de $\delta=3$ sacos/ha entre tratamientos, con $\alpha=0.05$ y potencia del $80\%$, usando $CM_E\approx4.34$ como estimación de $\sigma^2$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; margin-top:30px; font-size:28px; text-align:center;">
+Aplicando el método de potencia para ANOVA con $a=4$ grupos:
+$$n\approx 11 \text{ parcelas por tratamiento } (N\approx44 \text{ en total})$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:20px; font-size:28px; text-align:justify;">
+El experimento original ($n=6$) tenía un tamaño de muestra menor al recomendado para detectar diferencias de esta magnitud con una potencia del 80%; sin embargo, las diferencias observadas fueron lo bastante grandes para alcanzar significancia.
+</div>
+
+## Efectos de dispersión
+
+<div style="margin-top:30px;font-size:30px; text-align:justify; line-height:1.4;">
+En algunos experimentos no solo interesa el efecto de un factor sobre la <strong>media</strong> de la respuesta, sino también sobre su <strong>variabilidad</strong>. A esto se le llama <strong>efecto de dispersión</strong>.
+</div>
+
+<div class="twocol" style="margin-top:30px;">
+<table style="width:100%; font-size:24px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Tratamiento</th><th style="padding:8px;">$s_i$ (sacos/ha)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Control</td><td style="padding:8px;">1.18</td></tr>
+<tr><td style="padding:8px;">Foliar</td><td style="padding:8px;">1.69</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Orgánico</td><td style="padding:8px;">2.71</td></tr>
+<tr><td style="padding:8px;">NPK</td><td style="padding:8px;">2.41</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:28px; text-align:justify;">
+El Orgánico presenta más del doble de variabilidad que el Control: además de aumentar el rendimiento promedio, parece hacerlo menos uniforme entre parcelas (aunque la prueba de Bartlett no detectó esta diferencia como significativa con este tamaño de muestra).
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:30px; font-size:28px; text-align:justify;">
+En agricultura, un tratamiento más uniforme (menor varianza) puede ser preferible aunque tenga una media levemente menor, pues reduce el riesgo para el productor.
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Métodos no paramétricos en el ANOVA
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué alternativa existe cuando no se cumple el supuesto de normalidad?
+</p>
+
+</div>
+
+## Métodos no paramétricos en ANOVA
+
+<div style="font-size:28px; text-align:justify; line-height:1.1;">
+Cuando el supuesto de normalidad no se cumple (o las muestras son pequeñas), se utilizan alternativas no paramétricas basadas en los <strong>rangos</strong> de las observaciones, en lugar de sus valores originales.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="font-size:28px; text-align:justify; line-height:1.2; margin-top:10px;">
+La prueba de <strong>Kruskal-Wallis</strong> es el equivalente no paramétrico del ANOVA de un factor. Contrasta si las $a$ poblaciones tienen la misma distribución, utilizando los rangos de las observaciones.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title" style="font-size:28px;">Hipótesis de Kruskal-Wallis</div>
+<div class="block-body" style="font-size:28px; text-align:center;">
+$$H_0: \text{las } a \text{ poblaciones tienen la misma distribución}$$
+$$H_1: \text{al menos una población difiere}$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef4fb; padding:8px; border-radius:10px; border-left:6px solid #1a3a6b; margin-top:6px; font-size:24px; text-align:center;">
+$$H=\frac{12}{N(N+1)}\sum_{i=1}^a\frac{R_i^2}{n_i}-3(N+1)$$
+donde $R_i$ es la suma de los rangos del tratamiento $i$.
+</div>
+
+## Cálculo de Kruskal-Wallis: ejemplo completo
+
+<div style="font-size:30px; text-align:justify; line-height:1.2; margin-top:30px;">
+Asignando rangos de 1 a 24 a todas las observaciones (sin distinguir tratamiento) y sumando por grupo:
+</div>
+
+<table style="width:100%; font-size:26px; text-align:center; margin-top:20px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Tratamiento</th><th>Control</th><th>Foliar</th><th>Orgánico</th><th>NPK</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Suma de rangos $R_i$</td><td>32.5</td><td>57.5</td><td>81.0</td><td>129.0</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:24px; text-align:center; margin-top:8px;">
+$$H=\frac{12}{24(25)}\left(\frac{32.5^2}{6}+\frac{57.5^2}{6}+\frac{81^2}{6}+\frac{129^2}{6}\right)-3(25)=16.89$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:24px; text-align:center; margin-top:8px;">
+$$gl=a-1=3 \qquad \chi^2_{0.05,3}=7.81 \qquad \text{valor-p}=0.0007$$
+$$H=16.89>7.81 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:28px; text-align:center;">
+Coincide con la del ANOVA paramétrico: el tipo de fertilizante afecta el rendimiento del café.
+</div>
+
+## Transformación de rangos
+
+<div style="margin-top:60px;font-size:30px; text-align:justify; line-height:1.2;">
+La prueba de Kruskal-Wallis es, en esencia, un ANOVA aplicado a los <strong>rangos</strong> de las observaciones en lugar de sus valores originales.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:40px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:28px; text-align:justify; line-height:1.4;">
+**Ventaja**: no requiere el supuesto de normalidad ni de homogeneidad estricta de varianzas.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:28px; text-align:justify; line-height:1.4;">
+**Limitación**: se pierde información al usar solo el orden de los datos, no su magnitud exacta.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:40px; font-size:28px; text-align:justify;">
+La transformación de rangos puede aplicarse de forma general a otros diseños experimentales más complejos, no solo al ANOVA de un factor.
+</div>
+
+## Resumen general de la clase
+
+<table style="margin-top:60px;width:100%; font-size:26px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Tema</th>
+<th style="padding:8px;">Pregunta que responde</th>
+<th style="padding:8px;">Herramienta</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">ANOVA de un factor</td>
+<td style="padding:8px;">¿Difieren las $a$ medias?</td>
+<td style="padding:8px;">Estadístico $F$</td>
+</tr>
+<tr>
+<td style="padding:8px;">Diagnóstico de residuos</td>
+<td style="padding:8px;">¿Son válidos los supuestos?</td>
+<td style="padding:8px;">QQ-plot, Shapiro, Bartlett</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Contrastes y Scheffé</td>
+<td style="padding:8px;">¿Se cumple una hipótesis específica?</td>
+<td style="padding:8px;">Estadístico $t$ o $F$ de un contraste</td>
+</tr>
+<tr>
+<td style="padding:8px;">Tukey</td>
+<td style="padding:8px;">¿Cuáles pares difieren?</td>
+<td style="padding:8px;">Diferencia honestamente significativa</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Dunnett</td>
+<td style="padding:8px;">¿Quién difiere del control?</td>
+<td style="padding:8px;">Comparaciones contra un testigo</td>
+</tr>
+<tr>
+<td style="padding:8px;">Tamaño de muestra</td>
+<td style="padding:8px;">¿Cuántas repeticiones se necesitan?</td>
+<td style="padding:8px;">Análisis de potencia</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Kruskal-Wallis</td>
+<td style="padding:8px;">¿Difieren sin normalidad?</td>
+<td style="padding:8px;">ANOVA sobre rangos</td>
+</tr>
+</table>
+
+## Errores comunes generales
+
+<div class="block-alert fragment fade-up" data-fragment-index="1" style="margin-top:70px;">
+<div class="block-body" style="font-size:28px; line-height:1.4;">
+- Ignorar la verificación de supuestos antes de interpretar la tabla ANOVA.
+- Confundir significancia estadística con relevancia práctica del efecto.
+- No planear el tamaño de muestra antes de iniciar el experimento.
+- Usar comparaciones múltiples sin que el ANOVA global haya sido significativo.
+- Aplicar Kruskal-Wallis de forma automática, sin antes verificar si realmente falla el supuesto de normalidad.
+</div>
+</div>
+
+## Taller en Clase {.center .middle}
+
+## Instrucciones
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:26px; line-height:1.7;">
+
+Para cada ejercicio:
+
+<ol>
+<li>Plantee las hipótesis nula y alternativa.</li>
+<li>Construya la tabla ANOVA con la información suministrada.</li>
+<li>Aplique el criterio de decisión con el valor crítico o el valor-p indicado.</li>
+<li>Indique si se rechaza o no la hipótesis nula.</li>
+<li>Redacte una conclusión en el contexto del problema.</li>
+</ol>
+
+</div>
+
+</div>
+
+## Ejercicio 1
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+Un investigador compara el rendimiento (kg/parcela) de tres variedades de fríjol en el Huila, con 5 parcelas por variedad ($N=15$). Obtiene $SC_{Trat}=42.6$ y $SC_E=18.4$.
+
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:10px;">
+<tr style="background-color:#dbeafe;">
+<th>Fuente</th>
+<th>SC</th>
+<th>gl</th>
+</tr>
+<tr><td>Variedad</td><td>42.6</td><td>2</td></tr>
+<tr><td>Error</td><td>18.4</td><td>12</td></tr>
+</table>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $F_{0.05,2,12}=3.89$
+</div>
+
+## Ejercicio 2
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+Una empresa evalúa el efecto de 4 sistemas de riego sobre el rendimiento de caña panelera, con 6 parcelas por sistema ($N=24$). El software reporta la siguiente tabla ANOVA:
+
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:10px;">
+<tr style="background-color:#dbeafe;">
+<th>Fuente</th>
+<th>SC</th>
+<th>gl</th>
+<th>CM</th>
+<th>F</th>
+</tr>
+<tr><td>Sistema</td><td>210.5</td><td>3</td><td>70.17</td><td>?</td></tr>
+<tr><td>Error</td><td>112.0</td><td>20</td><td>5.6</td><td></td></tr>
+</table>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $F_{0.05,3,20}=3.10$
+</div>
+
+## Ejercicio 3
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+En un ensayo con 5 dosis de un biofertilizante sobre el rendimiento de tomate (4 parcelas por dosis, $N=20$), el ANOVA arrojó $F_{calc}=2.45$ y un valor-p de $0.087$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $\alpha=0.05$
+</div>
+
+## Ejercicio 4
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+Tras rechazar $H_0$ en un ANOVA con 4 variedades de mango (Tommy, Kent, Keitt y Criollo), la prueba de Tukey reporta los siguientes intervalos de confianza (95%) para las diferencias de medias:
+
+</div>
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:10px;">
+<tr style="background-color:#dbeafe;">
+<th>Comparación</th>
+<th>Intervalo 95%</th>
+</tr>
+<tr><td>Kent - Tommy</td><td>(-1.2, 3.4)</td></tr>
+<tr><td>Keitt - Tommy</td><td>(2.1, 6.5)</td></tr>
+<tr><td>Criollo - Tommy</td><td>(-4.8, -0.6)</td></tr>
+</table>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Indique cuáles variedades difieren significativamente de Tommy y por qué.
+</div>
+
+## Ejercicio 5
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+En un experimento con 3 densidades de siembra de maíz, los residuos del ANOVA no superaron la prueba de Shapiro-Wilk (valor-p $=0.01$). Al aplicar Kruskal-Wallis sobre las sumas de rangos $R_1=45$, $R_2=78$, $R_3=183$ ($N=30$, 10 por grupo), se obtiene $H=13.27$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $\chi^2_{0.05,2}=5.99$
+</div>

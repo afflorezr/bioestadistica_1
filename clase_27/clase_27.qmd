@@ -1,7 +1,7 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
@@ -15,6 +15,7 @@ format:
     controls: true
     width: 1280
     height: 720
+    embed-resources: true
     css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
     header-includes: |
       <link rel="stylesheet" href="../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
@@ -37,421 +38,905 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 27 {.center .middle}
 
 ## Contenido
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Distribución F y prueba de varianzas</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Modelo de efectos aleatorios</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Distribución F de Fisher-Snedecor.</li>
-<li class="fragment fade-in" data-fragment-index="3">Prueba F para $H_0: \sigma_1^2 = \sigma_2^2$.</li>
-<li class="fragment fade-in" data-fragment-index="4">Prueba de Bartlett y Levene.</li>
-<li class="fragment fade-in" data-fragment-index="5">Código R.</li>
+<li class="fragment fade-in" data-fragment-index="2">Efectos fijos vs. efectos aleatorios.</li>
+<li class="fragment fade-in" data-fragment-index="3">Modelo de un factor aleatorio.</li>
+<li class="fragment fade-in" data-fragment-index="4">Componentes de varianza.</li>
+<li class="fragment fade-in" data-fragment-index="5">Ejemplo: fincas cafeteras del Huila.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Aplicaciones</h3>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Modelos de dos factores</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">IC para la razón de varianzas.</li>
-<li class="fragment fade-in" data-fragment-index="8">Homogeneidad en ensayos agrícolas.</li>
-<li class="fragment fade-in" data-fragment-index="9">Conexión con el ANOVA.</li>
-<li class="fragment fade-in" data-fragment-index="10">Errores comunes y taller.</li>
+<li class="fragment fade-in" data-fragment-index="7">Dos factores aleatorios.</li>
+<li class="fragment fade-in" data-fragment-index="8">Modelo mixto: variedad fija y finca aleatoria.</li>
+<li class="fragment fade-in" data-fragment-index="9">Cuadrados medios esperados y prueba F correcta.</li>
+<li class="fragment fade-in" data-fragment-index="10">Estimación de efectos y componentes de varianza.</li>
 </ul>
 </div>
+
 </div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 18px; font-size: 30px; align-items: start;">
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="11" style="font-size: 34px; margin-bottom: 14px; color: #79260d;">Parte III: Tamaño de muestra y CME esperados</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="12">Tamaño de muestra con efectos aleatorios.</li>
+<li class="fragment fade-in" data-fragment-index="13">Reglas para los cuadrados medios esperados.</li>
+<li class="fragment fade-in" data-fragment-index="14">Pruebas F aproximadas: Satterthwaite.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="15" style="font-size: 34px; margin-bottom: 14px; color: #5b21b6;">Parte IV: Estimación de componentes de varianza</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="16">Intervalos de confianza aproximados.</li>
+<li class="fragment fade-in" data-fragment-index="17">Método de la muestra grande modificado.</li>
+<li class="fragment fade-in" data-fragment-index="18">Estimación por máxima verosimilitud (REML).</li>
+<li class="fragment fade-in" data-fragment-index="19">Taller en clase.</li>
+</ul>
+</div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Razón de Varianzas</p>
-<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Comparando la dispersión entre dos poblaciones</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
-</div>
 
-## ¿Por qué comparar varianzas?
+<p style="font-size: 50px; font-weight: bold; color: #3b82f6;">
+Experimentos con Factores Aleatorios
+</p>
 
-<div class="twocol">
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué cambia cuando los niveles de un factor no se eligen porque interesan en sí mismos, sino porque representan una muestra de una población más amplia?
+</p>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-En control de calidad, la uniformidad del producto puede ser tan importante como el promedio: un fertilizante con alta variabilidad de concentración es poco confiable, aunque su media sea correcta.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-En comparaciones de dos grupos (Clase 26), la elección entre la prueba t de Student y la de Welch depende de si las varianzas son iguales.
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-La <strong>prueba F</strong> compara formalmente dos varianzas poblacionales usando la razón $S_1^2 / S_2^2$.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-La distribución F es también el fundamento del ANOVA (Clase 30): la varianza entre grupos se compara con la varianza dentro de los grupos.
-</li>
-</ul>
-</div>
+<p style="font-size: 22px; color: #9ca3af; margin-top: 30px;">
+Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá
+</p>
 
 </div>
 
-## Distribución F de Fisher-Snedecor
+## Motivación: no todos los factores son iguales
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: distribución F</div>
-  <div class="block-body">
-  <p>Si $Q_1 \sim \chi^2_{\nu_1}$ y $Q_2 \sim \chi^2_{\nu_2}$ son independientes, entonces:</p>
-  $$F = \frac{Q_1/\nu_1}{Q_2/\nu_2} \sim F_{\nu_1,\,\nu_2}$$
-  <p>con $\nu_1$ y $\nu_2$ grados de libertad. $E(F) = \nu_2/(\nu_2-2)$ para $\nu_2 > 2$.</p>
-  </div>
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+Hasta ahora, en el ANOVA de efectos fijos, los niveles de un factor (ej. cuatro fertilizantes específicos) son los <strong>únicos</strong> de interés: la conclusión se aplica solo a ellos. Pero en muchos experimentos agrícolas los niveles de un factor son apenas una <strong>muestra aleatoria</strong> de una población mucho más grande de niveles posibles.
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-La distribución F es asimétrica a la derecha y solo toma valores positivos.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Propiedad: si $F \sim F_{\nu_1, \nu_2}$, entonces $1/F \sim F_{\nu_2, \nu_1}$.
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+Ejemplo: un agrónomo selecciona al azar <strong>5 fincas</strong> de la región cafetera del Huila (que tiene cientos de fincas) para medir el rendimiento. No le interesan esas 5 fincas en particular, sino qué tan <strong>variable</strong> es el rendimiento entre fincas de esa región en general.
+</div>
 
-## Forma de la distribución F
+## Efectos fijos vs. efectos aleatorios
 
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-x <- seq(0, 6, length.out = 400)
-params <- list(c(2,10), c(5,20), c(10,30), c(30,100))
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:10px;">
 
-df <- map_dfr(params, function(p) {
-  tibble(x, f = df(x, p[1], p[2]),
-         dist = paste0("F(", p[1], ",", p[2], ")"))
-})
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Factor fijo</div>
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-top:8px;">
+Los niveles son elegidos deliberadamente porque <strong>interesan por sí mismos</strong> (ej. tres variedades específicas de café). La conclusión se restringe a esos niveles. Se estiman los $\tau_i$ específicos.
+</div>
+</div>
 
-ggplot(df, aes(x, f, color = dist)) +
-  geom_line(linewidth = 1.2) +
-  coord_cartesian(ylim = c(0, 1.2)) +
-  labs(x = "F", y = "f(F)", color = NULL,
-       title = "Distribución F para distintos grados de libertad") +
-  theme_minimal(base_size = 13) + theme(legend.position = "top")
-```
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Factor aleatorio</div>
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-top:8px;">
+Los niveles son una <strong>muestra aleatoria</strong> de una población más amplia (ej. 5 fincas de cientos posibles). No interesan esas fincas en particular, sino la <strong>varianza</strong> $\sigma_\tau^2$ entre fincas en general.
+</div>
+</div>
 
-## Prueba F para igualdad de varianzas
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:21px; text-align:center;">
+La pregunta de investigación cambia: en efectos fijos preguntamos "¿cuál nivel es mejor?"; en efectos aleatorios preguntamos "¿cuánto varían los niveles entre sí?"
+</div>
+
+## Modelo de un factor aleatorio
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El modelo de un factor con $a$ niveles aleatorios se escribe igual que el de efectos fijos, pero con un supuesto distinto sobre $\tau_i$:
+</div>
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba F: $H_0: \sigma_1^2 = \sigma_2^2$</div>
-  <div class="block-body">
-  <p>Si $X_{1i} \sim N(\mu_1, \sigma_1^2)$ y $X_{2j} \sim N(\mu_2, \sigma_2^2)$, independientes:</p>
-  $$F = \frac{S_1^2}{S_2^2} \sim F_{n_1-1,\,n_2-1} \quad \text{bajo } H_0$$
-  <p>Región de rechazo bilateral: $F < F_{1-\alpha/2,\,n_1-1,\,n_2-1}$ o $F > F_{\alpha/2,\,n_1-1,\,n_2-1}$.</p>
-  </div>
+<div class="block-title" style="font-size:26px;">Modelo de efectos aleatorios de un factor</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}
+\qquad
+\begin{cases}
+i=1,\ldots,a \\
+j=1,\ldots,n
+\end{cases}
+$$
+$$
+\tau_i \sim N(0,\sigma_\tau^2) \qquad \varepsilon_{ij}\sim N(0,\sigma^2) \qquad \tau_i \perp \varepsilon_{ij}
+$$
+</div>
 </div>
 
-## Ejemplo: uniformidad en peso de trucha arcoíris
+<div style="font-size:22px; line-height:1.4; margin-top:10px;">
+- $\mu$: media general de la población de niveles.
+- $\tau_i$: efecto aleatorio del nivel $i$, ahora una <strong>variable aleatoria</strong>, no un parámetro fijo.
+- $\sigma_\tau^2$: varianza entre niveles (componente de varianza de interés).
+- $\sigma^2$: varianza del error experimental (dentro de cada nivel).
+</div>
+
+## Estructura de varianza del modelo aleatorio
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Como $\tau_i$ y $\varepsilon_{ij}$ son ambas variables aleatorias independientes, la varianza de cualquier observación se descompone directamente:
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Varianza de una observación</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$\text{Var}(y_{ij}) = \sigma_\tau^2 + \sigma^2$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Dos observaciones del <strong>mismo</strong> nivel están correlacionadas: $\text{Cov}(y_{ij}, y_{ij'}) = \sigma_\tau^2$ para $j\neq j'$. Esto es la base de los modelos de efectos mixtos y multinivel.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+La hipótesis de interés ya no es sobre medias específicas, sino: $H_0: \sigma_\tau^2 = 0$ vs. $H_1: \sigma_\tau^2 > 0$.
+</div>
+
+## Ejemplo: rendimiento del café entre fincas del Huila
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: piscicultura, Huila</div>
-  <div class="block-body">
-  <p>En dos piscifactorías del Huila se mide el peso (g) de truchas arcoíris al momento de cosecha. ¿Tienen la misma variabilidad? $H_0: \sigma_1^2 = \sigma_2^2$ vs $H_1: \sigma_1^2 \neq \sigma_2^2$, $\alpha = 0.05$.</p>
-  </div>
+<div class="block-title">Ejemplo: variabilidad entre fincas, Huila</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Un investigador selecciona al azar <strong>6 fincas</strong> de la región cafetera del Huila (factor aleatorio, $a=6$) y mide el rendimiento (sacos/ha) en <strong>5 parcelas</strong> de cada finca ($n=5$, $N=30$). No interesa cuál finca rinde más, sino qué tan variable es el rendimiento entre fincas de la región.
+</div>
 </div>
 
-```{r}
-#| echo: true
-set.seed(27)
-piscif_1 <- rnorm(20, 280, 25)   # mayor variabilidad
-piscif_2 <- rnorm(18, 275, 15)   # menor variabilidad
+<table style="width:100%; font-size:18px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th>Parcela</th><th>Finca 1</th><th>Finca 2</th><th>Finca 3</th><th>Finca 4</th><th>Finca 5</th><th>Finca 6</th>
+</tr>
+<tr><td>1</td><td>71.5</td><td>64.9</td><td>80.8</td><td>61.6</td><td>67.3</td><td>68.8</td></tr>
+<tr><td>2</td><td>74.9</td><td>71.2</td><td>76.0</td><td>66.0</td><td>65.7</td><td>70.7</td></tr>
+<tr><td>3</td><td>68.4</td><td>67.2</td><td>82.2</td><td>72.1</td><td>64.6</td><td>69.1</td></tr>
+<tr><td>4</td><td>69.5</td><td>67.0</td><td>79.1</td><td>68.2</td><td>64.6</td><td>61.7</td></tr>
+<tr><td>5</td><td>73.0</td><td>67.6</td><td>84.7</td><td>65.5</td><td>66.0</td><td>62.8</td></tr>
+<tr style="background-color:#eef7ee; font-weight:bold;"><td>$\bar y_{i.}$</td><td>71.46</td><td>67.58</td><td>80.56</td><td>66.68</td><td>65.64</td><td>66.62</td></tr>
+</table>
 
-cat("s1² =", round(var(piscif_1), 3), "\n")
-cat("s2² =", round(var(piscif_2), 3), "\n")
-
-resultado_F <- var.test(piscif_1, piscif_2, conf.level = 0.95)
-cat("F =", round(resultado_F$statistic, 4), "\n")
-cat("Valor-p =", round(resultado_F$p.value, 4), "\n")
-cat("IC 95% para σ1²/σ2²: [",
-    round(resultado_F$conf.int[1], 4), ",",
-    round(resultado_F$conf.int[2], 4), "]\n")
-```
-
-## Interpretación del IC para la razón de varianzas
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">IC para $\sigma_1^2/\sigma_2^2$</div>
-  <div class="block-body">
-  $$\left[\frac{S_1^2/S_2^2}{F_{\alpha/2,\,n_1-1,\,n_2-1}},\; \frac{S_1^2/S_2^2}{F_{1-\alpha/2,\,n_1-1,\,n_2-1}}\right]$$
-  </div>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:8px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:20px; text-align:center;">
+Gran media $\bar y_{..}=69.76$ sacos/ha. Las medias por finca van de 65.64 a 80.56: hay variabilidad visible entre fincas.
 </div>
 
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Si el IC contiene al 1: no hay evidencia suficiente de diferencia entre varianzas.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Si el IC está completamente por encima de 1: $\sigma_1^2 > \sigma_2^2$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Si el IC está completamente por debajo de 1: $\sigma_1^2 < \sigma_2^2$.
-</li>
-</ul>
+## Tabla ANOVA del modelo aleatorio
 
-## Prueba de Bartlett: más de dos grupos
+<div style="font-size:24px; text-align:justify; line-height:1.3;">
+La tabla ANOVA se construye <strong>exactamente igual</strong> que en el modelo de efectos fijos; lo que cambia es la interpretación de los cuadrados medios esperados.
+</div>
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center; margin-top:8px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>$E(CM)$</th><th>F</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Finca</td><td>803.01</td><td>5</td><td>160.60</td><td>$\sigma^2+n\sigma_\tau^2$</td><td rowspan="2">17.38</td>
+</tr>
+<tr>
+<td style="padding:8px;">Error</td><td>221.74</td><td>24</td><td>9.24</td><td>$\sigma^2$</td>
+</tr>
+<tr style="background-color:#eef7ee;">
+<td style="padding:8px;">Total</td><td>1024.75</td><td>29</td><td></td><td></td><td></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+$F=160.60/9.24=17.38$, con valor-p $=2.74\times10^{-7} < 0.05$: se rechaza $H_0:\sigma_\tau^2=0$. Existe variabilidad real entre fincas.
+</div>
+
+## Estimación de los componentes de varianza
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El método de momentos (también llamado <strong>método ANOVA</strong>) iguala cada cuadrado medio observado a su valor esperado y despeja los componentes de varianza:
+</div>
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba de Bartlett</div>
-  <div class="block-body">
-  <p>Para $k$ grupos con muestras normales, contrasta $H_0: \sigma_1^2 = \cdots = \sigma_k^2$. El estadístico sigue aproximadamente $\chi^2_{k-1}$ bajo $H_0$.</p>
-  </div>
+<div class="block-title" style="font-size:24px;">Estimadores de momentos</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$\hat\sigma^2 = CM_E \qquad \hat\sigma_\tau^2 = \frac{CM_{Finca}-CM_E}{n}$$
+</div>
 </div>
 
-```{r}
-#| echo: true
-set.seed(27)
-grupo_A <- rnorm(15, 5.2, 0.5)
-grupo_B <- rnorm(12, 5.8, 0.4)
-grupo_C <- rnorm(14, 5.0, 0.6)
-
-bartlett.test(list(grupo_A, grupo_B, grupo_C))
-```
-
-## Prueba de Levene: alternativa robusta
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p>La prueba de Bartlett es sensible a desviaciones de la normalidad. La <strong>prueba de Levene</strong> (basada en las desviaciones absolutas de la mediana) es más robusta y se prefiere cuando la normalidad es dudosa.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:23px; text-align:center; margin-top:8px;">
+$$\hat\sigma^2 = 9.24 \qquad \hat\sigma_\tau^2 = \frac{160.60-9.24}{5} = 30.27$$
 </div>
 
-```{r}
-#| echo: true
-# Prueba de Levene manual (versión simplificada)
-library(tidyverse)
-datos <- tibble(
-  y = c(grupo_A, grupo_B, grupo_C),
-  grupo = rep(c("A","B","C"), c(15,12,14))
-)
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+La varianza total estimada de una observación es $\hat\sigma^2+\hat\sigma_\tau^2 = 39.51$ sacos²/ha².
+</div>
 
-# Desviaciones absolutas de la mediana por grupo
-datos <- datos |>
-  group_by(grupo) |>
-  mutate(d = abs(y - median(y))) |>
-  ungroup()
+## Interpretación: ¿qué proporción de la variabilidad es por finca?
 
-# ANOVA sobre las desviaciones (equivalente a Levene)
-summary(aov(d ~ grupo, data = datos))
-```
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Una pregunta natural en estos modelos es qué fracción de la variabilidad total se debe a la finca y cuál al error experimental dentro de la finca.
+</div>
 
-## Supuesto de normalidad en la prueba F
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:23px; text-align:center; margin-top:14px;">
+$$
+\text{Coeficiente de correlación intraclase: } \quad \rho = \frac{\hat\sigma_\tau^2}{\hat\sigma_\tau^2+\hat\sigma^2} = \frac{30.27}{39.51} = 0.766
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:justify;">
+Aproximadamente el <strong>76.6%</strong> de la variabilidad total del rendimiento se explica por diferencias entre fincas (suelo, manejo, microclima), y solo el 23.4% restante por variabilidad dentro de la misma finca (parcela a parcela).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:20px; text-align:center;">
+Un $\rho$ alto sugiere que, para reducir la incertidumbre, conviene invertir en más fincas (más niveles del factor aleatorio) en lugar de más parcelas por finca.
+</div>
+
+## Errores comunes: modelo de un factor aleatorio
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: sensibilidad a la no-normalidad</div>
-  <div class="block-body">
-  <p>La prueba F de varianzas es muy sensible a desviaciones de la normalidad: si los datos no son normales, el nivel real de significancia puede diferir mucho de $\alpha$. Siempre verifique normalidad antes de aplicarla.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Tratar un factor aleatorio (fincas seleccionadas al azar de una región) como si fuera fijo, e interpretar diferencias entre niveles específicos (esa finca particular vs. otra) cuando lo que interesa es la varianza general.
+- Reportar solo la tabla ANOVA sin estimar $\sigma_\tau^2$, que es el parámetro de interés real.
+- Olvidar verificar que los niveles del factor realmente fueron seleccionados al azar de una población más amplia; si se eligieron a propósito, el factor es fijo, no aleatorio.
+- Confundir el coeficiente de correlación intraclase con un coeficiente de determinación $R^2$.
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Modelos de Dos Factores
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué ocurre cuando un experimento combina un factor de interés específico con un factor que representa una muestra aleatoria de una población?
+</p>
+
+</div>
+
+## Diseño de dos factores aleatorios
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Cuando <strong>ambos</strong> factores de un diseño cruzado son aleatorios, ninguno de los dos interesa por sus niveles específicos; interesan únicamente sus componentes de varianza.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:justify;">
+Ejemplo conceptual: para evaluar la repetibilidad de un protocolo de medición del grado Brix en caña de azúcar, se seleccionan al azar <strong>lotes</strong> de caña y <strong>operarios</strong> que realizan la medición. Ni los lotes ni los operarios específicos interesan; interesa cuánta variabilidad introduce cada fuente.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title" style="font-size:24px;">Modelo de dos factores aleatorios (cruzado, con interacción)</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+$$
+y_{ijk}=\mu+\tau_i+\beta_j+(\tau\beta)_{ij}+\varepsilon_{ijk}
+$$
+$$
+\tau_i\sim N(0,\sigma_\tau^2) \quad \beta_j\sim N(0,\sigma_\beta^2) \quad (\tau\beta)_{ij}\sim N(0,\sigma_{\tau\beta}^2) \quad \varepsilon_{ijk}\sim N(0,\sigma^2)
+$$
+</div>
+</div>
+
+## Varianza en el modelo de dos factores aleatorios
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Con dos factores aleatorios, la varianza total de una observación se descompone en <strong>cuatro</strong> componentes independientes:
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Descomposición de la varianza</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$\text{Var}(y_{ijk}) = \sigma_\tau^2 + \sigma_\beta^2 + \sigma_{\tau\beta}^2 + \sigma^2$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:21px; text-align:center;">
+Este tipo de modelo es la base de los estudios de <strong>repetibilidad y reproducibilidad</strong> (R&amp;R), comunes en el control de calidad de laboratorios agroindustriales (ej. medición de azúcares en caña, acidez en café).
+</div>
+
+## El modelo mixto de dos factores
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+El caso más frecuente en experimentación agrícola combina un factor <strong>fijo</strong> (el tratamiento de interés) con un factor <strong>aleatorio</strong> (el contexto donde se replica el experimento).
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Ejemplo central: variedades de café en fincas del Huila</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Se evalúan <strong>3 variedades de café</strong> (Castillo, Caturra, Tabi) &mdash; factor <strong>fijo</strong>, de interés específico para el productor &mdash; sembradas en <strong>5 fincas</strong> seleccionadas al azar de la región cafetera del Huila &mdash; factor <strong>aleatorio</strong>, muestra de la población de fincas de la región. Cada combinación variedad×finca se replica en 4 parcelas ($n=4$), para $N=60$ observaciones.
+</div>
+</div>
+
+## Modelo mixto: notación
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Modelo mixto de dos factores con interacción</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+y_{ijk}=\mu+\tau_i+\beta_j+(\tau\beta)_{ij}+\varepsilon_{ijk}
+$$
+$$
+i=1,\ldots,a=3 \quad j=1,\ldots,b=5 \quad k=1,\ldots,n=4
+$$
+</div>
+</div>
+
+<div style="font-size:22px; line-height:1.4; margin-top:10px;">
+- $\tau_i$: efecto <strong>fijo</strong> de la variedad $i$, con $\sum_i \tau_i = 0$ (parámetro, no variable aleatoria).
+- $\beta_j$: efecto <strong>aleatorio</strong> de la finca $j$, $\beta_j\sim N(0,\sigma_\beta^2)$.
+- $(\tau\beta)_{ij}$: interacción variedad×finca, también <strong>aleatoria</strong> porque involucra al factor aleatorio: $(\tau\beta)_{ij}\sim N(0,\sigma_{\tau\beta}^2)$.
+- $\varepsilon_{ijk}\sim N(0,\sigma^2)$: error experimental.
+</div>
+
+## Datos del experimento: rendimiento (sacos/ha)
+
+<table style="width:100%; font-size:18px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th>Variedad</th><th>Finca 1</th><th>Finca 2</th><th>Finca 3</th><th>Finca 4</th><th>Finca 5</th><th>$\bar y_{i..}$</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td>Castillo</td><td>74.90</td><td>66.70</td><td>76.23</td><td>71.43</td><td>76.50</td><td><strong>73.15</strong></td></tr>
+<tr><td>Caturra</td><td>65.85</td><td>62.58</td><td>64.38</td><td>73.00</td><td>69.55</td><td><strong>67.07</strong></td></tr>
+<tr style="background-color:#eef4fb;"><td>Tabi</td><td>63.60</td><td>66.85</td><td>65.08</td><td>69.40</td><td>73.70</td><td><strong>67.73</strong></td></tr>
+<tr style="background-color:#eef7ee; font-weight:bold;"><td>$\bar y_{.j.}$</td><td>68.12</td><td>65.38</td><td>68.56</td><td>71.28</td><td>73.25</td><td>69.32</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Cada celda es el promedio de 4 parcelas. Castillo muestra el mayor promedio general (73.15), pero el patrón cambia de finca a finca: hay indicios de interacción.
+</div>
+
+## Tabla ANOVA del modelo mixto: sumas de cuadrados
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center; margin-top:8px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Variedad (fijo)</td><td>445.51</td><td>2</td><td>222.75</td></tr>
+<tr><td style="padding:8px;">Finca (aleatorio)</td><td>442.30</td><td>4</td><td>110.57</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Variedad×Finca</td><td>365.31</td><td>8</td><td>45.66</td></tr>
+<tr><td style="padding:8px;">Error</td><td>304.11</td><td>45</td><td>6.76</td></tr>
+<tr style="background-color:#eef7ee;"><td style="padding:8px;">Total</td><td>1557.23</td><td>59</td><td></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:20px; text-align:center;">
+Hasta aquí, el cálculo de SC y CM es <strong>idéntico</strong> al de un modelo de efectos fijos. Lo que cambia es el cuadrado medio esperado de cada fuente, y en consecuencia el denominador correcto de la prueba F.
+</div>
+
+## Cuadrados medios esperados del modelo mixto
+
+<div style="font-size:24px; text-align:justify; line-height:1.3;">
+Para un diseño cruzado balanceado con variedad fija ($a=3$) y finca aleatoria ($b=5$, $n=4$ réplicas), los cuadrados medios esperados son:
+</div>
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center; margin-top:8px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th><th>$E(CM)$</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Variedad (fijo)</td>
+<td style="padding:8px;">$\sigma^2+n\sigma_{\tau\beta}^2+\dfrac{nb}{a-1}\sum_i\tau_i^2$</td>
+</tr>
+<tr>
+<td style="padding:8px;">Finca (aleatorio)</td>
+<td style="padding:8px;">$\sigma^2+na\,\sigma_\beta^2$</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Variedad×Finca</td>
+<td style="padding:8px;">$\sigma^2+n\sigma_{\tau\beta}^2$</td>
+</tr>
+<tr>
+<td style="padding:8px;">Error</td>
+<td style="padding:8px;">$\sigma^2$</td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:10px; font-size:20px; text-align:center;">
+Nótese que $E(CM_{Variedad})$ contiene el término $n\sigma_{\tau\beta}^2$: el denominador correcto para probar el factor fijo es $CM_{Variedad\times Finca}$, <strong>no</strong> $CM_E$.
+</div>
+
+## Prueba F correcta para el factor fijo (variedad)
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Para que el cociente de cuadrados medios tenga esperanza 1 bajo $H_0$, el numerador y el denominador deben compartir todos los términos excepto el que se está probando.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">F correcta para variedad (factor fijo)</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+F=\frac{CM_{Variedad}}{CM_{Variedad\times Finca}} \sim F_{a-1,\,(a-1)(b-1)} \quad \text{bajo } H_0:\tau_i=0\;\forall i
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:23px; text-align:center; margin-top:8px;">
+$$F=\frac{222.75}{45.66}=4.88 \qquad gl=(2,8) \qquad \text{valor-p}=0.041$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:20px; text-align:center;">
+<strong>Comparar:</strong> si (incorrectamente) se usara $CM_E=6.76$ como denominador, se obtendría $F=32.96$ y valor-p $=1.5\times10^{-7}$: una significancia artificialmente inflada.
+</div>
+
+## Por qué el denominador correcto importa
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Usar $CM_E$ como denominador ignora que parte de la variabilidad observada entre variedades también está contaminada por la interacción variedad×finca, que es aleatoria.
+</div>
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Denominador</th><th>F</th><th>gl error</th><th>valor-p</th><th>Conclusión</th>
+</tr>
+<tr style="background-color:#fdecec;">
+<td style="padding:8px;">$CM_E=6.76$ (incorrecto)</td><td>32.96</td><td>45</td><td>$1.5\times10^{-7}$</td><td>Muy significativo</td>
+</tr>
+<tr style="background-color:#eef7ee;">
+<td style="padding:8px;">$CM_{V\times F}=45.66$ (correcto)</td><td>4.88</td><td>8</td><td>0.041</td><td>Significativo, con menor margen</td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+La conclusión cualitativa no cambia en este ejemplo (sigue siendo significativo), pero los grados de libertad del error caen de 45 a 8: la prueba correcta es mucho más conservadora, como corresponde a tener solo 5 fincas.
+</div>
+
+## Prueba F para el factor aleatorio (finca) y la interacción
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; text-align:center;">
+<strong style="color:#1a3a6b;">Finca (aleatorio):</strong>
+$$F=\frac{CM_{Finca}}{CM_{Variedad\times Finca}}=\frac{110.57}{45.66}=2.42 \qquad gl=(4,8) \qquad \text{valor-p}=0.134$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:22px; text-align:center; margin-top:8px;">
+<strong style="color:#1b4d2e;">Interacción Variedad×Finca:</strong>
+$$F=\frac{CM_{Variedad\times Finca}}{CM_E}=\frac{45.66}{6.76}=6.76 \qquad gl=(8,45) \qquad \text{valor-p}<0.0001$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+La interacción <strong>sí</strong> usa $CM_E$ como denominador correcto (es la única fuente cuyo $E(CM)$ solo añade $\sigma^2$ al término propio). Hay evidencia fuerte de interacción: el desempeño relativo de las variedades cambia según la finca.
+</div>
+
+## Componentes de varianza del modelo mixto
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Despejando los cuadrados medios esperados (método de momentos):
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Estimadores de momentos</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$\hat\sigma^2=CM_E \qquad \hat\sigma_{\tau\beta}^2=\frac{CM_{V\times F}-CM_E}{n} \qquad \hat\sigma_\beta^2=\frac{CM_{Finca}-CM_{V\times F}}{na}$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:21px; text-align:center; margin-top:8px;">
+$$\hat\sigma^2=6.76 \qquad \hat\sigma_{\tau\beta}^2=\frac{45.66-6.76}{4}=9.73 \qquad \hat\sigma_\beta^2=\frac{110.57-45.66}{4(3)}=5.41$$
+</div>
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th>Componente</th><th>Estimación</th><th>% de la varianza</th></tr>
+<tr style="background-color:#eef7ee;"><td>$\sigma_\beta^2$ (finca)</td><td>5.41</td><td>24.7%</td></tr>
+<tr><td>$\sigma_{\tau\beta}^2$ (interacción)</td><td>9.73</td><td>44.4%</td></tr>
+<tr style="background-color:#eef7ee;"><td>$\sigma^2$ (error)</td><td>6.76</td><td>30.9%</td></tr>
+</table>
+
+## Estimación de los efectos fijos (variedad)
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Los efectos fijos de variedad se estiman con los promedios marginales, igual que en el ANOVA de un factor:
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th>Variedad</th><th>$\bar y_{i..}$</th><th>$\hat\tau_i=\bar y_{i..}-\bar y_{...}$</th></tr>
+<tr style="background-color:#eef4fb;"><td>Castillo</td><td>73.15</td><td>+3.84</td></tr>
+<tr><td>Caturra</td><td>67.07</td><td>-2.25</td></tr>
+<tr style="background-color:#eef4fb;"><td>Tabi</td><td>67.73</td><td>-1.59</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:21px; text-align:center; margin-top:10px;">
+Error estándar de la diferencia entre dos medias de variedad (usando $CM_{V\times F}$):
+$$EE(\bar y_{i..}-\bar y_{i'..})=\sqrt{\frac{2\,CM_{V\times F}}{bn}}=\sqrt{\frac{2(45.66)}{20}}=2.14$$
+</div>
+
+## Conclusión con números reales
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th>Comparación</th><th>Diferencia</th><th>$t=\text{dif}/EE$</th><th>$t_{0.025,8}=2.306$</th></tr>
+<tr style="background-color:#eef4fb;"><td>Castillo $-$ Caturra</td><td>6.08</td><td>2.85</td><td>Significativa</td></tr>
+<tr><td>Castillo $-$ Tabi</td><td>5.43</td><td>2.54</td><td>Significativa</td></tr>
+<tr style="background-color:#eef4fb;"><td>Caturra $-$ Tabi</td><td>$-0.66$</td><td>$-0.31$</td><td>No significativa</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:12px; font-size:21px; text-align:justify;">
+<strong>Conclusión:</strong> existe evidencia de que la variedad afecta el rendimiento ($F=4.88$, $p=0.041$), con Castillo superando a Caturra y a Tabi en aproximadamente 5.4 a 6.1 sacos/ha. Sin embargo, la fuerte interacción variedad×finca ($p<0.0001$) indica que esta ventaja de Castillo no es uniforme: en algunas fincas el patrón se invierte, por lo que la recomendación de variedad debería matizarse según las condiciones locales.
+</div>
+
+## Errores comunes: modelo mixto
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Usar siempre $CM_E$ como denominador de la prueba F, sin verificar primero los cuadrados medios esperados de cada fuente.
+- Olvidar que en un modelo mixto con interacción, el factor fijo se prueba contra $CM_{interacción}$, no contra $CM_E$.
+- Interpretar $\sigma_\beta^2$ o $\sigma_{\tau\beta}^2$ como si fueran efectos de fincas específicas (son varianzas de una población, no efectos puntuales).
+- Ignorar una interacción significativa y reportar solo el efecto principal del factor fijo, ocultando que su efecto depende del contexto (finca).
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Tamaño de Muestra y Cuadrados Medios Esperados
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Cuántos niveles del factor aleatorio y cuántas réplicas se necesitan? ¿Cómo se determina el denominador correcto de cada prueba F?
+</p>
+
+</div>
+
+## Tamaño de muestra con efectos aleatorios
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+En el modelo de efectos fijos, el tamaño de muestra solo involucra el número de réplicas $n$ por tratamiento. Con un factor aleatorio aparece una <strong>segunda decisión</strong>: cuántos <strong>niveles</strong> del factor aleatorio incluir.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center; line-height:1.4;">
+<strong>Número de niveles aleatorios ($b$)</strong><br>Cuántas fincas, lotes u operarios se seleccionan. Determina cuánto se puede generalizar a la población.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center; line-height:1.4;">
+<strong>Número de réplicas ($n$)</strong><br>Cuántas parcelas por combinación. Reduce el error experimental, pero no aumenta la generalización a otras fincas.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:21px; text-align:center;">
+En el ejemplo del café: aumentar $n$ (parcelas por finca) reduce $\sigma^2$, pero solo aumentar $b$ (número de fincas) reduce la incertidumbre sobre $\sigma_\beta^2$ y mejora los grados de libertad del denominador de la prueba F del factor fijo.
+</div>
+
+## Por qué los grados de libertad del factor aleatorio limitan la potencia
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En el ejemplo del café, la prueba F de variedad usa $gl_2=(a-1)(b-1)=8$, que depende del número de <strong>fincas</strong>, no del número total de observaciones ($N=60$).
 </div>
 
 ```{r}
-#| echo: true
-# Verificar normalidad en cada grupo antes de usar var.test
-sw1 <- shapiro.test(piscif_1)
-sw2 <- shapiro.test(piscif_2)
-cat("Shapiro-Wilk piscifactoría 1: p =", round(sw1$p.value, 4), "\n")
-cat("Shapiro-Wilk piscifactoría 2: p =", round(sw2$p.value, 4), "\n")
-```
-
-## Conexión con el ANOVA
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p>En el ANOVA de un factor (Clase 30), el estadístico de prueba es también una razón F:</p>
-  $$F = \frac{CM_{entre}}{CM_{dentro}} = \frac{\text{Varianza entre grupos}}{\text{Varianza dentro de grupos}}$$
-  <p>Si $H_0$ (todas las medias son iguales) es verdadera, el numerador y el denominador estiman la misma $\sigma^2$, y $F \approx 1$. Si $H_0$ es falsa, el numerador es más grande y $F > 1$.</p>
-  </div>
-</div>
-
-## Flujo de decisión: prueba t con dos grupos
-
-```{r}
+#| label: grafico-gl-vs-fincas
 #| echo: false
-#| fig-height: 3.5
-library(ggplot2)
-df_flow <- data.frame(
-  label = c("¿Datos normales?", "¿σ₁² = σ₂²?\n(var.test, Levene)",
-            "t de Student\n(var.equal=TRUE)", "Welch\n(var.equal=FALSE)",
-            "Wilcoxon\n(no paramétrica)"),
-  x = c(3, 3, 1.5, 4.5, 3),
-  y = c(4, 2.5, 1, 1, 1.2),
-  fill = c("#dce9f7","#d6f0dd","#1b4d2e","#1a3a6b","#fad8d8")
-)
-ggplot(df_flow, aes(x, y)) +
-  geom_label(aes(label = label, fill = fill), size = 3.8,
-             color = c("black","black","white","white","black"),
-             fontface = "bold", label.size = 0.5) +
-  scale_fill_identity() +
-  annotate("segment", x=3, xend=3, y=3.7, yend=2.9,
-           arrow=arrow(length=unit(0.2,"cm"))) +
-  annotate("segment", x=3, xend=1.5, y=2.2, yend=1.3,
-           arrow=arrow(length=unit(0.2,"cm"))) +
-  annotate("segment", x=3, xend=4.5, y=2.2, yend=1.3,
-           arrow=arrow(length=unit(0.2,"cm"))) +
-  annotate("text", x=1.5, y=2.4, label="Sí", size=4) +
-  annotate("text", x=4.5, y=2.4, label="No", size=4) +
-  annotate("text", x=1, y=3.6, label="Sí", size=4) +
-  xlim(0.5, 6) + ylim(0.5, 4.5) + theme_void()
+#| fig-height: 3.4
+b_vals <- 3:12
+gl2 <- (3-1)*(b_vals-1)
+plot(b_vals, gl2, type = "b", pch = 19, col = "#1a3a6b",
+     xlab = "Número de fincas (b)", ylab = "Grados de libertad del denominador (gl2)",
+     main = "Grados de libertad de la prueba F de variedad según el número de fincas")
+abline(h = 8, lty = 2, col = "#b91c1c")
+points(5, 8, pch = 19, col = "#b91c1c", cex = 1.5)
+text(5, 11, "Diseño actual\n(b=5, gl2=8)", col = "#b91c1c", cex = 0.8)
 ```
 
-## Errores comunes
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:20px; text-align:center;">
+Agregar más parcelas por finca (aumentar $n$) <strong>no</strong> mueve esta curva: solo agregar más fincas lo hace. Por eso la planeación de tamaño de muestra con factores aleatorios exige decidir $b$ con cuidado.
+</div>
+
+## Reglas para los cuadrados medios esperados
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Existe un algoritmo general (regla de Cornfield-Tukey) para determinar el $E(CM)$ de cualquier fuente en un diseño balanceado, según si cada factor es fijo o aleatorio.
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-body" style="font-size:22px; text-align:justify;">
+<strong>Algoritmo (versión resumida):</strong> para cada fuente, su $E(CM)$ es $\sigma^2$ más la suma de las varianzas (o sumas de cuadrados de efectos fijos divididas por sus gl) de <strong>todos los términos que contienen</strong> a los subíndices de esa fuente, cada uno multiplicado por el producto de los tamaños de los subíndices <strong>ausentes</strong> en ese término, exceptuando los subíndices correspondientes a factores fijos.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:20px; text-align:center;">
+En la práctica, basta construir una tabla de "reglas de subíndices" para identificar qué cuadrado medio sirve de denominador a cada fuente.
+</div>
+
+## Tabla de reglas para el ejemplo mixto
+
+<div style="font-size:22px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+Para el modelo mixto Variedad (fija, $i$) × Finca (aleatoria, $j$) con réplicas ($k$), la tabla de reglas se construye así:
+</div>
+
+<table style="width:100%; font-size:19px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>$i$ (fijo, $a=3$)</th><th>$j$ (aleat., $b=5$)</th><th>$k$ (réplica, $n=4$)</th><th>$E(CM)$</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Variedad ($i$)</td><td>0</td><td>1</td><td>1</td><td>$\sigma^2+n\sigma_{\tau\beta}^2+nb\,\theta_\tau$</td></tr>
+<tr><td style="padding:6px;">Finca ($j$)</td><td>1</td><td>0</td><td>1</td><td>$\sigma^2+na\,\sigma_\beta^2$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Variedad×Finca ($ij$)</td><td>0</td><td>0</td><td>1</td><td>$\sigma^2+n\sigma_{\tau\beta}^2$</td></tr>
+<tr><td style="padding:6px;">Error ($ijk$)</td><td>0</td><td>0</td><td>0</td><td>$\sigma^2$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Regla práctica: el denominador correcto de una fuente es el $CM$ de la fuente de mayor orden (más subíndices) cuyo $E(CM)$ coincide con el de la fuente bajo $H_0$, excepto el término que se está probando.
+</div>
+
+## Pruebas F aproximadas: motivación
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+En diseños más complejos (varios factores aleatorios, anidamientos), puede no existir ningún cuadrado medio simple cuyo $E(CM)$ coincida exactamente con el numerador bajo $H_0$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:justify;">
+Solución: construir un denominador <strong>aproximado</strong> como una combinación lineal de cuadrados medios disponibles, de modo que su esperanza coincida con la del numerador bajo $H_0$.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title" style="font-size:23px;">Combinación lineal de cuadrados medios</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$CM^{*}=CM_1+CM_2-CM_3$$
+$$F^{*}=\frac{CM_{Numerador}}{CM^{*}}$$
+</div>
+</div>
+
+## Método de Satterthwaite
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Como $CM^{*}$ ya no es un cuadrado medio puro, su distribución no es exactamente $\chi^2$ escalada. El <strong>método de Satterthwaite</strong> aproxima sus grados de libertad efectivos:
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Grados de libertad de Satterthwaite</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+$$
+gl^{*}=\frac{(CM_1+CM_2+\cdots)^2}{\dfrac{CM_1^2}{gl_1}+\dfrac{CM_2^2}{gl_2}+\cdots}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+La idea general (sin entrar en la derivación completa) es encontrar los grados de libertad de una distribución $\chi^2$ que mejor "imite" la varianza de la combinación lineal $CM^{*}$. Software como R (paquete <code>lmerTest</code>) calcula esto automáticamente en modelos mixtos.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:20px; text-align:center;">
+En nuestro ejemplo del café, el modelo es balanceado y el denominador $CM_{V\times F}$ es exacto: no se necesitó aproximación de Satterthwaite. Esta técnica se vuelve indispensable en diseños no balanceados o con anidamientos múltiples.
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Estimación de Componentes de Varianza
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Más allá del estimador puntual: ¿qué tan precisa es la estimación de $\sigma_\beta^2$ o $\sigma_{\tau\beta}^2$?
+</p>
+
+</div>
+
+## Intervalos de confianza para componentes de varianza: la dificultad
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Para una varianza simple $\sigma^2$ de una muestra normal, $\frac{(N-1)S^2}{\sigma^2}\sim\chi^2_{N-1}$ permite un IC exacto. Para $\sigma_\tau^2$ o $\sigma_\beta^2$, estimados como una <strong>diferencia</strong> de cuadrados medios, no existe una distribución exacta tan simple.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:22px; text-align:justify;">
+El problema: $\hat\sigma_\beta^2=\dfrac{CM_{Finca}-CM_{V\times F}}{na}$ es la diferencia de dos variables aleatorias proporcionales a $\chi^2$, y la diferencia de dos $\chi^2$ no sigue, en general, ninguna distribución conocida en forma cerrada.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Consecuencia práctica: $\hat\sigma_\beta^2$ puede incluso resultar <strong>negativo</strong> en muestras pequeñas, lo cual no tiene sentido para una varianza.
+</div>
+
+## El método de la muestra grande modificado
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El <strong>método de la muestra grande modificado</strong> (modified large-sample method, Graybill-Wang) construye un intervalo de confianza aproximado para combinaciones lineales de componentes de varianza, sin requerir que la muestra sea exactamente grande.
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-body" style="font-size:22px; text-align:justify;">
+<strong>Idea general:</strong> en lugar de tratar $\hat\sigma_\beta^2$ como una variable con distribución conocida, se combinan los límites de confianza individuales de cada cuadrado medio involucrado (usando la distribución $\chi^2$ de cada uno por separado) en una fórmula que garantiza, de forma aproximada, la cobertura deseada incluso con pocos niveles del factor aleatorio.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Se usa cuando el número de niveles del factor aleatorio es pequeño (como las 5 fincas del ejemplo), situación en la que los métodos basados en la normalidad asintótica son poco confiables.
+</div>
+
+## Estimación por máxima verosimilitud
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El método de momentos (igualar $CM$ a $E(CM)$) es simple pero tiene una debilidad: puede producir estimaciones <strong>negativas</strong> de $\sigma_\beta^2$ o $\sigma_{\tau\beta}^2$ cuando el cuadrado medio del numerador es menor que el del denominador.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:20px; text-align:center; line-height:1.4;">
+<strong>Método de momentos (ANOVA)</strong><br>Rápido, no requiere supuestos de optimización, pero permite estimaciones negativas sin sentido.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:20px; text-align:center; line-height:1.4;">
+<strong>Máxima verosimilitud (ML / REML)</strong><br>Maximiza la función de verosimilitud bajo el supuesto de normalidad; restringe las estimaciones a ser no negativas.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:14px; font-size:20px; text-align:center;">
+En la práctica se prefiere <strong>REML</strong> (máxima verosimilitud restringida) porque corrige el sesgo que ML introduce al estimar componentes de varianza en muestras pequeñas.
+</div>
+
+## REML aplicado al ejemplo del café
+
+<div style="font-size:23px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Ajustando el modelo mixto del experimento de variedades de café por REML, se obtienen estimaciones muy cercanas a las del método de momentos:
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Componente</th><th>Método ANOVA (momentos)</th><th>REML</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$\sigma_\beta^2$ (finca)</td><td>5.41</td><td>5.41</td></tr>
+<tr><td style="padding:8px;">$\sigma_{\tau\beta}^2$ (interacción)</td><td>9.73</td><td>9.73</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$\sigma^2$ (error)</td><td>6.76</td><td>6.76</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:20px; text-align:center;">
+En diseños perfectamente balanceados (como este), el método de momentos y REML coinciden numéricamente. Las diferencias entre ambos métodos se hacen evidentes en diseños <strong>no balanceados</strong>, donde REML sigue produciendo estimaciones válidas y no negativas, mientras que el método de momentos puede fallar.
+</div>
+
+## Ventaja clave de la máxima verosimilitud
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+La principal ventaja práctica de ML/REML sobre el método de momentos es que las estimaciones de varianza están <strong>restringidas a ser no negativas</strong> por construcción, ya que se obtienen maximizando una verosimilitud sobre el espacio de parámetros válido $\sigma^2\geq 0$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:22px; text-align:justify;">
+Si en el ejemplo del café hubiéramos tenido pocas fincas y poca señal real entre ellas, el método de momentos podría haber arrojado $\hat\sigma_\beta^2<0$; REML, en cambio, habría reportado $\hat\sigma_\beta^2=0$, una conclusión interpretable: no hay evidencia de variabilidad entre fincas.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:20px; text-align:center;">
+Por esta razón, el software moderno de modelos mixtos (ej. <code>lme4</code> en R) usa REML como método de estimación por defecto.
+</div>
+
+## Errores comunes: estimación de componentes de varianza
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes en pruebas de varianza</div>
-  <div class="block-body">
-  <p>La prueba de igualdad de varianzas es una herramienta auxiliar, no un fin en sí misma.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Reportar una estimación de $\sigma_\beta^2$ sin advertir que el método de momentos puede producir valores negativos en muestras pequeñas.
+- Usar ML en lugar de REML para inferencia final sobre componentes de varianza (ML subestima la varianza al no ajustar por la pérdida de grados de libertad al estimar los efectos fijos).
+- Construir un intervalo de confianza para $\sigma_\beta^2$ usando directamente una distribución $\chi^2$, ignorando que es una diferencia de cuadrados medios.
+- Confundir la decisión de aumentar réplicas ($n$) con la de aumentar niveles del factor aleatorio ($b$): solo esta última mejora la precisión de $\hat\sigma_\beta^2$.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Aplicar la prueba F sin verificar normalidad:</strong> con datos no normales, use siempre la prueba de Levene.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Usar la prueba F como prerrequisito obligatorio para t:</strong> la prueba de Welch es robusta ante varianzas desiguales y puede usarse por defecto sin necesidad de verificar primero.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Confundir $F_{\nu_1,\nu_2}$ con $F_{\nu_2,\nu_1}$:</strong> los grados de libertad importan: $F_{n_1-1, n_2-1}$ no es igual a $F_{n_2-1, n_1-1}$.
-</li>
-</ul>
-
-## Taller en clase {.center .middle}
-
-## Taller 1: prueba F de varianzas
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Se compara la variabilidad en el contenido de grasa de leche (%) entre dos razas bovinas en Antioquia. Raza 1 ($n_1 = 15$): $s_1^2 = 0.36$. Raza 2 ($n_2 = 12$): $s_2^2 = 0.16$. ¿Son las varianzas iguales? Use $\alpha = 0.10$. Construya también un IC al 90%.</p>
-  </div>
-</div>
-
-## Taller 1: solución
-
-```{r}
-#| echo: true
-n1 <- 15; s2_1 <- 0.36
-n2 <- 12; s2_2 <- 0.16
-alpha <- 0.10
-
-F_obs  <- s2_1 / s2_2
-F_low  <- qf(alpha/2, n1-1, n2-1)
-F_high <- qf(1-alpha/2, n1-1, n2-1)
-vp     <- 2 * min(pf(F_obs, n1-1, n2-1),
-                  pf(F_obs, n1-1, n2-1, lower.tail = FALSE))
-
-cat("F observado:", round(F_obs, 4), "\n")
-cat("Región de no rechazo: [", round(F_low,4), ",", round(F_high,4), "]\n")
-cat("Valor-p:", round(vp, 4), "\n")
-cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-ic <- c(F_obs/F_high, F_obs/F_low)
-cat("IC 90% para σ1²/σ2²: [", round(ic[1],4), ",", round(ic[2],4), "]\n")
-```
-
-## Taller 2: Bartlett para tres grupos
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En un ensayo de tres variedades de frijol en el Meta, se mide el peso de 100 granos (g) en 12 plantas por variedad. Antes de aplicar ANOVA, verifique la homogeneidad de varianzas con la prueba de Bartlett. Use $\alpha = 0.05$.</p>
-  </div>
-</div>
-
-## Taller 2: solución
-
-```{r}
-#| echo: true
-set.seed(27)
-var1 <- rnorm(12, 52, 4)
-var2 <- rnorm(12, 55, 5)
-var3 <- rnorm(12, 50, 4.5)
-
-cat("Varianzas muestrales:\n")
-cat("Variedad 1:", round(var(var1), 3), "\n")
-cat("Variedad 2:", round(var(var2), 3), "\n")
-cat("Variedad 3:", round(var(var3), 3), "\n\n")
-
-# Prueba de Bartlett
-bt <- bartlett.test(list(var1, var2, var3))
-cat("Bartlett K² =", round(bt$statistic, 4), "\n")
-cat("Valor-p =", round(bt$p.value, 4), "\n")
-cat("Conclusión:", ifelse(bt$p.value > 0.05,
-    "Varianzas homogéneas: ANOVA es apropiado.",
-    "Varianzas heterogéneas: considere Welch-ANOVA o transformación."), "\n")
-```
-
-## Taller 3: flujo de análisis completo
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Para comparar el rendimiento de dos tratamientos de riego en 20 parcelas de arroz (10 por grupo): (a) verifique normalidad en cada grupo, (b) pruebe igualdad de varianzas, (c) aplique la prueba t apropiada, (d) calcule el IC al 95% y el d de Cohen.</p>
-  </div>
-</div>
-
-## Taller 3: solución
-
-```{r}
-#| echo: true
-set.seed(27)
-riego_A <- rnorm(10, 5.6, 0.5)
-riego_B <- rnorm(10, 5.1, 0.7)
-
-cat("(a) Shapiro-Wilk:\n")
-cat("   Grupo A: p =", round(shapiro.test(riego_A)$p.value, 4), "\n")
-cat("   Grupo B: p =", round(shapiro.test(riego_B)$p.value, 4), "\n")
-
-cat("(b) Igualdad de varianzas (F-test):\n")
-vt <- var.test(riego_A, riego_B)
-cat("   F =", round(vt$statistic, 4), "  p =", round(vt$p.value, 4), "\n")
-
-cat("(c) Prueba t (Welch):\n")
-tt <- t.test(riego_A, riego_B)
-cat("   t =", round(tt$statistic, 4), "  p =", round(tt$p.value, 4), "\n")
-cat("(d) IC 95%: [", round(tt$conf.int[1],4), ",", round(tt$conf.int[2],4), "]\n")
-d <- (mean(riego_A)-mean(riego_B))/sqrt((var(riego_A)+var(riego_B))/2)
-cat("   d Cohen =", round(d, 4), "\n")
-```
-
-## Resumen: razón de varianzas
+## Resumen general
 
 <div class="twocol">
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 26px;">Pruebas de varianza</h4>
+<h4 style="color:#1b4d2e; font-size: 26px;">Conceptos clave</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">Dos grupos (Normal): <code>var.test(x, y)</code>.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">Varios grupos (Normal): <code>bartlett.test()</code>.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">Varios grupos (robusta): prueba de Levene (<code>car::leveneTest</code>).</li>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px;">Factor aleatorio: muestra de una población más amplia; interesa $\sigma_\tau^2$, no los niveles específicos.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px;">En modelos mixtos, el denominador correcto de la F del factor fijo depende de los cuadrados medios esperados.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px;">El número de niveles del factor aleatorio limita los grados de libertad y la potencia.</li>
 </ul>
 </div>
 
 <div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 style="color:#1a3a6b; font-size: 26px;">Interpretación</h4>
+<h4 style="color:#1a3a6b; font-size: 26px;">Herramientas</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px;">IC para $\sigma_1^2/\sigma_2^2$ contiene 1: varianzas iguales.</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;">p-valor Bartlett/Levene $> 0.05$: homocedasticidad.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;">Welch funciona bien en la mayoría de los casos.</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">Método de momentos (tabla ANOVA) vs. máxima verosimilitud (REML).</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;">Método de la muestra grande modificado para IC de componentes de varianza.</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">Satterthwaite para pruebas F aproximadas en diseños no balanceados.</li>
 </ul>
 </div>
 
 </div>
 
-## Próxima clase
+## Taller en Clase {.center .middle}
+
+## Instrucciones
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 28: Modelo de regresión y Método de mínimos cuadrados.</strong> Pasamos al análisis de la relación entre dos variables cuantitativas. Aprenderemos a ajustar una recta a los datos y a estimar los coeficientes por mínimos cuadrados ordinarios.</p>
-  </div>
+<div class="block-body" style="font-size:24px; text-align:justify;">
+Resuelva los siguientes ejercicios identificando primero si cada factor es <strong>fijo</strong> o <strong>aleatorio</strong>, plantee el modelo correspondiente, construya la tabla ANOVA con los cuadrados medios esperados, y use el denominador correcto en cada prueba F. Interprete los resultados en el contexto agrícola del problema.
+</div>
+</div>
+
+## Ejercicio 1
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Variabilidad en lotes de arroz, Tolima</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Un ingeniero agrónomo selecciona al azar <strong>7 lotes</strong> de arroz en el Tolima (de una población de cientos de lotes) y mide el rendimiento (ton/ha) en 6 parcelas de cada lote. Plantee el modelo de un factor aleatorio, escriba la tabla ANOVA simbólica con los $E(CM)$, y explique cómo estimaría $\sigma_{lote}^2$ y qué representa el coeficiente de correlación intraclase en este contexto.
+</div>
+</div>
+
+## Ejercicio 2
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Variedades de papa en fincas de Boyacá</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Se evalúan <strong>4 variedades de papa</strong> (Diacol Capiro, Parda Pastusa, Criolla, Pastusa Suprema) en <strong>6 fincas</strong> seleccionadas al azar de la región paramuna de Boyacá, con 3 parcelas por combinación. Identifique cuál factor es fijo y cuál aleatorio, escriba el modelo mixto completo con sus supuestos, y construya la tabla de $E(CM)$ indicando el denominador correcto para la prueba F de variedad.
+</div>
+</div>
+
+## Ejercicio 3
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Producción de leche y hatos ganaderos</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+En un estudio sobre <strong>3 dietas suplementarias</strong> (factor fijo) para ganado lechero, se seleccionan al azar <strong>8 hatos</strong> de la sabana de Bogotá (factor aleatorio) y se mide la producción diaria de leche (litros/vaca) en 5 vacas por combinación dieta×hato. Con $CM_{Dieta}=18.4$, $CM_{Hato}=22.1$, $CM_{Dieta\times Hato}=6.2$ y $CM_E=2.1$ (con $a=3$, $b=8$, $n=5$), calcule la prueba F correcta para la dieta y para el hato, y estime los componentes de varianza $\sigma_{hato}^2$ y $\sigma_{dieta\times hato}^2$.
+</div>
+</div>
+
+## Ejercicio 4
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Repetibilidad en medición de grados Brix en caña</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Para evaluar un protocolo de medición del grado Brix en caña de azúcar del Valle del Cauca, se seleccionan al azar <strong>5 lotes</strong> de caña y <strong>4 operarios</strong> de laboratorio, ambos factores aleatorios, con 3 mediciones repetidas por combinación lote×operario. Plantee el modelo de dos factores aleatorios con interacción, escriba la descomposición de $\text{Var}(y_{ijk})$, y explique qué tipo de decisión gerencial (capacitación de operarios vs. estandarización de muestreo de lotes) se vería afectada según cuál componente de varianza resulte más grande.
+</div>
+</div>
+
+## Ejercicio 5
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Planeación de un nuevo ensayo de flores de exportación</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Una empresa exportadora de flores en Cundinamarca quiere comparar <strong>2 sistemas de riego</strong> (factor fijo) replicados en un número aún por decidir de <strong>invernaderos</strong> seleccionados al azar de su red de proveedores (factor aleatorio), con 6 camas de cultivo por combinación. Si el estudio piloto sugiere $\sigma_{riego\times invernadero}^2\approx 4$ y se desea que la prueba F del riego tenga al menos $gl_2=10$ en el denominador, ¿cuántos invernaderos como mínimo deben incluirse? Justifique por qué aumentar el número de camas por invernadero no resuelve este problema de grados de libertad.
+</div>
 </div>

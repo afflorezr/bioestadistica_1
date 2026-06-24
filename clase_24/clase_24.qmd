@@ -1,7 +1,7 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
@@ -15,6 +15,7 @@ format:
     controls: true
     width: 1280
     height: 720
+    embed-resources: true
     css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
     header-includes: |
       <link rel="stylesheet" href="../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
@@ -37,478 +38,874 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 24 {.center .middle}
 
 ## Contenido
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Errores y potencia</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El diseño factorial $3^k$</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Error tipo I y tipo II: revisión profunda.</li>
-<li class="fragment fade-in" data-fragment-index="3">Función de potencia.</li>
-<li class="fragment fade-in" data-fragment-index="4">Curvas ROC en pruebas diagnósticas.</li>
-<li class="fragment fade-in" data-fragment-index="5">Tamaño del efecto.</li>
+<li class="fragment fade-in" data-fragment-index="2">Motivación: factores cuantitativos con tres niveles.</li>
+<li class="fragment fade-in" data-fragment-index="3">El diseño $3^2$: ejemplo completo en papa.</li>
+<li class="fragment fade-in" data-fragment-index="4">El diseño $3^3$: extensión a tres factores.</li>
+<li class="fragment fade-in" data-fragment-index="5">El diseño $3^k$ general.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: El valor-p en profundidad</h3>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Confusión en el diseño $3^k$</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Valor-p: cálculo en los tres tipos de prueba.</li>
-<li class="fragment fade-in" data-fragment-index="8">El debate actual sobre el valor-p.</li>
-<li class="fragment fade-in" data-fragment-index="9">Alternativas: IC, tamaño del efecto, d de Cohen.</li>
-<li class="fragment fade-in" data-fragment-index="10">Simulación y taller.</li>
+<li class="fragment fade-in" data-fragment-index="7">El diseño $3^k$ en tres bloques.</li>
+<li class="fragment fade-in" data-fragment-index="8">El diseño $3^k$ en nueve bloques.</li>
+<li class="fragment fade-in" data-fragment-index="9">El diseño $3^k$ en $3^p$ bloques.</li>
 </ul>
 </div>
+
 </div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 26px; font-size: 30px; align-items: start;">
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="10" style="font-size: 34px; margin-bottom: 14px; color: #79260d;">Parte III: Réplica fraccionada del $3^k$</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="11">La fracción un tercio del diseño $3^k$.</li>
+<li class="fragment fade-in" data-fragment-index="12">Otros diseños $3^{k-p}$ fraccionados.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="13" style="font-size: 34px; margin-bottom: 14px; color: #5b21b6;">Parte IV: Factoriales con niveles mixtos</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="14">Factores a dos y tres niveles simultáneamente.</li>
+<li class="fragment fade-in" data-fragment-index="15">Factores a dos y cuatro niveles simultáneamente.</li>
+<li class="fragment fade-in" data-fragment-index="16">Taller en clase.</li>
+</ul>
+</div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">Errores tipo I y II, Valor-p</p>
-<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Tomando decisiones con incertidumbre cuantificada</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
-</div>
 
-## Repaso: la tabla de decisiones
+<p style="font-size: 50px; font-weight: bold; color: #3b82f6;">
+Diseños Factoriales de Tres Niveles y de Niveles Mixtos
+</p>
 
-<div class="fragment fade-in" data-fragment-index="1">
-
-| | $H_0$ verdadera | $H_0$ falsa |
-|---|:---:|:---:|
-| **No rechazar $H_0$** | $1 - \alpha$ (correcto) | $\beta$ (error tipo II) |
-| **Rechazar $H_0$** | $\alpha$ (error tipo I) | $1 - \beta$ (potencia) |
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Cuando un factor cuantitativo (dosis, riego, densidad) puede tomar más de dos valores, ¿cómo diseñar el experimento para detectar no solo tendencias lineales, sino también curvatura?
+</p>
 
 </div>
 
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-En esta clase profundizamos en cómo la función de potencia depende del verdadero valor del parámetro y cómo los errores interactúan con el diseño del estudio.
-</li>
-</ul>
+## Motivación: más allá de dos niveles
 
-## Función de potencia
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+Los diseños factoriales $2^k$ son muy eficientes, pero solo permiten estimar el efecto <strong>lineal</strong> de cada factor entre su nivel bajo y su nivel alto. En muchos problemas agrícolas colombianos, el agrónomo sospecha que la respuesta no es una línea recta, sino que existe un <strong>punto óptimo intermedio</strong>.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+Ejemplo: en papa de altiplano, una dosis baja de nitrógeno puede ser insuficiente y una dosis muy alta puede causar exceso de follaje y caída en el rendimiento de tubérculo. Solo con <strong>tres niveles</strong> (bajo, medio, alto) es posible detectar esta curvatura.
+</div>
+
+## ¿Por qué tres niveles?
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:18px; border-radius:18px; border-top:8px solid #b91c1c;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#b91c1c;">Diseño $2^k$</div>
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-top:8px;">
+Con dos niveles (bajo, alto) solo se puede ajustar una recta. Si la verdadera relación tiene un máximo intermedio, el diseño $2^k$ es incapaz de detectarlo.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Diseño $3^k$</div>
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-top:8px;">
+Con tres niveles (bajo, medio, alto) es posible separar el efecto <strong>lineal</strong> del efecto <strong>cuadrático</strong> (curvatura) de cada factor cuantitativo.
+</div>
+</div>
+
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="3">
+<div class="block-title">Definición: diseño factorial $3^k$</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Diseño factorial con $k$ factores, cada uno a <strong>tres niveles</strong> (codificados $-1, 0, +1$ o bajo/medio/alto). Tiene $3^k$ combinaciones de tratamiento (corridas).
+</div>
+</div>
+
+## El diseño $3^2$: motivación agrícola
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+Un agrónomo del altiplano cundiboyacense estudia el rendimiento de <strong>papa criolla</strong> (t/ha) en función de dos factores cuantitativos, cada uno a tres niveles:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; font-size:22px; text-align:center;">
+<strong>Factor A: Fertilización NPK</strong><br>Bajo / Medio / Alto<br>(150 / 300 / 450 kg/ha)
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e; font-size:22px; text-align:center;">
+<strong>Factor B: Lámina de riego</strong><br>Bajo / Medio / Alto<br>(20 / 35 / 50 mm/semana)
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:22px; text-align:center;">
+$3^2=9$ combinaciones de tratamiento, con $n=3$ parcelas (réplicas) por combinación: $N=27$ parcelas en total.
+</div>
+
+## Datos del experimento de papa criolla
+
+<div style="font-size:22px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+Rendimiento (t/ha) registrado en las 27 parcelas, organizadas por combinación de NPK y riego:
+</div>
+
+<table style="width:100%; font-size:18px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:5px;">NPK</th><th style="padding:5px;">Riego</th><th style="padding:5px;">Rep 1</th><th style="padding:5px;">Rep 2</th><th style="padding:5px;">Rep 3</th><th style="padding:5px;">Media celda</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">Bajo</td><td style="padding:5px;">Bajo</td><td style="padding:5px;">17.2</td><td style="padding:5px;">17.7</td><td style="padding:5px;">20.2</td><td style="padding:5px;">18.37</td></tr>
+<tr><td style="padding:5px;">Bajo</td><td style="padding:5px;">Medio</td><td style="padding:5px;">22.1</td><td style="padding:5px;">22.2</td><td style="padding:5px;">24.4</td><td style="padding:5px;">22.90</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">Bajo</td><td style="padding:5px;">Alto</td><td style="padding:5px;">24.6</td><td style="padding:5px;">22.2</td><td style="padding:5px;">23.0</td><td style="padding:5px;">23.27</td></tr>
+<tr><td style="padding:5px;">Medio</td><td style="padding:5px;">Bajo</td><td style="padding:5px;">22.4</td><td style="padding:5px;">24.7</td><td style="padding:5px;">23.5</td><td style="padding:5px;">23.53</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">Medio</td><td style="padding:5px;">Medio</td><td style="padding:5px;">29.6</td><td style="padding:5px;">29.2</td><td style="padding:5px;">28.2</td><td style="padding:5px;">29.00</td></tr>
+<tr><td style="padding:5px;">Medio</td><td style="padding:5px;">Alto</td><td style="padding:5px;">34.5</td><td style="padding:5px;">32.7</td><td style="padding:5px;">29.2</td><td style="padding:5px;">32.13</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">Alto</td><td style="padding:5px;">Bajo</td><td style="padding:5px;">27.0</td><td style="padding:5px;">25.3</td><td style="padding:5px;">24.5</td><td style="padding:5px;">25.60</td></tr>
+<tr><td style="padding:5px;">Alto</td><td style="padding:5px;">Medio</td><td style="padding:5px;">32.7</td><td style="padding:5px;">31.6</td><td style="padding:5px;">32.0</td><td style="padding:5px;">32.10</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">Alto</td><td style="padding:5px;">Alto</td><td style="padding:5px;">34.1</td><td style="padding:5px;">32.6</td><td style="padding:5px;">36.2</td><td style="padding:5px;">34.30</td></tr>
+</table>
+
+## Tabla de medias y gráfico de interacción
+
+<table style="width:70%; margin:0 auto; font-size:22px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">NPK \ Riego</th><th style="padding:8px;">Bajo</th><th style="padding:8px;">Medio</th><th style="padding:8px;">Alto</th><th style="padding:8px;">Media NPK</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Bajo</td><td style="padding:8px;">18.37</td><td style="padding:8px;">22.90</td><td style="padding:8px;">23.27</td><td style="padding:8px;">21.51</td></tr>
+<tr><td style="padding:8px;">Medio</td><td style="padding:8px;">23.53</td><td style="padding:8px;">29.00</td><td style="padding:8px;">32.13</td><td style="padding:8px;">28.22</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Alto</td><td style="padding:8px;">25.60</td><td style="padding:8px;">32.10</td><td style="padding:8px;">34.30</td><td style="padding:8px;">30.67</td></tr>
+<tr><td style="padding:8px;"><strong>Media Riego</strong></td><td style="padding:8px;">22.50</td><td style="padding:8px;">28.00</td><td style="padding:8px;">29.90</td><td style="padding:8px;"><strong>26.80</strong></td></tr>
+</table>
+
+```{r}
+#| label: interaccion-papa
+#| echo: false
+#| fig-height: 3.2
+medias <- matrix(c(18.37,23.53,25.60, 22.90,29.00,32.10, 23.27,32.13,34.30),
+                  nrow=3, dimnames=list(c("Bajo","Medio","Alto"), c("Bajo","Medio","Alto")))
+matplot(1:3, medias, type="b", pch=19, lty=1, lwd=2, col=c("#1a3a6b","#1b4d2e","#d97706"),
+        xaxt="n", xlab="Nivel de NPK", ylab="Rendimiento (t/ha)",
+        main="Interacción NPK x Riego en papa criolla")
+axis(1, at=1:3, labels=c("Bajo","Medio","Alto"))
+legend("topleft", legend=c("Riego Bajo","Riego Medio","Riego Alto"), col=c("#1a3a6b","#1b4d2e","#d97706"), lty=1, lwd=2, pch=19, cex=0.8)
+```
+
+## Componentes lineal y cuadrático
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Con tres niveles equiespaciados, los 2 grados de libertad de cada factor principal se descomponen mediante <strong>contrastes polinomiales ortogonales</strong>:
+</div>
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: función de potencia</div>
-  <div class="block-body">
-  <p>La <strong>función de potencia</strong> $\pi(\theta)$ de una prueba es la probabilidad de rechazar $H_0$ como función del verdadero valor del parámetro $\theta$:</p>
-  $$\pi(\theta) = P(\text{rechazar } H_0 \mid \theta \text{ verdadero})$$
-  <p>Cuando $\theta \in H_0$: $\pi(\theta) = \alpha$. Cuando $\theta \in H_1$: $\pi(\theta) = 1 - \beta(\theta)$ (potencia).</p>
-  </div>
+<div class="block-title">Contrastes polinomiales (3 niveles)</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$L = -1\cdot\bar y_{Bajo} + 0\cdot\bar y_{Medio} + 1\cdot\bar y_{Alto} \quad \text{(componente lineal)}$$
+$$Q = 1\cdot\bar y_{Bajo} - 2\cdot\bar y_{Medio} + 1\cdot\bar y_{Alto} \quad \text{(componente cuadrático)}$$
+</div>
 </div>
 
-## Gráfica de la función de potencia
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Cada componente aporta exactamente <strong>1 grado de libertad</strong>. Para un factor a 3 niveles: $2$ gl $=1$ gl (lineal) $+1$ gl (cuadrático).
+</div>
 
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2)
-# Prueba bilateral H0: mu = 5, sigma = 2, n = 25, alpha = 0.05
-mu0 <- 5; sigma <- 2; n <- 25; alpha <- 0.05
-z_crit <- qnorm(1 - alpha/2)
-ee <- sigma / sqrt(n)
+## Descomposición de los 8 grados de libertad del $3^2$
 
-mu_vals <- seq(3, 7, length.out = 200)
-# Potencia = P(Z > z_crit | mu) + P(Z < -z_crit | mu)
-potencia <- pnorm(-z_crit, (mu_vals - mu0)/ee) +
-            pnorm(z_crit,  (mu_vals - mu0)/ee, lower.tail = FALSE)
+<div style="font-size:24px; text-align:justify; line-height:1.3; margin-bottom:8px;">
+En el diseño $3^2$ hay $3^2-1=8$ grados de libertad de tratamiento, que se descomponen en componentes lineales (L) y cuadráticos (Q) de cada factor y sus interacciones:
+</div>
 
-ggplot(data.frame(mu = mu_vals, pot = potencia), aes(mu, pot)) +
-  geom_line(color = "#1a3a6b", linewidth = 1.4) +
-  geom_hline(yintercept = alpha, color = "#c0392b", linetype = "dashed") +
-  geom_vline(xintercept = mu0, color = "#374151", linetype = "dotted") +
-  annotate("text", x = 3.3, y = alpha + 0.04, label = paste0("α = ", alpha),
-           color = "#c0392b", size = 4) +
-  labs(x = "Verdadero valor de μ", y = "Potencia π(μ)",
-       title = "Función de potencia: H₀: μ = 5, n = 25, σ = 2") +
-  theme_minimal(base_size = 13)
-```
+<table style="width:100%; font-size:20px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th style="padding:6px;">gl</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK (lineal)</td><td style="padding:6px;">1</td></tr>
+<tr><td style="padding:6px;">NPK (cuadrático)</td><td style="padding:6px;">1</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Riego (lineal)</td><td style="padding:6px;">1</td></tr>
+<tr><td style="padding:6px;">Riego (cuadrático)</td><td style="padding:6px;">1</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK(L)×Riego(L)</td><td style="padding:6px;">1</td></tr>
+<tr><td style="padding:6px;">NPK(Q)×Riego(L)</td><td style="padding:6px;">1</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK(L)×Riego(Q)</td><td style="padding:6px;">1</td></tr>
+<tr><td style="padding:6px;">NPK(Q)×Riego(Q)</td><td style="padding:6px;">1</td></tr>
+<tr style="background-color:#dbeafe; font-weight:bold;"><td style="padding:6px;">Total tratamientos</td><td style="padding:6px;">8</td></tr>
+</table>
 
-## Efecto de $n$ en la función de potencia
+## Tabla ANOVA: NPK y Riego (efectos principales)
 
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-mu0 <- 5; sigma <- 2; alpha <- 0.05
-z_crit <- qnorm(1 - alpha/2)
-mu_vals <- seq(3, 7, length.out = 200)
-ns <- c(10, 25, 50, 100)
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">NPK</td><td>404.5</td><td>2</td><td>202.26</td><td>90.64</td><td>$4.0\times10^{-10}$</td></tr>
+<tr><td style="padding:8px;">Riego</td><td>265.9</td><td>2</td><td>132.93</td><td>59.57</td><td>$1.2\times10^{-8}$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">NPK $\times$ Riego</td><td>15.3</td><td>4</td><td>3.82</td><td>1.71</td><td>0.191</td></tr>
+<tr><td style="padding:8px;">Error</td><td>40.2</td><td>18</td><td>2.23</td><td></td><td></td></tr>
+<tr style="background-color:#eef7ee; font-weight:bold;"><td style="padding:8px;">Total</td><td>725.9</td><td>26</td><td></td><td></td><td></td></tr>
+</table>
 
-df <- map_dfr(ns, function(n) {
-  ee <- sigma / sqrt(n)
-  pot <- pnorm(-z_crit, (mu_vals - mu0)/ee) +
-         pnorm(z_crit, (mu_vals - mu0)/ee, lower.tail = FALSE)
-  tibble(mu = mu_vals, potencia = pot, n = paste0("n = ", n))
-})
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Tanto NPK como Riego son altamente significativos ($\alpha=0.05$); la interacción global no lo es ($p=0.191$).
+</div>
 
-ggplot(df, aes(mu, potencia, color = n)) +
-  geom_line(linewidth = 1.2) +
-  geom_hline(yintercept = alpha, linetype = "dashed", color = "gray50") +
-  labs(x = "Verdadero μ", y = "Potencia", color = NULL,
-       title = "Potencia vs n: H₀: μ = 5, σ = 2") +
-  theme_minimal(base_size = 13) + theme(legend.position = "top")
-```
+## Tabla ANOVA: descomposición lineal/cuadrática
 
-## Tamaño del efecto
+<table style="width:100%; font-size:18px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK lineal</td><td>377.1</td><td>1</td><td>377.1</td><td>169.04</td><td>$1.4\times10^{-10}$</td></tr>
+<tr><td style="padding:6px;">NPK cuadrático</td><td>27.3</td><td>1</td><td>27.3</td><td>12.24</td><td>0.0026</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Riego lineal</td><td>246.5</td><td>1</td><td>246.5</td><td>110.43</td><td>$4.1\times10^{-9}$</td></tr>
+<tr><td style="padding:6px;">Riego cuadrático</td><td>19.4</td><td>1</td><td>19.4</td><td>8.71</td><td>0.0085</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK(L)$\times$Riego(L)</td><td>10.8</td><td>1</td><td>10.8</td><td>4.85</td><td>0.0409</td></tr>
+<tr><td style="padding:6px;">NPK(Q)$\times$Riego(L)</td><td>3.2</td><td>1</td><td>3.2</td><td>1.45</td><td>0.2438</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK(L)$\times$Riego(Q)</td><td>0.0</td><td>1</td><td>0.0</td><td>0.00</td><td>0.9649</td></tr>
+<tr><td style="padding:6px;">NPK(Q)$\times$Riego(Q)</td><td>1.2</td><td>1</td><td>1.2</td><td>0.54</td><td>0.4722</td></tr>
+<tr style="background-color:#eef7ee;"><td style="padding:6px;">Error</td><td>40.2</td><td>18</td><td>2.23</td><td></td><td></td></tr>
+</table>
+
+## Interpretación: papa criolla
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; font-size:22px; text-align:justify; line-height:1.4;">
+<strong>Componente lineal de NPK</strong> ($F=169.04$, $p<0.001$): el rendimiento crece de forma marcadamente lineal al aumentar la dosis de fertilizante en el rango estudiado.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:8px solid #1b4d2e; margin-top:10px; font-size:22px; text-align:justify; line-height:1.4;">
+<strong>Componente cuadrático de NPK</strong> ($F=12.24$, $p=0.0026$): significativo pero pequeño frente al lineal; sugiere un leve aplanamiento de la curva entre las dosis Media y Alta, no un máximo claro dentro del rango.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:8px solid #d97706; margin-top:10px; font-size:22px; text-align:justify; line-height:1.4;">
+<strong>Interacción NPK(L)$\times$Riego(L)</strong> ($p=0.0409$): el efecto lineal del fertilizante depende levemente del nivel de riego; con más agua, el incremento marginal de NPK es algo mayor.
+</div>
+
+## El diseño $3^3$: extensión a tres factores
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+Si el agrónomo desea incorporar un tercer factor cuantitativo a tres niveles, por ejemplo la <strong>densidad de siembra</strong> de la papa criolla (baja: 40 000, media: 55 000, alta: 70 000 plantas/ha), se obtiene un diseño $3^3$.
+</div>
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: tamaño del efecto (d de Cohen)</div>
-  <div class="block-body">
-  <p>El <strong>tamaño del efecto</strong> $d$ de Cohen cuantifica la magnitud de la diferencia en unidades de desviación estándar:</p>
-  $$d = \frac{\mu_1 - \mu_2}{\sigma} \qquad \text{o para una muestra: } \quad d = \frac{\mu - \mu_0}{\sigma}$$
-  </div>
+<div class="block-title">Diseño $3^3$: NPK $\times$ Riego $\times$ Densidad</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$3^3 = 27$ combinaciones de tratamiento. Con $n=2$ réplicas, $N=54$ parcelas.
+</div>
 </div>
 
-<div class="fragment fade-in" data-fragment-index="2" style="margin-top: 16px;">
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Grados de libertad de tratamiento: $3^3-1=26$, que se reparten en 3 efectos principales (2 gl cada uno, separables en L y Q), 3 interacciones de dos factores (4 gl cada una) y 1 interacción de tres factores (8 gl).
+</div>
 
-| Magnitud | d de Cohen |
-|---|:---:|
-| Pequeño | $\approx 0.2$ |
-| Mediano | $\approx 0.5$ |
-| Grande | $\approx 0.8$ |
+## Descomposición de grados de libertad del $3^3$
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>gl</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK (A)</td><td>2</td></tr>
+<tr><td style="padding:6px;">Riego (B)</td><td>2</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Densidad (C)</td><td>2</td></tr>
+<tr><td style="padding:6px;">A$\times$B</td><td>4</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">A$\times$C</td><td>4</td></tr>
+<tr><td style="padding:6px;">B$\times$C</td><td>4</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">A$\times$B$\times$C</td><td>8</td></tr>
+<tr style="background-color:#dbeafe; font-weight:bold;"><td style="padding:6px;">Total tratamientos</td><td>26</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Cada efecto principal (2 gl) puede descomponerse en lineal y cuadrático; cada interacción de 2 factores (4 gl) en cuatro componentes LL, LQ, QL, QQ; la de 3 factores (8 gl) en ocho componentes LLL, LLQ, ..., QQQ.
+</div>
+
+## Ejemplo conceptual: $3^3$ con densidad de siembra
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Supóngase que al añadir Densidad de siembra al experimento de papa criolla se observan estas medias marginales aproximadas (t/ha):
+</div>
+
+<table style="width:90%; margin:0 auto; font-size:21px; text-align:center; border-collapse:collapse; margin-top:10px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Densidad</th><th style="padding:8px;">Baja</th><th style="padding:8px;">Media</th><th style="padding:8px;">Alta</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Rendimiento medio</td><td style="padding:8px;">24.1</td><td style="padding:8px;">28.9</td><td style="padding:8px;">27.3</td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:14px; font-size:21px; text-align:center;">
+El patrón Baja $<$ Media $>$ Alta sugiere un <strong>componente cuadrático fuerte</strong> en Densidad: existe una densidad óptima intermedia, y sembrar demasiado denso reduce el rendimiento por competencia entre plantas.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:20px; text-align:center;">
+Sin el nivel intermedio (diseño $2^k$), este óptimo pasaría completamente inadvertido.
+</div>
+
+## El diseño $3^k$ general
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Diseño factorial $3^k$</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+Número de corridas (combinaciones de tratamiento): $\quad 3^k$
+$$\text{Grados de libertad de tratamientos: } 3^k - 1$$
+</div>
+</div>
+
+<div style="font-size:23px; text-align:justify; line-height:1.5; margin-top:12px;">
+A medida que $k$ crece, el número de corridas se dispara: $3^2=9$, $3^3=27$, $3^4=81$, $3^5=243$. Esto motiva dos estrategias que se desarrollan a continuación:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>Confusión en bloques</strong>: ejecutar el experimento completo, pero repartido en bloques manejables.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>Réplica fraccionada</strong>: ejecutar solo una fracción de las $3^k$ combinaciones.
+</div>
 
 </div>
 
-## Tamaño del efecto en R
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Confusión en el diseño $3^k$
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Cómo ejecutar un diseño $3^k$ grande cuando la capacidad experimental (invernadero, lote, día de siembra) es limitada?
+</p>
+
+</div>
+
+## Motivación: bloques de capacidad limitada
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+En el diseño $3^3$ de papa criolla (27 combinaciones), puede ocurrir que el lote experimental solo permita sembrar <strong>9 parcelas por día</strong> de siembra, o que cada invernadero solo tenga capacidad para 9 macetas. Sembrar las 27 combinaciones el mismo día es inviable.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Confusión (confounding)</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Técnica que reparte las $3^k$ combinaciones en bloques, sacrificando deliberadamente la posibilidad de estimar cierta interacción de orden alto (que se <strong>confunde</strong> con el efecto de bloque), a cambio de poder ejecutar el experimento por partes.
+</div>
+</div>
+
+## El diseño $3^k$ en tres bloques
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Para el $3^2$ de papa criolla (9 combinaciones), si solo se dispone de <strong>3 parcelas por bloque</strong> (por ejemplo, 3 fincas colaboradoras, cada una con capacidad para 3 parcelas), se reparten las 9 combinaciones en 3 bloques de 3.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:21px; text-align:center;">
+Se utiliza un <strong>componente de interacción</strong>, por ejemplo $AB$ o $AB^2$, para definir los bloques: las combinaciones que comparten el mismo valor de ese componente forman un bloque.
+</div>
+
+<table style="width:90%; margin:10px auto 0; font-size:19px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Bloque 1</th><th style="padding:6px;">Bloque 2</th><th style="padding:6px;">Bloque 3</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK Bajo, Riego Bajo</td><td style="padding:6px;">NPK Medio, Riego Bajo</td><td style="padding:6px;">NPK Alto, Riego Bajo</td></tr>
+<tr><td style="padding:6px;">NPK Medio, Riego Alto</td><td style="padding:6px;">NPK Alto, Riego Medio</td><td style="padding:6px;">NPK Bajo, Riego Medio</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK Alto, Riego Medio*</td><td style="padding:6px;">NPK Bajo, Riego Alto*</td><td style="padding:6px;">NPK Medio, Riego Alto*</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+El precio: ya no es posible estimar limpiamente toda la interacción NPK$\times$Riego, pues parte de ella queda confundida con la diferencia entre fincas (bloques).
+</div>
+
+## El diseño $3^k$ en nueve bloques
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+Si la limitación es aún mayor (por ejemplo, en un $3^3$ de 27 combinaciones solo se dispone de <strong>3 parcelas por bloque</strong>), se necesitan $27/3=9$ bloques.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:14px; font-size:22px; text-align:justify; line-height:1.4;">
+Se utilizan <strong>dos componentes de interacción independientes</strong> (por ejemplo $ABC$ y $AB^2C^2$) para definir simultáneamente los 9 bloques de 3 parcelas cada uno. Cada componente usado para bloquear aporta 2 grados de libertad que quedan confundidos con bloques.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:10px; font-size:20px; text-align:center;">
+Ejemplo agrícola: nueve veredas distintas, cada una sembrando solo 3 parcelas del experimento $3^3$ de papa (NPK, Riego, Densidad) en la misma semana.
+</div>
+
+## El diseño $3^k$ en $3^p$ bloques
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+En general, un diseño $3^k$ puede dividirse en $3^p$ bloques de tamaño $3^{k-p}$, usando $p$ componentes de interacción independientes para definir la pertenencia a cada bloque.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Confusión del $3^k$ en $3^p$ bloques</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+Número de bloques: $3^p$ &nbsp;&nbsp; Tamaño de cada bloque: $3^{k-p}$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:21px; text-align:center;">
+A mayor $p$, los bloques son más pequeños y manejables, pero se confunden más componentes de interacción: existe un compromiso entre factibilidad operativa y pérdida de información.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Regla práctica: seleccionar para la confusión las interacciones de <strong>orden más alto</strong>, pues suelen ser las menos relevantes agronómicamente (ej. la interacción triple NPK$\times$Riego$\times$Densidad).
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Réplica fraccionada del diseño $3^k$
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Es necesario ejecutar todas las $3^k$ combinaciones, o basta con una fracción cuidadosamente elegida?
+</p>
+
+</div>
+
+## Motivación: reducir el número de corridas
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+Cuando se estudian varios factores cuantitativos a tres niveles (por ejemplo NPK, Riego, Densidad y un cuarto factor como variedad de papa con tres clones), el diseño completo $3^4=81$ corridas resulta costoso e impráctico en campo.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Réplica fraccionada $3^{k-p}$</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Subconjunto de $3^{k-p}$ combinaciones (una fracción $1/3^p$ del diseño completo), seleccionado de modo que los efectos principales y las interacciones de interés permanezcan estimables, al costo de confundir los efectos de orden superior entre sí.
+</div>
+</div>
+
+## La fracción un tercio del diseño $3^k$
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+La fracción más simple es la <strong>fracción $1/3$</strong>: se ejecuta solo $3^{k-1}$ de las $3^k$ combinaciones, definida mediante un componente de interacción de orden $k$ (como $ABC\cdots$) fijado en un valor constante.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:22px; text-align:justify; line-height:1.4;">
+<strong>Ejemplo agrícola:</strong> en el $3^3$ de papa criolla (NPK, Riego, Densidad), en lugar de sembrar las 27 combinaciones, se siembran solo $3^2=9$, seleccionadas con el componente $ABC$ fijo. Se reduce el experimento a un tercio de su tamaño.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+El costo: la interacción de tres factores ($ABC$, 8 gl) ya no puede estimarse, pues fue la base de la selección de la fracción; se confunde con la media general y queda fuera del análisis.
+</div>
+
+## Otros diseños $3^{k-p}$ fraccionados
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+De forma análoga, pueden construirse fracciones más pequeñas, $1/9$ ($3^{k-2}$), $1/27$ ($3^{k-3}$), etc., usando $p$ componentes de interacción independientes para definir la fracción.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center; line-height:1.4;">
+A mayor $p$, menos corridas se requieren, pero se confunden más interacciones entre sí (mayor pérdida de resolución).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center; line-height:1.4;">
+Útil en etapas exploratorias (tamizaje) con varios factores cuantitativos, antes de profundizar con un diseño completo en los factores más relevantes.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:12px; font-size:20px; text-align:center;">
+Ejemplo: con 4 factores agronómicos a 3 niveles (NPK, Riego, Densidad, Variedad), una fracción $3^{4-2}=9$ corridas permite un primer tamizaje, antes de un ensayo confirmatorio más completo.
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Factoriales con niveles mixtos
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué ocurre cuando los factores del experimento no tienen todos el mismo número de niveles?
+</p>
+
+</div>
+
+## Factores a dos y tres niveles simultáneamente
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+En la práctica agrícola es común combinar un factor <strong>cualitativo a dos niveles</strong> (ej. variedad, sistema de siembra) con un factor <strong>cuantitativo a tres niveles</strong> (ej. dosis de un insumo). Esto da lugar a un diseño factorial de <strong>niveles mixtos $2\times3$</strong>.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Diseño factorial de niveles mixtos</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Diseño factorial en el que los factores no comparten el mismo número de niveles. El número total de combinaciones es el producto de los niveles de cada factor (ej. $2\times3=6$).
+</div>
+</div>
+
+## Ejemplo agrícola: arroz, Variedad x Dosis de fertilizante
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En los Llanos Orientales se evalúa el rendimiento de <strong>arroz</strong> (t/ha) según dos factores:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>Factor A: Variedad</strong> (2 niveles)<br>V1 (tradicional) / V2 (mejorada)
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>Factor B: Dosis de urea</strong> (3 niveles)<br>Baja / Media / Alta
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:12px; font-size:21px; text-align:center;">
+$2\times3=6$ combinaciones de tratamiento, con $n=3$ parcelas por combinación: $N=18$ parcelas.
+</div>
+
+## Datos: arroz, Variedad x Dosis
+
+<table style="width:100%; font-size:19px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:5px;">Variedad</th><th style="padding:5px;">Dosis</th><th style="padding:5px;">Rep 1</th><th style="padding:5px;">Rep 2</th><th style="padding:5px;">Rep 3</th><th style="padding:5px;">Media celda</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">V1</td><td style="padding:5px;">Baja</td><td style="padding:5px;">4.80</td><td style="padding:5px;">5.39</td><td style="padding:5px;">5.44</td><td style="padding:5px;">5.21</td></tr>
+<tr><td style="padding:5px;">V1</td><td style="padding:5px;">Media</td><td style="padding:5px;">5.58</td><td style="padding:5px;">5.79</td><td style="padding:5px;">5.90</td><td style="padding:5px;">5.76</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">V1</td><td style="padding:5px;">Alta</td><td style="padding:5px;">6.61</td><td style="padding:5px;">6.48</td><td style="padding:5px;">6.70</td><td style="padding:5px;">6.60</td></tr>
+<tr><td style="padding:5px;">V2</td><td style="padding:5px;">Baja</td><td style="padding:5px;">5.77</td><td style="padding:5px;">5.33</td><td style="padding:5px;">5.99</td><td style="padding:5px;">5.70</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">V2</td><td style="padding:5px;">Media</td><td style="padding:5px;">7.10</td><td style="padding:5px;">7.30</td><td style="padding:5px;">6.37</td><td style="padding:5px;">6.92</td></tr>
+<tr><td style="padding:5px;">V2</td><td style="padding:5px;">Alta</td><td style="padding:5px;">8.18</td><td style="padding:5px;">8.12</td><td style="padding:5px;">7.72</td><td style="padding:5px;">8.01</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:8px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:19px; text-align:center;">
+Media general $\bar y_{..}=6.365$ t/ha.
+</div>
+
+## Gráfico de interacción: arroz
 
 ```{r}
-#| echo: true
-# Efecto en rendimiento de maíz
-mu0 <- 4.5; mu_obs <- 4.8; sigma <- 0.8
-d_cohen <- (mu_obs - mu0) / sigma
-cat("d de Cohen:", round(d_cohen, 4), "\n")
-cat("Magnitud:", ifelse(abs(d_cohen) < 0.2, "trivial",
-                 ifelse(abs(d_cohen) < 0.5, "pequeño",
-                 ifelse(abs(d_cohen) < 0.8, "mediano", "grande"))), "\n")
-
-# paquete effectsize (si está disponible)
-# install.packages("effectsize")
-# library(effectsize)
-# cohens_d(rendimientos, mu = mu0)
+#| label: interaccion-arroz
+#| echo: false
+#| fig-height: 3.4
+m1 <- c(5.21, 5.76, 6.60)
+m2 <- c(5.70, 6.92, 8.01)
+plot(1:3, m1, type="b", pch=19, lwd=2, col="#1a3a6b", ylim=c(4.5,8.5),
+     xaxt="n", xlab="Dosis de urea", ylab="Rendimiento (t/ha)",
+     main="Interacción Variedad x Dosis en arroz")
+lines(1:3, m2, type="b", pch=17, lwd=2, col="#1b4d2e")
+axis(1, at=1:3, labels=c("Baja","Media","Alta"))
+legend("topleft", legend=c("V1 (tradicional)","V2 (mejorada)"), col=c("#1a3a6b","#1b4d2e"), lty=1, lwd=2, pch=c(19,17))
 ```
 
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p>Un valor-p pequeño con $d$ cercano a 0 indica significancia estadística sin relevancia práctica. Siempre reporte ambos.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:20px; text-align:center;">
+Las líneas no son paralelas: V2 responde con mayor pendiente al incremento de dosis que V1, lo que sugiere una posible interacción.
 </div>
 
-## Valor-p: los tres casos
+## Tabla ANOVA: arroz, Variedad x Dosis (niveles mixtos $2\times3$)
 
-<div class="twocol">
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Variedad</td><td>4.69</td><td>1</td><td>4.69</td><td>48.50</td><td>$1.5\times10^{-5}$</td></tr>
+<tr><td style="padding:8px;">Dosis</td><td>10.25</td><td>2</td><td>5.13</td><td>53.00</td><td>$1.1\times10^{-6}$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Variedad $\times$ Dosis</td><td>0.69</td><td>2</td><td>0.34</td><td>3.55</td><td>0.061</td></tr>
+<tr><td style="padding:8px;">Error</td><td>1.16</td><td>12</td><td>0.10</td><td></td><td></td></tr>
+<tr style="background-color:#eef7ee; font-weight:bold;"><td style="padding:8px;">Total</td><td>16.79</td><td>17</td><td></td><td></td><td></td></tr>
+</table>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Bilateral $H_1: \mu \neq \mu_0$</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
-$\text{valor-p} = 2 \cdot P(Z > |z_{obs}|)$
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Se duplica la probabilidad de una sola cola.
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:10px; font-size:20px; text-align:center;">
+gl de tratamientos $=2\times3-1=5=1(\text{Variedad})+2(\text{Dosis})+2(\text{Variedad}\times\text{Dosis})$.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Unilaterales</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">
-$H_1: \mu > \mu_0$: $\text{vp} = P(Z > z_{obs})$
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
-$H_1: \mu < \mu_0$: $\text{vp} = P(Z < z_{obs})$
-</li>
-</ul>
+## Interpretación: arroz
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; font-size:22px; text-align:justify; line-height:1.4;">
+<strong>Variedad</strong> ($F=48.50$, $p<0.001$): la variedad mejorada V2 (media global 6.88 t/ha) supera significativamente a la tradicional V1 (5.85 t/ha).
 </div>
 
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:8px solid #1b4d2e; margin-top:10px; font-size:22px; text-align:justify; line-height:1.4;">
+<strong>Dosis de urea</strong> ($F=53.00$, $p<0.001$): el rendimiento aumenta de forma marcada y aproximadamente lineal con la dosis (5.45, 6.34, 7.30 t/ha).
 </div>
 
-```{r}
-#| echo: true
-z_obs <- 2.00
-cat("Bilateral: ", 2 * pnorm(abs(z_obs), lower.tail = FALSE), "\n")
-cat("Unilateral der: ", pnorm(z_obs, lower.tail = FALSE), "\n")
-cat("Unilateral izq: ", pnorm(z_obs), "\n")
-```
-
-## Visualización del valor-p
-
-```{r}
-#| echo: true
-#| fig-height: 3.5
-library(ggplot2); library(patchwork)
-x <- seq(-4, 4, length.out = 400)
-df <- data.frame(x, f = dnorm(x))
-z0 <- 2.0
-
-p1 <- ggplot(df, aes(x, f)) +
-  geom_line(color = "#1a3a6b", linewidth = 1.2) +
-  geom_ribbon(data = subset(df, x >= z0),
-              aes(ymin = 0, ymax = f), fill = "#c0392b", alpha = 0.6) +
-  geom_ribbon(data = subset(df, x <= -z0),
-              aes(ymin = 0, ymax = f), fill = "#c0392b", alpha = 0.6) +
-  geom_vline(xintercept = z0, color = "#c0392b") +
-  labs(x = "Z", y = "f(z)", title = "Bilateral: valor-p = 0.046") +
-  theme_minimal(base_size = 11)
-
-p2 <- ggplot(df, aes(x, f)) +
-  geom_line(color = "#1a3a6b", linewidth = 1.2) +
-  geom_ribbon(data = subset(df, x >= z0),
-              aes(ymin = 0, ymax = f), fill = "#1b4d2e", alpha = 0.6) +
-  geom_vline(xintercept = z0, color = "#1b4d2e") +
-  labs(x = "Z", y = "f(z)", title = "Unilateral der.: valor-p = 0.023") +
-  theme_minimal(base_size = 11)
-
-p1 + p2
-```
-
-## Simulación: distribución del valor-p bajo H0
-
-```{r}
-#| echo: true
-#| fig-height: 3.5
-set.seed(24)
-B <- 5000; mu0 <- 5; sigma <- 2; n <- 25
-
-# Bajo H0: los valores-p deben ser Uniforme(0,1)
-vp_bajo_H0 <- replicate(B, {
-  x <- rnorm(n, mu0, sigma)    # datos bajo H0 verdadera
-  Z <- (mean(x) - mu0) / (sigma / sqrt(n))
-  2 * pnorm(abs(Z), lower.tail = FALSE)
-})
-
-library(ggplot2)
-ggplot(data.frame(vp = vp_bajo_H0), aes(vp)) +
-  geom_histogram(aes(y = after_stat(density)), bins = 25,
-                 fill = "#1a3a6b", color = "white", alpha = 0.8) +
-  geom_hline(yintercept = 1, color = "#c0392b", linetype = "dashed", linewidth = 1) +
-  labs(x = "Valor-p", y = "Densidad",
-       title = "Distribución del valor-p bajo H₀ verdadera: Uniforme(0,1)") +
-  theme_minimal(base_size = 13)
-```
-
-## El debate actual sobre el valor-p
-
-<div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: limitaciones del valor-p</div>
-  <div class="block-body">
-  <p>En 2016, la Asociación Americana de Estadística (ASA) publicó una declaración advirtiendo sobre el mal uso del valor-p en la investigación científica.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:8px solid #d97706; margin-top:10px; font-size:22px; text-align:justify; line-height:1.4;">
+<strong>Interacción</strong> ($F=3.55$, $p=0.061$): no alcanza significancia al 5%, pero está cerca del umbral; la respuesta a la dosis tiende a ser algo más pronunciada en V2, lo que merece seguimiento en futuros ensayos.
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>«p-hacking»:</strong> realizar múltiples pruebas hasta obtener $p < 0.05$, inflando el error tipo I real.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Sesgo de publicación:</strong> los resultados con $p < 0.05$ se publican más, distorsionando la evidencia acumulada.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Recomendación actual:</strong> reportar el valor-p exacto junto al tamaño del efecto (d de Cohen, $\eta^2$, OR), IC al 95% y una descripción del contexto práctico del resultado.
-</li>
-</ul>
+## Factores a dos y cuatro niveles: flores de exportación
 
-## Alternativas y complementos al valor-p
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Reportar siempre</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">Valor-p exacto (no solo $< 0.05$).</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">IC al 95% del parámetro estimado.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px;">Tamaño del efecto (d, $r$, $\eta^2$, OR).</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px;">Potencia del estudio.</li>
-</ul>
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+En un cultivo de <strong>rosas de exportación</strong> en la sabana de Bogotá se desea evaluar el efecto de dos factores con distinto número de niveles sobre el número de tallos exportables por planta.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 class="fragment fade-in" data-fragment-index="6" style="color:#1a3a6b;">Alternativas formales</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">Factor de Bayes: evidencia relativa entre $H_0$ y $H_1$.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px;">Estimación bayesiana con distribuciones a posteriori.</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px;">Pruebas de equivalencia (TOST) para demostrar «no diferencia».</li>
-</ul>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>Factor A: Sistema de riego</strong> (2 niveles)<br>Goteo convencional / Goteo con fertirriego
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>Factor B: Dosis de bioestimulante</strong> (4 niveles)<br>0, 1, 2, 3 mL/L
 </div>
 
 </div>
 
-## Ejemplo integral: rendimiento de sorgo forrajero
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: sorgo, Cesar</div>
-  <div class="block-body">
-  <p>Un agrónomo afirma que una nueva variedad de sorgo forrajero supera los 6.0 t/ha de rendimiento promedio. En 20 parcelas obtuvo $\bar{x} = 6.4$ t/ha y $s = 1.1$ t/ha. Realice la prueba completa con $\alpha = 0.05$ y reporte el tamaño del efecto.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:12px; font-size:21px; text-align:center;">
+Diseño de niveles mixtos $2\times4=8$ combinaciones de tratamiento.
 </div>
 
-```{r}
-#| echo: true
-xbar <- 6.4; s <- 1.1; n <- 20; mu0 <- 6.0; alpha <- 0.05
+## Estructura conceptual: riego x bioestimulante en rosas
 
-# Estadístico t
-t_obs <- (xbar - mu0) / (s / sqrt(n))
-vp    <- pt(t_obs, df = n - 1, lower.tail = FALSE)   # unilateral derecha
-d     <- (xbar - mu0) / s
+<table style="width:90%; margin:0 auto; font-size:21px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Riego \ Bioestimulante</th><th>0 mL/L</th><th>1 mL/L</th><th>2 mL/L</th><th>3 mL/L</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Convencional</td><td>38</td><td>41</td><td>44</td><td>45</td></tr>
+<tr><td style="padding:8px;">Fertirriego</td><td>42</td><td>47</td><td>52</td><td>54</td></tr>
+</table>
 
-cat("t observado:", round(t_obs, 4), "\n")
-cat("Valor-p (H1: mu > 6):", round(vp, 4), "\n")
-cat("d de Cohen:", round(d, 4), "\n")
-cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-```
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:21px; text-align:center;">
+gl de tratamientos $=2\times4-1=7=1(\text{Riego})+3(\text{Bioestimulante})+3(\text{Riego}\times\text{Bioestimulante})$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Conceptualmente: ambos sistemas de riego mejoran con mayor dosis de bioestimulante, pero el fertirriego parte de una base más alta y gana más tallos por unidad de dosis (posible interacción).
+</div>
+
+## Generalización: diseños de niveles mixtos
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Diseño factorial de niveles mixtos $a\times b$</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+Número de corridas: $a\times b$ &nbsp;&nbsp; Grados de libertad de tratamientos: $ab-1$
+$$gl_A = a-1 \qquad gl_B = b-1 \qquad gl_{A\times B}=(a-1)(b-1)$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:21px; text-align:center;">
+El principio se extiende a más de dos factores con distintos números de niveles, ej. $2\times3\times4$, manteniendo siempre que el número total de corridas es el producto de los niveles.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:10px; font-size:20px; text-align:center;">
+Si el factor a tres o más niveles es cuantitativo, sus grados de libertad pueden descomponerse en componentes lineal, cuadrático, etc., igual que en el diseño $3^k$.
+</div>
 
 ## Errores comunes
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes con errores y valor-p</div>
-  <div class="block-body">
-  <p>La mala interpretación del valor-p es uno de los problemas más graves en la investigación aplicada.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Tratar un factor cuantitativo a tres niveles como si fuera puramente cualitativo, perdiendo la posibilidad de estimar los componentes lineal y cuadrático.
+- Olvidar que en un diseño $3^k$ confundido en bloques se pierde información sobre la(s) interacción(es) usada(s) para definir los bloques.
+- Confundir una réplica fraccionada $3^{k-p}$ con un diseño $2^{k-p}$: las reglas de generadores y alias son distintas en cada caso.
+- En diseños de niveles mixtos, calcular mal los grados de libertad de la interacción: no es $(a-1)+(b-1)$, sino $(a-1)(b-1)$.
+- Interpretar un componente cuadrático significativo como evidencia automática de un máximo dentro del rango estudiado, sin graficar la curva de respuesta.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Confundir $\alpha$ (planificado) con el valor-p (observado):</strong> $\alpha$ se fija antes del estudio; el valor-p se calcula con los datos.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Prueba unilateral cuando debería ser bilateral:</strong> elegir la dirección de la prueba después de ver los datos invalida la inferencia.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Ignorar el tamaño del efecto:</strong> reportar solo «$p = 0.03$, diferencia significativa» sin cuantificar la magnitud es insuficiente para la toma de decisiones.
-</li>
-</ul>
+## Resumen general de la clase
 
-## Taller en clase {.center .middle}
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Diseño</th>
+<th style="padding:8px;">Corridas</th>
+<th style="padding:8px;">gl tratamientos</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$3^2$</td><td style="padding:8px;">9</td><td style="padding:8px;">8</td></tr>
+<tr><td style="padding:8px;">$3^3$</td><td style="padding:8px;">27</td><td style="padding:8px;">26</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$3^k$ en $3^p$ bloques</td><td style="padding:8px;">$3^k$ (en $3^p$ bloques de $3^{k-p}$)</td><td style="padding:8px;">$3^k-1$ (menos gl confundidos)</td></tr>
+<tr><td style="padding:8px;">$3^{k-p}$ fraccionado</td><td style="padding:8px;">$3^{k-p}$</td><td style="padding:8px;">$3^{k-p}-1$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Niveles mixtos $a\times b$</td><td style="padding:8px;">$a\times b$</td><td style="padding:8px;">$ab-1$</td></tr>
+</table>
 
-## Taller 1: función de potencia
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Para la prueba bilateral $H_0: \mu = 10$ vs $H_1: \mu \neq 10$ con $\sigma = 3$ y $n = 36$, calcule la potencia cuando el verdadero $\mu$ es 10.5, 11, 11.5 y 12. Use $\alpha = 0.05$.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:12px; font-size:20px; text-align:center;">
+La elección del diseño depende de cuántos niveles necesita cada factor para responder la pregunta agronómica, y de la capacidad operativa real del experimento.
 </div>
 
-## Taller 1: solución
+## Taller en Clase {.center .middle}
 
-```{r}
-#| echo: true
-mu0 <- 10; sigma <- 3; n <- 36; alpha <- 0.05
-z_crit <- qnorm(1 - alpha/2)
-ee <- sigma / sqrt(n)
+## Instrucciones
 
-mu_alt <- c(10.5, 11, 11.5, 12)
-for (mu in mu_alt) {
-  delta <- (mu - mu0) / ee
-  pot <- pnorm(-z_crit - delta) + pnorm(z_crit - delta, lower.tail = FALSE)
-  cat(sprintf("μ = %.1f:  d = %.3f  potencia = %.4f\n",
-              mu, (mu - mu0)/sigma, pot))
-}
-```
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
 
-## Taller 2: valor-p en tres tipos de prueba
+<div style="font-size:26px; line-height:1.7;">
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Se prueban 30 ovinos y se obtiene un peso promedio de $\bar{x} = 42.3$ kg con $\sigma = 5$ kg conocida. El valor de referencia es $\mu_0 = 40$ kg. Calcule el valor-p para: (a) $H_1: \mu \neq 40$, (b) $H_1: \mu > 40$, (c) $H_1: \mu < 40$. Concluya con $\alpha = 0.05$.</p>
-  </div>
-</div>
+Para cada ejercicio:
 
-## Taller 2: solución
+<ol>
+<li>Identifique el tipo de diseño (completo $3^k$, confundido en bloques, fraccionado, o de niveles mixtos).</li>
+<li>Calcule el número de corridas y los grados de libertad de tratamientos.</li>
+<li>Cuando se suministre información, complete o interprete la tabla ANOVA correspondiente.</li>
+<li>Redacte una conclusión en el contexto agronómico del problema.</li>
+</ol>
 
-```{r}
-#| echo: true
-xbar <- 42.3; mu0 <- 40; sigma <- 5; n <- 30
-Z <- (xbar - mu0) / (sigma / sqrt(n))
-cat("Z observado:", round(Z, 4), "\n\n")
-
-# (a) Bilateral
-vp_bil <- 2 * pnorm(abs(Z), lower.tail = FALSE)
-cat("(a) Bilateral vp =", round(vp_bil, 4),
-    "->", ifelse(vp_bil < 0.05, "Rechazar H0", "No rechazar H0"), "\n")
-
-# (b) Unilateral derecha
-vp_der <- pnorm(Z, lower.tail = FALSE)
-cat("(b) Unilat. der. vp =", round(vp_der, 4),
-    "->", ifelse(vp_der < 0.05, "Rechazar H0", "No rechazar H0"), "\n")
-
-# (c) Unilateral izquierda
-vp_izq <- pnorm(Z)
-cat("(c) Unilat. izq. vp =", round(vp_izq, 4),
-    "->", ifelse(vp_izq < 0.05, "Rechazar H0", "No rechazar H0"), "\n")
-```
-
-## Taller 3: informe completo de resultados
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Con los datos del taller 2, elabore un informe completo de los resultados incluyendo: estadístico de prueba, valor-p, IC 95%, tamaño del efecto d de Cohen, y una conclusión en lenguaje no técnico para el productor ganadero.</p>
-  </div>
-</div>
-
-## Taller 3: solución
-
-```{r}
-#| echo: true
-xbar <- 42.3; mu0 <- 40; sigma <- 5; n <- 30
-
-Z   <- (xbar - mu0) / (sigma/sqrt(n))
-vp  <- 2 * pnorm(abs(Z), lower.tail = FALSE)
-ic  <- xbar + c(-1,1) * qnorm(0.975) * sigma/sqrt(n)
-d   <- (xbar - mu0) / sigma
-
-cat(sprintf(
-"=== Informe de resultados ===
-Estadístico Z = %.4f
-Valor-p (bilateral) = %.4f
-IC 95%%: [%.3f, %.3f] kg
-d de Cohen = %.4f (efecto %s)
-Conclusión: con α = 0.05, hay evidencia significativa de que el peso
-promedio difiere del valor de referencia (40 kg). El peso observado
-(%.1f kg) supera en promedio %.1f kg al de referencia, un efecto %s.\n",
-Z, vp, ic[1], ic[2], d,
-ifelse(abs(d)<0.2,"trivial",ifelse(abs(d)<0.5,"pequeño",
-ifelse(abs(d)<0.8,"mediano","grande"))),
-xbar, xbar - mu0,
-ifelse(abs(d)<0.5,"de magnitud pequeña","de magnitud mediana")
-))
-```
-
-## Resumen: errores y valor-p
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 26px;">Errores</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">Error I: rechazar $H_0$ verdadera ($\alpha$).</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">Error II: no rechazar $H_0$ falsa ($\beta$).</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">Potencia = $1 - \beta$: aumenta con $n$.</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px;">d de Cohen: magnitud del efecto.</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 style="color:#1a3a6b; font-size: 26px;">Valor-p</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;">Bilateral: $2P(Z > |z_{obs}|)$.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;">Unilateral: $P(Z > z_{obs})$ o $P(Z < z_{obs})$.</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 23px;">Siempre reportar con IC y tamaño del efecto.</li>
-</ul>
 </div>
 
 </div>
 
-## Próxima clase
+## Ejercicio 1
 
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 25: Pruebas para la media, proporción y varianza.</strong> Aplicaremos el marco de las pruebas de hipótesis a los parámetros más usados: la media (prueba Z y t), la proporción (prueba Z) y la varianza (prueba chi-cuadrado).</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+Un caficultor del Huila evalúa el rendimiento del café (kg/ha) bajo tres niveles de fertilizante foliar (Bajo, Medio, Alto) y tres niveles de sombra (0%, 30%, 60%), con $n=4$ repeticiones por combinación.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Indique el número de corridas, el número total de parcelas $N$, y los grados de libertad de tratamiento, descomponiéndolos en efectos principales e interacción.
+</div>
+
+## Ejercicio 2
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+En un ensayo de caña de azúcar con tres factores a tres niveles (dosis de nitrógeno, dosis de potasio, frecuencia de riego), el agrónomo solo dispone de lotes con capacidad para 9 parcelas cada uno.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Determine en cuántos bloques debe dividirse el experimento $3^3$ y el tamaño de cada bloque. Indique cuántos grados de libertad se confundirían con bloques.
+</div>
+
+## Ejercicio 3
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+Un investigador de Fedearroz estudia 4 factores cuantitativos a tres niveles cada uno (nitrógeno, fósforo, potasio y densidad de siembra) y considera que el diseño completo $3^4=81$ corridas es demasiado costoso.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Proponga una réplica fraccionada adecuada ($3^{4-1}$ o $3^{4-2}$), indicando el número de corridas resultante y qué se sacrifica al usar la fracción elegida.
+</div>
+
+## Ejercicio 4
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+En un cultivo de papa en Boyacá se compara el tipo de semilla (certificada vs. no certificada: 2 niveles) con tres dosis de un fungicida preventivo (Baja, Media, Alta). Con $n=5$ parcelas por combinación, el software reporta:
+
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px;">
+<tr style="background-color:#dbeafe;">
+<th>Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th>
+</tr>
+<tr><td>Semilla</td><td>18.2</td><td>?</td><td>?</td><td>?</td></tr>
+<tr><td>Dosis</td><td>34.5</td><td>?</td><td>?</td><td>?</td></tr>
+<tr><td>Semilla $\times$ Dosis</td><td>6.1</td><td>?</td><td>?</td><td>?</td></tr>
+<tr><td>Error</td><td>28.8</td><td>24</td><td>?</td><td></td></tr>
+</table>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Complete la tabla ANOVA (gl, CM y F) y utilice $F_{0.05,1,24}=4.26$, $F_{0.05,2,24}=3.40$.
+</div>
+
+## Ejercicio 5
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+Un floricultor de la sabana de Bogotá evalúa claveles bajo 2 sistemas de poda y 4 dosis de un regulador de crecimiento, registrando el número de tallos exportables por planta como respuesta.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Indique el número total de combinaciones de tratamiento y la descomposición de los grados de libertad en efecto de poda, efecto de dosis e interacción.
 </div>

@@ -1,7 +1,7 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
@@ -15,6 +15,7 @@ format:
     controls: true
     width: 1280
     height: 720
+    embed-resources: true
     css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
     header-includes: |
       <link rel="stylesheet" href="../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
@@ -37,482 +38,898 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 23 {.center .middle}
 
 ## Contenido
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El lenguaje de las hipótesis</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Introducción y media fracción</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Hipótesis nula y alternativa.</li>
-<li class="fragment fade-in" data-fragment-index="3">Pruebas unilaterales y bilaterales.</li>
-<li class="fragment fade-in" data-fragment-index="4">Estadístico de prueba.</li>
-<li class="fragment fade-in" data-fragment-index="5">Región de rechazo.</li>
+<li class="fragment fade-in" data-fragment-index="2">Motivación: el costo del factorial completo.</li>
+<li class="fragment fade-in" data-fragment-index="3">La media fracción $2^{k-1}$.</li>
+<li class="fragment fade-in" data-fragment-index="4">Generador y relación de definición.</li>
+<li class="fragment fade-in" data-fragment-index="5">Ejemplo: screening en arroz con $2^{4-1}$.</li>
+<li class="fragment fade-in" data-fragment-index="6">Estructura de alias y efectos confundidos.</li>
+<li class="fragment fade-in" data-fragment-index="7">ANOVA e interpretación de resultados.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Decisiones y errores</h3>
+<h3 class="fragment fade-in" data-fragment-index="8" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Cuarta fracción y caso general</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Error tipo I y tipo II.</li>
-<li class="fragment fade-in" data-fragment-index="8">Nivel de significancia y valor-p.</li>
-<li class="fragment fade-in" data-fragment-index="9">Interpretación correcta del valor-p.</li>
-<li class="fragment fade-in" data-fragment-index="10">Taller de conceptos.</li>
+<li class="fragment fade-in" data-fragment-index="9">La cuarta fracción $2^{k-2}$.</li>
+<li class="fragment fade-in" data-fragment-index="10">Ejemplo: screening en papa con $2^{5-2}$.</li>
+<li class="fragment fade-in" data-fragment-index="11">Estructura de alias con dos generadores.</li>
+<li class="fragment fade-in" data-fragment-index="12">El diseño factorial fraccionado general $2^{k-p}$.</li>
+<li class="fragment fade-in" data-fragment-index="13">Elección de generadores y diseño base.</li>
 </ul>
 </div>
+
 </div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 26px; font-size: 30px; align-items: start;">
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="14" style="font-size: 34px; margin-bottom: 14px; color: #79260d;">Parte III: Resolución de los diseños</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="15">Diseños de Resolución III.</li>
+<li class="fragment fade-in" data-fragment-index="16">Diseños de Resolución IV y V.</li>
+<li class="fragment fade-in" data-fragment-index="17">Comparación de costos e información.</li>
+<li class="fragment fade-in" data-fragment-index="18">Resumen general y tabla comparativa.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="19" style="font-size: 34px; margin-bottom: 14px; color: #5b21b6;">Taller en clase</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="20">Cinco ejercicios agrícolas resueltos en grupo.</li>
+<li class="fragment fade-in" data-fragment-index="21">Construcción de generadores y alias.</li>
+<li class="fragment fade-in" data-fragment-index="22">Selección de resolución según el objetivo.</li>
+</ul>
+</div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">Conceptos Fundamentales de Pruebas de Hipótesis</p>
-<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">El marco para tomar decisiones estadísticas con datos</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
-</div>
 
-## ¿Qué es una prueba de hipótesis?
+<p style="font-size: 50px; font-weight: bold; color: #3b82f6;">
+Diseños Factoriales Fraccionados de Dos Niveles
+</p>
 
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Un agrónomo afirma que un nuevo fertilizante aumenta el rendimiento de maíz por encima de 4.5 t/ha.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Con los datos de 25 parcelas obtenemos $\bar{x} = 4.8$ t/ha. ¿Es esta diferencia real o producto del azar del muestreo?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-Una <strong>prueba de hipótesis</strong> es un procedimiento formal para decidir si los datos ofrecen evidencia suficiente contra una afirmación sobre la población.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-La decisión no es «la hipótesis es verdadera»: es «los datos son compatibles o incompatibles con la hipótesis».
-</li>
-</ul>
-</div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando hay demasiados factores agronómicos para evaluar y muy pocos recursos (tiempo, terreno, un solo ciclo de cultivo) para correr el factorial completo?
+</p>
 
 </div>
 
-## Hipótesis nula y alternativa
+## Motivación: el costo del factorial completo
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En estudios de <strong>screening</strong> agronómico es común querer evaluar simultáneamente muchos factores: tipo de riego, dosis de nitrógeno, densidad de siembra, variedad, fungicida, momento de fertilización, etc. Un diseño factorial completo $2^k$ requiere $2^k$ corridas.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:23px; text-align:center;">
+$k=4$ factores<br><strong>16 corridas</strong>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:23px; text-align:center;">
+$k=5$ factores<br><strong>32 corridas</strong>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-top:7px solid #b91c1c; font-size:23px; text-align:center;">
+$k=6$ factores<br><strong>64 corridas</strong>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:22px; text-align:justify;">
+En un cultivo de arroz o papa, cada "corrida" es una parcela completa que debe sembrarse, manejarse y cosecharse durante <strong>todo un ciclo del cultivo</strong>. Con 6 factores, 64 parcelas en un solo ciclo son, en la práctica, inviables.
+</div>
+
+## El problema del screening agronómico
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+Un ingeniero agrónomo del Tolima quiere evaluar en arroz, en un único ciclo de cultivo, cuatro prácticas: tipo de riego, dosis de nitrógeno, densidad de siembra y variedad. El factorial completo $2^4=16$ exige 16 parcelas grandes, con repeticiones para estimar el error, recursos hídricos y mano de obra simultánea que la finca no tiene disponibles en una sola temporada.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:center;">
+La pregunta natural: ¿es posible obtener información útil sobre los <strong>cuatro</strong> factores usando <strong>menos</strong> de 16 corridas?
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:22px; text-align:center;">
+Respuesta: sí, mediante un <strong>diseño factorial fraccionado</strong>, sacrificando parte de la información sobre interacciones de orden alto, que en screening suelen ser despreciables.
+</div>
+
+## Principio de escasez de efectos
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+Los diseños fraccionados se justifican gracias al <strong>principio de escasez de efectos</strong> (sparsity of effects principle):
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="1" style="font-size:24px; margin-top:14px;">
+En la mayoría de los sistemas, la respuesta está dominada por unos pocos efectos principales e interacciones de bajo orden (2 factores); las interacciones de 3 o más factores casi siempre son despreciables.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:22px; text-align:justify;">
+Si las interacciones de orden alto son despreciables, podemos "sacrificarlas" deliberadamente para reducir el número de corridas, sin perder información relevante sobre los efectos principales.
+</div>
+
+## La media fracción del diseño $2^k$
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+La <strong>media fracción</strong> de un diseño $2^k$ utiliza solamente $2^{k-1}$ corridas: la mitad de las combinaciones de tratamiento del factorial completo.
+</div>
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definiciones</div>
-  <div class="block-body">
-  <ul style="font-size: 27px;">
-  <li><strong>Hipótesis nula $H_0$:</strong> afirmación de «no efecto», «no diferencia» o valor específico del parámetro. Es lo que se quiere refutar.</li>
-  <li><strong>Hipótesis alternativa $H_1$:</strong> lo que el investigador quiere demostrar. Indica la dirección del efecto.</li>
-  </ul>
-  </div>
+<div class="block-title" style="font-size:26px;">Media fracción $2^{k-1}$</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Se selecciona la mitad de las $2^k$ combinaciones de signos definida por un <strong>generador</strong>: una columna de interacción de alto orden que se utiliza para dividir el diseño completo en dos mitades (fracciones).
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px;">
-Ejemplo: $H_0: \mu = 4.5$ t/ha vs $H_1: \mu > 4.5$ t/ha (prueba unilateral derecha).
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-La carga de la prueba recae sobre $H_1$: rechazamos $H_0$ solo si los datos ofrecen evidencia suficientemente fuerte en contra.
-</li>
-</ul>
-
-## Tipos de hipótesis alternativa
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Bilateral</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px;">
-$H_0: \mu = \mu_0$ vs $H_1: \mu \neq \mu_0$
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
-Se rechaza $H_0$ si el estadístico es muy grande o muy pequeño.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-Uso: cuando la dirección del efecto es desconocida a priori.
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+Para $k=4$ con generador $D=ABC$ (equivalentemente $I=ABCD$), se eligen las 8 corridas donde la columna $ABCD$ vale $+1$ (o, simétricamente, las 8 donde vale $-1$).
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 class="fragment fade-in" data-fragment-index="5" style="color:#1a3a6b;">Unilateral</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
-Derecha: $H_1: \mu > \mu_0$ (se espera aumento)
-</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px;">
-Izquierda: $H_1: \mu < \mu_0$ (se espera disminución)
-</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
-Uso: cuando la dirección del efecto es conocida por el contexto científico.
-</li>
-</ul>
+## El generador y la relación de definición
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Si se define $D=ABC$, multiplicando ambos lados por $D$ se obtiene $D^2=ABCD$, y como $D^2=I$ (columna de unos), resulta:
 </div>
 
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Relación de definición</div>
+<div class="block-body" style="font-size:28px; text-align:center;">
+$$I = ABCD$$
+</div>
 </div>
 
-## Estadístico de prueba
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: estadístico de prueba</div>
-  <div class="block-body">
-  <p>El <strong>estadístico de prueba</strong> es una función de la muestra que mide qué tan lejos están los datos observados del valor postulado en $H_0$. Para la prueba de la media con $\sigma$ conocida:</p>
-  $$Z = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} \sim N(0,1) \quad \text{bajo } H_0$$
-  </div>
+<div style="font-size:23px; line-height:1.5; margin-top:10px;">
+- $I$ se llama <strong>relación de definición</strong> del diseño fraccionado.
+- Cualquier efecto multiplicado (módulo 2) por $ABCD$ produce su <strong>alias</strong>: el efecto con el que queda confundido.
+- Ejemplo: $A \times ABCD = A^2BCD = BCD$, por lo tanto $A$ y $BCD$ son <strong>alias</strong> (se confunden entre sí).
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Un estadístico de prueba grande (en valor absoluto) indica que los datos son poco compatibles con $H_0$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-La distribución del estadístico bajo $H_0$ permite calcular probabilidades y tomar decisiones.
-</li>
-</ul>
+## Cómo se construyen los alias
 
-## Región de rechazo y valor crítico
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Región de rechazo</div>
-  <div class="block-body">
-  <p>La <strong>región de rechazo</strong> $\mathcal{R}$ es el conjunto de valores del estadístico para los cuales se rechaza $H_0$. Está determinada por el <strong>valor crítico</strong> $c$:</p>
-  <ul style="font-size: 26px;">
-  <li>Bilateral: $|Z| > z_{\alpha/2}$ (ej: $|Z| > 1.96$ con $\alpha = 0.05$)</li>
-  <li>Unilateral derecha: $Z > z_\alpha$ (ej: $Z > 1.645$)</li>
-  <li>Unilateral izquierda: $Z < -z_\alpha$</li>
-  </ul>
-  </div>
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Para encontrar el alias de cualquier efecto, se multiplica dicho efecto por la relación de definición $I=ABCD$, usando la regla de que cualquier letra elevada al cuadrado se vuelve $I$:
 </div>
 
-## Visualización de la región de rechazo
+<table style="width:100%; font-size:23px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Efecto</th><th style="padding:8px;">Cálculo del alias</th><th style="padding:8px;">Alias</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$A$</td><td style="padding:8px;">$A\cdot ABCD=A^2BCD$</td><td style="padding:8px;">$BCD$</td></tr>
+<tr><td style="padding:8px;">$B$</td><td style="padding:8px;">$B\cdot ABCD=AB^2CD$</td><td style="padding:8px;">$ACD$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$C$</td><td style="padding:8px;">$C\cdot ABCD=ABC^2D$</td><td style="padding:8px;">$ABD$</td></tr>
+<tr><td style="padding:8px;">$D$</td><td style="padding:8px;">$D\cdot ABCD=ABCD^2$</td><td style="padding:8px;">$ABC$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$AB$</td><td style="padding:8px;">$AB\cdot ABCD=A^2B^2CD$</td><td style="padding:8px;">$CD$</td></tr>
+<tr><td style="padding:8px;">$AC$</td><td style="padding:8px;">$AC\cdot ABCD=A^2BC^2D$</td><td style="padding:8px;">$BD$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$AD$</td><td style="padding:8px;">$AD\cdot ABCD=A^2BCD^2$</td><td style="padding:8px;">$BC$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Cada efecto principal queda confundido con una interacción de tres factores; cada interacción de dos factores queda confundida con otra interacción de dos factores.
+</div>
+
+## Ejemplo agrícola: screening en arroz ($k=4$)
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Un agrónomo del Tolima desea evaluar cuatro prácticas en arroz en un solo ciclo de cultivo, usando solo 8 parcelas en lugar de 16:
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Factor</th><th style="padding:8px;">Nivel ($-$)</th><th style="padding:8px;">Nivel ($+$)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$A$: Riego</td><td style="padding:8px;">Intermitente</td><td style="padding:8px;">Continuo</td></tr>
+<tr><td style="padding:8px;">$B$: Fertilización N</td><td style="padding:8px;">100 kg/ha</td><td style="padding:8px;">160 kg/ha</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$C$: Densidad de siembra</td><td style="padding:8px;">120 kg semilla/ha</td><td style="padding:8px;">180 kg semilla/ha</td></tr>
+<tr><td style="padding:8px;">$D$: Variedad</td><td style="padding:8px;">Fedearroz 60</td><td style="padding:8px;">Fedearroz 174</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Respuesta: rendimiento de arroz paddy (ton/ha). Generador: $D=ABC$, es decir $I=ABCD$.
+</div>
+
+## Construcción de la fracción: diseño base
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+El <strong>diseño base</strong> es un factorial completo $2^3$ en los factores $A$, $B$, $C$. La columna de la cuarta variable $D$ se obtiene multiplicando $D=A\times B\times C$:
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Corrida</th><th>$A$</th><th>$B$</th><th>$C$</th><th>$D=ABC$</th><th>Tratamiento</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">1</td><td>$-$</td><td>$-$</td><td>$-$</td><td>$-$</td><td>(1)</td></tr>
+<tr><td style="padding:6px;">2</td><td>$-$</td><td>$-$</td><td>$+$</td><td>$+$</td><td>cd</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">3</td><td>$-$</td><td>$+$</td><td>$-$</td><td>$+$</td><td>bd</td></tr>
+<tr><td style="padding:6px;">4</td><td>$-$</td><td>$+$</td><td>$+$</td><td>$-$</td><td>bc</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">5</td><td>$+$</td><td>$-$</td><td>$-$</td><td>$+$</td><td>ad</td></tr>
+<tr><td style="padding:6px;">6</td><td>$+$</td><td>$-$</td><td>$+$</td><td>$-$</td><td>ac</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">7</td><td>$+$</td><td>$+$</td><td>$-$</td><td>$-$</td><td>ab</td></tr>
+<tr><td style="padding:6px;">8</td><td>$+$</td><td>$+$</td><td>$+$</td><td>$+$</td><td>abcd</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Esta es la fracción "principal" ($I=+ABCD$): exactamente 8 de las 16 combinaciones del factorial completo.
+</div>
+
+## Datos del ensayo en arroz
+
+<div style="font-size:23px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+Rendimiento observado (ton/ha de arroz paddy) en las 8 parcelas de la media fracción:
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Tratamiento</th><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>Rendimiento (ton/ha)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">(1)</td><td>$-$</td><td>$-$</td><td>$-$</td><td>$-$</td><td>5.43</td></tr>
+<tr><td style="padding:6px;">cd</td><td>$-$</td><td>$-$</td><td>$+$</td><td>$+$</td><td>5.88</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">bd</td><td>$-$</td><td>$+$</td><td>$-$</td><td>$+$</td><td>6.24</td></tr>
+<tr><td style="padding:6px;">bc</td><td>$-$</td><td>$+$</td><td>$+$</td><td>$-$</td><td>5.59</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">ad</td><td>$+$</td><td>$-$</td><td>$-$</td><td>$+$</td><td>6.35</td></tr>
+<tr><td style="padding:6px;">ac</td><td>$+$</td><td>$-$</td><td>$+$</td><td>$-$</td><td>5.80</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">ab</td><td>$+$</td><td>$+$</td><td>$-$</td><td>$-$</td><td>6.16</td></tr>
+<tr><td style="padding:6px;">abcd</td><td>$+$</td><td>$+$</td><td>$+$</td><td>$+$</td><td>6.65</td></tr>
+</table>
+
+## Cálculo de efectos: contrastes
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Cada efecto se calcula igual que en un factorial completo, pero con divisor $N/2=4$ (la mitad del número de corridas $N=8$):
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Cálculo del efecto</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+\text{Efecto} = \frac{\sum (\text{signo de la columna}) \times y}{N/2} = \frac{\text{contraste}}{4}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Ejemplo para $A$: contraste $=-5.43+(-5.88)+(-6.24)+(-5.59)+6.35+5.80+6.16+6.65=1.82$, efecto $A=1.82/4=0.455$.
+</div>
+
+## Resultado: efectos estimados (confundidos)
+
+<div style="font-size:23px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+Como cada efecto principal está confundido con una interacción de tres factores y cada interacción de dos factores con otra interacción de dos factores, lo que se calcula es realmente la <strong>suma</strong> de ambos alias:
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Efecto estimado</th><th style="padding:8px;">Alias</th><th style="padding:8px;">Valor</th><th style="padding:8px;">SC (1 gl)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$A+BCD$</td><td style="padding:8px;">$BCD$</td><td style="padding:8px;">0.4550</td><td style="padding:8px;">0.4141</td></tr>
+<tr><td style="padding:8px;">$B+ACD$</td><td style="padding:8px;">$ACD$</td><td style="padding:8px;">0.2950</td><td style="padding:8px;">0.1741</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$C+ABD$</td><td style="padding:8px;">$ABD$</td><td style="padding:8px;">$-0.0650$</td><td style="padding:8px;">0.0085</td></tr>
+<tr><td style="padding:8px;">$D+ABC$</td><td style="padding:8px;">$ABC$</td><td style="padding:8px;">0.5350</td><td style="padding:8px;">0.5724</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$AB+CD$</td><td style="padding:8px;">$CD$</td><td style="padding:8px;">0.0350</td><td style="padding:8px;">0.0025</td></tr>
+<tr><td style="padding:8px;">$AC+BD$</td><td style="padding:8px;">$BD$</td><td style="padding:8px;">0.0350</td><td style="padding:8px;">0.0025</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$AD+BC$</td><td style="padding:8px;">$BC$</td><td style="padding:8px;">$-0.0150$</td><td style="padding:8px;">0.0005</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+8 corridas → 7 grados de libertad disponibles (todos usados, sin gl para error puro).
+</div>
+
+## Tabla ANOVA de la media fracción
+
+<div style="font-size:23px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+Al no haber repeticiones, la tabla ANOVA se construye con la suma de cuadrados de cada uno de los 7 efectos confundidos. La suma de cuadrados total coincide con la suma de las 7 componentes:
+</div>
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th style="padding:6px;">SC</th><th style="padding:6px;">gl</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$A$ (+ $BCD$)</td><td style="padding:6px;">0.4141</td><td style="padding:6px;">1</td></tr>
+<tr><td style="padding:6px;">$B$ (+ $ACD$)</td><td style="padding:6px;">0.1741</td><td style="padding:6px;">1</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$C$ (+ $ABD$)</td><td style="padding:6px;">0.0085</td><td style="padding:6px;">1</td></tr>
+<tr><td style="padding:6px;">$D$ (+ $ABC$)</td><td style="padding:6px;">0.5724</td><td style="padding:6px;">1</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$AB$ (+ $CD$)</td><td style="padding:6px;">0.0025</td><td style="padding:6px;">1</td></tr>
+<tr><td style="padding:6px;">$AC$ (+ $BD$)</td><td style="padding:6px;">0.0025</td><td style="padding:6px;">1</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$AD$ (+ $BC$)</td><td style="padding:6px;">0.0005</td><td style="padding:6px;">1</td></tr>
+<tr><td style="padding:6px;"><strong>Total</strong></td><td style="padding:6px;"><strong>1.1746</strong></td><td style="padding:6px;"><strong>7</strong></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:8px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:20px; text-align:center;">
+Sin réplicas no hay grados de libertad para estimar el error puro: la inferencia formal (valor-p) requiere repetir el diseño o usar gráfico de probabilidad normal de efectos.
+</div>
+
+## Gráfico de efectos: identificación visual
 
 ```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2)
-x <- seq(-4, 4, length.out = 400)
-df <- data.frame(x, f = dnorm(x))
-
-# Bilateral con alpha = 0.05
-z_crit <- qnorm(0.975)
-
-ggplot(df, aes(x, f)) +
-  geom_line(color = "#1a3a6b", linewidth = 1.3) +
-  geom_ribbon(data = subset(df, x >= z_crit),
-              aes(ymin = 0, ymax = f), fill = "#c0392b", alpha = 0.5) +
-  geom_ribbon(data = subset(df, x <= -z_crit),
-              aes(ymin = 0, ymax = f), fill = "#c0392b", alpha = 0.5) +
-  geom_ribbon(data = subset(df, x > -z_crit & x < z_crit),
-              aes(ymin = 0, ymax = f), fill = "#dce9f7", alpha = 0.6) +
-  geom_vline(xintercept = c(-z_crit, z_crit), color = "#c0392b", linetype = "dashed") +
-  annotate("text", x = 3, y = 0.05, label = "RR\nα/2", color = "#c0392b", size = 4.5) +
-  annotate("text", x = -3, y = 0.05, label = "RR\nα/2", color = "#c0392b", size = 4.5) +
-  annotate("text", x = 0, y = 0.15, label = "No rechazo\n1-α", color = "#1a3a6b", size = 4.5) +
-  labs(x = "Z", y = "f(z)", title = "Región de rechazo bilateral (α = 0.05)") +
-  theme_minimal(base_size = 13)
+#| label: grafico-efectos-arroz
+#| echo: false
+#| fig-height: 3.4
+efectos <- c(A=0.4550, B=0.2950, C=-0.0650, D=0.5350, AB=0.0350, AC=0.0350, AD=-0.0150)
+ord <- order(abs(efectos))
+barplot(efectos[ord], horiz = TRUE, las = 1,
+        col = ifelse(abs(efectos[ord]) > 0.2, "#1a3a6b", "#cbd5e1"),
+        xlab = "Magnitud del efecto estimado (ton/ha)",
+        main = "Efectos estimados en el ensayo de arroz (media fracción)")
+abline(v = 0, lty = 2)
 ```
 
-## Error tipo I y error tipo II
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Tipos de error</div>
-  <div class="block-body">
-
-| | $H_0$ verdadera | $H_0$ falsa |
-|---|---|---|
-| **No rechazar $H_0$** | Decisión correcta ($1-\alpha$) | Error tipo II ($\beta$) |
-| **Rechazar $H_0$** | Error tipo I ($\alpha$) | Decisión correcta ($1-\beta$: potencia) |
-
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:21px; text-align:center;">
+Los efectos $D$ (variedad), $A$ (riego) y $B$ (fertilización) destacan claramente sobre los demás, que se comportan como ruido aleatorio.
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-<strong>Error tipo I ($\alpha$):</strong> rechazar $H_0$ cuando es verdadera (falso positivo). Se controla fijando $\alpha$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-<strong>Error tipo II ($\beta$):</strong> no rechazar $H_0$ cuando es falsa (falso negativo). Se reduce aumentando $n$.
-</li>
-</ul>
+## Interpretación de resultados
 
-## La disyuntiva $\alpha$ versus $\beta$
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Reducir $\alpha$ implica aumentar $\beta$</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-Si exigimos mayor evidencia para rechazar $H_0$ (reducir falsos positivos), aumentamos el riesgo de no detectar efectos reales.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-En diagnóstico veterinario: ¿es peor declarar sano a un animal enfermo o enfermo a uno sano?
-</li>
-</ul>
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Bajo el principio de escasez de efectos, se asume que las interacciones de tres factores ($BCD$, $ACD$, $ABD$, $ABC$) son despreciables. Entonces los efectos grandes observados se atribuyen a los efectos principales:
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">La solución: aumentar $n$</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
-Mayor tamaño de muestra reduce simultáneamente ambos errores, manteniendo $\alpha$ fijo.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
-Esto justifica el cálculo de $n$ antes del estudio (Clase 22).
-</li>
-</ul>
+<table style="width:100%; font-size:22px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Factor</th><th style="padding:8px;">Efecto</th><th style="padding:8px;">Interpretación</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$D$: Variedad</td><td style="padding:8px;">0.535</td><td style="padding:8px;">Fedearroz 174 rinde 0.535 ton/ha más que Fedearroz 60</td></tr>
+<tr><td style="padding:8px;">$A$: Riego</td><td style="padding:8px;">0.455</td><td style="padding:8px;">Riego continuo aumenta el rendimiento en 0.455 ton/ha</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$B$: Fertilización N</td><td style="padding:8px;">0.295</td><td style="padding:8px;">160 kg/ha de N aumenta el rendimiento en 0.295 ton/ha</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+$C$ (densidad de siembra) y las interacciones de dos factores resultaron despreciables: en un futuro ensayo de confirmación podrían omitirse para simplificar el manejo agronómico.
 </div>
 
-</div>
-
-## El valor-p
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: valor-p</div>
-  <div class="block-body">
-  <p>El <strong>valor-p</strong> es la probabilidad de observar un estadístico de prueba tan extremo o más extremo que el observado, <strong>asumiendo que $H_0$ es verdadera</strong>:</p>
-  $$\text{valor-p} = P(\text{estadístico tan extremo} \mid H_0 \text{ verdadera})$$
-  </div>
-</div>
-
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Un valor-p pequeño indica que los datos son poco compatibles con $H_0$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Regla de decisión:</strong> si valor-p $< \alpha$, se rechaza $H_0$; si valor-p $\geq \alpha$, no se rechaza.
-</li>
-</ul>
-
-## Interpretación correcta del valor-p
+## Errores comunes: media fracción
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: lo que el valor-p NO es</div>
-  <div class="block-body">
-  <ul style="font-size: 26px;">
-  <li>NO es la probabilidad de que $H_0$ sea verdadera.</li>
-  <li>NO es la probabilidad de que los resultados sean «por azar».</li>
-  <li>NO mide el tamaño del efecto ni su importancia práctica.</li>
-  </ul>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Interpretar el efecto estimado de $A$ como si fuera "puro", olvidando que en realidad es $A+BCD$.
+- Elegir un generador de bajo orden (ej. $D=AB$ en vez de $D=ABC$) sin entender que esto degrada la resolución del diseño.
+- Ejecutar la fracción complementaria sin necesidad cuando el principio de escasez de efectos ya resuelve la ambigüedad.
+- Olvidar que sin réplicas no hay grados de libertad para el error puro: se requiere un gráfico de efectos o un diseño confirmatorio.
+</div>
 </div>
 
-<div class="block-note fragment fade-up" data-fragment-index="2">
-  <div class="block-body">
-  <p><strong>Interpretación correcta:</strong> «si $H_0$ fuera verdadera, la probabilidad de obtener datos tan extremos como los observados (o más) es de valor-p = x». Un valor-p pequeño indica evidencia contra $H_0$.</p>
-  </div>
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+La cuarta fracción y el caso general $2^{k-p}$
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Cuando hay aún más factores de screening, es posible reducir el número de corridas todavía más usando varios generadores simultáneos.
+</p>
+
 </div>
 
-## Cálculo del valor-p en R
+## La cuarta fracción del diseño $2^k$
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+La <strong>cuarta fracción</strong> $2^{k-2}$ utiliza solamente $2^{k-2}$ corridas: la cuarta parte del factorial completo. Requiere <strong>dos generadores</strong> independientes.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Cuarta fracción $2^{k-2}$</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Se eligen dos generadores $P$ y $Q$ (columnas de interacción) que definen dos relaciones de definición $I=P$ e $I=Q$. El producto $P\times Q$ genera una tercera relación, llamada <strong>relación de definición generalizada</strong>:
+$$I = P = Q = PQ$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Cada efecto tendrá ahora <strong>tres</strong> alias (uno por cada elemento no trivial de la relación generalizada).
+</div>
+
+## Ejemplo agrícola: screening en papa ($k=5$)
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Un productor de papa en Cundinamarca (zona de Subachoque) desea evaluar 5 prácticas agronómicas en un solo ciclo, usando apenas 8 parcelas en lugar de 32:
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Factor</th><th style="padding:6px;">Nivel ($-$)</th><th style="padding:6px;">Nivel ($+$)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$A$: Riego</td><td style="padding:6px;">Secano</td><td style="padding:6px;">Suplementario</td></tr>
+<tr><td style="padding:6px;">$B$: Fertilización N</td><td style="padding:6px;">150 kg/ha</td><td style="padding:6px;">250 kg/ha</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$C$: Fertilización K</td><td style="padding:6px;">100 kg/ha</td><td style="padding:6px;">180 kg/ha</td></tr>
+<tr><td style="padding:6px;">$D$: Densidad de siembra</td><td style="padding:6px;">40 000 plantas/ha</td><td style="padding:6px;">55 000 plantas/ha</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$E$: Variedad</td><td style="padding:6px;">Parda Pastusa</td><td style="padding:6px;">Diacol Capiro</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:8px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:20px; text-align:center;">
+Generadores elegidos: $D=AB$, $E=AC$, es decir $I=ABD=ACE$.
+</div>
+
+## Construcción de la cuarta fracción
+
+<div style="font-size:23px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+El diseño base es nuevamente un factorial completo $2^3$ en $A$, $B$, $C$; las columnas de $D$ y $E$ se obtienen de los generadores:
+</div>
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Corrida</th><th>$A$</th><th>$B$</th><th>$C$</th><th>$D=AB$</th><th>$E=AC$</th><th>Trat.</th><th>Rend. (ton/ha)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">1</td><td>$-$</td><td>$-$</td><td>$-$</td><td>$+$</td><td>$+$</td><td>de</td><td>22.12</td></tr>
+<tr><td style="padding:6px;">2</td><td>$-$</td><td>$-$</td><td>$+$</td><td>$+$</td><td>$-$</td><td>cd</td><td>19.54</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">3</td><td>$-$</td><td>$+$</td><td>$-$</td><td>$-$</td><td>$+$</td><td>be</td><td>22.75</td></tr>
+<tr><td style="padding:6px;">4</td><td>$-$</td><td>$+$</td><td>$+$</td><td>$-$</td><td>$-$</td><td>bc</td><td>19.92</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">5</td><td>$+$</td><td>$-$</td><td>$-$</td><td>$-$</td><td>$-$</td><td>a</td><td>21.06</td></tr>
+<tr><td style="padding:6px;">6</td><td>$+$</td><td>$-$</td><td>$+$</td><td>$-$</td><td>$+$</td><td>ace</td><td>22.98</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">7</td><td>$+$</td><td>$+$</td><td>$-$</td><td>$+$</td><td>$-$</td><td>abd</td><td>22.84</td></tr>
+<tr><td style="padding:6px;">8</td><td>$+$</td><td>$+$</td><td>$+$</td><td>$+$</td><td>$+$</td><td>abcde</td><td>24.72</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="font-size:20px; text-align:center; margin-top:6px; color:#475569;">
+Respuesta: rendimiento de papa (ton/ha). 8 corridas en lugar de 32: una reducción del 75%.
+</div>
+
+## Relación de definición generalizada
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Con generadores $D=AB$ y $E=AC$, la relación de definición generalizada se obtiene multiplicando: $I=ABD$, $I=ACE$, y el producto $ABD\times ACE=A^2BCDE=BCDE$.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Relación de definición generalizada</div>
+<div class="block-body" style="font-size:26px; text-align:center;">
+$$I = ABD = ACE = BCDE$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Cada uno de los 7 efectos estimables tiene ahora <strong>tres</strong> alias, uno por cada palabra no trivial de la relación generalizada.
+</div>
+
+## Estructura de alias de la cuarta fracción
+
+<div style="font-size:22px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+Multiplicando cada efecto principal por $I=ABD=ACE=BCDE$ se obtienen sus alias:
+</div>
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Efecto</th><th style="padding:6px;">Alias 1</th><th style="padding:6px;">Alias 2</th><th style="padding:6px;">Alias 3</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$A$</td><td style="padding:6px;">$BD$</td><td style="padding:6px;">$CE$</td><td style="padding:6px;">$ABCDE$</td></tr>
+<tr><td style="padding:6px;">$B$</td><td style="padding:6px;">$AD$</td><td style="padding:6px;">$ABCE$</td><td style="padding:6px;">$CDE$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$C$</td><td style="padding:6px;">$ABCD$</td><td style="padding:6px;">$AE$</td><td style="padding:6px;">$BDE$</td></tr>
+<tr><td style="padding:6px;">$D$</td><td style="padding:6px;">$AB$</td><td style="padding:6px;">$ACDE$</td><td style="padding:6px;">$BCE$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$E$</td><td style="padding:6px;">$ABDE$</td><td style="padding:6px;">$AC$</td><td style="padding:6px;">$BCD$</td></tr>
+<tr><td style="padding:6px;">$BC$</td><td style="padding:6px;">$ACD$</td><td style="padding:6px;">$ABE$</td><td style="padding:6px;">$DE$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$BE$</td><td style="padding:6px;">$ADE$</td><td style="padding:6px;">$ABC$</td><td style="padding:6px;">$CD$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:20px; text-align:center;">
+Importante: $A$ queda confundido con la interacción de dos factores $BD$ y con $CE$: este diseño es de <strong>Resolución III</strong>.
+</div>
+
+## Resultado: efectos calculados en el ensayo de papa
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Efecto</th><th style="padding:8px;">Confundido con</th><th style="padding:8px;">Valor estimado</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$A$</td><td style="padding:8px;">$BD$, $CE$</td><td style="padding:8px;">1.8175</td></tr>
+<tr><td style="padding:8px;">$B$</td><td style="padding:8px;">$AD$, $CDE$</td><td style="padding:8px;">1.1325</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$C$</td><td style="padding:8px;">$AE$, $BDE$</td><td style="padding:8px;">$-0.4025$</td></tr>
+<tr><td style="padding:8px;">$D$</td><td style="padding:8px;">$AB$, $BCE$</td><td style="padding:8px;">0.6275</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$E$</td><td style="padding:8px;">$AC$, $BCD$</td><td style="padding:8px;">2.3025</td></tr>
+<tr><td style="padding:8px;">$BC$ (+ $DE$)</td><td style="padding:8px;">$ACD$, $ABE$</td><td style="padding:8px;">$-0.0725$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$BE$ (+ $CD$)</td><td style="padding:8px;">$ADE$, $ABC$</td><td style="padding:8px;">0.0525</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:8px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:20px; text-align:center;">
+Note la curiosidad numérica: como $A$ y $BD$ son alias, su valor estimado de "$A$" es idéntico al de "$BD$" calculado por separado: ambos son la misma combinación lineal de los datos.
+</div>
+
+## Gráfico de efectos: ensayo de papa
 
 ```{r}
-#| echo: true
-# Ejemplo: rendimiento de maíz
-# H0: mu = 4.5 t/ha vs H1: mu > 4.5 (unilateral derecha)
-mu0 <- 4.5; sigma <- 0.8; n <- 25; xbar <- 4.8
-
-# Estadístico Z
-Z <- (xbar - mu0) / (sigma / sqrt(n))
-cat("Estadístico Z:", round(Z, 4), "\n")
-
-# Valor-p unilateral derecha
-vp_derecha <- pnorm(Z, lower.tail = FALSE)
-cat("Valor-p (H1: mu > 4.5):", round(vp_derecha, 4), "\n")
-
-# Valor-p bilateral
-vp_bilateral <- 2 * pnorm(abs(Z), lower.tail = FALSE)
-cat("Valor-p (H1: mu ≠ 4.5):", round(vp_bilateral, 4), "\n")
+#| label: grafico-efectos-papa
+#| echo: false
+#| fig-height: 3.4
+efectos_p <- c(A=1.8175, B=1.1325, C=-0.4025, D=0.6275, E=2.3025, BC=-0.0725, BE=0.0525)
+ordp <- order(abs(efectos_p))
+barplot(efectos_p[ordp], horiz = TRUE, las = 1,
+        col = ifelse(abs(efectos_p[ordp]) > 0.5, "#1b4d2e", "#cbd5e1"),
+        xlab = "Magnitud del efecto estimado (ton/ha)",
+        main = "Efectos estimados en el ensayo de papa (cuarta fracción)")
+abline(v = 0, lty = 2)
 ```
 
-## Pasos para realizar una prueba de hipótesis
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:21px; text-align:center;">
+$E$ (variedad), $A$ (riego) y $B$ (fertilización N) dominan claramente; $C$, $BC$ y $BE$ se aproximan a cero.
+</div>
 
-<ol>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
-<strong>Plantear $H_0$ y $H_1$</strong> con claridad, especificando el tipo de prueba (bilateral o unilateral).
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
-<strong>Fijar el nivel de significancia $\alpha$</strong> (típicamente 0.05 o 0.01).
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
-<strong>Seleccionar el estadístico de prueba</strong> apropiado y determinar su distribución bajo $H_0$.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
-<strong>Calcular el estadístico</strong> con los datos observados.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify; margin-bottom: 10px;">
-<strong>Calcular el valor-p</strong> y comparar con $\alpha$ (o comparar el estadístico con el valor crítico).
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 27px; text-align: justify;">
-<strong>Concluir en el contexto del problema</strong>: con suficiente evidencia o sin evidencia suficiente.
-</li>
-</ol>
+## Interpretación del ensayo de papa
 
-## Significancia estadística vs importancia práctica
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Asumiendo que las interacciones de tres y más factores son despreciables (principio de escasez de efectos), los resultados sugieren:
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Factor</th><th style="padding:8px;">Efecto</th><th style="padding:8px;">Conclusión preliminar</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$E$: Variedad</td><td style="padding:8px;">2.30</td><td style="padding:8px;">Diacol Capiro supera a Parda Pastusa en 2.3 ton/ha</td></tr>
+<tr><td style="padding:8px;">$A$: Riego</td><td style="padding:8px;">1.82</td><td style="padding:8px;">Riego suplementario aumenta el rendimiento en 1.82 ton/ha</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$B$: Fertilización N</td><td style="padding:8px;">1.13</td><td style="padding:8px;">250 kg/ha de N aumenta el rendimiento en 1.13 ton/ha</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+$C$ (fertilización K) y la densidad de siembra ($D$) tuvieron efectos pequeños: podrían fijarse en su nivel más económico en futuros ensayos.
+</div>
+
+## El diseño factorial fraccionado general $2^{k-p}$
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+En general, un diseño factorial fraccionado $2^{k-p}$ usa $2^{k-p}$ corridas: la $1/2^p$-ésima parte del factorial completo $2^k$, y requiere $p$ generadores independientes.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Diseño factorial fraccionado $2^{k-p}$</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+\text{Número de corridas} = 2^{k-p}
+\qquad
+\text{Número de generadores} = p
+$$
+</div>
+</div>
+
+<div style="font-size:23px; line-height:1.5; margin-top:10px;">
+- El <strong>diseño base</strong> es un factorial completo $2^{k-p}$ en los primeros $k-p$ factores.
+- Los $p$ factores restantes se asignan a columnas de interacción del diseño base (los generadores).
+- La <strong>relación de definición generalizada</strong> contiene $2^p-1$ palabras (incluyendo los $p$ generadores y todos sus productos).
+</div>
+
+## Elección de generadores
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+La elección de los generadores determina la calidad del diseño fraccionado. Se busca que cada efecto principal quede confundido con interacciones del <strong>mayor orden posible</strong>.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:22px; text-align:center; line-height:1.4;">
+<strong>Buena elección</strong><br>$D=ABC$ confunde efectos principales con interacciones de tres factores (escasas en la práctica)
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-top:7px solid #b91c1c; font-size:22px; text-align:center; line-height:1.4;">
+<strong>Mala elección</strong><br>$D=AB$ confunde un efecto principal con una interacción de dos factores (frecuentemente importante)
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+El criterio formal para comparar generadores es la <strong>resolución</strong> del diseño, que se estudia en la siguiente sección.
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Resolución de los diseños fraccionados
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+La resolución resume, en un solo número romano, cuán "limpia" es la información que un diseño fraccionado puede ofrecer.
+</p>
+
+</div>
+
+## La resolución de un diseño
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+La <strong>resolución</strong> de un diseño fraccionado es igual a la <strong>longitud de la palabra más corta</strong> en la relación de definición generalizada (sin contar el símbolo $I$).
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Resolución</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Si la palabra más corta tiene $r$ letras, el diseño es de <strong>Resolución $r$</strong> (en números romanos). Por ejemplo, $I=ABCD$ tiene una sola palabra de longitud 4: Resolución IV.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+A mayor resolución, menor confusión entre efectos de bajo orden: la información obtenida es "más limpia".
+</div>
+
+## Diseños de Resolución III
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Resolución III</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Ningún efecto principal está confundido con otro efecto principal, pero los efectos principales <strong>sí</strong> están confundidos con interacciones de <strong>dos</strong> factores.
+</div>
+</div>
+
+<div style="font-size:23px; line-height:1.4; margin-top:10px;">
+- Se usan para <strong>screening puro</strong>: identificar rápidamente cuáles de muchos factores son importantes, asumiendo que las interacciones son pequeñas.
+- El ejemplo de papa ($I=ABD=ACE=BCDE$, palabra más corta de longitud 3) es de <strong>Resolución III</strong>.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:10px; font-size:21px; text-align:center;">
+Riesgo: si una interacción de dos factores es en realidad importante, el efecto principal correspondiente quedará sesgado sin que el investigador lo note.
+</div>
+
+## Ejemplo agrícola de Resolución III
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En el ensayo de papa, $A$ (riego) está confundido con $CE$ (potasio $\times$ variedad) y con $BD$ (nitrógeno $\times$ densidad). Si en realidad existiera una interacción fuerte riego-variedad ($AE$), el agrónomo no podría distinguirla del efecto principal de fertilización K.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:center;">
+En la práctica agronómica, los diseños de Resolución III se usan como <strong>primera etapa de screening</strong>, seguida de un experimento confirmatorio con los factores que resultaron importantes.
+</div>
+
+## Diseños de Resolución IV
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Resolución IV</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Ningún efecto principal está confundido con interacciones de dos factores. Sin embargo, las interacciones de dos factores <strong>sí</strong> quedan confundidas entre sí.
+</div>
+</div>
+
+<div style="font-size:23px; line-height:1.4; margin-top:10px;">
+- El ejemplo del arroz, con $I=ABCD$ (palabra de longitud 4), es de <strong>Resolución IV</strong>.
+- Cada efecto principal está confundido únicamente con una interacción de <strong>tres</strong> factores, generalmente despreciable.
+- Cada interacción de dos factores está confundida con otra interacción de dos factores: $AB$ con $CD$, $AC$ con $BD$, $AD$ con $BC$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:21px; text-align:center;">
+Los efectos principales se estiman limpiamente; solo las interacciones de dos factores quedan ambiguas entre sí.
+</div>
+
+## Diseños de Resolución V
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Resolución V</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Ningún efecto principal ni ninguna interacción de dos factores está confundida con otro efecto principal o interacción de dos factores. Las interacciones de dos factores quedan confundidas solo con interacciones de tres o más factores.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+Se requiere una palabra mínima de longitud 5 en la relación de definición, por ejemplo $I=ABCDE$ para $k=5$, $p=1$ (media fracción de $2^5$, 16 corridas).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+Resolución V exige más corridas que Resolución III o IV para el mismo número de factores, pero permite estimar limpiamente todas las interacciones de dos factores.
+</div>
+
+## Comparación: Resolución III vs. Resolución V para 5 factores
+
+<div style="font-size:23px; text-align:justify; line-height:1.3; margin-bottom:8px;">
+Para los mismos 5 factores agronómicos del ensayo de papa, se comparan dos posibles diseños fraccionados:
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;"></th><th style="padding:8px;">Resolución III</th><th style="padding:8px;">Resolución V</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Diseño</td><td style="padding:8px;">$2^{5-2}_{III}$</td><td style="padding:8px;">$2^{5-1}_{V}$</td></tr>
+<tr><td style="padding:8px;">Generador(es)</td><td style="padding:8px;">$D=AB$, $E=AC$</td><td style="padding:8px;">$E=ABCD$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Corridas</td><td style="padding:8px;">8</td><td style="padding:8px;">16</td></tr>
+<tr><td style="padding:8px;">Efectos principales</td><td style="padding:8px;">Confundidos con interacciones de 2 factores</td><td style="padding:8px;">Libres de confusión</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Interacciones de 2 factores</td><td style="padding:8px;">No estimables limpiamente</td><td style="padding:8px;">Libres de confusión entre ellas</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+Duplicar el número de corridas (8 a 16) permite pasar de un screening "a ciegas" sobre interacciones a un diseño donde todas las interacciones de dos factores se estiman sin ambigüedad.
+</div>
+
+## Costo vs. información: la decisión práctica
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+La elección entre resoluciones es, en esencia, una decisión de <strong>costo-beneficio</strong> agronómico:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Pocas corridas, baja resolución</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Ideal cuando hay <strong>muchos</strong> factores candidatos (8 o más) y el objetivo es descartar rápidamente los irrelevantes.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Más corridas, alta resolución</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Apropiado cuando ya se redujo la lista a pocos factores (4 a 6) y se sospecha que las interacciones son importantes.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+En la práctica agronómica colombiana, suele usarse una estrategia secuencial: Resolución III para el primer ciclo de screening, seguida de un diseño de mayor resolución (o el factorial completo) en el ciclo siguiente con los factores sobrevivientes.
+</div>
+
+## Resumen: tabla comparativa de fracciones
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fracción</th><th style="padding:8px;">Notación</th><th style="padding:8px;">Generadores</th><th style="padding:8px;">Corridas ($k=5$)</th><th style="padding:8px;">Resolución típica</th><th style="padding:8px;">Qué se estima limpiamente</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Completo</td><td style="padding:8px;">$2^5$</td><td style="padding:8px;">Ninguno</td><td style="padding:8px;">32</td><td style="padding:8px;">$\infty$</td><td style="padding:8px;">Todos los efectos</td>
+</tr>
+<tr>
+<td style="padding:8px;">Media fracción</td><td style="padding:8px;">$2^{5-1}$</td><td style="padding:8px;">1</td><td style="padding:8px;">16</td><td style="padding:8px;">V</td><td style="padding:8px;">Principales e interacciones de 2 factores</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Cuarta fracción</td><td style="padding:8px;">$2^{5-2}$</td><td style="padding:8px;">2</td><td style="padding:8px;">8</td><td style="padding:8px;">III</td><td style="padding:8px;">Solo efectos principales (con riesgo de confusión)</td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+A medida que se fracciona más el diseño ($p$ mayor), se ahorran corridas pero se sacrifica resolución: la regla general es Resolución $=k-p+1$ cuando se eligen generadores óptimos de longitud mínima $k-p+1$.
+</div>
+
+## Resumen: qué efectos se pueden estimar
+
+<table style="width:100%; font-size:22px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Resolución</th><th style="padding:8px;">Efectos principales</th><th style="padding:8px;">Interacciones de 2 factores</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">III</td><td style="padding:8px;">Confundidos con interacciones de 2 factores</td><td style="padding:8px;">No estimables limpiamente</td>
+</tr>
+<tr>
+<td style="padding:8px;">IV</td><td style="padding:8px;">Libres de confusión</td><td style="padding:8px;">Confundidas entre sí</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">V</td><td style="padding:8px;">Libres de confusión</td><td style="padding:8px;">Libres de confusión</td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Esta tabla resume el criterio práctico para elegir el diseño fraccionado adecuado al objetivo del experimento agronómico.
+</div>
+
+## Errores comunes: resolución y diseños fraccionados
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: significancia no equivale a importancia</div>
-  <div class="block-body">
-  <p>Con muestras grandes, diferencias triviales pueden ser estadísticamente significativas. Siempre reporte el tamaño del efecto junto al valor-p.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Usar un diseño de Resolución III y luego interpretar las interacciones de dos factores como si estuvieran limpiamente estimadas.
+- Elegir generadores de bajo orden (ej. $D=AB$) sin verificar la resolución resultante.
+- Olvidar reportar la relación de definición generalizada al comunicar los resultados del experimento.
+- Confundir "menos corridas" con "menos información útil": con buena elección de generadores, el screening de Resolución III sigue siendo muy valioso para descartar factores irrelevantes.
+</div>
 </div>
 
-```{r}
-#| echo: true
-# Diferencia de 0.02 t/ha con n = 10000: significativa pero trivial
-mu0 <- 4.50; sigma <- 0.8; xbar <- 4.52
-for (n in c(30, 100, 1000, 10000)) {
-  Z <- (xbar - mu0) / (sigma/sqrt(n))
-  vp <- 2 * pnorm(abs(Z), lower.tail = FALSE)
-  cat(sprintf("n = %5d: Z = %.3f, valor-p = %.4f\n", n, Z, vp))
-}
-```
+## Taller en Clase {.center .middle}
 
-## Errores comunes en pruebas de hipótesis
+## Instrucciones
 
-<div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores conceptuales frecuentes</div>
-  <div class="block-body">
-  <p>Las pruebas de hipótesis son el área de la estadística con más malentendidos en la práctica científica.</p>
-  </div>
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+Trabaje en grupos de 2 a 3 estudiantes. Para cada ejercicio: identifique el diseño fraccionado adecuado ($2^{k-p}$), proponga el o los generadores, escriba la relación de definición (generalizada si aplica), determine la resolución del diseño y liste la estructura de alias de los efectos principales.
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-<strong>«$p > 0.05$ demuestra que $H_0$ es verdadera»:</strong> incorrecto. Solo significa que no hay evidencia suficiente para rechazarla con esos datos.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-<strong>«$p = 0.049$ es importante, $p = 0.051$ no»:</strong> el umbral $\alpha = 0.05$ es una convención, no una frontera absoluta. Reporte el valor-p exacto y el tamaño del efecto.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-<strong>Plantear $H_1$ después de ver los datos:</strong> llamado «HARKing» (Hypothesizing After Results are Known). Invalida la prueba.
-</li>
-</ul>
-
-## Taller en clase {.center .middle}
-
-## Taller 1: plantear hipótesis
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Para cada situación, plantee $H_0$ y $H_1$, y justifique si la prueba debe ser bilateral o unilateral:</p>
-  <ol style="font-size: 24px;">
-  <li>Un laboratorio asegura que su nuevo inóculo aumenta la fijación de nitrógeno en leguminosas por encima del promedio histórico de 12 mg/g.</li>
-  <li>Se quiere verificar si el peso promedio de truchas en una piscicultora del Huila difiere de las 350 g recomendadas para comercialización.</li>
-  <li>Un estudio evalúa si la tasa de preñez de bovinos tratados con progesterona es diferente (sin dirección esperada) a la del grupo control.</li>
-  </ol>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:center;">
+Tiempo sugerido: 25 minutos. Cada grupo presentará la solución de un ejercicio asignado.
 </div>
 
-## Taller 1: solución
+## Ejercicio 1
 
-<ul>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
-<strong>Caso 1:</strong> $H_0: \mu \leq 12$ vs $H_1: \mu > 12$. Unilateral derecha: se afirma un aumento.
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-<strong>Caso 2:</strong> $H_0: \mu = 350$ vs $H_1: \mu \neq 350$. Bilateral: se quiere detectar cualquier diferencia sin dirección específica.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-<strong>Caso 3:</strong> $H_0: p_{trat} = p_{ctrl}$ vs $H_1: p_{trat} \neq p_{ctrl}$. Bilateral: sin dirección esperada.
-</li>
-</ul>
-
-## Taller 2: valor-p y decisión
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En un ensayo con 36 parcelas de arroz, se obtuvo $\bar{x} = 5.1$ t/ha con $\sigma = 0.9$ t/ha (conocida). La hipótesis es $H_0: \mu = 4.8$ vs $H_1: \mu \neq 4.8$ con $\alpha = 0.05$. Calcule el estadístico $Z$, el valor-p y concluya.</p>
-  </div>
+<div style="font-size:27px; text-align:justify; line-height:1.4;">
+Un caficultor del Huila desea evaluar en un solo ciclo de cosecha 4 prácticas: sombrío (con/sin), tipo de poda, fertilización foliar (sí/no) y densidad de siembra. Decide usar una media fracción $2^{4-1}$ con generador $D=ABC$.
 </div>
 
-## Taller 2: solución
-
-```{r}
-#| echo: true
-mu0 <- 4.8; sigma <- 0.9; n <- 36; xbar <- 5.1
-
-Z <- (xbar - mu0) / (sigma / sqrt(n))
-vp <- 2 * pnorm(abs(Z), lower.tail = FALSE)
-z_crit <- qnorm(0.975)
-
-cat("Z =", round(Z, 4), "\n")
-cat("Valor crítico z_0.025 =", round(z_crit, 4), "\n")
-cat("Valor-p =", round(vp, 4), "\n")
-cat("Decisión: ", ifelse(vp < 0.05, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-cat("Conclusión: hay evidencia suficiente de que el rendimiento",
-    "promedio difiere de 4.8 t/ha.\n")
-```
-
-## Taller 3: errores tipo I y tipo II
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En una prueba diagnóstica de brucelosis en bovinos: $H_0$ = «animal sano», $H_1$ = «animal enfermo». (a) ¿Qué representa el error tipo I? (b) ¿El error tipo II? (c) ¿Cuál error es más grave desde la perspectiva de salud pública? (d) ¿Cómo afecta reducir $\alpha$ a 0.01?</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:22px; text-align:justify;">
+a) Escriba la relación de definición y la estructura completa de alias.<br>
+b) Determine la resolución del diseño.<br>
+c) Construya la tabla de signos de las 8 corridas y asigne los nombres de tratamiento (notación con minúsculas).
 </div>
 
-## Taller 3: solución
+## Ejercicio 2
 
-<ul>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
-<strong>(a) Error tipo I:</strong> declarar enfermo a un animal sano. Consecuencia: sacrificio innecesario, pérdida económica para el productor.
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-<strong>(b) Error tipo II:</strong> declarar sano a un animal enfermo. Consecuencia: el animal circula en la cadena productiva, riesgo de contagio al rebaño y potencial zoonosis.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-<strong>(c)</strong> El error tipo II es más grave en salud pública. Se prefiere una prueba más sensible (mayor $\alpha$, menor $\beta$).
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
-<strong>(d)</strong> Reducir $\alpha$ a 0.01 aumenta la región de no rechazo, incrementando $\beta$: más animales enfermos pasarían como sanos.
-</li>
-</ul>
-
-## Resumen: conceptos fundamentales
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 26px;">Elementos clave</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">$H_0$: lo que se quiere refutar.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">$H_1$: lo que se quiere demostrar.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">$\alpha$ = P(error tipo I) = nivel de significancia.</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px;">valor-p: evidencia contra $H_0$ dado los datos.</li>
-</ul>
+<div style="font-size:27px; text-align:justify; line-height:1.4;">
+Para el ensayo de café del Ejercicio 1, se obtuvieron los siguientes rendimientos (sacos/ha), en el mismo orden de corridas que la tabla de signos calculada: 28.4, 30.1, 29.8, 33.2, 31.5, 30.9, 32.6, 35.1.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 style="color:#1a3a6b; font-size: 26px;">Reglas de decisión</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;">valor-p $< \alpha$: rechazar $H_0$.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;">valor-p $\geq \alpha$: no rechazar $H_0$.</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 23px;">Reportar siempre tamaño del efecto.</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 23px;">Significancia $\neq$ importancia práctica.</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:justify;">
+a) Calcule los 7 efectos confundidos usando el método de contrastes.<br>
+b) Calcule la suma de cuadrados de cada efecto.<br>
+c) Identifique cuáles factores parecen tener un efecto importante sobre el rendimiento.
 </div>
 
+## Ejercicio 3
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Una empresa de flores de exportación en Cundinamarca quiere evaluar 6 factores de cultivo de rosas (temperatura de invernadero, humedad relativa, tipo de sustrato, fertirriego, fotoperiodo artificial y variedad) usando un diseño de Resolución III con el menor número de corridas posible.
 </div>
 
-## Próxima clase
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 24: Errores tipo I y II, Valor-p.</strong> Profundizaremos en la relación entre errores, potencia y tamaño de muestra, y revisaremos el debate actual sobre el uso del valor-p en ciencias biológicas y agrícolas.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:22px; text-align:justify;">
+a) ¿Cuántas corridas mínimas se necesitan para un diseño $2^{6-p}$ de Resolución III?<br>
+b) Proponga generadores adecuados y escriba la relación de definición generalizada.<br>
+c) Justifique por qué este diseño es apropiado para una primera etapa de screening con tantos factores.
 </div>
 
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Comenzaremos también a aplicar el marco de las pruebas a situaciones concretas: prueba Z y prueba t para la media.
-</li>
-</ul>
+## Ejercicio 4
+
+<div style="font-size:27px; text-align:justify; line-height:1.4;">
+Un ingenio en el Valle del Cauca evalúa el efecto de 5 factores sobre el rendimiento de caña de azúcar (toneladas de caña por hectárea): variedad, dosis de nitrógeno, riego, control de malezas y densidad de siembra. Se compara un diseño $2^{5-2}_{III}$ (8 corridas) contra un diseño $2^{5-1}_{V}$ (16 corridas).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:justify;">
+a) Proponga generadores válidos para cada diseño y verifique su resolución.<br>
+b) Explique qué información adicional se gana al duplicar las corridas (de 8 a 16).<br>
+c) Si el ingenio sospecha una interacción fuerte entre riego y dosis de nitrógeno, ¿cuál diseño recomendaría y por qué?
+</div>
+
+## Ejercicio 5
+
+<div style="font-size:27px; text-align:justify; line-height:1.4;">
+Un investigador de la Universidad Nacional, sede Palmira, diseña un experimento de screening con 4 factores en maíz (variedad, densidad, fertilización N y control fitosanitario) y elige, por error, el generador $D=AB$ para una media fracción $2^{4-1}$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:10px; font-size:22px; text-align:justify;">
+a) Escriba la relación de definición y la estructura de alias resultante.<br>
+b) Determine la resolución de este diseño y compárela con la del generador $D=ABC$ usado en el ejemplo del arroz.<br>
+c) Explique por qué $D=AB$ es una mala elección de generador y qué riesgo práctico implica para la interpretación agronómica de los resultados.
+</div>

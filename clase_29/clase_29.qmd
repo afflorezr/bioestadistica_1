@@ -1,11 +1,12 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
   revealjs:
+    embed-resources: true
     logo: images/logo_unal_3.png
     slide-number: true
     title-slide: false
@@ -37,368 +38,1117 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 29 {.center .middle}
 
 ## Contenido
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 28px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Inferencia en regresión</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 32px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Transformaciones y GLM</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Distribución de $\hat{\beta}_0$ y $\hat{\beta}_1$.</li>
-<li class="fragment fade-in" data-fragment-index="3">Pruebas de hipótesis para los coeficientes.</li>
-<li class="fragment fade-in" data-fragment-index="4">Intervalos de confianza para $\beta_0$ y $\beta_1$.</li>
-<li class="fragment fade-in" data-fragment-index="5">Tabla ANOVA de regresión.</li>
+<li class="fragment fade-in" data-fragment-index="2">Respuestas no normales: motivación.</li>
+<li class="fragment fade-in" data-fragment-index="3">Selección de una transformación: Box-Cox.</li>
+<li class="fragment fade-in" data-fragment-index="4">Modelo lineal generalizado (GLM) como alternativa.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Evaluación del modelo</h3>
+<h3 class="fragment fade-in" data-fragment-index="5" style="font-size: 32px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Datos no balanceados</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Coeficiente de determinación $R^2$.</li>
-<li class="fragment fade-in" data-fragment-index="8">Diagnóstico de residuos.</li>
-<li class="fragment fade-in" data-fragment-index="9">Bandas de confianza y predicción.</li>
-<li class="fragment fade-in" data-fragment-index="10">Ejemplos y taller.</li>
+<li class="fragment fade-in" data-fragment-index="6">Motivación y datos proporcionales.</li>
+<li class="fragment fade-in" data-fragment-index="7">Métodos aproximados.</li>
+<li class="fragment fade-in" data-fragment-index="8">El método exacto: suma de cuadrados tipo III.</li>
 </ul>
 </div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="9" style="font-size: 32px; margin-bottom: 14px; color: #79260d;">Parte III: ANCOVA</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="10">Descripción del procedimiento y modelo.</li>
+<li class="fragment fade-in" data-fragment-index="11">Solución por computador y medias ajustadas.</li>
+<li class="fragment fade-in" data-fragment-index="12">Regresión general y factoriales con covariables.</li>
+</ul>
 </div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="13" style="font-size: 32px; margin-bottom: 14px; color: #5b21b6;">Parte IV: Medidas repetidas</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="14">Motivación: mediciones no independientes.</li>
+<li class="fragment fade-in" data-fragment-index="15">Estructura entre/dentro de sujetos.</li>
+<li class="fragment fade-in" data-fragment-index="16">Esfericidad y taller en clase.</li>
+</ul>
+</div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Estimación de Parámetros y Evaluación del Modelo</p>
-<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Inferencia, bondad de ajuste y diagnósticos en regresión lineal</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Otros Temas de Diseño y Análisis de Experimentos
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Transformaciones, datos no balanceados, análisis de covarianza y medidas repetidas: herramientas para situaciones que el ANOVA clásico no resuelve directamente.
+</p>
+
 </div>
 
-## Distribución de los estimadores MCO
+## Motivación: cuando la respuesta no es normal
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+El ANOVA de efectos fijos asume residuos normales con varianza constante. Sin embargo, muchas variables agrícolas <strong>violan estos supuestos de forma natural</strong>:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center; line-height:1.4;">
+<strong>Conteos</strong><br>Insectos por planta, plantas enfermas por parcela.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center; line-height:1.4;">
+<strong>Proporciones</strong><br>Porcentaje de frutos con daño, germinación.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:21px; text-align:center; line-height:1.4;">
+<strong>Asimetrías</strong><br>Tiempos hasta floración, cargas de plagas.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:21px; text-align:center;">
+En estos casos, la varianza suele depender de la media: a mayor conteo promedio, mayor variabilidad. El ANOVA estándar pierde validez.
+</div>
+
+## Dos caminos posibles
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Existen dos estrategias clásicas para abordar respuestas que no cumplen normalidad u homogeneidad de varianza:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Transformar la respuesta</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Aplicar una función (raíz, logaritmo, Box-Cox) que estabilice la varianza y aproxime la normalidad, y luego usar el ANOVA habitual.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Modelar directamente</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Usar un modelo lineal generalizado (GLM) con la distribución apropiada (Poisson, binomial), sin transformar la escala original.
+</div>
+</div>
+
+</div>
+
+## El método de Box-Cox: idea general
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+La <strong>familia de transformaciones potencia de Box-Cox</strong> busca, dentro de una familia parametrizada por $\lambda$, la transformación que hace a los datos más cercanos a la normalidad con varianza homogénea.
+</div>
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Teorema: distribución de $\hat{\beta}_0$ y $\hat{\beta}_1$</div>
-  <div class="block-body">
-  <p>Bajo los supuestos LINE con $\varepsilon_i \sim N(0, \sigma^2)$:</p>
-  $$\hat{\beta}_1 \sim N\!\left(\beta_1,\; \frac{\sigma^2}{S_{XX}}\right) \qquad \hat{\beta}_0 \sim N\!\left(\beta_0,\; \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{XX}}\right)\right)$$
-  <p>con $S_{XX} = \sum(X_i - \bar{X})^2$ y $\sigma^2$ estimado por $\hat{\sigma}^2 = SCE/(n-2)$.</p>
-  </div>
+<div class="block-title" style="font-size:25px;">Familia de Box-Cox</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+$$
+y^{(\lambda)} =
+\begin{cases}
+\dfrac{y^{\lambda}-1}{\lambda} & \lambda \neq 0 \\[6pt]
+\ln(y) & \lambda = 0
+\end{cases}
+$$
+</div>
 </div>
 
-## Prueba de hipótesis sobre $\beta_1$
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba t: $H_0: \beta_1 = 0$</div>
-  <div class="block-body">
-  <p>La hipótesis $H_0: \beta_1 = 0$ afirma que no existe relación lineal entre $X$ e $Y$. El estadístico de prueba es:</p>
-  $$t = \frac{\hat{\beta}_1}{EE(\hat{\beta}_1)} = \frac{\hat{\beta}_1}{\hat{\sigma}/\sqrt{S_{XX}}} \sim t_{n-2} \quad \text{bajo } H_0$$
-  </div>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+$\lambda$ se estima por <strong>máxima verosimilitud</strong>: se elige el valor que maximiza la log-verosimilitud del modelo ANOVA ajustado sobre $y^{(\lambda)}$.
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Región de rechazo bilateral: $|t| > t_{\alpha/2,\, n-2}$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-En R, esta prueba aparece automáticamente en <code>summary(lm(...))</code>.
-</li>
-</ul>
+## Valores típicos de $\lambda$
 
-## Ejemplo: inferencia en regresión dosis-rendimiento
+<table style="width:100%; font-size:22px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">$\lambda$</th><th style="padding:8px;">Transformación</th><th style="padding:8px;">Uso típico</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$1$</td><td style="padding:8px;">Sin transformar</td><td style="padding:8px;">Datos ya aproximadamente normales</td></tr>
+<tr><td style="padding:8px;">$0.5$</td><td style="padding:8px;">Raíz cuadrada $\sqrt{y}$</td><td style="padding:8px;">Conteos (Poisson)</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$0$</td><td style="padding:8px;">Logaritmo $\ln(y)$</td><td style="padding:8px;">Varianza proporcional a la media al cuadrado</td></tr>
+<tr><td style="padding:8px;">$-1$</td><td style="padding:8px;">Inverso $1/y$</td><td style="padding:8px;">Tiempos, tasas</td></tr>
+</table>
 
-```{r}
-#| echo: true
-set.seed(29)
-dosis <- seq(20, 120, by = 10)
-rend  <- 2.5 + 0.04 * dosis + rnorm(length(dosis), 0, 0.4)
-modelo <- lm(rend ~ dosis)
-
-# Tabla de coeficientes con pruebas t
-coefs <- summary(modelo)$coefficients
-print(round(coefs, 6))
-
-cat("\nIC 95% para β₀ y β₁:\n")
-print(round(confint(modelo, level = 0.95), 6))
-```
-
-## Interpretación de la tabla de coeficientes
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">$\hat{\beta}_1$</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-Si $p < 0.05$: la pendiente es significativamente distinta de 0. Hay evidencia de relación lineal.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-El IC para $\beta_1$ que no contiene al 0 confirma la relación.
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+En la práctica se redondea $\hat\lambda$ al valor "interpretable" más cercano dentro de su intervalo de confianza (ej. 0.5 en vez de 0.58).
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">$\hat{\beta}_0$</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
-La prueba $H_0: \beta_0 = 0$ raramente es de interés biológico.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
-Se interpreta solo si $X = 0$ es un valor observado o teóricamente relevante.
-</li>
-</ul>
-</div>
-
-</div>
-
-## Descomposición de la variabilidad total
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Descomposición SCT = SCR + SCE</div>
-  <div class="block-body">
-  $$\underbrace{\sum(Y_i - \bar{Y})^2}_{SCT} = \underbrace{\sum(\hat{Y}_i - \bar{Y})^2}_{SCR} + \underbrace{\sum(Y_i - \hat{Y}_i)^2}_{SCE}$$
-  <p>SCT: variabilidad total. SCR: variabilidad explicada por la regresión. SCE: variabilidad residual (no explicada).</p>
-  </div>
-</div>
-
-## Tabla ANOVA de regresión
-
-<div class="fragment fade-in" data-fragment-index="1">
-
-| Fuente | SC | GL | CM | F |
-|---|---|---|---|---|
-| Regresión | SCR | 1 | SCR/1 | SCR/CME |
-| Error | SCE | $n-2$ | SCE/$(n-2)$ | |
-| Total | SCT | $n-1$ | | |
-
-</div>
-
-```{r}
-#| echo: true
-anova(modelo)
-```
-
-## Coeficiente de determinación $R^2$
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: $R^2$</div>
-  <div class="block-body">
-  $$R^2 = \frac{SCR}{SCT} = 1 - \frac{SCE}{SCT}$$
-  <p>$R^2 \in [0, 1]$: proporción de la variabilidad total de $Y$ explicada por el modelo lineal.</p>
-  </div>
-</div>
-
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-$R^2 = 1$: ajuste perfecto (todos los puntos en la recta).
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-$R^2 = 0$: el modelo no explica ninguna variación de $Y$.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-En regresión simple: $R^2 = r^2$ (cuadrado del coeficiente de correlación de Pearson).
-</li>
-</ul>
-
-```{r}
-#| echo: true
-cat("R² =", round(summary(modelo)$r.squared, 4), "\n")
-cat("R² ajustado =", round(summary(modelo)$adj.r.squared, 4), "\n")
-cat("r (Pearson) =", round(cor(dosis, rend), 4),
-    "  r² =", round(cor(dosis, rend)^2, 4), "\n")
-```
-
-## Diagnóstico completo de residuos
-
-```{r}
-#| echo: true
-#| fig-height: 4
-par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
-plot(modelo)
-```
-
-## Bandas de confianza y de predicción
-
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2)
-x_nuevo <- data.frame(dosis = seq(20, 120, length.out = 100))
-ic_media <- predict(modelo, x_nuevo, interval = "confidence", level = 0.95)
-ip_obs   <- predict(modelo, x_nuevo, interval = "prediction",  level = 0.95)
-
-df_pred <- cbind(x_nuevo, as.data.frame(ic_media))
-df_pred$lwr_p <- ip_obs[,2]; df_pred$upr_p <- ip_obs[,3]
-
-ggplot(df_pred, aes(dosis)) +
-  geom_ribbon(aes(ymin = lwr_p, ymax = upr_p), fill = "#fad8d8", alpha = 0.5) +
-  geom_ribbon(aes(ymin = lwr, ymax = upr), fill = "#dce9f7", alpha = 0.7) +
-  geom_line(aes(y = fit), color = "#c0392b", linewidth = 1.2) +
-  geom_point(data = data.frame(dosis, rend), aes(y = rend),
-             color = "#1b4d2e", size = 2.5) +
-  labs(x = "Dosis N (kg/ha)", y = "Rendimiento (t/ha)",
-       title = "Bandas de confianza (azul) y predicción (rojo)") +
-  theme_minimal(base_size = 13)
-```
-
-## Ejemplo integral: peso vivo y consumo de alimento
+## Ejemplo agrícola: plagas en algodón
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: bovinos, Llanos Orientales</div>
-  <div class="block-body">
-  <p>En 18 novillas Brahman de los Llanos Orientales se midió el peso vivo (kg) y el consumo diario de materia seca (kg/día). Ajuste el modelo de regresión, evalúe $R^2$, pruebe $H_0: \beta_1 = 0$ e interprete los resultados.</p>
-  </div>
+<div class="block-title">Ejemplo: picudo del algodón, Cesar y Tolima</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Un ingeniero agrónomo evalúa 4 dosis de un insecticida biológico (Control, Baja, Media, Alta) sobre el conteo de picudos del algodón por planta. Se muestrean 8 plantas por dosis ($N=32$). La respuesta es un <strong>conteo</strong>, candidato natural a violar normalidad y homogeneidad de varianza.
+</div>
 </div>
 
-```{r}
-#| echo: true
-set.seed(29)
-peso    <- runif(18, 250, 450)
-consumo <- 1.8 + 0.012 * peso + rnorm(18, 0, 0.5)
-mod2    <- lm(consumo ~ peso)
-sm2     <- summary(mod2)
+<table style="width:100%; font-size:20px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Dosis</th><th>$n_i$</th><th>$\bar y_i$ (conteo)</th><th>$s_i$</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Control</td><td>8</td><td>12.38</td><td>3.07</td></tr>
+<tr><td style="padding:6px;">Dosis baja</td><td>8</td><td>9.50</td><td>2.78</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Dosis media</td><td>8</td><td>5.75</td><td>3.45</td></tr>
+<tr><td style="padding:6px;">Dosis alta</td><td>8</td><td>3.38</td><td>1.69</td></tr>
+</table>
 
-cat("β̂₁ =", round(coef(mod2)[2], 6),
-    "  p-valor =", round(sm2$coefficients[2,4], 4), "\n")
-cat("R² =", round(sm2$r.squared, 4), "\n")
-cat("IC 95% para β₁: [",
-    round(confint(mod2)[2,1], 6), ",",
-    round(confint(mod2)[2,2], 6), "]\n")
+## ANOVA sobre el conteo original
+
+<div style="font-size:25px; text-align:justify; line-height:1.4; margin-bottom:8px;">
+Al ajustar el ANOVA directamente sobre el conteo de picudos, se obtiene:
+</div>
+
+<table style="width:100%; font-size:22px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th><th style="padding:8px;">SC</th><th style="padding:8px;">gl</th><th style="padding:8px;">CM</th><th style="padding:8px;">F</th><th style="padding:8px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Dosis</td><td style="padding:8px;">381.0</td><td style="padding:8px;">3</td><td style="padding:8px;">126.9</td><td style="padding:8px;" rowspan="2">17.50</td><td style="padding:8px;" rowspan="2">$1.4\times10^{-6}$</td>
+</tr>
+<tr><td style="padding:8px;">Error</td><td style="padding:8px;">203.4</td><td style="padding:8px;">28</td><td style="padding:8px;">7.26</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:21px; text-align:center;">
+Shapiro-Wilk en residuos: $W=0.983$, valor-p$=0.877$. Bartlett: $K^2=3.24$, valor-p$=0.356$. En este caso particular ambos supuestos parecen sostenerse, pero la varianza muestral decrece junto con la media ($s_i$ tiende a ser mayor donde $\bar y_i$ es mayor), un patrón típico de datos de conteo que justifica revisar una transformación.
+</div>
+
+## Gráfico de verosimilitud de Box-Cox
+
+```{r}
+#| label: boxcox-plot
+#| fig-height: 4
+suppressMessages(library(MASS))
+set.seed(2901)
+dosis <- factor(rep(c("Control","Dosis_baja","Dosis_media","Dosis_alta"), each=8),
+                levels=c("Control","Dosis_baja","Dosis_media","Dosis_alta"))
+lambda_true <- c(14, 9, 5, 2.5)
+conteo <- unlist(lapply(lambda_true, function(m) rpois(8, m)))
+conteo[conteo==0] <- 1
+datos1 <- data.frame(dosis, conteo)
+boxcox(conteo ~ dosis, data = datos1, lambda = seq(-2, 2, 0.01),
+       xlab = expression(lambda), main = "Log-verosimilitud de Box-Cox")
 ```
 
-## Errores comunes en la evaluación del modelo
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:6px; font-size:21px; text-align:center;">
+El máximo de la curva se alcanza en $\hat\lambda = 0.58$, con intervalo de confianza al 95% que incluye a $\lambda=0.5$ (raíz cuadrada): se elige $\lambda=0.5$ por su fácil interpretación.
+</div>
+
+## Re-análisis con la variable transformada
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Se aplica $y^{(0.5)}=\sqrt{conteo}$ y se repite el ANOVA:
+</div>
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:6px;">Dosis</td><td>55.2</td><td>3</td><td>18.40</td><td rowspan="2">17.50</td><td rowspan="2">$1.3\times10^{-6}$</td>
+</tr>
+<tr><td style="padding:6px;">Error</td><td>29.4</td><td>28</td><td>1.05</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+Shapiro-Wilk transformado: $W=0.975$, valor-p$=0.643$. Bartlett transformado: $K^2=1.47$, valor-p$=0.690$. Ambos valores-p aumentan respecto al análisis sin transformar, evidenciando un mejor ajuste a los supuestos.
+</div>
+
+## Comparación de conclusiones antes/después
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">Sin transformar</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+$F=17.50$, valor-p$=1.4\times10^{-6}$.<br>Shapiro $0.877$, Bartlett $0.356$.<br>Se rechaza $H_0$.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Transformado ($\sqrt{y}$)</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+$F=17.50$, valor-p$=1.3\times10^{-6}$.<br>Shapiro $0.643$, Bartlett $0.690$.<br>Se rechaza $H_0$.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:21px; text-align:center;">
+La conclusión sustantiva no cambia (la dosis afecta el conteo de plagas), pero la transformación da mayor confianza en la validez del valor-p al reforzar el cumplimiento de los supuestos.
+</div>
+
+## El modelo lineal generalizado (GLM): motivación
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Transformar la respuesta tiene una desventaja: las conclusiones quedan en la escala transformada (ej. "raíz del conteo"), que es difícil de interpretar agronómicamente. El <strong>GLM</strong> evita este problema modelando <strong>directamente</strong> la distribución apropiada de la respuesta.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">GLM Poisson para conteos</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$
+Y_{ij} \sim \text{Poisson}(\mu_{ij}) \qquad \ln(\mu_{ij}) = \mu + \tau_i
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+La función de enlace logarítmica garantiza $\mu_{ij}>0$, y la varianza se modela como $\text{Var}(Y_{ij})=\mu_{ij}$, igual que en la distribución Poisson real.
+</div>
+
+## GLM Poisson aplicado al ejemplo de plagas
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:8px;">
+Se ajusta el mismo conjunto de datos con un GLM Poisson y enlace logarítmico:
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Coeficiente</th><th>Estimación ($\ln$)</th><th>$\exp(\cdot)$: razón vs. Control</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Intercepto (Control)</td><td>2.516</td><td>$\mu_{Control}=12.38$</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">Dosis baja</td><td>$-0.264$</td><td>0.768</td><td>0.083</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Dosis media</td><td>$-0.766$</td><td>0.465</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">Dosis alta</td><td>$-1.299$</td><td>0.273</td><td>$<0.001$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+Prueba de razón de verosimilitudes (deviance) para el efecto de dosis: $\chi^2=51.26$, $gl=3$, valor-p$=4.3\times10^{-11}$.
+</div>
+
+## Comparación: transformación versus GLM
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Aspecto</th><th style="padding:8px;">Transformación Box-Cox</th><th style="padding:8px;">GLM Poisson</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Escala de interpretación</td><td style="padding:8px;">Transformada ($\sqrt{y}$)</td><td style="padding:8px;">Original (conteo esperado)</td></tr>
+<tr><td style="padding:8px;">Varianza modelada</td><td style="padding:8px;">Aproximada vía transformación</td><td style="padding:8px;">Exacta según la distribución</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Conclusión sobre dosis</td><td style="padding:8px;">Rechaza $H_0$ ($p\approx10^{-6}$)</td><td style="padding:8px;">Rechaza $H_0$ ($p\approx10^{-11}$)</td></tr>
+<tr><td style="padding:8px;">Facilidad de uso</td><td style="padding:8px;">Requiere reanálisis ANOVA</td><td style="padding:8px;">Requiere software con GLM</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Ambos enfoques llegan a la misma conclusión sustantiva: las dosis altas reducen significativamente el conteo de plagas. El GLM es preferible cuando se conoce bien la distribución generadora de los datos.
+</div>
+
+## Errores comunes: transformaciones y GLM
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes</div>
-  <div class="block-body">
-  <p>Un $R^2$ alto no garantiza que el modelo sea adecuado.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Elegir $\lambda$ "a ojo" sin calcular el intervalo de verosimilitud de Box-Cox.
+- Interpretar las medias de la variable transformada como si fueran las medias originales (hay que "destransformar" con cuidado, pues $E[g(Y)] \neq g(E[Y])$).
+- Aplicar Box-Cox a datos con ceros o negativos sin un desplazamiento previo.
+- Usar GLM Poisson sin verificar sobredispersión (varianza mucho mayor que la media).
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>$R^2$ alto con violación de supuestos:</strong> siempre verifique la gráfica de residuos. Un $R^2 = 0.95$ con patrón no aleatorio en los residuos indica que el modelo es incorrecto.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Usar el IC de la media para predecir observaciones individuales:</strong> el IC para $E(Y|X)$ es más estrecho que el intervalo de predicción (IP). Para predecir una nueva observación, use <code>interval = "prediction"</code>.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Forzar el intercepto a cero sin justificación:</strong> solo elimine el intercepto si hay razones biológicas o físicas sólidas para que $Y = 0$ cuando $X = 0$.
-</li>
-</ul>
+## {.center .middle}
 
-## Taller en clase {.center .middle}
+<div style="text-align: center; margin-top: 40px;">
 
-## Taller 1: inferencia sobre la pendiente
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Datos no balanceados en diseños factoriales
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando se pierden parcelas, animales o plantas y el diseño factorial deja de ser balanceado?
+</p>
+
+</div>
+
+## Motivación: pérdida de unidades experimentales
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En un diseño factorial balanceado, todas las combinaciones de niveles de los factores tienen el <strong>mismo número</strong> de repeticiones $n_{ij}$. En la práctica de campo esto rara vez se mantiene hasta el final del experimento.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center; line-height:1.4;">
+Parcelas perdidas por inundación o granizo.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center; line-height:1.4;">
+Animales que mueren o se retiran del ensayo.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:21px; text-align:center; line-height:1.4;">
+Plantas que no germinan o se descartan por daño mecánico.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:21px; text-align:center;">
+Cuando $n_{ij}$ varía entre celdas, las sumas de cuadrados de los factores principales y la interacción dejan de ser ortogonales: el orden en que se ajustan los términos afecta el resultado.
+</div>
+
+## Datos proporcionales: el caso fácil
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Existe un caso particular de desbalance que permite un análisis exacto y sencillo: cuando el número de observaciones por celda es <strong>proporcional</strong> al producto de los totales marginales.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Condición de proporcionalidad</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$
+n_{ij} = \frac{n_{i.}\,n_{.j}}{N}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Ejemplo conceptual: en un ensayo de 2 variedades de papa $\times$ 3 niveles de riego, si se pierden parcelas pero el patrón resultante sigue siendo proporcional a los totales de fila y columna, las sumas de cuadrados de los efectos principales siguen siendo ortogonales entre sí y se calculan con las fórmulas usuales, simplemente reemplazando $n$ por los $n_{ij}$ observados.
+</div>
+
+## Métodos aproximados
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Cuando el desbalance <strong>no</strong> sigue un patrón proporcional, una alternativa histórica son los <strong>métodos aproximados</strong>, que estiman las celdas faltantes o ponderan las sumas de cuadrados de forma heurística.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; font-size:21px; text-align:center; line-height:1.4;">
+<strong>Estimación de valores faltantes:</strong> se "rellena" la celda vacía con un valor que minimiza la suma de cuadrados del error, y se resta un grado de libertad por cada valor estimado.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e; font-size:21px; text-align:center; line-height:1.4;">
+<strong>Ponderación aproximada:</strong> se usan promedios no ponderados de las medias de celda, ignorando que los $n_{ij}$ difieren, lo cual introduce sesgo.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:21px; text-align:center;">
+Ejemplo conceptual: en un ensayo de fertilización de caña con 3 dosis $\times$ 2 variedades, si una combinación pierde 2 de 5 parcelas por una plaga puntual, un método aproximado estimaría el rendimiento faltante a partir de las medias de fila y columna, antes de calcular la tabla ANOVA. Estos métodos son simples pero pueden distorsionar el error tipo I; hoy se prefiere el método exacto.
+</div>
+
+## El método exacto: sumas de cuadrados tipo III
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+El método moderno y exacto consiste en plantear el diseño factorial como un <strong>modelo de regresión general</strong> con variables indicadoras, y calcular la suma de cuadrados de <strong>tipo III</strong>: la contribución de cada efecto controlando por todos los demás efectos del modelo.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Suma de cuadrados tipo III</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$
+SC_{III}(\text{efecto}) = SCE(\text{modelo sin el efecto}) - SCE(\text{modelo completo})
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+A diferencia de la suma de cuadrados tipo I (secuencial), el tipo III no depende del orden en que se listan los factores en el modelo: cada efecto se ajusta "al último", después de los demás.
+</div>
+
+## Ejemplo agrícola: frijol desbalanceado
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En un estudio de nutrición porcina en Antioquia, se relaciona la cantidad de lisina en el alimento (%) con la ganancia diaria de peso (g/día) en 12 cerdos. Con $\hat{\beta}_1 = 185$, $EE(\hat{\beta}_1) = 42$, $n = 12$: (a) Pruebe $H_0: \beta_1 = 0$ con $\alpha = 0.05$. (b) Construya un IC al 95% para $\beta_1$. (c) Interprete.</p>
-  </div>
+<div class="block-title">Ejemplo: variedad $\times$ fertilizante en frijol, Boyacá</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Se evalúan 2 variedades de frijol (Diacol, ICA) y 2 niveles de fertilizante (Bajo, Alto) en un diseño $2\times2$. Por pérdida de parcelas durante el ciclo, el número de repeticiones por combinación quedó desbalanceado. Respuesta: rendimiento (t/ha).
+</div>
 </div>
 
-## Taller 1: solución
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;"></th><th>Fertilizante Bajo</th><th>Fertilizante Alto</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Diacol</td><td>$n=5$, $\bar y=1.78$</td><td>$n=7$, $\bar y=2.35$</td></tr>
+<tr><td style="padding:6px;">ICA</td><td>$n=6$, $\bar y=2.01$</td><td>$n=4$, $\bar y=2.97$</td></tr>
+</table>
 
-```{r}
-#| echo: true
-b1_hat <- 185; ee_b1 <- 42; n <- 12; alpha <- 0.05
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+$N=22$ parcelas en total (no 24, como en un diseño $2\times2$ balanceado con $n=6$). Los $n_{ij}$ no siguen un patrón proporcional: $\frac{12\times11}{22}=6\neq5$.
+</div>
 
-t_obs  <- b1_hat / ee_b1
-t_crit <- qt(1 - alpha/2, df = n - 2)
-vp     <- 2 * pt(abs(t_obs), df = n-2, lower.tail = FALSE)
-ic     <- b1_hat + c(-1,1) * t_crit * ee_b1
+## Tabla ANOVA tipo III: frijol
 
-cat("t observado:", round(t_obs, 4), "\n")
-cat("t crítico (±):", round(t_crit, 4), "\n")
-cat("Valor-p:", round(vp, 4), "\n")
-cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-cat("IC 95% para β₁: [", round(ic[1],2), ",", round(ic[2],2), "] g/día por %\n")
-cat("Interpretación: cada 1% adicional de lisina incrementa la GDP\n",
-    "en promedio entre", round(ic[1],0), "y", round(ic[2],0), "g/día.\n")
-```
+<div style="font-size:23px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Al ajustar el modelo $rend = \mu + variedad + fert + variedad{:}fert + \varepsilon$ y calcular sumas de cuadrados tipo III:
+</div>
 
-## Taller 2: tabla ANOVA y $R^2$
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC (tipo III)</th><th>gl</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Variedad</td><td>0.93</td><td>1</td><td>13.39</td><td>0.0018</td></tr>
+<tr><td style="padding:6px;">Fertilizante</td><td>3.11</td><td>1</td><td>44.61</td><td>$<0.0001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Variedad $\times$ Fertilizante</td><td>0.20</td><td>1</td><td>2.86</td><td>0.108</td></tr>
+<tr><td style="padding:6px;">Error</td><td>1.26</td><td>18</td><td></td><td></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+Si se calculan sumas de cuadrados tipo I cambiando el orden de los factores, las SC de Variedad y Fertilizante cambian (0.42 y 2.99 en un orden, 0.91 y 2.50 en el otro); la SC tipo III es la única invariante al orden.
+</div>
+
+## Conclusión del ejemplo de frijol
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:23px; font-weight:bold; text-align:center; color:#1a3a6b;">Efectos principales</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+Tanto la variedad ($p=0.0018$) como el fertilizante ($p<0.0001$) afectan significativamente el rendimiento.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:23px; font-weight:bold; text-align:center; color:#1b4d2e;">Interacción</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+No es significativa ($p=0.108$): el efecto del fertilizante es similar en ambas variedades.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:20px; text-align:center;">
+Conclusión agronómica: la variedad ICA con fertilización alta presenta el mayor rendimiento promedio (2.97 t/ha); el desbalance en las repeticiones no impidió un análisis válido gracias al método exacto (tipo III).
+</div>
+
+## Errores comunes: datos no balanceados
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Usar sumas de cuadrados tipo I (secuenciales) en datos desbalanceados sin justificar el orden de los factores.
+- Eliminar parcelas adicionales para "forzar" el balance, perdiendo información valiosa.
+- Ignorar que un desbalance severo reduce la potencia para detectar la interacción.
+- Confundir el caso de datos proporcionales (análisis exacto sencillo) con el caso general, que requiere el método de regresión tipo III.
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Análisis de Covarianza (ANCOVA)
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Cómo ajustar la comparación de tratamientos cuando existe una variable continua, no controlable experimentalmente, que afecta la respuesta?
+</p>
+
+</div>
+
+## Descripción del procedimiento: motivación
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En muchos experimentos agrícolas, las unidades experimentales no parten de condiciones idénticas: las plántulas tienen tamaños distintos antes de aplicar el tratamiento, los animales pesan diferente al inicio, los suelos tienen distinta fertilidad basal.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+El <strong>Análisis de Covarianza (ANCOVA)</strong> combina el ANOVA con la regresión: ajusta la respuesta por una variable continua (la <strong>covariable</strong>) medida <strong>antes</strong> del tratamiento, que no se puede controlar experimentalmente pero sí estadísticamente.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Resultado: comparaciones de tratamiento más precisas, con menor varianza del error, al remover la variabilidad explicada por la covariable.
+</div>
+
+## El modelo de ANCOVA
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:26px;">Modelo de Análisis de Covarianza</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+y_{ij} = \mu + \tau_i + \beta\,(x_{ij}-\bar x_{..}) + \varepsilon_{ij}
+$$
+</div>
+</div>
+
+<div style="font-size:23px; line-height:1.4; margin-top:10px;">
+- $y_{ij}$: respuesta del sujeto $j$ en el tratamiento $i$ (ej. altura final).
+- $x_{ij}$: covariable del mismo sujeto, medida antes del tratamiento (ej. altura inicial).
+- $\beta$: pendiente común de regresión entre $y$ y $x$, igual para todos los tratamientos (supuesto de homogeneidad de pendientes).
+- $\tau_i$: efecto del tratamiento $i$, <strong>ya ajustado</strong> por la covariable.
+- $\varepsilon_{ij}\sim N(0,\sigma^2)$ independientes.
+</div>
+
+## Ejemplo agrícola: eucalipto y altura inicial
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Con los datos del taller 1 de la Clase 28 (lámina de riego vs rendimiento de papa), construya la tabla ANOVA de regresión, calcule $R^2$ e interprete el porcentaje de variabilidad explicado.</p>
-  </div>
+<div class="block-title">Ejemplo: plántulas de eucalipto, vivero forestal</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Se comparan 3 tratamientos de fertilización (Testigo, Orgánico, Químico) sobre el crecimiento de plántulas de eucalipto, midiendo la <strong>altura final</strong> (cm) a los 6 meses. Como las plántulas no partían exactamente de la misma altura, se registra la <strong>altura inicial</strong> (cm) como covariable. $n=10$ plántulas por tratamiento, $N=30$.
+</div>
 </div>
 
-## Taller 2: solución
+<table style="width:100%; font-size:20px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Tratamiento</th><th>$\bar x_i$ (altura inicial)</th><th>$\bar y_i$ (altura final, sin ajustar)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Testigo</td><td>34.66</td><td>40.09</td></tr>
+<tr><td style="padding:6px;">Orgánico</td><td>34.16</td><td>54.51</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Químico</td><td>36.73</td><td>64.98</td></tr>
+</table>
+
+## ANOVA simple versus ANCOVA: por qué ajustar
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Si se ignora la covariable y se ajusta un ANOVA simple sobre la altura final:
+</div>
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Tratamiento</td><td>3124</td><td>2</td><td>1562</td><td rowspan="2">46.0</td><td rowspan="2">$2\times10^{-9}$</td></tr>
+<tr><td style="padding:6px;">Error</td><td>917</td><td>27</td><td>34.0</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:10px; font-size:21px; text-align:center;">
+Aunque las alturas iniciales son parecidas entre tratamientos (34.16 a 36.73 cm), parte del error de 917 todavía contiene variabilidad explicable por esas pequeñas diferencias iniciales. El ANCOVA remueve esa fuente de ruido.
+</div>
+
+## Tabla ANCOVA: eucalipto
+
+<div style="font-size:23px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Ajustando el modelo $altura\_final = \mu + \beta(altura\_inicial-\bar x) + \tau_i$:
+</div>
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC (tipo III)</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Covariable (altura inicial)</td><td>680.2</td><td>1</td><td>680.2</td><td>74.71</td><td>$4.0\times10^{-9}$</td></tr>
+<tr><td style="padding:6px;">Tratamiento (ajustado)</td><td>2541.9</td><td>2</td><td>1270.9</td><td>139.6</td><td>$1.2\times10^{-14}$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Error</td><td>236.7</td><td>26</td><td>9.10</td><td></td><td></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+$CM_E$ bajó de $34.0$ (ANOVA simple) a $9.10$ (ANCOVA): la covariable explicó una parte sustancial del error, lo que aumentó drásticamente la potencia de la prueba sobre tratamiento ($F$ pasó de 46.0 a 139.6).
+</div>
+
+## Pendiente común y homogeneidad de pendientes
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+El modelo ANCOVA asume una <strong>pendiente común</strong> $\beta$ entre la covariable y la respuesta, igual en los tres tratamientos. Este supuesto se verifica probando la interacción covariable $\times$ tratamiento.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; text-align:center; margin-top:10px;">
+$\hat\beta = 1.184$ cm de altura final por cada cm adicional de altura inicial (centrada).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:22px; text-align:center; margin-top:8px;">
+Prueba de interacción altura_inicial $\times$ tratamiento: $F=0.08$, $gl=(2,24)$, valor-p$=0.92$. No hay evidencia de que las pendientes difieran entre tratamientos: el supuesto se cumple.
+</div>
+
+## Medias ajustadas
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Las <strong>medias ajustadas</strong> estiman cuál sería la altura final promedio de cada tratamiento si todas las plántulas hubieran partido de la misma altura inicial (la media general $\bar x_{..}=35.18$ cm):
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Fórmula de la media ajustada</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$\bar y_{i,\text{aj}} = \bar y_{i.} - \hat\beta\,(\bar x_{i.}-\bar x_{..})$$
+</div>
+</div>
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Tratamiento</th><th>$\bar y_i$ (sin ajustar)</th><th>$\bar y_{i,\text{aj}}$ (ajustada)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Testigo</td><td>40.09</td><td>40.71</td></tr>
+<tr><td style="padding:6px;">Orgánico</td><td>54.51</td><td>55.72</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Químico</td><td>64.98</td><td>63.15</td></tr>
+</table>
+
+## Gráfico de las rectas de regresión por tratamiento
 
 ```{r}
-#| echo: true
-x  <- c(50, 75, 100, 125, 150)
-y  <- c(18.2, 21.5, 24.8, 27.1, 29.3)
-mod_papa <- lm(y ~ x)
-
-cat("Tabla ANOVA:\n")
-print(anova(mod_papa))
-cat("\nR² =", round(summary(mod_papa)$r.squared, 4), "\n")
-cat("Interpretación: el", round(summary(mod_papa)$r.squared*100, 1),
-    "% de la variabilidad en el rendimiento\n",
-    "de papa es explicada por la lámina de riego aplicada.\n")
+#| label: ancova-plot
+#| fig-height: 4
+set.seed(2903)
+trat3 <- factor(rep(c("Testigo","Organico","Quimico"), each=10),
+                 levels=c("Testigo","Organico","Quimico"))
+alt_inicial <- round(rnorm(30, 35, 4), 1)
+beta_true <- 1.15
+efecto <- c(Testigo=0, Organico=14, Quimico=22)[as.character(trat3)]
+alt_final <- round(40 + efecto + beta_true*(alt_inicial - mean(alt_inicial)) + rnorm(30, 0, 3), 1)
+datos3 <- data.frame(trat3, alt_inicial, alt_final)
+cols <- c(Testigo="#374151", Organico="#1b4d2e", Quimico="#1a3a6b")
+plot(datos3$alt_inicial, datos3$alt_final, col = cols[datos3$trat3], pch = 19,
+     xlab = "Altura inicial (cm)", ylab = "Altura final (cm)",
+     main = "ANCOVA: rectas paralelas por tratamiento")
+mod_ancova_lm <- lm(alt_final ~ alt_inicial + trat3, data = datos3)
+b0 <- coef(mod_ancova_lm)["(Intercept)"]; b1 <- coef(mod_ancova_lm)["alt_inicial"]
+abline(a = b0, b = b1, col = cols["Testigo"], lwd = 2)
+abline(a = b0 + coef(mod_ancova_lm)["trat3Organico"], b = b1, col = cols["Organico"], lwd = 2)
+abline(a = b0 + coef(mod_ancova_lm)["trat3Quimico"], b = b1, col = cols["Quimico"], lwd = 2)
+legend("topleft", legend = names(cols), col = cols, pch = 19, lwd = 2, bty = "n")
 ```
 
-## Taller 3: diagnóstico y predicción
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:20px; text-align:center;">
+Las tres rectas son paralelas (pendiente común $\hat\beta=1.184$): el ANCOVA simplemente desplaza verticalmente cada tratamiento.
+</div>
+
+## Solución por computador: cómo interpretar la salida
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:8px;">
+Cualquier software estadístico (R, SAS, Minitab, SPSS) reporta el ANCOVA con esta estructura. Es clave identificar cada columna:
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Columna</th><th>Significado</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Fila "covariable"</td><td style="padding:6px;">Prueba si $\beta\neq0$: ¿la covariable realmente influye en $Y$?</td></tr>
+<tr><td style="padding:6px;">Fila "tratamiento"</td><td style="padding:6px;">Prueba $H_0:\tau_1=\cdots=\tau_a=0$, <strong>ya controlando</strong> por la covariable</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Coeficiente de la covariable</td><td style="padding:6px;">Estimación de $\hat\beta$, la pendiente común</td></tr>
+<tr><td style="padding:6px;">Medias ajustadas / "LS Means"</td><td style="padding:6px;">Medias de tratamiento corregidas por la covariable</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:20px; text-align:center;">
+El orden recomendado de lectura es: (1) verificar homogeneidad de pendientes, (2) revisar significancia de la covariable, (3) interpretar el efecto de tratamiento ajustado, (4) comparar medias ajustadas.
+</div>
+
+## Desarrollo mediante regresión general
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Igual que en clases anteriores, el ANCOVA puede verse como una <strong>prueba de significancia de regresión general</strong>: se compara un modelo completo contra modelos reducidos.
+</div>
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Modelo</th><th>SC residual (SCE)</th><th>gl</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Reducido: solo covariable $y=\mu+\beta x+\varepsilon$</td><td>2778.7</td><td>28</td></tr>
+<tr><td style="padding:6px;">Completo: covariable + tratamiento</td><td>236.7</td><td>26</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:21px; text-align:center;">
+$$F=\frac{(2778.7-236.7)/2}{236.7/26}=139.6$$
+Idéntico al estadístico $F$ de tratamiento en la tabla ANCOVA: el efecto de tratamiento es la diferencia entre incluir o no las variables indicadoras, controlando ya por la covariable.
+</div>
+
+## Experimentos factoriales con covariables
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+El ANCOVA se extiende de forma natural a <strong>más de un factor</strong>: el modelo simplemente agrega los efectos principales y la interacción, manteniendo el ajuste por la covariable.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">ANCOVA factorial</div>
+<div class="block-body" style="font-size:21px; text-align:center;">
+$$
+y_{ijk} = \mu + \alpha_i + \gamma_j + (\alpha\gamma)_{ij} + \beta\,(x_{ijk}-\bar x_{...}) + \varepsilon_{ijk}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Ejemplo conceptual: en el ensayo de eucalipto, si además se cruzan los 3 tratamientos de fertilización con 2 tipos de sustrato (arenoso, franco), el ANCOVA factorial evaluaría los efectos de fertilización, sustrato y su interacción, todos ajustados por la altura inicial de cada plántula.
+</div>
+
+## Errores comunes: ANCOVA
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Usar como covariable una variable medida <strong>después</strong> del tratamiento (puede estar afectada por él, violando el supuesto de independencia entre covariable y tratamiento).
+- Omitir la verificación de homogeneidad de pendientes: si las pendientes difieren entre tratamientos, el modelo de pendiente común no es válido.
+- Interpretar las medias <strong>sin ajustar</strong> cuando los tratamientos partieron de niveles distintos de la covariable.
+- Aplicar ANCOVA cuando la covariable ya está perfectamente balanceada entre tratamientos (en ese caso, el ANOVA simple es suficiente y más sencillo).
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Medidas Repetidas
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Cómo analizar correctamente una variable medida varias veces en la misma unidad experimental a lo largo del tiempo?
+</p>
+
+</div>
+
+## Motivación: mediciones repetidas en el tiempo
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En muchos experimentos agrícolas y forestales se mide la <strong>misma unidad experimental varias veces</strong>: la altura de una plántula cada mes, el peso de un animal cada semana, el rendimiento de una parcela cada cosecha.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+Ejemplo: la altura de plántulas de eucalipto se mide cada mes durante 6 meses, bajo dos regímenes de riego (con riego, sin riego).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:10px; font-size:21px; text-align:center;">
+Problema: las 6 mediciones de una misma plántula <strong>no son independientes</strong> entre sí (una plántula alta en el mes 1 probablemente sigue siendo alta en el mes 2). Tratar el tiempo como un factor más de un ANOVA factorial viola el supuesto de independencia.
+</div>
+
+## Por qué no es un ANOVA factorial simple
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">ANOVA factorial común</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+Asume que todas las observaciones, dentro y entre niveles de cualquier factor, son independientes entre sí.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Medidas repetidas</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+Las observaciones del <strong>mismo sujeto</strong> en distintos tiempos están correlacionadas; se requiere un modelo que reconozca esa estructura.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:21px; text-align:center;">
+Ignorar la correlación intra-sujeto subestima el error estándar de los efectos de tiempo, inflando artificialmente la significancia estadística.
+</div>
+
+## Estructura entre sujetos y dentro de sujetos
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Un diseño de medidas repetidas distingue dos tipos de factores:
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Factor entre sujetos (between-subjects)</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+El <strong>tratamiento</strong> (riego / sin riego): cada plántula recibe solo uno de los niveles, de forma permanente.
+</div>
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="2">
+<div class="block-title" style="font-size:24px;">Factor dentro de sujetos (within-subjects)</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+El <strong>tiempo</strong> (mes 1 a mes 6): cada plántula pasa por <strong>todos</strong> los niveles de este factor.
+</div>
+</div>
+
+## Ejemplo agrícola completo: crecimiento de eucalipto
 
 <div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Usando el modelo de riego de papa: (a) haga el diagnóstico de residuos (gráfica y Shapiro-Wilk), (b) calcule el IC al 95% para el rendimiento promedio esperado con 90 mm de riego, (c) calcule el IP al 95% para una nueva parcela con 90 mm.</p>
-  </div>
+<div class="block-title">Ejemplo: altura de eucalipto bajo riego, vivero forestal</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Se siguen 16 plántulas de eucalipto (8 con riego suplementario, 8 sin riego) y se mide su altura (cm) cada mes durante 6 meses.
+</div>
 </div>
 
-## Taller 3: solución
+<table style="width:100%; font-size:19px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Tratamiento</th><th>Mes 1</th><th>Mes 2</th><th>Mes 3</th><th>Mes 4</th><th>Mes 5</th><th>Mes 6</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Riego</td><td>20.39</td><td>26.78</td><td>35.26</td><td>44.54</td><td>54.16</td><td>64.70</td></tr>
+<tr><td style="padding:6px;">Sin riego</td><td>19.66</td><td>23.86</td><td>28.74</td><td>33.50</td><td>38.60</td><td>43.36</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Valores: medias de altura (cm) por tratamiento y mes, sobre 8 plántulas cada uno.
+</div>
+
+## Gráfico de perfiles de crecimiento
 
 ```{r}
-#| echo: true
-x90 <- data.frame(x = 90)
-
-# IC para la media
-ic_media <- predict(mod_papa, x90, interval = "confidence", level = 0.95)
-cat("IC 95% para E(Y|X=90): [", round(ic_media[2],4), ",",
-    round(ic_media[3],4), "] t/ha\n")
-
-# IP para observación nueva
-ip_obs <- predict(mod_papa, x90, interval = "prediction", level = 0.95)
-cat("IP 95% para Y_nuevo|X=90: [", round(ip_obs[2],4), ",",
-    round(ip_obs[3],4), "] t/ha\n")
-
-# Diagnóstico de residuos
-cat("\nShapiro-Wilk residuos: p =",
-    round(shapiro.test(residuals(mod_papa))$p.value, 4), "\n")
+#| label: perfiles-crecimiento
+#| fig-height: 4
+medias_riego <- c(20.39, 26.78, 35.26, 44.54, 54.16, 64.70)
+medias_sin   <- c(19.66, 23.86, 28.74, 33.50, 38.60, 43.36)
+plot(1:6, medias_riego, type = "b", pch = 19, col = "#1a3a6b", lwd = 2,
+     ylim = c(15, 70), xlab = "Mes", ylab = "Altura promedio (cm)",
+     main = "Perfiles de crecimiento por tratamiento")
+lines(1:6, medias_sin, type = "b", pch = 17, col = "#1b4d2e", lwd = 2)
+legend("topleft", legend = c("Riego", "Sin riego"), col = c("#1a3a6b", "#1b4d2e"),
+       pch = c(19, 17), lwd = 2, bty = "n")
 ```
 
-## Resumen: inferencia y evaluación en regresión
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 25px;">Inferencia</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px;">$t = \hat{\beta}_1/EE(\hat{\beta}_1) \sim t_{n-2}$.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px;">IC para $\beta_j$: <code>confint(mod)</code>.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px;">ANOVA: <code>anova(mod)</code>.</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:6px; font-size:20px; text-align:center;">
+Los perfiles no son paralelos: la brecha entre tratamientos crece con el tiempo, lo que sugiere una <strong>interacción tratamiento $\times$ tiempo</strong>.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 style="color:#1a3a6b; font-size: 25px;">Evaluación</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">$R^2$: proporción de variabilidad explicada.</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;"><code>plot(mod)</code>: gráficas de diagnóstico.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">IC media vs IP observación: <code>interval=</code>.</li>
-</ul>
+## Tabla de análisis de medidas repetidas
+
+<div style="font-size:23px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+El análisis separa la variabilidad <strong>entre sujetos</strong> (tratamiento) de la variabilidad <strong>dentro de sujetos</strong> (tiempo e interacción):
 </div>
 
+<table style="width:100%; font-size:19px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Tratamiento (entre sujetos)</td><td>504</td><td>1</td><td>504</td><td>177.0</td><td>$<0.0001$</td></tr>
+<tr><td style="padding:6px;">Mes (dentro de sujetos)</td><td>6584</td><td>5</td><td>1317</td><td>462.9</td><td>$<0.0001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Tratamiento $\times$ Mes</td><td>336</td><td>5</td><td>67</td><td>23.6</td><td>$<0.0001$</td></tr>
+<tr><td style="padding:6px;">Error (dentro)</td><td>222</td><td>78</td><td>2.85</td><td></td><td></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+La interacción tratamiento $\times$ mes es altamente significativa: confirma lo observado en el gráfico de perfiles: el riego acelera el crecimiento de forma creciente en el tiempo.
 </div>
 
-## Próxima clase
+## Corrección por esfericidad: idea general
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+La tabla anterior asume <strong>esfericidad</strong>: que las varianzas de las diferencias entre cualquier par de tiempos son iguales. Esta condición rara vez se cumple exactamente con datos de crecimiento.
+</div>
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 30: ANOVA e Introducción al Diseño de Experimentos.</strong> Extendemos la comparación de grupos más allá de dos: el Análisis de Varianza (ANOVA) permite comparar las medias de $k \geq 2$ grupos con una sola prueba controlando el error tipo I global.</p>
-  </div>
+<div class="block-body" style="font-size:22px;">
+La prueba de <strong>esfericidad de Mauchly</strong> contrasta $H_0:$ se cumple la esfericidad. En este ejemplo: estadístico $=0.261$, valor-p$=0.308$ &mdash; no se rechaza, por lo que la corrección no es estrictamente necesaria.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+Cuando la esfericidad falla, se aplican <strong>correcciones</strong> que reducen los grados de libertad del estadístico $F$ (Greenhouse-Geisser, Huynh-Feldt), haciendo la prueba más conservadora sin tener que abandonar el ANOVA de medidas repetidas.
+</div>
+
+## Conclusión del ejemplo de eucalipto
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:23px; font-weight:bold; text-align:center; color:#1a3a6b;">Resultado estadístico</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+Efectos significativos de tratamiento, tiempo, y su interacción (todos $p<0.0001$). Esfericidad razonable ($p=0.308$).
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:23px; font-weight:bold; text-align:center; color:#1b4d2e;">Conclusión agronómica</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+El riego suplementario no solo aumenta la altura final, sino que <strong>acelera la tasa de crecimiento</strong> mes a mes, ampliando la diferencia con el tiempo.
+</div>
+</div>
+
+</div>
+
+## Errores comunes: medidas repetidas
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Analizar el factor tiempo como si fuera independiente entre mediciones (ANOVA factorial estándar), ignorando la correlación intra-sujeto.
+- Ignorar la prueba de esfericidad y reportar el valor-p sin corrección cuando la esfericidad falla claramente.
+- Confundir el factor "entre sujetos" (tratamiento, fijo por sujeto) con el factor "dentro de sujetos" (tiempo, varía dentro del mismo sujeto).
+- No graficar los perfiles de evolución temporal antes del análisis formal: el gráfico revela visualmente si existe interacción tratamiento $\times$ tiempo.
+</div>
+</div>
+
+## Resumen general de la clase
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Tema</th>
+<th style="padding:8px;">Problema que resuelve</th>
+<th style="padding:8px;">Herramienta</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Box-Cox / GLM</td>
+<td style="padding:8px;">Respuesta no normal o varianza heterogénea</td>
+<td style="padding:8px;">Transformación potencia o modelo Poisson/binomial</td>
+</tr>
+<tr>
+<td style="padding:8px;">Datos no balanceados</td>
+<td style="padding:8px;">Pérdida de parcelas en diseño factorial</td>
+<td style="padding:8px;">Suma de cuadrados tipo III (regresión general)</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">ANCOVA</td>
+<td style="padding:8px;">Diferencias iniciales no controlables</td>
+<td style="padding:8px;">Ajuste por covariable continua</td>
+</tr>
+<tr>
+<td style="padding:8px;">Medidas repetidas</td>
+<td style="padding:8px;">Mediciones correlacionadas en el tiempo</td>
+<td style="padding:8px;">Factores entre/dentro de sujetos, esfericidad</td>
+</tr>
+</table>
+
+## Taller en Clase {.center .middle}
+
+## Instrucciones
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:26px; line-height:1.7;">
+
+Para cada ejercicio:
+
+<ol>
+<li>Identifique el tema involucrado (transformación, GLM, datos no balanceados, ANCOVA o medidas repetidas).</li>
+<li>Plantee el modelo o las hipótesis correspondientes.</li>
+<li>Realice los cálculos solicitados con la información suministrada.</li>
+<li>Aplique el criterio de decisión indicado.</li>
+<li>Redacte una conclusión en el contexto agrícola del problema.</li>
+</ol>
+
+</div>
+
+</div>
+
+## Ejercicio 1
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema: transformación de datos de conteo
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+En un cultivo de arroz en el Tolima, se cuenta el número de plantas afectadas por el hongo <em>Pyricularia</em> por parcela, bajo 3 tratamientos fungicidas. Un análisis de Box-Cox sobre los datos arroja $\hat\lambda=0.1$, con intervalo de confianza del 95% que incluye a $\lambda=0$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+(a) ¿Qué transformación recomienda aplicar? (b) Justifique por qué el GLM Poisson sería una alternativa razonable a la transformación.
+</div>
+
+## Ejercicio 2
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema: datos no balanceados
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+Un ensayo factorial $2\times2$ de variedad de café (Caturra, Castillo) $\times$ sombra (Con sombra, Sin sombra) perdió parcelas por una helada. Quedaron: Caturra-Con sombra ($n=8$), Caturra-Sin sombra ($n=5$), Castillo-Con sombra ($n=6$), Castillo-Sin sombra ($n=9$).
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+(a) Verifique si el patrón de $n_{ij}$ es proporcional. (b) Indique qué método de análisis (proporcional, aproximado o exacto tipo III) es apropiado y por qué.
+</div>
+
+## Ejercicio 3
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema: ANCOVA en ganadería
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+Se comparan 2 dietas de ceba en novillos de los Llanos, ajustando por el peso inicial (covariable). Con $\bar y_1=420$ kg, $\bar y_2=455$ kg (pesos finales sin ajustar), $\bar x_1=310$ kg, $\bar x_2=325$ kg, $\bar x_{..}=317.5$ kg y $\hat\beta=1.05$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Calcule las medias ajustadas $\bar y_{1,\text{aj}}$ y $\bar y_{2,\text{aj}}$ e interprete si la diferencia entre dietas cambia tras el ajuste.
+</div>
+
+## Ejercicio 4
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema: ANCOVA, prueba de regresión general
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+En un ensayo de fertilización de caña ajustado por covariable (contenido inicial de materia orgánica del suelo), el modelo reducido (solo covariable) tiene $SCE=850$ con $gl=22$; el modelo completo (covariable + tratamiento, 3 niveles) tiene $SCE=410$ con $gl=20$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Calcule el estadístico $F$ para el efecto de tratamiento y compárelo con $F_{0.05,2,20}=3.49$. Concluya.
+</div>
+
+## Ejercicio 5
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema: medidas repetidas en floricultura
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+En un cultivo de rosas en Cundinamarca, se mide el número de botones florales por planta cada semana durante 4 semanas, en 2 tratamientos de fertirriego (Estándar, Mejorado), con 10 plantas por tratamiento. El ANOVA de medidas repetidas reporta: tratamiento $F=22.4$ ($gl=1,18$), semana $F=58.1$ ($gl=3,54$), interacción tratamiento$\times$semana $F=9.7$ ($gl=3,54$), todos con valor-p$<0.01$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+(a) Interprete cada uno de los tres efectos. (b) Explique por qué no sería correcto analizar estos datos con un ANOVA factorial de 2 factores independientes.
 </div>

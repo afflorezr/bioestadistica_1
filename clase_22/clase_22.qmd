@@ -1,11 +1,12 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
   revealjs:
+    embed-resources: true
     logo: images/logo_unal_3.png
     slide-number: true
     title-slide: false
@@ -37,413 +38,898 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 22 {.center .middle}
 
 ## Contenido
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Fundamentos</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Bloqueo de un 2^k replicado</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Error tolerable y nivel de confianza.</li>
-<li class="fragment fade-in" data-fragment-index="3">$n$ para estimar la media.</li>
-<li class="fragment fade-in" data-fragment-index="4">$n$ para estimar la proporción.</li>
-<li class="fragment fade-in" data-fragment-index="5">Efecto del tamaño poblacional.</li>
+<li class="fragment fade-in" data-fragment-index="2">Motivación: variabilidad extraña entre réplicas.</li>
+<li class="fragment fade-in" data-fragment-index="3">Cada réplica completa como bloque.</li>
+<li class="fragment fade-in" data-fragment-index="4">Ejemplo agrícola: fincas cafeteras.</li>
+<li class="fragment fade-in" data-fragment-index="5">ANOVA con bloques.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Casos avanzados</h3>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Confusión en el 2^k</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">$n$ para comparación de dos medias.</li>
-<li class="fragment fade-in" data-fragment-index="8">$n$ para comparación de proporciones.</li>
-<li class="fragment fade-in" data-fragment-index="9">Potencia estadística.</li>
-<li class="fragment fade-in" data-fragment-index="10">Código R y taller.</li>
+<li class="fragment fade-in" data-fragment-index="7">Concepto de confusión (confounding).</li>
+<li class="fragment fade-in" data-fragment-index="8">Confusión en dos bloques: ejemplo en arroz.</li>
+<li class="fragment fade-in" data-fragment-index="9">Confusión en cuatro bloques: ejemplo en papa.</li>
+<li class="fragment fade-in" data-fragment-index="10">Generalización a 2^p bloques.</li>
 </ul>
 </div>
+
 </div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 26px; font-size: 30px; align-items: start;">
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="11" style="font-size: 34px; margin-bottom: 14px; color: #79260d;">Parte III: Confusión parcial</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="12">Motivación: recuperar información del efecto confundido.</li>
+<li class="fragment fade-in" data-fragment-index="13">Esquema con réplicas y bloqueos distintos.</li>
+<li class="fragment fade-in" data-fragment-index="14">Ventajas y costos.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="15" style="font-size: 34px; margin-bottom: 14px; color: #5b21b6;">Cierre</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="16">Errores comunes.</li>
+<li class="fragment fade-in" data-fragment-index="17">Taller en clase con ejercicios agrícolas.</li>
+</ul>
+</div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Tamaño de Muestra</p>
-<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">¿Cuántas observaciones necesito para responder mi pregunta?</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
-</div>
 
-## ¿Por qué calcular el tamaño de muestra?
+<p style="font-size: 50px; font-weight: bold; color: #3b82f6;">
+Bloqueo y Confusión en el Diseño Factorial 2^k
+</p>
 
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Una muestra muy pequeña produce ICs muy amplios: la estimación es poco precisa para tomar decisiones.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Una muestra muy grande desperdicia recursos: tiempo, dinero y esfuerzo del campo.
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-El tamaño de muestra se calcula <strong>antes</strong> de recolectar los datos, fijando el error máximo tolerable y el nivel de confianza deseado.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-Es un componente obligatorio de cualquier protocolo de investigación o estudio de campo.
-</li>
-</ul>
-</div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando una finca, un lote o un día de siembra no tiene capacidad para correr todas las combinaciones de un experimento factorial?
+</p>
 
 </div>
 
-## Ingredientes para calcular $n$
+## Motivación: la realidad del trabajo de campo
 
-<ul>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
-<strong>Error tolerable $E$:</strong> máxima diferencia aceptable entre el estimador y el parámetro. Lo fija el investigador según el contexto.
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-<strong>Nivel de confianza $1-\alpha$:</strong> generalmente 90%, 95% o 99%.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-<strong>Variabilidad poblacional $\sigma$ (o $p$):</strong> se estima a partir de estudios previos, datos piloto o valores conservadores.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px; text-align: justify;">
-<strong>Potencia $1-\beta$:</strong> en comparaciones, probabilidad de detectar una diferencia real. Usualmente 80% o 90%.
-</li>
-</ul>
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
 
-## Tamaño de muestra para estimar la media
+Un diseño factorial $2^k$ requiere correr las $2^k$ combinaciones de tratamientos bajo condiciones lo más homogéneas posible. En el campo colombiano esto rara vez es trivial: una finca cafetera pequeña, un lote de arroz o un invernadero de flores no siempre tienen el tamaño, el agua o la mano de obra para sembrar **todas** las combinaciones el mismo día, en el mismo terreno.
 
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Fórmula: $n$ para la media</div>
-  <div class="block-body">
-  <p>Para un IC al $(1-\alpha)\times 100\%$ con error máximo $E = |\bar{x} - \mu|$:</p>
-  $$n = \left\lceil \left(\frac{z_{\alpha/2}\,\sigma}{E}\right)^2 \right\rceil$$
-  <p>Siempre se redondea hacia arriba.</p>
-  </div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Si $\sigma$ es desconocida, se puede usar una estimación previa $s$ o el rango dividido por 4 como aproximación.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Con $\sigma$ desconocida y sin datos piloto, use $t$ en lugar de $z$ y resuelva iterativamente.
-</li>
-</ul>
-
-## Ejemplo: estimación del rendimiento de papa
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: papa pastusa, Boyacá</div>
-  <div class="block-body">
-  <p>Se quiere estimar el rendimiento promedio de papa pastusa en Boyacá con un error máximo de $E = 0.5$ t/ha y 95% de confianza. Estudios previos reportan $\sigma = 2.0$ t/ha. ¿Cuántas parcelas deben muestrearse?</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+Ejemplo: un agrónomo del Quindío quiere evaluar $2^3=8$ combinaciones de sombra, fertilización y poda, pero cada finca colaboradora solo presta un lote homogéneo con capacidad para 4 parcelas.
 </div>
 
-```{r}
-#| echo: true
-z <- qnorm(0.975)   # z para 95%
-sigma <- 2.0
-E <- 0.5
+## Dos problemas, dos soluciones
 
-n_exacto <- (z * sigma / E)^2
-n <- ceiling(n_exacto)
-cat("n exacto:", round(n_exacto, 4), "\n")
-cat("n requerido:", n, "parcelas\n")
-```
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
 
-## Efecto de E y $\sigma$ en el tamaño de muestra
-
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-z95 <- qnorm(0.975)
-df <- expand_grid(E = c(0.25, 0.5, 1.0, 1.5),
-                  sigma = c(1.0, 1.5, 2.0, 2.5)) |>
-  mutate(n = ceiling((z95 * sigma / E)^2),
-         E_label = paste0("E = ", E))
-
-ggplot(df, aes(x = sigma, y = n, color = E_label, group = E_label)) +
-  geom_line(linewidth = 1.2) +
-  geom_point(size = 2.5) +
-  labs(x = "Desviación estándar (σ)", y = "Tamaño de muestra (n)",
-       color = "Error tolerable",
-       title = "n requerido para estimar la media (IC 95%)") +
-  theme_minimal(base_size = 13)
-```
-
-## Tamaño de muestra para estimar la proporción
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Fórmula: $n$ para la proporción</div>
-  <div class="block-body">
-  <p>Para un IC al $(1-\alpha)\times 100\%$ con error máximo $E = |\hat{p} - p|$:</p>
-  $$n = \left\lceil \frac{z_{\alpha/2}^2\; p(1-p)}{E^2} \right\rceil$$
-  <p>Si $p$ es desconocida, usar $p = 0.5$ (valor conservador que maximiza $p(1-p) = 0.25$).</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Variabilidad entre réplicas</div>
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-top:8px;">
+Cada finca SÍ alcanza a correr las 8 combinaciones completas, pero las fincas difieren entre sí (suelo, altitud, manejo). Se necesita <strong>bloquear por finca</strong> sin sacrificar ningún efecto.
+</div>
 </div>
 
-## Ejemplo: encuesta de adopción de BPA
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: adopción de BPA, Tolima</div>
-  <div class="block-body">
-  <p>Se quiere estimar la proporción de caficultores del Tolima que adoptan BPA con error máximo $E = 0.04$ y 95% de confianza. Sin información previa sobre $p$, ¿cuántos caficultores deben encuestarse?</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:18px; border-radius:18px; border-top:8px solid #b91c1c;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#b91c1c;">Capacidad insuficiente del bloque</div>
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-top:8px;">
+El lote NO tiene espacio para las 8 combinaciones; solo caben 4. Es necesario <strong>dividir</strong> el experimento en fracciones y aceptar <strong>confundir</strong> un efecto con el bloque.
+</div>
 </div>
 
-```{r}
-#| echo: true
-z <- qnorm(0.975)
-E <- 0.04
-p_cons <- 0.5   # conservador
-
-n_cons <- ceiling(z^2 * p_cons * (1 - p_cons) / E^2)
-cat("n conservador (p = 0.5):", n_cons, "\n")
-
-# Si se estima p ≈ 0.35 de estudios previos
-p_prev <- 0.35
-n_prev <- ceiling(z^2 * p_prev * (1 - p_prev) / E^2)
-cat("n con p estimada = 0.35:", n_prev, "\n")
-```
-
-## Corrección por tamaño de población finita
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Factor de corrección por población finita</div>
-  <div class="block-body">
-  <p>Si la población tiene tamaño $N$ finito y $n_0$ es el tamaño calculado sin corrección:</p>
-  $$n = \frac{n_0}{1 + (n_0 - 1)/N}$$
-  </div>
 </div>
 
-```{r}
-#| echo: true
-# Ejemplo: población de 800 fincas, n0 calculado = 384
-n0 <- 384; N <- 800
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+La primera situación se resuelve con <strong>bloqueo de un 2^k replicado</strong> (Parte I); la segunda exige <strong>confusión</strong> (Parte II).
+</div>
 
-n_corregido <- ceiling(n0 / (1 + (n0 - 1) / N))
-cat("n sin corrección:", n0, "\n")
-cat("n con corrección (N =", N, "):", n_corregido, "\n")
-cat("Reducción:", n0 - n_corregido, "unidades\n")
-```
+## {.center .middle}
 
-## Potencia estadística
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Parte I: Bloqueo de un 2^k replicado
+</p>
+
+</div>
+
+## Bloqueo de un diseño 2^k replicado
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+
+Cuando cada bloque tiene capacidad para correr **todas** las $2^k$ combinaciones, la solución es simple: cada réplica completa del experimento se asigna a un bloque distinto.
+
+</div>
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: potencia</div>
-  <div class="block-body">
-  <p>La <strong>potencia</strong> de una prueba es $1 - \beta$, donde $\beta = P(\text{no detectar diferencia} \mid \text{diferencia real existe})$. Una potencia del 80% significa que hay un 80% de probabilidad de detectar una diferencia real de tamaño especificado.</p>
-  </div>
+<div class="block-title">Definición: bloqueo de réplicas completas</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Si se dispone de $r$ bloques (fincas, lotes, días) y cada uno permite ejecutar las $2^k$ combinaciones completas, el modelo agrega un término de bloque sin confundir ningún efecto del factorial:
+$$y_{ijk\ldots} = \mu + \beta_l + \tau_{ijk\ldots} + \varepsilon$$
+donde $\beta_l$ es el efecto del bloque $l=1,\ldots,r$.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Potencia baja implica estudios que no detectan efectos reales: conclusiones de «no diferencia» pueden ser falsas.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-El tamaño de muestra para comparaciones se calcula fijando simultáneamente $\alpha$ y $1-\beta$.
-</li>
-</ul>
+## ¿Por qué bloquear si no es estrictamente necesario?
 
-## $n$ para comparar dos medias
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
 
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Fórmula: $n$ por grupo para comparar $\mu_1$ vs $\mu_2$</div>
-  <div class="block-body">
-  $$n = \left\lceil \frac{(z_{\alpha/2} + z_\beta)^2 \cdot 2\sigma^2}{\delta^2} \right\rceil$$
-  <p>donde $\delta = |\mu_1 - \mu_2|$ es la diferencia mínima a detectar y $z_\beta = z_{1-\beta}$.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e; font-size:22px; text-align:center; line-height:1.5;">
+Reduce el error experimental al remover la variabilidad explicada por diferencias entre fincas, lo que aumenta la potencia para detectar efectos reales.
 </div>
 
-```{r}
-#| echo: true
-# Detectar delta = 0.5 t/ha, sigma = 1.2, alpha = 0.05, potencia = 0.80
-delta <- 0.5; sigma <- 1.2
-z_alpha <- qnorm(0.975)   # alpha = 0.05 bilateral
-z_beta  <- qnorm(0.80)    # potencia 80%
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:16px; border-radius:16px; border-top:8px solid #d97706; font-size:22px; text-align:center; line-height:1.5;">
+No cuesta nada en términos de información: todos los efectos del $2^k$ siguen siendo estimables sin confusión alguna.
+</div>
 
-n_grupo <- ceiling((z_alpha + z_beta)^2 * 2 * sigma^2 / delta^2)
-cat("n por grupo:", n_grupo, "\n")
-cat("n total:", 2 * n_grupo, "\n")
-```
+</div>
 
-## Función power.t.test en R
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+La única condición es que el bloque tenga capacidad para las $2^k$ combinaciones completas.
+</div>
 
-```{r}
-#| echo: true
-# Calcular n dado delta, sigma, alpha y potencia
-power.t.test(delta = 0.5, sd = 1.2, sig.level = 0.05,
-             power = 0.80, type = "two.sample")
+## Ejemplo: prácticas agronómicas en café
 
-# Calcular potencia dado n
-power.t.test(n = 50, delta = 0.5, sd = 1.2, sig.level = 0.05,
-             type = "two.sample")$power
-```
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
 
-## Curvas de potencia
+Un agrónomo evalúa un diseño $2^3$ con los factores $A$ = Sombra (Bajo/Alto), $B$ = Fertilización (Convencional/Reforzada) y $C$ = Poda (Sin/Con), midiendo el rendimiento (kg de café pergamino seco por parcela). El experimento se replica completo en **tres fincas** del eje cafetero, cada una con capacidad para las 8 combinaciones.
 
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-ns <- seq(10, 150, by = 5)
-potencias <- map_dbl(ns, ~power.t.test(
-  n = .x, delta = 0.5, sd = 1.2, sig.level = 0.05,
-  type = "two.sample")$power)
+</div>
 
-ggplot(data.frame(n = ns, pot = potencias), aes(n, pot)) +
-  geom_line(color = "#1a3a6b", linewidth = 1.3) +
-  geom_hline(yintercept = 0.80, color = "#c0392b", linetype = "dashed") +
-  geom_hline(yintercept = 0.90, color = "#1b4d2e", linetype = "dashed") +
-  annotate("text", x = 140, y = 0.82, label = "80%", color = "#c0392b", size = 4) +
-  annotate("text", x = 140, y = 0.92, label = "90%", color = "#1b4d2e", size = 4) +
-  labs(x = "n por grupo", y = "Potencia",
-       title = "Curva de potencia: comparar medias (δ = 0.5, σ = 1.2)") +
-  theme_minimal(base_size = 13)
-```
+<table style="width:100%; font-size:18px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Combinación</th><th>A</th><th>B</th><th>C</th><th>Finca 1</th><th>Finca 2</th><th>Finca 3</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">(1)</td><td>−</td><td>−</td><td>−</td><td>31.55</td><td>33.45</td><td>36.40</td></tr>
+<tr><td style="padding:6px;">a</td><td>+</td><td>−</td><td>−</td><td>37.82</td><td>39.64</td><td>40.43</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">b</td><td>−</td><td>+</td><td>−</td><td>34.25</td><td>35.98</td><td>37.56</td></tr>
+<tr><td style="padding:6px;">ab</td><td>+</td><td>+</td><td>−</td><td>43.06</td><td>45.29</td><td>46.62</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">c</td><td>−</td><td>−</td><td>+</td><td>38.10</td><td>40.32</td><td>41.15</td></tr>
+<tr><td style="padding:6px;">ac</td><td>+</td><td>−</td><td>+</td><td>37.37</td><td>38.09</td><td>39.83</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">bc</td><td>−</td><td>+</td><td>+</td><td>37.37</td><td>38.56</td><td>40.18</td></tr>
+<tr><td style="padding:6px;">abc</td><td>+</td><td>+</td><td>+</td><td>45.99</td><td>50.43</td><td>50.42</td></tr>
+</table>
 
-## Errores comunes en el cálculo de $n$
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:19px; text-align:center;">
+Cada finca es un bloque: las 8 combinaciones se corren completas dentro de cada una.
+</div>
+
+## Cálculo de efectos: tabla de signos
+
+<div style="font-size:23px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Promediando las tres fincas para cada combinación, se aplica la tabla de signos estándar del $2^3$:
+</div>
+
+<table style="width:100%; font-size:17px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:5px;">Combinación</th><th>A</th><th>B</th><th>C</th><th>AB</th><th>AC</th><th>BC</th><th>ABC</th><th>$\bar y$ (3 fincas)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">(1)</td><td>−</td><td>−</td><td>−</td><td>+</td><td>+</td><td>+</td><td>−</td><td>33.80</td></tr>
+<tr><td style="padding:5px;">a</td><td>+</td><td>−</td><td>−</td><td>−</td><td>−</td><td>+</td><td>+</td><td>39.30</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">b</td><td>−</td><td>+</td><td>−</td><td>−</td><td>+</td><td>−</td><td>+</td><td>35.93</td></tr>
+<tr><td style="padding:5px;">ab</td><td>+</td><td>+</td><td>−</td><td>+</td><td>−</td><td>−</td><td>−</td><td>44.99</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">c</td><td>−</td><td>−</td><td>+</td><td>+</td><td>−</td><td>−</td><td>+</td><td>39.86</td></tr>
+<tr><td style="padding:5px;">ac</td><td>+</td><td>−</td><td>+</td><td>−</td><td>+</td><td>−</td><td>−</td><td>38.43</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">bc</td><td>−</td><td>+</td><td>+</td><td>−</td><td>−</td><td>+</td><td>−</td><td>38.70</td></tr>
+<tr><td style="padding:5px;">abc</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>48.95</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:19px; text-align:center;">
+Efecto $=\dfrac{1}{4r}\sum (\text{signo})\,\bar y$, con $r=3$ réplicas (fincas).
+</div>
+
+## Efectos estimados y suma de cuadrados
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Efecto</th><th>A</th><th>B</th><th>C</th><th>AB</th><th>AC</th><th>BC</th><th>ABC</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Estimado</td><td>1.95</td><td>1.43</td><td>0.99</td><td>1.27</td><td>−0.48</td><td>0.13</td><td>0.68</td></tr>
+<tr><td style="padding:8px;">SC</td><td>22.76</td><td>12.31</td><td>5.92</td><td>9.67</td><td>1.37</td><td>0.10</td><td>2.74</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:20px; text-align:center;">
+$$SC_{efecto}=\frac{(\text{contraste})^2}{r\cdot 2^k}=\frac{(\text{contraste})^2}{3\times 8}$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Sombra (A) y Fertilización (B) presentan los efectos principales más grandes; AB también es relevante.
+</div>
+
+## Suma de cuadrados de bloques
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+La variabilidad entre fincas se cuantifica igual que en cualquier diseño en bloques completos: con los totales de cada bloque.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4; margin-top:10px;">
+<strong style="color:#1a3a6b;">Totales por finca (8 observaciones c/u):</strong>
+$$y_{Finca1}=305.51 \quad y_{Finca2}=321.76 \quad y_{Finca3}=332.59$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1b4d2e;">Suma de cuadrados de bloques:</strong>
+$$SC_{Bloques}=\frac{\sum_l y_{l\cdot}^2}{8}-\frac{y_{\cdot\cdot}^2}{24}=46.44$$
+</div>
+
+## Tabla ANOVA completa: café con bloques
+
+<table style="width:100%; font-size:18px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Finca (Bloque)</td><td>46.44</td><td>2</td><td>23.22</td><td>51.60</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">A: Sombra</td><td>204.87</td><td>1</td><td>204.87</td><td>455.21</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">B: Fertilización</td><td>110.77</td><td>1</td><td>110.77</td><td>246.12</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">C: Poda</td><td>53.28</td><td>1</td><td>53.28</td><td>118.39</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">AB</td><td>87.02</td><td>1</td><td>87.02</td><td>193.36</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">AC</td><td>12.36</td><td>1</td><td>12.36</td><td>27.45</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">BC</td><td>0.89</td><td>1</td><td>0.89</td><td>1.98</td><td>0.182</td></tr>
+<tr><td style="padding:6px;">ABC</td><td>24.64</td><td>1</td><td>24.64</td><td>54.76</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef7ee;"><td style="padding:6px;">Error</td><td>6.30</td><td>14</td><td>0.45</td><td></td><td></td></tr>
+<tr><td style="padding:6px;">Total</td><td>546.57</td><td>23</td><td></td><td></td><td></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:19px; text-align:center;">
+El bloque (Finca) es altamente significativo: confirma que era necesario controlar la variabilidad entre fincas.
+</div>
+
+## Interpretación: bloqueo del 2^3 replicado
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; font-size:22px; text-align:justify; line-height:1.5;">
+Todos los efectos principales ($A$, $B$, $C$) y la interacción $AB$ son significativos: la sombra, la fertilización y la poda afectan el rendimiento, y el efecto de la sombra depende del nivel de fertilización. La interacción $BC$ no es significativa.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:12px; font-size:21px; text-align:center;">
+Al bloquear por finca, $SC_{Bloques}=46.44$ se removió del error experimental, lo que aumentó la potencia de todas las pruebas $F$ sin sacrificar ningún efecto del factorial.
+</div>
+
+## Errores comunes: bloqueo de réplicas completas
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes</div>
-  <div class="block-body">
-  <p>Calcular mal el tamaño de muestra es una de las causas más frecuentes de estudios no concluyentes o de derroche de recursos.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Ignorar el bloque (finca) y analizar los datos como si fuera un $2^k$ sin estructura, inflando el error experimental.
+- Confundir "bloquear por finca" con "promediar entre fincas": cada finca aporta su propia réplica completa, no se promedian antes del análisis.
+- Olvidar que el bloqueo de réplicas completas no confunde ningún efecto; es distinto del bloqueo fraccionado que se estudia a continuación.
+- Aplicar este esquema cuando el bloque **no** tiene capacidad para las $2^k$ combinaciones completas (ahí se requiere confusión).
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>No redondear hacia arriba:</strong> siempre use <code>ceiling()</code>. Un $n$ fraccionario nunca se redondea hacia abajo.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Olvidar pérdidas:</strong> en estudios longitudinales, el $n$ calculado debe incrementarse por la tasa de abandono esperada (ej: $n / (1 - 0.15)$ si se espera un 15% de deserción).
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Subestimar $\sigma$:</strong> un $\sigma$ más pequeño del real produce un $n$ insuficiente. Use estimaciones conservadoras.
-</li>
-</ul>
+## {.center .middle}
 
-## Taller en clase {.center .middle}
+<div style="text-align: center; margin-top: 40px;">
 
-## Taller 1: $n$ para la media
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Parte II: Confusión en el diseño 2^k
+</p>
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Se quiere estimar el peso promedio de pollos de engorde en una granja del Valle del Cauca con $E = 50\,\text{g}$ y 95% de confianza. Un estudio piloto reportó $s = 180\,\text{g}$. (a) ¿Cuántos pollos deben pesarse? (b) ¿Cuántos si se reduce el error a $E = 30\,\text{g}$?</p>
-  </div>
+<p style="font-size: 26px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando el bloque no alcanza para todas las combinaciones del factorial?
+</p>
+
 </div>
 
-## Taller 1: solución
+## El problema: bloques de capacidad limitada
 
-```{r}
-#| echo: true
-z <- qnorm(0.975); sigma <- 180
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
 
-# (a) E = 50 g
-n_a <- ceiling((z * sigma / 50)^2)
-cat("(a) n con E = 50 g:", n_a, "\n")
+Suponga ahora que un lote de arroz en el Tolima solo tiene capacidad homogénea para **4 parcelas**, pero el experimento $2^3$ (Riego $\times$ Fertilizante $\times$ Densidad) requiere 8 combinaciones. Es necesario dividir cada réplica en **2 bloques de 4 parcelas**.
 
-# (b) E = 30 g
-n_b <- ceiling((z * sigma / 30)^2)
-cat("(b) n con E = 30 g:", n_b, "\n")
-cat("Al reducir E a la mitad, n aumenta aprox", round(n_b/n_a, 1), "veces.\n")
-```
-
-## Taller 2: $n$ para la proporción
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>El ICA quiere estimar la proporción de cuerpos de agua en zonas agrícolas de Cundinamarca con presencia de cianobacterias, con $E = 0.05$ y 99% de confianza. Sin información previa: (a) calcule $n$ conservador. (b) Si estudios previos sugieren $p \approx 0.25$, ¿cuánto se reduce $n$?</p>
-  </div>
 </div>
 
-## Taller 2: solución
-
-```{r}
-#| echo: true
-z <- qnorm(0.995); E <- 0.05   # 99% de confianza
-
-# (a) Conservador p = 0.5
-n_cons <- ceiling(z^2 * 0.5 * 0.5 / E^2)
-cat("(a) n conservador:", n_cons, "\n")
-
-# (b) p estimada = 0.25
-n_prev <- ceiling(z^2 * 0.25 * 0.75 / E^2)
-cat("(b) n con p = 0.25:", n_prev, "\n")
-cat("Reducción:", n_cons - n_prev, "unidades\n")
-```
-
-## Taller 3: tamaño y potencia
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Un ensayo busca detectar una diferencia de al menos 0.3 en el índice de condición corporal (ICC) de bovinos entre dos dietas. Se estima $\sigma = 0.5$. (a) ¿Cuántos animales por grupo para $\alpha = 0.05$ y potencia del 80%? (b) ¿Cuál sería la potencia con $n = 30$ por grupo?</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:23px; text-align:justify;">
+Al dividir el experimento, cualquier diferencia entre los dos bloques (lotes) quedará mezclada con la estimación de algún efecto del factorial. A esa mezcla inevitable se le llama <strong>confusión</strong> (confounding).
 </div>
 
-## Taller 3: solución
+## Concepto de confusión
 
-```{r}
-#| echo: true
-# (a) n por grupo
-result_a <- power.t.test(delta = 0.3, sd = 0.5,
-                          sig.level = 0.05, power = 0.80,
-                          type = "two.sample")
-cat("(a) n por grupo:", ceiling(result_a$n), "\n")
-
-# (b) potencia con n = 30
-result_b <- power.t.test(n = 30, delta = 0.3, sd = 0.5,
-                          sig.level = 0.05, type = "two.sample")
-cat("(b) Potencia con n = 30:", round(result_b$power, 4), "\n")
-```
-
-## Resumen: tamaño de muestra
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 26px;">Fórmulas clave</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">Media: $n = \lceil(z_{\alpha/2}\sigma/E)^2\rceil$.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">Proporción: $n = \lceil z_{\alpha/2}^2 p(1-p)/E^2\rceil$.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">Siempre redondear hacia arriba (<code>ceiling</code>).</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px;">Corrección finita si $n_0 > 0.05N$.</li>
-</ul>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Definición: confusión (confounding)</div>
+<div class="block-body" style="font-size:23px; text-align:justify;">
+Un efecto está <strong>confundido</strong> con los bloques cuando su contraste estimado coincide exactamente con el contraste que mide la diferencia entre bloques. No es posible distinguir si la diferencia observada se debe al efecto o a las condiciones del bloque.
+</div>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 style="color:#1a3a6b; font-size: 26px;">Funciones R</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;"><code>ceiling((z*sigma/E)^2)</code>: media.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;"><code>ceiling(z^2*p*(1-p)/E^2)</code>: proporción.</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 23px;"><code>power.t.test()</code>: dos medias.</li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 23px;"><code>power.prop.test()</code>: dos proporciones.</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+La estrategia del diseño experimental no es evitar la confusión (es inevitable si el bloque es pequeño), sino <strong>elegirla deliberadamente</strong>.
+</div>
+
+## ¿Por qué confundir la interacción de mayor orden?
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Entre todos los efectos posibles, se sacrifica la interacción de <strong>mayor orden</strong> (en un $2^3$, la interacción triple $ABC$) porque:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center; line-height:1.4;">
+Por el <strong>principio de parsimonia</strong>, las interacciones de orden alto suelen ser pequeñas o nulas en la práctica agrícola.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:21px; text-align:center; line-height:1.4;">
+Los efectos principales y las interacciones de orden bajo (las más interpretables y de mayor interés agronómico) se conservan sin confundir.
 </div>
 
 </div>
 
-## Próxima clase
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 23: Conceptos fundamentales de pruebas de hipótesis.</strong> Formalizaremos el lenguaje estadístico para tomar decisiones: hipótesis nula y alternativa, errores tipo I y II, valor-p y regiones de rechazo.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+"Sacrificamos lo que probablemente no importa, para proteger lo que sí importa."
 </div>
 
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Este marco conceptual es la base de todas las pruebas de hipótesis de las Clases 24 a 27.
-</li>
-</ul>
+## Confusión del 2^3 en dos bloques: ejemplo en arroz
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+Factores: $A$ = Riego (Tradicional/Tecnificado), $B$ = Fertilizante (Estándar/Mejorado), $C$ = Densidad (Baja/Alta). Respuesta: rendimiento (sacos/ha). Cada lote (bloque) admite 4 parcelas; se usa el generador $ABC$ para definir los bloques.
+
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Regla de asignación a bloques</div>
+<div class="block-body" style="font-size:21px; text-align:center;">
+Se calcula el contraste de $ABC$ para cada combinación (producto de signos de $A$, $B$ y $C$). Las combinaciones con signo $-$ van al Bloque 1; las de signo $+$ van al Bloque 2.
+</div>
+</div>
+
+## Tabla de asignación a bloques
+
+<table style="width:100%; font-size:19px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Combinación</th><th>A</th><th>B</th><th>C</th><th>ABC</th><th>Bloque</th><th>Rendimiento</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">(1)</td><td>−</td><td>−</td><td>−</td><td>−</td><td>Lote 1</td><td>48.22</td></tr>
+<tr><td style="padding:6px;">a</td><td>+</td><td>−</td><td>−</td><td>+</td><td>Lote 2</td><td>56.44</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">b</td><td>−</td><td>+</td><td>−</td><td>+</td><td>Lote 2</td><td>60.28</td></tr>
+<tr><td style="padding:6px;">ab</td><td>+</td><td>+</td><td>−</td><td>−</td><td>Lote 1</td><td>61.48</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">c</td><td>−</td><td>−</td><td>+</td><td>+</td><td>Lote 2</td><td>50.94</td></tr>
+<tr><td style="padding:6px;">ac</td><td>+</td><td>−</td><td>+</td><td>−</td><td>Lote 1</td><td>49.82</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">bc</td><td>−</td><td>+</td><td>+</td><td>−</td><td>Lote 1</td><td>44.03</td></tr>
+<tr><td style="padding:6px;">abc</td><td>+</td><td>+</td><td>+</td><td>+</td><td>Lote 2</td><td>65.53</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:8px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:19px; text-align:center;">
+Lote 1: (1), ab, ac, bc &nbsp;&nbsp;|&nbsp;&nbsp; Lote 2: a, b, c, abc. Cada lote recibe 4 parcelas balanceadas en signos de $A$, $B$ y $C$.
+</div>
+
+## El experimento se replica dos veces
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Para poder estimar el error experimental, el esquema de bloqueo se repite en una segunda réplica (dos lotes adicionales con el mismo patrón de asignación).
+</div>
+
+<table style="width:100%; font-size:18px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Combinación</th><th>Bloque</th><th>Réplica 1</th><th>Réplica 2</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">(1)</td><td>Lote 1</td><td>48.22</td><td>47.37</td></tr>
+<tr><td style="padding:6px;">a</td><td>Lote 2</td><td>56.44</td><td>59.25</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">b</td><td>Lote 2</td><td>60.28</td><td>59.63</td></tr>
+<tr><td style="padding:6px;">ab</td><td>Lote 1</td><td>61.48</td><td>61.51</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">c</td><td>Lote 2</td><td>50.94</td><td>51.61</td></tr>
+<tr><td style="padding:6px;">ac</td><td>Lote 1</td><td>49.82</td><td>51.47</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">bc</td><td>Lote 1</td><td>44.03</td><td>45.32</td></tr>
+<tr><td style="padding:6px;">abc</td><td>Lote 2</td><td>65.53</td><td>65.59</td></tr>
+</table>
+
+## Cálculo de efectos (dos réplicas)
+
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Sumando las dos réplicas por combinación y aplicando la tabla de signos del $2^3$ ($n=2$ réplicas, $2^k=8$):
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Efecto</th><th>A</th><th>B</th><th>C</th><th>AB</th><th>AC</th><th>BC</th><th>ABC</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Estimado</td><td>7.96</td><td>6.03</td><td>−3.73</td><td>3.25</td><td>2.17</td><td>−1.87</td><td>7.51</td></tr>
+<tr><td style="padding:8px;">SC</td><td>253.53</td><td>145.50</td><td>55.76</td><td>42.28</td><td>18.77</td><td>14.04</td><td>225.38</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:10px; font-size:20px; text-align:center;">
+$SC_{ABC}=225.38$ no puede interpretarse como un efecto agronómico puro: está <strong>confundido</strong> con la diferencia entre Lote 1 y Lote 2.
+</div>
+
+## Verificación: SC de Bloques = SC de ABC
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Totales por bloque (dentro de cada réplica):</strong> usando los 4 lotes (2 por réplica), con $SC_{Bloques(dentro\ de\ Rep)}=226.98$ con 3 grados de libertad.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1b4d2e;">Descomposición:</strong> 1 grado de libertad de esa suma corresponde exactamente al contraste $ABC$ ($SC_{ABC}=225.38$); los 2 grados de libertad restantes corresponden a la diferencia entre las dos réplicas.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Esta coincidencia numérica es la prueba algebraica de que $ABC$ está confundido con el bloqueo dentro de cada réplica.
+</div>
+
+## Tabla ANOVA: arroz con confusión en dos bloques
+
+<table style="width:100%; font-size:18px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#fdecec;"><td style="padding:6px;">Bloques (incluye ABC)</td><td>226.98</td><td>3</td><td>75.66</td><td>85.12</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">A: Riego</td><td>253.53</td><td>1</td><td>253.53</td><td>285.23</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">B: Fertilizante</td><td>145.50</td><td>1</td><td>145.50</td><td>163.70</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">C: Densidad</td><td>55.76</td><td>1</td><td>55.76</td><td>62.74</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">AB</td><td>42.28</td><td>1</td><td>42.28</td><td>47.57</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">AC</td><td>18.77</td><td>1</td><td>18.77</td><td>21.12</td><td>0.004</td></tr>
+<tr><td style="padding:6px;">BC</td><td>14.04</td><td>1</td><td>14.04</td><td>15.80</td><td>0.007</td></tr>
+<tr style="background-color:#eef7ee;"><td style="padding:6px;">Error</td><td>5.33</td><td>6</td><td>0.89</td><td></td><td></td></tr>
+<tr><td style="padding:6px;">Total</td><td>762.21</td><td>15</td><td></td><td></td><td></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:8px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:18px; text-align:center;">
+Nótese que $ABC$ <strong>no aparece</strong> como fila propia: su información quedó absorbida en la fuente "Bloques".
+</div>
+
+## Conclusión: confusión en arroz
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; font-size:22px; text-align:justify; line-height:1.5;">
+Los efectos principales (Riego, Fertilizante, Densidad) y todas las interacciones de dos factores ($AB$, $AC$, $BC$) son significativos y se estimaron <strong>limpiamente</strong>, sin contaminación del bloque.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:12px; font-size:21px; text-align:center;">
+El costo fue renunciar a estimar $ABC$ de forma independiente del efecto de lote: un precio razonable, dado que la interacción triple rara vez es de interés agronómico prioritario.
+</div>
+
+## Confusión del 2^k en cuatro bloques
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+
+Cuando el bloque es aún más pequeño, se requieren $2^p$ bloques. Por ejemplo, en una finca papera de Cundinamarca, un experimento $2^4$ (Variedad $A$, Fungicida $B$, Riego $C$, Densidad $D$, 16 combinaciones) debe correrse en **lotes pequeños de solo 4 parcelas**: se necesitan $4 = 2^2$ bloques.
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:22px; text-align:center;">
+Con 4 bloques se necesitan <strong>dos generadores independientes</strong> para definir la partición; cada uno confunde un efecto, y su producto confunde un tercero.
+</div>
+
+## Generadores independientes y efecto generalizado
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Definición: efecto generalizado de interacción</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Si se eligen dos generadores independientes (por ejemplo $ABC$ y $ACD$), el <strong>efecto generalizado de interacción</strong> es su producto algebraico, eliminando letras repetidas en pares:
+$$ABC \times ACD = A^2BC^2D = BD$$
+Los tres efectos $ABC$, $ACD$ y $BD$ quedan <strong>todos</strong> confundidos con los 3 grados de libertad de "Bloques".
+</div>
+</div>
+
+## Asignación a 4 bloques: regla práctica
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+Para cada combinación se calculan los signos de los dos generadores $ABC$ y $ACD$. La combinación de signos $(\pm,\pm)$ define a cuál de los 4 lotes pertenece esa corrida:
+
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">ABC</th><th>ACD</th><th>Bloque</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">−</td><td>−</td><td>Lote 1</td></tr>
+<tr><td style="padding:8px;">−</td><td>+</td><td>Lote 2</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">+</td><td>−</td><td>Lote 3</td></tr>
+<tr><td style="padding:8px;">+</td><td>+</td><td>Lote 4</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:20px; text-align:center;">
+Cada lote queda con exactamente 4 de las 16 combinaciones, balanceadas en los demás efectos.
+</div>
+
+## Tabla de asignación: papa en 4 lotes
+
+<table style="width:100%; font-size:15px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:4px;">Comb.</th><th>A</th><th>B</th><th>C</th><th>D</th><th>ABC</th><th>ACD</th><th>Bloque</th><th>Rend.</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">(1)</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>Lote 1</td><td>22.48</td></tr>
+<tr><td style="padding:4px;">a</td><td>+</td><td>−</td><td>−</td><td>−</td><td>+</td><td>+</td><td>Lote 4</td><td>27.92</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">b</td><td>−</td><td>+</td><td>−</td><td>−</td><td>+</td><td>−</td><td>Lote 3</td><td>25.10</td></tr>
+<tr><td style="padding:4px;">ab</td><td>+</td><td>+</td><td>−</td><td>−</td><td>−</td><td>+</td><td>Lote 2</td><td>30.31</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">c</td><td>−</td><td>−</td><td>+</td><td>−</td><td>+</td><td>+</td><td>Lote 4</td><td>27.74</td></tr>
+<tr><td style="padding:4px;">ac</td><td>+</td><td>−</td><td>+</td><td>−</td><td>−</td><td>−</td><td>Lote 1</td><td>24.76</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">bc</td><td>−</td><td>+</td><td>+</td><td>−</td><td>−</td><td>+</td><td>Lote 2</td><td>28.58</td></tr>
+<tr><td style="padding:4px;">abc</td><td>+</td><td>+</td><td>+</td><td>−</td><td>+</td><td>−</td><td>Lote 3</td><td>33.49</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">d</td><td>−</td><td>−</td><td>−</td><td>+</td><td>−</td><td>+</td><td>Lote 2</td><td>22.40</td></tr>
+<tr><td style="padding:4px;">ad</td><td>+</td><td>−</td><td>−</td><td>+</td><td>+</td><td>−</td><td>Lote 3</td><td>28.79</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">bd</td><td>−</td><td>+</td><td>−</td><td>+</td><td>+</td><td>+</td><td>Lote 4</td><td>23.80</td></tr>
+<tr><td style="padding:4px;">abd</td><td>+</td><td>+</td><td>−</td><td>+</td><td>−</td><td>−</td><td>Lote 1</td><td>31.42</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">cd</td><td>−</td><td>−</td><td>+</td><td>+</td><td>−</td><td>−</td><td>Lote 3</td><td>28.95</td></tr>
+<tr><td style="padding:4px;">acd</td><td>+</td><td>−</td><td>+</td><td>+</td><td>+</td><td>−</td><td>Lote 2</td><td>28.96</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">bcd</td><td>−</td><td>+</td><td>+</td><td>+</td><td>−</td><td>−</td><td>Lote 1</td><td>24.85</td></tr>
+<tr><td style="padding:4px;">abcd</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>Lote 4</td><td>36.77</td></tr>
+</table>
+
+## SC de bloques en 4 grupos: verificación
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:21px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Totales por lote:</strong>
+$$y_{Lote1}=103.51 \quad y_{Lote2}=110.25 \quad y_{Lote3}=116.33 \quad y_{Lote4}=116.23$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:21px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1b4d2e;">Suma de cuadrados de bloques (3 gl):</strong>
+$$SC_{Bloques}=\frac{\sum_l y_{l\cdot}^2}{4}-\frac{y_{\cdot\cdot}^2}{16}=27.77$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+$$SC_{ABC}+SC_{ACD}+SC_{BD}=22.09+2.76+2.92=27.77=SC_{Bloques}$$
+La identidad se verifica de forma exacta: los tres efectos confundidos explican toda la variabilidad entre lotes.
+</div>
+
+## Tabla ANOVA: papa con confusión en 4 bloques
+
+<table style="width:100%; font-size:17px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:5px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#fdecec;"><td style="padding:5px;">Bloques (ABC, ACD, BD)</td><td>27.77</td><td>3</td><td>9.26</td><td>7.36</td><td>0.068</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">A: Variedad</td><td>92.74</td><td>1</td><td>92.74</td><td>73.70</td><td>0.003</td></tr>
+<tr><td style="padding:5px;">B: Fungicida</td><td>31.14</td><td>1</td><td>31.14</td><td>24.74</td><td>0.016</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">C: Riego</td><td>29.92</td><td>1</td><td>29.92</td><td>23.78</td><td>0.016</td></tr>
+<tr><td style="padding:5px;">D: Densidad</td><td>1.93</td><td>1</td><td>1.93</td><td>1.54</td><td>0.303</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">AB</td><td>27.04</td><td>1</td><td>27.04</td><td>21.49</td><td>0.019</td></tr>
+<tr><td style="padding:5px;">AC</td><td>7.29</td><td>1</td><td>7.29</td><td>5.79</td><td>0.095</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">AD</td><td>11.16</td><td>1</td><td>11.16</td><td>8.87</td><td>0.059</td></tr>
+<tr><td style="padding:5px;">BC</td><td>1.12</td><td>1</td><td>1.12</td><td>0.89</td><td>0.414</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">CD</td><td>1.19</td><td>1</td><td>1.19</td><td>0.94</td><td>0.403</td></tr>
+<tr><td style="padding:5px;">Error (ABD, BCD, ABCD)</td><td>3.78</td><td>3</td><td>1.26</td><td></td><td></td></tr>
+<tr style="background-color:#eef7ee;"><td style="padding:5px;">Total</td><td>235.07</td><td>15</td><td></td><td></td><td></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:6px; border-radius:10px; border-left:8px solid #475569; margin-top:6px; font-size:16px; text-align:center;">
+$BD$ no aparece como fila propia: su información, junto con $ABC$ y $ACD$, está en "Bloques". El error usa los efectos de orden 3 y 4 no confundidos ($ABD$, $BCD$, $ABCD$).
+</div>
+
+## Interpretación: papa en 4 bloques
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; font-size:22px; text-align:justify; line-height:1.5;">
+La Variedad, el Fungicida, el Riego y la interacción $AB$ (Variedad $\times$ Fungicida) afectan significativamente el rendimiento. La Densidad ($D$) no resultó significativa en este ensayo.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:12px; font-size:21px; text-align:center;">
+El precio de bloquear en 4 lotes pequeños fue renunciar a estimar limpiamente $ABC$, $ACD$ y $BD$: tres interacciones de orden alto y medio, normalmente menos relevantes que los efectos principales.
+</div>
+
+## Confusión del 2^k en 2^p bloques: generalización
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+
+El procedimiento se extiende a cualquier número de bloques que sea potencia de 2.
+
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Regla general de confusión en $2^p$ bloques</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Para dividir un $2^k$ en $2^p$ bloques de tamaño $2^{k-p}$ se eligen $p$ generadores independientes. Quedan confundidos con bloques los $p$ generadores y todas sus $\binom{p}{2}+\binom{p}{3}+\cdots$ interacciones generalizadas, hasta completar $2^p-1$ efectos confundidos (los grados de libertad de "Bloques").
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+A mayor número de bloques, mayor el número de efectos sacrificados: la elección de generadores debe privilegiar interacciones de orden alto.
+</div>
+
+## Errores comunes: confusión
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Elegir como generador un efecto principal o una interacción de orden bajo, sacrificando información valiosa innecesariamente.
+- Interpretar el efecto confundido (ej. $ABC$) como si fuera una estimación pura, ignorando que incluye la diferencia entre bloques.
+- Olvidar verificar que $SC_{Bloques}$ coincide exactamente con la suma de SC de los efectos confundidos: es la forma de comprobar que el esquema de bloqueo fue bien construido.
+- Usar más bloques de los necesarios, aumentando innecesariamente el número de efectos confundidos.
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Parte III: Confusión parcial
+</p>
+
+</div>
+
+## Motivación de la confusión parcial
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+
+En el ejemplo de la papa, las interacciones $ABC$, $ACD$ y $BD$ quedaron <strong>totalmente</strong> confundidas: ninguna réplica permite estimarlas. Si alguna de ellas resultara importante agronómicamente, esa información se perdería por completo.
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+La <strong>confusión parcial</strong> resuelve esto: se repite el experimento varias veces, usando un <strong>esquema de bloqueo distinto</strong> (es decir, un generador distinto) en cada réplica.
+</div>
+
+## Idea de la confusión parcial
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Definición: confusión parcial</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Si en cada una de $r$ réplicas se confunde un efecto distinto con los bloques, cada efecto queda confundido solo en una fracción $1/r$ de las observaciones. Las réplicas donde el efecto <strong>no</strong> está confundido permiten estimarlo, recuperando parcialmente la información perdida.
+</div>
+</div>
+
+## Ejemplo conceptual: flores en sabana de Bogotá
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+Un cultivo de rosas en Madrid (Cundinamarca) evalúa $2^3$ combinaciones de Riego, Nutrición foliar y Poda de formación, con invernaderos de capacidad para solo 4 camas (bloques de tamaño 4). Se programan <strong>cuatro réplicas</strong>, cada una con un generador distinto:
+
+</div>
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Réplica</th><th>Generador confundido</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">I</td><td>$AB$</td></tr>
+<tr><td style="padding:8px;">II</td><td>$AC$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">III</td><td>$BC$</td></tr>
+<tr><td style="padding:8px;">IV</td><td>$ABC$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:19px; text-align:center;">
+Cada efecto ($AB$, $AC$, $BC$, $ABC$) se estima con información de las 3 réplicas donde <strong>no</strong> está confundido, en lugar de perderse completamente.
+</div>
+
+## Estimación bajo confusión parcial
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Para un efecto confundido en 1 de las 4 réplicas, su efecto se estima usando únicamente las 3 réplicas donde se estimó limpiamente:
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; text-align:center; margin-top:10px;">
+$$\widehat{AB}=\frac{1}{3}\Big(\text{contraste}_{AB}^{(II)}+\text{contraste}_{AB}^{(III)}+\text{contraste}_{AB}^{(IV)}\Big)\Big/ 4$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:21px; text-align:center;">
+La eficiencia relativa de esta estimación parcial, comparada con una estimación completamente limpia, es del 75% (se usan 3 de 4 réplicas).
+</div>
+
+## Ventajas y costos de la confusión parcial
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Ventajas</div>
+<div style="font-size:21px; text-align:justify; line-height:1.4; margin-top:8px;">
+Ningún efecto se pierde por completo; todos son estimables con al menos parte de la información. Útil cuando no se sabe de antemano cuál interacción podría ser relevante.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:18px; border-radius:18px; border-top:8px solid #b91c1c;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#b91c1c;">Costos</div>
+<div style="font-size:21px; text-align:justify; line-height:1.4; margin-top:8px;">
+El análisis es más complejo (cada efecto usa un subconjunto distinto de réplicas) y la precisión de cada efecto confundido parcialmente es menor que la de un efecto nunca confundido.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+La confusión parcial es preferible cuando se necesitan varias réplicas de todas formas y existe incertidumbre sobre qué interacciones podrían importar.
+</div>
+
+## Errores comunes: confusión parcial
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Promediar los contrastes de un efecto usando también las réplicas donde estuvo confundido, sesgando la estimación.
+- No documentar qué generador se usó en cada réplica, perdiendo la trazabilidad necesaria para el análisis correcto.
+- Aplicar confusión parcial cuando bastaría con confusión total de la interacción de mayor orden (mayor complejidad sin beneficio real).
+- Olvidar que la eficiencia relativa de un efecto parcialmente confundido es siempre menor al 100%.
+</div>
+</div>
+
+## Resumen general de la clase
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Esquema</th>
+<th style="padding:8px;">¿Cuándo se usa?</th>
+<th style="padding:8px;">Costo en información</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Bloqueo de réplicas completas</td>
+<td style="padding:8px;">El bloque admite las $2^k$ combinaciones</td>
+<td style="padding:8px;">Ninguno</td>
+</tr>
+<tr>
+<td style="padding:8px;">Confusión total en $2^p$ bloques</td>
+<td style="padding:8px;">El bloque solo admite $2^{k-p}$ combinaciones</td>
+<td style="padding:8px;">Se pierden $2^p-1$ efectos por completo</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Confusión parcial</td>
+<td style="padding:8px;">Bloque pequeño y varias réplicas disponibles</td>
+<td style="padding:8px;">Eficiencia reducida, pero ningún efecto se pierde del todo</td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+En los tres casos, la regla de oro es: si hay que sacrificar información, sacrifique la interacción de mayor orden o de menor interés agronómico.
+</div>
+
+## Taller en Clase {.center .middle}
+
+## Instrucciones
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:26px; line-height:1.7;">
+
+Para cada ejercicio:
+
+<ol>
+<li>Identifique el tipo de esquema (bloqueo de réplicas completas, confusión total o confusión parcial).</li>
+<li>Construya la tabla de signos o de asignación a bloques que corresponda.</li>
+<li>Calcule los efectos y sumas de cuadrados solicitados.</li>
+<li>Verifique la identidad $SC_{Bloques}=\sum SC_{efectos\ confundidos}$ cuando aplique.</li>
+<li>Redacte una conclusión en el contexto agrícola del problema.</li>
+</ol>
+
+</div>
+
+</div>
+
+## Ejercicio 1
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Un productor de plátano en Urabá replica un diseño $2^3$ (Riego, Fertilización, Control de Sigatoka) completo en 4 fincas distintas, cada una con capacidad para las 8 combinaciones. Obtiene $SC_{Bloques}=38.2$ (con 3 gl) y $SC_{Error}=12.6$ (con 21 gl).
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+¿Es necesario el bloqueo por finca? Calcule $F$ para Bloques y compárela con $F_{0.05,3,21}=3.07$.
+</div>
+
+## Ejercicio 2
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+En un experimento $2^3$ de caña panelera (Variedad $A$, Fertilización $B$, Riego $C$), cada lote solo admite 4 parcelas. Se confunde $ABC$ con bloques. Las combinaciones con $ABC=-1$ son (1), ab, ac, bc.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Determine en qué bloque queda la combinación <strong>abc</strong> y explique por qué <strong>no</strong> es posible estimar $ABC$ sin contaminación del bloque.
+</div>
+
+## Ejercicio 3
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Un experimento $2^4$ sobre rendimiento de fríjol (Variedad $A$, Densidad $B$, Fertilizante $C$, Riego $D$) se confunde en 4 bloques de 4 parcelas usando los generadores $ABD$ y $BCD$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Calcule el efecto generalizado de interacción ($ABD \times BCD$) y liste los tres efectos que quedan confundidos con bloques.
+</div>
+
+## Ejercicio 4
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Para el experimento de papa confundido en 4 bloques visto en clase, los totales de bloque fueron $y_{Lote1}=103.51$, $y_{Lote2}=110.25$, $y_{Lote3}=116.33$, $y_{Lote4}=116.23$, con $y_{\cdot\cdot}=446.32$ y 16 observaciones.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Verifique el cálculo de $SC_{Bloques}=\dfrac{\sum y_{l\cdot}^2}{4}-\dfrac{y_{\cdot\cdot}^2}{16}$ y compárelo con el valor reportado en la tabla ANOVA (27.77).
+</div>
+
+## Ejercicio 5
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Un cultivo de flores planea 3 réplicas de un $2^3$ (Riego, Nutrición, Poda) en invernaderos de 4 camas, confundiendo $AB$ en la réplica I, $AC$ en la réplica II y $BC$ en la réplica III.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Explique con qué fracción de la información total se estima cada uno de los efectos $AB$, $AC$ y $BC$, y calcule la eficiencia relativa de cada estimación.
+</div>

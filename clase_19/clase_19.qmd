@@ -1,11 +1,12 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
   revealjs:
+    embed-resources: true
     logo: images/logo_unal_3.png
     slide-number: true
     title-slide: false
@@ -37,432 +38,1079 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 19 {.center .middle}
 
 ## Contenido
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 26px; margin-top: 20px; font-size: 21px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El TCL</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 25px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Bloques Completos Aleatorizados</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Enunciado y condiciones.</li>
-<li class="fragment fade-in" data-fragment-index="3">Demostración intuitiva.</li>
-<li class="fragment fade-in" data-fragment-index="4">Convergencia en distribución.</li>
-<li class="fragment fade-in" data-fragment-index="5">Velocidad de convergencia.</li>
+<li class="fragment fade-in" data-fragment-index="2">Motivación: por qué bloquear.</li>
+<li class="fragment fade-in" data-fragment-index="3">El modelo del RCBD.</li>
+<li class="fragment fade-in" data-fragment-index="4">Descomposición de la suma de cuadrados.</li>
+<li class="fragment fade-in" data-fragment-index="5">Tabla ANOVA y ejemplo: papa en el altiplano.</li>
+<li class="fragment fade-in" data-fragment-index="6">Verificación del modelo y residuos.</li>
+<li class="fragment fade-in" data-fragment-index="7">Eficiencia relativa del bloqueo.</li>
+<li class="fragment fade-in" data-fragment-index="8">Observación faltante y modelo de regresión.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Aplicaciones</h3>
+<h3 class="fragment fade-in" data-fragment-index="9" style="font-size: 25px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Cuadrado Latino</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">TCL para la suma y la media.</li>
-<li class="fragment fade-in" data-fragment-index="8">Aproximación Normal a Binomial y Poisson.</li>
-<li class="fragment fade-in" data-fragment-index="9">Simulación y visualización en R.</li>
-<li class="fragment fade-in" data-fragment-index="10">Condiciones de aplicación y taller.</li>
+<li class="fragment fade-in" data-fragment-index="10">Motivación: dos fuentes de variación extraña.</li>
+<li class="fragment fade-in" data-fragment-index="11">Estructura y aleatorización.</li>
+<li class="fragment fade-in" data-fragment-index="12">Modelo estadístico.</li>
+<li class="fragment fade-in" data-fragment-index="13">Ejemplo: variedades de arroz en el Tolima.</li>
+<li class="fragment fade-in" data-fragment-index="14">Tabla ANOVA de cuatro fuentes.</li>
 </ul>
 </div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="15" style="font-size: 25px; margin-bottom: 14px; color: #79260d;">Parte III: Cuadrado Greco-Latino</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="16">Motivación: tres fuentes de variación extraña.</li>
+<li class="fragment fade-in" data-fragment-index="17">Estructura y modelo.</li>
+<li class="fragment fade-in" data-fragment-index="18">Condiciones de uso y limitaciones.</li>
+<li class="fragment fade-in" data-fragment-index="19">Ejemplo conceptual: fertilizantes.</li>
+</ul>
 </div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="20" style="font-size: 25px; margin-bottom: 14px; color: #5b21b6;">Parte IV: Bloques Incompletos Balanceados</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="21">Motivación: capacidad limitada de bloque.</li>
+<li class="fragment fade-in" data-fragment-index="22">Análisis estadístico del BIBD.</li>
+<li class="fragment fade-in" data-fragment-index="23">Estimación por mínimos cuadrados.</li>
+<li class="fragment fade-in" data-fragment-index="24">Recuperación de información interbloque.</li>
+<li class="fragment fade-in" data-fragment-index="25">Ejemplo: variedades de café.</li>
+<li class="fragment fade-in" data-fragment-index="26">Taller en clase.</li>
+</ul>
+</div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Teorema Central del Límite</p>
-<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Por qué la Normal aparece en todas partes</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
-</div>
 
-## El fenómeno que justifica la Normal
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Diseños con Restricciones de Aleatorización
+</p>
 
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-El rendimiento de un cultivo depende de cientos de factores: temperatura, lluvia, pH, nutrientes, luz, plagas. Ninguno por sí solo domina.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Cada factor contribuye una pequeña perturbación aleatoria. La suma de muchos efectos pequeños e independientes produce una distribución Normal.
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-Este fenómeno es precisamente lo que establece el <strong>Teorema Central del Límite (TCL)</strong>.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-Es el resultado teórico más importante de la estadística: explica por qué la distribución Normal es ubicua en fenómenos naturales y biológicos.
-</li>
-</ul>
-</div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+En los experimentos agrícolas reales, casi nunca todo el material experimental es homogéneo. ¿Cómo controlamos la variabilidad que no nos interesa, sin perder la capacidad de comparar tratamientos?
+</p>
 
 </div>
 
-## Enunciado del TCL
+## Motivación: por qué bloquear
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En el Diseño Completamente Aleatorizado (DCA) se asume que todas las unidades experimentales son homogéneas. Sin embargo, en campo esto rara vez ocurre: las fincas difieren en altitud, tipo de suelo, manejo previo o disponibilidad de agua.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:18px; border-radius:18px; border-top:8px solid #b91c1c;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#b91c1c;">El problema</div>
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-top:8px;">
+Si la variabilidad entre fincas se mezcla con el error experimental, el $CM_E$ se infla y se reduce la capacidad de detectar diferencias reales entre tratamientos.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">La solución: bloquear</div>
+<div style="font-size:22px; text-align:justify; line-height:1.4; margin-top:8px;">
+Se agrupan las unidades experimentales en <strong>bloques</strong> homogéneos (ej. fincas), y se aplican todos los tratamientos dentro de cada bloque, aislando esa fuente de variación.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:14px; border-radius:14px; border-left:8px solid #475569; margin-top:14px;">
+<div style="font-size:23px; text-align:justify; line-height:1.3;">
+Ejemplo: comparar 4 variedades de papa en 5 fincas distintas del altiplano cundiboyacense. La finca no es de interés directo, pero afecta el rendimiento; bloquear por finca permite "restarle" esa variabilidad al error experimental.
+</div>
+</div>
+
+## El Diseño de Bloques Completos Aleatorizados (RCBD)
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+En un RCBD, cada <strong>bloque</strong> contiene exactamente una réplica de <strong>todos</strong> los tratamientos (de ahí "completo"), y dentro de cada bloque el orden de los tratamientos se asigna al azar (de ahí "aleatorizado").
+</div>
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Teorema Central del Límite (Lindeberg-Lévy)</div>
-  <div class="block-body">
-  <p>Sea $X_1, X_2, \ldots$ una sucesión de variables aleatorias i.i.d. con $E(X_i) = \mu$ y $\text{Var}(X_i) = \sigma^2 < \infty$. Entonces, cuando $n \to \infty$:</p>
-  $$Z_n = \frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} = \frac{\sum_{i=1}^n X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1)$$
-  </div>
+<div class="block-title" style="font-size:28px;">Modelo del RCBD</div>
+<div class="block-body" style="font-size:26px; text-align:center;">
+$$
+y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij}
+\qquad
+\begin{cases}
+i=1,\ldots,a \text{ (tratamientos)} \\
+j=1,\ldots,b \text{ (bloques)}
+\end{cases}
+$$
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-El resultado es válido <strong>sin importar la distribución original</strong> de $X_i$, siempre que $\mu$ y $\sigma^2$ sean finitos.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-$\xrightarrow{d}$ denota convergencia en distribución.
-</li>
-</ul>
+<div style="font-size:22px; line-height:1.4; margin-top:10px;">
+- $\mu$: media general. $\tau_i$: efecto del tratamiento $i$. $\beta_j$: efecto del bloque $j$.
+- $\varepsilon_{ij}\sim N(0,\sigma^2)$ independientes.
+- Restricciones: $\sum_i \tau_i = 0$, $\sum_j \beta_j = 0$.
+- A diferencia del DCA, ahora el modelo separa explícitamente la variabilidad debida al bloque.
+</div>
 
-## Consecuencias prácticas del TCL
+## Hipótesis y supuestos del RCBD
 
-<ul>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 28px; text-align: justify;">
-Para $n$ suficientemente grande, $\bar{X} \approx N(\mu, \sigma^2/n)$ <strong>independientemente de la distribución de la población</strong>.
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Los intervalos de confianza y pruebas de hipótesis basados en la Normal son aproximadamente válidos para muestras grandes aunque la población no sea Normal.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Regla práctica: el TCL es una buena aproximación con $n \geq 30$ para distribuciones moderadamente asimétricas, y $n \geq 50$ para distribuciones muy asimétricas.
-</li>
-</ul>
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El interés principal del RCBD recae en el efecto de tratamiento; el bloque se incluye para controlar variabilidad, no para realizar inferencia sobre él.
+</div>
 
-## Demostración intuitiva: sumas de Uniformes
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>Hipótesis de interés</strong><br>
+$$H_0:\tau_1=\cdots=\tau_a=0$$
+$$H_1:\text{algún } \tau_i\neq0$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>Supuestos del modelo</strong><br>
+Normalidad, homogeneidad de varianza, independencia y aditividad (sin interacción tratamiento-bloque).
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:20px; text-align:center;">
+La aleatorización se restringe: dentro de cada bloque, los tratamientos se asignan al azar a las unidades experimentales, pero el bloque mismo no se aleatoriza.
+</div>
+
+## Ejemplo agrícola: variedades de papa en el altiplano
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Un ingeniero agrónomo del ICA evalúa el rendimiento (t/ha) de 4 variedades de papa: <strong>Pastusa Suprema</strong>, <strong>Diacol Capiro</strong>, <strong>ICA Única</strong> y <strong>Criolla Colombia</strong>, sembradas en 5 fincas de Cundinamarca y Boyacá (Subachoque, Toca, Villapinzón, Tausa, Zipaquirá), cada una usada como bloque.
+</div>
+
+<table style="width:100%; font-size:19px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Finca (bloque)</th><th>Pastusa Suprema</th><th>Diacol Capiro</th><th>ICA Única</th><th>Criolla Colombia</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Subachoque</td><td>27.6</td><td>31.9</td><td>32.8</td><td>25.9</td></tr>
+<tr><td style="padding:6px;">Toca</td><td>30.2</td><td>32.7</td><td>32.6</td><td>26.6</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Villapinzón</td><td>26.1</td><td>29.3</td><td>33.0</td><td>25.3</td></tr>
+<tr><td style="padding:6px;">Tausa</td><td>31.3</td><td>34.6</td><td>33.2</td><td>28.1</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Zipaquirá</td><td>25.9</td><td>27.6</td><td>29.3</td><td>21.0</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Cada finca recibe las 4 variedades en orden aleatorio: hay $a=4$ tratamientos y $b=5$ bloques, con $N=20$ observaciones en total.
+</div>
+
+## Medias por tratamiento y por bloque
+
+<table style="width:100%; font-size:23px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Variedad</th><th style="padding:8px;">$\bar y_{i.}$ (t/ha)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Pastusa Suprema</td><td style="padding:8px;">28.22</td></tr>
+<tr><td style="padding:8px;">Diacol Capiro</td><td style="padding:8px;">31.22</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">ICA Única</td><td style="padding:8px;">32.18</td></tr>
+<tr><td style="padding:8px;">Criolla Colombia</td><td style="padding:8px;">25.38</td></tr>
+</table>
 
 ```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-set.seed(19)
-B <- 5000
-ns <- c(1, 2, 5, 30)
-
-df <- map_dfr(ns, function(n) {
-  sumas <- replicate(B, mean(runif(n, 0, 1)))
-  tibble(xbar = sumas, n = paste0("n = ", n))
-}) |> mutate(n = factor(n, levels = paste0("n = ", ns)))
-
-ggplot(df, aes(x = xbar)) +
-  geom_histogram(aes(y = after_stat(density)), bins = 40,
-                 fill = "#1a3a6b", color = "white", alpha = 0.8) +
-  facet_wrap(~n, scales = "free_y") +
-  labs(x = "Media muestral", y = "Densidad",
-       title = "TCL: medias de Uniforme(0,1) convergen a Normal") +
-  theme_minimal(base_size = 12)
+#| label: boxplot-papa
+#| echo: false
+#| fig-height: 3.2
+variedades <- c("Pastusa_Suprema", "Diacol_Capiro", "ICA_Unica", "Criolla_Colombia")
+fincas <- c("Subachoque","Toca","Villapinzon","Tausa","Zipaquira")
+set.seed(101)
+mu <- 28
+tau <- c(0, 2.4, 4.1, -1.8); names(tau) <- variedades
+beta <- c(0, 1.5, -1.0, 3.0, -2.5); names(beta) <- fincas
+dat_papa <- expand.grid(finca = fincas, variedad = variedades)
+dat_papa$rend <- mu + tau[dat_papa$variedad] + beta[dat_papa$finca] + rnorm(nrow(dat_papa), 0, 1.3)
+dat_papa$rend <- round(dat_papa$rend, 1)
+dat_papa$variedad <- factor(dat_papa$variedad, levels = variedades)
+dat_papa$finca <- factor(dat_papa$finca, levels = fincas)
+modelo_rcbd <- aov(rend ~ variedad + finca, data = dat_papa)
+boxplot(rend ~ variedad, data = dat_papa,
+        col = c("#cbd5e1", "#dbeafe", "#d6f0dd", "#fde68a"),
+        xlab = "Variedad", ylab = "Rendimiento (t/ha)",
+        main = "Rendimiento de papa por variedad (5 fincas)")
 ```
 
-## Velocidad de convergencia
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Distribuciones simétricas</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-La convergencia es rápida: con $n \geq 10$ la aproximación Normal es buena.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px;">
-Ejemplos: Uniforme, Binomial($n$, 0.5).
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:20px; text-align:center;">
+La media general es $\bar y_{..}=29.25$ t/ha. Las fincas también difieren: Tausa promedia 31.80 t/ha y Zipaquirá solo 25.95 t/ha, evidenciando la necesidad de bloquear.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Distribuciones asimétricas</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
-La convergencia es más lenta: se necesita $n \geq 50$ o más.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px;">
-Ejemplos: Exponencial, Poisson con $\lambda$ pequeño.
-</li>
-</ul>
+## Descomposición de la suma de cuadrados en el RCBD
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+La variabilidad total ahora se descompone en <strong>tres</strong> componentes: tratamiento, bloque y error.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Identidad fundamental del RCBD</div>
+<div class="block-body" style="font-size:21px; text-align:center;">
+$$
+\underbrace{\sum_{i}\sum_{j}(y_{ij}-\bar y_{..})^2}_{SC_T}
+=
+\underbrace{b\sum_{i} (\bar y_{i.}-\bar y_{..})^2}_{SC_{Trat}}
++
+\underbrace{a\sum_{j} (\bar y_{.j}-\bar y_{..})^2}_{SC_{Bloq}}
++
+\underbrace{\sum_{i}\sum_{j}(y_{ij}-\bar y_{i.}-\bar y_{.j}+\bar y_{..})^2}_{SC_E}
+$$
+</div>
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:19px; text-align:center;">
+$SC_{Trat}$: variabilidad entre variedades.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:19px; text-align:center;">
+$SC_{Bloq}$: variabilidad entre fincas.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-top:7px solid #d97706; font-size:19px; text-align:center;">
+$SC_E$: variabilidad residual no explicada.
 </div>
 
 </div>
 
-## TCL con distribución Exponencial
+## Cálculo de las sumas de cuadrados: ejemplo de la papa
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Paso 1. Suma de cuadrados total:</strong>
+$$SC_T=\sum_i\sum_j(y_{ij}-29.25)^2=235.97$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1b4d2e;">Paso 2. Suma de cuadrados de tratamiento y bloque:</strong>
+$$SC_{Trat}=5\sum_i (\bar y_{i.}-29.25)^2=142.52$$
+$$SC_{Bloq}=4\sum_j (\bar y_{.j}-29.25)^2=79.16$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4; margin-top:8px;">
+<strong style="color:#d97706;">Paso 3. Suma de cuadrados del error:</strong>
+$$SC_E=SC_T-SC_{Trat}-SC_{Bloq}=235.97-142.52-79.16=14.30$$
+</div>
+
+## Tabla ANOVA del RCBD
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center; margin-top:8px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Fuente</th>
+<th style="padding:8px;">SC</th>
+<th style="padding:8px;">gl</th>
+<th style="padding:8px;">CM</th>
+<th style="padding:8px;">F</th>
+<th style="padding:8px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Variedad</td>
+<td style="padding:8px;">142.52</td>
+<td style="padding:8px;">3</td>
+<td style="padding:8px;">47.51</td>
+<td style="padding:8px;">39.88</td>
+<td style="padding:8px;">$1.6\times10^{-6}$</td>
+</tr>
+<tr>
+<td style="padding:8px;">Finca (bloque)</td>
+<td style="padding:8px;">79.16</td>
+<td style="padding:8px;">4</td>
+<td style="padding:8px;">19.79</td>
+<td style="padding:8px;">16.61</td>
+<td style="padding:8px;">$7.8\times10^{-5}$</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:8px;">Error</td>
+<td style="padding:8px;">14.30</td>
+<td style="padding:8px;">12</td>
+<td style="padding:8px;">1.19</td>
+<td style="padding:8px;"></td>
+<td style="padding:8px;"></td>
+</tr>
+<tr>
+<td style="padding:8px;">Total</td>
+<td style="padding:8px;">235.97</td>
+<td style="padding:8px;">19</td>
+<td style="padding:8px;"></td>
+<td style="padding:8px;"></td>
+<td style="padding:8px;"></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Para tratamiento: $F=\dfrac{CM_{Trat}}{CM_E}\sim F_{a-1,(a-1)(b-1)}$. Para bloque: $F=\dfrac{CM_{Bloq}}{CM_E}\sim F_{b-1,(a-1)(b-1)}$, aunque esta última prueba suele usarse solo de forma descriptiva.
+</div>
+
+## Criterio de decisión y conclusión: papa
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Criterio de decisión</div>
+<div style="font-size:21px; text-align:center; line-height:1.5; margin-top:8px;">
+$$F_{calc}=39.88 > F_{0.05,3,12}=3.49$$
+$$\text{valor-p}=1.6\times10^{-6}<0.05$$
+Se rechaza $H_0:\tau_1=\cdots=\tau_4=0$.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:21px; text-align:justify; line-height:1.4; margin-top:8px;">
+Existe evidencia estadística suficiente para afirmar que al menos una variedad de papa tiene un rendimiento promedio diferente, controlando por la variabilidad entre fincas.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:20px; text-align:center;">
+El bloqueo por finca también resultó significativo ($F=16.61$, valor-p$=7.8\times10^{-5}$), confirmando que las fincas difieren considerablemente y que bloquear fue una decisión acertada.
+</div>
+
+## Verificación de la adecuación del modelo
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Como en cualquier ANOVA, los residuos $e_{ij}=y_{ij}-\hat y_{ij}$ deben revisarse para validar normalidad, homogeneidad de varianza e independencia.
+</div>
 
 ```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-set.seed(19)
-lambda <- 0.5; B <- 5000
-mu <- 1/lambda; sigma <- 1/lambda
-ns <- c(2, 10, 30, 100)
-
-df <- map_dfr(ns, function(n) {
-  zs <- replicate(B, {
-    x <- rexp(n, lambda)
-    (mean(x) - mu) / (sigma / sqrt(n))
-  })
-  tibble(z = zs, n = paste0("n = ", n))
-}) |> mutate(n = factor(n, levels = paste0("n = ", ns)))
-
-ggplot(df, aes(x = z)) +
-  geom_histogram(aes(y = after_stat(density)), bins = 40,
-                 fill = "#1b4d2e", color = "white", alpha = 0.8) +
-  stat_function(fun = dnorm, color = "#c0392b", linewidth = 1) +
-  facet_wrap(~n) +
-  labs(x = "Z estandarizado", y = "Densidad",
-       title = "TCL: Exp(0.5) converge a N(0,1)") +
-  theme_minimal(base_size = 12)
+#| label: qqplot-papa
+#| echo: false
+#| fig-height: 3.2
+qqnorm(residuals(modelo_rcbd), main = "Gráfico de probabilidad normal de los residuos",
+       pch = 19, col = "#1a3a6b")
+qqline(residuals(modelo_rcbd), col = "#b91c1c", lwd = 2)
 ```
 
-## Aproximación Normal a la Binomial
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:21px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Shapiro-Wilk:</strong> $W=0.947$, valor-p$=0.319$.
+<strong style="color:#1b4d2e; margin-left:10px;">Bartlett:</strong> $K^2=1.73$, gl$=3$, valor-p$=0.630$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+Ambos supuestos se cumplen razonablemente: no hay evidencia para rechazar normalidad ni homogeneidad de varianzas.
+</div>
+
+## Gráfico de interacción tratamiento por bloque
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+El modelo aditivo del RCBD asume que el efecto del tratamiento es <strong>el mismo</strong> en todos los bloques (no hay interacción). Esto se verifica gráficamente con un gráfico de perfiles.
+</div>
+
+```{r}
+#| label: interaccion-papa
+#| echo: false
+#| fig-height: 3.4
+with(dat_papa, interaction.plot(finca, variedad, rend,
+     col = c("#1a3a6b","#1b4d2e","#d97706","#7c3aed"), lwd = 2,
+     xlab = "Finca (bloque)", ylab = "Rendimiento (t/ha)",
+     trace.label = "Variedad", main = "Perfiles de rendimiento por finca y variedad"))
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:20px; text-align:center;">
+Las líneas son aproximadamente paralelas: no se observa un cruce sistemático, lo cual respalda el supuesto de aditividad. La <strong>prueba de Tukey para no aditividad</strong> permite formalizar esta verificación, contrastando $H_0:$ no hay interacción tratamiento-bloque.
+</div>
+
+## Otros aspectos del RCBD: eficiencia relativa del bloqueo
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Una pregunta natural es: ¿valió la pena bloquear? La <strong>eficiencia relativa</strong> (ER) compara la precisión del RCBD con la de un DCA hipotético que hubiera ignorado el bloqueo.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Eficiencia relativa del bloqueo</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$
+ER = \frac{CM_{Bloq}(b-1) + b(a-1)\,CM_E}{(ab-1)\,CM_E}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; text-align:center; margin-top:8px;">
+$$ER=\frac{19.79(4)+5(3)(1.19)}{19(1.19)}=\frac{79.16+17.85}{22.61}\approx4.29$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:21px; text-align:center;">
+$ER\approx4.29$ significa que el RCBD es aproximadamente <strong>4.3 veces más eficiente</strong> que el DCA: hubiera sido necesario usar más de 4 veces el número de réplicas en un DCA para lograr la misma precisión.
+</div>
+
+## Observación faltante en el RCBD
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En campo es común perder una observación (planta muerta, parcela inundada). El procedimiento de Yates permite <strong>estimar</strong> el valor faltante para mantener el análisis balanceado.
+</div>
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Corolario: aproximación Normal a Binomial</div>
-  <div class="block-body">
-  <p>Si $X \sim \text{Bin}(n, p)$ con $np \geq 5$ y $n(1-p) \geq 5$:</p>
-  $$X \approx N(np,\; np(1-p))$$
-  <p>Con corrección de continuidad: $P(X \leq k) \approx \Phi\!\left(\dfrac{k + 0.5 - np}{\sqrt{np(1-p)}}\right)$.</p>
-  </div>
+<div class="block-title" style="font-size:24px;">Fórmula de Yates para un dato faltante</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+\hat y_{ij}=\frac{a\,B_j+b\,T_i-Y}{(a-1)(b-1)}
+$$
+</div>
 </div>
 
-## Corrección de continuidad: ejemplo
-
-```{r}
-#| echo: true
-n <- 50; p <- 0.4
-# Exacto (Binomial)
-p_exacto <- pbinom(22, n, p)
-
-# Aproximación Normal sin corrección
-p_sin_cc <- pnorm(22, n*p, sqrt(n*p*(1-p)))
-
-# Aproximación Normal con corrección de continuidad
-p_con_cc <- pnorm(22.5, n*p, sqrt(n*p*(1-p)))
-
-cat("Binomial exacto:", round(p_exacto, 5), "\n")
-cat("Normal sin CC:  ", round(p_sin_cc, 5), "\n")
-cat("Normal con CC:  ", round(p_con_cc, 5), "\n")
-```
-
-## Aproximación Normal a la Poisson
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Corolario: aproximación Normal a Poisson</div>
-  <div class="block-body">
-  <p>Si $X \sim \text{Poisson}(\lambda)$ con $\lambda$ grande ($\lambda \geq 10$):</p>
-  $$X \approx N(\lambda, \lambda)$$
-  </div>
+<div style="font-size:21px; line-height:1.4; margin-top:8px;">
+- $B_j$: total del bloque $j$ (sin el dato faltante).
+- $T_i$: total del tratamiento $i$ (sin el dato faltante).
+- $Y$: gran total (sin el dato faltante).
 </div>
 
-```{r}
-#| echo: true
-lambda <- 25
-# Exacto
-ppois(20, lambda)
-# Aproximación Normal con CC
-pnorm(20.5, lambda, sqrt(lambda))
-
-# Gráfica comparativa
-k <- 0:50
-df_comp <- data.frame(k, pois = dpois(k, lambda),
-                       norm = dnorm(k, lambda, sqrt(lambda)))
-```
-
-## Ejemplo aplicado: rendimiento de maíz
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: maíz, Valledupar</div>
-  <div class="block-body">
-  <p>El rendimiento por planta de maíz en Valledupar sigue una distribución con $\mu = 250\,\text{g}$ y $\sigma = 40\,\text{g}$ (distribución desconocida). Se toman $n = 64$ plantas. ¿Cuál es la probabilidad de que el rendimiento promedio supere 260 g?</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:21px; text-align:center; margin-top:8px;">
+Suponga que se pierde el dato de ICA Única en Tausa (valor real $33.2$). Con $B_{Tausa}=94.0$, $T_{ICA}=127.7$, $Y=551.8$:
+$$\hat y=\frac{4(94.0)+5(127.7)-551.8}{(4-1)(5-1)}=\frac{376+638.5-551.8}{12}\approx38.6$$
 </div>
 
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Por el TCL, con $n = 64$: $\bar{X} \approx N(250, 40^2/64) = N(250, 25)$, es decir $\sigma_{\bar{X}} = 5$.
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:6px; font-size:20px; text-align:center;">
+El valor estimado debe usarse con $1$ grado de libertad menos en el error, y el análisis posterior debe interpretarse con cautela: la estimación introduce algo de optimismo en la precisión.
+</div>
 
-```{r}
-#| echo: true
-mu <- 250; sigma <- 40; n <- 64
-ee <- sigma / sqrt(n)
-pnorm(260, mu, ee, lower.tail = FALSE)
-```
+## Estimación de parámetros y regresión general
 
-## Condiciones del TCL: cuándo no aplica
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+El RCBD también puede expresarse como un modelo de regresión con variables indicadoras para tratamiento y para bloque, usando Pastusa Suprema y Subachoque como referencias.
+</div>
+
+<table style="width:100%; font-size:19px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Coeficiente</th><th>Estimación</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Intercepto (Pastusa, Subachoque)</td><td>28.52</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">Diacol Capiro</td><td>3.00</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">ICA Única</td><td>3.96</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">Criolla Colombia</td><td>-2.84</td><td>0.001</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Tausa</td><td>2.25</td><td>0.013</td></tr>
+<tr><td style="padding:6px;">Zipaquirá</td><td>-3.60</td><td>0.001</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:20px; text-align:center;">
+El modelo de regresión explica el $93.9\%$ de la variabilidad ($R^2=0.939$), con $F=26.6$ (7, 12 gl), valor-p$=2.16\times10^{-6}$: el modelo global es altamente significativo, confirmando los resultados del ANOVA del RCBD.
+</div>
+
+## Comparaciones múltiples en el RCBD
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Una vez rechazado $H_0$, las comparaciones de Tukey, Scheffé o Dunnett (vistas en la clase anterior) se aplican de la misma forma, usando $CM_E$ del RCBD con sus grados de libertad $(a-1)(b-1)$.
+</div>
+
+<table style="width:100%; font-size:19px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Comparación</th><th>Diferencia</th><th>valor-p (Tukey)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Diacol Capiro - Pastusa Suprema</td><td>3.00</td><td>0.012</td></tr>
+<tr><td style="padding:6px;">ICA Única - Pastusa Suprema</td><td>3.96</td><td>0.002</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Criolla Colombia - Pastusa Suprema</td><td>-2.84</td><td>0.025</td></tr>
+<tr><td style="padding:6px;">ICA Única - Diacol Capiro</td><td>0.96</td><td>0.498</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Criolla Colombia - Diacol Capiro</td><td>-5.84</td><td>$<0.001$</td></tr>
+<tr><td style="padding:6px;">Criolla Colombia - ICA Única</td><td>-6.80</td><td>$<0.001$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+ICA Única y Diacol Capiro tienen el mayor rendimiento y no difieren significativamente entre sí; Criolla Colombia presenta el menor rendimiento, significativamente inferior a las otras tres variedades.
+</div>
+
+## Errores comunes en el RCBD
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: violaciones del TCL</div>
-  <div class="block-body">
-  <p>El TCL requiere varianza finita. Cuando no se cumple, la aproximación Normal falla.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Bloquear por una variable que no afecta la respuesta: se pierden grados de libertad del error sin ganar precisión.
+- Confundir bloque con tratamiento: el bloque nunca se asigna al azar a las unidades, ya existe (ej. la finca ya tiene su ubicación).
+- Olvidar que cada bloque debe contener <strong>todos</strong> los tratamientos exactamente una vez (diseño "completo").
+- Ignorar la posible interacción tratamiento-bloque, que viola el supuesto de aditividad del modelo.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Distribución Cauchy:</strong> no tiene media ni varianza finita. La media muestral no converge a Normal.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Distribuciones de colas muy pesadas:</strong> si existen valores extremos muy frecuentes, $n$ debe ser muy grande.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Dependencia:</strong> el TCL clásico requiere independencia. Para series de tiempo o datos espaciales, existen versiones modificadas.
-</li>
-</ul>
+## {.center .middle}
 
-## Errores comunes
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+El Diseño de Cuadrado Latino
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando existen DOS fuentes de variabilidad extraña que se desean controlar simultáneamente?
+</p>
+
+</div>
+
+## Motivación: controlar dos fuentes de variabilidad
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+El RCBD controla una sola fuente de variación extraña (el bloque). Pero en muchos experimentos agrícolas existen <strong>dos</strong> fuentes simultáneas: por ejemplo, el tipo de suelo (por filas) y la época de siembra (por columnas).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+El <strong>Cuadrado Latino</strong> permite controlar dos factores de bloqueo a la vez, usando un arreglo en filas y columnas donde cada tratamiento aparece exactamente una vez en cada fila y en cada columna.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Limitación importante: el número de filas, columnas y tratamientos debe ser <strong>el mismo</strong> ($a\times a$).
+</div>
+
+## Estructura y aleatorización del cuadrado latino
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En un cuadrado latino de orden $a$, se construye una matriz $a\times a$ donde cada letra (tratamiento) aparece una sola vez en cada fila y en cada columna.
+</div>
+
+<table style="width:60%; margin:10px auto; font-size:24px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th></th><th>Col 1</th><th>Col 2</th><th>Col 3</th><th>Col 4</th></tr>
+<tr style="background-color:#eef4fb;"><td><strong>Fila 1</strong></td><td>A</td><td>B</td><td>C</td><td>D</td></tr>
+<tr><td><strong>Fila 2</strong></td><td>B</td><td>C</td><td>D</td><td>A</td></tr>
+<tr style="background-color:#eef4fb;"><td><strong>Fila 3</strong></td><td>C</td><td>D</td><td>A</td><td>B</td></tr>
+<tr><td><strong>Fila 4</strong></td><td>D</td><td>A</td><td>B</td><td>C</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:21px; text-align:center;">
+La aleatorización consiste en permutar al azar las filas, luego las columnas y, opcionalmente, los símbolos de tratamiento de un cuadrado latino estándar.
+</div>
+
+## Modelo del cuadrado latino
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:28px;">Modelo del Cuadrado Latino</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+y_{ijk} = \mu + \alpha_i + \beta_j + \tau_k + \varepsilon_{ijk}
+$$
+</div>
+</div>
+
+<div style="font-size:23px; line-height:1.4; margin-top:10px;">
+- $\alpha_i$: efecto de la fila $i$ (ej. lote), $i=1,\ldots,a$.
+- $\beta_j$: efecto de la columna $j$ (ej. fecha de siembra), $j=1,\ldots,a$.
+- $\tau_k$: efecto del tratamiento $k$ (ej. variedad), $k=1,\ldots,a$.
+- $\varepsilon_{ijk}\sim N(0,\sigma^2)$ independientes.
+- Solo se observan $a^2$ combinaciones de las $a^3$ posibles: cada fila-columna recibe un único tratamiento.
+</div>
+
+## Ejemplo agrícola: variedades de arroz en el Tolima
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Un agrónomo del Espinal (Tolima) compara 4 variedades de arroz: <strong>Fedearroz 60</strong>, <strong>Fedearroz 67</strong>, <strong>Fedearroz 2000</strong> y <strong>Coprosem</strong>. Controla por <strong>lote</strong> (filas, diferencias de fertilidad del suelo) y por <strong>fecha de siembra</strong> (columnas, diferencias climáticas estacionales).
+</div>
+
+<table style="width:80%; margin:10px auto; font-size:20px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th></th><th>Fecha 1</th><th>Fecha 2</th><th>Fecha 3</th><th>Fecha 4</th></tr>
+<tr style="background-color:#eef4fb;"><td><strong>Lote 1</strong></td><td>F60 (6.80)</td><td>F67 (7.35)</td><td>F2000 (8.98)</td><td>Coprosem (6.50)</td></tr>
+<tr><td><strong>Lote 2</strong></td><td>F67 (8.25)</td><td>F2000 (7.80)</td><td>Coprosem (7.23)</td><td>F60 (7.02)</td></tr>
+<tr style="background-color:#eef4fb;"><td><strong>Lote 3</strong></td><td>F2000 (8.21)</td><td>Coprosem (5.86)</td><td>F60 (7.35)</td><td>F67 (8.21)</td></tr>
+<tr><td><strong>Lote 4</strong></td><td>Coprosem (6.83)</td><td>F60 (7.16)</td><td>F67 (9.68)</td><td>F2000 (9.11)</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:19px; text-align:center;">
+Rendimiento en toneladas/ha. Cada variedad aparece exactamente una vez en cada lote y en cada fecha.
+</div>
+
+## Medias del cuadrado latino: arroz
+
+```{r}
+#| label: interaccion-arroz
+#| echo: false
+#| fig-height: 3.2
+trt_arroz <- c("Fedearroz_60","Fedearroz_67","Fedearroz_2000","Coprosem")
+lotes <- paste0("Lote_", 1:4)
+fechas <- paste0("Fecha_", 1:4)
+LS <- matrix(c(1,2,3,4, 2,3,4,1, 3,4,1,2, 4,1,2,3), nrow=4, byrow=TRUE)
+mu2 <- 7.2
+alpha_fila <- c(0, 0.3, -0.4, 0.5)
+beta_col   <- c(0, -0.5, 0.6, 0.2)
+tau_trt    <- c(0, 0.8, 1.3, -0.6)
+set.seed(202)
+dat_arroz <- data.frame()
+for (i in 1:4) for (j in 1:4) {
+  k <- LS[i,j]
+  y <- mu2 + alpha_fila[i] + beta_col[j] + tau_trt[k] + rnorm(1,0,0.35)
+  dat_arroz <- rbind(dat_arroz, data.frame(lote=lotes[i], fecha=fechas[j],
+                                            variedad=trt_arroz[k], rend=round(y,2)))
+}
+dat_arroz$lote <- factor(dat_arroz$lote, levels=lotes)
+dat_arroz$fecha <- factor(dat_arroz$fecha, levels=fechas)
+dat_arroz$variedad <- factor(dat_arroz$variedad, levels=trt_arroz)
+modelo_ls <- aov(rend ~ variedad + lote + fecha, data=dat_arroz)
+boxplot(rend ~ variedad, data = dat_arroz,
+        col = c("#dbeafe","#d6f0dd","#fde68a","#fecaca"),
+        xlab = "Variedad", ylab = "Rendimiento (t/ha)",
+        main = "Rendimiento de arroz por variedad")
+```
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th>Variedad</th><th>$\bar y_{..k}$</th></tr>
+<tr style="background-color:#eef4fb;"><td>Fedearroz 60</td><td>7.082</td></tr>
+<tr><td>Fedearroz 67</td><td>8.373</td></tr>
+<tr style="background-color:#eef4fb;"><td>Fedearroz 2000</td><td>8.525</td></tr>
+<tr><td>Coprosem</td><td>6.605</td></tr>
+</table>
+
+## Tabla ANOVA del cuadrado latino
+
+<div style="font-size:23px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+El cuadrado latino descompone $SC_T$ en <strong>cuatro</strong> fuentes: variedad, lote, fecha y error, cada una con $a-1$ grados de libertad (excepto el error).
+</div>
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Variedad</td><td>10.81</td><td>3</td><td>3.60</td><td>134.7</td><td>$6.8\times10^{-6}$</td></tr>
+<tr><td style="padding:6px;">Lote (fila)</td><td>1.68</td><td>3</td><td>0.56</td><td>20.9</td><td>0.0014</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Fecha (columna)</td><td>3.30</td><td>3</td><td>1.10</td><td>41.1</td><td>0.0002</td></tr>
+<tr><td style="padding:6px;">Error</td><td>0.16</td><td>6</td><td>0.027</td><td></td><td></td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Total</td><td>15.95</td><td>15</td><td></td><td></td><td></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+Los gl totales son $a^2-1=15$, distribuidos en $3(a-1)=9$ gl para las tres fuentes controladas y $(a-1)(a-2)=6$ gl para el error.
+</div>
+
+## Conclusión: arroz en el Tolima
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">Criterio de decisión</div>
+<div style="font-size:20px; text-align:center; line-height:1.5; margin-top:8px;">
+$$F_{calc}=134.7 > F_{0.05,3,6}=4.76$$
+$$\text{valor-p}=6.8\times10^{-6}<0.05$$
+Se rechaza $H_0:\tau_1=\cdots=\tau_4=0$.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:20px; text-align:justify; line-height:1.4; margin-top:8px;">
+Existe evidencia estadística suficiente para afirmar que las variedades de arroz difieren en rendimiento, controlando simultáneamente por lote y por fecha de siembra.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:20px; text-align:center;">
+Tanto el lote como la fecha de siembra resultaron significativos, confirmando que ambas fuentes de variación extraña eran relevantes y que el diseño de cuadrado latino fue una elección apropiada.
+</div>
+
+## Errores comunes en el cuadrado latino
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: malas interpretaciones del TCL</div>
-  <div class="block-body">
-  <p>El TCL afirma que $\bar{X}$ se distribuye aproximadamente Normal; no afirma que los datos individuales sean Normales.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Usar un cuadrado latino cuando filas, columnas y tratamientos no tienen el mismo número de niveles.
+- Asumir que no existe interacción entre filas, columnas y tratamientos (el modelo es aditivo y no permite estimarla con un solo cuadrado).
+- Con pocos tratamientos ($a\leq4$), el error tiene muy pocos grados de libertad: se recomienda repetir el cuadrado o usar $a\geq5$.
+- Olvidar que cada combinación fila-columna solo puede tener un tratamiento (no es factorial completo).
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Error frecuente:</strong> concluir que la población es Normal porque la media muestral "parece" Normal. La distribución de $X_i$ puede seguir siendo Exponencial, Poisson, etc.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>$n \geq 30$ como regla absoluta:</strong> es una guía, no una garantía. Para distribuciones muy asimétricas se necesita mayor $n$.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Ignorar la corrección de continuidad:</strong> al aproximar Binomial o Poisson con la Normal, la corrección mejora la precisión, especialmente para $n$ moderado.
-</li>
-</ul>
+## {.center .middle}
 
-## Taller en clase {.center .middle}
+<div style="text-align: center; margin-top: 40px;">
 
-## Taller 1: aplicación del TCL
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+El Diseño de Cuadrado Greco-Latino
+</p>
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>El número de huevos puestos por una gallina en un ciclo sigue una distribución con $\mu = 6$ y $\sigma = 1.5$ huevos. Se registran $n = 36$ gallinas. Calcule: (a) $P(\bar{X} > 6.4)$, (b) $P(5.7 \leq \bar{X} \leq 6.3)$, (c) el valor $c$ tal que $P(\bar{X} \leq c) = 0.80$.</p>
-  </div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando existen TRES fuentes de variabilidad extraña que se desean controlar al mismo tiempo?
+</p>
+
 </div>
 
-## Taller 1: solución
+## Motivación: tres fuentes de variabilidad extraña
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En algunos ensayos de campo intervienen tres factores de bloqueo simultáneos: por ejemplo, el <strong>lote</strong>, la <strong>época</strong> de aplicación y el <strong>operario</strong> que aplica el tratamiento.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+El <strong>Cuadrado Greco-Latino</strong> superpone dos cuadrados latinos ortogonales (uno con letras latinas, otro con letras griegas) sobre la misma matriz fila-columna, permitiendo controlar tres fuentes de variación con un solo experimento.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Limitación: los cuadrados latinos ortogonales de orden $a$ no existen para todo $a$ (por ejemplo, no existen para $a=6$); además se requiere que las cuatro fuentes (filas, columnas, latinas, griegas) tengan exactamente $a$ niveles.
+</div>
+
+## Estructura y modelo del cuadrado Greco-Latino
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:26px;">Modelo del Cuadrado Greco-Latino</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+y_{ijkl} = \mu + \alpha_i + \beta_j + \tau_k + \gamma_l + \varepsilon_{ijkl}
+$$
+</div>
+</div>
+
+<div style="font-size:22px; line-height:1.4; margin-top:10px;">
+- $\alpha_i$: efecto de la fila $i$ (ej. lote).
+- $\beta_j$: efecto de la columna $j$ (ej. época de aplicación).
+- $\tau_k$: efecto del tratamiento latino $k$ (ej. dosis de fertilizante).
+- $\gamma_l$: efecto del tratamiento griego $l$ (ej. operario de aplicación).
+- Solo $a^2$ de las $a^4$ combinaciones posibles se observan: cada nivel de fila, columna, latina y griega coincide exactamente una vez.
+</div>
+
+## Ejemplo conceptual: ensayo de fertilizantes
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Una empresa de insumos agrícolas en el Valle del Cauca evalúa 4 dosis de un fertilizante NPK en caña de azúcar, controlando simultáneamente por <strong>lote</strong> (filas), <strong>época</strong> de aplicación (columnas) y <strong>operario</strong> encargado de aplicar el producto (letras griegas).
+</div>
+
+<table style="width:75%; margin:10px auto; font-size:18px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th></th><th>Época 1</th><th>Época 2</th><th>Época 3</th><th>Época 4</th></tr>
+<tr style="background-color:#eef4fb;"><td><strong>Lote 1</strong></td><td>A$\alpha$</td><td>B$\beta$</td><td>C$\gamma$</td><td>D$\delta$</td></tr>
+<tr><td><strong>Lote 2</strong></td><td>B$\gamma$</td><td>A$\delta$</td><td>D$\beta$</td><td>C$\alpha$</td></tr>
+<tr style="background-color:#eef4fb;"><td><strong>Lote 3</strong></td><td>C$\delta$</td><td>D$\gamma$</td><td>A$\beta$</td><td>B$\alpha$</td></tr>
+<tr><td><strong>Lote 4</strong></td><td>D$\beta$</td><td>C$\alpha$</td><td>B$\delta$</td><td>A$\gamma$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:20px; text-align:center;">
+Letras latinas (A, B, C, D) = dosis de NPK; letras griegas ($\alpha,\beta,\gamma,\delta$) = operario. Cada dosis y cada operario aparecen una vez en cada lote y en cada época.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:20px; text-align:center;">
+Con solo $a=4$ niveles, los grados de libertad del error son $(a-1)(a-3)=3$, muy escasos: en la práctica se recomienda repetir el cuadrado o usar $a\geq5$.
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Diseños de Bloques Incompletos Balanceados (BIBD)
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando el bloque no tiene capacidad para recibir todos los tratamientos?
+</p>
+
+</div>
+
+## Motivación: bloques de capacidad limitada
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En ocasiones el tamaño del bloque es menor que el número de tratamientos: un invernadero tiene espacio para 3 macetas, pero se desean comparar 7 variedades; una máquina de beneficio de café procesa solo 3 lotes por turno.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+Un <strong>Diseño de Bloques Incompletos Balanceados</strong> (BIBD) asigna solo un subconjunto de $k<a$ tratamientos a cada bloque, garantizando que cada <strong>par</strong> de tratamientos aparezca junto el mismo número de veces $\lambda$ en algún bloque (de ahí "balanceado").
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Parámetros: $a$ tratamientos, $b$ bloques, $k$ unidades por bloque, $r$ réplicas por tratamiento, $\lambda$ coincidencias por par. Se cumple: $ar=bk$ y $\lambda(a-1)=r(k-1)$.
+</div>
+
+## Análisis estadístico del BIBD
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+A diferencia del RCBD, en el BIBD la suma de cuadrados de tratamiento <strong>cruda</strong> está contaminada por el efecto de bloque, ya que los tratamientos no se reparten igual en todos los bloques. Por ello se calcula una <strong>suma de cuadrados ajustada</strong>.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Suma de cuadrados de tratamiento ajustada</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$
+SC_{Trat(ajust)}=\frac{k\sum_{i=1}^a Q_i^2}{\lambda a}
+\qquad
+Q_i=T_i-\frac{1}{k}\sum_{j\in i} B_j
+$$
+</div>
+</div>
+
+<div style="font-size:20px; line-height:1.4; margin-top:8px;">
+- $T_i$: total del tratamiento $i$. $B_j$: total del bloque $j$ que contiene al tratamiento $i$.
+- $Q_i$: total ajustado del tratamiento $i$, que remueve el efecto de los bloques en que participó.
+- $SC_{Bloq}$ se calcula de la forma usual con los totales de bloque.
+</div>
+
+## Ejemplo agrícola: variedades de café en Huila
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Cenicafé evalúa 7 variedades de café (V1 a V7) en una planta de beneficio con capacidad de solo $k=3$ lotes por turno de procesamiento (bloque). Se diseña un BIBD con $b=7$ bloques, $r=3$ réplicas por variedad y $\lambda=1$.
+</div>
+
+<table style="width:100%; font-size:17px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:5px;">Bloque (turno)</th><th>Var. 1</th><th>Var. 2</th><th>Var. 3</th><th>Rend. (sacos/ha)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">1</td><td>V1</td><td>V3</td><td>V7</td><td>86.7 / 81.1 / 80.0</td></tr>
+<tr><td style="padding:5px;">2</td><td>V6</td><td>V4</td><td>V1</td><td>87.4 / 95.3 / 88.5</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">3</td><td>V2</td><td>V7</td><td>V6</td><td>89.1 / 84.2 / 88.3</td></tr>
+<tr><td style="padding:5px;">4</td><td>V5</td><td>V4</td><td>V7</td><td>78.8 / 91.0 / 82.8</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">5</td><td>V2</td><td>V3</td><td>V4</td><td>95.6 / 85.9 / 95.4</td></tr>
+<tr><td style="padding:5px;">6</td><td>V5</td><td>V1</td><td>V2</td><td>81.5 / 86.1 / 87.5</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">7</td><td>V6</td><td>V3</td><td>V5</td><td>84.5 / 70.5 / 71.4</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:10px; border-left:8px solid #d97706; margin-top:6px; font-size:18px; text-align:center;">
+Cada par de variedades coincide en exactamente $\lambda=1$ bloque; cada variedad se repite $r=3$ veces.
+</div>
+
+## Medias crudas y ajustadas: café
 
 ```{r}
-#| echo: true
-mu <- 6; sigma <- 1.5; n <- 36
-ee <- sigma / sqrt(n)
-cat("EE:", ee, "\n")
-
-# (a) P(Xbar > 6.4)
-pnorm(6.4, mu, ee, lower.tail = FALSE)
-
-# (b) P(5.7 <= Xbar <= 6.3)
-pnorm(6.3, mu, ee) - pnorm(5.7, mu, ee)
-
-# (c) c tal que P(Xbar <= c) = 0.80
-qnorm(0.80, mu, ee)
+#| label: boxplot-cafe
+#| echo: false
+#| fig-height: 3.2
+suppressMessages(library(agricolae))
+trts7 <- paste0("V",1:7)
+des <- agricolae::design.bib(trt=trts7, k=3, seed=303)
+book <- des$book
+names(book)[3] <- "trt"
+set.seed(404)
+mu3 <- 85
+tau_v <- c(0, 4, -3, 6, -5, 2, -1); names(tau_v) <- trts7
+block_eff <- rnorm(7, 0, 3); names(block_eff) <- as.character(unique(book$block))
+book$rend <- mu3 + tau_v[as.character(book$trt)] + block_eff[as.character(book$block)] + rnorm(nrow(book),0,2)
+book$rend <- round(book$rend,1)
+modelo_bibd <- aov(rend ~ block + trt, data = book)
+boxplot(rend ~ trt, data = book,
+        col = c("#dbeafe","#d6f0dd","#fde68a","#fecaca","#e9d5ff","#bbf7d0","#fed7aa"),
+        xlab = "Variedad", ylab = "Rendimiento (sacos/ha)",
+        main = "Rendimiento de café por variedad (BIBD)")
 ```
 
-## Taller 2: aproximación Normal a Binomial
+<table style="width:100%; font-size:19px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th>Variedad</th><th>Media cruda</th><th>Media ajustada</th></tr>
+<tr style="background-color:#eef4fb;"><td>V1</td><td>87.10</td><td>86.71</td></tr>
+<tr><td>V2</td><td>90.73</td><td>88.60</td></tr>
+<tr style="background-color:#eef4fb;"><td>V3</td><td>79.17</td><td>79.80</td></tr>
+<tr><td>V4</td><td>93.90</td><td>91.66</td></tr>
+<tr style="background-color:#eef4fb;"><td>V5</td><td>77.23</td><td>79.74</td></tr>
+<tr><td>V6</td><td>86.73</td><td>88.37</td></tr>
+<tr style="background-color:#eef4fb;"><td>V7</td><td>82.33</td><td>82.31</td></tr>
+</table>
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En un ensayo de vacunación contra la fiebre aftosa, el 70% de los bovinos vacunados desarrolla inmunidad protectora. Se vacunan 200 animales. (a) ¿Cuál es la probabilidad de que entre 130 y 150 desarrollen inmunidad? Use la aproximación Normal con corrección de continuidad. (b) Compare con el valor exacto Binomial.</p>
-  </div>
+## Tabla ANOVA del BIBD: café
+
+<div style="font-size:22px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+La SC de tratamiento se ajusta por bloques incompletos; el orden correcto del modelo es bloque primero, tratamiento ajustado después.
 </div>
 
-## Taller 2: solución
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Bloque</td><td>552</td><td>6</td><td>91.9</td><td>15.40</td><td>0.0005</td></tr>
+<tr><td style="padding:6px;">Variedad (ajustada)</td><td>310</td><td>6</td><td>51.6</td><td>8.65</td><td>0.0038</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Error</td><td>48</td><td>8</td><td>6.0</td><td></td><td></td></tr>
+<tr><td style="padding:6px;">Total</td><td>910</td><td>20</td><td></td><td></td><td></td></tr>
+</table>
 
-```{r}
-#| echo: true
-n <- 200; p <- 0.70
-mu_b <- n * p; sigma_b <- sqrt(n * p * (1 - p))
-cat("mu =", mu_b, "  sigma =", round(sigma_b, 4), "\n")
-
-# Exacto
-exacto <- pbinom(150, n, p) - pbinom(129, n, p)
-
-# Normal con corrección de continuidad
-aprox  <- pnorm(150.5, mu_b, sigma_b) - pnorm(129.5, mu_b, sigma_b)
-
-cat("Binomial exacto:", round(exacto, 5), "\n")
-cat("Normal con CC:  ", round(aprox, 5), "\n")
-```
-
-## Taller 3: simulación del TCL
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Simule la distribución muestral de $\bar{X}$ para $n \in \{5, 30, 100\}$ cuando la población sigue una distribución Poisson($\lambda = 2$). Grafique los histogramas y superponga la densidad Normal teórica. ¿Para qué $n$ la aproximación es buena visualmente?</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+$F_{calc}=8.65 > F_{0.05,6,8}=3.58$, valor-p$=0.0038<0.05$: se rechaza $H_0$. Existe evidencia de que al menos una variedad de café difiere en rendimiento, una vez ajustado por el efecto de bloque (turno de beneficio).
 </div>
 
-## Taller 3: solución
+## Estimación de parámetros por mínimos cuadrados en el BIBD
 
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-lambda <- 2; B <- 4000
-ns <- c(5, 30, 100)
-
-df <- map_dfr(ns, function(n) {
-  set.seed(19)
-  tibble(xbar = replicate(B, mean(rpois(n, lambda))),
-         n = paste0("n = ", n),
-         mu_t = lambda, sd_t = sqrt(lambda/n))
-}) |> mutate(n = factor(n, levels = paste0("n = ", ns)))
-
-ggplot(df, aes(x = xbar)) +
-  geom_histogram(aes(y = after_stat(density)), bins = 35,
-                 fill = "#1a3a6b", color = "white", alpha = 0.75) +
-  stat_function(fun = ~dnorm(.x, lambda, sqrt(lambda/as.numeric(gsub("n = ","",
-               df$n[1])))), inherit.aes = FALSE, color = "#c0392b") +
-  facet_wrap(~n, scales = "free") +
-  labs(x = expression(bar(X)), title = "TCL: Poisson(2) para distintos n") +
-  theme_minimal(base_size = 12)
-```
-
-## Resumen: Teorema Central del Límite
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 26px;">El TCL en síntesis</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px;">$X_i$ i.i.d., $\mu$ y $\sigma^2$ finitos.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">$\bar{X} \approx N(\mu, \sigma^2/n)$ para $n$ grande.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">Válido sin importar la distribución original.</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px;">$n \geq 30$ como guía, más si hay asimetría.</li>
-</ul>
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+A diferencia del RCBD, en el BIBD las ecuaciones normales de mínimos cuadrados no se desacoplan limpiamente entre tratamientos y bloques, porque cada tratamiento no aparece en todos los bloques.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6">
-<h4 style="color:#1a3a6b; font-size: 26px;">Aplicaciones</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">Justifica los intervalos de confianza (Clase 20).</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">Aproximación Normal a Binomial y Poisson.</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px;">Fundamento de pruebas $Z$ y $t$ (Clases 23-25).</li>
-</ul>
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Estimador del efecto de tratamiento ajustado</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+$$
+\hat\tau_i=\frac{k\,Q_i}{\lambda a}
+$$
+</div>
 </div>
 
+<div style="font-size:21px; line-height:1.4; margin-top:8px; text-align:justify;">
+El estimador $\hat\tau_i$ corrige el efecto crudo del tratamiento $i$ restando la influencia de los bloques específicos en que participó. La media ajustada se obtiene como $\hat\mu+\hat\tau_i$, y son estas medias ajustadas (no las crudas) las que deben compararse mediante pruebas de comparación múltiple (ej. Tukey adaptado al BIBD).
 </div>
 
-## Próxima clase
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 20: Estimadores e intervalos de confianza.</strong> Usaremos el TCL y las distribuciones muestrales para construir estimaciones puntuales y por intervalos de los parámetros poblacionales.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+En el ejemplo del café, V4 tiene la media ajustada más alta (91.66 sacos/ha) y V5 la más baja (79.74 sacos/ha); la comparación de Tukey adaptada agrupa a V4 como significativamente superior a V3 y V5.
 </div>
 
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Estudiaremos propiedades deseables de los estimadores: insesgamiento, consistencia y eficiencia.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Construiremos el primer intervalo de confianza para la media con $\sigma$ conocida.
-</li>
-</ul>
+## Recuperación de información interbloque
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El análisis anterior (intrabloque) usa solo las comparaciones <strong>dentro</strong> de cada bloque. Sin embargo, si los efectos de bloque se tratan como <strong>aleatorios</strong>, es posible recuperar información adicional comparando los totales de bloque entre sí.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:justify;">
+La <strong>recuperación de información interbloque</strong> combina ambas fuentes de información (intra e interbloque) mediante un promedio ponderado, lo que aumenta la precisión de las estimaciones de los efectos de tratamiento.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Se utiliza cuando se desea exprimir la máxima información posible del experimento, especialmente cuando hay pocos bloques. Su derivación completa requiere álgebra de mínimos cuadrados generalizados y excede el alcance de este curso introductorio.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:20px; text-align:center;">
+En la práctica, software especializado (SAS PROC GLM, R con <code>lme4</code>) calcula automáticamente los estimadores combinados cuando se solicita el análisis con recuperación interbloque.
+</div>
+
+## Errores comunes en el BIBD
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Comparar las medias <strong>crudas</strong> de tratamiento en lugar de las medias <strong>ajustadas</strong>: las crudas están sesgadas por la composición de cada bloque.
+- Diseñar un BIBD sin verificar que $\lambda(a-1)=r(k-1)$ sea un entero: si no se cumple, el balanceo no es posible con esos parámetros.
+- Usar la fórmula de SC de tratamiento del RCBD (sin ajustar) cuando el diseño es incompleto.
+- Olvidar que el orden de los términos en el modelo importa: la SC de bloque debe calcularse antes de ajustar el tratamiento.
+</div>
+</div>
+
+## Resumen de los cuatro diseños
+
+<table style="width:100%; font-size:19px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Diseño</th><th>Fuentes controladas</th><th>Estructura</th><th>Ejemplo</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">RCBD</td><td>1 (bloque)</td><td>Bloques completos</td><td>Papa, 5 fincas</td></tr>
+<tr><td style="padding:6px;">Cuadrado Latino</td><td>2 (fila y columna)</td><td>$a\times a$, 1 trat./celda</td><td>Arroz, lote y fecha</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Cuadrado Greco-Latino</td><td>3 (fila, columna y griega)</td><td>2 cuadrados ortogonales</td><td>Fertilizante, operario</td></tr>
+<tr><td style="padding:6px;">BIBD</td><td>1 (bloque), capacidad limitada</td><td>Bloques incompletos balanceados</td><td>Café, 7 variedades en bloques de 3</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+Todos comparten la misma lógica: aislar fuentes de variación no relevantes para concentrar el análisis en el efecto del tratamiento de interés.
+</div>
+
+## Taller en Clase {.center .middle}
+
+## Instrucciones
+
+<div style="font-size:28px; text-align:justify; line-height:1.5;">
+Resuelva los siguientes ejercicios aplicando el diseño experimental indicado. Para cada uno: identifique el modelo, calcule la tabla ANOVA completa, aplique el criterio de decisión y redacte la conclusión en el contexto del problema.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:center;">
+Utilice $\alpha=0.05$ en todos los ejercicios, salvo que se indique lo contrario.
+</div>
+
+## Ejercicio 1
+
+<div style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; font-size:22px;">
+
+Una asociación de paneleros del Huila compara 3 variedades de caña panelera (<strong>POJ 2878</strong>, <strong>PR 61632</strong> y <strong>CC 84-75</strong>) en 4 trapiches (bloques), midiendo la producción de panela (kg/tonelada de caña).
+
+<table style="width:100%; font-size:19px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#dbeafe;"><th>Trapiche</th><th>POJ 2878</th><th>PR 61632</th><th>CC 84-75</th></tr>
+<tr><td>1</td><td>112</td><td>118</td><td>121</td></tr>
+<tr><td>2</td><td>108</td><td>115</td><td>119</td></tr>
+<tr><td>3</td><td>115</td><td>120</td><td>124</td></tr>
+<tr><td>4</td><td>110</td><td>117</td><td>122</td></tr>
+</table>
+
+<div style="margin-top:10px; font-size:20px;"><strong>Utilice:</strong> un diseño de bloques completos aleatorizados (RCBD). Construya la tabla ANOVA y concluya si las variedades difieren en producción de panela.</div>
+
+</div>
+
+## Ejercicio 2
+
+<div style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e; font-size:22px;">
+
+En una finca ganadera de Casanare se desea comparar 4 suplementos alimenticios para ganado de ceba, controlando por <strong>potrero</strong> (filas, calidad del pasto) y por <strong>mes</strong> de inicio del ensayo (columnas, condiciones climáticas).
+
+<table style="width:80%; margin:10px auto; font-size:18px; text-align:center; border-collapse:collapse;">
+<tr style="background-color:#dbeafe;"><th></th><th>Mes 1</th><th>Mes 2</th><th>Mes 3</th><th>Mes 4</th></tr>
+<tr><td><strong>Potrero 1</strong></td><td>A (18.2)</td><td>B (19.5)</td><td>C (17.0)</td><td>D (20.1)</td></tr>
+<tr><td><strong>Potrero 2</strong></td><td>B (19.0)</td><td>C (16.8)</td><td>D (20.4)</td><td>A (18.0)</td></tr>
+<tr><td><strong>Potrero 3</strong></td><td>C (16.5)</td><td>D (19.8)</td><td>A (18.4)</td><td>B (19.2)</td></tr>
+<tr><td><strong>Potrero 4</strong></td><td>D (20.0)</td><td>A (18.6)</td><td>B (19.7)</td><td>C (17.2)</td></tr>
+</table>
+
+<div style="margin-top:10px; font-size:20px;"><strong>Utilice:</strong> un diseño de cuadrado latino. Los valores son ganancia de peso (kg/mes). Construya la tabla ANOVA de cuatro fuentes y concluya.</div>
+
+</div>
+
+## Ejercicio 3
+
+<div style="background-color:#fff7e8; padding:16px; border-radius:16px; border-top:8px solid #d97706; font-size:22px;">
+
+Un vivero de flores en Madrid (Cundinamarca) desea comparar 6 variedades de rosa de exportación. Cada invernadero (bloque) tiene capacidad para solo 3 variedades simultáneamente, por restricciones de espacio y manejo fitosanitario.
+
+<div style="font-size:20px; margin-top:10px; line-height:1.5;">
+a) Proponga los parámetros $a$, $k$, $b$, $r$ y $\lambda$ de un BIBD adecuado para esta situación, verificando que $\lambda(a-1)=r(k-1)$ sea entero.<br>
+b) Explique por qué no sería válido comparar directamente las medias crudas de cada variedad sin ajustar por bloque.
+</div>
+
+<div style="margin-top:10px; font-size:20px;"><strong>Utilice:</strong> los conceptos de diseño de bloques incompletos balanceados (BIBD) y de suma de cuadrados de tratamiento ajustada.</div>
+
+</div>
+
+## Ejercicio 4
+
+<div style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; font-size:22px;">
+
+En un ensayo de fertilización foliar en cultivos de aguacate Hass en Antioquia, se aplicó un RCBD con 5 tratamientos (incluyendo un control) en 4 fincas (bloques). Durante la cosecha, se perdió por completo el dato de la parcela del <strong>Tratamiento 3</strong> en la <strong>Finca 2</strong> debido a una helada localizada.
+
+<div style="font-size:20px; margin-top:10px; line-height:1.5;">
+Los totales disponibles son: total del Tratamiento 3 (sin el dato faltante) $T_3=148$ kg; total de la Finca 2 (sin el dato faltante) $B_2=210$ kg; gran total (sin el dato faltante) $Y=1340$ kg.
+</div>
+
+<div style="margin-top:10px; font-size:20px;"><strong>Utilice:</strong> la fórmula de Yates para estimar el dato faltante, y discuta qué ajuste debe hacerse a los grados de libertad del error en el ANOVA posterior.</div>
+
+</div>
+
+## Ejercicio 5
+
+<div style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e; font-size:22px;">
+
+Una cooperativa cafetera del Tolima ejecuta el RCBD de variedades de café del ejemplo de esta clase (variedades V1 a V4, en 5 fincas como bloques), obteniendo $SC_{Bloq}=58.0$, $CM_E=2.10$, con $a=4$ tratamientos y $b=5$ bloques.
+
+<div style="font-size:20px; margin-top:10px; line-height:1.5;">
+a) Calcule la eficiencia relativa del bloqueo respecto a un diseño completamente aleatorizado.<br>
+b) Interprete el resultado: ¿valió la pena bloquear por finca en este experimento?
+</div>
+
+<div style="margin-top:10px; font-size:20px;"><strong>Utilice:</strong> la fórmula de eficiencia relativa $ER=\dfrac{CM_{Bloq}(b-1)+b(a-1)CM_E}{(ab-1)CM_E}$.</div>
+
+</div>

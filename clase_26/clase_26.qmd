@@ -1,11 +1,12 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
   revealjs:
+    embed-resources: true
     logo: images/logo_unal_3.png
     slide-number: true
     title-slide: false
@@ -37,382 +38,1000 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 26 {.center .middle}
 
 ## Contenido
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Comparación de medias</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Máximo ascenso</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Prueba t de dos muestras independientes.</li>
-<li class="fragment fade-in" data-fragment-index="3">Prueba de Levene: igualdad de varianzas.</li>
-<li class="fragment fade-in" data-fragment-index="4">Prueba t pareada.</li>
-<li class="fragment fade-in" data-fragment-index="5">Código R: <code>t.test</code>.</li>
+<li class="fragment fade-in" data-fragment-index="2">Motivación: optimización de procesos agrícolas.</li>
+<li class="fragment fade-in" data-fragment-index="3">Idea general de la Metodología de Superficie de Respuesta.</li>
+<li class="fragment fade-in" data-fragment-index="4">Diseño factorial 2^k con puntos centrales.</li>
+<li class="fragment fade-in" data-fragment-index="5">Método de máximo ascenso (steepest ascent).</li>
+<li class="fragment fade-in" data-fragment-index="6">Ejemplo: tomate de invernadero en Boyacá.</li>
+</ul>
+
+<h3 class="fragment fade-in" data-fragment-index="7" style="font-size: 34px; margin-bottom: 14px; margin-top: 22px; color: #1a3a6b;">Parte II: Superficies de segundo orden</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="8">Punto estacionario del modelo cuadrático.</li>
+<li class="fragment fade-in" data-fragment-index="9">Caracterización: valores y vectores propios.</li>
+<li class="fragment fade-in" data-fragment-index="10">Sistemas de cresta (ridge systems).</li>
+<li class="fragment fade-in" data-fragment-index="11">Optimización de respuestas múltiples y deseabilidad.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Comparación de proporciones</h3>
+<h3 class="fragment fade-in" data-fragment-index="12" style="font-size: 34px; margin-bottom: 14px; color: #79260d;">Parte III: Diseños experimentales</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Prueba Z para diferencia de proporciones.</li>
-<li class="fragment fade-in" data-fragment-index="8">Prueba chi-cuadrado de independencia.</li>
-<li class="fragment fade-in" data-fragment-index="9">Tablas de contingencia en R.</li>
-<li class="fragment fade-in" data-fragment-index="10">Ejemplos integrales y taller.</li>
+<li class="fragment fade-in" data-fragment-index="13">Diseños para el modelo de primer orden.</li>
+<li class="fragment fade-in" data-fragment-index="14">Diseño central compuesto (CCD).</li>
+<li class="fragment fade-in" data-fragment-index="15">Ejemplo: CCD para nitrógeno y fósforo.</li>
+<li class="fragment fade-in" data-fragment-index="16">Bloqueo en diseños de superficie de respuesta.</li>
+<li class="fragment fade-in" data-fragment-index="17">Diseños óptimos generados por computador.</li>
+</ul>
+
+<h3 class="fragment fade-in" data-fragment-index="18" style="font-size: 34px; margin-bottom: 14px; margin-top: 22px; color: #5b21b6;">Parte IV: Otros enfoques</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="19">Experimentos con mezclas.</li>
+<li class="fragment fade-in" data-fragment-index="20">Operación evolutiva (EVOP).</li>
+<li class="fragment fade-in" data-fragment-index="21">Diseño robusto de procesos.</li>
+<li class="fragment fade-in" data-fragment-index="22">Taller en clase.</li>
 </ul>
 </div>
 </div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Comparación de Medias y Proporciones</p>
-<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">¿Son estadísticamente diferentes dos grupos?</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+
+<p style="font-size: 50px; font-weight: bold; color: #3b82f6;">
+Metodología de Superficie de Respuesta
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Cómo encontrar, de manera sistemática y eficiente, las condiciones de operación que maximizan el rendimiento de un proceso agrícola?
+</p>
+
 </div>
 
-## Prueba t de dos muestras independientes
+## Motivación: de la comparación a la optimización
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En las clases anteriores se aprendió a <strong>detectar</strong> si un factor (fertilizante, densidad de siembra, riego) tiene efecto sobre una variable de respuesta. Sin embargo, en la práctica agrícola la pregunta más valiosa suele ser otra.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Pregunta de detección</div>
+<div style="font-size:22px; text-align:center; line-height:1.4; margin-top:8px;">
+¿La dosis de nitrógeno afecta el rendimiento del cultivo? (ANOVA, regresión)
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Pregunta de optimización</div>
+<div style="font-size:22px; text-align:center; line-height:1.4; margin-top:8px;">
+¿Cuál es la combinación exacta de nitrógeno y fósforo que <strong>maximiza</strong> el rendimiento?
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:22px; text-align:center;">
+La <strong>Metodología de Superficie de Respuesta</strong> (RSM, por sus siglas en inglés) es el conjunto de técnicas estadísticas y de optimización diseñadas para responder esta segunda pregunta.
+</div>
+
+## Idea general de la RSM
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+La RSM modela la relación entre una variable de respuesta $y$ (rendimiento, calidad) y varios factores cuantitativos $x_1, x_2, \ldots, x_k$ (dosis de insumos), y busca de forma <strong>secuencial</strong> la región donde $y$ se optimiza.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>Etapa 1</strong><br>Lejos del óptimo: modelo de primer orden y máximo ascenso.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>Etapa 2</strong><br>Cerca del óptimo: modelo de segundo orden (curvatura).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:21px; text-align:center;">
+<strong>Etapa 3</strong><br>Caracterización del óptimo y validación.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+Esta secuencia evita experimentar exhaustivamente en todo el espacio de factores: se avanza progresivamente hacia la región de interés.
+</div>
+
+## El método de máximo ascenso
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Cuando el proceso actual está <strong>lejos</strong> de las condiciones óptimas, la superficie de respuesta puede aproximarse razonablemente bien mediante un plano (modelo de primer orden).
+</div>
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba t: $H_0: \mu_1 = \mu_2$ (Welch)</div>
-  <div class="block-body">
-  <p>Si $X_{1i} \sim N(\mu_1, \sigma_1^2)$ y $X_{2j} \sim N(\mu_2, \sigma_2^2)$, independientes:</p>
-  $$t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_1^2/n_1 + S_2^2/n_2}} \sim t_\nu \quad \text{(Welch)}$$
-  <p>con $\nu$ grados de libertad de Welch. En R: <code>t.test(x, y, var.equal = FALSE)</code> (por defecto).</p>
-  </div>
+<div class="block-title" style="font-size:28px;">Modelo de primer orden</div>
+<div class="block-body" style="font-size:26px; text-align:center;">
+$$
+\hat y = b_0 + b_1 x_1 + b_2 x_2 + \cdots + b_k x_k
+$$
+</div>
 </div>
 
-## Prueba t con varianzas iguales (Student)
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba t: varianzas iguales (Student)</div>
-  <div class="block-body">
-  <p>Si $\sigma_1^2 = \sigma_2^2 = \sigma^2$ (verificado con prueba de Levene):</p>
-  $$t = \frac{\bar{X}_1 - \bar{X}_2}{S_p\sqrt{1/n_1 + 1/n_2}} \sim t_{n_1+n_2-2}$$
-  <p>con $S_p^2 = \dfrac{(n_1-1)S_1^2 + (n_2-1)S_2^2}{n_1+n_2-2}$.</p>
-  </div>
+<div style="font-size:23px; line-height:1.4; margin-top:10px;">
+- Se ajusta con un diseño factorial $2^k$ (o fraccionado), aumentado con puntos centrales para estimar el error puro y detectar curvatura.
+- Los coeficientes $b_i$ indican cuánto cambia $\hat y$ por unidad de cambio en $x_i$ (en variables codificadas).
+- El <strong>gradiente</strong> $(b_1, b_2, \ldots, b_k)$ define la dirección en la que $\hat y$ crece más rápidamente.
 </div>
 
-<div class="block-note fragment fade-up" data-fragment-index="2">
-  <div class="block-body">
-  <p>La prueba de Welch es más robusta y funciona bien incluso cuando las varianzas son iguales. Se recomienda como opción por defecto.</p>
-  </div>
+## Dirección de máximo ascenso
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El método de <strong>máximo ascenso</strong> consiste en moverse, a partir del centro del diseño, en la dirección del gradiente del modelo de primer orden, es decir, proporcional a los coeficientes $b_1, b_2, \ldots, b_k$.
 </div>
 
-## Verificación de igualdad de varianzas
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Construcción del camino de ascenso</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+Se fija un paso de referencia $\Delta x_1$ en la variable con mayor $|b_i|$; los demás pasos se escalan proporcionalmente:
+$$
+\Delta x_j = \Delta x_1 \cdot \frac{b_j}{b_1}, \qquad j=2,\ldots,k
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Se evalúa la respuesta real en puntos sucesivos sobre esta trayectoria, hasta que la respuesta deja de mejorar: ahí se ha llegado a la vecindad del óptimo.
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 44px; font-weight: bold; color: #3b82f6;">
+Ejemplo central: tomate de invernadero en Boyacá
+</p>
+
+<p style="font-size: 26px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Un agrónomo busca las dosis de nitrógeno (N) y fósforo (P) que maximizan el rendimiento de tomate bajo invernadero.
+</p>
+
+</div>
+
+## Planteamiento del problema
+
+<p style="font-size: 27px; text-align: justify; line-height: 1.4;">
+En un invernadero de tomate en Sutamarchán (Boyacá), la operación actual usa $N=10$ g/planta y $P=6$ g/planta, con un rendimiento promedio cercano a $38.7$ kg/planta. El agrónomo sospecha que estas dosis distan del óptimo y desea encontrar la combinación de nitrógeno y fósforo que <strong>maximiza</strong> el rendimiento.
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; margin-top:14px;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Factores y respuesta</div>
+<div style="font-size:22px; text-align:center; line-height:1.6; margin-top:8px;">
+$x_1$: dosis de nitrógeno N (g/planta), centro $10$, paso $2$.<br>
+$x_2$: dosis de fósforo P (g/planta), centro $6$, paso $2$.<br>
+$y$: rendimiento (kg/planta).
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Se codifican los factores como $x_1=\frac{N-10}{2}$ y $x_2=\frac{P-6}{2}$, de modo que el diseño factorial use niveles $-1$ y $+1$.
+</div>
+
+## Diseño factorial 2² con puntos centrales
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Se ejecuta un diseño factorial $2^2$ con 4 réplicas en el centro, para estimar el modelo de primer orden y el error experimental.
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Corrida</th><th>$x_1$</th><th>$x_2$</th><th>N (g/planta)</th><th>P (g/planta)</th><th>y (kg/planta)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td>1</td><td>-1</td><td>-1</td><td>8</td><td>4</td><td>33.92</td></tr>
+<tr><td>2</td><td>+1</td><td>-1</td><td>12</td><td>4</td><td>39.29</td></tr>
+<tr style="background-color:#eef4fb;"><td>3</td><td>-1</td><td>+1</td><td>8</td><td>8</td><td>37.03</td></tr>
+<tr><td>4</td><td>+1</td><td>+1</td><td>12</td><td>8</td><td>41.97</td></tr>
+<tr style="background-color:#eef4fb;"><td>5</td><td>0</td><td>0</td><td>10</td><td>6</td><td>38.76</td></tr>
+<tr><td>6</td><td>0</td><td>0</td><td>10</td><td>6</td><td>39.00</td></tr>
+<tr style="background-color:#eef4fb;"><td>7</td><td>0</td><td>0</td><td>10</td><td>6</td><td>38.81</td></tr>
+<tr><td>8</td><td>0</td><td>0</td><td>10</td><td>6</td><td>38.55</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+Las 4 corridas centrales permiten estimar el error puro y verificar si hace falta curvatura en el modelo.
+</div>
+
+## Ajuste del modelo de primer orden
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Al ajustar el modelo $\hat y = b_0 + b_1 x_1 + b_2 x_2$ por mínimos cuadrados sobre las 8 corridas, se obtiene:
+</div>
+
+<table style="width:100%; font-size:23px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Coeficiente</th><th style="padding:8px;">Estimación</th><th style="padding:8px;">Error estándar</th><th style="padding:8px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$b_0$ (Intercepto)</td><td style="padding:8px;">38.415</td><td style="padding:8px;">0.174</td><td style="padding:8px;">$<0.001$</td></tr>
+<tr><td style="padding:8px;">$b_1$ ($x_1$, N)</td><td style="padding:8px;">2.577</td><td style="padding:8px;">0.246</td><td style="padding:8px;">$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$b_2$ ($x_2$, P)</td><td style="padding:8px;">1.451</td><td style="padding:8px;">0.246</td><td style="padding:8px;">0.002</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:21px; text-align:center;">
+$R^2=0.967$. Ambos coeficientes son significativos ($\alpha=0.05$): el nitrógeno y el fósforo tienen efecto positivo sobre el rendimiento en esta región.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+El modelo ajustado es: $\hat y = 38.415 + 2.577\,x_1 + 1.451\,x_2$
+</div>
+
+## Cálculo de la dirección de máximo ascenso
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:23px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Paso 1. Razón de coeficientes:</strong>
+$$\frac{b_2}{b_1}=\frac{1.451}{2.577}=0.563$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:23px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1b4d2e;">Paso 2. Paso de referencia:</strong>
+Se fija $\Delta x_1=1$ (un paso codificado en N). El paso correspondiente en $x_2$ es:
+$$\Delta x_2 = 1 \times 0.563 = 0.563$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:23px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1a3a6b;">Paso 3. Conversión a unidades reales:</strong>
+Como el paso de codificación es $2$ unidades para ambos factores:
+$$\Delta N = 1 \times 2 = 2 \text{ g/planta} \qquad \Delta P = 0.563 \times 2 = 1.13 \text{ g/planta}$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+Por cada incremento de 2 g/planta en N, se debe incrementar P en 1.13 g/planta para mantenerse en la dirección de máximo ascenso.
+</div>
+
+## Camino de máximo ascenso: puntos sucesivos
+
+<div style="font-size:23px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Partiendo del centro ($N=10$, $P=6$), se evalúa el rendimiento real del cultivo en puntos sucesivos sobre la trayectoria de ascenso:
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Paso</th><th>N (g/planta)</th><th>P (g/planta)</th><th>y observado (kg/planta)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td>0 (centro)</td><td>10.00</td><td>6.00</td><td>38.67</td></tr>
+<tr><td>1</td><td>12.00</td><td>7.13</td><td>41.61</td></tr>
+<tr style="background-color:#eef4fb;"><td>2</td><td>14.00</td><td>8.25</td><td>43.76</td></tr>
+<tr><td>3</td><td>16.00</td><td>9.38</td><td>44.71</td></tr>
+<tr style="background-color:#fde68a;"><td>4</td><td>18.00</td><td>10.51</td><td><strong>44.81</strong></td></tr>
+<tr><td>5</td><td>20.00</td><td>11.63</td><td>43.95</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:21px; text-align:center;">
+El rendimiento aumenta hasta el paso 4 ($N=18$, $P\approx10.5$) y luego empieza a disminuir en el paso 5: se ha sobrepasado la vecindad del óptimo. Aquí termina la fase de máximo ascenso.
+</div>
+
+## Visualización del camino de ascenso
 
 ```{r}
-#| echo: true
-set.seed(26)
-var_A <- rnorm(20, 5.8, 0.6)
-var_B <- rnorm(18, 5.2, 0.8)
+#| label: contorno-ascenso
+#| fig-width: 7.5
+#| fig-height: 4.6
+f_real <- function(n, p) {
+  45 - 0.08*(n-18)^2 - 0.10*(p-9)^2 - 0.01*(n-18)*(p-9)
+}
+ng <- seq(6, 22, length.out = 120)
+pg <- seq(2, 13, length.out = 120)
+zg <- outer(ng, pg, f_real)
 
-# Prueba de Levene (paquete car)
-# library(car)
-# leveneTest(c(var_A, var_B), group = factor(rep(c("A","B"), c(20,18))))
+path_N <- c(10, 12, 14, 16, 18, 20)
+path_P <- c(6, 7.13, 8.25, 9.38, 10.51, 11.63)
 
-# Alternativa: prueba F de Bartlett (para normalidad verificada)
-bartlett.test(list(var_A, var_B))
+filled.contour(ng, pg, zg, color.palette = function(n) hcl.colors(n, "Greens", rev = TRUE),
+                xlab = "Nitrógeno N (g/planta)", ylab = "Fósforo P (g/planta)",
+                main = "Curvas de contorno y camino de máximo ascenso",
+                plot.axes = {
+                  axis(1); axis(2)
+                  lines(path_N, path_P, col = "#7a1515", lwd = 3, type = "o", pch = 19)
+                  points(10, 6, pch = 17, col = "#1a3a6b", cex = 1.6)
+                  text(10, 5.2, "Operación actual", col = "#1a3a6b", cex = 0.8)
+                })
 ```
 
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p>Si el valor-p de Bartlett/Levene es $> 0.05$: no se rechaza igualdad de varianzas, se puede usar la prueba t Student. Si es $< 0.05$: use Welch.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:8px; border-radius:12px; border-left:8px solid #475569; font-size:19px; text-align:center;">
+La superficie real (desconocida para el agrónomo) tiene su máximo cerca de $N=18$, $P=9$. El camino de máximo ascenso conduce naturalmente hacia esa vecindad.
 </div>
 
-## Ejemplo: rendimiento de dos variedades de maíz
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: maíz amarillo, Córdoba</div>
-  <div class="block-body">
-  <p>Se comparan dos variedades de maíz amarillo en 15 parcelas cada una. ¿Tienen el mismo rendimiento promedio? $H_0: \mu_A = \mu_B$ vs $H_1: \mu_A \neq \mu_B$, $\alpha = 0.05$.</p>
-  </div>
-</div>
-
-```{r}
-#| echo: true
-set.seed(26)
-maiz_A <- c(5.2, 5.8, 6.1, 5.5, 5.9, 6.3, 5.4, 6.0, 5.7, 5.6,
-            6.2, 5.3, 5.8, 6.0, 5.9)
-maiz_B <- c(4.8, 5.1, 4.9, 5.3, 5.0, 5.5, 4.7, 5.2, 5.4, 4.9,
-            5.1, 5.0, 4.8, 5.3, 5.1)
-
-resultado <- t.test(maiz_A, maiz_B, var.equal = FALSE, conf.level = 0.95)
-cat("t =", round(resultado$statistic, 4), "\n")
-cat("gl (Welch) =", round(resultado$parameter, 2), "\n")
-cat("Valor-p =", round(resultado$p.value, 4), "\n")
-cat("IC 95% para μ_A - μ_B: [", round(resultado$conf.int[1], 4),
-    ",", round(resultado$conf.int[2], 4), "]\n")
-```
-
-## Prueba t pareada: análisis antes y después
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: efecto de biofertilizante en frijol</div>
-  <div class="block-body">
-  <p>Se mide el contenido de clorofila (SPAD) en 10 plantas de frijol antes y después de aplicar un biofertilizante. $H_0: \mu_D = 0$ vs $H_1: \mu_D > 0$, $\alpha = 0.05$.</p>
-  </div>
-</div>
-
-```{r}
-#| echo: true
-antes   <- c(32.1, 30.5, 33.4, 31.0, 29.8, 34.2, 31.5, 30.9, 32.8, 31.3)
-despues <- c(35.6, 33.8, 36.2, 34.5, 32.4, 37.1, 34.8, 33.6, 35.9, 34.2)
-
-resultado <- t.test(despues, antes, paired = TRUE,
-                    alternative = "greater", conf.level = 0.95)
-cat("Diferencia media:", round(mean(despues - antes), 4), "\n")
-cat("t =", round(resultado$statistic, 4), "\n")
-cat("Valor-p:", round(resultado$p.value, 4), "\n")
-cat("IC 95% inferior:", round(resultado$conf.int[1], 4), "\n")
-```
-
-## Visualización: comparación de grupos
-
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(tidyverse)
-df <- bind_rows(
-  tibble(rendimiento = maiz_A, variedad = "A"),
-  tibble(rendimiento = maiz_B, variedad = "B")
-)
-
-ggplot(df, aes(x = variedad, y = rendimiento, fill = variedad)) +
-  geom_boxplot(alpha = 0.7, outlier.shape = 16, outlier.size = 2) +
-  geom_jitter(width = 0.1, alpha = 0.5, size = 2) +
-  scale_fill_manual(values = c("A" = "#1b4d2e", "B" = "#1a3a6b")) +
-  labs(x = "Variedad", y = "Rendimiento (t/ha)",
-       title = "Rendimiento de maíz amarillo por variedad") +
-  theme_minimal(base_size = 13) + theme(legend.position = "none")
-```
-
-## Prueba Z para diferencia de proporciones
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba: $H_0: p_1 = p_2$</div>
-  <div class="block-body">
-  <p>Con estimador combinado $\hat{p} = (X_1 + X_2)/(n_1 + n_2)$:</p>
-  $$Z = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})(1/n_1 + 1/n_2)}} \sim N(0,1) \quad \text{bajo } H_0$$
-  </div>
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Ejemplo: BPA en dos departamentos</div>
-  <div class="block-body">
-  <p>Huila: 87/150 adoptan BPA. Nariño: 54/120 adoptan BPA. ¿Difieren las tasas? $\alpha = 0.05$.</p>
-  </div>
-</div>
-
-```{r}
-#| echo: true
-resultado <- prop.test(c(87, 54), c(150, 120),
-                       alternative = "two.sided", correct = FALSE)
-cat("Valor-p:", round(resultado$p.value, 4), "\n")
-cat("IC 95%: [", round(resultado$conf.int[1], 4),
-    ",", round(resultado$conf.int[2], 4), "]\n")
-```
-
-## Prueba chi-cuadrado de independencia
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba $\chi^2$ de independencia</div>
-  <div class="block-body">
-  <p>Para una tabla de contingencia $r \times c$, bajo $H_0$ de independencia:</p>
-  $$\chi^2 = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}} \sim \chi^2_{(r-1)(c-1)}$$
-  <p>con frecuencias esperadas $E_{ij} = n_{i\bullet} \cdot n_{\bullet j} / n$.</p>
-  </div>
-</div>
-
-## Ejemplo: tabla de contingencia en sanidad animal
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: brucelosis y región, Antioquia</div>
-  <div class="block-body">
-  <p>Se registra si 200 bovinos de cuatro zonas presentan brucelosis. ¿Es la prevalencia independiente de la zona?</p>
-  </div>
-</div>
-
-```{r}
-#| echo: true
-tabla <- matrix(c(12, 88, 18, 72, 25, 65, 8, 92),
-                nrow = 2, byrow = FALSE,
-                dimnames = list(c("Positivo", "Negativo"),
-                                c("Zona_A", "Zona_B", "Zona_C", "Zona_D")))
-print(tabla)
-
-resultado_chi <- chisq.test(tabla)
-cat("\nχ² =", round(resultado_chi$statistic, 4), "\n")
-cat("gl =", resultado_chi$parameter, "\n")
-cat("Valor-p =", round(resultado_chi$p.value, 4), "\n")
-```
-
-## Frecuencias esperadas y residuos
-
-```{r}
-#| echo: true
-resultado_chi <- chisq.test(tabla)
-cat("Frecuencias esperadas:\n")
-print(round(resultado_chi$expected, 2))
-
-cat("\nResiduos estandarizados (Pearson):\n")
-print(round(resultado_chi$residuals, 3))
-```
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p>Residuos $|r_{ij}| > 2$ indican celdas que contribuyen más de lo esperado al estadístico $\chi^2$, señalando dónde está la asociación.</p>
-  </div>
-</div>
-
-## Errores comunes
+## Errores comunes en el máximo ascenso
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes en comparaciones</div>
-  <div class="block-body">
-  <p>Las pruebas de comparación tienen supuestos que deben verificarse cuidadosamente.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Usar pasos demasiado grandes, lo que hace que el camino "salte" sobre la región óptima sin detectarla.
+- Continuar el camino después de que la respuesta empieza a disminuir (señal clara de haber superado el óptimo).
+- Aplicar el método de máximo ascenso cuando ya existe curvatura significativa: en ese caso se necesita directamente un modelo de segundo orden.
+- Olvidar que la dirección de ascenso depende de la <strong>escala de codificación</strong>; cambiar los pasos del diseño cambia la dirección calculada.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Tratar datos pareados como independientes:</strong> siempre use <code>paired = TRUE</code> cuando las observaciones están naturalmente emparejadas.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Prueba $\chi^2$ con frecuencias esperadas pequeñas:</strong> si alguna $E_{ij} < 5$, use la prueba exacta de Fisher (<code>fisher.test()</code>).
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Comparaciones múltiples sin corrección:</strong> comparar $k$ grupos tomando pares produce inflación del error tipo I. Use ANOVA (Clase 30) o corrección de Bonferroni.
-</li>
-</ul>
+## {.center .middle}
 
-## Taller en clase {.center .middle}
+<div style="text-align: center; margin-top: 40px;">
 
-## Taller 1: prueba t de dos muestras
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Análisis de una superficie de segundo orden
+</p>
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Se evalúa el contenido de grasa (%) en leche de 16 vacas Holstein y 14 Jersey en Cundinamarca. Holstein: $\bar{x}_1 = 3.8\%$, $s_1 = 0.4\%$. Jersey: $\bar{x}_2 = 5.1\%$, $s_2 = 0.6\%$. ¿Difieren las medias? $H_0: \mu_H = \mu_J$ vs $H_1: \mu_H \neq \mu_J$, $\alpha = 0.01$.</p>
-  </div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Una vez en la vecindad del óptimo, el modelo lineal ya no es adecuado: se necesita capturar la curvatura de la superficie.
+</p>
+
 </div>
 
-## Taller 1: solución
+## El modelo de segundo orden
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Cerca del óptimo, la superficie de respuesta presenta curvatura y se aproxima mejor mediante un polinomio de <strong>segundo orden</strong>:
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:26px;">Modelo de segundo orden (k = 2)</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+\hat y = b_0 + b_1 x_1 + b_2 x_2 + b_{11}x_1^2 + b_{22}x_2^2 + b_{12}x_1 x_2
+$$
+</div>
+</div>
+
+<div style="font-size:22px; line-height:1.4; margin-top:10px;">
+- $b_{11}, b_{22}$: efectos cuadráticos puros (curvatura en cada eje).
+- $b_{12}$: efecto de interacción (curvatura cruzada entre los dos factores).
+- Este modelo ya no puede ajustarse con un diseño factorial $2^k$ simple: requiere un diseño que permita estimar términos cuadráticos (Parte III).
+</div>
+
+## Ubicación del punto estacionario: forma matricial
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+El modelo de segundo orden se escribe de forma compacta como $\hat y = b_0 + \mathbf{x}'\mathbf{b} + \mathbf{x}'\mathbf{B}\mathbf{x}$, con:
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; text-align:center;">
+$$
+\mathbf{b}=\begin{pmatrix}b_1\\b_2\end{pmatrix}
+\qquad
+\mathbf{B}=\begin{pmatrix}b_{11} & b_{12}/2\\ b_{12}/2 & b_{22}\end{pmatrix}
+$$
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="2">
+<div class="block-title" style="font-size:24px;">Punto estacionario</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+Derivando $\hat y$ respecto a $\mathbf{x}$ e igualando a cero:
+$$
+\mathbf{x}_s = -\frac{1}{2}\mathbf{B}^{-1}\mathbf{b}
+\qquad
+\hat y_s = b_0 + \frac{1}{2}\mathbf{x}_s'\,\mathbf{b}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+$\mathbf{x}_s$ es el punto donde el gradiente de la superficie ajustada se anula: puede ser un máximo, un mínimo o un punto de silla.
+</div>
+
+## CCD para el ejemplo del tomate
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Con base en el resultado del máximo ascenso (mejor punto en el paso 4: $N=18$, $P\approx9.5$), se centra un diseño central compuesto (CCD) en $N=18$, $P=9$, con paso $2$ para N y $1$ para P, y $\alpha=\sqrt{2}$ (rotable).
+</div>
+
+<table style="width:100%; font-size:18px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:4px;">Corrida</th><th>$x_1$</th><th>$x_2$</th><th>N</th><th>P</th><th>y</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td>1</td><td>-1</td><td>-1</td><td>16.0</td><td>8.0</td><td>44.36</td></tr>
+<tr><td>2</td><td>+1</td><td>-1</td><td>20.0</td><td>8.0</td><td>44.69</td></tr>
+<tr style="background-color:#eef4fb;"><td>3</td><td>-1</td><td>+1</td><td>16.0</td><td>10.0</td><td>44.72</td></tr>
+<tr><td>4</td><td>+1</td><td>+1</td><td>20.0</td><td>10.0</td><td>44.35</td></tr>
+<tr style="background-color:#eef4fb;"><td>5</td><td>$-\sqrt2$</td><td>0</td><td>15.17</td><td>9.0</td><td>44.25</td></tr>
+<tr><td>6</td><td>$+\sqrt2$</td><td>0</td><td>20.83</td><td>9.0</td><td>44.31</td></tr>
+<tr style="background-color:#eef4fb;"><td>7</td><td>0</td><td>$-\sqrt2$</td><td>18.0</td><td>7.59</td><td>44.90</td></tr>
+<tr><td>8</td><td>0</td><td>$+\sqrt2$</td><td>18.0</td><td>10.41</td><td>44.84</td></tr>
+<tr style="background-color:#eef4fb;"><td>9-13</td><td>0</td><td>0</td><td>18.0</td><td>9.0</td><td>45.15, 45.09, 44.86, 45.20, 45.15</td></tr>
+</table>
+
+## Ajuste del modelo de segundo orden
+
+<div style="font-size:23px; text-align:justify; line-height:1.4;">
+Ajustando $\hat y = b_0 + b_1x_1 + b_2x_2 + b_{11}x_1^2 + b_{22}x_2^2 + b_{12}x_1x_2$ con las 13 corridas del CCD:
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Término</th><th>Estimación</th><th>Error estándar</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td>$b_0$</td><td>45.089</td><td>0.047</td><td>$<0.001$</td></tr>
+<tr><td>$b_1$ ($x_1$)</td><td>0.0061</td><td>0.037</td><td>0.874</td></tr>
+<tr style="background-color:#eef4fb;"><td>$b_2$ ($x_2$)</td><td>-0.0090</td><td>0.037</td><td>0.815</td></tr>
+<tr><td>$b_{11}$ ($x_1^2$)</td><td>-0.4149</td><td>0.040</td><td>$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td>$b_{22}$ ($x_2^2$)</td><td>-0.1204</td><td>0.040</td><td>0.019</td></tr>
+<tr><td>$b_{12}$ ($x_1x_2$)</td><td>-0.1758</td><td>0.053</td><td>0.012</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+$R^2=0.946$. Los términos lineales ya no son significativos (el camino de ascenso "centró" bien el diseño), pero los términos cuadráticos y de interacción sí lo son: hay curvatura clara.
+</div>
+
+## Cálculo del punto estacionario
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Paso 1. Vector y matriz:</strong>
+$$
+\mathbf{b}=\begin{pmatrix}0.0061\\-0.0090\end{pmatrix}
+\quad
+\mathbf{B}=\begin{pmatrix}-0.4149 & -0.0879\\ -0.0879 & -0.1204\end{pmatrix}
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1b4d2e;">Paso 2. Punto estacionario codificado:</strong>
+$$\mathbf{x}_s = -\tfrac12 \mathbf{B}^{-1}\mathbf{b} = (0.018,\,-0.051)$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:22px; line-height:1.4; margin-top:8px;">
+<strong style="color:#1a3a6b;">Paso 3. Conversión a unidades reales:</strong>
+$$N_s = 18 + 2(0.018) = 18.04 \text{ g/planta} \qquad P_s = 9 + 1(-0.051) = 8.95 \text{ g/planta}$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Valor predicho en el punto estacionario: $\hat y_s = 45.089$ kg/planta.
+</div>
+
+## Superficie de respuesta ajustada
 
 ```{r}
-#| echo: true
-set.seed(26)
-holstein <- rnorm(16, 3.8, 0.4)
-jersey   <- rnorm(14, 5.1, 0.6)
+#| label: superficie-3d
+#| fig-width: 7.5
+#| fig-height: 4.6
+fhat <- function(x1, x2) {
+  45.089 + 0.0061*x1 - 0.0090*x2 - 0.4149*x1^2 - 0.1204*x2^2 - 0.1758*x1*x2
+}
+x1s <- seq(-2, 2, length.out = 50)
+x2s <- seq(-2, 2, length.out = 50)
+zs <- outer(x1s, x2s, fhat)
 
-resultado <- t.test(holstein, jersey, var.equal = FALSE, conf.level = 0.99)
-cat("t =", round(resultado$statistic, 4), "\n")
-cat("Valor-p =", round(resultado$p.value, 4), "\n")
-cat("IC 99%: [", round(resultado$conf.int[1], 4), ",",
-    round(resultado$conf.int[2], 4), "]\n")
-cat("Decisión:", ifelse(resultado$p.value < 0.01,
-    "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-d <- (mean(holstein) - mean(jersey)) /
-  sqrt((var(holstein) + var(jersey)) / 2)
-cat("d Cohen =", round(d, 4), "\n")
+Ns <- 18 + 2*x1s
+Ps <- 9 + 1*x2s
+
+persp(Ns, Ps, zs, theta = -35, phi = 22, expand = 0.6,
+      col = "#a7d8b3", shade = 0.5, ticktype = "detailed",
+      xlab = "N (g/planta)", ylab = "P (g/planta)", zlab = "Rendimiento (kg/planta)",
+      main = "Superficie de respuesta ajustada de segundo orden")
 ```
 
-## Taller 2: prueba de independencia chi-cuadrado
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En una encuesta a 250 agricultores del Huila, se registró el tipo de tenencia de tierra (propia/arrendada) y la adopción de abono orgánico (sí/no). Con los datos de la tabla, pruebe si la adopción es independiente de la tenencia. $\alpha = 0.05$.</p>
-
-  | | Adopta | No adopta |
-  |---|:---:|:---:|
-  | Tierra propia | 95 | 55 |
-  | Tierra arrendada | 30 | 70 |
-
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:8px; border-radius:12px; border-left:8px solid #475569; font-size:19px; text-align:center;">
+La superficie tiene forma de domo: existe un único máximo dentro de la región experimental, coincidente con el punto estacionario calculado.
 </div>
 
-## Taller 2: solución
+## Caracterización: valores y vectores propios
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Para determinar si el punto estacionario es un <strong>máximo</strong>, un <strong>mínimo</strong> o un <strong>punto de silla</strong>, se analizan los valores propios ($\lambda_1,\lambda_2$) de la matriz $\mathbf{B}$.
+</div>
+
+<table style="width:100%; font-size:23px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Signo de los $\lambda_i$</th><th style="padding:8px;">Naturaleza del punto estacionario</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Todos negativos</td><td style="padding:8px;">Máximo</td></tr>
+<tr><td style="padding:8px;">Todos positivos</td><td style="padding:8px;">Mínimo</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Signos mixtos</td><td style="padding:8px;">Punto de silla</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:21px; text-align:center;">
+Para el ejemplo del tomate: $\lambda_1=-0.096$, $\lambda_2=-0.439$. <strong>Ambos valores propios son negativos</strong>, por lo tanto el punto estacionario es un <strong>máximo</strong>.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+El eje con $|\lambda|$ mayor ($\lambda_2=-0.439$) es la dirección de mayor curvatura: la superficie cae más rápido al alejarse del óptimo en ese eje.
+</div>
+
+## Interpretación agronómica del resultado
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:26px;">Conclusión del análisis</div>
+<div class="block-body" style="font-size:23px; line-height:1.5;">
+Las dosis óptimas estimadas son <strong>N = 18.04 g/planta</strong> y <strong>P = 8.95 g/planta</strong>, con un rendimiento máximo esperado de <strong>45.09 kg/planta</strong>, frente a los 38.7 kg/planta de la operación inicial: una mejora superior al 16%.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:10px; font-size:21px; text-align:center;">
+El agrónomo puede recomendar estas dosis con confianza, ya que el análisis confirma que corresponden a un máximo y no a un punto de silla.
+</div>
+
+## Sistemas de cresta (ridge systems)
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+En algunos procesos no existe un único óptimo bien definido, sino una <strong>cresta</strong>: una región alargada donde muchas combinaciones de factores producen una respuesta igualmente buena.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">Cuándo aparece</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Cuando uno de los valores propios de $\mathbf{B}$ es cercano a cero: la curvatura en esa dirección es casi nula.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Ejemplo agrícola</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Riego y fertilización nitrogenada pueden sustituirse parcialmente: varias combinaciones (más riego/menos N, o menos riego/más N) producen rendimientos similares de caña de azúcar.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:21px; text-align:center;">
+En un sistema de cresta, el agricultor tiene flexibilidad: puede elegir el punto de la cresta más económico, sin sacrificar rendimiento.
+</div>
+
+## Respuestas múltiples: motivación
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+En la práctica agrícola rara vez interesa optimizar una sola variable. El productor de tomate también podría querer maximizar la <strong>calidad</strong> del fruto (firmeza, contenido de sólidos solubles), no solo el rendimiento en kg/planta.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:14px; font-size:22px; text-align:center;">
+El problema: las dosis que maximizan el rendimiento ($N=18.0$, $P=8.95$) pueden no ser las mismas que maximizan la calidad del fruto.
+</div>
+
+## Función de deseabilidad
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+La <strong>función de deseabilidad</strong> de Derringer y Suich combina varias respuestas en un único índice $D \in [0,1]$, donde $D=1$ representa la situación ideal para todas las respuestas simultáneamente.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Idea general</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+Cada respuesta $y_i$ se transforma en una deseabilidad individual $d_i \in [0,1]$; la deseabilidad global es la media geométrica:
+$$
+D = (d_1 \cdot d_2 \cdots d_m)^{1/m}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Ejemplo: para el tomate, $d_1$ mide qué tan cerca está el rendimiento de su máximo posible, y $d_2$ qué tan cerca está la firmeza del fruto de su valor ideal. Se buscan las dosis de N y P que maximizan $D$, en lugar de cada respuesta por separado.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Si $D=0$ para cualquier respuesta fuera de un rango aceptable, la deseabilidad global también es cero: ninguna respuesta puede "compensar" totalmente a otra que sea inaceptable.
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Diseños experimentales para superficies de respuesta
+</p>
+
+<p style="font-size: 26px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué diseño experimental se necesita en cada etapa de la RSM?
+</p>
+
+</div>
+
+## Diseños para el modelo de primer orden
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Para estimar un modelo de primer orden se necesitan diseños eficientes que permitan calcular el gradiente con el menor número de corridas posible.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Factoriales $2^k$ (o fraccionados $2^{k-p}$)</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Los más utilizados. Con $k=2$ o $3$ factores, se ejecutan en su forma completa más puntos centrales para estimar curvatura y error puro.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Diseños simplex</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Usan $k+1$ puntos (un simplex geométrico) para $k$ factores: son la opción más económica cuando los recursos experimentales son muy limitados.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+Ambos diseños son ortogonales o casi ortogonales, lo que facilita la estimación precisa de los coeficientes del modelo lineal.
+</div>
+
+## El diseño central compuesto (CCD)
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El <strong>diseño central compuesto</strong> es el diseño más usado para ajustar modelos de segundo orden. Combina tres tipos de puntos:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>Puntos factoriales</strong><br>$2^k$ corridas en los vértices ($\pm1$ en cada factor).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>Puntos axiales (estrella)</strong><br>$2k$ corridas a distancia $\pm\alpha$ sobre cada eje, con los demás factores en su centro.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:21px; text-align:center;">
+<strong>Puntos centrales</strong><br>$n_c$ réplicas en el centro del diseño, para estimar el error puro.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+Para $k=2$ factores y $\alpha=\sqrt2$ (CCD rotable), el diseño usado en el ejemplo del tomate tuvo $4+4+5=13$ corridas en total.
+</div>
+
+## Estructura geométrica del CCD ($k=2$)
 
 ```{r}
-#| echo: true
-tabla2 <- matrix(c(95, 30, 55, 70), nrow = 2,
-                 dimnames = list(c("Propia", "Arrendada"),
-                                 c("Adopta", "No adopta")))
-resultado_chi2 <- chisq.test(tabla2, correct = FALSE)
-cat("χ² =", round(resultado_chi2$statistic, 4), "\n")
-cat("gl =", resultado_chi2$parameter, "\n")
-cat("Valor-p =", round(resultado_chi2$p.value, 4), "\n")
-cat("Decisión:", ifelse(resultado_chi2$p.value < 0.05,
-    "RECHAZAR H0 (dependencia)", "NO RECHAZAR H0"), "\n")
-cat("\nFrecuencias esperadas:\n")
-print(round(resultado_chi2$expected, 2))
+#| label: ccd-geometria
+#| fig-width: 6.4
+#| fig-height: 4.4
+a <- sqrt(2)
+fac <- expand.grid(x1=c(-1,1), x2=c(-1,1))
+ax <- data.frame(x1=c(-a,a,0,0), x2=c(0,0,-a,a))
+ce <- data.frame(x1=rep(0,5), x2=rep(0,5))
+
+plot(NA, xlim=c(-1.8,1.8), ylim=c(-1.8,1.8), xlab="x1 (codificado)", ylab="x2 (codificado)",
+     main="Puntos del diseño central compuesto", asp=1)
+abline(h=0, v=0, col="gray80")
+points(fac$x1, fac$x2, pch=15, col="#1a3a6b", cex=2)
+points(ax$x1, ax$x2, pch=17, col="#b91c1c", cex=2)
+points(ce$x1, ce$x2, pch=19, col="#1b4d2e", cex=1.6)
+legend("topright", legend=c("Factoriales","Axiales (estrella)","Centrales"),
+       pch=c(15,17,19), col=c("#1a3a6b","#b91c1c","#1b4d2e"), bty="n", cex=0.85)
 ```
 
-## Taller 3: elección del tipo de prueba
+## Elección de $\alpha$ y número de puntos centrales
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Para cada escenario, indique qué prueba usar y justifique:</p>
-  <ol style="font-size: 24px;">
-  <li>Comparar el rendimiento de dos fertilizantes en 20 parcelas, 10 por tratamiento, asignados al azar.</li>
-  <li>Evaluar si la tasa de preñez difiere entre dos razas bovinas (120 y 95 hembras).</li>
-  <li>Comparar el peso de 15 terneros antes y después de un programa de suplementación.</li>
-  </ol>
-  </div>
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El valor de $\alpha$ y el número de puntos centrales $n_c$ se eligen para que el CCD tenga propiedades deseables, como la rotabilidad (la varianza de predicción depende solo de la distancia al centro).
 </div>
 
-## Taller 3: solución
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">k (factores)</th><th>$\alpha$ rotable ($2^{k/4}$)</th><th>$n_c$ recomendado</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td>2</td><td>1.414</td><td>5</td></tr>
+<tr><td>3</td><td>1.682</td><td>6</td></tr>
+<tr style="background-color:#eef4fb;"><td>4</td><td>2.000</td><td>7</td></tr>
+</table>
 
-<ul>
-<li class="fragment fade-up" data-fragment-index="1" style="font-size: 26px; text-align: justify;">
-<strong>1:</strong> Prueba t de Welch (dos muestras independientes). Verificar normalidad con Shapiro-Wilk. Si se viola, usar Wilcoxon de rango suma.
-</li>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-<strong>2:</strong> Prueba Z para diferencia de proporciones (<code>prop.test</code>) o $\chi^2$ de independencia. Verificar que $n\hat{p} \geq 5$ en cada celda.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-<strong>3:</strong> Prueba t pareada (<code>t.test(..., paired = TRUE)</code>). Las mismas unidades se miden dos veces, por lo que hay una dependencia natural entre las observaciones.
-</li>
-</ul>
-
-## Resumen: comparación de dos grupos
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 25px;">Medias</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 22px;">Independientes (Welch): <code>t.test(x, y)</code>.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px;">Independientes (Student): <code>t.test(x, y, var.equal=TRUE)</code>.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px;">Pareadas: <code>t.test(x, y, paired=TRUE)</code>.</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+En el ejemplo del tomate ($k=2$), se usó $\alpha=1.414$ y $n_c=5$, siguiendo la recomendación estándar para diseños rotables.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 style="color:#1a3a6b; font-size: 25px;">Proporciones / tablas</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px;">Dos proporciones: <code>prop.test(c(x1,x2), c(n1,n2))</code>.</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px;">Tabla $r \times c$: <code>chisq.test(tabla)</code>.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px;">Frecuencias pequeñas: <code>fisher.test(tabla)</code>.</li>
-</ul>
+## Bloqueo en diseños de superficie de respuesta
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Cuando el experimento no puede ejecutarse en condiciones homogéneas (varios días de siembra, distintos lotes de fertilizante, varios invernaderos), se introduce el <strong>bloqueo</strong> para aislar esa fuente de variación.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:center;">
+Un CCD se puede dividir en dos bloques: uno con los puntos factoriales + algunos centrales, y otro con los puntos axiales + el resto de los centrales.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Ejemplo: si el CCD del tomate requiere dos semanas de invernadero, las 8 corridas de la primera semana (factoriales + 2 o 3 centrales) forman el bloque 1, y las 5 corridas axiales + el resto de centrales forman el bloque 2. El efecto de "semana" se modela como bloque, sin contaminar la estimación de N y P.
+</div>
+
+## Diseños óptimos generados por computador
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Cuando la región experimental tiene restricciones (por ejemplo, no se puede aplicar simultáneamente dosis muy altas de N y muy bajas de riego), los diseños clásicos (factorial, CCD) pueden no ser aplicables directamente.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">Criterio D-óptimo</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Selecciona los puntos experimentales que minimizan el volumen de la región de confianza de los coeficientes (maximiza $|\mathbf{X}'\mathbf{X}|$).
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Cuándo usarlos</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Regiones experimentales irregulares, número de corridas fijo por presupuesto, o combinación de factores cualitativos y cuantitativos.
+</div>
 </div>
 
 </div>
 
-## Próxima clase
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+Estos diseños se generan con algoritmos computacionales (intercambio de puntos) y no tienen, en general, una estructura geométrica tan simple como el CCD.
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Otros enfoques de optimización de procesos
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+La RSM clásica no es la única herramienta disponible para optimizar procesos agrícolas.
+</p>
+
+</div>
+
+## Experimentos con mezclas
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En los <strong>experimentos con mezclas</strong>, los factores son las proporciones de los componentes de una mezcla, y deben sumar siempre el 100%. Esto los distingue de los factoriales clásicos, donde cada factor varía de forma independiente.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Restricción de mezcla</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+$$
+x_1 + x_2 + \cdots + x_q = 1, \qquad x_i \geq 0
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Ejemplo agrícola: un vivero de flores en Madrid (Cundinamarca) busca la mezcla óptima de sustrato para semilleros, combinando turba, cascarilla de arroz y compost, en proporciones que suman 100%, para maximizar el porcentaje de germinación.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+La región experimental ya no es un cubo o una esfera, sino un símplex (triángulo para $q=3$ componentes), lo que exige diseños específicos (simplex-lattice, simplex-centroide).
+</div>
+
+## Operación evolutiva (EVOP)
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+La <strong>Operación Evolutiva</strong> (EVOP) permite optimizar un proceso que ya está en producción, mediante pequeños cambios secuenciales, <strong>sin detener la operación</strong> y sin asumir los riesgos de un cambio drástico.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">Idea central</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Se ejecutan ciclos pequeños de variaciones en torno a las condiciones actuales de operación (un "factorial pequeño" repetido en el tiempo), acumulando información hasta detectar mejoras significativas.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Ejemplo agrícola</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Una planta de beneficio de café en producción continua ajusta gradualmente la dosis de cal usada en el lavado del grano, probando pequeñas variaciones cada semana sin detener el proceso productivo.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+EVOP es más lento que un experimento diseñado clásico, pero evita interrumpir la producción mientras se busca la mejora.
+</div>
+
+## Diseño robusto de procesos: antecedentes
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El enfoque de <strong>diseño robusto</strong>, propuesto originalmente por Genichi Taguchi, distingue dos tipos de factores que afectan un proceso.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Factores de control</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Variables que el productor puede fijar y manipular: dosis de fertilizante, densidad de siembra, variedad de semilla.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Factores de ruido</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Variables que afectan la respuesta pero que <strong>no</strong> se pueden controlar en campo: temperatura, precipitación, radiación solar.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:21px; text-align:center;">
+El objetivo del diseño robusto no es solo maximizar la media de la respuesta, sino encontrar condiciones que sean buenas <strong>en promedio</strong> y, además, poco sensibles a la variabilidad de los factores de ruido.
+</div>
+
+## Enfoque de superficie de respuesta para diseño robusto
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+La extensión moderna del diseño robusto usa RSM para modelar simultáneamente la <strong>media</strong> y la <strong>varianza</strong> de la respuesta en función de los factores de control y de ruido.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Modelos de media y varianza</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$
+\hat\mu_y(\mathbf{x}) \qquad \text{y} \qquad \hat\sigma^2_y(\mathbf{x})
+$$
+se ajustan como funciones de los factores de control $\mathbf{x}$, combinando luego ambos objetivos (ej. maximizar $\hat\mu_y$ sujeto a una cota en $\hat\sigma^2_y$).
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Ejemplo agrícola: un caficultor en el Huila busca la combinación de variedad y densidad de siembra que produzca un rendimiento alto en promedio, pero que también sea estable frente a años de sequía o exceso de lluvia.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Una práctica más rentable en promedio, pero muy sensible al clima, puede ser menos deseable que una práctica algo menos rentable pero mucho más estable.
+</div>
+
+## Resumen general de la clase
 
 <div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 27: Razón de varianzas.</strong> Completaremos el panorama de comparaciones con la prueba F para igualdad de varianzas, que es también el fundamento del ANOVA.</p>
-  </div>
+<div class="block-body" style="font-size:23px; line-height:1.5;">
+La RSM avanza secuencialmente: primero un modelo de primer orden y máximo ascenso para acercarse al óptimo, luego un modelo de segundo orden (vía CCD) para caracterizarlo mediante el punto estacionario y el análisis de valores propios. Cuando hay varias respuestas, se recurre a la deseabilidad; cuando no hay óptimo único, aparecen sistemas de cresta. Las mezclas, EVOP y el diseño robusto son extensiones del mismo espíritu de optimización experimental.
+</div>
 </div>
 
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Estudiaremos la distribución F, la prueba de Bartlett y de Levene, y la relación con la prueba t de varianzas iguales.
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+En el ejemplo central, las dosis óptimas de N=18.04 g/planta y P=8.95 g/planta llevaron el rendimiento de 38.7 a 45.09 kg/planta de tomate.
+</div>
+
+## Taller en Clase {.center .middle}
+
+## Instrucciones
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+Resuelva los siguientes ejercicios aplicando los conceptos de la Metodología de Superficie de Respuesta vistos en esta clase. Para cada ejercicio:
+</div>
+
+<div style="font-size:24px; line-height:1.6; margin-top:14px;">
+1. Identifique las variables (factores y respuesta) y su tipo de diseño.
+2. Realice los cálculos solicitados paso a paso (dirección de ascenso, punto estacionario, valores propios, según corresponda).
+3. Interprete el resultado en el contexto agrícola del problema.
+4. Discuta posibles errores comunes que deben evitarse al aplicar el método.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:14px; font-size:21px; text-align:center;">
+Trabaje en grupos de máximo 3 estudiantes. Tiempo estimado: 35 minutos.
+</div>
+
+## Ejercicio 1
+
+<p style="font-size:27px; text-align:justify; line-height:1.4;">
+Un cultivador de papa en Nariño ajusta un modelo de primer orden para el rendimiento (ton/ha) en función de la dosis de potasio ($x_1$) y la frecuencia de riego ($x_2$), codificadas en $[-1,1]$:
+$$\hat y = 24.6 + 1.8x_1 + 3.2x_2$$
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:23px; text-align:center;">
+a) Calcule la razón $b_2/b_1$ y la dirección de máximo ascenso.<br>
+b) Si el paso de referencia es $\Delta x_1=1$, calcule $\Delta x_2$.<br>
+c) Si el centro del diseño es $x_1=20$ kg/ha de potasio (paso 5) y $x_2=2$ riegos/semana (paso 1), construya la tabla de los primeros 3 puntos del camino de ascenso en unidades reales.
+</div>
+
+## Ejercicio 2
+
+<p style="font-size:27px; text-align:justify; line-height:1.4;">
+En una plantación de caña de azúcar en el Valle del Cauca se ajustó un modelo de segundo orden para el contenido de sacarosa (%) en función de la dosis de nitrógeno ($x_1$) y de potasio ($x_2$):
+$$\hat y = 14.2 + 0.15x_1 + 0.08x_2 - 0.25x_1^2 - 0.10x_2^2 + 0.05x_1x_2$$
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:23px; text-align:center;">
+a) Escriba el vector $\mathbf{b}$ y la matriz $\mathbf{B}$ del modelo.<br>
+b) Calcule el punto estacionario codificado $\mathbf{x}_s$.<br>
+c) Calcule los valores propios de $\mathbf{B}$ y determine si el punto estacionario es un máximo, un mínimo o un punto de silla.
+</div>
+
+## Ejercicio 3
+
+<p style="font-size:27px; text-align:justify; line-height:1.4;">
+Un agrónomo de flores en Madrid (Cundinamarca) desea diseñar un CCD para 2 factores: temperatura del invernadero ($x_1$) y humedad relativa ($x_2$), con el fin de maximizar el número de tallos comerciales de rosa por planta.
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:23px; text-align:center;">
+a) Liste los puntos del CCD (factoriales, axiales y centrales) usando $\alpha=1.414$ y $n_c=5$, en variables codificadas.<br>
+b) Si el centro real es $T=22°C$ (paso $2°C$) y $HR=70\%$ (paso $5\%$), convierta los 13 puntos del diseño a unidades reales.<br>
+c) Explique por qué este diseño no podría usarse para estimar únicamente un modelo de primer orden de forma eficiente.
+</div>
+
+## Ejercicio 4
+
+<p style="font-size:26px; text-align:justify; line-height:1.4;">
+Una empresa de flores busca simultáneamente maximizar la longitud del tallo (respuesta 1) y minimizar el porcentaje de pétalos dañados por hongos (respuesta 2), ambas en función de la dosis de fungicida y la frecuencia de ventilación del invernadero.
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:23px; text-align:center;">
+a) Explique por qué este es un problema de respuestas múltiples y no se puede resolver optimizando cada respuesta por separado.<br>
+b) Proponga, en palabras, cómo construiría las deseabilidades individuales $d_1$ y $d_2$ para cada respuesta.<br>
+c) Discuta qué ocurriría con la deseabilidad global $D$ si una combinación de factores produce el tallo más largo posible pero también el mayor daño por hongos.
+</div>
+
+## Ejercicio 5
+
+<p style="font-size:27px; text-align:justify; line-height:1.4;">
+Una planta procesadora de panela en Santander, ya en operación continua, desea mejorar el rendimiento de panela por tonelada de caña sin detener la producción diaria.
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:23px; text-align:center;">
+a) Justifique por qué la Operación Evolutiva (EVOP) es más adecuada aquí que un CCD clásico.<br>
+b) Proponga dos factores de control y dos posibles factores de ruido relevantes para este proceso.<br>
+c) Describa, en términos generales, cómo se vería un ciclo de EVOP para esta planta (qué cambios pequeños probaría y cómo decidiría si conservarlos).
+</div>

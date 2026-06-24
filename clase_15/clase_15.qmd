@@ -1,7 +1,7 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
@@ -40,12 +40,10 @@ execute:
   echo: true
 ---
 
-## Clase 15 {.center .middle}
-
 ## Contenido
 
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 28px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 28px; align-items: start;line-height:1.2;">
 
 <div>
 
@@ -75,7 +73,7 @@ Pruebas para la diferencia de medias.
 Criterios de decisión.
 </li>
 <li class="fragment fade-in" data-fragment-index="7">
-Ejemplos y código en R.
+Ejemplos resueltos.
 </li>
 </ul>
 
@@ -106,85 +104,127 @@ Criterios de decisión.
 </li>
 
 <li class="fragment fade-in" data-fragment-index="13">
-Ejemplos y código en R.
+Ejemplos resueltos.
 </li>
 
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="15"
+<h3 class="fragment fade-in" data-fragment-index="14"
 style="font-size: 30px; margin-bottom: 14px; color: #79260d;">
-Parte III: Error tipo I, error tipo II potencia de la prueba y razón de varianzas.
+Parte III: Errores, potencia y razón de varianzas.
 </h3>
 
 <ul>
+<li class="fragment fade-in" data-fragment-index="15">
+Error tipo I y error tipo II.
+</li>
+
 <li class="fragment fade-in" data-fragment-index="16">
-Introducción
+Tabla de decisiones y relación entre $\small \alpha$ y $\small \beta$.
 </li>
 
 <li class="fragment fade-in" data-fragment-index="17">
-Error tipo I, error tipo II (Definiciones)
+Potencia estadística y función de potencia.
 </li>
 
 <li class="fragment fade-in" data-fragment-index="18">
-Tabla de decisiones
+Efecto del tamaño de muestra sobre la potencia.
 </li>
 
 <li class="fragment fade-in" data-fragment-index="19">
-Potencia
+Determinación del tamaño de muestra.
 </li>
 
 <li class="fragment fade-in" data-fragment-index="20">
-Relación α, β y potencia.
+Prueba de hipótesis para la razón de varianzas (distribución $\small F$).
 </li>
 
 <li class="fragment fade-in" data-fragment-index="21">
-Prueba de hipotesis para la razón de varianzas.
+Ejemplo y solución.
 </li>
+
 <li class="fragment fade-in" data-fragment-index="22">
 Taller en clase.
 </li>
-
 </ul>
-
 </div>
 </div>
 
-<div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
-</div>
 
 ## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
 
 <p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
-Introducción a las Pruebas de Hipótesis para la Diferencia de Medias
+Introducción a las Pruebas de Hipótesis para la diferencia de medias
 </p>
 
-<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
-
-En numerosas investigaciones no basta con analizar una sola población, sino que es necesario comparar dos grupos para determinar si presentan diferencias significativas. Las pruebas de hipótesis para la diferencia de medias permiten evaluar, a partir de información muestral, si las diferencias observadas entre dos poblaciones se deben al azar o reflejan diferencias reales en sus promedios.
-
-</p>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">En numerosas investigaciones no basta con analizar una sola población, sino que es necesario comparar dos grupos para determinar si presentan diferencias significativas.</p>
 
 </div>
 
-## Pruebas de Hipótesis para la Diferencia de Medias
+## Resumen clase 14
+
+<div style="font-size: 28px; text-align: justify; line-height: 1.5;">
+
+En la clase anterior se estudiaron las pruebas de hipótesis para un solo parámetro poblacional ($\mu$, $p$ y $\sigma^2$), junto con sus criterios de decisión.
+
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; text-align:center;">
+Clase 14: una población
+</div>
+
+<div style="font-size:24px; line-height:1.3; margin-top:12px;">
+- Conceptos básicos: $H_0$, $H_1$, $\alpha$, estadístico de prueba.
+- Pruebas para la media $\mu$ y la proporción $p$.
+- Prueba de hipótesis para la varianza $\sigma^2$.
+- Criterios de decisión: región crítica, valor$-p$ e intervalo de confianza.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:16px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Clase 15: dos poblaciones
+</div>
+
+<div style="font-size:24px; line-height:1.3; margin-top:12px;">
+- Comparación de dos grupos: diferencia de medias y de proporciones.
+- Los mismos criterios de decisión, aplicados a la diferencia de parámetros.
+- Errores tipo I y II, potencia y razón de varianzas.
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px;">
+
+<div style="font-size:24px; text-align:justify; line-height:1.3;">
+La lógica de las pruebas de hipótesis no cambia: lo que cambia es el parámetro de interés, que ahora compara dos poblaciones en lugar de evaluar una sola.
+</div>
+
+</div>
+
+## Pruebas de hipótesis para la diferencia de medias
 
 <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:24px; align-items:center;">
 
 <div>
 
-<div style="font-size:28px; text-align:justify; line-height:1.6;">
-
-En numerosas investigaciones no basta con analizar una sola población, sino que es necesario comparar dos grupos para determinar si presentan diferencias significativas.
-
-<br>
-
+<div style="font-size:30px; text-align:justify; line-height:1.6;">
 Las pruebas de hipótesis para la diferencia de medias permiten evaluar si las diferencias observadas entre dos muestras reflejan diferencias reales entre las poblaciones o simplemente variaciones debidas al azar.
-
 </div>
 
 </div>
@@ -224,23 +264,17 @@ Diferencia entre las medias de dos poblaciones.
 <div class="fragment fade-up" data-fragment-index="1"
 style="background-color:#eef7ee; padding:16px; border-radius:16px; border-left:8px solid #1b4d2e;">
 
-<div style="font-size:28px; text-align:justify; line-height:1.6;">
-
+<div style="font-size:30px; text-align:justify; line-height:1;">
 El objetivo es determinar si la diferencia poblacional es igual a cero o si existe evidencia estadística suficiente para afirmar que los promedios de ambas poblaciones son diferentes.
-
 </div>
 
 </div>
 
 ## Tipos de Muestras
 
-<div style="font-size: 25px; text-align: justify; line-height: 1.6;">
-
+<div style="margin-top:20px;font-size: 30px; text-align: justify; line-height: 1.6;">
 La selección de la prueba estadística depende de la relación existente entre las muestras que se desean comparar.
-
 </div>
-
-<br>
 
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
 
@@ -293,36 +327,20 @@ Producción de un cultivo antes y después de aplicar un fertilizante.
 <div class="fragment fade-up" data-fragment-index="3"
 style="background-color:#fff7e8; padding:16px; border-radius:16px; border-left:8px solid #d97706;">
 
-<div style="font-size:25px; text-align:justify; line-height:1.6;">
-
+<div style="font-size:30px; text-align:justify; line-height:1;">
 Identificar correctamente el tipo de muestra es fundamental, ya que determina el estadístico de prueba que debe utilizarse en el análisis.
-
 </div>
 
 </div>
 
 
-## Tipos de Hipótesis para la Diferencia de Medias
+## Hipótesis para la diferencia de medias
 
-<div style="font-size: 26px; text-align: justify; line-height: 1.6;">
-
-El objetivo es determinar si existe evidencia estadística suficiente para afirmar que las medias de dos poblaciones son diferentes.
-
+<div style="margin-top:20px;font-size: 30px; text-align: justify; line-height: 1;">
+El objetivo es determinar si existe evidencia estadística suficiente para afirmar que las medias de dos poblaciones son diferentes. El parámetro de interés es: $\small \mu_1-\mu_2$
 </div>
 
-
-<div style="font-size: 28px; text-align: center;">
-
-El parámetro de interés es:
-
-$$
-\mu_1-\mu_2
-$$
-
-</div>
-
-
-<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+<div style="margin-top:30px;display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
 
 <div class="fragment fade-up" data-fragment-index="1"
 style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:7px solid #1a3a6b;">
@@ -389,28 +407,20 @@ $$
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="4"
-style="background-color:#f8fafc; padding:16px; border-radius:16px; border-left:8px solid #475569;">
+style="margin-top:30px;background-color:#f8fafc; padding:16px; border-radius:16px; border-left:8px solid #475569;">
 
-<div style="font-size:27px; text-align:justify; line-height:1.6;">
-
+<div style="font-size:30px; text-align:justify; line-height:1;">
 En la mayoría de aplicaciones, la hipótesis nula plantea que no existe diferencia entre las medias poblacionales, mientras que la hipótesis alternativa evalúa la presencia de diferencias, aumentos o disminuciones en el parámetro de interés.
-
 </div>
 
 </div>
 
-## Estadístico de Prueba para la Diferencia de Medias
+## Estadístico de Prueba
 
-<div style="font-size: 26px; text-align: justify; line-height: 1.6;">
-
+<div style="font-size: 30px; text-align: justify; line-height:1;">
 Las pruebas de hipótesis para la diferencia de medias buscan evaluar si la diferencia observada entre dos muestras es suficientemente grande para concluir que existe una diferencia real entre las poblaciones.
-
 </div>
-
-<br>
 
 <div class="fragment fade-up" data-fragment-index="1"
 style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
@@ -419,7 +429,7 @@ style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8p
 Idea General
 </div>
 
-<div style="font-size:30px; text-align:center; margin-top:15px;">
+<div style="font-size:26px; text-align:center; margin-top:15px;">
 
 $$
 \text{Estadístico}
@@ -490,13 +500,9 @@ Mide la variabilidad de la diferencia entre medias.
 
 ## Selección del Estadístico de Prueba
 
-<div style="font-size: 26px; text-align: justify; line-height: 1.6;">
-
+<div style="margin-top:40px;font-size: 30px; text-align: justify; line-height:1;">
 La elección del estadístico de prueba depende del tipo de muestra y de la información disponible sobre las poblaciones.
-
 </div>
-
-<br>
 
 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
 
@@ -547,88 +553,59 @@ Se utiliza cuando las observaciones están relacionadas o emparejadas.
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="4"
 style="background-color:#f8fafc; padding:16px; border-radius:16px; border-left:8px solid #475569;">
-
-<div style="font-size:24px; text-align:justify; line-height:1.6;">
-
+<div style="font-size:30px; text-align:justify; line-height:1.6;">
 En la práctica, la prueba t de Student es la más utilizada, ya que generalmente las desviaciones estándar poblacionales son desconocidas.
-
 </div>
-
 </div>
 
 ## Prueba Z para la Diferencia de Medias
 
-<div style="font-size: 28px; text-align: justify; line-height: 1.6;">
-
+<div style="font-size: 30px; text-align: justify; line-height: 1;">
 La prueba Z se utiliza para comparar dos medias poblacionales cuando las desviaciones estándar de ambas poblaciones son conocidas.
-
 </div>
 
 
 <div class="block-theorem">
 
-<div class="block-title">
-Estadístico de prueba
-</div>
+<div class="block-title" style="font-size:30px;">Estadístico de prueba</div>
 
-<div class="block-body" style="font-size:28px; text-align:center;">
-
+<div class="block-body" style="font-size:24px; text-align:center;">
 $$
 Z=
 \frac{(\bar{x}_1-\bar{x}_2)-(\mu_1-\mu_2)}
 {\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}
 $$
-
+</div>
 </div>
 
-</div>
-
-<div style="font-size:28px; line-height:1.7;">
-
+<div style="font-size:28px; line-height:1.2;">
 - $\bar{x}_1,\bar{x}_2$: medias muestrales.
-
 - $\sigma_1,\sigma_2$: desviaciones estándar poblacionales.
-
 - $n_1,n_2$: tamaños muestrales.
-
 - Bajo $H_0$, generalmente: $\mu_1-\mu_2=0$
-
 </div>
 
 
 ## Pruebas t para la Diferencia de Medias
 
-<div style="font-size:25px; text-align:justify; line-height:1.5;">
-
+<div style="font-size:30px; text-align:justify; line-height:1;">
 Cuando las desviaciones estándar poblacionales son desconocidas, la diferencia de medias puede evaluarse mediante una prueba t de Student.
-
 </div>
 
-
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
-
 <div class="fragment fade-up" data-fragment-index="1"
 style="background-color:#eef4fb;
 padding:18px;
 border-radius:18px;
 border-top:8px solid #1a3a6b;">
 
-<div style="font-size:28px;
-font-weight:bold;
-text-align:center;
-color:#1a3a6b;">
-
+<div style="font-size:28px;font-weight:bold;text-align:center;color:#1a3a6b;">
 Muestras Independientes
-
 </div>
 
-<div style="font-size:26px;
-text-align:center;
-margin-top:10px;">
+<div style="font-size:26px;text-align:center;margin-top:10px;">
 
 $$
 t=
@@ -637,22 +614,11 @@ t=
 $$
 
 </div>
-
-<div style="font-size:22px;
-line-height:1.5;">
-
-• Las muestras provienen de grupos diferentes.
-
-• Se utilizan las desviaciones estándar muestrales:
-
-$$
-s_1,\; s_2
-$$
-
-• Se compara con una distribución t de Student.
-
-</div>
-
+<ul style="font-size:26px;line-height:1.2;">
+<li>Las muestras provienen de grupos diferentes.</li>
+<li>Se utilizan las desviaciones estándar muestrales: $\small s_1,\; s_2$</li>
+<li>Se compara con una distribución t de Student.</li>
+</ul>
 </div>
 
 <div class="fragment fade-up" data-fragment-index="2"
@@ -670,62 +636,31 @@ Muestras Pareadas
 
 </div>
 
-<div style="font-size:26px;
-text-align:center;
-margin-top:10px;">
+<div style="font-size:24px;text-align:center;margin-top:10px;">
 
 $$
 t=
 \frac{\bar d-\mu_d}
 {s_d/\sqrt{n}}
 $$
-
 </div>
-
-<div style="font-size:22px;
-line-height:1.5;">
-• Las observaciones están relacionadas.
-
-• El análisis se realiza sobre las diferencias: $d_i$
-
-• $\bar{d}$: promedio de las diferencias.
-
-• $s_d$: desviación estándar de las diferencias.
-
-• $n$: número de pares.
-
-• Generalmente se contrasta: $H_0:\mu_d=0$
-
+<ul style="font-size:26px; line-height:1.2;">
+<li>Las observaciones están relacionadas.</li>
+<li>El análisis se realiza sobre las diferencias: $d_i$</li>
+<li>$\bar{d}$: promedio de las diferencias.</li>
+<li>$s_d$: desviación estándar de las diferencias.</li>
+<li>$n$: número de pares.</li>
+<li>Generalmente se contrasta: $H_0:\mu_d=0$</li>
+</ul>
 </div>
-
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#fff7e8;
-padding:14px;
-border-radius:16px;
-border-left:8px solid #d97706;">
-
-<div style="font-size:23px; text-align:center;">
-
-La elección de la prueba depende de si las muestras son independientes o si las observaciones están emparejadas.
-
-</div>
-
 </div>
 
 
-## Criterios de Decisión para la Diferencia de Medias
+## Criterios de Decisión
 
-<div style="font-size: 28px; text-align: justify; line-height: 1.6;">
-
+<div style="font-size: 30px; text-align: justify; line-height: 1;margin-top:30px;">
 Una vez calculado el estadístico de prueba, es necesario decidir si existe evidencia suficiente para rechazar la hipótesis nula.
-
 </div>
-
-<br>
 
 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
 
@@ -735,15 +670,10 @@ style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8p
 <div style="font-size:28px; font-weight:bold; color:#1a3a6b; text-align:center;">
 Región crítica
 </div>
-
 <div style="font-size:28px; text-align:center; line-height:1.6; margin-top:10px;">
-
 Comparar el estadístico calculado con los valores críticos.
-
 </div>
-
 </div>
-
 <div class="fragment fade-up" data-fragment-index="2"
 style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
 
@@ -775,9 +705,6 @@ Verificar si el valor hipotético pertenece al intervalo.
 </div>
 
 </div>
-
-<br>
-
 <div class="fragment fade-up" data-fragment-index="4"
 style="background-color:#f8fafc; padding:16px; border-radius:16px; border-left:8px solid #475569;">
 
@@ -791,13 +718,9 @@ Los tres criterios deben conducir a la misma conclusión cuando se aplican corre
 
 ## Criterio de la Región Crítica
 
-<div style="font-size: 28px; text-align: justify; line-height: 1.6;">
-
+<div style="font-size:30px; text-align: justify; line-height: 1;margin-top:40px">
 La decisión se toma comparando el estadístico calculado con los valores críticos de la distribución correspondiente.
-
 </div>
-
-<br>
 
 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
 
@@ -878,33 +801,74 @@ $$
 
 </div>
 
-## Criterio del Valor-p
 
-<div style="font-size: 30px; text-align: justify; line-height: 1.6;">
+## Grados de libertad en la distribución t
 
-El valor-p representa la probabilidad de obtener un resultado igual o más extremo que el observado, suponiendo que la hipótesis nula es verdadera.
+<div style="font-size:30px; text-align: justify; line-height: 1; margin-top:40px;">
+Cuando se utiliza una prueba t de Student, los valores críticos dependen de los grados de libertad (gl), los cuales determinan la forma de la distribución $t$.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; text-align:center;">
+Muestras Independientes
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1">
+
+$$
+gl=n_1+n_2-2
+$$
+</div>
 
 </div>
 
-<br>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:18px; border-radius:18px; border-top:8px solid #d97706;">
+
+<div style="font-size:28px; font-weight:bold; color:#d97706; text-align:center;">
+Muestras Pareadas
+</div>
+
+<div style="font-size:28px; text-align:center; line-height:1.8; margin-top:15px;">
+
+$$ gl=n-1 $$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style=" margin-top:20px;background-color:#eef4fb; padding:16px; border-radius:16px; border-left:8px solid #1a3a6b;">
+
+<div style="font-size:28px; text-align:justify; line-height:1;">
+Los grados de libertad se utilizan para obtener el valor crítico de la distribución t en el criterio de región crítica y para calcular el valor$-p$.
+</div>
+</div>
+
+
+## Criterio del Valor$-p$
+
+<div style="margin-top:50px;font-size: 30px; text-align: justify; line-height:1;">
+El valor-p representa la probabilidad de obtener un resultado igual o más extremo que el observado, suponiendo que la hipótesis nula es verdadera.
+</div>
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
 
-<div class="block-title">
+<div class="block-title" style="font-size:30px;">
 Regla de decisión
 </div>
 
 <div class="block-body" style="font-size:30px;">
-
 Si: $p < \alpha$ se rechaza la hipótesis nula.
-
 Si: $p \geq \alpha$ no se rechaza la hipótesis nula.
-
 </div>
-
 </div>
-
-<br>
 
 <div class="fragment fade-up" data-fragment-index="2"
 style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e;">
@@ -919,13 +883,9 @@ Mientras más pequeño sea el valor-p, mayor será la evidencia estadística en 
 
 ## Criterio del Intervalo de Confianza
 
-<div style="font-size: 30px; text-align: justify; line-height: 1.5;">
-
+<div style="font-size: 30px; text-align: justify; line-height: 1;margin-top:40px;">
 La prueba de hipótesis puede realizarse verificando si el valor propuesto en la hipótesis nula pertenece al intervalo de confianza de la diferencia de medias.
-
 </div>
-
-<br>
 
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
 
@@ -961,93 +921,20 @@ Regla de decisión
 
 <div style="font-size:28px; line-height:1.8; margin-top:10px; text-align:center;">
 
-Si $0$ pertenece al IC:
-
-No se rechaza $H_0$.
-
-<br>
-
-Si $0$ no pertenece al IC:
-
-Se rechaza $H_0$.
-
+Si $0$ pertenece al IC: No se rechaza $H_0$.
+<br><br>
+Si $0$ no pertenece al IC: Se rechaza $H_0$.
+</div>
+</div>
 </div>
 
-</div>
+## Resumen
 
-</div>
-
-## Grados de Libertad en la Distribución t
-
-<div style="font-size: 28px; text-align: justify; line-height: 1.6;">
-
-Cuando se utiliza una prueba t de Student, los valores críticos dependen de los grados de libertad (gl), los cuales determinan la forma de la distribución t.
-
-</div>
-
-<br>
-
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
-
-<div style="font-size:28px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Muestras Independientes
-</div>
-
-<div style="font-size:28px; text-align:center; line-height:1.8; margin-top:15px;">
-
-$$
-gl=n_1+n_2-2
-$$
-
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#fff7e8; padding:18px; border-radius:18px; border-top:8px solid #d97706;">
-
-<div style="font-size:28px; font-weight:bold; color:#d97706; text-align:center;">
-Muestras Pareadas
-</div>
-
-<div style="font-size:28px; text-align:center; line-height:1.8; margin-top:15px;">
-
-$$
-gl=n-1
-$$
-
-</div>
-
-</div>
-
-</div>
-
-<br>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef4fb; padding:16px; border-radius:16px; border-left:8px solid #1a3a6b;">
-
-<div style="font-size:28px; text-align:justify; line-height:1.6;">
-
-Los grados de libertad se utilizan para obtener el valor crítico de la distribución t en el criterio de región crítica y para calcular el valor-p.
-
-</div>
-
-</div>
-
-
-## Resumen de las Pruebas para la Diferencia de Medias
-
-<div style="font-size: 28px; text-align: justify; line-height: 1.5;">
-
+<div style="font-size:30px; text-align: justify; line-height:1;margin-top:40px;">
 La selección de la prueba estadística depende del tipo de muestra y de la información disponible sobre las poblaciones.
-
 </div>
 
-<table style="width:100%; font-size:25px; border-collapse:collapse; text-align:center;">
+<table style="width:100%; font-size:28px; border-collapse:collapse; text-align:center;">
 
 <tr style="background-color:#1a3a6b; color:white;">
 <th style="padding:12px;">Tipo de muestra</th>
@@ -1075,9 +962,7 @@ La selección de la prueba estadística depende del tipo de muestra y de la info
 
 </table>
 
-<br>
-
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;;margin-top:20px;">
 
 <div class="fragment fade-up" data-fragment-index="1"
 style="background-color:#eef7ee; padding:16px; border-radius:16px; border-left:8px solid #1b4d2e;">
@@ -1118,578 +1003,107 @@ $$
 ## {.center .middle} 
 
 <p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
-Ejemplos de Pruebas de Hipótesis para la Diferencia de Medias y Aplicación en R
+Ejemplos de Pruebas de Hipótesis para la Diferencia de Medias
 </p>
 
 ## Ejemplo 1
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 28px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Un investigador desea comparar el rendimiento promedio de dos variedades de arroz. En muestras de $\small n_1=n_2=50$ parcelas se obtuvo $\small \bar{x}_1=6.8$ y $\small \bar{x}_2=6.2$, con $\small \sigma_1=1.2$ y $\small \sigma_2=1.1$ conocidas. ¿Existe evidencia estadística para afirmar que los rendimientos promedio de ambas variedades son diferentes? $\small \alpha=0.05$.
+</p>
 
-<div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
 
-<div style="font-size:24px; text-align:justify; line-height:1.5;">
-
-Un investigador agrícola desea comparar el rendimiento promedio de dos variedades de arroz cultivadas en el Tolima.
-
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0:\mu_1-\mu_2=0 \qquad H_1:\mu_1-\mu_2\neq0$$
+Prueba de dos colas.
 </div>
 
-<br>
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
-
-<div style="font-size:28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-Datos
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong>
+Prueba $Z$ ($\sigma$ conocida):
+$$Z=\frac{6.8-6.2-0}{\sqrt{\frac{1.2^2}{50}+\frac{1.1^2}{50}}}=2.61$$
 </div>
 
-<div style="font-size:24px; text-align:center; line-height:1.7; margin-top:10px;">
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong>
+Para $\alpha=0.05$ (dos colas), valor crítico $Z_{crit}=1.96$.
+$$|Z_{cal}|=2.61 > Z_{crit}=1.96 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
 
-$$
-\bar{x}_1=6.8
-$$
-
-$$
-\bar{x}_2=6.2
-$$
-
-$$
-\sigma_1=1.2
-$$
-
-$$
-\sigma_2=1.1
-$$
-
-$$
-n_1=n_2=50
-$$
-
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Valor-p:</strong>
+$$p=0.009$$
+$$p < 0.05 \;\Rightarrow\; \text{se rechaza } H_0$$
 </div>
 
 </div>
 
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:28px; text-align:justify; line-height:1.3; margin-top:4px;">
+Existe evidencia estadística para afirmar que las dos variedades de arroz presentan rendimientos promedio diferentes, con un nivel de significancia del $5\%$.
 </div>
-
-<div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Pregunta
 </div>
-
-<br>
-
-<div style="font-size:25px; text-align:justify; line-height:1.6;">
-
-¿Existe evidencia estadística para afirmar que los rendimientos promedio de ambas variedades son diferentes?  
-Utilice un nivel de significancia del $5\%$.
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-## Solución
-
-<div class="twocol">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-
-<div class="block-title">
-Paso 1: Hipótesis
-</div>
-
-<div class="block-body" style="font-size:25px;">
-
-$$
-H_0:\mu_1-\mu_2=0
-$$
-
-$$
-H_1:\mu_1-\mu_2\neq0
-$$
-
-Prueba bilateral.
-
-</div>
-
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-
-<div class="block-title">
-Paso 2: Estadístico Z
-</div>
-
-<div class="block-body" style="font-size:24px;">
-Bajo $H_0$, la diferencia entre medias es 0, por lo que el estadístico Z se calcula como:
-$$
-Z=
-\frac{6.8-6.2-(0)}
-{\sqrt{\frac{1.2^2}{50}+\frac{1.1^2}{50}}}
-$$
-
-$$
-Z=2.61
-$$
-
-Se utiliza una prueba Z porque las desviaciones estándar poblacionales son conocidas.
-
-</div>
-
-</div>
-
-</div>
-
-## Decisión
-
-<div class="twocol">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-
-<div class="block-title">
-Región crítica
-</div>
-
-<div class="block-body" style="font-size:25px;">
-
-$$
-|Z|=2.61
-$$
-
-$$
-Z_{crit}=1.96
-$$
-
-Como:
-
-$$
-2.61>1.96
-$$
-
-Se rechaza $H_0$.
-
-</div>
-
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-
-<div class="block-title">
-Valor-p
-</div>
-
-<div class="block-body" style="font-size:25px;">
-
-$$
-p=0.009
-$$
-
-$$
-p<0.05
-$$
-
-Se rechaza $H_0$.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-Conclusión
-</div>
-
-<div style="font-size:25px; text-align:justify; line-height:1.6; margin-top:10px;">
-
-Existe evidencia estadística para afirmar que las dos variedades de arroz presentan rendimientos promedio diferentes con un nivel de significancia del $5\%$.
-
-</div>
-
-</div>
-
-
-## Código en R
-
-```{r}
-# Datos
-x1 <- 6.8
-x2 <- 6.2
-
-sigma1 <- 1.2
-sigma2 <- 1.1
-
-n1 <- 50
-n2 <- 50
-
-# Cálculo del estadístico Z
-z <- (x1 - x2) /
-     sqrt((sigma1^2/n1) +
-          (sigma2^2/n2))
-
-z
-
-# Cálculo del valor-p para una prueba bilateral
-pvalor <- 2 * pnorm(abs(z),
-                    lower.tail = FALSE)
-
-pvalor
-```
-
 
 ## Ejemplo 2
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 26px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Un investigador desea comparar la producción promedio de café (sacos/ha) entre fincas de Caldas y Huila. En Caldas, $\small n_1=20$ fincas con $\small \bar{x}_1=34.5$ y $\small s_1=4.8$; en Huila, $\small n_2=22$ fincas con $\small \bar{x}_2=31.2$ y $\small s_2=5.1$. ¿Existe evidencia suficiente para afirmar que la producción promedio difiere entre ambos departamentos? $\small \alpha=0.05$.
+</p>
 
-<div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
 
-<div style="font-size:24px; text-align:justify; line-height:1.5;">
-
-Un investigador desea comparar la producción promedio de café (sacos/ha) entre fincas de Caldas y Huila.
-
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0:\mu_1-\mu_2=0 \qquad H_1:\mu_1-\mu_2\neq0$$
+Prueba de dos colas.
 </div>
 
-<br>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong>
+Prueba $t$ ($\sigma$ desconocida), $\small gl=n_1+n_2-2=40$:
 
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:18px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:18px;">
 
-<div style="font-size:28px; font-weight:bold; color:#1a3a6b; text-align:center;">
-Datos
+$$t=\frac{(34.5-31.2)-0}{\sqrt{\frac{4.8^2}{20}+\frac{5.1^2}{22}}}=2.16$$
+</div>
 </div>
 
-<div style="font-size:24px; text-align:center; line-height:1.7; margin-top:10px;">
-
-$$
-\bar{x}_1=34.5
-$$
-
-$$
-\bar{x}_2=31.2
-$$
-
-$$
-s_1=4.8
-$$
-
-$$
-s_2=5.1
-$$
-
-$$
-n_1=20,\; n_2=22
-$$
-
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong>
+Para $\alpha=0.05$ y $gl=40$, valor crítico $t_{0.025,40}=2.021$.
+$$t_{cal}=2.16 > t_{crit}=2.021 \;\Rightarrow\; \text{se rechaza } H_0$$
 </div>
 
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Valor$-p$:</strong>
+
+<div style="font-size:18px;">
+$$p=0.037 < 0.05 \;\Rightarrow\; \text{se rechaza } H_0$$
+$$IC_{95\%}=(0.21,\;6.39), \;\; 0\notin IC \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
+</div>
 </div>
 
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:26px; text-align:justify; line-height:1.3; margin-top:4px;">
+Los tres criterios conducen a la misma decisión: existe evidencia estadística suficiente para afirmar que la producción promedio de café difiere entre las fincas evaluadas de Caldas y Huila, con un nivel de significancia del $5\%$.
 </div>
-
-<div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:20px; border-radius:18px; border-top:8px solid #1b4d2e; margin-top:25px;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e; text-align:center;">
-Pregunta
 </div>
-
-<br>
-
-<div style="font-size:25px; text-align:justify; line-height:1.6;">
-
-¿Existe evidencia suficiente para afirmar que la producción promedio de café difiere entre ambos departamentos?  
-Utilice un nivel de significancia del $5\%$.
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-## Solución
-
-<div class="twocol">
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-
-<div class="block-title">
-Paso 1: Hipótesis
-</div>
-
-<div class="block-body" style="font-size:25px;">
-
-$$
-H_0:\mu_1-\mu_2=0
-$$
-
-$$
-H_1:\mu_1-\mu_2\neq0
-$$
-
-Prueba bilateral.
-
-</div>
-
-</div>
-
-<div class="block-example fragment fade-up" data-fragment-index="2">
-
-<div class="block-title">
-Paso 2: Estadístico t
-</div>
-
-<div class="block-body" style="font-size:23px;">
-Bajo $H_0$, la diferencia entre medias es 0, por lo que el estadístico t se calcula como:
-$$
-t=
-\frac{(34.5-31.2)-(0)}
-{\sqrt{\frac{4.8^2}{20}+\frac{5.1^2}{22}}}
-$$
-
-$$
-t=2.15
-$$
-
-Como las desviaciones poblacionales son desconocidas, se utiliza una prueba t.
-
-</div>
-
-</div>
-
-</div>
-
-<br>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#fff7e8; padding:14px; border-radius:14px; border-left:8px solid #d97706;">
-
-<div style="font-size:24px;">
-
-$$
-gl=n_1+n_2-2=40
-$$
-
-</div>
-
-</div>
-
-## Criterios de Decisión
-
-<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb; padding:15px; border-radius:15px;">
-
-<div style="font-size:25px; font-weight:bold; text-align:center;">
-Región crítica
-</div>
-
-<div style="font-size:22px; text-align:center; line-height:1.7;">
-
-$$
-|t|=2.16
-$$
-
-$$
-t_{crit}=t_{0.025,40}=2.021
-$$
-
-Como:
-
-$$
-2.16>2.021
-$$
-
-Se rechaza $H_0$.
-
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee; padding:15px; border-radius:15px;">
-
-<div style="font-size:25px; font-weight:bold; text-align:center;">
-Valor-p
-</div>
-
-<div style="font-size:22px; text-align:center; line-height:1.7;">
-
-$$
-p=0.037
-$$
-
-$$
-p<0.05
-$$
-
-Se rechaza $H_0$.
-
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#fff7e8; padding:15px; border-radius:15px;">
-
-<div style="font-size:25px; font-weight:bold; text-align:center;">
-IC 95%
-</div>
-
-<div style="font-size:21px; text-align:center; line-height:1.7;">
-
-$$
-(0.21,\;6.39)
-$$
-
-Como:
-
-$$
-0\notin IC
-$$
-
-Se rechaza $H_0$.
-
-</div>
-
-</div>
-
-</div>
-
-<br>
-
-<div class="fragment fade-up"
-style="background-color:#eef7ee; padding:18px; border-radius:16px; border-left:8px solid #1b4d2e;">
-
-<div style="font-size:30px; font-weight:bold; color:#1b4d2e;">
-Conclusión
-</div>
-
-<div style="font-size:25px; text-align:justify; line-height:1.6; margin-top:10px;">
-
-Los tres criterios conducen a la misma decisión. Existe evidencia estadística suficiente para afirmar que la producción promedio de café difiere entre las fincas evaluadas de Caldas y Huila con un nivel de significancia de 0.05.
-
-</div>
-
-</div>
-
-
-
-## Código en R
-
-<div class="twocol">
-
-<div>
-
-<div class="block-theorem">
-
-<div class="block-title">
-Datos y Estadístico t
-</div>
-
-<div class="block-body">
-
-```{r}
-# Datos del problema
-xbar1 <- 34.5
-xbar2 <- 31.2
-
-s1 <- 4.8
-s2 <- 5.1
-
-n1 <- 20
-n2 <- 22
-
-# Estadístico t
-t <- (xbar1 - xbar2) /
-     sqrt((s1^2/n1) +
-          (s2^2/n2))
-
-round(t, 2)
-```
-</div> 
-</div> 
-
-
-<div class="block-example"> <div class="block-title"> Grados de libertad </div> <div class="block-body">
-```{r}
-gl <- n1 + n2 - 2
-gl
-```
-
-</div> 
-</div> 
-</div> 
-<div> 
-
-<div class="block-example"> <div class="block-title"> Valor-p </div> <div class="block-body">
-
-```{r}
-# Valor-p bilateral
-
-pvalor <- 2 *
-  pt(abs(t),
-     df = gl,
-     lower.tail = FALSE)
-
-round(pvalor, 3)
-```
-</div> 
-</div> 
-
-<div class="block-theorem"> <div class="block-title"> IC del 95% </div> <div class="block-body">
-```{r}
-# Error estándar
-EE <- sqrt((s1^2/n1) +
-           (s2^2/n2))
-# Valor crítico t
-tcrit <- qt(0.975,
-            df = gl)
-# Intervalo de confianza
-LI <- (xbar1 - xbar2) -
-      tcrit*EE
-
-LS <- (xbar1 - xbar2) +
-      tcrit*EE
-
-round(c(LI, LS), 2)
-
-```
-
-</div> 
-</div> 
-</div> 
-</div> 
-
-<div class="fragment fade-up" style="background-color:#eef7ee; padding:14px; border-radius:14px; border-left:8px solid #1b4d2e;"> <div style="font-size:23px; text-align:center; line-height:1.6;">
-</div> 
-</div> 
 
 
 ## Ejemplo 3
 
-<div style="font-size:23px; text-align:justify; line-height:1.5;">
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 30px; text-align: justify; line-height: 1.3; margin-bottom: 6px;">
+Un investigador evalúa el efecto de un fertilizante biológico sobre el rendimiento de tomate en 15 parcelas de Boyacá. En cada parcela se registró la producción antes y después de aplicar el fertilizante.
+</p>
 
-Un investigador evalúa el efecto de un fertilizante biológico sobre el rendimiento de tomate en 15 parcelas de Boyacá.
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:6px 12px;margin-top:20px;">
 
-En cada parcela se registró la producción antes y después de aplicar el fertilizante.
-
-</div>
-
-<div>
-
-<table style="width:100%; font-size:17px; text-align:center;">
+<table style="width:100%; font-size:16px; text-align:center;">
 
 <tr style="background-color:#dbeafe;">
 <th>Parcela</th>
@@ -1702,98 +1116,40 @@ En cada parcela se registró la producción antes y después de aplicar el ferti
 <tr><td>2</td><td>21</td><td>24</td><td>3</td></tr>
 <tr><td>3</td><td>19</td><td>20</td><td>1</td></tr>
 <tr><td>4</td><td>22</td><td>24</td><td>2</td></tr>
-<tr><td>5</td><td>20</td><td>21</td><td>1</td></tr>
-<tr><td>6</td><td>23</td><td>25</td><td>2</td></tr>
-<tr><td>7</td><td>17</td><td>19</td><td>2</td></tr>
-<tr><td>8</td><td>21</td><td>24</td><td>3</td></tr>
-<tr><td>9</td><td>20</td><td>22</td><td>2</td></tr>
-<tr><td>10</td><td>19</td><td>21</td><td>2</td></tr>
-<tr><td>11</td><td>22</td><td>25</td><td>3</td></tr>
-<tr><td>12</td><td>18</td><td>19</td><td>1</td></tr>
-<tr><td>13</td><td>24</td><td>26</td><td>2</td></tr>
-<tr><td>14</td><td>21</td><td>23</td><td>2</td></tr>
+<tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
 <tr><td>15</td><td>20</td><td>22</td><td>2</td></tr>
 
 </table>
 
 </div>
-<li style="font-size:23px; text-align:justify; line-height:1.5; list-style-type:none;">
-Pregunta: ¿Existe evidencia estadística suficiente para afirmar que el fertilizante modifica la producción promedio de tomate? Use un nivel de significancia del $5\%$.
-</li>
 
-## Solución
-
-<div class="twocol">
-
-<div class="block-theorem">
-
-<div class="block-title">
-Resumen de las diferencias
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:24px; text-align: justify; line-height: 1.3; margin-top: 8px;">
+<strong style="color:#d97706;">Pregunta:</strong> ¿Existe evidencia estadística suficiente para afirmar que el fertilizante modifica la producción promedio de tomate? Use $\small \alpha=0.05$.
 </div>
 
-<div class="block-body">
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
 
-<table style="width:100%; font-size:24px;">
-
-<tr>
-<td><b>Media</b></td>
-<td>$$\bar d=2.0$$</td>
-</tr>
-
-<tr>
-<td><b>Desv. estándar</b></td>
-<td>$$s_d=0.65$$</td>
-</tr>
-
-<tr>
-<td><b>Tamaño muestral</b></td>
-<td>$$n=15$$</td>
-</tr>
-
-<tr>
-<td><b>Nivel de significancia</b></td>
-<td>$$\alpha=0.05$$</td>
-</tr>
-
-</table>
-
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.4;">
+<strong style="color:#1a3a6b;">Resumen de las diferencias:</strong>
+$$\bar{d}=2.0 \qquad s_d=0.65 \qquad n=15 \qquad \alpha=0.05$$
 </div>
 
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 1. Hipótesis:</strong>
+
+<div style="font-size:20px;">
+$$H_0:\mu_d=0 \qquad H_1:\mu_d\neq0$$
+</div>
+Prueba de dos colas.
 </div>
 
-<div class="block-example fragment fade-up" data-fragment-index="2">
-
-<div class="block-title">
-Paso 1: Hipótesis
-</div>
-
-<div class="block-body" style="font-size:24px; line-height:1.6;">
-
-$$
-H_0:\mu_d=0
-$$
-
-$$
-H_1:\mu_d\neq0
-$$
-
-<br>
-
-Prueba bilateral.
-
-</div>
-
-</div>
 </div>
 
 ## Prueba t para muestras pareadas
 
 <div class="block-example fragment fade-up" data-fragment-index="3">
-<div class="block-title">
-Paso 2: Estadístico de prueba
-</div>
-
-<div class="block-body" style="font-size:24px; line-height:1.5;">
+<div class="block-title" style="font-size:28px;">Paso 2: Estadístico de prueba</div>
+<div class="block-body" style="font-size:24px; line-height:1;">
 
 Como las observaciones son dependientes (antes y después en las mismas parcelas), se utiliza una prueba t para muestras pareadas.
 
@@ -1917,14 +1273,6 @@ border-left:8px solid #1b4d2e;
 margin-top:18px;">
 
 <div style="font-size:28px;
-font-weight:bold;
-color:#1b4d2e;">
-
-Conclusión
-
-</div>
-
-<div style="font-size:24px;
 text-align:justify;
 line-height:1.5;
 margin-top:8px;">
@@ -1935,63 +1283,17 @@ Dado que $|t|>t_{crit}$, el valor-p es menor que $\alpha$ y el intervalo de conf
 
 </div>
 
-## Codigo en R
-
-<div class="twocol">
-
-<div>
-
-```{r}
-# Producción antes del fertilizante
-antes <- c(
-18,21,19,22,20,23,17,21,20,19,22,18,24,21,20
-)
-# Producción después del fertilizante
-despues <- c(
-20,24,20,24,21,25,19,24,22,21,25,19,26,23,22
-)
-# Diferencias
-d <- despues - antes
-# Media de las diferencias
-mean(d)
-# Desviación estándar
-sd(d)
-
-```
-</div> 
-
-<div>
-```{r}
-
-# Prueba t pareada
-t.test(
-  despues,
-  antes,
-  paired = TRUE,
-  conf.level = 0.95
-)
-```
-
-</div> 
-</div>
-
-
 ## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
 
 <p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
-Pruebas de Hipótesis para la Diferencia de Proporciones
+Pruebas de Hipótesis para la diferencia de proporciones
 </p>
 
 <p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
-
-En numerosas investigaciones es necesario comparar la frecuencia con la que ocurre un evento en dos poblaciones o grupos. Las pruebas de hipótesis para la diferencia de proporciones permiten evaluar, a partir de información muestral, si las diferencias observadas entre dos porcentajes son estadísticamente significativas o si pueden atribuirse a la variabilidad propia del muestreo.
-
-Estas pruebas tienen aplicaciones en diversas áreas, como la evaluación de tratamientos, la comparación de métodos, el análisis de características poblacionales y el estudio de fenómenos biológicos, agrícolas y ambientales.
-
+Permiten evaluar si la diferencia observada entre dos porcentajes es estadísticamente significativa o si puede explicarse por la variabilidad del muestreo.
 </p>
-
 </div>
 
 
@@ -2077,18 +1379,8 @@ Diferencia entre las proporciones poblacionales.
 
 ## Hipótesis para la diferencia de proporciones
 
-<div style="font-size:28px; text-align:center; line-height:1.5; margin-bottom:20px;">
-
-Se desea evaluar si dos poblaciones presentan la misma proporción respecto a una característica de interés.
-
-<br>
-
-El parámetro que se compara es:
-
-$$
-p_1-p_2
-$$
-
+<div style="font-size:30px; text-align:justify; line-height:1.5; margin-bottom:30px;margin-top:50px;">
+Se desea evaluar si dos poblaciones presentan la misma proporción respecto a una característica de interés. El parámetro que se compara es $\small p_1-p_2$:
 </div>
 
 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
@@ -2200,13 +1492,9 @@ La hipótesis alternativa depende de la pregunta de investigación.
 
 ## Proporciones muestrales
 
-<div style="font-size:28px; text-align:justify; line-height:1.5;">
-
+<div style="font-size:30px; text-align:justify; line-height:1;margin-top:50px">
 Las proporciones poblacionales se estiman mediante las proporciones muestrales:
-
 </div>
-
-<br>
 
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
 
@@ -2272,23 +1560,22 @@ $n_2$: muestra
 
 </div>
 
-<br>
-
 <div style="background-color:#fff7e8;
 padding:14px;
 border-radius:16px;
-border-left:8px solid #d97706;">
+border-left:8px solid #d97706;margin-top:30px;">
 
-<div style="font-size:24px; text-align:center;">
+<div style="font-size:30px; text-align:center;">
 
 La diferencia observada entre las muestras es:
 
+<div style="font-size:20px;">
 $$
 \hat p_1-\hat p_2
 $$
 
 </div>
-
+</div>
 </div>
 
 ## Estadístico de prueba
@@ -2325,7 +1612,7 @@ $$
 
 <div style="background-color:#eef7ee;padding:16px;border-radius:16px;border-left:8px solid #1b4d2e;">
 
-<div style="font-size:24px;">
+<div style="font-size:28px;">
 
 $$
 \hat p_1,\hat p_2
@@ -2339,7 +1626,7 @@ Proporciones muestrales observadas.
 
 <div style="background-color:#fff7e8;padding:16px;border-radius:16px;border-left:8px solid #d97706;">
 
-<div style="font-size:24px;">
+<div style="font-size:28px;">
 
 $$
 n_1,n_2
@@ -2687,81 +1974,15 @@ $$
 ## {.center .middle} 
 
 <p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
-Ejemplos de Pruebas de Hipótesis para la Diferencia de Proporciones y Aplicación en R
-</p>
+Ejemplos para la diferencia de proporciones</p>
 
 ## Ejemplo 1
 
 <div style="font-size:28px; text-align:justify; line-height:1.5;">
 
-Un investigador agrícola desea comparar la proporción de germinación de dos variedades de semillas de maíz.
-
-Se seleccionan aleatoriamente 200 semillas de cada variedad y se obtienen los siguientes resultados:
-
+Un investigador agrícola desea comparar la proporción de germinación de dos variedades de semillas de maíz. Se seleccionan aleatoriamente 200 semillas de cada variedad y se obtienen los siguientes resultados, variedad A: $x_{1}=170$ y variedad B: $x_{2}=145$. ¿Existe evidencia estadística suficiente para afirmar que las proporciones de germinación son diferentes?
 </div>
 
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb;
-padding:16px;
-border-radius:16px;
-border-top:8px solid #1a3a6b;">
-
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-
-<div style="text-align:center;">
-
-<div style="font-size:25px; font-weight:bold; color:#1a3a6b;">
-Variedad A
-</div>
-
-$$
-x_1=170
-$$
-
-$$
-n_1=200
-$$
-
-</div>
-
-<div style="text-align:center;">
-
-<div style="font-size:25px; font-weight:bold; color:#1b4d2e;">
-Variedad B
-</div>
-
-$$
-x_2=145
-$$
-
-$$
-n_2=200
-$$
-
-</div>
-
-</div>
-
-</div>
-
-<br>
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#eef7ee;
-padding:16px;
-border-radius:16px;
-border-left:8px solid #1b4d2e;">
-
-<div style="font-size:28px;">
-
-¿Existe evidencia estadística suficiente para afirmar que las proporciones de germinación son diferentes?
-
-</div>
-
-</div>
-
-
-
-## Solución
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
 
 <div class="fragment fade-up" data-fragment-index="1"style="background-color:#eef4fb;padding:18px;border-radius:18px;
@@ -2771,12 +1992,10 @@ border-top:8px solid #1a3a6b;">
 font-weight:bold;
 text-align:center;
 color:#1a3a6b;">
-
 Paso 1: Hipótesis
-
 </div>
 
-<div style="font-size:28px;
+<div style="font-size:24px;
 text-align:center;
 line-height:1.8;">
 
@@ -2789,14 +2008,6 @@ H_1:p_1\neq p_2
 $$
 
 </div>
-
-<div style="font-size:22px;
-text-align:center;">
-
-Prueba bilateral.
-
-</div>
-
 </div>
 
 <div class="fragment fade-up" data-fragment-index="2"style="background-color:#eef7ee;padding:18px;border-radius:18px;
@@ -2827,8 +2038,6 @@ $$
 </div>
 
 </div>
-
-<br>
 
 <div class="fragment fade-up" data-fragment-index="3"style="background-color:#fff7e8;padding:18px;border-radius:18px;
 border-left:8px solid #d97706;">
@@ -2976,129 +2185,11 @@ Los tres criterios conducen a la misma decisión.
 Conclusión
 
 </div>
-
-
 Existe evidencia estadística suficiente para afirmar que las proporciones de germinación de las dos variedades de maíz son diferentes.
 
 </div>
 
 </div>
-
-
-## Código en R
-
-<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
-
-<div style="background-color:#eef4fb;
-padding:14px;
-border-radius:16px;
-border-top:7px solid #1a3a6b;">
-
-<div style="font-size:22px;
-font-weight:bold;
-text-align:center;
-color:#1a3a6b;">
-
-Paso 1
-
-</div>
-
-```{r}
-# Datos
-x1 <- 170
-x2 <- 145
-
-n1 <- 200
-n2 <- 200
-
-p1 <- x1/n1
-p2 <- x2/n2
-```
-
-<div style="font-size:18px;">
-
-Calcular las proporciones muestrales.
-
-</div>
-
-</div>
-
-<div style="background-color:#eef7ee;
-padding:14px;
-border-radius:16px;
-border-top:7px solid #1b4d2e;">
-
-<div style="font-size:22px;
-font-weight:bold;
-text-align:center;
-color:#1b4d2e;">
-
-Paso 2
-
-</div>
-
-```{r}
-dif <- p1-p2
-
-se <- sqrt(
-(p1*(1-p1))/n1 +
-(p2*(1-p2))/n2
-)
-
-z <- dif/se
-round(z, 2)
-pvalor <- 2*pnorm(
-abs(z),
-lower.tail=FALSE
-)
-round(pvalor, 4)
-```
-
-<div style="font-size:18px;">
-
-Obtener el estadístico Z y el valor-p.
-
-</div>
-
-</div>
-
-<div style="background-color:#fff7e8;
-padding:14px;
-border-radius:16px;
-border-top:7px solid #d97706;">
-
-<div style="font-size:22px;
-font-weight:bold;
-text-align:center;
-color:#d97706;">
-
-Paso 3
-
-</div>
-
-```{r}
-alpha <- 0.05
-
-zcrit <- qnorm(
-1-alpha/2
-)
-
-li <- dif-zcrit*se
-ls <- dif+zcrit*se
-
-round(c(li, ls), 3)
-```
-
-<div style="font-size:18px;">
-
-Construir el intervalo de confianza.
-
-</div>
-
-</div>
-
-</div>
-
 
 ## Ejemplo 2
 
@@ -3179,7 +2270,7 @@ Hipótesis
 
 </div>
 
-<div style="font-size:23px;
+<div style="font-size:28px;
 text-align:center;
 line-height:1.7;">
 
@@ -3221,7 +2312,7 @@ Proporciones muestrales
 
 </div>
 
-<div style="font-size:23px;
+<div style="font-size:28px;
 text-align:center;
 line-height:1.7;">
 
@@ -3251,7 +2342,7 @@ padding:16px;
 border-radius:18px;
 border-left:8px solid #d97706;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;">
 
 La diferencia observada es positiva, lo que sugiere que la nueva tecnología presenta una mayor proporción de germinación.
@@ -3264,7 +2355,7 @@ La diferencia observada es positiva, lo que sugiere que la nueva tecnología pre
 
 <div style="display:grid;
 grid-template-columns:1fr 1fr 1fr;
-gap:16px;">
+gap:16px;margin-top:40px">
 
 <div class="fragment fade-up" data-fragment-index="1"
 style="background-color:#eef4fb;
@@ -3289,7 +2380,7 @@ Bajo $H_0$ el estadístico Z se calcula como:
 
 $$
 Z=
-\frac{(\hat p_2-\hat p_1)-0}
+\frac{(\hat p_2-\hat p_1)}
 {\sqrt{
 \frac{\hat p_1(1-\hat p_1)}{n_1}
 +
@@ -3322,7 +2413,7 @@ line-height:1.6;">
 
 $$
 Z=
-\frac{(0.891-0.833)-0}
+\frac{(0.891-0.833)}
 {\sqrt{
 \frac{0.891(0.109)}{230}
 +
@@ -3441,23 +2532,14 @@ se rechaza $H_0$
 </div>
 
 </div>
-<br>
+
 <div class="fragment fade-up" data-fragment-index="4"
 style="background-color:#eef7ee;
 padding:22px;
 border-radius:18px;
 border-left:10px solid #1b4d2e;">
 
-<div style="font-size:30px;
-font-weight:bold;
-color:#1b4d2e;
-margin-bottom:12px;">
-
-Conclusión
-
-</div>
-
-<div style="font-size:25px;
+<div style="font-size:28px;
 text-align:justify;
 line-height:1.6;">
 
@@ -3469,163 +2551,22 @@ Sin embargo, la evidencia es moderada, ya que el estadístico de prueba se encue
 
 </div>
 
-## Código en R
-
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-
-<div>
-
-```{r}
-x1 <- 150; n1 <- 180
-x2 <- 205; n2 <- 230
-
-p1 <- round(x1/n1, 3)
-p2 <- round(x2/n2, 3)
-
-dif <- p2 - p1
-
-p1
-p2
-dif
-```
-
-</div>
-
-<div>
-
-```{r}
-se <- sqrt(
- (p1*(1-p1))/n1 +
- (p2*(1-p2))/n2
-)
-
-z <- dif/se
-round(z, 2)
-
-round(qnorm(0.95), 3)
-
-round(pnorm(
- z,
- lower.tail = FALSE
-), 3)
-```
-
-</div>
-
-</div>
-
 ## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">¿Por qué pueden ocurrir errores?</p>
 
-<div style="font-size: 52px; font-weight: bold; color: #3b82f6;">
-Errores Tipo I y Tipo II
-</div>
-
-<div style="font-size: 32px;color: #071327;font-weight: 600;margin-top: 10px;text-align: justify;line-height: 1.7;">
-
-Las decisiones en una prueba de hipótesis se basan en información obtenida de una muestra. Por esta razón, siempre existe la posibilidad de cometer errores al concluir sobre una población. Los errores más importantes son el <b>Error Tipo I</b> y el <b>Error Tipo II</b>, los cuales determinan la confiabilidad de una prueba estadística.
-
-</div>
-
-</div>
-
-## ¿Por qué pueden ocurrir errores?
-
-<div style="font-size:27px;
-text-align:justify;
-line-height:1.6;">
-
-Las pruebas de hipótesis utilizan información obtenida de una muestra para tomar decisiones sobre una población. Sin embargo, distintas muestras pueden producir resultados diferentes debido a la variabilidad inherente al proceso de muestreo.
-
-</div>
-
-<div style="display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
-margin-top:14px;">
-
-<div class="fragment fade-up" data-fragment-index="1"
-style="background-color:#eef4fb;
-padding:18px;
-border-radius:18px;
-border-top:8px solid #1a3a6b;">
-
-<div style="font-size:26px;
-font-weight:bold;
-text-align:center;
-color:#1a3a6b;">
-
-Población
-
-</div>
-
-<div style="font-size:22px;
-text-align:center;
-line-height:1.5;">
-
-Contiene el valor real del parámetro que se desea estudiar.
-
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="2"
-style="background-color:#fff7e8;
-padding:18px;
-border-radius:18px;
-border-top:8px solid #d97706;">
-
-<div style="font-size:26px;
-font-weight:bold;
-text-align:center;
-color:#d97706;">
-
-Muestra
-
-</div>
-
-<div style="font-size:22px;
-text-align:center;
-line-height:1.5;">
-
-Proporciona una estimación del parámetro, pero está sujeta a variabilidad.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef7ee;
-padding:18px;
-border-radius:18px;
-border-left:8px solid #1b4d2e;
-margin-top:14px;">
-
-<div style="font-size:24px;
-text-align:center;
-line-height:1.5;">
-
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
 Como las decisiones se basan en muestras y no en toda la población, siempre existe la posibilidad de tomar una decisión incorrecta.
-
-</div>
-
+</p>
 </div>
 
 
 ## Errores en las pruebas de hipótesis
 
-<div style="font-size:28px;
-text-align:justify;
-line-height:1.6;">
-
+<p style="font-size:30px;text-align:justify;line-height:1.2;">
 Las decisiones en una prueba de hipótesis se basan en información muestral. Por esta razón, siempre existe la posibilidad de tomar una decisión incorrecta respecto a la realidad de la población.
-
-</div>
-
-<br>
+</p>
 
 <div style="display:grid;
 grid-template-columns:1fr 1fr;
@@ -3705,39 +2646,33 @@ No rechazar una hipótesis nula falsa.
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="3"
 style="background-color:#eef7ee;
 padding:18px;
 border-radius:18px;
-border-left:8px solid #1b4d2e;">
-
-<div style="font-size:28px;
+border-left:8px solid #1b4d2e;
+font-size:28px;
 text-align:center;
-line-height:1.6;">
+line-height:1;
+margin-top:30px">
 
 Toda prueba de hipótesis busca controlar la probabilidad de cometer estos errores.
-
-</div>
-
 </div>
 
 ## Posibles decisiones en una prueba de hipótesis
 
-<div style="font-size:28px;
+<p style="font-size:30px;
 text-align:justify;
-line-height:1.5;">
-
+line-height:1.2;
+margin-top:40px">
 La decisión tomada por el investigador puede coincidir o no con la realidad, generando cuatro posibles escenarios.
-
-</div>
+</p>
 
 <table style="width:100%;
 font-size:22px;
 text-align:center;
 border-collapse:collapse;
-margin-top:10px;">
+margin-top:20px;">
 
 <tr style="background-color:#dbeafe;">
 <th style="padding:8px;"></th>
@@ -3759,11 +2694,7 @@ No rechazar $H_0$
 
 <td style="background-color:#fff7e8;padding:10px;">
 
-Error Tipo II
-
-<br>
-
-$$(\beta)$$
+Error Tipo II: $(\beta)$
 
 </td>
 
@@ -3777,11 +2708,7 @@ Rechazar $H_0$
 
 <td style="background-color:#fdecec;padding:10px;">
 
-Error Tipo I
-
-<br>
-
-$$(\alpha)$$
+Error Tipo I: $(\alpha)$
 
 </td>
 
@@ -3800,27 +2727,22 @@ style="background-color:#eef4fb;
 padding:14px;
 border-radius:16px;
 border-left:8px solid #1a3a6b;
-margin-top:12px;">
-
-<div style="font-size:28px;
+margin-top:20px;
+font-size:28px;
 text-align:center;
-line-height:1.4;">
-
+line-height:1;">
 Las probabilidades de cometer estos errores se representan mediante
 $\alpha$ y $\beta$.
-
-</div>
-
 </div>
 
 
 ## Interpretación de $\alpha$ y $\beta$
 
-<div style="font-size:26px;
+<div style="font-size:30px;
 text-align:justify;
-line-height:1.6;">
+line-height:1.2;">
 
-Las probabilidades asociadas a los errores Tipo I y Tipo II permiten cuantificar el riesgo de tomar una decisión incorrecta en una prueba de hipótesis.
+Las probabilidades asociadas a los errores **Tipo I** y **Tipo II** permiten cuantificar el riesgo de tomar una decisión incorrecta en una prueba de hipótesis.
 
 </div>
 
@@ -3835,7 +2757,7 @@ padding:20px;
 border-radius:18px;
 border-top:8px solid #b91c1c;">
 
-<div style="font-size:30px;
+<div style="font-size:28px;
 font-weight:bold;
 text-align:center;
 color:#b91c1c;">
@@ -3846,18 +2768,11 @@ $$
 
 </div>
 
-<div style="font-size:23px;
+<div style="font-size:28px;
 text-align:center;
 line-height:1.5;">
-
-Probabilidad de cometer un Error Tipo I.
-
-<br>
-
 Representa el riesgo de rechazar una hipótesis nula que en realidad es verdadera.
-
 </div>
-
 </div>
 
 <div class="fragment fade-up" data-fragment-index="2"
@@ -3877,18 +2792,11 @@ $$
 
 </div>
 
-<div style="font-size:23px;
+<div style="font-size:28px;
 text-align:center;
 line-height:1.5;">
-
-Probabilidad de cometer un Error Tipo II.
-
-<br>
-
 Representa el riesgo de no detectar un efecto o diferencia que realmente existe.
-
 </div>
-
 </div>
 
 </div>
@@ -3900,9 +2808,9 @@ border-radius:18px;
 border-left:8px solid #1b4d2e;
 margin-top:14px;">
 
-<div style="font-size:24px;
+<div style="font-size:28px;
 text-align:center;
-line-height:1.5;">
+line-height:1.2;">
 
 Por convención, suele utilizarse
 
@@ -3923,25 +2831,15 @@ padding:18px;
 border-radius:18px;
 border-top:8px solid #1a3a6b;">
 
-<div style="font-size:25px;
+<div style="font-size:30px;
 text-align:justify;
-line-height:1.5;">
-
+line-height:1.2;">
 Un investigador desea evaluar si un nuevo fertilizante aumenta el rendimiento promedio de un cultivo de fresa.
-
 </div>
-
-<div style="font-size:23px;
-text-align:center;
-margin-top:10px;">
-
-$H_0$: El fertilizante no aumenta el rendimiento.
-
-<br>
-
-$H_1$: El fertilizante aumenta el rendimiento.
-
-</div>
+<ul style="padding-left:30px; margin-top:10px;font-size:30px;">
+<li>$H_0$: El fertilizante no aumenta el rendimiento.</li>
+<li>$H_1$: El fertilizante aumenta el rendimiento.</li>
+</ul>
 
 </div>
 
@@ -3965,13 +2863,15 @@ Error Tipo I ($\alpha$)
 
 </div>
 
-<div style="font-size:21px;
+<div style="font-size:26px;
 text-align:justify;
-line-height:1.5;">
+line-height:1.2;">
 
 Se concluye que el fertilizante mejora el rendimiento y se rechaza $H_0$, cuando en realidad no produce ningún efecto. 
-Interpretación: Se recomienda un fertilizante que realmente no funciona.  
-Consecuencia: pérdidas económicas para los productores.
+<br>
+**Interpretación**: Se recomienda un fertilizante que realmente no funciona. 
+
+**Consecuencia**: pérdidas económicas para los productores.
 </div>
 
 </div>
@@ -3991,31 +2891,16 @@ Error Tipo II ($\beta$)
 
 </div>
 
-<div style="font-size:21px;
+<div style="font-size:26px;
 text-align:justify;
-line-height:1.5;">
+line-height:1.2;">
 
-Se concluye que el fertilizante no mejora el rendimiento y no se rechaza $H_0$, cuando en realidad sí produce una mejora.  
-Interpretación: Se descarta un fertilizante que realmente sí funciona.  
-Consecuencia: se pierde una oportunidad de aumentar la producción.
+Se concluye que el fertilizante no mejora el rendimiento y no se rechaza $H_0$, cuando en realidad sí produce una mejora. 
+<br>
+**Interpretación**: Se descarta un fertilizante que realmente sí funciona.  
+
+**Consecuencia**: se pierde una oportunidad de aumentar la producción.
 </div>
-
-</div>
-
-</div>
-
-<div class="fragment fade-up" data-fragment-index="3"
-style="background-color:#eef7ee;
-padding:16px;
-border-radius:16px;
-border-left:8px solid #1b4d2e;
-margin-top:14px;">
-
-<div style="font-size:23px;
-text-align:center;
-line-height:1.5;">
-
-Toda prueba de hipótesis implica un riesgo de error; por ello, es importante comprender y controlar las probabilidades asociadas a los errores Tipo I y Tipo II.
 
 </div>
 
@@ -4025,8 +2910,7 @@ Toda prueba de hipótesis implica un riesgo de error; por ello, es importante co
 
 <div style="font-size:28px;
 text-align:justify;
-line-height:1.6;">
-
+line-height:1.2;">
 Además de controlar el riesgo de cometer errores, es importante que una prueba tenga capacidad para detectar diferencias o efectos reales cuando estos existen.
 
 </div>
@@ -4123,7 +3007,7 @@ margin-top:14px;">
 <div style="font-size:28px;
 text-align:justify;
 line-height:1.5;">
-A menor probabilidad de cometer un Error Tipo II,mayor será la potencia de la prueba.
+A menor probabilidad de cometer un Error Tipo II, mayor será la potencia de la prueba.
 </div>
 
 </div>
@@ -4131,15 +3015,13 @@ A menor probabilidad de cometer un Error Tipo II,mayor será la potencia de la p
 
 ## Factores que afectan la potencia
 
-<div class="fragment fade-up" data-fragment-index="1" style="font-size:28px;
+<div class="fragment fade-up" data-fragment-index="1" style="font-size:30px;
 text-align:justify;
-line-height:1.6;">
-
+line-height:1.2;">
 La potencia de una prueba no es fija. Su valor depende de varios factores relacionados con el diseño del estudio y las características de la población.
-
 </div>
-<br>
-<table class="fragment fade-up" data-fragment-index="2" style="width:100%; font-size:28px;">
+
+<table class="fragment fade-up" data-fragment-index="2" style="margin-top:30px;width:100%; font-size:28px;">
 
 <tr style="background-color:#dbeafe;">
 <th>Factor</th>
@@ -4168,29 +3050,21 @@ La potencia de una prueba no es fija. Su valor depende de varios factores relaci
 
 </table>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="3"
 style="background-color:#eef7ee;
 padding:16px;
 border-radius:16px;
 border-left:8px solid #1b4d2e;
-margin-top:14px;">
-
-<div style="font-size:28px;
+margin-top:30px;font-size:30px;
 text-align:center;
-line-height:1.5;">
-
+line-height:1;">
 En general, una prueba tendrá mayor capacidad para detectar efectos reales cuando la información disponible sea más precisa y abundante.
-
-</div>
-
 </div>
 
 
 ## Función de potencia
 
-<div style="font-size:25px;
+<div style="font-size:28px;
 text-align:justify;
 line-height:1.5;">
 
@@ -4207,7 +3081,7 @@ border-radius:18px;
 border-top:8px solid #1a3a6b;
 margin-top:12px;">
 
-<div style="font-size:23px;
+<div style="font-size:26px;
 text-align:center;
 line-height:1.5;">
 
@@ -4224,7 +3098,7 @@ border-radius:18px;
 border-top:8px solid #d97706;
 margin-top:12px;">
 
-<div style="font-size:23px;
+<div style="font-size:26px;
 text-align:center;
 line-height:1.5;">
 
@@ -4241,7 +3115,7 @@ border-radius:16px;
 border-left:8px solid #1b4d2e;
 margin-top:12px;">
 
-<div style="font-size:22px;
+<div style="font-size:26px;
 text-align:center;
 line-height:1.5;">
 
@@ -4346,9 +3220,9 @@ ggplot(df, aes(theta, power)) +
 
 ## Efecto del tamaño de muestra sobre la potencia
 
-<div style="font-size:25px;
+<div style="font-size:30px;
 text-align:justify;
-line-height:1.5;">
+line-height:1;">
 
 El tamaño de muestra es uno de los factores que más influye en la potencia de una prueba estadística.
 
@@ -4361,9 +3235,9 @@ border-radius:18px;
 border-top:8px solid #1a3a6b;
 margin-top:12px;">
 
-<div style="font-size:23px;
+<div style="font-size:28px;
 text-align:center;
-line-height:1.5;">
+line-height:1.2;">
 
 Al aumentar el tamaño de muestra, disminuye la variabilidad de los estimadores y resulta más fácil detectar diferencias reales.
 
@@ -4378,9 +3252,9 @@ border-radius:18px;
 border-top:8px solid #d97706;
 margin-top:12px;">
 
-<div style="font-size:23px;
+<div style="font-size:28px;
 text-align:center;
-line-height:1.5;">
+line-height:1.2;">
 
 Por esta razón, pruebas realizadas con muestras más grandes suelen presentar una mayor potencia.
 
@@ -4401,7 +3275,7 @@ line-height:1.5;">
 
 En general:
 
-<br><br>
+<br>
 
 $n \uparrow \quad \Longrightarrow \quad \beta \downarrow \quad \Longrightarrow \quad \text{Potencia} \uparrow$
 
@@ -4409,7 +3283,7 @@ $n \uparrow \quad \Longrightarrow \quad \beta \downarrow \quad \Longrightarrow \
 
 </div>
 
-## Grafico del efecto del tamaño de muestra sobre la potencia
+## Gráfico del efecto del tamaño de muestra sobre la potencia
 
 
 ```{r, echo=FALSE, fig.width=30, fig.height=8}
@@ -4474,13 +3348,11 @@ Problema
 
 </div>
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:justify;
-line-height:1.5;">
+line-height:1.2;">
 
-Un investigador desea evaluar un nuevo fertilizante en cultivos de fresa.
-
-Se considera importante detectar una diferencia mínima de:
+Un investigador desea evaluar un nuevo fertilizante en cultivos de fresa. Se considera importante detectar una diferencia mínima de:
 
 $$
 d=4 \text{ toneladas/ha}
@@ -4490,23 +3362,15 @@ $$
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="2"
 style="background-color:#eef7ee;
 padding:16px;
 border-radius:18px;
-border-top:8px solid #1b4d2e;">
-
-<div style="font-size:24px;
+border-top:8px solid #1b4d2e;font-size:24px;
 font-weight:bold;
 color:#1b4d2e;
 margin-bottom:8px;">
-
 Datos
-
-</div>
-
 <div style="font-size:22px;
 text-align:center;
 line-height:1.6;">
@@ -4543,16 +3407,11 @@ $$
 style="background-color:#fff7e8;
 padding:16px;
 border-radius:18px;
-border-top:8px solid #d97706;">
-
-<div style="font-size:24px;
+border-top:8px solid #d97706;font-size:28px;
 font-weight:bold;
 color:#d97706;
 margin-bottom:8px;">
-
 Cálculo
-
-</div>
 
 <div style="font-size:20px;
 text-align:center;
@@ -4583,8 +3442,6 @@ $$
 
 </div>
 
-<br>
-
 <div class="fragment fade-up" data-fragment-index="4"
 style="background-color:#eef7ee;
 padding:16px;
@@ -4595,13 +3452,7 @@ border-left:8px solid #1b4d2e;">
 text-align:justify;
 line-height:1.5;">
 
-Se requieren al menos
-
-$$
-32
-$$
-
-unidades experimentales para detectar una diferencia de 4 toneladas/ha con un nivel de significancia del 5% y una potencia del 80%.
+Se requieren al menos $n=32$ unidades experimentales para detectar una diferencia de $4$ toneladas/ha con un nivel de significancia del $5\%$ y una potencia del $80\%$.
 
 </div>
 
@@ -4773,10 +3624,8 @@ Una prueba estadística confiable busca controlar el Error Tipo I y minimizar el
 Pruebas de Hipótesis para la Razón de Varianzas
 </div>
 
-<div style="font-size: 30px;color: #071327;font-weight: 600;margin-top: 10px;text-align: justify;line-height: 1.7;">
-En numerosas investigaciones es importante comparar la variabilidad de dos poblaciones. Más allá de analizar diferencias entre medias, en muchos casos resulta necesario determinar si los datos presentan niveles de dispersión similares o si una población es significativamente más variable que otra.
-
-Las pruebas de hipótesis para la razón de varianzas permiten evaluar estas diferencias mediante la comparación de las varianzas poblacionales y constituyen una herramienta fundamental en el análisis estadístico y el diseño de experimentos.
+<div style="font-size: 30px;color: #071327;font-weight: 600;margin-top: 10px;text-align: justify;line-height: 1.2;">
+Las pruebas para la razón de varianzas permiten determinar si una población es más dispersa que otra y son útiles en el análisis estadístico y el diseño de experimentos.
 
 </div>
 
@@ -4784,18 +3633,19 @@ Las pruebas de hipótesis para la razón de varianzas permiten evaluar estas dif
 
 ## ¿Para qué sirve la prueba de razón de varianzas?
 
-<div style="font-size:26px;
+<div style="font-size:30px;
 text-align:justify;
-line-height:1.6;">
+line-height:1.2;
+margin-top:40px;">
 
 En muchos estudios no solo interesa comparar promedios, sino también analizar la variabilidad de los datos. La prueba para la razón de varianzas permite determinar si dos poblaciones presentan niveles de dispersión similares o si una de ellas es significativamente más variable que la otra.
 
 </div>
-<br>
+
 <div style="display:grid;
 grid-template-columns:1fr 1fr;
 gap:18px;
-margin-top:14px;">
+margin-top:40px;">
 
 <div class="fragment fade-up"
 style="background-color:#eef4fb;
@@ -4803,7 +3653,7 @@ padding:16px;
 border-radius:18px;
 border-top:8px solid #1a3a6b;">
 
-<div style="font-size:24px;
+<div style="font-size:28px;
 font-weight:bold;
 text-align:center;
 color:#1a3a6b;">
@@ -4812,7 +3662,7 @@ color:#1a3a6b;">
 
 </div>
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;
 line-height:1.5;">
 
@@ -4828,7 +3678,7 @@ padding:16px;
 border-radius:18px;
 border-top:8px solid #1b4d2e;">
 
-<div style="font-size:24px;
+<div style="font-size:28px;
 font-weight:bold;
 text-align:center;
 color:#1b4d2e;">
@@ -4837,9 +3687,9 @@ color:#1b4d2e;">
 
 </div>
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;
-line-height:1.5;">
+line-height:1.2;">
 
 Permite verificar si ambas poblaciones presentan una dispersión similar.
 
@@ -4848,15 +3698,16 @@ Permite verificar si ambas poblaciones presentan una dispersión similar.
 </div>
 
 </div>
-<br>
+
+
 <div class="fragment fade-up"
 style="background-color:#fff7e8;
 padding:14px;
 border-radius:16px;
 border-left:8px solid #d97706;
-margin-top:14px;">
+margin-top:40px;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;
 line-height:1.5;">
 
@@ -4868,20 +3719,17 @@ Esta prueba constituye una herramienta fundamental en ANOVA y Diseño de Experim
 
 ## ¿Cuándo se utiliza?
 
-<div style="font-size:26px;
+<div style="font-size:30px;
 text-align:justify;
 line-height:1.6;">
-
 La prueba de razón de varianzas se utiliza cuando se desea comparar la dispersión de dos poblaciones y verificar si presentan niveles de variabilidad estadísticamente similares.
 
 </div>
 
-<br>
-
 <div style="display:grid;
 grid-template-columns:1fr 1fr;
 gap:18px;
-margin-top:14px;">
+margin-top:40px;">
 
 <div class="fragment fade-up"
 style="background-color:#eef4fb;
@@ -4889,7 +3737,7 @@ padding:14px;
 border-radius:16px;
 border-top:8px solid #1a3a6b;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;">
 
 ✓ Dos muestras independientes
@@ -4904,7 +3752,7 @@ padding:14px;
 border-radius:16px;
 border-top:8px solid #1b4d2e;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;">
 
 ✓ Datos cuantitativos
@@ -4919,7 +3767,7 @@ padding:14px;
 border-radius:16px;
 border-top:8px solid #d97706;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;">
 
 ✓ Comparación de varianzas
@@ -4934,7 +3782,7 @@ padding:14px;
 border-radius:16px;
 border-top:8px solid #b91c1c;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;">
 
 ✓ Poblaciones aproximadamente normales
@@ -4945,8 +3793,6 @@ text-align:center;">
 
 </div>
 
-<br>
-
 <div class="fragment fade-up"
 style="background-color:#eef7ee;
 padding:14px;
@@ -4954,7 +3800,7 @@ border-radius:16px;
 border-left:8px solid #1b4d2e;
 margin-top:14px;">
 
-<div style="font-size:22px;
+<div style="font-size:30px;
 text-align:center;
 line-height:1.5;">
 
@@ -4969,11 +3815,7 @@ La normalidad es un supuesto importante para que la distribución F sea válida.
 <div style="font-size:26px;
 text-align:justify;
 line-height:1.6;">
-
 El objetivo de esta prueba consiste en comparar la variabilidad de dos poblaciones mediante sus varianzas poblacionales.
-
-La varianza mide el grado de dispersión de los datos respecto a su media. Valores grandes indican mayor variabilidad, mientras que valores pequeños reflejan observaciones más homogéneas.
-
 </div>
 
 <div style="display:grid;
@@ -4987,7 +3829,7 @@ padding:18px;
 border-radius:18px;
 border-top:8px solid #1a3a6b;">
 
-<div style="font-size:24px;
+<div style="font-size:30px;
 font-weight:bold;
 text-align:center;
 color:#1a3a6b;">
@@ -4996,7 +3838,7 @@ Población 1
 
 </div>
 
-<div style="font-size:28px;
+<div style="font-size:30px;
 text-align:center;
 line-height:1.8;">
 
@@ -5006,7 +3848,7 @@ $$
 
 </div>
 
-<div style="font-size:20px;
+<div style="font-size:30px;
 text-align:center;
 line-height:1.4;">
 
@@ -5022,7 +3864,7 @@ padding:18px;
 border-radius:18px;
 border-top:8px solid #1b4d2e;">
 
-<div style="font-size:24px;
+<div style="font-size:30px;
 font-weight:bold;
 text-align:center;
 color:#1b4d2e;">
@@ -5041,7 +3883,7 @@ $$
 
 </div>
 
-<div style="font-size:20px;
+<div style="font-size:30px;
 text-align:center;
 line-height:1.4;">
 
@@ -5060,7 +3902,7 @@ border-radius:16px;
 border-left:8px solid #d97706;
 margin-top:14px;">
 
-<div style="font-size:22px;
+<div style="font-size:30px;
 text-align:center;
 line-height:1.5;">
 
@@ -5080,20 +3922,18 @@ obtenidas a partir de muestras independientes.
 
 ## Hipótesis de investigación
 
-<div style="font-size:26px;
+<div style="font-size:30px;
 text-align:justify;
-line-height:1.6;">
+line-height:1.2;">
 
 La formulación de las hipótesis depende de la pregunta de investigación planteada. En la comparación de varianzas pueden realizarse pruebas bilaterales o unilaterales.
-
 </div>
 
-<br>
 
 <div style="display:grid;
 grid-template-columns:1fr 1fr 1fr;
 gap:14px;
-margin-top:14px;">
+margin-top:40px;">
 
 <div class="fragment fade-up"
 style="background-color:#eef4fb;
@@ -5101,7 +3941,7 @@ padding:14px;
 border-radius:18px;
 border-top:8px solid #1a3a6b;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 font-weight:bold;
 text-align:center;
 color:#1a3a6b;">
@@ -5110,7 +3950,7 @@ Bilateral
 
 </div>
 
-<div style="font-size:21px;
+<div style="font-size:24px;
 text-align:center;
 line-height:1.6;">
 
@@ -5132,7 +3972,7 @@ padding:14px;
 border-radius:18px;
 border-top:8px solid #1b4d2e;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 font-weight:bold;
 text-align:center;
 color:#1b4d2e;">
@@ -5141,7 +3981,7 @@ Cola derecha
 
 </div>
 
-<div style="font-size:21px;
+<div style="font-size:24px;
 text-align:center;
 line-height:1.6;">
 
@@ -5163,7 +4003,7 @@ padding:14px;
 border-radius:18px;
 border-top:8px solid #d97706;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 font-weight:bold;
 text-align:center;
 color:#d97706;">
@@ -5172,7 +4012,7 @@ Cola izquierda
 
 </div>
 
-<div style="font-size:21px;
+<div style="font-size:24px;
 text-align:center;
 line-height:1.6;">
 
@@ -5196,27 +4036,20 @@ style="background-color:#eef7ee;
 padding:14px;
 border-radius:16px;
 border-left:8px solid #1b4d2e;
-margin-top:14px;">
-
-<div style="font-size:22px;
+margin-top:14px;font-size:30px;
 text-align:center;">
 
 En la práctica, la prueba bilateral es la más utilizada para evaluar la homogeneidad de varianzas.
-
-</div>
-
 </div>
 
 
 ## Distribución F y estadístico de prueba
 
-<div style="font-size:25px;
+<p style="font-size:30px;
 text-align:justify;
-line-height:1.6;">
-
+line-height:1.2;">
 La prueba para la razón de varianzas utiliza la distribución F de Fisher-Snedecor, la cual se obtiene a partir de la razón entre dos varianzas muestrales provenientes de poblaciones normales e independientes.
-
-</div>
+</p>
 
 <div class="fragment fade-up" data-fragment-index="1"
 style="background-color:#eef4fb;
@@ -5225,7 +4058,7 @@ border-radius:18px;
 border-top:8px solid #1a3a6b;
 margin-top:12px;">
 
-<div style="font-size:30px;
+<div style="font-size:26px;
 text-align:center;
 line-height:1.8;">
 
@@ -5235,15 +4068,11 @@ $$
 
 </div>
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;
-line-height:1.5;">
+line-height:1.2;">
 
-Por convención, suele colocarse la mayor varianza en el numerador para obtener valores de:
-
-$$
-F \geq 1
-$$
+Por convención, suele colocarse la mayor varianza en el numerador para obtener valores de: $\small F \geq 1$.
 
 </div>
 
@@ -5317,9 +4146,9 @@ border-radius:16px;
 border-left:8px solid #b91c1c;
 margin-top:14px;">
 
-<div style="font-size:22px;
+<div style="font-size:28px;
 text-align:center;
-line-height:1.5;">
+line-height:1.2;">
 
 Si las varianzas poblacionales son iguales, se espera que el estadístico F tome valores cercanos a 1. Valores muy alejados de 1 constituyen evidencia en contra de la hipótesis nula.
 
@@ -5329,15 +4158,11 @@ Si las varianzas poblacionales son iguales, se espera que el estadístico F tome
 
 ## Hipótesis y criterio de decisión
 
-<div style="font-size:28px;
+<div style="font-size:30px;
 text-align:justify;
-line-height:1.6;">
-
+line-height:1.2;">
 Una vez calculado el estadístico de prueba, la decisión se toma comparando el valor observado con un valor crítico obtenido de la distribución F de Fisher-Snedecor.
-
 </div>
-
-<br>
 
 <div style="display:grid;
 grid-template-columns:1fr 1fr 1fr;
@@ -5470,13 +4295,11 @@ Valores grandes de $F$ indican que las diferencias observadas entre las varianza
 
 ## Ejemplo
 
-<div style="font-size:25px;
+<div style="font-size:30px;
 text-align:justify;
 line-height:1.6;">
 
-Un investigador agrícola desea comparar la variabilidad del rendimiento de fresa obtenida bajo dos sistemas de riego.
-
-Para ello selecciona dos muestras independientes y obtiene la siguiente información:
+Un investigador agrícola desea comparar la variabilidad del rendimiento de fresa obtenida bajo dos sistemas de riego. Para ello selecciona dos muestras independientes, usa un nivel de significancia de $\small \alpha=0.05$ y obtiene la siguiente información:
 
 </div>
 
@@ -5491,7 +4314,7 @@ padding:16px;
 border-radius:18px;
 border-top:8px solid #1a3a6b;">
 
-<div style="font-size:24px;
+<div style="font-size:30px;
 font-weight:bold;
 text-align:center;
 color:#1a3a6b;">
@@ -5522,7 +4345,7 @@ padding:16px;
 border-radius:18px;
 border-top:8px solid #1b4d2e;">
 
-<div style="font-size:24px;
+<div style="font-size:30px;
 font-weight:bold;
 text-align:center;
 color:#1b4d2e;">
@@ -5550,33 +4373,17 @@ $$
 </div>
 
 <div class="fragment fade-up"
-style="background-color:#fff7e8;
-padding:14px;
-border-radius:16px;
-border-left:8px solid #d97706;
-margin-top:14px;">
-
-<div style="font-size:22px;
-text-align:center;">
-
-Nivel de significancia: $\alpha=0.05$
-
-</div>
-
-</div>
-
-<div class="fragment fade-up"
 style="background-color:#fdecec;
 padding:14px;
 border-radius:16px;
 border-left:8px solid #b91c1c;
 margin-top:14px;">
 
-<div style="font-size:22px;
+<div style="font-size:30px;
 text-align:center;
 line-height:1.6;">
 
-Contrastar:
+**Contrastar**:
 
 $$
 H_0:\sigma_A^2=\sigma_B^2
@@ -5674,16 +4481,10 @@ border-radius:16px;
 border-left:8px solid #b91c1c;
 margin-top:14px;">
 
-<div style="font-size:22px;
+<div style="font-size:30px;
 text-align:center;">
 
-Como
-
-$$
-2.26 < 3.29
-$$
-
-no se rechaza $H_0$.
+Como $2.26 < 3.29$, no se rechaza $H_0$.
 
 </div>
 
@@ -5696,59 +4497,23 @@ border-radius:16px;
 border-left:8px solid #1b4d2e;
 margin-top:14px;">
 
-<div style="font-size:22px;
+<div style="font-size:30px;
 text-align:justify;
-line-height:1.5;">
+line-height:1.2;">
 
-Con un nivel de significancia del 5%, no existe evidencia estadística suficiente para afirmar que los sistemas de riego presentan variabilidades diferentes en el rendimiento de fresa.
-
-</div>
+Con un nivel de significancia del $5\%$, no existe evidencia estadística suficiente para afirmar que los sistemas de riego presentan variabilidades diferentes en el rendimiento de fresa.
 
 </div>
 
-
-
-## Código en R
-
-
-```{r}
-# Datos
-s1 <- 18.5 ; n1 <- 15
-s2 <- 8.2 ; n2 <- 12
-alpha <- 0.05
-# F observado
-Fcalc <- s1/s2
-# grados de libertad
-gl1 <- n1 - 1
-gl2 <- n2 - 1
-# F crítico
-Fcrit <- qf(1 - alpha/2, df1 = gl1, df2 = gl2)
-
-Fcalc
-Fcrit
-```
-
+</div>
 
 ## Taller en Clase {.center .middle}
 
-## 
+## Instrucciones
 
-<div style="background-color:#eef4fb;
-padding:24px;
-border-radius:18px;
-border-top:8px solid #1a3a6b;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
 
-<div style="font-size:30px;
-font-weight:bold;
-color:#1a3a6b;
-margin-bottom:12px;">
-
-Instrucciones
-
-</div>
-
-<div style="font-size:26px;
-line-height:1.7;">
+<div style="font-size:26px; line-height:1.7;">
 
 Para cada ejercicio:
 
@@ -5766,176 +4531,86 @@ Para cada ejercicio:
 
 ## Ejercicio 1
 
-<div style="background-color:#eef4fb;
-padding:22px;
-border-radius:18px;
-border-top:8px solid #1a3a6b;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
 
-<div style="font-size:30px;
-font-weight:bold;
-color:#1a3a6b;
-margin-bottom:12px;">
-
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
 Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+Un investigador agrícola desea determinar si dos variedades de aguacate Hass presentan diferencias en su rendimiento promedio por hectárea. Se seleccionan dos muestras independientes y se obtienen:
 
 </div>
 
-<div style="font-size:26px;
-text-align:justify;
-line-height:1.6;">
-
-Un investigador agrícola desea determinar si dos variedades de aguacate Hass presentan diferencias en su rendimiento promedio por hectárea.
-
-Se seleccionan dos muestras independientes y se obtienen:
-
-</div>
-
-<br>
-
-<table style="width:100%; font-size:23px; text-align:center;">
-<tr>
+<table style="width:100%; font-size:22px; text-align:center; margin-top:10px;">
+<tr style="background-color:#dbeafe;">
 <th>Variedad</th>
 <th>Media (t/ha)</th>
 <th>Desv. Est.</th>
 <th>Muestra</th>
 </tr>
 
-<tr>
-<td>A</td>
-<td>3.8</td>
-<td>0.50</td>
-<td>25</td>
-</tr>
-
-<tr>
-<td>B</td>
-<td>4.1</td>
-<td>0.60</td>
-<td>30</td>
-</tr>
+<tr><td>A</td><td>3.8</td><td>0.50</td><td>25</td></tr>
+<tr><td>B</td><td>4.1</td><td>0.60</td><td>30</td></tr>
 
 </table>
 
 </div>
 
-<br>
-
-<div style="background-color:#fff7e8;
-padding:18px;
-border-radius:16px;
-border-left:8px solid #d97706;">
-
-<div style="font-size:24px;text-align:center;">
-
-Utilice:
-
-
-$t_{0.025,53}=2.01$ y $\alpha=0.05$
-
-</div>
-
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $t_{0.025,53}=2.01$ y $\alpha=0.05$
 </div>
 
 ## Ejercicio 2
 
-<div style="background-color:#eef7ee;
-padding:22px;
-border-radius:18px;
-border-top:8px solid #1b4d2e;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
 
-<div style="font-size:30px;
-font-weight:bold;
-color:#1b4d2e;
-margin-bottom:12px;">
-
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
 Problema
+</div>
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+
+Una empresa agrícola afirma que un nuevo biofertilizante aumenta el rendimiento promedio de mora de Castilla respecto al manejo convencional. Los resultados obtenidos fueron:
 
 </div>
 
-<div style="font-size:26px;
-text-align:justify;
-line-height:1.6;">
-
-Una empresa agrícola afirma que un nuevo biofertilizante aumenta el rendimiento promedio de mora de Castilla respecto al manejo convencional.
-
-Los resultados obtenidos fueron:
-
-</div>
-
-<br>
-
-<table style="width:100%; font-size:23px; text-align:center;">
-<tr>
+<table style="width:100%; font-size:22px; text-align:center; margin-top:10px;">
+<tr style="background-color:#dbeafe;">
 <th>Tratamiento</th>
 <th>Media (kg/parcela)</th>
 <th>Desv. Est.</th>
 <th>Muestra</th>
 </tr>
 
-<tr>
-<td>Convencional</td>
-<td>42</td>
-<td>5.2</td>
-<td>20</td>
-</tr>
-
-<tr>
-<td>Biofertilizante</td>
-<td>46</td>
-<td>6.1</td>
-<td>22</td>
-</tr>
+<tr><td>Convencional</td><td>42</td><td>5.2</td><td>20</td></tr>
+<tr><td>Biofertilizante</td><td>46</td><td>6.1</td><td>22</td></tr>
 
 </table>
 
 </div>
 
-<br>
-
-<div style="background-color:#fff7e8;
-padding:18px;
-border-radius:16px;
-border-left:8px solid #d97706;">
-
-<div style="font-size:24px;text-align:center;">
-
-Utilice:
-
-
-$t_{0.05,40}=1.68$ y $\alpha=0.05$
-
-</div>
-
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $t_{0.05,40}=1.68$ y $\alpha=0.05$
 </div>
 
 ## Ejercicio 3
 
-<div style="background-color:#eef4fb;
-padding:22px;
-border-radius:18px;
-border-top:8px solid #1a3a6b;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
 
-<div style="font-size:30px;
-font-weight:bold;
-color:#1a3a6b;
-margin-bottom:12px;">
-
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
 Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+
+En un cultivo de caña panelera se desea verificar si un sistema de riego inteligente reduce el consumo promedio de agua. Se registró el consumo semanal de agua (m³) en las mismas parcelas antes y después de implementar el sistema.
 
 </div>
 
-<div style="font-size:25px;
-text-align:justify;
-line-height:1.6;">
-
-En un cultivo de caña panelera se desea verificar si un sistema de riego inteligente reduce el consumo promedio de agua.
-
-Se registró el consumo semanal de agua (m³) en las mismas parcelas antes y después de implementar el sistema.
-
-</div>
-
-<table style="width:50%; font-size:21px; text-align:center;">
-<tr>
+<table style="width:70%; margin:8px auto 0; font-size:18px; text-align:center;">
+<tr style="background-color:#dbeafe;">
 <th>Parcela</th>
 <th>Antes</th>
 <th>Después</th>
@@ -5954,78 +4629,43 @@ Se registró el consumo semanal de agua (m³) en las mismas parcelas antes y des
 <tr><td>10</td><td>140</td><td>121</td><td></td></tr>
 
 </table>
-<div style="font-size:23px;">
-
-Utilice: $t_{0.05,9}=-1.833$ y $\alpha=0.05$
 
 </div>
 
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $t_{0.05,9}=-1.833$ y $\alpha=0.05$
 </div>
 
 
 ## Ejercicio 4
 
-<div style="background-color:#eef7ee;
-padding:22px;
-border-radius:18px;
-border-top:8px solid #1b4d2e;">
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
 
-<div style="font-size:30px;
-font-weight:bold;
-color:#1b4d2e;
-margin-bottom:12px;">
-
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
 Problema
-
 </div>
 
-<div style="font-size:26px;
-text-align:justify;
-line-height:1.6;">
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
 
 Dos tratamientos de pregerminación se aplican a semillas de maracuyá para evaluar cuál presenta una mayor proporción de germinación.
 
 </div>
 
-<br>
-
-<table style="width:100%; font-size:23px; text-align:center;">
-<tr>
+<table style="width:100%; font-size:22px; text-align:center; margin-top:10px;">
+<tr style="background-color:#dbeafe;">
 <th>Tratamiento</th>
 <th>Germinadas</th>
 <th>Total</th>
 </tr>
 
-<tr>
-<td>A</td>
-<td>168</td>
-<td>200</td>
-</tr>
-
-<tr>
-<td>B</td>
-<td>186</td>
-<td>210</td>
-</tr>
+<tr><td>A</td><td>168</td><td>200</td></tr>
+<tr><td>B</td><td>186</td><td>210</td></tr>
 
 </table>
 
 </div>
 
-<br>
-
-<div style="background-color:#fff7e8;
-padding:18px;
-border-radius:16px;
-border-left:8px solid #d97706;">
-
-<div style="font-size:24px;">
-
-Utilice:
-
-$Z_{0.05}=1.645$ y $\alpha=0.05$
-
-</div>
-
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $Z_{0.05}=1.645$ y $\alpha=0.05$
 </div>
 

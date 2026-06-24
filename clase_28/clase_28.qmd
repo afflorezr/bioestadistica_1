@@ -1,11 +1,12 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
   revealjs:
+    embed-resources: true
     logo: images/logo_unal_3.png
     slide-number: true
     title-slide: false
@@ -37,7 +38,7 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
 
 ## Clase 28 {.center .middle}
@@ -45,434 +46,1037 @@ execute:
 ## Contenido
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: El modelo de regresión</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Diseño anidado de dos etapas</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Relación lineal entre variables.</li>
-<li class="fragment fade-in" data-fragment-index="3">Modelo de regresión lineal simple.</li>
-<li class="fragment fade-in" data-fragment-index="4">Supuestos del modelo (LINE).</li>
-<li class="fragment fade-in" data-fragment-index="5">Diagrama de dispersión.</li>
+<li class="fragment fade-in" data-fragment-index="2">Factores cruzados vs. factores anidados.</li>
+<li class="fragment fade-in" data-fragment-index="3">Ejemplo: materia orgánica en lotes anidados en fincas.</li>
+<li class="fragment fade-in" data-fragment-index="4">Modelo, descomposición de SC y tabla ANOVA.</li>
+<li class="fragment fade-in" data-fragment-index="5">Verificación diagnóstica de residuos.</li>
+<li class="fragment fade-in" data-fragment-index="6">Componentes de varianza.</li>
+<li class="fragment fade-in" data-fragment-index="7">Diseños anidados escalonados.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Mínimos cuadrados ordinarios</h3>
+<h3 class="fragment fade-in" data-fragment-index="8" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Generalizaciones del anidado</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Criterio MCO.</li>
-<li class="fragment fade-in" data-fragment-index="8">Derivación de $\hat{\beta}_0$ y $\hat{\beta}_1$.</li>
-<li class="fragment fade-in" data-fragment-index="9">Recta ajustada y residuos.</li>
-<li class="fragment fade-in" data-fragment-index="10">Código R: <code>lm()</code> y visualización.</li>
+<li class="fragment fade-in" data-fragment-index="9">Diseño anidado general de $m$ etapas.</li>
+<li class="fragment fade-in" data-fragment-index="10">Factores anidados y factoriales combinados.</li>
+</ul>
+
+<h3 class="fragment fade-in" data-fragment-index="11" style="font-size: 34px; margin-bottom: 14px; margin-top: 20px; color: #79260d;">Parte III: Parcelas divididas (split-plot)</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="12">Motivación: factores difíciles de cambiar.</li>
+<li class="fragment fade-in" data-fragment-index="13">Ejemplo: riego (parcela principal) y variedad de arroz (subparcela).</li>
+<li class="fragment fade-in" data-fragment-index="14">Modelo, tabla ANOVA y precisión diferencial.</li>
+</ul>
+
+<h3 class="fragment fade-in" data-fragment-index="15" style="font-size: 34px; margin-bottom: 14px; margin-top: 20px; color: #5b21b6;">Parte IV: Otras variaciones</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="16">Split-plot con más de dos factores.</li>
+<li class="fragment fade-in" data-fragment-index="17">Diseño split-split-plot.</li>
+<li class="fragment fade-in" data-fragment-index="18">Diseño en franjas divididas (strip-split-plot).</li>
 </ul>
 </div>
+
 </div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Modelo de Regresión y Mínimos Cuadrados</p>
-<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Modelando la relación lineal entre dos variables cuantitativas</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
-</div>
 
-## Motivación: dosis de fertilizante y rendimiento
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Diseños Anidados y de Parcelas Divididas
+</p>
 
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Un agrónomo aplica distintas dosis de nitrógeno (kg/ha) a parcelas de maíz y mide el rendimiento (t/ha). ¿Existe una relación lineal entre la dosis y el rendimiento?
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-Si la hay, ¿podemos predecir el rendimiento esperado para una dosis que no fue ensayada?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-La <strong>regresión lineal simple</strong> modela la relación entre una variable respuesta $Y$ (rendimiento) y una variable predictora $X$ (dosis) mediante una recta.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-Permite cuantificar el efecto de $X$ sobre $Y$, hacer predicciones y probar hipótesis sobre esa relación.
-</li>
-</ul>
-</div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando los niveles de un factor solo tienen sentido dentro de otro factor, o cuando un factor es muy costoso de cambiar entre unidades experimentales?
+</p>
 
 </div>
 
-## El modelo de regresión lineal simple
+## Motivación: factores cruzados vs. anidados
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En los diseños factoriales estudiados hasta ahora, los factores son <strong>cruzados</strong>: cada nivel de un factor se combina con cada nivel del otro. Pero en muchos estudios agropecuarios esto no es posible ni tiene sentido.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+Ejemplo: si se seleccionan 3 <strong>lotes</strong> dentro de cada una de 4 <strong>fincas</strong> cafeteras del Quindío, el "lote 1" de la finca La Esperanza no es la misma unidad física que el "lote 1" de la finca El Vergel. Son etiquetas distintas que solo tienen sentido dentro de su finca.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Cuando los niveles de un factor B solo existen dentro de un nivel específico de otro factor A, se dice que B está <strong>anidado</strong> en A, y se escribe $B(A)$.
+</div>
+
+## Factor cruzado vs. factor anidado
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Factores cruzados</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Ejemplo: variedad de café $\times$ tipo de fertilizante. Cada variedad se evalúa con <strong>todos</strong> los fertilizantes. Tiene sentido hablar del efecto de interacción.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Factores anidados</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Ejemplo: lote dentro de finca. Cada lote pertenece a <strong>una sola</strong> finca. No existe interacción finca $\times$ lote en el sentido factorial clásico.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:14px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+Otros ejemplos agrícolas: parcela dentro de bloque, vaca dentro de hato, planta dentro de surco, rama dentro de árbol.
+</div>
+
+## Ejemplo introductorio: materia orgánica del suelo
+
+<p style="font-size: 25px; text-align: justify; line-height: 1.4; margin-bottom: 6px;">
+Un agrónomo del Quindío quiere caracterizar el contenido de <strong>materia orgánica del suelo (%)</strong> en cuatro fincas cafeteras. En cada finca se seleccionan al azar 3 lotes, y en cada lote se toman 3 submuestras de suelo.
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+Estructura: 4 fincas $\times$ 3 lotes anidados en cada finca $\times$ 3 submuestras por lote = 36 observaciones.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+¿Difiere el contenido promedio de materia orgánica entre fincas? ¿Cuánta variabilidad existe entre lotes dentro de la misma finca?
+</div>
+
+## Datos: materia orgánica por finca y lote
+
+<table style="width:100%; font-size:18px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:5px;">Finca</th><th>Lote 1</th><th>Lote 2</th><th>Lote 3</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">La Esperanza</td><td>3.21 / 3.56 / 3.63</td><td>4.23 / 4.18 / 4.12</td><td>4.07 / 3.62 / 4.01</td></tr>
+<tr><td style="padding:5px;">El Vergel</td><td>4.81 / 4.86 / 4.54</td><td>4.36 / 4.40 / 4.30</td><td>3.84 / 3.85 / 4.08</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:5px;">Buenavista</td><td>3.06 / 3.30 / 3.20</td><td>3.59 / 4.08 / 3.83</td><td>4.41 / 4.10 / 4.33</td></tr>
+<tr><td style="padding:5px;">San Isidro</td><td>4.63 / 4.83 / 4.79</td><td>4.77 / 4.70 / 4.78</td><td>4.88 / 5.52 / 4.75</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:20px; text-align:center;">
+Medias por finca: La Esperanza = 3.85%, El Vergel = 4.34%, Buenavista = 3.77%, San Isidro = 4.85%. Media general = 4.20%.
+</div>
+
+```{r}
+#| label: boxplot-anidado
+#| echo: false
+#| fig-height: 3.2
+fincas <- c("La Esperanza", "El Vergel", "Buenavista", "San Isidro")
+finca <- factor(rep(fincas, each = 9), levels = fincas)
+mo <- c(3.21,3.56,3.63,4.23,4.18,4.12,4.07,3.62,4.01,
+        4.81,4.86,4.54,4.36,4.40,4.30,3.84,3.85,4.08,
+        3.06,3.30,3.20,3.59,4.08,3.83,4.41,4.10,4.33,
+        4.63,4.83,4.79,4.77,4.70,4.78,4.88,5.52,4.75)
+lote <- factor(rep(rep(1:3, each = 3), times = 4))
+datos_anidado <- data.frame(finca, lote, mo)
+boxplot(mo ~ lote + finca, data = datos_anidado, col = c("#dbeafe","#d6f0dd","#fde68a"),
+        las = 2, cex.axis = 0.6, ylab = "Materia orgánica (%)",
+        main = "Materia orgánica por lote dentro de finca")
+```
+
+## Modelo del diseño anidado de dos etapas
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Sea $i=1,\ldots,a$ el índice de finca, $j=1,\ldots,b$ el índice de lote dentro de la finca $i$, y $k=1,\ldots,n$ el índice de submuestra dentro del lote $j$ de la finca $i$.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:26px;">Modelo anidado de dos etapas</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+y_{ijk} = \mu + \tau_i + \beta_{j(i)} + \varepsilon_{k(ij)}
+$$
+</div>
+</div>
+
+<div style="font-size:22px; line-height:1.4; margin-top:10px;">
+- $\tau_i$: efecto de la finca $i$ ($i=1,\ldots,4$).
+- $\beta_{j(i)}$: efecto del lote $j$ <strong>anidado</strong> en la finca $i$ ($j=1,2,3$); la notación $j(i)$ indica que el lote solo existe dentro de la finca $i$.
+- $\varepsilon_{k(ij)}$: error de la submuestra $k$ dentro del lote $j$ de la finca $i$, con $\varepsilon_{k(ij)}\sim N(0,\sigma^2)$.
+- En este ejemplo: finca es un factor fijo y lote es un factor aleatorio (los lotes se seleccionaron al azar dentro de cada finca).
+</div>
+
+## Descomposición de la suma de cuadrados
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+La variabilidad total se descompone en tres fuentes: entre fincas, entre lotes dentro de fincas, y dentro de lotes (error).
+</div>
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: modelo de regresión lineal simple</div>
-  <div class="block-body">
-  $$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i, \quad i = 1, \ldots, n$$
-  <p>donde:</p>
-  <ul style="font-size: 26px;">
-  <li>$Y_i$: variable respuesta (dependiente) en la observación $i$.</li>
-  <li>$X_i$: variable predictora (independiente), fija o aleatoria.</li>
-  <li>$\beta_0$: intercepto (valor esperado de $Y$ cuando $X = 0$).</li>
-  <li>$\beta_1$: pendiente (cambio esperado en $Y$ por unidad de cambio en $X$).</li>
-  <li>$\varepsilon_i$: error aleatorio con $E(\varepsilon_i) = 0$.</li>
-  </ul>
-  </div>
+<div class="block-title" style="font-size:23px;">Identidad del anidado de dos etapas</div>
+<div class="block-body" style="font-size:21px; text-align:center;">
+$$
+\underbrace{\sum_{i}\sum_{j}\sum_{k}(y_{ijk}-\bar y_{...})^2}_{SC_T}
+=
+\underbrace{bn\sum_i (\bar y_{i..}-\bar y_{...})^2}_{SC_A}
++
+\underbrace{n\sum_i\sum_j (\bar y_{ij.}-\bar y_{i..})^2}_{SC_{B(A)}}
++
+\underbrace{\sum_i\sum_j\sum_k (y_{ijk}-\bar y_{ij.})^2}_{SC_E}
+$$
+</div>
 </div>
 
-## Supuestos del modelo: LINE
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-top:6px solid #1a3a6b; font-size:19px; text-align:center;">
+$SC_A$: variabilidad entre fincas ($a-1$ gl).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-top:6px solid #1b4d2e; font-size:19px; text-align:center;">
+$SC_{B(A)}$: variabilidad entre lotes dentro de finca ($a(b-1)$ gl).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-top:6px solid #d97706; font-size:19px; text-align:center;">
+$SC_E$: variabilidad entre submuestras dentro de lote ($ab(n-1)$ gl).
+</div>
+
+</div>
+
+## Tabla ANOVA del diseño anidado: estructura
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center; margin-top:8px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Fuente</th>
+<th style="padding:7px;">SC</th>
+<th style="padding:7px;">gl</th>
+<th style="padding:7px;">CM</th>
+<th style="padding:7px;">F</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Finca (A)</td>
+<td style="padding:7px;">$SC_A$</td>
+<td style="padding:7px;">$a-1$</td>
+<td style="padding:7px;">$CM_A$</td>
+<td style="padding:7px;">$CM_A/CM_{B(A)}$</td>
+</tr>
+<tr>
+<td style="padding:7px;">Lote dentro de finca B(A)</td>
+<td style="padding:7px;">$SC_{B(A)}$</td>
+<td style="padding:7px;">$a(b-1)$</td>
+<td style="padding:7px;">$CM_{B(A)}$</td>
+<td style="padding:7px;">$CM_{B(A)}/CM_E$</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Error</td>
+<td style="padding:7px;">$SC_E$</td>
+<td style="padding:7px;">$ab(n-1)$</td>
+<td style="padding:7px;">$CM_E$</td>
+<td style="padding:7px;"></td>
+</tr>
+<tr>
+<td style="padding:7px;">Total</td>
+<td style="padding:7px;">$SC_T$</td>
+<td style="padding:7px;">$abn-1$</td>
+<td style="padding:7px;"></td>
+<td style="padding:7px;"></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:19px; text-align:center;">
+Punto clave: el factor finca se prueba contra $CM_{B(A)}$ (no contra $CM_E$), porque el lote es la unidad experimental real para el efecto de finca.
+</div>
+
+## Resultado del ejemplo: tabla ANOVA completa
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Fuente</th>
+<th style="padding:7px;">SC</th>
+<th style="padding:7px;">gl</th>
+<th style="padding:7px;">CM</th>
+<th style="padding:7px;">F</th>
+<th style="padding:7px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Finca</td>
+<td style="padding:7px;">6.780</td>
+<td style="padding:7px;">3</td>
+<td style="padding:7px;">2.260</td>
+<td style="padding:7px;">4.81</td>
+<td style="padding:7px;">0.034</td>
+</tr>
+<tr>
+<td style="padding:7px;">Lote (Finca)</td>
+<td style="padding:7px;">3.755</td>
+<td style="padding:7px;">8</td>
+<td style="padding:7px;">0.469</td>
+<td style="padding:7px;">12.59</td>
+<td style="padding:7px;">$6.5\times10^{-7}$</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Error</td>
+<td style="padding:7px;">0.895</td>
+<td style="padding:7px;">24</td>
+<td style="padding:7px;">0.037</td>
+<td style="padding:7px;"></td>
+<td style="padding:7px;"></td>
+</tr>
+<tr>
+<td style="padding:7px;">Total</td>
+<td style="padding:7px;">11.430</td>
+<td style="padding:7px;">35</td>
+<td style="padding:7px;"></td>
+<td style="padding:7px;"></td>
+<td style="padding:7px;"></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:19px; text-align:center;">
+$F_{Finca}=CM_A/CM_{B(A)}=2.260/0.469=4.81$ &nbsp;&nbsp; $F_{Lote(Finca)}=CM_{B(A)}/CM_E=0.469/0.037=12.59$
+</div>
+
+## Criterio de decisión y conclusión
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:23px; font-weight:bold; text-align:center; color:#1a3a6b;">Efecto de Finca</div>
+<div style="font-size:19px; text-align:center; line-height:1.5; margin-top:8px;">
+$$F_{calc}=4.81 > F_{0.05,3,8}=4.07$$
+$$\text{valor-p}=0.034<0.05$$
+Se rechaza $H_0$: hay diferencias entre fincas.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:23px; font-weight:bold; text-align:center; color:#1b4d2e;">Efecto de Lote (Finca)</div>
+<div style="font-size:19px; text-align:center; line-height:1.5; margin-top:8px;">
+$$F_{calc}=12.59 > F_{0.05,8,24}=2.36$$
+$$\text{valor-p}=6.5\times10^{-7}<0.05$$
+Se rechaza $H_0$: hay variación entre lotes.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:20px; text-align:center;">
+Conclusión: tanto la finca como el lote dentro de finca contribuyen significativamente a la variabilidad de la materia orgánica del suelo. San Isidro presenta el contenido promedio más alto (4.85%) y Buenavista el más bajo (3.77%).
+</div>
+
+## Verificación diagnóstica: residuos
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Como en cualquier ANOVA, deben verificarse los supuestos de normalidad y homogeneidad de varianza sobre los residuos del modelo anidado.
+</div>
+
+```{r}
+#| label: diag-anidado
+#| echo: false
+#| fig-height: 3.4
+modelo_an <- aov(mo ~ finca + finca:lote, data = datos_anidado)
+par(mfrow = c(1, 2))
+qqnorm(residuals(modelo_an), main = "QQ-plot de residuos", pch = 19, col = "#1a3a6b")
+qqline(residuals(modelo_an), col = "#b91c1c", lwd = 2)
+plot(fitted(modelo_an), residuals(modelo_an), pch = 19, col = "#1b4d2e",
+     xlab = "Valores ajustados", ylab = "Residuo", main = "Residuos vs. ajustados")
+abline(h = 0, lty = 2, col = "#b91c1c")
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:6px; font-size:20px; text-align:center;">
+Prueba de Shapiro-Wilk sobre los residuos: $W=0.965$, valor-p $=0.310>0.05$. No hay evidencia para rechazar la normalidad; el modelo es adecuado.
+</div>
+
+## Componentes de varianza en el diseño anidado
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Cuando el factor anidado (lote) es <strong>aleatorio</strong>, interesa estimar cuánta variabilidad total se debe a la diferencia entre lotes y cuánta al error de muestreo dentro de lote, mediante el método de momentos.
+</div>
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Supuestos LINE</div>
-  <div class="block-body">
-  <ul style="font-size: 27px;">
-  <li><strong>L</strong>inealidad: $E(Y_i \mid X_i) = \beta_0 + \beta_1 X_i$.</li>
-  <li><strong>I</strong>ndependencia: los errores $\varepsilon_i$ son independientes entre sí.</li>
-  <li><strong>N</strong>ormalidad: $\varepsilon_i \sim N(0, \sigma^2)$.</li>
-  <li><strong>E</strong>quivarianza (homocedasticidad): $\text{Var}(\varepsilon_i) = \sigma^2$ constante.</li>
-  </ul>
-  </div>
+<div class="block-title" style="font-size:23px;">Estimadores de componentes de varianza</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$\hat\sigma^2 = CM_E \qquad\qquad \hat\sigma^2_\beta = \frac{CM_{B(A)}-CM_E}{n}$$
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Consecuencia: $Y_i \sim N(\beta_0 + \beta_1 X_i,\, \sigma^2)$ condicionalmente en $X_i$.
-</li>
-</ul>
-
-## Diagrama de dispersión y correlación
-
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2)
-set.seed(28)
-dosis   <- seq(20, 120, by = 10)  # kg N/ha
-rend    <- 2.5 + 0.04 * dosis + rnorm(length(dosis), 0, 0.4)  # t/ha
-
-df <- data.frame(dosis, rend)
-r  <- cor(dosis, rend)
-
-ggplot(df, aes(dosis, rend)) +
-  geom_point(color = "#1b4d2e", size = 3) +
-  labs(x = "Dosis de nitrógeno (kg/ha)",
-       y = "Rendimiento (t/ha)",
-       title = paste0("Maíz: dosis vs rendimiento  (r = ", round(r, 3), ")")) +
-  theme_minimal(base_size = 13)
-```
-
-## Criterio de mínimos cuadrados ordinarios
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Criterio MCO</div>
-  <div class="block-body">
-  <p>Los estimadores MCO $\hat{\beta}_0$ y $\hat{\beta}_1$ minimizan la <strong>suma de cuadrados de los residuos</strong>:</p>
-  $$SCE = \sum_{i=1}^n \hat{\varepsilon}_i^2 = \sum_{i=1}^n (Y_i - \hat{\beta}_0 - \hat{\beta}_1 X_i)^2$$
-  </div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:21px; text-align:center; margin-top:10px;">
+Con $CM_{B(A)}=0.469$, $CM_E=0.037$ y $n=3$ submuestras por lote:
+$$\hat\sigma^2=0.037 \qquad\qquad \hat\sigma^2_\beta=\frac{0.469-0.037}{3}=0.144$$
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Los residuos $\hat{\varepsilon}_i = Y_i - \hat{Y}_i$ son las diferencias entre valores observados y predichos.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Minimizar SCE equivale a encontrar la recta más cercana a todos los puntos, en el sentido de la distancia vertical al cuadrado.
-</li>
-</ul>
-
-## Derivación de los estimadores MCO
-
-<div class="block-proof fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Demostración: $\hat{\beta}_0$ y $\hat{\beta}_1$</div>
-  <div class="block-body">
-  <p>Derivando $SCE$ respecto a $\beta_0$ y $\beta_1$ e igualando a cero:</p>
-  $$\hat{\beta}_1 = \frac{\sum(X_i - \bar{X})(Y_i - \bar{Y})}{\sum(X_i - \bar{X})^2} = \frac{S_{XY}}{S_{XX}}$$
-  $$\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{X}$$
-  <p>La recta ajustada siempre pasa por $(\bar{X}, \bar{Y})$. $\blacksquare$</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+La varianza entre lotes ($0.144$) es casi 4 veces mayor que la varianza dentro de lote ($0.037$): la mayor fuente de variabilidad no controlada está entre lotes, no entre submuestras.
 </div>
 
-## Cálculo manual de $\hat{\beta}_1$ y $\hat{\beta}_0$
+## Interpretación práctica de los componentes de varianza
 
-```{r}
-#| echo: true
-x <- dosis; y <- rend
-n <- length(x)
-
-Sxx <- sum((x - mean(x))^2)
-Sxy <- sum((x - mean(x)) * (y - mean(y)))
-
-beta1_hat <- Sxy / Sxx
-beta0_hat <- mean(y) - beta1_hat * mean(x)
-
-cat("β̂₁ (pendiente) =", round(beta1_hat, 6), "t/ha por kg N/ha\n")
-cat("β̂₀ (intercepto) =", round(beta0_hat, 4), "t/ha\n")
-cat("Recta: Ŷ = ", round(beta0_hat, 4), "+", round(beta1_hat, 6), "* X\n")
-```
-
-## Ajuste con lm() en R
-
-```{r}
-#| echo: true
-modelo <- lm(rend ~ dosis, data = df)
-summary(modelo)
-```
-
-## Interpretación de los coeficientes
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 class="fragment fade-in" data-fragment-index="1" style="color:#1b4d2e;">Pendiente $\hat{\beta}_1$</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
-Por cada kg/ha adicional de nitrógeno, el rendimiento aumenta en $\hat{\beta}_1$ t/ha en promedio.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
-Si $\hat{\beta}_1 > 0$: relación positiva. Si $\hat{\beta}_1 < 0$: relación negativa.
-</li>
-</ul>
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+Esta descomposición tiene una implicación directa para el muestreo de suelos en fincas cafeteras.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<h4 class="fragment fade-in" data-fragment-index="4" style="color:#1a3a6b;">Intercepto $\hat{\beta}_0$</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
-Valor esperado de $Y$ cuando $X = 0$. Solo tiene interpretación directa si $X = 0$ es plausible en el contexto.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
-Con dosis = 0 kg N/ha, el rendimiento esperado sería $\hat{\beta}_0$ t/ha (rendimiento sin fertilizar).
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:center; line-height:1.5;">
+Si $\hat\sigma^2_\beta \gg \hat\sigma^2$, conviene invertir el esfuerzo de muestreo en aumentar el <strong>número de lotes</strong> por finca, en lugar de aumentar el número de submuestras por lote.
 </div>
 
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:10px; font-size:20px; text-align:center;">
+Tomar 10 submuestras de un solo lote no compensa la variabilidad real entre lotes de una misma finca.
 </div>
 
-## Visualización de la recta ajustada
+## Diseños anidados escalonados (staggered)
 
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2)
-df$predichos <- fitted(modelo)
-df$residuos  <- residuals(modelo)
-
-ggplot(df, aes(dosis, rend)) +
-  geom_point(color = "#1b4d2e", size = 2.5) +
-  geom_smooth(method = "lm", se = TRUE, color = "#c0392b",
-              fill = "#fad8d8", alpha = 0.3) +
-  geom_segment(aes(xend = dosis, yend = predichos),
-               color = "#1a3a6b", linetype = "dashed", alpha = 0.5) +
-  labs(x = "Dosis de nitrógeno (kg/ha)",
-       y = "Rendimiento (t/ha)",
-       title = "Regresión lineal: maíz, Córdoba") +
-  theme_minimal(base_size = 13)
-```
-
-## Los residuos y su importancia
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: residuos</div>
-  <div class="block-body">
-  <p>El <strong>residuo</strong> de la observación $i$ es:</p>
-  $$\hat{\varepsilon}_i = Y_i - \hat{Y}_i = Y_i - (\hat{\beta}_0 + \hat{\beta}_1 X_i)$$
-  <p>Propiedades MCO: $\sum \hat{\varepsilon}_i = 0$ y $\sum X_i \hat{\varepsilon}_i = 0$.</p>
-  </div>
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+En el diseño anidado clásico se exige el mismo número de lotes por finca y el mismo número de submuestras por lote (diseño <strong>balanceado</strong>). En la práctica, el costo de muestrear submuestras adicionales en niveles inferiores de la jerarquía suele ser mucho menor que el de agregar una unidad en un nivel superior.
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Los residuos son la parte de $Y$ no explicada por la recta. Su análisis permite verificar los supuestos del modelo.
-</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:21px; text-align:center;">
+Un diseño anidado <strong>escalonado</strong> (staggered nested design) reduce deliberadamente el número de observaciones en los niveles más profundos de la jerarquía a medida que se sube de nivel, balanceando así el costo total del muestreo entre todos los niveles.
+</div>
 
-## Diagnóstico: gráficas de residuos
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Ejemplo: en lugar de tomar 3 submuestras en cada uno de 3 lotes por finca, se podría tomar 4 submuestras en un lote, 2 en otro y 1 en el tercero, manteniendo precisión similar en la estimación de cada componente de varianza con menor costo total.
+</div>
 
-```{r}
-#| echo: true
-#| fig-height: 4
-library(ggplot2); library(patchwork)
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:19px; text-align:center;">
+Estos diseños son útiles cuando el objetivo principal es estimar componentes de varianza (no comparar medias), y se analizan con métodos especializados de estimación de varianza por niveles.
+</div>
 
-p1 <- ggplot(df, aes(predichos, residuos)) +
-  geom_point(color = "#1b4d2e", size = 2) +
-  geom_hline(yintercept = 0, color = "#c0392b", linetype = "dashed") +
-  labs(x = "Valores ajustados", y = "Residuos",
-       title = "Residuos vs ajustados") +
-  theme_minimal(base_size = 11)
-
-p2 <- ggplot(df, aes(sample = residuos)) +
-  stat_qq(color = "#1a3a6b") + stat_qq_line(color = "#c0392b") +
-  labs(x = "Cuantiles teóricos", y = "Cuantiles muestrales",
-       title = "QQ-plot de residuos") +
-  theme_minimal(base_size = 11)
-
-p1 + p2
-```
-
-## Predicción con la recta ajustada
-
-```{r}
-#| echo: true
-# Predicción puntual para dosis = 80 kg N/ha
-nueva_dosis <- data.frame(dosis = 80)
-pred_puntual <- predict(modelo, newdata = nueva_dosis)
-cat("Rendimiento predicho para 80 kg N/ha:", round(pred_puntual, 4), "t/ha\n")
-
-# IC para la media (banda de confianza)
-pred_ic_media <- predict(modelo, newdata = nueva_dosis,
-                          interval = "confidence", level = 0.95)
-cat("IC 95% para E(Y|X=80): [", round(pred_ic_media[2], 4),
-    ",", round(pred_ic_media[3], 4), "]\n")
-
-# IP para una observación nueva (banda de predicción)
-pred_ip <- predict(modelo, newdata = nueva_dosis,
-                   interval = "prediction", level = 0.95)
-cat("IP 95% para Y_nuevo|X=80: [", round(pred_ip[2], 4),
-    ",", round(pred_ip[3], 4), "]\n")
-```
-
-## Errores comunes en regresión
+## Errores comunes: diseño anidado
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes</div>
-  <div class="block-body">
-  <p>La regresión lineal tiene supuestos que, si se violan, invalidan las inferencias.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Probar el efecto de finca contra $CM_E$ en lugar de $CM_{B(A)}$: produce un estadístico F inflado y conclusiones erróneas.
+- Tratar lote y finca como factores cruzados (incluir una "interacción" finca $\times$ lote) cuando en realidad el lote está anidado.
+- Ignorar que, si el lote es aleatorio, el denominador correcto para probar finca depende de si finca también es aleatoria o fija.
+- Confundir el número de submuestras con repeticiones independientes del experimento: las submuestras solo capturan variación de muestreo dentro del lote, no entre lotes.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Extrapolación:</strong> predecir fuera del rango de $X$ observado puede producir valores sin sentido. La relación lineal puede no mantenerse más allá del rango estudiado.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Confundir correlación con causalidad:</strong> una alta $r^2$ no implica que $X$ cause $Y$. Puede haber una variable de confusión.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>No verificar supuestos:</strong> analice siempre las gráficas de residuos antes de interpretar los coeficientes.
-</li>
-</ul>
+## {.center .middle}
 
-## Taller en clase {.center .middle}
+<div style="text-align: center; margin-top: 40px;">
 
-## Taller 1: estimación manual de MCO
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Generalizaciones del diseño anidado
+</p>
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En un ensayo de riego en papa, se midió la lámina de agua aplicada (mm) y el rendimiento (t/ha). Con los datos: $X$: 50, 75, 100, 125, 150 mm; $Y$: 18.2, 21.5, 24.8, 27.1, 29.3 t/ha. (a) Calcule $\hat{\beta}_0$ y $\hat{\beta}_1$. (b) Interprete la pendiente. (c) Prediga el rendimiento para 110 mm.</p>
-  </div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+La jerarquía de anidamiento puede extenderse a más niveles, y puede combinarse con factores cruzados.
+</p>
+
 </div>
 
-## Taller 1: solución
+## El diseño anidado general de m etapas
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+La idea del anidamiento de dos etapas se extiende naturalmente a más niveles jerárquicos. Por ejemplo, en un estudio de rendimiento de café podría existir la jerarquía: <strong>región</strong> $\to$ <strong>finca</strong> (anidada en región) $\to$ <strong>lote</strong> (anidado en finca) $\to$ <strong>parcela</strong> (anidada en lote).
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Modelo anidado de m etapas</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$
+y_{hijk\ldots} = \mu + \alpha_h + \tau_{i(h)} + \beta_{j(hi)} + \varepsilon_{k(hij)}
+$$
+</div>
+</div>
+
+<div style="font-size:20px; line-height:1.4; margin-top:8px;">
+Cada término se prueba contra el cuadrado medio del nivel <strong>inmediatamente inferior</strong> en la jerarquía, no contra el error de la base.
+</div>
+
+## Tabla ANOVA del diseño anidado de m etapas
+
+<table style="width:100%; font-size:19px; border-collapse:collapse; text-align:center; margin-top:8px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th>
+<th style="padding:6px;">gl</th>
+<th style="padding:6px;">Denominador de F</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Región</td><td style="padding:6px;">$r-1$</td><td style="padding:6px;">$CM_{Finca(Región)}$</td></tr>
+<tr><td style="padding:6px;">Finca (Región)</td><td style="padding:6px;">$r(f-1)$</td><td style="padding:6px;">$CM_{Lote(Finca)}$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Lote (Finca)</td><td style="padding:6px;">$rf(l-1)$</td><td style="padding:6px;">$CM_{Parcela(Lote)}$</td></tr>
+<tr><td style="padding:6px;">Parcela (Lote)</td><td style="padding:6px;">$rfl(p-1)$</td><td style="padding:6px;">$CM_{Error}$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Error</td><td style="padding:6px;">por diferencia</td><td style="padding:6px;"></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:19px; text-align:center;">
+Cada nivel se prueba con el cuadrado medio del nivel inmediatamente más profundo: esta es la regla general de los "denominadores correctos" en jerarquías anidadas.
+</div>
+
+## Factores anidados y factoriales combinados
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Es posible combinar un esquema factorial con un esquema anidado. Por ejemplo: dentro de cada finca cafetera se cruzan dos factores, <strong>variedad de café</strong> (Castillo, Caturra) y <strong>tipo de manejo</strong> (tradicional, tecnificado), pero ambos factores están anidados dentro de finca porque las combinaciones se distribuyen en lotes propios de cada finca.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:21px; text-align:center;">
+Notación: Variedad $\times$ Manejo $(Finca)$. La interacción Variedad $\times$ Manejo es de interés directo; la finca actúa como bloque jerárquico que aporta variabilidad adicional no controlada.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+Estos modelos mixtos (cruzado + anidado) son comunes en sistemas agrícolas reales, donde hay una estructura de manejo experimental dentro de unidades geográficas naturales (fincas, veredas, regiones).
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Diseño de parcelas divididas (split-plot)
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Qué hacer cuando un factor experimental es costoso o difícil de cambiar entre unidades pequeñas?
+</p>
+
+</div>
+
+## Motivación del split-plot
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+En un cultivo de arroz se quiere evaluar dos <strong>sistemas de riego</strong> (inundación continua, goteo) y tres <strong>variedades</strong> (Fedearroz 60, Fedearroz 174, Oryzica). El riego requiere infraestructura fija (canales, tuberías) que solo puede instalarse en parcelas <strong>grandes</strong>; cambiar el sistema de riego dentro de una parcela pequeña es inviable.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:12px; font-size:22px; text-align:center;">
+Si se aleatorizara por completo (diseño factorial completamente aleatorizado), habría que construir infraestructura de riego distinta para cada combinación riego$\times$variedad: costoso e impráctico.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+Solución: aplicar el riego a <strong>parcelas grandes</strong> (parcela principal) y, dentro de cada una, sembrar franjas de las distintas variedades (subparcela), que sí pueden asignarse al azar fácilmente.
+</div>
+
+## Estructura del diseño split-plot
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">Parcela principal (whole-plot)</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+Unidad <strong>grande</strong>. Recibe el factor difícil de cambiar (riego). Se aleatoriza dentro de bloques, igual que en un BCA.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Subparcela (sub-plot)</div>
+<div style="font-size:20px; text-align:center; line-height:1.4; margin-top:8px;">
+Unidad <strong>pequeña</strong>, dentro de la parcela principal. Recibe el factor fácil de cambiar (variedad), aleatorizado dentro de cada parcela principal.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:20px; text-align:center;">
+Existen dos procesos de aleatorización independientes: uno para el factor de parcela principal entre bloques, y otro para el factor de subparcela dentro de cada parcela principal.
+</div>
+
+## Ejemplo agrícola: riego y variedad de arroz
+
+<p style="font-size: 24px; text-align: justify; line-height: 1.4; margin-bottom: 6px;">
+Se establecen 3 <strong>bloques</strong> en un lote arrocero del Tolima. En cada bloque hay 2 parcelas principales, asignadas aleatoriamente a los sistemas de riego (Inundación, Goteo). Dentro de cada parcela principal, las 3 variedades se siembran en franjas (subparcelas) asignadas al azar.
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Total de observaciones: 3 bloques $\times$ 2 riegos $\times$ 3 variedades = 18 parcelas. Variable de respuesta: rendimiento (ton/ha).
+</div>
 
 ```{r}
-#| echo: true
-x <- c(50, 75, 100, 125, 150)
-y <- c(18.2, 21.5, 24.8, 27.1, 29.3)
-
-Sxx <- sum((x - mean(x))^2)
-Sxy <- sum((x - mean(x)) * (y - mean(y)))
-b1  <- Sxy / Sxx
-b0  <- mean(y) - b1 * mean(x)
-
-cat("β̂₀ =", round(b0, 4), "\n")
-cat("β̂₁ =", round(b1, 4), "t/ha por mm\n")
-cat("Interpretación: por cada mm adicional de riego, el rendimiento\n",
-    "aumenta en promedio", round(b1, 4), "t/ha.\n")
-cat("Predicción X = 110 mm:", round(b0 + b1 * 110, 4), "t/ha\n")
-```
-
-## Taller 2: ajuste con lm() e interpretación
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Con los datos del taller 1, ajuste el modelo con <code>lm()</code>, grafique la recta ajustada con su banda de confianza al 95%, haga el diagnóstico de residuos e interprete el coeficiente $R^2$.</p>
-  </div>
-</div>
-
-## Taller 2: solución
-
-```{r}
-#| echo: true
-#| fig-height: 3.5
-library(ggplot2)
-df_t <- data.frame(x, y)
-mod  <- lm(y ~ x, data = df_t)
-cat("Resumen del modelo:\n")
-print(summary(mod)$coefficients)
-cat("R² =", round(summary(mod)$r.squared, 4), "\n")
-
-ggplot(df_t, aes(x, y)) +
-  geom_point(color = "#1b4d2e", size = 3) +
-  geom_smooth(method = "lm", se = TRUE, color = "#c0392b", fill = "#fad8d8") +
-  labs(x = "Lámina de riego (mm)", y = "Rendimiento (t/ha)",
-       title = "Regresión: riego vs rendimiento de papa") +
-  theme_minimal(base_size = 13)
-```
-
-## Taller 3: verificación de supuestos
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Para el modelo ajustado en el taller 2: (a) grafique residuos vs valores ajustados, (b) haga el QQ-plot de residuos, (c) aplique Shapiro-Wilk a los residuos. ¿Se cumplen los supuestos de normalidad y homocedasticidad?</p>
-  </div>
-</div>
-
-## Taller 3: solución
-
-```{r}
-#| echo: true
+#| label: boxplot-splitplot
+#| echo: false
 #| fig-height: 3
-library(ggplot2); library(patchwork)
-df_t$res  <- residuals(mod)
-df_t$ajus <- fitted(mod)
-
-p1 <- ggplot(df_t, aes(ajus, res)) +
-  geom_point(color="#1b4d2e", size=2.5) +
-  geom_hline(yintercept=0, color="#c0392b", linetype="dashed") +
-  labs(x="Ajustados", y="Residuos", title="Residuos vs ajustados") +
-  theme_minimal(base_size=11)
-
-p2 <- ggplot(df_t, aes(sample=res)) +
-  stat_qq(color="#1a3a6b") + stat_qq_line(color="#c0392b") +
-  labs(title="QQ-plot residuos") + theme_minimal(base_size=11)
-
-p1 + p2
+bloque <- factor(rep(1:3, each = 6))
+riego  <- factor(rep(rep(c("Inundacion", "Goteo"), each = 3), times = 3),
+                  levels = c("Inundacion", "Goteo"))
+variedad <- factor(rep(c("Fedearroz60", "Fedearroz174", "Oryzica"), times = 6),
+                    levels = c("Fedearroz60", "Fedearroz174", "Oryzica"))
+rend <- c(5.67,6.39,5.72,5.81,6.98,5.00,
+          6.75,7.28,6.49,5.68,6.39,4.99,
+          6.86,7.35,6.85,5.89,6.83,5.06)
+datos_sp <- data.frame(bloque, riego, variedad, rend)
+boxplot(rend ~ variedad + riego, data = datos_sp, col = c("#dbeafe","#d6f0dd","#fde68a"),
+        las = 2, cex.axis = 0.65, ylab = "Rendimiento (ton/ha)",
+        main = "Rendimiento por riego y variedad")
 ```
+
+## Datos del experimento split-plot
+
+<table style="width:100%; font-size:16px; text-align:center; margin-top:4px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:4px;">Bloque</th><th>Riego</th><th>Fedearroz60</th><th>Fedearroz174</th><th>Oryzica</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">1</td><td>Inundación</td><td>5.67</td><td>6.39</td><td>5.72</td></tr>
+<tr><td style="padding:4px;">1</td><td>Goteo</td><td>5.81</td><td>6.98</td><td>5.00</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">2</td><td>Inundación</td><td>6.75</td><td>7.28</td><td>6.49</td></tr>
+<tr><td style="padding:4px;">2</td><td>Goteo</td><td>5.68</td><td>6.39</td><td>4.99</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:4px;">3</td><td>Inundación</td><td>6.86</td><td>7.35</td><td>6.85</td></tr>
+<tr><td style="padding:4px;">3</td><td>Goteo</td><td>5.89</td><td>6.83</td><td>5.06</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:19px; text-align:center;">
+Medias: Inundación = 6.60 ton/ha, Goteo = 5.85 ton/ha. Fedearroz60 = 6.11, Fedearroz174 = 6.87, Oryzica = 5.69.
+</div>
+
+## Modelo del diseño split-plot
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Sea $k=1,\ldots,3$ el bloque, $i=1,2$ el sistema de riego (factor de parcela principal) y $j=1,2,3$ la variedad (factor de subparcela).
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Modelo split-plot</div>
+<div class="block-body" style="font-size:22px; text-align:center;">
+$$
+y_{ijk} = \mu + \rho_k + \alpha_i + \delta_{ik} + \gamma_j + (\alpha\gamma)_{ij} + \varepsilon_{ijk}
+$$
+</div>
+</div>
+
+<div style="font-size:19px; line-height:1.4; margin-top:8px;">
+- $\rho_k$: efecto del bloque. &nbsp; $\alpha_i$: efecto del riego (parcela principal).
+- $\delta_{ik}\sim N(0,\sigma^2_\delta)$: <strong>error de parcela principal</strong> (whole-plot error), captura la variabilidad entre parcelas grandes dentro de un bloque.
+- $\gamma_j$: efecto de variedad (subparcela). &nbsp; $(\alpha\gamma)_{ij}$: interacción riego$\times$variedad.
+- $\varepsilon_{ijk}\sim N(0,\sigma^2)$: <strong>error de subparcela</strong> (sub-plot error), generalmente más pequeño que $\sigma^2_\delta$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:8px; border-radius:10px; border-left:6px solid #d97706; margin-top:8px; font-size:18px; text-align:center;">
+El modelo tiene <strong>dos términos de error distintos</strong>: esta es la característica que distingue al split-plot de un factorial estándar en BCA.
+</div>
+
+## Tabla ANOVA del split-plot: estructura
+
+<table style="width:100%; font-size:18px; border-collapse:collapse; text-align:center; margin-top:6px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th>
+<th style="padding:6px;">SC</th>
+<th style="padding:6px;">gl</th>
+<th style="padding:6px;">CM</th>
+<th style="padding:6px;">F</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Bloque</td><td style="padding:6px;">$SC_{Bloque}$</td><td style="padding:6px;">$r-1$</td><td style="padding:6px;">$CM_{Bloque}$</td><td style="padding:6px;">$CM_{Bloque}/CM_{Ea}$</td></tr>
+<tr><td style="padding:6px;">Riego (A)</td><td style="padding:6px;">$SC_A$</td><td style="padding:6px;">$a-1$</td><td style="padding:6px;">$CM_A$</td><td style="padding:6px;">$CM_A/CM_{Ea}$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Error(a) [whole-plot]</td><td style="padding:6px;">$SC_{Ea}$</td><td style="padding:6px;">$(r-1)(a-1)$</td><td style="padding:6px;">$CM_{Ea}$</td><td style="padding:6px;"></td></tr>
+<tr><td style="padding:6px;">Variedad (B)</td><td style="padding:6px;">$SC_B$</td><td style="padding:6px;">$b-1$</td><td style="padding:6px;">$CM_B$</td><td style="padding:6px;">$CM_B/CM_{Eb}$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Riego $\times$ Variedad</td><td style="padding:6px;">$SC_{AB}$</td><td style="padding:6px;">$(a-1)(b-1)$</td><td style="padding:6px;">$CM_{AB}$</td><td style="padding:6px;">$CM_{AB}/CM_{Eb}$</td></tr>
+<tr><td style="padding:6px;">Error(b) [sub-plot]</td><td style="padding:6px;">$SC_{Eb}$</td><td style="padding:6px;">$a(r-1)(b-1)$</td><td style="padding:6px;">$CM_{Eb}$</td><td style="padding:6px;"></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:10px; border-left:6px solid #d97706; margin-top:8px; font-size:18px; text-align:center;">
+Regla del denominador correcto: los efectos de parcela principal (Bloque, Riego) se prueban contra $CM_{Ea}$; los efectos de subparcela y la interacción se prueban contra $CM_{Eb}$.
+</div>
+
+## Resultado del ejemplo: tabla ANOVA split-plot
+
+<table style="width:100%; font-size:18px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th>
+<th style="padding:6px;">SC</th>
+<th style="padding:6px;">gl</th>
+<th style="padding:6px;">CM</th>
+<th style="padding:6px;">F</th>
+<th style="padding:6px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Bloque</td><td style="padding:6px;">0.907</td><td style="padding:6px;">2</td><td style="padding:6px;">0.453</td><td style="padding:6px;">0.71</td><td style="padding:6px;">0.584</td></tr>
+<tr><td style="padding:6px;">Riego</td><td style="padding:6px;">2.516</td><td style="padding:6px;">1</td><td style="padding:6px;">2.516</td><td style="padding:6px;">3.96</td><td style="padding:6px;">0.185</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Error(a)</td><td style="padding:6px;">1.272</td><td style="padding:6px;">2</td><td style="padding:6px;">0.636</td><td style="padding:6px;"></td><td style="padding:6px;"></td></tr>
+<tr><td style="padding:6px;">Variedad</td><td style="padding:6px;">4.325</td><td style="padding:6px;">2</td><td style="padding:6px;">2.162</td><td style="padding:6px;">124.62</td><td style="padding:6px;">$<0.001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Riego $\times$ Variedad</td><td style="padding:6px;">0.877</td><td style="padding:6px;">2</td><td style="padding:6px;">0.439</td><td style="padding:6px;">25.28</td><td style="padding:6px;">$<0.001$</td></tr>
+<tr><td style="padding:6px;">Error(b)</td><td style="padding:6px;">0.139</td><td style="padding:6px;">8</td><td style="padding:6px;">0.017</td><td style="padding:6px;"></td><td style="padding:6px;"></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:8px; border-radius:10px; border-left:6px solid #1b4d2e; margin-top:8px; font-size:17px; text-align:center;">
+$F_{Riego}=2.516/0.636=3.96$ (vs. $CM_{Ea}$) &nbsp;&nbsp; $F_{Variedad}=2.162/0.017=124.62$ (vs. $CM_{Eb}$) &nbsp;&nbsp; $F_{R\times V}=0.439/0.017=25.28$ (vs. $CM_{Eb}$)
+</div>
+
+## Criterio de decisión: efecto de riego (parcela principal)
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b; margin-top:14px;">
+<div style="font-size:23px; text-align:center; line-height:1.6;">
+$$F_{calc}=3.96 \quad \text{vs.} \quad F_{0.05,1,2}=18.51$$
+$$\text{valor-p}=0.185>0.05$$
+No se rechaza $H_0$: con solo $2$ grados de libertad para Error(a), no hay evidencia suficiente de diferencia entre sistemas de riego.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:10px; font-size:20px; text-align:center;">
+Aunque la diferencia muestral es grande (6.60 vs. 5.85 ton/ha), el error de parcela principal tiene muy pocos grados de libertad (solo 2), lo que limita drásticamente la potencia de esta prueba.
+</div>
+
+## Criterio de decisión: efecto de variedad y de interacción
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:16px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:22px; text-align:center; line-height:1.5;">
+<strong>Variedad:</strong> $F_{calc}=124.62 > F_{0.05,2,8}=4.46$, valor-p $<0.001$. Se rechaza $H_0$: las variedades difieren significativamente en rendimiento.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:16px; border-radius:18px; border-top:8px solid #d97706; margin-top:10px;">
+<div style="font-size:22px; text-align:center; line-height:1.5;">
+<strong>Riego $\times$ Variedad:</strong> $F_{calc}=25.28 > F_{0.05,2,8}=4.46$, valor-p $<0.001$. Se rechaza $H_0$: el efecto de la variedad depende del sistema de riego.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:10px; font-size:19px; text-align:center;">
+Conclusión: Fedearroz 174 rinde más en ambos sistemas, pero su ventaja es mayor bajo goteo (6.73 vs. 6.43 en inundación para la diferencia con Oryzica); la interacción significativa exige analizar las variedades por separado dentro de cada sistema de riego.
+</div>
+
+## Medias de las combinaciones riego x variedad
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Riego</th><th>Fedearroz60</th><th>Fedearroz174</th><th>Oryzica</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:7px;">Inundación</td><td>6.43</td><td>7.01</td><td>6.35</td></tr>
+<tr><td style="padding:7px;">Goteo</td><td>5.79</td><td>6.73</td><td>5.02</td></tr>
+</table>
 
 ```{r}
-#| echo: true
-shapiro.test(residuals(mod))
+#| label: interaccion-splitplot
+#| echo: false
+#| fig-height: 3.2
+medias_iv <- tapply(datos_sp$rend, list(datos_sp$variedad, datos_sp$riego), mean)
+matplot(1:3, medias_iv, type = "b", pch = 19, lty = 1, lwd = 2,
+        col = c("#1a3a6b", "#b91c1c"), xaxt = "n",
+        xlab = "Variedad", ylab = "Rendimiento promedio (ton/ha)",
+        main = "Interacción riego x variedad")
+axis(1, at = 1:3, labels = rownames(medias_iv))
+legend("bottomright", legend = colnames(medias_iv), col = c("#1a3a6b", "#b91c1c"), lwd = 2, pch = 19)
 ```
 
-## Resumen: regresión y MCO
+## Comparación de medias de variedad: Tukey
 
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 26px;">Modelo y estimadores</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px;">$Y = \beta_0 + \beta_1 X + \varepsilon$, supuestos LINE.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px;">$\hat{\beta}_1 = S_{XY}/S_{XX}$, $\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1\bar{X}$.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px;">MCO minimiza $\sum\hat{\varepsilon}_i^2$.</li>
-</ul>
+<div style="font-size:23px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+Como el efecto de variedad fue significativo, se comparan los pares de medias usando Tukey con el error de subparcela ($CM_{Eb}=0.017$, 8 gl).
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 style="color:#1a3a6b; font-size: 26px;">Código R clave</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px;"><code>lm(y ~ x)</code>: ajuste del modelo.</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px;"><code>summary(mod)</code>: coeficientes y $R^2$.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 23px;"><code>predict(mod, newdata, interval)</code>: predicciones.</li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 23px;"><code>residuals(mod)</code>, <code>fitted(mod)</code>.</li>
-</ul>
+<table style="width:100%; font-size:20px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Comparación</th><th>Diferencia</th><th>IC 95%</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Fedearroz174 - Fedearroz60</td><td>0.760</td><td>(0.166, 1.354)</td><td>0.014</td></tr>
+<tr><td style="padding:6px;">Oryzica - Fedearroz60</td><td>-0.425</td><td>(-1.019, 0.169)</td><td>0.173</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Oryzica - Fedearroz174</td><td>-1.185</td><td>(-1.779, -0.591)</td><td>$<0.001$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:19px; text-align:center;">
+Fedearroz 174 difiere significativamente de Fedearroz 60 y de Oryzica; Fedearroz 60 y Oryzica no difieren significativamente entre sí.
+</div>
+
+## Interpretación: precisión diferencial en el split-plot
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Una característica fundamental del split-plot es que el factor de parcela principal se estima con <strong>menor precisión</strong> que el factor de subparcela.
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Fuente</th><th>CM de error</th><th>gl de error</th><th>CV (%)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:7px;">Riego (whole-plot)</td><td>0.636</td><td>2</td><td>12.82</td></tr>
+<tr><td style="padding:7px;">Variedad (sub-plot)</td><td>0.017</td><td>8</td><td>2.12</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:12px; font-size:20px; text-align:center;">
+El coeficiente de variación del whole-plot (12.82%) es seis veces mayor que el del sub-plot (2.12%): la estimación del efecto de riego es mucho menos precisa.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:19px; text-align:center;">
+Implicación práctica: el factor más importante para el investigador (aquel cuyas diferencias se desean detectar con mayor precisión) debe asignarse a la <strong>subparcela</strong>, no a la parcela principal, siempre que el diseño lo permita.
+</div>
+
+## Errores comunes: split-plot
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Probar el factor de parcela principal (riego) contra $CM_{Eb}$ en lugar de $CM_{Ea}$: ignora que el riego tiene su propio error con menos grados de libertad.
+- Tratar el split-plot como un factorial estándar de dos factores en BCA, lo cual ignora la estructura de dos errores y produce conclusiones incorrectas sobre el factor de parcela principal.
+- Asignar al whole-plot el factor de mayor interés científico cuando podría asignarse al sub-plot, sacrificando precisión innecesariamente.
+- No reportar por separado los grados de libertad de Error(a) y Error(b): son fundamentales para evaluar la potencia real de cada prueba.
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 44px; font-weight: bold; color: #3b82f6;">
+Otras variaciones del split-plot
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+La estructura de parcelas divididas puede extenderse a más factores y a otros esquemas de asignación.
+</p>
+
+</div>
+
+## Split-plot con más de dos factores
+
+<div style="font-size:26px; text-align:justify; line-height:1.5;">
+Es posible agregar un tercer factor dentro de la subparcela, manteniendo un solo nivel de parcela principal. Por ejemplo, además de riego (whole-plot) y variedad (sub-plot), se podría evaluar la <strong>densidad de siembra</strong> también a nivel de subparcela.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:21px; text-align:center;">
+El modelo agrega los términos variedad $\times$ densidad y riego $\times$ variedad $\times$ densidad, todos probados contra $CM_{Eb}$, ya que ambos factores adicionales viven dentro de la subparcela.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+La estructura de error sigue teniendo solo dos componentes (Error(a) y Error(b)), siempre que todos los factores adicionales se asignen y aleatoricen dentro de la subparcela.
+</div>
+
+## El diseño split-split-plot
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Cuando existen <strong>tres</strong> niveles de dificultad para cambiar los factores, se introduce un tercer nivel de unidad experimental: la <strong>sub-subparcela</strong> (split-split-plot).
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-top:6px solid #1a3a6b; font-size:19px; text-align:center;">
+<strong>Parcela principal</strong><br>Riego (difícil de cambiar)
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-top:6px solid #1b4d2e; font-size:19px; text-align:center;">
+<strong>Subparcela</strong><br>Variedad (cambio intermedio)
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-top:6px solid #d97706; font-size:19px; text-align:center;">
+<strong>Sub-subparcela</strong><br>Dosis de fertilizante (fácil de cambiar)
 </div>
 
 </div>
 
-## Próxima clase
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:12px; font-size:19px; text-align:center;">
+Este modelo tiene <strong>tres</strong> términos de error (whole-plot, sub-plot y sub-sub-plot), cada uno con sus propios grados de libertad; cada factor se prueba contra el error de su propio nivel jerárquico.
+</div>
 
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 29: Estimación de parámetros y evaluación del modelo.</strong> Inferencia sobre $\beta_0$ y $\beta_1$, el coeficiente de determinación $R^2$, la tabla ANOVA de regresión y diagnósticos formales del modelo.</p>
-  </div>
+## El diseño en franjas divididas (strip-split-plot)
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+En el diseño en <strong>franjas divididas</strong> (strip-plot), ambos factores principales se aplican en franjas que se <strong>cruzan</strong> perpendicularmente dentro de cada bloque, en lugar de que uno esté anidado dentro del otro.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:21px; text-align:center;">
+Ejemplo: en un lote de caña panelera, el <strong>sistema de riego</strong> se aplica en franjas horizontales y la <strong>variedad</strong> se aplica en franjas verticales que atraviesan todas las franjas de riego. Cada celda de la cuadrícula resultante es la intersección de una franja de riego y una franja de variedad.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+A diferencia del split-plot clásico, aquí <strong>ambos</strong> factores tienen su propio error de franja (error de fila y error de columna), y la interacción se prueba con un tercer error, generalmente más preciso que los dos anteriores.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:19px; text-align:center;">
+Se usa cuando ambos factores son igualmente difíciles de cambiar dentro de la unidad pequeña, pero es factible aplicarlos en franjas cruzadas (ej. limitaciones de maquinaria agrícola en ambas direcciones de siembra).
+</div>
+
+## Resumen general de la clase
+
+<table style="width:100%; font-size:19px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Diseño</th>
+<th style="padding:7px;">Estructura</th>
+<th style="padding:7px;">Errores</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Anidado de 2 etapas</td>
+<td style="padding:7px;">Lote dentro de finca</td>
+<td style="padding:7px;">1 error (submuestra)</td>
+</tr>
+<tr>
+<td style="padding:7px;">Anidado de m etapas</td>
+<td style="padding:7px;">Región &gt; finca &gt; lote &gt; parcela</td>
+<td style="padding:7px;">Jerarquía de denominadores</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Split-plot</td>
+<td style="padding:7px;">Riego (whole-plot) $\times$ variedad (sub-plot)</td>
+<td style="padding:7px;">2 errores</td>
+</tr>
+<tr>
+<td style="padding:7px;">Split-split-plot</td>
+<td style="padding:7px;">+ dosis (sub-sub-plot)</td>
+<td style="padding:7px;">3 errores</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Strip-split-plot</td>
+<td style="padding:7px;">Franjas cruzadas de riego y variedad</td>
+<td style="padding:7px;">3 errores (fila, columna, intersección)</td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:10px; font-size:19px; text-align:center;">
+La regla común a todos estos diseños: cada efecto se prueba contra el cuadrado medio del error correspondiente a su propio nivel de unidad experimental.
+</div>
+
+## Taller en Clase {.center .middle}
+
+## Instrucciones
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:20px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:26px; line-height:1.7;">
+
+Para cada ejercicio:
+
+<ol>
+<li>Identifique si la estructura es anidada, factorial, split-plot o una combinación.</li>
+<li>Plantee el modelo estadístico y las hipótesis correspondientes.</li>
+<li>Construya o complete la tabla ANOVA usando el denominador correcto para cada F.</li>
+<li>Aplique el criterio de decisión con el valor crítico o el valor-p indicado.</li>
+<li>Redacte una conclusión en el contexto agrícola del problema.</li>
+</ol>
+
+</div>
+
+</div>
+
+## Ejercicio 1
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Un ganadero evalúa la producción de leche (litros/día) en 3 hatos de la Sabana de Bogotá. En cada hato se seleccionan al azar 4 vacas (anidadas en hato), y cada vaca se mide en 2 ordeños (mañana y tarde). El ANOVA arroja $SC_{Hato}=18.6$ (2 gl), $SC_{Vaca(Hato)}=42.3$ (9 gl) y $SC_E=8.1$ (12 gl).
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $F_{0.05,2,9}=4.26$ y $F_{0.05,9,12}=2.80$
+</div>
+
+## Ejercicio 2
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+En una finca floricultora de Cundinamarca se evalúan 2 tipos de invernadero (whole-plot, en 4 bloques) y 3 variedades de rosa (sub-plot). El software reporta: Bloque $SC=3.2$ (3 gl), Invernadero $SC=14.5$ (1 gl), Error(a) $SC=6.4$ (3 gl), Variedad $SC=22.1$ (2 gl), Invernadero$\times$Variedad $SC=5.8$ (2 gl), Error(b) $SC=4.2$ (12 gl).
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Utilice: $F_{0.05,1,3}=10.13$ y $F_{0.05,2,12}=3.89$
+</div>
+
+## Ejercicio 3
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Un ingenio azucarero del Valle del Cauca mide el contenido de sacarosa (%) en cañaduzales con la jerarquía: zona $\to$ finca (anidada en zona) $\to$ lote (anidado en finca). Hay 2 zonas, 3 fincas por zona y 4 lotes por finca. ¿Cuál es el denominador correcto del estadístico F para probar el efecto de zona? ¿Y para probar el efecto de finca?
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Justifique su respuesta usando la jerarquía de anidamiento.
+</div>
+
+## Ejercicio 4
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px; font-weight:bold; color:#1b4d2e; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+En un experimento de papa en Boyacá se cruzan 2 niveles de riego (whole-plot, 3 bloques) y 4 variedades (sub-plot). El estadístico para riego resulta $F_{calc}=2.1$ con $F_{0.05,1,2}=18.51$; el estadístico para variedad resulta $F_{calc}=15.8$ con $F_{0.05,3,18}=3.16$. El investigador concluye: "como el riego no fue significativo, no afecta el rendimiento de la papa".
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Evalúe críticamente esta conclusión considerando los grados de libertad de cada error.
+</div>
+
+## Ejercicio 5
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px; font-weight:bold; color:#1a3a6b; margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:24px; text-align:justify; line-height:1.5;">
+
+Un agrónomo del Eje Cafetero diseña un experimento split-split-plot: sistema de sombrío (whole-plot, 2 niveles), variedad de café (sub-plot, 3 niveles) y dosis de fertilizante (sub-sub-plot, 3 niveles), con 3 bloques. Dibuje (describa en palabras) la estructura de aleatorización de las tres unidades experimentales y enumere los términos de error que tendría la tabla ANOVA.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:22px; text-align:center; margin-top:10px;">
+Indique contra qué error se probaría cada uno de los tres factores principales.
 </div>

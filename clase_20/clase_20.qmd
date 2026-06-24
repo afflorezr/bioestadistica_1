@@ -1,11 +1,12 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
   revealjs:
+    embed-resources: true
     logo: images/logo_unal_3.png
     slide-number: true
     title-slide: false
@@ -37,401 +38,862 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
-
-## Clase 20 {.center .middle}
 
 ## Contenido
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 20px; font-size: 24px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Estimación puntual</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 27px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Fundamentos</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Estimador e insesgamiento.</li>
-<li class="fragment fade-in" data-fragment-index="3">Consistencia y eficiencia.</li>
-<li class="fragment fade-in" data-fragment-index="4">Error cuadrático medio.</li>
-<li class="fragment fade-in" data-fragment-index="5">Métodos de estimación.</li>
+<li class="fragment fade-in" data-fragment-index="2">Definiciones básicas: factor, nivel, tratamiento.</li>
+<li class="fragment fade-in" data-fragment-index="3">Efecto principal e interacción.</li>
+<li class="fragment fade-in" data-fragment-index="4">Diseño cruzado.</li>
+<li class="fragment fade-in" data-fragment-index="5">Ventaja del diseño factorial frente a un factor a la vez.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Intervalos de confianza</h3>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 27px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Factorial de dos factores</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Definición e interpretación correcta.</li>
-<li class="fragment fade-in" data-fragment-index="8">IC para la media con $\sigma$ conocida.</li>
-<li class="fragment fade-in" data-fragment-index="9">IC para la media con $\sigma$ desconocida.</li>
-<li class="fragment fade-in" data-fragment-index="10">Código R y taller.</li>
+<li class="fragment fade-in" data-fragment-index="7">Ejemplo introductorio: papa en Boyacá.</li>
+<li class="fragment fade-in" data-fragment-index="8">Modelo de efectos fijos y descomposición de SC.</li>
+<li class="fragment fade-in" data-fragment-index="9">Tabla ANOVA con 4 fuentes de variación.</li>
+<li class="fragment fade-in" data-fragment-index="10">Verificación de supuestos del modelo.</li>
+<li class="fragment fade-in" data-fragment-index="11">Estimación de parámetros.</li>
+<li class="fragment fade-in" data-fragment-index="12">Tamaño de muestra y supuesto de no interacción.</li>
+<li class="fragment fade-in" data-fragment-index="13">Una observación por celda: prueba de Tukey.</li>
 </ul>
 </div>
+
+<div>
+<h3 class="fragment fade-in" data-fragment-index="14" style="font-size: 27px; margin-bottom: 14px; color: #79260d;">Parte III: Extensiones</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="15">Diseño factorial general (más de dos factores).</li>
+<li class="fragment fade-in" data-fragment-index="16">Ajuste de curvas y superficies de respuesta.</li>
+<li class="fragment fade-in" data-fragment-index="17">Bloqueo en un diseño factorial.</li>
+<li class="fragment fade-in" data-fragment-index="18">Taller en clase.</li>
+</ul>
 </div>
+
+</div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">Estimadores e Intervalos de Confianza</p>
-<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Del estadístico al parámetro: cuantificar la incertidumbre</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
-</div>
 
-## La pregunta central de la inferencia
+<p style="font-size: 50px; font-weight: bold; color: #3b82f6;">
+Introducción a los Diseños Factoriales
+</p>
 
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Medimos el contenido de proteína en 30 muestras de leche de Nariño y obtenemos $\bar{x} = 3.18\%$.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px; text-align: justify;">
-¿Qué tan certera es esta estimación del promedio real $\mu$ de toda la producción lechera del departamento?
-</li>
-</ul>
-</div>
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
-<ul>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 28px; text-align: justify;">
-Un <strong>estimador puntual</strong> da un solo valor ($\bar{x} = 3.18\%$), pero no cuantifica la incertidumbre.
-</li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 28px; text-align: justify;">
-Un <strong>intervalo de confianza</strong> dice: «con un 95% de confianza, $\mu$ está entre 3.11% y 3.25%». Eso comunica la precisión de la estimación.
-</li>
-</ul>
-</div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+En clases anteriores se comparó un único factor (ANOVA de un factor). ¿Qué ocurre cuando un experimento agrícola involucra dos o más factores que pueden actuar simultáneamente sobre la respuesta?
+</p>
 
 </div>
 
-## Estimador: definición y propiedades
+## Motivación: más de un factor a la vez
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+
+En la práctica agrícola rara vez interesa solo un factor. Por ejemplo, el rendimiento de la papa depende tanto de la <strong>variedad</strong> sembrada como del <strong>nivel de fertilización</strong> aplicado. Estudiar ambos factores en un mismo experimento permite responder preguntas más realistas.
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:justify;">
+¿El efecto de la fertilización es el mismo para todas las variedades, o depende de cuál variedad se siembre? Esa pregunta solo puede responderse con un <strong>diseño factorial</strong>.
+</div>
+
+## Definiciones básicas
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Factor</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Variable controlada por el investigador que puede influir en la respuesta. Ej.: variedad de papa, nivel de fertilización.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Nivel</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Cada uno de los valores o categorías que toma un factor. Ej.: "Bajo" y "Alto" son los niveles del factor fertilización.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:16px; border-radius:16px; border-top:8px solid #d97706;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#d97706;">Tratamiento</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Cada combinación específica de niveles de los factores. Con 3 variedades y 2 niveles de fertilización hay 6 tratamientos.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f5f3ff; padding:16px; border-radius:16px; border-top:8px solid #7c3aed;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#7c3aed;">Diseño cruzado</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Cada nivel de un factor se combina con <strong>todos</strong> los niveles del otro factor, generando todas las combinaciones posibles.
+</div>
+</div>
+
+</div>
+
+## Efecto principal e interacción
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En un diseño factorial interesan dos tipos de efectos:
+</div>
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: estimador</div>
-  <div class="block-body">
-  <p>Un <strong>estimador</strong> $\hat{\theta}$ de un parámetro $\theta$ es una función de la muestra $\hat{\theta} = T(X_1, \ldots, X_n)$ usada para estimar $\theta$. El valor observado $\hat{\theta}(x_1,\ldots,x_n)$ es la <strong>estimación</strong>.</p>
-  </div>
+<div class="block-title">Efecto principal</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Cambio en la respuesta promedio al variar el nivel de <strong>un</strong> factor, promediando sobre todos los niveles del otro factor.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Insesgamiento:</strong> $E(\hat{\theta}) = \theta$. El estimador no sobreestima ni subestima sistemáticamente.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Consistencia:</strong> $\hat{\theta} \to \theta$ en probabilidad cuando $n \to \infty$. Más datos implican mayor precisión.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Eficiencia:</strong> entre estimadores insesgados, el más eficiente tiene la menor varianza.
-</li>
-</ul>
-
-## Error cuadrático medio
-
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: ECM</div>
-  <div class="block-body">
-  $$ECM(\hat{\theta}) = E[(\hat{\theta} - \theta)^2] = \text{Var}(\hat{\theta}) + [\text{sesgo}(\hat{\theta})]^2$$
-  </div>
+<div class="block-definition fragment fade-up" data-fragment-index="2">
+<div class="block-title">Interacción</div>
+<div class="block-body" style="font-size:22px; text-align:justify;">
+Ocurre cuando el efecto de un factor <strong>depende</strong> del nivel del otro factor. Es decir, las líneas de respuesta de los factores no son paralelas.
+</div>
 </div>
 
-<ul style="margin-top: 20px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-El ECM combina varianza y sesgo: un estimador puede tener mayor sesgo pero menor ECM que otro insesgado con mayor varianza.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Para estimadores insesgados: $ECM(\hat{\theta}) = \text{Var}(\hat{\theta})$.
-</li>
-</ul>
-
-## Estimadores de $\mu$ y $\sigma^2$
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Proposición: estimadores de la media y varianza</div>
-  <div class="block-body">
-  <ul style="font-size: 27px;">
-  <li>$\bar{X} = \frac{1}{n}\sum X_i$ es estimador <strong>insesgado</strong> y consistente de $\mu$.</li>
-  <li>$S^2 = \frac{1}{n-1}\sum(X_i - \bar{X})^2$ es estimador <strong>insesgado</strong> de $\sigma^2$ (divisor $n-1$).</li>
-  <li>$S^2_n = \frac{1}{n}\sum(X_i - \bar{X})^2$ es estimador <strong>sesgado</strong> de $\sigma^2$ (divisor $n$).</li>
-  </ul>
-  </div>
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:21px; text-align:center;">
+Si el efecto de la fertilización es mucho mayor en la variedad Criolla Colombia que en Diacol Capiro, existe interacción entre variedad y fertilización.
 </div>
 
-## Intervalo de confianza: definición e interpretación
+## La ventaja de los diseños factoriales
 
-<div class="block-definition fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Definición: intervalo de confianza</div>
-  <div class="block-body">
-  <p>Un <strong>intervalo de confianza</strong> al $(1-\alpha)\times 100\%$ para $\theta$ es un intervalo aleatorio $[L(X), U(X)]$ tal que:</p>
-  $$P(L \leq \theta \leq U) = 1 - \alpha$$
-  </div>
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Frente a la estrategia de estudiar <strong>un factor a la vez</strong>, el diseño factorial ofrece dos ventajas fundamentales.
 </div>
 
-<div class="block-alert fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Interpretación correcta</div>
-  <div class="block-body">
-  <p>El nivel de confianza $1-\alpha$ NO es la probabilidad de que $\theta$ caiga en el intervalo calculado de una muestra específica. Es la proporción de intervalos que contendrían a $\theta$ si repitiéramos el proceso de muestreo infinitas veces.</p>
-  </div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:16px; border-radius:16px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">Eficiencia</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Las mismas observaciones se utilizan para estimar los efectos de <strong>ambos</strong> factores simultáneamente, en lugar de requerir dos experimentos separados.
+</div>
 </div>
 
-## IC para la media: $\sigma$ conocida
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">IC para $\mu$ con $\sigma$ conocida</div>
-  <div class="block-body">
-  <p>Si $X_i \sim N(\mu, \sigma^2)$ o $n$ es grande (TCL), el IC al $(1-\alpha)\times 100\%$ para $\mu$ es:</p>
-  $$\bar{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}$$
-  <p>donde $z_{\alpha/2} = \Phi^{-1}(1 - \alpha/2)$ es el cuantil Normal estándar.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:16px; border-radius:16px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Detección de interacción</div>
+<div style="font-size:21px; text-align:center; line-height:1.4; margin-top:8px;">
+Solo un diseño factorial permite detectar si el efecto de un factor cambia según el nivel del otro factor.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px;">
-$\alpha = 0.05$: $z_{0.025} = 1.96$ (IC 95%)
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px;">
-$\alpha = 0.01$: $z_{0.005} = 2.576$ (IC 99%)
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px;">
-El margen de error es $E = z_{\alpha/2} \cdot \sigma/\sqrt{n}$.
-</li>
-</ul>
-
-## Ejemplo: IC para proteína en leche
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: leche, Nariño</div>
-  <div class="block-body">
-  <p>En 30 muestras de leche de Nariño se obtuvo $\bar{x} = 3.18\%$ de proteína. Se sabe que $\sigma = 0.20\%$. Construya un IC al 95% para la proteína media $\mu$.</p>
-  </div>
 </div>
 
-```{r}
-#| echo: true
-xbar <- 3.18; sigma <- 0.20; n <- 30; alpha <- 0.05
-z <- qnorm(1 - alpha/2)
-ee <- sigma / sqrt(n)
-ic <- c(xbar - z*ee, xbar + z*ee)
-cat("IC 95%: [", round(ic[1], 4), ",", round(ic[2], 4), "]\n")
-cat("Margen de error:", round(z*ee, 4), "\n")
-```
-
-## IC para la media: $\sigma$ desconocida
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">IC para $\mu$ con $\sigma$ desconocida</div>
-  <div class="block-body">
-  <p>Si $X_i \sim N(\mu, \sigma^2)$ con $\sigma$ desconocida, el IC al $(1-\alpha)\times 100\%$ para $\mu$ es:</p>
-  $$\bar{x} \pm t_{\alpha/2,\, n-1} \frac{s}{\sqrt{n}}$$
-  <p>donde $t_{\alpha/2, n-1}$ es el cuantil de la distribución $t$ con $n-1$ grados de libertad.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:21px; text-align:center;">
+Estudiar un factor a la vez, manteniendo el otro fijo, ignora por completo la posible interacción y desperdicia recursos experimentales.
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-Para $n$ grande, $t_{n-1} \approx z$ y los dos IC coinciden.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-Para $n$ pequeño, el IC con $t$ es más ancho (más conservador) que el de $z$.
-</li>
-</ul>
+## Ejemplo ilustrativo: un factor a la vez
 
-## Código R: IC con t de Student
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Suponga que un agrónomo del Huila desea evaluar variedad de café y nivel de sombra. Con el enfoque "un factor a la vez": primero fija la sombra y prueba 3 variedades (9 parcelas); luego fija la mejor variedad y prueba 2 niveles de sombra (6 parcelas). Total: 15 parcelas.
+</div>
 
-```{r}
-#| echo: true
-# Datos: pH del suelo en 15 parcelas de cacao, Huila
-set.seed(20)
-ph <- rnorm(15, mean = 5.6, sd = 0.4)
-n <- length(ph); xbar <- mean(ph); s <- sd(ph)
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Enfoque</th><th style="padding:8px;">Parcelas usadas</th><th style="padding:8px;">¿Detecta interacción?</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Un factor a la vez</td><td style="padding:8px;">15</td><td style="padding:8px;">No</td></tr>
+<tr><td style="padding:8px;">Factorial 3x2 (n=4)</td><td style="padding:8px;">24</td><td style="padding:8px;">Sí, con réplicas suficientes</td></tr>
+</table>
 
-cat("n =", n, "  xbar =", round(xbar, 4), "  s =", round(s, 4), "\n")
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+El diseño factorial usa cada parcela para informar sobre <strong>ambos</strong> factores y, además, permite estimar la interacción, algo imposible en el enfoque secuencial.
+</div>
 
-# IC 95% manual con t
-t_crit <- qt(0.975, df = n - 1)
-ee <- s / sqrt(n)
-ic <- c(xbar - t_crit*ee, xbar + t_crit*ee)
-cat("IC 95% (manual): [", round(ic[1], 4), ",", round(ic[2], 4), "]\n")
-
-# IC 95% automático con t.test
-t.test(ph, conf.level = 0.95)$conf.int
-```
-
-## Efecto del nivel de confianza y del tamaño de muestra
-
-```{r}
-#| echo: true
-#| fig-height: 3.5
-library(ggplot2); library(tidyverse)
-set.seed(20)
-datos <- rnorm(50, 5.6, 0.4)
-
-# IC para distintos niveles
-niveles <- c(0.80, 0.90, 0.95, 0.99)
-ics <- map_dfr(niveles, function(conf) {
-  ic <- t.test(datos, conf.level = conf)$conf.int
-  tibble(nivel = paste0(conf*100, "%"), lwr = ic[1], upr = ic[2],
-         centro = mean(datos))
-})
-
-ggplot(ics, aes(y = nivel)) +
-  geom_errorbarh(aes(xmin = lwr, xmax = upr), height = 0.3,
-                 color = "#1a3a6b", linewidth = 1.2) +
-  geom_point(aes(x = centro), color = "#c0392b", size = 3) +
-  labs(x = "pH", y = "Nivel de confianza",
-       title = "IC para el pH: distintos niveles de confianza") +
-  theme_minimal(base_size = 13)
-```
-
-## Simulación: cobertura del IC
-
-```{r}
-#| echo: true
-#| fig-height: 3.5
-set.seed(20)
-mu_real <- 5.6; sigma <- 0.4; n <- 15; B <- 100
-
-resultados <- map_dfr(1:B, function(i) {
-  x <- rnorm(n, mu_real, sigma)
-  ic <- t.test(x)$conf.int
-  tibble(sim = i, lwr = ic[1], upr = ic[2],
-         cubre = ic[1] <= mu_real & mu_real <= ic[2])
-})
-
-ggplot(resultados[1:50,], aes(y = sim, color = cubre)) +
-  geom_errorbarh(aes(xmin = lwr, xmax = upr), height = 0.5) +
-  geom_vline(xintercept = mu_real, color = "#c0392b", linewidth = 1.2) +
-  scale_color_manual(values = c("TRUE"="#1b4d2e","FALSE"="#c0392b")) +
-  labs(x = "pH", y = "Muestra", color = "¿Cubre μ?",
-       title = "50 IC al 95%: cobertura simulada") +
-  theme_minimal(base_size = 12)
-```
-
-## Errores comunes en intervalos de confianza
+## Errores comunes: fundamentos
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: interpretaciones incorrectas</div>
-  <div class="block-body">
-  <p>El IC es una propiedad del procedimiento de estimación, no del parámetro.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Confundir "factor" con "tratamiento": el tratamiento es una combinación de niveles de varios factores.
+- Creer que estudiar un factor a la vez ahorra recursos: en realidad requiere más observaciones para la misma precisión.
+- Ignorar la posible interacción y reportar solo efectos principales cuando existe interacción significativa.
+- Olvidar que el diseño cruzado requiere todas las combinaciones de niveles, no solo algunas.
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Error:</strong> «hay un 95% de probabilidad de que $\mu$ esté en [3.11, 3.25]». Incorrecto: $\mu$ es fijo, no aleatorio.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>Correcto:</strong> «el procedimiento que produjo este intervalo genera intervalos que contienen a $\mu$ el 95% de las veces».
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>Usar $z$ cuando se desconoce $\sigma$:</strong> con muestras pequeñas, debe usarse $t_{n-1}$.
-</li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 27px; text-align: justify;">
-<strong>IC más ancho no significa peor:</strong> mayor nivel de confianza produce IC más amplios, lo cual es correcto.
-</li>
-</ul>
+## {.center .middle}
 
-## Taller en clase {.center .middle}
+<div style="text-align: center; margin-top: 40px;">
 
-## Taller 1: IC con $\sigma$ conocida
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+El diseño factorial de dos factores
+</p>
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>El rendimiento de papa pastusa en Boyacá sigue $N(\mu, \sigma^2)$ con $\sigma = 1.8$ t/ha (conocida por estudios históricos). Una muestra de $n = 40$ parcelas arrojó $\bar{x} = 22.3$ t/ha. Construya: (a) IC al 90%, (b) IC al 95%, (c) IC al 99%. ¿Qué ocurre con el ancho del IC al aumentar el nivel?</p>
-  </div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Un ejemplo completo: variedad de papa y nivel de fertilización en Boyacá.
+</p>
+
 </div>
 
-## Taller 1: solución
+## Ejemplo introductorio: papa en Boyacá
+
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 25px; text-align: justify; line-height: 1.3; margin-bottom: 6px;">
+Un agrónomo de Boyacá desea evaluar el rendimiento de papa (ton/ha) bajo tres variedades (<strong>Diacol Capiro</strong>, <strong>Pastusa Suprema</strong>, <strong>Criolla Colombia</strong>) y dos niveles de fertilización NPK (<strong>Bajo</strong> y <strong>Alto</strong>). Se siembran 4 parcelas por combinación variedad x fertilización ($n=4$, 6 tratamientos, $N=24$).
+</p>
 
 ```{r}
-#| echo: true
-xbar <- 22.3; sigma <- 1.8; n <- 40
+#| label: setup-datos
+#| include: false
+variedad <- factor(rep(c("Diacol Capiro", "Pastusa Suprema", "Criolla Colombia"), each = 8),
+                    levels = c("Diacol Capiro", "Pastusa Suprema", "Criolla Colombia"))
+fert <- factor(rep(rep(c("Bajo", "Alto"), each = 4), times = 3), levels = c("Bajo", "Alto"))
 
-for (conf in c(0.90, 0.95, 0.99)) {
-  z  <- qnorm(1 - (1-conf)/2)
-  ee <- sigma / sqrt(n)
-  ic <- xbar + c(-1, 1) * z * ee
-  cat(sprintf("IC %s%%: [%.4f, %.4f]  ancho = %.4f\n",
-              conf*100, ic[1], ic[2], diff(ic)))
-}
+mu <- c(
+  "Diacol Capiro.Bajo" = 22, "Diacol Capiro.Alto" = 27,
+  "Pastusa Suprema.Bajo" = 24, "Pastusa Suprema.Alto" = 30,
+  "Criolla Colombia.Bajo" = 19, "Criolla Colombia.Alto" = 29
+)
+celda <- paste(variedad, fert, sep = ".")
+set.seed(2026)
+rendimiento <- round(rnorm(24, mean = mu[celda], sd = 1.6), 1)
+datos <- data.frame(variedad, fert, rendimiento)
+modelo <- aov(rendimiento ~ variedad * fert, data = datos)
 ```
 
-## Taller 2: IC con $\sigma$ desconocida
+<table style="width:100%; font-size:18px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#dbeafe;">
+<th>Parcela</th><th>D.Capiro/Bajo</th><th>D.Capiro/Alto</th><th>Pastusa/Bajo</th><th>Pastusa/Alto</th><th>Criolla/Bajo</th><th>Criolla/Alto</th>
+</tr>
+<tr><td>1</td><td>22.8</td><td>25.9</td><td>24.2</td><td>29.6</td><td>20.0</td><td>28.5</td></tr>
+<tr><td>2</td><td>20.3</td><td>23.0</td><td>23.2</td><td>29.6</td><td>19.3</td><td>28.7</td></tr>
+<tr><td>3</td><td>22.2</td><td>25.8</td><td>23.3</td><td>25.9</td><td>17.7</td><td>26.8</td></tr>
+<tr><td>4</td><td>21.9</td><td>25.4</td><td>22.8</td><td>32.2</td><td>20.1</td><td>31.3</td></tr>
+</table>
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Se midió el contenido de nitrógeno en 12 muestras de suelo de un cultivo de plátano en el Urabá antioqueño, obteniendo $\bar{x} = 18.4$ mg/kg y $s = 3.2$ mg/kg. Construya un IC al 95% para la media poblacional $\mu$. ¿Qué distribución aplica?</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:8px;">
+<div style="font-size:22px; text-align:center;">
+¿La fertilización afecta el rendimiento? ¿La variedad lo afecta? ¿El efecto de la fertilización depende de la variedad sembrada?
+</div>
 </div>
 
-## Taller 2: solución
+## Medias de celda y medias marginales
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Variedad</th><th style="padding:8px;">Bajo</th><th style="padding:8px;">Alto</th><th style="padding:8px;">Media marginal</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Diacol Capiro</td><td style="padding:8px;">21.80</td><td style="padding:8px;">25.03</td><td style="padding:8px;">23.41</td></tr>
+<tr><td style="padding:8px;">Pastusa Suprema</td><td style="padding:8px;">23.38</td><td style="padding:8px;">29.33</td><td style="padding:8px;">26.35</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Criolla Colombia</td><td style="padding:8px;">19.28</td><td style="padding:8px;">28.83</td><td style="padding:8px;">24.05</td></tr>
+<tr><td style="padding:8px;"><strong>Media marginal</strong></td><td style="padding:8px;"><strong>21.48</strong></td><td style="padding:8px;"><strong>27.73</strong></td><td style="padding:8px;"><strong>24.60</strong></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+El incremento por fertilización es de 3.2 en Diacol Capiro, 5.9 en Pastusa Suprema y 9.5 en Criolla Colombia: una señal visual de posible interacción.
+</div>
+
+## Gráfico descriptivo: boxplot por tratamiento
 
 ```{r}
-#| echo: true
-xbar <- 18.4; s <- 3.2; n <- 12; alpha <- 0.05
-# Distribución t con n-1 = 11 grados de libertad
-t_crit <- qt(1 - alpha/2, df = n - 1)
-cat("t crítico (11 gl):", round(t_crit, 4), "\n")
-ee <- s / sqrt(n)
-ic <- xbar + c(-1, 1) * t_crit * ee
-cat("IC 95%: [", round(ic[1], 4), ",", round(ic[2], 4), "]\n")
+#| label: boxplot-descriptivo
+#| echo: false
+#| fig-height: 3.3
+boxplot(rendimiento ~ fert * variedad, data = datos,
+        col = rep(c("#dbeafe", "#fde68a"), 3),
+        las = 2, cex.axis = 0.7,
+        xlab = "", ylab = "Rendimiento (ton/ha)",
+        main = "Rendimiento de papa por tratamiento")
 ```
 
-## Taller 3: interpretación y simulación
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>Simule 200 muestras de tamaño $n = 20$ de una $N(\mu = 10, \sigma = 2)$. Para cada muestra construya un IC al 95%. Calcule la proporción de ICs que contienen a $\mu = 10$ y compare con el nivel de confianza nominal.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:21px; text-align:center;">
+El nivel Alto de fertilización aumenta el rendimiento en las 3 variedades, pero el incremento parece mayor en Criolla Colombia.
 </div>
 
-## Taller 3: solución
+## Gráfico de interacción A x B
 
 ```{r}
-#| echo: true
-set.seed(20)
-mu <- 10; sigma <- 2; n <- 20; B <- 200
-cobertura <- replicate(B, {
-  x <- rnorm(n, mu, sigma)
-  ic <- t.test(x, conf.level = 0.95)$conf.int
-  ic[1] <= mu & mu <= ic[2]
-})
-cat("Cobertura observada:", mean(cobertura), "\n")
-cat("Cobertura nominal:  0.95\n")
+#| label: grafico-interaccion
+#| echo: false
+#| fig-height: 3.4
+interaction.plot(datos$fert, datos$variedad, datos$rendimiento,
+                  col = c("#1a3a6b", "#1b4d2e", "#b91c1c"), lwd = 3,
+                  type = "b", pch = 19,
+                  xlab = "Nivel de fertilización", ylab = "Rendimiento promedio (ton/ha)",
+                  trace.label = "Variedad", main = "Gráfico de interacción Variedad x Fertilización")
 ```
 
-## Resumen: estimadores e IC
-
-<div class="twocol">
-
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
-<h4 style="color:#1b4d2e; font-size: 26px;">Estimadores</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px;">$\bar{X}$: insesgado, consistente para $\mu$.</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px;">$S^2$ (divisor $n-1$): insesgado para $\sigma^2$.</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px;">ECM = Varianza + Sesgo².</li>
-</ul>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:6px; font-size:21px; text-align:center;">
+Las líneas <strong>no son paralelas</strong>: la pendiente de Criolla Colombia es más pronunciada que la de Diacol Capiro. Esto sugiere interacción entre los dos factores.
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
-<h4 style="color:#1a3a6b; font-size: 26px;">Intervalos de confianza</h4>
-<ul>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px;">$\sigma$ conocida: $\bar{x} \pm z_{\alpha/2} \sigma/\sqrt{n}$.</li>
-<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px;">$\sigma$ desconocida: $\bar{x} \pm t_{\alpha/2,n-1} s/\sqrt{n}$.</li>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px;">En R: <code>t.test(x, conf.level = 0.95)</code>.</li>
-</ul>
+## Modelo de efectos fijos para dos factores
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+El diseño factorial de dos factores con $a$ niveles del factor A y $b$ niveles del factor B se representa mediante:
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:27px;">Modelo de efectos fijos (dos factores)</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+y_{ijk} = \mu + \tau_i + \beta_j + (\tau\beta)_{ij} + \varepsilon_{ijk}
+\qquad
+\begin{cases}
+i=1,\ldots,a \\
+j=1,\ldots,b \\
+k=1,\ldots,n
+\end{cases}
+$$
+</div>
+</div>
+
+<div style="font-size:22px; line-height:1.4; margin-top:8px;">
+- $\mu$: media general. $\tau_i$: efecto principal del factor A (variedad). $\beta_j$: efecto principal del factor B (fertilización).
+- $(\tau\beta)_{ij}$: efecto de interacción entre los niveles $i$ y $j$.
+- $\varepsilon_{ijk}\sim N(0,\sigma^2)$ independientes. Restricciones: $\sum_i\tau_i=\sum_j\beta_j=0$, $\sum_i(\tau\beta)_{ij}=\sum_j(\tau\beta)_{ij}=0$.
+</div>
+
+## Hipótesis del modelo factorial
+
+<div style="font-size:24px; text-align:justify; line-height:1.3;">
+El modelo de dos factores permite probar <strong>tres</strong> hipótesis independientes:
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:19px; text-align:center;">
+<strong>Efecto de A (Variedad)</strong><br>
+$H_0:\tau_1=\cdots=\tau_a=0$<br>
+$H_1:$ algún $\tau_i\neq 0$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:19px; text-align:center;">
+<strong>Efecto de B (Fertilización)</strong><br>
+$H_0:\beta_1=\cdots=\beta_b=0$<br>
+$H_1:$ algún $\beta_j\neq 0$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:19px; text-align:center;">
+<strong>Interacción A x B</strong><br>
+$H_0:(\tau\beta)_{ij}=0\;\forall i,j$<br>
+$H_1:$ algún $(\tau\beta)_{ij}\neq 0$
 </div>
 
 </div>
 
-## Próxima clase
-
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 21: Estimación de la media y la proporción.</strong> Extenderemos los IC al caso de proporciones y estudiaremos el IC para la diferencia de medias entre dos poblaciones.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:12px; font-size:20px; text-align:center;">
+Se recomienda probar primero la interacción: si es significativa, los efectos principales deben interpretarse con cautela.
 </div>
 
-<ul style="margin-top: 24px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px; text-align: justify;">
-Aprenderemos a usar <code>prop.test</code> en R para ICs de proporciones y veremos la corrección de Yates.
-</li>
-</ul>
+## Descomposición de la suma de cuadrados
+
+<div style="font-size:23px; text-align:justify; line-height:1.3;">
+La suma de cuadrados total se descompone en cuatro componentes:
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:22px;">Identidad del ANOVA factorial</div>
+<div class="block-body" style="font-size:18px; text-align:center;">
+$$
+SC_T = SC_A + SC_B + SC_{AB} + SC_E
+$$
+</div>
+</div>
+
+<div style="font-size:18px; line-height:1.45; margin-top:8px;">
+$$SC_A=bn\sum_{i=1}^a(\bar y_{i..}-\bar y_{...})^2 \qquad SC_B=an\sum_{j=1}^b(\bar y_{.j.}-\bar y_{...})^2$$
+$$SC_{AB}=n\sum_{i=1}^a\sum_{j=1}^b(\bar y_{ij.}-\bar y_{i..}-\bar y_{.j.}+\bar y_{...})^2 \qquad SC_E=\sum_{i,j,k}(y_{ijk}-\bar y_{ij.})^2$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:6px; font-size:19px; text-align:center;">
+$SC_A$ y $SC_B$: efectos principales. $SC_{AB}$: interacción. $SC_E$: error dentro de cada celda.
+</div>
+
+## Cálculo manual: sumas de cuadrados del ejemplo
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size:21px; line-height:1.3;">
+<strong style="color:#1a3a6b;">Paso 1. Media general:</strong> $\bar y_{...}=24.60$ ton/ha, con $a=3$, $b=2$, $n=4$, $N=24$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size:21px; line-height:1.3; margin-top:6px;">
+<strong style="color:#1b4d2e;">Paso 2. SC de Variedad (A):</strong>
+$$SC_A=8\big[(23.41-24.60)^2+(26.35-24.60)^2+(24.05-24.60)^2\big]=38.20$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#fff7e8; border-left:6px solid #d97706; border-radius:8px; padding:8px 12px; font-size:21px; line-height:1.3; margin-top:6px;">
+<strong style="color:#d97706;">Paso 3. SC de Fertilización (B):</strong>
+$$SC_B=12\big[(21.48-24.60)^2+(27.73-24.60)^2\big]=233.75$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#f5f3ff; border-left:6px solid #7c3aed; border-radius:8px; padding:8px 12px; font-size:21px; line-height:1.3; margin-top:6px;">
+<strong style="color:#7c3aed;">Paso 4. SC de interacción y error:</strong>
+$$SC_{AB}=40.26 \qquad SC_E=44.26 \qquad SC_T=356.47$$
+</div>
+
+## Tabla ANOVA completa: resultados reales
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Fuente</th>
+<th style="padding:7px;">SC</th>
+<th style="padding:7px;">gl</th>
+<th style="padding:7px;">CM</th>
+<th style="padding:7px;">F</th>
+<th style="padding:7px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Variedad (A)</td><td style="padding:7px;">38.20</td><td style="padding:7px;">2</td><td style="padding:7px;">19.10</td><td style="padding:7px;">7.77</td><td style="padding:7px;">0.0037</td>
+</tr>
+<tr>
+<td style="padding:7px;">Fertilización (B)</td><td style="padding:7px;">233.75</td><td style="padding:7px;">1</td><td style="padding:7px;">233.75</td><td style="padding:7px;">95.07</td><td style="padding:7px;">$1.3\times10^{-8}$</td>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Interacción (AxB)</td><td style="padding:7px;">40.26</td><td style="padding:7px;">2</td><td style="padding:7px;">20.13</td><td style="padding:7px;">8.19</td><td style="padding:7px;">0.0030</td>
+</tr>
+<tr>
+<td style="padding:7px;">Error</td><td style="padding:7px;">44.26</td><td style="padding:7px;">18</td><td style="padding:7px;">2.46</td><td style="padding:7px;"></td><td style="padding:7px;"></td>
+</tr>
+<tr style="background-color:#eef7ee;">
+<td style="padding:7px;">Total</td><td style="padding:7px;">356.47</td><td style="padding:7px;">23</td><td style="padding:7px;"></td><td style="padding:7px;"></td><td style="padding:7px;"></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+$gl_A=a-1=2$, $gl_B=b-1=1$, $gl_{AB}=(a-1)(b-1)=2$, $gl_E=ab(n-1)=18$, $gl_T=N-1=23$.
+</div>
+
+## Criterio de decisión y conclusión
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:18px; text-align:center;">
+<strong>Variedad</strong><br>
+$F_{calc}=7.77$<br>$F_{0.05,2,18}=3.55$<br>
+$7.77>3.55\Rightarrow$ rechaza $H_0$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:18px; text-align:center;">
+<strong>Fertilización</strong><br>
+$F_{calc}=95.07$<br>$F_{0.05,1,18}=4.41$<br>
+$95.07>4.41\Rightarrow$ rechaza $H_0$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:18px; text-align:center;">
+<strong>Interacción</strong><br>
+$F_{calc}=8.19$<br>$F_{0.05,2,18}=3.55$<br>
+$8.19>3.55\Rightarrow$ rechaza $H_0$
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:14px; font-size:21px; text-align:justify;">
+<strong>Conclusión:</strong> existe interacción significativa entre variedad y fertilización ($p=0.003$). Por lo tanto, el efecto de la fertilización sobre el rendimiento de papa <strong>depende</strong> de la variedad sembrada; los efectos principales deben interpretarse con cautela y se recomienda analizar las medias de celda directamente.
+</div>
+
+## Verificación de la adecuación del modelo
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Antes de confiar en los resultados se verifican los supuestos sobre los residuos $e_{ijk}=y_{ijk}-\bar y_{ij.}$.
+</div>
+
+```{r}
+#| label: qqplot-residuos
+#| echo: false
+#| fig-height: 3.2
+qqnorm(residuals(modelo), main = "Gráfico de probabilidad normal de los residuos",
+       pch = 19, col = "#1a3a6b")
+qqline(residuals(modelo), col = "#b91c1c", lwd = 2)
+```
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 14px; font-size:21px; line-height:1.3;">
+<strong style="color:#1a3a6b;">Prueba de Shapiro-Wilk:</strong> $W=0.942$, valor-p$=0.181>0.05$: no hay evidencia para rechazar la normalidad.
+</div>
+
+## Residuos versus ajustados y homogeneidad
+
+```{r}
+#| label: residuos-vs-ajustados
+#| echo: false
+#| fig-height: 3.3
+plot(fitted(modelo), residuals(modelo), pch = 19, col = "#1b4d2e",
+     xlab = "Valores ajustados", ylab = "Residuo",
+     main = "Residuos vs. valores ajustados")
+abline(h = 0, lty = 2, col = "#b91c1c")
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:20px; text-align:center;">
+Dispersión similar entre celdas, sin forma de embudo. Prueba de Bartlett entre las 6 celdas: $K^2=6.23$, $gl=5$, valor-p$=0.285>0.05$: se cumple la homogeneidad de varianza.
+</div>
+
+## Estimación de los parámetros del modelo
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Parámetro</th><th style="padding:6px;">Estimador</th><th style="padding:6px;">Valor</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$\hat\mu$</td><td style="padding:6px;">$\bar y_{...}$</td><td style="padding:6px;">24.60</td></tr>
+<tr><td style="padding:6px;">$\hat\tau_{Diacol}$</td><td style="padding:6px;">$\bar y_{1..}-\bar y_{...}$</td><td style="padding:6px;">-1.19</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$\hat\tau_{Pastusa}$</td><td style="padding:6px;">$\bar y_{2..}-\bar y_{...}$</td><td style="padding:6px;">1.74</td></tr>
+<tr><td style="padding:6px;">$\hat\tau_{Criolla}$</td><td style="padding:6px;">$\bar y_{3..}-\bar y_{...}$</td><td style="padding:6px;">-0.55</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$\hat\beta_{Bajo}$</td><td style="padding:6px;">$\bar y_{.1.}-\bar y_{...}$</td><td style="padding:6px;">-3.12</td></tr>
+<tr><td style="padding:6px;">$\hat\beta_{Alto}$</td><td style="padding:6px;">$\bar y_{.2.}-\bar y_{...}$</td><td style="padding:6px;">3.12</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">$\widehat{(\tau\beta)}_{Criolla,Alto}$</td><td style="padding:6px;">$\bar y_{ij.}-\bar y_{i..}-\bar y_{.j.}+\bar y_{...}$</td><td style="padding:6px;">3.16</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:8px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:19px; text-align:center;">
+El efecto de interacción más grande corresponde a Criolla Colombia con fertilización Alta: su rendimiento supera lo que predicen los efectos principales por sí solos.
+</div>
+
+## Elección del tamaño de muestra
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En un diseño factorial, el tamaño de muestra por celda ($n$) se determina mediante análisis de potencia, igual que en el ANOVA de un factor, pero considerando el número total de celdas $ab$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; margin-top:12px; font-size:22px; text-align:center;">
+Para detectar diferencias entre variedades con potencia del $80\%$, $\alpha=0.05$, usando $CM_E\approx2.46$ y la varianza entre medias de variedad observada:
+$$\text{potencia obtenida con } n=8 \text{ por nivel de A es } 0.917$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Con $n=4$ por celda (8 observaciones por nivel de variedad), la potencia para detectar el efecto de variedad ya supera el 90%; para detectar interacciones más sutiles se recomienda aumentar $n$.
+</div>
+
+## El supuesto de no interacción
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En algunos diseños de dos factores se asume que <strong>no existe interacción</strong>, lo cual simplifica el modelo a uno puramente aditivo: $y_{ijk}=\mu+\tau_i+\beta_j+\varepsilon_{ijk}$.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center; line-height:1.4;">
+<strong>¿Cuándo es razonable?</strong><br>
+Cuando hay fundamento biológico o agronómico para suponer que los factores actúan de forma independiente, o cuando no hay réplicas suficientes para estimar la interacción.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-top:7px solid #b91c1c; font-size:21px; text-align:center; line-height:1.4;">
+<strong>Consecuencias de violarlo</strong><br>
+Si existe interacción real y se ignora, $SC_{AB}$ se agrega al error, inflando $CM_E$ y reduciendo la potencia para detectar los efectos principales.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:12px; font-size:20px; text-align:center;">
+En el ejemplo de la papa, asumir no interacción sería un error: el ANOVA detectó interacción significativa ($p=0.003$).
+</div>
+
+## Una observación por celda: el problema
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Cuando los recursos son limitados, a veces solo se obtiene <strong>una</strong> observación por celda ($n=1$). En ese caso, $SC_E$ no puede calcularse directamente, pues no hay réplicas dentro de cada celda.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; margin-top:12px; font-size:22px; text-align:center;">
+Ejemplo: 4 densidades de siembra de arroz (Espinal, Tolima) x 3 niveles de riego, una parcela por combinación ($N=12$).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+La solución usual es <strong>asumir no interacción</strong>: el término $SC_{AB}$ se utiliza como estimador del error.
+</div>
+
+## Una observación por celda: ANOVA aditivo
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center; margin-top:10px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Fuente</th><th style="padding:7px;">SC</th><th style="padding:7px;">gl</th><th style="padding:7px;">CM</th><th style="padding:7px;">F</th><th style="padding:7px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:7px;">Densidad (A)</td><td style="padding:7px;">45.23</td><td style="padding:7px;">3</td><td style="padding:7px;">15.08</td><td style="padding:7px;">51.25</td><td style="padding:7px;">0.0001</td></tr>
+<tr><td style="padding:7px;">Riego (B)</td><td style="padding:7px;">80.36</td><td style="padding:7px;">2</td><td style="padding:7px;">40.18</td><td style="padding:7px;">136.59</td><td style="padding:7px;">$<0.0001$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:7px;">Error (=residuo aditivo)</td><td style="padding:7px;">1.76</td><td style="padding:7px;">6</td><td style="padding:7px;">0.29</td><td style="padding:7px;"></td><td style="padding:7px;"></td></tr>
+<tr><td style="padding:7px;">Total</td><td style="padding:7px;">127.36</td><td style="padding:7px;">11</td><td style="padding:7px;"></td><td style="padding:7px;"></td><td style="padding:7px;"></td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+Sin réplicas, el residuo $gl=(a-1)(b-1)=6$ se usa como error, asumiendo que no hay interacción entre densidad y riego.
+</div>
+
+## Prueba de Tukey para no aditividad
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+Antes de aceptar el modelo aditivo, la <strong>prueba de Tukey para no aditividad</strong> evalúa si el supuesto de ausencia de interacción es razonable, descomponiendo el residuo en una componente de no aditividad y un remanente.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:23px;">Estadístico de Tukey</div>
+<div class="block-body" style="font-size:20px; text-align:center;">
+$$
+SC_N=\frac{\left[\sum_{i,j}(\bar y_{i.}-\bar y_{..})(\bar y_{.j}-\bar y_{..})y_{ij}\right]^2}{\sum_i(\bar y_{i.}-\bar y_{..})^2\sum_j(\bar y_{.j}-\bar y_{..})^2}
+\qquad F_N=\frac{SC_N}{SC_{E^*}/[(a-1)(b-1)-1]}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 14px; font-size:21px; text-align:center; margin-top:8px;">
+Para el ejemplo del arroz: $SC_N=0.094$, $SC_{E^*}=1.671$ con $5$ gl, $F_N=0.282$, valor-p$=0.618>0.05$: no hay evidencia de no aditividad; el supuesto de no interacción es razonable.
+</div>
+
+## Errores comunes: factorial de dos factores
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:22px; line-height:1.4;">
+- Interpretar los efectos principales sin antes revisar si la interacción es significativa.
+- Promediar sobre niveles de un factor cuando existe interacción fuerte, ocultando el comportamiento real.
+- Aplicar el modelo aditivo (sin interacción) con una sola observación por celda sin verificar la prueba de Tukey para no aditividad.
+- Confundir "no significativo" con "no existe": una interacción no significativa con poca potencia puede simplemente no haberse detectado.
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">
+Extensiones del diseño factorial
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Más de dos factores, superficies de respuesta y bloqueo.
+</p>
+
+</div>
+
+## El diseño factorial general
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+El diseño factorial se extiende de forma natural a <strong>más de dos factores</strong>. Con factores A, B y C con $a$, $b$ y $c$ niveles respectivamente, el modelo incluye efectos principales, interacciones de dos factores y la interacción de tres factores.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Modelo factorial de tres factores</div>
+<div class="block-body" style="font-size:21px; text-align:center;">
+$$
+y_{ijkl}=\mu+\tau_i+\beta_j+\gamma_k+(\tau\beta)_{ij}+(\tau\gamma)_{ik}+(\beta\gamma)_{jk}+(\tau\beta\gamma)_{ijk}+\varepsilon_{ijkl}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:20px; text-align:center;">
+Ejemplo: variedad de café x nivel de sombra x altitud de la finca. El número de tratamientos crece rápidamente: $a\times b\times c$.
+</div>
+
+## Grados de libertad de orden superior
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th style="padding:6px;">Grados de libertad</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">A</td><td style="padding:6px;">$a-1$</td></tr>
+<tr><td style="padding:6px;">B</td><td style="padding:6px;">$b-1$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">C</td><td style="padding:6px;">$c-1$</td></tr>
+<tr><td style="padding:6px;">AxB</td><td style="padding:6px;">$(a-1)(b-1)$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">AxC</td><td style="padding:6px;">$(a-1)(c-1)$</td></tr>
+<tr><td style="padding:6px;">BxC</td><td style="padding:6px;">$(b-1)(c-1)$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">AxBxC</td><td style="padding:6px;">$(a-1)(b-1)(c-1)$</td></tr>
+<tr><td style="padding:6px;">Error</td><td style="padding:6px;">$abc(n-1)$</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:19px; text-align:center;">
+Con muchos factores el número de parámetros crece exponencialmente; las interacciones de orden alto (3 o más factores) suelen ser difíciles de interpretar y a menudo no significativas.
+</div>
+
+## Ajuste de curvas y superficies de respuesta
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Cuando los niveles de un factor son <strong>cuantitativos</strong> (dosis, temperatura, densidad), en lugar de tratarlos como categorías discretas se puede ajustar un modelo de <strong>regresión polinomial</strong> que describa la relación continua entre el factor y la respuesta.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-top:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+Ejemplo: niveles de nitrógeno (50, 100, 150, 200 kg/ha) en caña de azúcar, Valle del Cauca. Respuesta: rendimiento (ton/ha).
+</div>
+
+## Superficie de respuesta: ejemplo con nitrógeno
+
+```{r}
+#| label: rs-setup
+#| include: false
+set.seed(7)
+Nf <- rep(c(50, 100, 150, 200), each = 5)
+rend_rs <- round(70 + 0.55*Nf - 0.0016*Nf^2 + rnorm(20, 0, 2.2), 1)
+datos_rs <- data.frame(N = Nf, rend = rend_rs)
+mod_quad <- lm(rend ~ N + I(N^2), data = datos_rs)
+```
+
+```{r}
+#| label: rs-plot
+#| echo: false
+#| fig-height: 3.3
+plot(datos_rs$N, datos_rs$rend, pch = 19, col = "#1a3a6b",
+     xlab = "Nitrógeno aplicado (kg/ha)", ylab = "Rendimiento (ton/ha)",
+     main = "Ajuste cuadrático: nitrógeno y rendimiento de caña")
+curve_x <- seq(50, 200, length.out = 100)
+curve_y <- predict(mod_quad, newdata = data.frame(N = curve_x))
+lines(curve_x, curve_y, col = "#b91c1c", lwd = 2)
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:20px; text-align:center;">
+Modelo ajustado: $\hat y=64.31+0.671N-0.00205N^2$ ($R^2=0.95$). El término cuadrático es significativo ($p<0.0001$), lo que confirma una relación curva, no lineal.
+</div>
+
+## Interpretación: dosis óptima de nitrógeno
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+A diferencia del enfoque categórico (ANOVA), el modelo de regresión permite estimar el nivel <strong>óptimo</strong> del factor cuantitativo, no solo comparar los niveles observados.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:8px solid #d97706; margin-top:12px; font-size:23px; text-align:center;">
+Derivando e igualando a cero: $\hat N_{óptimo}=-\dfrac{0.6711}{2(-0.00205)}\approx163.5$ kg/ha
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:21px; text-align:center;">
+Este nivel no estaba entre los 4 niveles originalmente probados (50, 100, 150, 200): la ventaja de la superficie de respuesta es justamente poder interpolar y encontrar el óptimo.
+</div>
+
+## Bloqueo en un diseño factorial
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Cuando existe una fuente de variación conocida pero no de interés directo (ej. la finca o el lote), se puede <strong>bloquear</strong> por esa variable dentro de un diseño factorial, igual que en un diseño de bloques completos.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; margin-top:12px; font-size:22px; text-align:center;">
+Ejemplo: al evaluar variedad de papa x fertilización en Boyacá, se podría bloquear por <strong>finca</strong>, si las 6 combinaciones se replican dentro de cada finca.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title" style="font-size:23px;">Modelo factorial con bloques</div>
+<div class="block-body" style="font-size:21px; text-align:center;">
+$$
+y_{ijk}=\mu+\rho_k+\tau_i+\beta_j+(\tau\beta)_{ij}+\varepsilon_{ijk}
+$$
+donde $\rho_k$ es el efecto del bloque (finca) $k$.
+</div>
+</div>
+
+## Ventajas del bloqueo en diseños factoriales
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center; line-height:1.4;">
+Remueve la variabilidad atribuible al bloque (finca, lote, año) de $SC_E$, reduciendo el error experimental y aumentando la potencia de las pruebas.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:21px; text-align:center; line-height:1.4;">
+Permite generalizar las conclusiones a varias fincas o condiciones, en lugar de limitarse a una sola.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:14px; font-size:20px; text-align:center;">
+Es importante no confundir el efecto de bloque con un factor de interés: el bloque no se cruza con los demás factores para formar nuevos tratamientos, solo controla variabilidad.
+</div>
+
+## Resumen de la clase
+
+<div style="font-size:24px; text-align:justify; line-height:1.4;">
+El diseño factorial permite estudiar simultáneamente dos o más factores y, lo más importante, detectar si interactúan entre sí.
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Concepto</th><th style="padding:8px;">Idea clave</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Efecto principal</td><td style="padding:8px;">Efecto promedio de un factor</td></tr>
+<tr><td style="padding:8px;">Interacción</td><td style="padding:8px;">El efecto de un factor depende del otro</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Una observación por celda</td><td style="padding:8px;">Se asume no interacción; se verifica con Tukey</td></tr>
+<tr><td style="padding:8px;">Superficie de respuesta</td><td style="padding:8px;">Factores cuantitativos, modelo de regresión</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Bloqueo</td><td style="padding:8px;">Controla variabilidad no asociada a los factores</td></tr>
+</table>
+
+## Taller en Clase {.center .middle}
+
+## Instrucciones
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+
+Resuelva los siguientes ejercicios de diseño factorial de dos factores. Para cada uno:
+
+</div>
+
+<div style="font-size:25px; line-height:1.6; margin-top:10px;">
+1. Identifique los factores, sus niveles y el número de tratamientos.
+2. Plantee las hipótesis para los efectos principales y la interacción.
+3. Calcule (a mano o con software) la tabla ANOVA completa.
+4. Interprete el resultado en el contexto agrícola del problema.
+5. Verifique gráficamente si hay evidencia de interacción.
+</div>
+
+## Ejercicio 1
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Un ingeniero agrónomo del Eje Cafetero evalúa el rendimiento del café (kg/ha) bajo 2 sistemas de siembra (Tradicional, Tecnificado) y 3 niveles de sombra (Sin sombra, Sombra parcial, Sombra densa), con 5 parcelas por combinación. Plantee el modelo, identifique los grados de libertad de cada fuente de variación de la tabla ANOVA, y explique qué significaría encontrar una interacción significativa entre sistema de siembra y nivel de sombra.
+</div>
+
+## Ejercicio 2
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+En una finca ganadera de los Llanos Orientales se evalúa el aumento de peso de novillos (kg/mes) bajo 2 tipos de pastura (Brachiaria, Estrella) y 2 niveles de suplementación mineral (Sin suplemento, Con suplemento), con 6 animales por combinación. Las medias de celda fueron: Brachiaria/Sin=12.1, Brachiaria/Con=15.8, Estrella/Sin=13.5, Estrella/Con=14.2. Calcule los efectos principales estimados y el efecto de interacción para la celda Brachiaria/Con. ¿La diferencia entre pasturas parece ser la misma con y sin suplemento?
+</div>
+
+## Ejercicio 3
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Un floricultor de Cundinamarca compara la producción de tallos de rosa (tallos/m²) bajo 3 variedades y 2 densidades de siembra, con una sola parcela por combinación (sin réplicas). Explique qué supuesto debe asumirse para poder construir la tabla ANOVA en este caso, cómo se estima el error experimental, y qué prueba estadística permitiría verificar si ese supuesto es razonable.
+</div>
+
+## Ejercicio 4
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Un agrónomo del Tolima evalúa el rendimiento del arroz (ton/ha) bajo 4 niveles cuantitativos de potasio (0, 40, 80, 120 kg/ha), con 4 réplicas por nivel. Los datos sugieren una relación curva entre el potasio y el rendimiento, con un máximo en niveles intermedios. Proponga un modelo de regresión adecuado para describir esta relación y explique cómo se estimaría la dosis óptima de potasio a partir de dicho modelo.
+</div>
+
+## Ejercicio 5
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Un experimento factorial 2x2 sobre riego (Goteo, Aspersión) y densidad de siembra (Baja, Alta) en cultivo de papa se replicó en 4 fincas distintas de Nariño, cada una con las 4 combinaciones de tratamiento. Proponga el modelo estadístico adecuado incluyendo el efecto de finca como bloque, indique qué ventaja ofrece este diseño frente a ignorar la variabilidad entre fincas, y plantee las hipótesis de interés sobre riego, densidad y su interacción.
+</div>

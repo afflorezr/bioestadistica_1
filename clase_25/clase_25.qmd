@@ -1,7 +1,7 @@
 ---
 title: "Bioestadística Fundamental"
 author: " "
-institute: "Departamento de Estadı́stica, Sede Bogotá"
+institute: "Departamento de Estadística, Sede Bogotá"
 bibliography: referencias.bib
 csl: ieee.csl
 format:
@@ -15,6 +15,7 @@ format:
     controls: true
     width: 1280
     height: 720
+    embed-resources: true
     css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
     header-includes: |
       <link rel="stylesheet" href="../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
@@ -37,327 +38,1171 @@ format:
       });
       </script>
 execute:
-  echo: true
+  echo: false
 ---
 
 ## Clase 25 {.center .middle}
 
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Ajuste de Modelos de Regresión
+</p>
+</div>
+
 ## Contenido
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 28px; align-items: start;">
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 34px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Pruebas para la media</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 32px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Modelos de regresión lineal</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="2">Prueba Z: $\sigma$ conocida.</li>
-<li class="fragment fade-in" data-fragment-index="3">Prueba t de una muestra.</li>
-<li class="fragment fade-in" data-fragment-index="4">Supuesto de normalidad.</li>
-<li class="fragment fade-in" data-fragment-index="5">Código R completo.</li>
+<li class="fragment fade-in" data-fragment-index="2">Motivación: variables cuantitativas vs. ANOVA.</li>
+<li class="fragment fade-in" data-fragment-index="3">Forma general del modelo y supuestos.</li>
+<li class="fragment fade-in" data-fragment-index="4">Ejemplo agrícola central: rendimiento de caña de azúcar.</li>
+<li class="fragment fade-in" data-fragment-index="5">Estimación por mínimos cuadrados.</li>
+</ul>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 32px; margin-bottom: 14px; margin-top: 22px; color: #1b4d2e;">Parte II: Pruebas de hipótesis</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="7">Significancia global de la regresión y tabla ANOVA.</li>
+<li class="fragment fade-in" data-fragment-index="8">Pruebas t individuales y F parcial por subconjuntos.</li>
 </ul>
 </div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 34px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Proporción y varianza</h3>
+<h3 class="fragment fade-in" data-fragment-index="9" style="font-size: 32px; margin-bottom: 14px; color: #1a3a6b;">Parte III: Intervalos y predicción</h3>
 <ul>
-<li class="fragment fade-in" data-fragment-index="7">Prueba Z para la proporción.</li>
-<li class="fragment fade-in" data-fragment-index="8">Prueba chi-cuadrado para la varianza.</li>
-<li class="fragment fade-in" data-fragment-index="9">Ejemplos agrícolas integrales.</li>
-<li class="fragment fade-in" data-fragment-index="10">Errores comunes y taller.</li>
+<li class="fragment fade-in" data-fragment-index="10">IC para coeficientes y para la respuesta media.</li>
+<li class="fragment fade-in" data-fragment-index="11">Intervalo de predicción para una observación nueva.</li>
+</ul>
+<h3 class="fragment fade-in" data-fragment-index="12" style="font-size: 32px; margin-bottom: 14px; margin-top: 22px; color: #1a3a6b;">Parte IV: Diagnóstico del modelo</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="13">Residuos escalados y estadístico PRESS.</li>
+<li class="fragment fade-in" data-fragment-index="14">Leverage, distancia de Cook, DFFITS.</li>
+<li class="fragment fade-in" data-fragment-index="15">Prueba de falta de ajuste.</li>
 </ul>
 </div>
 </div>
+
+## {.center .middle}
 
 <div style="text-align: center; margin-top: 40px;">
-<p style="font-size: 46px; font-weight: bold; color: #3b82f6;">Pruebas para la Media, Proporción y Varianza</p>
-<p style="font-size: 30px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Aplicando el marco inferencial a los parámetros fundamentales</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+
+<p style="font-size: 50px; font-weight: bold; color: #3b82f6;">
+Modelos de Regresión Lineal Múltiple
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Cómo modelar una respuesta cuantitativa en función de variables explicativas también cuantitativas?
+</p>
+
 </div>
 
-## Prueba Z para la media: $\sigma$ conocida
+## Motivación: de los factores a las variables continuas
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+En el ANOVA se comparan medias de una respuesta entre niveles de un <strong>factor cualitativo</strong> (tipo de fertilizante, variedad, método). Pero muchas variables agronómicas relevantes son <strong>cuantitativas continuas</strong>: precipitación, dosis de nitrógeno, horas de sol, altitud.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">ANOVA</div>
+<div style="font-size:22px; text-align:center; line-height:1.4; margin-top:8px;">
+Compara medias entre <strong>grupos o niveles</strong> de una variable cualitativa (factor).
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Regresión</div>
+<div style="font-size:22px; text-align:center; line-height:1.4; margin-top:8px;">
+Modela la <strong>relación funcional</strong> entre la respuesta y una o más variables explicativas continuas.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:14px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:22px; text-align:justify;">
+Por ejemplo: en lugar de comparar el rendimiento de caña de azúcar entre tres niveles fijos de nitrógeno, la regresión permite estimar cómo cambia el rendimiento <strong>para cualquier dosis</strong> de nitrógeno aplicada.
+</div>
+
+## Ejemplo agrícola central: caña de azúcar en el Valle del Cauca
+
+<p style="font-size:25px; text-align:justify; line-height:1.4;">
+Un ingeniero agrónomo del Valle del Cauca desea modelar el <strong>rendimiento de caña de azúcar</strong> (ton/ha) en función de tres variables continuas registradas en 28 lotes de cultivo durante un ciclo productivo:
+</p>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>$x_1$: Precipitación</strong><br>mm/mes promedio
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>$x_2$: Nitrógeno</strong><br>dosis aplicada (kg/ha)
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:21px; text-align:center;">
+<strong>$x_3$: Horas de sol</strong><br>promedio diario (h)
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:12px; font-size:22px; text-align:center;">
+$y$: Rendimiento de caña de azúcar (ton/ha). Este dataset de $n=28$ lotes se usará a lo largo de toda la clase.
+</div>
+
+## Datos del ejemplo: rendimiento de caña de azúcar
+
+<div style="font-size:18px; text-align:justify; line-height:1.2; margin-bottom:6px;">
+Primeras observaciones del conjunto de datos ($n=28$ lotes):
+</div>
+
+<table style="width:100%; font-size:16px; text-align:center; margin-top:4px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:5px;">Lote</th><th style="padding:5px;">Precip. (mm)</th><th style="padding:5px;">N (kg/ha)</th><th style="padding:5px;">Sol (h)</th><th style="padding:5px;">Rend. (ton/ha)</th>
+</tr>
+<tr><td>1</td><td>185.2</td><td>200.0</td><td>5.23</td><td>88.1</td></tr>
+<tr style="background-color:#eef4fb;"><td>2</td><td>151.8</td><td>116.3</td><td>6.07</td><td>78.8</td></tr>
+<tr><td>3</td><td>156.8</td><td>139.2</td><td>6.68</td><td>78.9</td></tr>
+<tr style="background-color:#eef4fb;"><td>4</td><td>154.8</td><td>100.1</td><td>6.10</td><td>83.9</td></tr>
+<tr><td>5</td><td>191.4</td><td>147.1</td><td>4.53</td><td>80.7</td></tr>
+<tr style="background-color:#eef4fb;"><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+<tr><td>27</td><td>191.1</td><td>152.8</td><td>7.25</td><td>100.5</td></tr>
+<tr style="background-color:#eef4fb;"><td>28</td><td>115.9</td><td>130.2</td><td>4.30</td><td>70.4</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:20px; text-align:center;">
+Medias: $\bar x_1=159.1$ mm, $\bar x_2=151.4$ kg/ha, $\bar x_3=5.81$ h, $\bar y=84.36$ ton/ha.
+</div>
+
+## Dispersión de los datos: rendimiento contra cada covariable
+
+```{r}
+#| label: dispersion-datos
+#| echo: false
+#| fig-height: 3.4
+precipitacion <- c(185.2,151.8,156.8,154.8,191.4,155.6,206.8,106.6,173.8,164.0,146.6,213.8,175.1,93.1,150.9,201.5,137.5,137.5,188.6,104.0,135.0,195.9,95.2,183.0,133.8,209.4,191.1,115.9)
+nitrogeno <- c(200.0,116.3,139.2,100.1,147.1,156.4,172.7,96.0,93.3,104.7,218.9,206.7,136.5,210.3,187.6,194.1,219.7,193.9,184.9,98.4,143.5,155.7,93.5,183.0,105.1,98.4,152.8,130.2)
+sol <- c(5.23,6.07,6.68,6.10,4.53,6.60,7.38,4.76,4.36,6.69,6.53,5.16,4.92,4.65,4.36,7.49,6.14,5.51,4.24,5.74,6.87,6.12,6.92,6.06,7.14,4.76,7.25,4.30)
+rendimiento <- c(88.1,78.8,78.9,83.9,80.7,88.0,101.2,71.1,75.5,76.9,93.1,99.1,82.7,85.6,85.7,95.9,88.5,86.1,88.6,75.2,86.9,95.9,69.8,80.4,76.9,77.6,100.5,70.4)
+datos <- data.frame(precipitacion, nitrogeno, sol, rendimiento)
+modelo <- lm(rendimiento ~ precipitacion + nitrogeno + sol, data = datos)
+
+par(mfrow = c(1, 3))
+plot(datos$precipitacion, datos$rendimiento, pch = 19, col = "#1a3a6b",
+     xlab = "Precipitación (mm/mes)", ylab = "Rendimiento (ton/ha)", main = "vs. Precipitación")
+plot(datos$nitrogeno, datos$rendimiento, pch = 19, col = "#1b4d2e",
+     xlab = "Nitrógeno (kg/ha)", ylab = "Rendimiento (ton/ha)", main = "vs. Nitrógeno")
+plot(datos$sol, datos$rendimiento, pch = 19, col = "#d97706",
+     xlab = "Horas de sol (h/día)", ylab = "Rendimiento (ton/ha)", main = "vs. Horas de sol")
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:21px; text-align:center;">
+Las tres variables muestran una relación positiva con el rendimiento: sugiere que un modelo lineal múltiple es razonable.
+</div>
+
+## Forma general del modelo de regresión lineal
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+El modelo de regresión lineal múltiple relaciona una respuesta $y$ con $k$ variables explicativas $x_1,\ldots,x_k$:
+</div>
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba Z: $H_0: \mu = \mu_0$</div>
-  <div class="block-body">
-  <p>Bajo $H_0$ con $X_i \sim N(\mu_0, \sigma^2)$ o $n$ grande:</p>
-  $$Z = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} \sim N(0,1)$$
-  <p>Región de rechazo con $\alpha = 0.05$: $|Z| > 1.96$ (bilateral); $Z > 1.645$ (unilateral derecha).</p>
-  </div>
+<div class="block-title" style="font-size:28px;">Modelo de regresión lineal múltiple</div>
+<div class="block-body" style="font-size:27px; text-align:center;">
+$$
+y=\beta_0+\beta_1 x_1+\beta_2 x_2+\cdots+\beta_k x_k+\varepsilon
+$$
+</div>
 </div>
 
-<div class="block-example fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Ejemplo: productividad de palma africana</div>
-  <div class="block-body">
-  <p>$H_0: \mu = 18$ t/ha vs $H_1: \mu > 18$. Muestra de $n = 40$ fincas: $\bar{x} = 18.9$, $\sigma = 2.5$ (histórica). $\alpha = 0.05$.</p>
-  </div>
+<div style="font-size:23px; line-height:1.4; margin-top:10px;">
+- $\beta_0$: intercepto, valor esperado de $y$ cuando todas las $x_i=0$.
+- $\beta_j$: efecto marginal de $x_j$ sobre $y$, manteniendo constantes las demás variables.
+- $\varepsilon$: error aleatorio no explicado por el modelo.
+- $k=3$ en el ejemplo: precipitación, nitrógeno y horas de sol.
 </div>
 
-## Solución: prueba Z palma africana
+## Supuestos del modelo de regresión lineal
 
-```{r}
-#| echo: true
-mu0 <- 18; sigma <- 2.5; n <- 40; xbar <- 18.9; alpha <- 0.05
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
 
-Z    <- (xbar - mu0) / (sigma / sqrt(n))
-vp   <- pnorm(Z, lower.tail = FALSE)          # unilateral derecha
-ic95 <- xbar + c(-1,1) * qnorm(0.975) * sigma/sqrt(n)
-d    <- (xbar - mu0) / sigma
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:20px; text-align:center;">
+<strong>Linealidad</strong><br>La relación entre $y$ y las $x_j$ es lineal en los parámetros.
+</div>
 
-cat("Z =", round(Z, 4), "\n")
-cat("Valor-p =", round(vp, 4), "\n")
-cat("IC 95%: [", round(ic95[1],3), ",", round(ic95[2],3), "]\n")
-cat("d Cohen =", round(d, 4), "\n")
-cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-```
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:20px; text-align:center;">
+<strong>Normalidad</strong><br>$\varepsilon\sim N(0,\sigma^2)$
+</div>
 
-## Prueba t de una muestra: $\sigma$ desconocida
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:14px; border-radius:14px; border-top:7px solid #d97706; font-size:20px; text-align:center;">
+<strong>Homocedasticidad</strong><br>Varianza $\sigma^2$ constante para todos los niveles de $x$
+</div>
+
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f5f3ff; padding:14px; border-radius:14px; border-top:7px solid #7c3aed; font-size:20px; text-align:center;">
+<strong>Independencia</strong><br>Los errores $\varepsilon_i$ son independientes entre observaciones.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#fdecec; padding:14px; border-radius:14px; border-top:7px solid #b91c1c; font-size:20px; text-align:center;">
+<strong>No colinealidad perfecta</strong><br>Las variables $x_j$ no son combinaciones lineales exactas entre sí.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="6"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:12px; font-size:20px; text-align:center;">
+Estos supuestos se verifican mediante el análisis de residuos (Parte IV de esta clase).
+</div>
+
+## Estimación de los parámetros: idea de mínimos cuadrados
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+El método de <strong>mínimos cuadrados ordinarios</strong> (MCO) busca los valores $\hat\beta_0,\hat\beta_1,\ldots,\hat\beta_k$ que minimizan la suma de cuadrados de los residuos:
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Criterio de mínimos cuadrados</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+SC_E=\sum_{i=1}^n \left(y_i-\hat\beta_0-\sum_{j=1}^k \hat\beta_j x_{ij}\right)^2
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+Geométricamente: se busca el hiperplano que minimiza la suma de las distancias verticales al cuadrado entre los puntos observados y los valores ajustados.
+</div>
+
+## Estimación matricial de los parámetros
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En notación matricial, el modelo se escribe $\mathbf{y}=\mathbf{X}\boldsymbol\beta+\boldsymbol\varepsilon$, donde $\mathbf{X}$ es la matriz de diseño ($n\times(k+1)$, con una columna de unos para el intercepto).
+</div>
 
 <div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba t: $H_0: \mu = \mu_0$, $\sigma$ desconocida</div>
-  <div class="block-body">
-  <p>Si $X_i \sim N(\mu_0, \sigma^2)$ con $\sigma$ desconocida:</p>
-  $$t = \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \sim t_{n-1} \quad \text{bajo } H_0$$
-  <p>Región de rechazo bilateral: $|t| > t_{\alpha/2,\, n-1}$.</p>
-  </div>
+<div class="block-title" style="font-size:25px;">Estimador de mínimos cuadrados</div>
+<div class="block-body" style="font-size:28px; text-align:center;">
+$$
+\hat{\boldsymbol\beta}=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}
+$$
+</div>
 </div>
 
-## Ejemplo: pH de suelo en parcelas de cacao
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: cacao, Huila</div>
-  <div class="block-body">
-  <p>El pH óptimo para cacao es 6.5. Se midió el pH en 15 parcelas del Huila. ¿Difiere significativamente del valor óptimo? $H_0: \mu = 6.5$ vs $H_1: \mu \neq 6.5$, $\alpha = 0.05$.</p>
-  </div>
+<div style="font-size:22px; line-height:1.4; margin-top:10px;">
+- $\mathbf{X}'\mathbf{X}$: matriz de sumas de cuadrados y productos cruzados de las covariables.
+- $(\mathbf{X}'\mathbf{X})^{-1}$: existe siempre que las columnas de $\mathbf{X}$ sean linealmente independientes (no colinealidad perfecta).
+- Este estimador es el mismo que minimiza $SC_E$; ambos enfoques (cálculo diferencial y álgebra matricial) llevan a la misma solución.
 </div>
+
+## Estimaciones del modelo: caña de azúcar
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:8px;">
+Aplicando $\hat{\boldsymbol\beta}=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}$ a los datos de los 28 lotes se obtiene el siguiente modelo ajustado:
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Parámetro</th><th style="padding:8px;">Estimación $\hat\beta_j$</th><th style="padding:8px;">Error estándar</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$\beta_0$ (Intercepto)</td><td style="padding:8px;">32.585</td><td style="padding:8px;">6.474</td></tr>
+<tr><td style="padding:8px;">$\beta_1$ (Precipitación)</td><td style="padding:8px;">0.1092</td><td style="padding:8px;">0.0251</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">$\beta_2$ (Nitrógeno)</td><td style="padding:8px;">0.1241</td><td style="padding:8px;">0.0207</td></tr>
+<tr><td style="padding:8px;">$\beta_3$ (Horas de sol)</td><td style="padding:8px;">2.6894</td><td style="padding:8px;">0.8199</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:21px; text-align:center;">
+$$\hat y = 32.585+0.109\,x_1+0.124\,x_2+2.689\,x_3$$
+</div>
+
+## Interpretación de los coeficientes estimados
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Cada coeficiente representa el efecto marginal de su variable, manteniendo las demás constantes (<em>ceteris paribus</em>):
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:20px; text-align:center;">
+Por cada mm/mes adicional de precipitación, el rendimiento aumenta en promedio <strong>0.109 ton/ha</strong>, fijando nitrógeno y horas de sol.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:20px; text-align:center;">
+Por cada kg/ha adicional de nitrógeno, el rendimiento aumenta en promedio <strong>0.124 ton/ha</strong>, fijando precipitación y sol.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-top:7px solid #d97706; font-size:20px; text-align:center;">
+Por cada hora adicional de sol diario, el rendimiento aumenta en promedio <strong>2.689 ton/ha</strong>, fijando precipitación y nitrógeno.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:12px; font-size:21px; text-align:center;">
+El intercepto ($32.585$) no tiene interpretación agronómica directa, pues ninguna de las covariables se acerca a cero en la práctica.
+</div>
+
+## Recta de regresión ajustada: valores observados versus ajustados
 
 ```{r}
-#| echo: true
-set.seed(25)
-ph <- c(6.1, 6.4, 5.9, 6.3, 6.0, 6.5, 6.2, 5.8, 6.4, 6.1,
-        6.3, 5.7, 6.2, 6.0, 6.3)
-mu0 <- 6.5
-
-resultado <- t.test(ph, mu = mu0, alternative = "two.sided", conf.level = 0.95)
-cat("t =", round(resultado$statistic, 4), "\n")
-cat("Valor-p =", round(resultado$p.value, 4), "\n")
-cat("IC 95%: [", round(resultado$conf.int[1], 4), ",",
-    round(resultado$conf.int[2], 4), "]\n")
-cat("d Cohen =", round((mean(ph) - mu0)/sd(ph), 4), "\n")
+#| label: ajustados-observados
+#| echo: false
+#| fig-height: 3.4
+plot(fitted(modelo), datos$rendimiento, pch = 19, col = "#1a3a6b",
+     xlab = "Rendimiento ajustado (ton/ha)", ylab = "Rendimiento observado (ton/ha)",
+     main = "Valores observados vs. ajustados")
+abline(0, 1, col = "#b91c1c", lwd = 2, lty = 2)
 ```
 
-## Verificación del supuesto de normalidad
-
-```{r}
-#| echo: true
-#| fig-height: 3.5
-library(ggplot2)
-ph <- c(6.1, 6.4, 5.9, 6.3, 6.0, 6.5, 6.2, 5.8, 6.4, 6.1,
-        6.3, 5.7, 6.2, 6.0, 6.3)
-
-# Shapiro-Wilk
-sw <- shapiro.test(ph)
-cat("Shapiro-Wilk: W =", round(sw$statistic, 4),
-    "  p-valor =", round(sw$p.value, 4), "\n")
-
-# QQ-plot
-df_qq <- data.frame(teorico  = qnorm(ppoints(length(ph))),
-                    muestral = sort(ph))
-ggplot(df_qq, aes(teorico, muestral)) +
-  geom_point(color = "#1b4d2e", size = 2.5) +
-  geom_abline(slope = sd(ph), intercept = mean(ph), color = "#c0392b") +
-  labs(x = "Cuantiles N(0,1)", y = "pH muestral",
-       title = "QQ-plot: pH suelo parcelas de cacao") +
-  theme_minimal(base_size = 13)
-```
-
-## Prueba Z para la proporción
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba Z: $H_0: p = p_0$</div>
-  <div class="block-body">
-  <p>Si $X \sim \text{Bin}(n, p)$ con $np_0 \geq 5$ y $n(1-p_0) \geq 5$:</p>
-  $$Z = \frac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \quad \text{bajo } H_0$$
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:21px; text-align:center;">
+Los puntos se concentran alrededor de la línea de identidad ($y=\hat y$), indicando un buen ajuste global. $R^2=0.775$: el modelo explica el 77.5% de la variabilidad del rendimiento.
 </div>
 
-<div class="block-example fragment fade-up" data-fragment-index="2">
-  <div class="block-title">Ejemplo: adopción de riego tecnificado</div>
-  <div class="block-body">
-  <p>Se afirma que más del 30% de los arroceros del Tolima usa riego tecnificado. En una muestra de 120 agricultores, 42 lo usan. $H_0: p = 0.30$ vs $H_1: p > 0.30$, $\alpha = 0.05$.</p>
-  </div>
-</div>
-
-## Solución: prueba Z para proporción
-
-```{r}
-#| echo: true
-x <- 42; n <- 120; p0 <- 0.30; alpha <- 0.05
-p_hat <- x / n
-
-Z  <- (p_hat - p0) / sqrt(p0 * (1 - p0) / n)
-vp <- pnorm(Z, lower.tail = FALSE)   # unilateral derecha
-
-cat("p̂ =", round(p_hat, 4), "\n")
-cat("Z =", round(Z, 4), "\n")
-cat("Valor-p =", round(vp, 4), "\n")
-cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-
-# Alternativa automática en R
-prop.test(x, n, p = p0, alternative = "greater", correct = FALSE)
-```
-
-## Prueba chi-cuadrado para la varianza
-
-<div class="block-theorem fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Prueba $\chi^2$: $H_0: \sigma^2 = \sigma_0^2$</div>
-  <div class="block-body">
-  <p>Si $X_i \sim N(\mu, \sigma^2)$:</p>
-  $$\chi^2 = \frac{(n-1)S^2}{\sigma_0^2} \sim \chi^2_{n-1} \quad \text{bajo } H_0$$
-  <p>Región de rechazo bilateral: $\chi^2 < \chi^2_{1-\alpha/2,\,n-1}$ o $\chi^2 > \chi^2_{\alpha/2,\,n-1}$.</p>
-  </div>
-</div>
-
-## Ejemplo: uniformidad en el peso de pollos
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Ejemplo: avicultura, Valle del Cauca</div>
-  <div class="block-body">
-  <p>El proceso exige $\sigma^2 \leq 400\,\text{g}^2$ en el peso al sacrificio. En 20 pollos se obtuvo $s^2 = 520\,\text{g}^2$. $H_0: \sigma^2 = 400$ vs $H_1: \sigma^2 > 400$, $\alpha = 0.05$.</p>
-  </div>
-</div>
-
-```{r}
-#| echo: true
-n <- 20; s2 <- 520; sigma2_0 <- 400; alpha <- 0.05
-
-chi2_obs  <- (n - 1) * s2 / sigma2_0
-chi2_crit <- qchisq(1 - alpha, df = n - 1)
-vp        <- pchisq(chi2_obs, df = n - 1, lower.tail = FALSE)
-
-cat("χ² observado:", round(chi2_obs, 4), "\n")
-cat("χ² crítico (unilateral der.):", round(chi2_crit, 4), "\n")
-cat("Valor-p:", round(vp, 4), "\n")
-cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-```
-
-## Resumen: estadísticos y distribuciones
-
-<div class="fragment fade-in" data-fragment-index="1">
-
-| Parámetro | $H_0$ | Estadístico | Distribución bajo $H_0$ | Función R |
-|---|---|---|---|---|
-| $\mu$ ($\sigma$ conocida) | $\mu = \mu_0$ | $Z = (\bar{x}-\mu_0)/(\sigma/\sqrt{n})$ | $N(0,1)$ | `pnorm` |
-| $\mu$ ($\sigma$ desconocida) | $\mu = \mu_0$ | $t = (\bar{x}-\mu_0)/(s/\sqrt{n})$ | $t_{n-1}$ | `t.test` |
-| $p$ | $p = p_0$ | $Z = (\hat{p}-p_0)/\sqrt{p_0 q_0/n}$ | $N(0,1)$ | `prop.test` |
-| $\sigma^2$ | $\sigma^2 = \sigma_0^2$ | $\chi^2 = (n-1)s^2/\sigma_0^2$ | $\chi^2_{n-1}$ | `pchisq` |
-
-</div>
-
-## Errores comunes
+## Errores comunes: fundamentos de regresión
 
 <div class="block-alert fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Advertencia: errores frecuentes</div>
-  <div class="block-body">
-  <p>Cada prueba tiene sus propias condiciones de aplicación que deben verificarse.</p>
-  </div>
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Interpretar $\beta_0$ fuera del rango observado de las covariables (extrapolación sin sentido agronómico).
+- Confundir "efecto marginal manteniendo las demás constantes" con el efecto total observado en los datos crudos.
+- Ajustar un modelo lineal sin verificar gráficamente que la relación entre $y$ y cada $x_j$ sea aproximadamente lineal.
+- Ignorar la posible colinealidad entre covariables (ej. precipitación y horas de sol suelen estar correlacionadas negativamente).
+</div>
 </div>
 
-<ul style="margin-top: 16px;">
-<li class="fragment fade-up" data-fragment-index="2" style="font-size: 27px; text-align: justify;">
-<strong>Usar prueba Z para $\sigma$ desconocida con $n$ pequeño:</strong> con $n < 30$ y $\sigma$ desconocida, siempre use la prueba t.
-</li>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 27px; text-align: justify;">
-<strong>No verificar normalidad antes de la prueba t:</strong> con $n$ pequeño, la prueba t requiere que los datos sean aproximadamente normales.
-</li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 27px; text-align: justify;">
-<strong>La prueba $\chi^2$ de varianza es muy sensible a la falta de normalidad:</strong> no es robusta; verifique normalidad con Shapiro-Wilk antes de aplicarla.
-</li>
-</ul>
+## {.center .middle}
 
-## Taller en clase {.center .middle}
+<div style="text-align: center; margin-top: 40px;">
 
-## Taller 1: prueba t para la media
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Pruebas de Hipótesis en Regresión Múltiple
+</p>
 
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>El contenido de proteína en pienso para cerdos debe ser al menos 18%. Se analizan 12 muestras y se obtiene $\bar{x} = 17.4\%$ y $s = 0.9\%$. ¿Hay evidencia de que el contenido es inferior al 18%? Use $\alpha = 0.05$. Verifique normalidad.</p>
-  </div>
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿El modelo en conjunto explica la variabilidad de la respuesta? ¿Cada variable individual aporta significativamente?
+</p>
+
 </div>
 
-## Taller 1: solución
+## Prueba de significancia de la regresión
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Antes de interpretar coeficientes individuales, se evalúa si el modelo, en su conjunto, explica una proporción significativa de la variabilidad de $y$.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Hipótesis de significancia global</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+H_0:\beta_1=\beta_2=\cdots=\beta_k=0 \qquad \text{vs.} \qquad H_1: \text{algún } \beta_j\neq 0
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+$H_0$ implica que ninguna de las variables explicativas tiene relación lineal con $y$: el "mejor predictor" sería simplemente $\bar y$.
+</div>
+
+## Descomposición de la suma de cuadrados en regresión
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:25px;">Identidad de la suma de cuadrados</div>
+<div class="block-body" style="font-size:23px; text-align:center;">
+$$
+\underbrace{\sum_{i=1}^n(y_i-\bar y)^2}_{SC_T}
+=
+\underbrace{\sum_{i=1}^n(\hat y_i-\bar y)^2}_{SC_{Reg}}
++
+\underbrace{\sum_{i=1}^n(y_i-\hat y_i)^2}_{SC_E}
+$$
+</div>
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:10px;">
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+$SC_{Reg}$: variabilidad explicada por las variables $x_1,\ldots,x_k$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+$SC_E$: variabilidad residual, no explicada por el modelo.
+</div>
+
+</div>
+
+## Tabla ANOVA de regresión y estadístico F
+
+<div style="font-size:23px; text-align:justify; line-height:1.3;">
+Cada suma de cuadrados se divide por sus grados de libertad. El estadístico de prueba es el cociente de cuadrados medios:
+</div>
+
+<table style="width:100%; font-size:20px; border-collapse:collapse; text-align:center; margin-top:6px;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Fuente</th>
+<th style="padding:7px;">SC</th>
+<th style="padding:7px;">gl</th>
+<th style="padding:7px;">CM</th>
+<th style="padding:7px;">F</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Regresión</td>
+<td style="padding:7px;">$SC_{Reg}$</td>
+<td style="padding:7px;">$k$</td>
+<td style="padding:7px;">$CM_{Reg}=\frac{SC_{Reg}}{k}$</td>
+<td style="padding:7px;" rowspan="2">$F=\dfrac{CM_{Reg}}{CM_E}$</td>
+</tr>
+<tr>
+<td style="padding:7px;">Error</td>
+<td style="padding:7px;">$SC_E$</td>
+<td style="padding:7px;">$n-k-1$</td>
+<td style="padding:7px;">$CM_E=\frac{SC_E}{n-k-1}$</td>
+</tr>
+<tr style="background-color:#eef7ee;">
+<td style="padding:7px;">Total</td>
+<td style="padding:7px;">$SC_T$</td>
+<td style="padding:7px;">$n-1$</td>
+<td style="padding:7px;"></td>
+<td style="padding:7px;"></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:19px; text-align:center;">
+Bajo $H_0$, $F=\dfrac{CM_{Reg}}{CM_E}\sim F_{k,\,n-k-1}$. Se rechaza $H_0$ si $F_{calc}>F_{\alpha,\,k,\,n-k-1}$.
+</div>
+
+## Resultado del ejemplo: tabla ANOVA de la caña de azúcar
+
+<table style="width:100%; font-size:21px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Fuente</th>
+<th style="padding:7px;">SC</th>
+<th style="padding:7px;">gl</th>
+<th style="padding:7px;">CM</th>
+<th style="padding:7px;">F</th>
+<th style="padding:7px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;">
+<td style="padding:7px;">Regresión</td>
+<td style="padding:7px;">1685.91</td>
+<td style="padding:7px;">3</td>
+<td style="padding:7px;">561.97</td>
+<td style="padding:7px;" rowspan="2">27.63</td>
+<td style="padding:7px;" rowspan="2">$5.90\times10^{-8}$</td>
+</tr>
+<tr>
+<td style="padding:7px;">Error</td>
+<td style="padding:7px;">488.23</td>
+<td style="padding:7px;">24</td>
+<td style="padding:7px;">20.34</td>
+</tr>
+<tr style="background-color:#eef7ee;">
+<td style="padding:7px;">Total</td>
+<td style="padding:7px;">2174.14</td>
+<td style="padding:7px;">27</td>
+<td style="padding:7px;"></td>
+<td style="padding:7px;"></td>
+<td style="padding:7px;"></td>
+</tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:20px; text-align:center;">
+$CM_{Reg}=1685.91/3=561.97$, &nbsp; $CM_E=488.23/24=20.34$, &nbsp; $F=561.97/20.34=27.63$.
+</div>
+
+## Criterio de decisión y conclusión: significancia global
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1a3a6b;">Criterio de decisión</div>
+<div style="font-size:20px; text-align:center; line-height:1.5; margin-top:8px;">
+$$F_{calc}=27.63 > F_{0.05,3,24}=3.01$$
+$$\text{valor-p}=5.90\times10^{-8}<0.05$$
+Se rechaza $H_0$.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:24px; font-weight:bold; text-align:center; color:#1b4d2e;">Conclusión</div>
+<div style="font-size:20px; text-align:justify; line-height:1.4; margin-top:8px;">
+Existe evidencia estadística suficiente para afirmar que al menos una de las variables (precipitación, nitrógeno, horas de sol) tiene efecto sobre el rendimiento de la caña de azúcar.
+</div>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:12px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:20px; text-align:center;">
+$R^2=SC_{Reg}/SC_T=1685.91/2174.14=0.7754$: el modelo explica el 77.5% de la variabilidad del rendimiento.
+</div>
+
+## Pruebas t para coeficientes individuales
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Una vez confirmada la significancia global, se evalúa si <strong>cada coeficiente</strong> $\beta_j$ aporta significativamente al modelo, controlando por las demás variables.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Prueba t individual</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+H_0:\beta_j=0 \quad \text{vs.} \quad H_1:\beta_j\neq 0
+\qquad
+t=\frac{\hat\beta_j}{EE(\hat\beta_j)}\sim t_{n-k-1}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Se rechaza $H_0$ si $|t_{calc}|>t_{\alpha/2,\,n-k-1}$. Esta prueba evalúa el aporte <strong>marginal</strong> de $x_j$, no su efecto en un modelo simple sin las demás variables.
+</div>
+
+## Resultado del ejemplo: pruebas t individuales
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Variable</th><th style="padding:8px;">$\hat\beta_j$</th><th style="padding:8px;">$EE(\hat\beta_j)$</th><th style="padding:8px;">$t_{calc}$</th><th style="padding:8px;">valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Intercepto</td><td style="padding:8px;">32.585</td><td style="padding:8px;">6.474</td><td style="padding:8px;">5.033</td><td style="padding:8px;">$3.82\times10^{-5}$</td></tr>
+<tr><td style="padding:8px;">Precipitación</td><td style="padding:8px;">0.109</td><td style="padding:8px;">0.025</td><td style="padding:8px;">4.342</td><td style="padding:8px;">0.00022</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Nitrógeno</td><td style="padding:8px;">0.124</td><td style="padding:8px;">0.021</td><td style="padding:8px;">5.987</td><td style="padding:8px;">$3.52\times10^{-6}$</td></tr>
+<tr><td style="padding:8px;">Horas de sol</td><td style="padding:8px;">2.689</td><td style="padding:8px;">0.820</td><td style="padding:8px;">3.280</td><td style="padding:8px;">0.00316</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:20px; text-align:center;">
+Con $gl=n-k-1=24$ y $t_{0.025,24}=2.064$: las tres variables presentan $|t_{calc}|>2.064$, por lo que <strong>todas son significativas</strong> al 5%, controlando por las demás.
+</div>
+
+## Prueba F parcial: subconjuntos de coeficientes
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+La prueba F parcial compara un <strong>modelo completo</strong> contra un <strong>modelo reducido</strong> (sin un subconjunto de variables), para evaluar si esas variables aportan significativamente en conjunto.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Estadístico F parcial</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+F=\frac{(SC_{E,red}-SC_{E,comp})/r}{CM_{E,comp}}\sim F_{r,\,n-k-1}
+$$
+</div>
+</div>
+
+<div style="font-size:21px; line-height:1.4; margin-top:8px;">
+- $SC_{E,red}$: suma de cuadrados del error del modelo reducido.
+- $SC_{E,comp}$: suma de cuadrados del error del modelo completo.
+- $r$: número de coeficientes eliminados al pasar del modelo completo al reducido.
+</div>
+
+## Ejemplo: ¿es significativo el efecto de horas de sol?
+
+<p style="font-size:24px; text-align:justify; line-height:1.4;">
+Pregunta: controlando por precipitación y nitrógeno, ¿aporta significativamente la variable horas de sol? Se comparan:
+</p>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>Modelo reducido</strong><br>
+$y=\beta_0+\beta_1 x_1+\beta_2 x_2+\varepsilon$<br>
+$SC_{E,red}=707.11$, &nbsp; $gl=25$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>Modelo completo</strong><br>
+$y=\beta_0+\beta_1 x_1+\beta_2 x_2+\beta_3 x_3+\varepsilon$<br>
+$SC_{E,comp}=488.23$, &nbsp; $gl=24$
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:12px; font-size:22px; text-align:center;">
+$$
+F=\frac{(707.11-488.23)/1}{20.34}=\frac{218.88}{20.34}=10.76
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+$F_{0.05,1,24}=4.26$. Como $10.76>4.26$ (y valor-p $=0.00316$), se rechaza $H_0:\beta_3=0$: las horas de sol aportan significativamente, incluso controlando por las otras dos variables.
+</div>
+
+## Relación entre prueba t y prueba F parcial
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:14px; border-radius:14px; border-left:8px solid #475569; margin-top:14px; font-size:23px; text-align:justify;">
+Cuando se elimina <strong>una sola variable</strong> ($r=1$), la prueba F parcial es equivalente a la prueba t individual: $F=t^2$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+Verificación: $t_{calc}=3.280$ para horas de sol, y $t^2=3.280^2=10.76=F_{calc}$. Coinciden exactamente.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+La prueba F parcial es más general: permite evaluar <strong>varios coeficientes simultáneamente</strong> ($r>1$), algo que la prueba t individual no puede hacer.
+</div>
+
+## Errores comunes: pruebas de hipótesis en regresión
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Concluir, a partir de la prueba F global significativa, que <strong>todas</strong> las variables son individualmente significativas (puede que solo algunas lo sean).
+- Eliminar variables del modelo basándose únicamente en su valor-p individual, sin considerar el contexto agronómico ni posibles colinealidades.
+- Comparar modelos con prueba F parcial cuando no están <strong>anidados</strong> (el modelo reducido debe ser un caso particular del completo).
+- Olvidar que un coeficiente no significativo no implica ausencia de relación, sino ausencia de aporte marginal dado el resto del modelo.
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Intervalos de Confianza y Predicción
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿Cuál es el rango plausible para un coeficiente, para la respuesta media, o para una nueva observación?
+</p>
+
+</div>
+
+## Intervalos de confianza para coeficientes individuales
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Un intervalo de confianza para $\beta_j$ cuantifica la incertidumbre de la estimación puntual $\hat\beta_j$.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">IC para $\beta_j$</div>
+<div class="block-body" style="font-size:26px; text-align:center;">
+$$
+\hat\beta_j \pm t_{\alpha/2,\,n-k-1}\;EE(\hat\beta_j)
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+Ejemplo: IC 95% para $\beta_2$ (nitrógeno): $0.124\pm 2.064(0.0207)=0.124\pm0.0428$
+$$
+IC_{95\%}(\beta_2)=(0.0813,\;0.1669)
+$$
+</div>
+
+## Resultado del ejemplo: IC para los tres coeficientes
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Variable</th><th style="padding:8px;">$\hat\beta_j$</th><th style="padding:8px;">IC 95% inferior</th><th style="padding:8px;">IC 95% superior</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Intercepto</td><td style="padding:8px;">32.585</td><td style="padding:8px;">19.223</td><td style="padding:8px;">45.946</td></tr>
+<tr><td style="padding:8px;">Precipitación</td><td style="padding:8px;">0.109</td><td style="padding:8px;">0.057</td><td style="padding:8px;">0.161</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Nitrógeno</td><td style="padding:8px;">0.124</td><td style="padding:8px;">0.081</td><td style="padding:8px;">0.167</td></tr>
+<tr><td style="padding:8px;">Horas de sol</td><td style="padding:8px;">2.689</td><td style="padding:8px;">0.997</td><td style="padding:8px;">4.382</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:20px; text-align:center;">
+Como ninguno de los tres intervalos contiene el cero, se confirma que las tres variables son significativas al 5% (consistente con las pruebas t individuales).
+</div>
+
+## Intervalo de confianza para la respuesta media
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+A menudo interesa estimar el rendimiento <strong>esperado</strong> (promedio) para una combinación específica de valores de las covariables $\mathbf{x}_0$, no una observación individual.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">IC para la respuesta media</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+\hat y_0 \pm t_{\alpha/2,\,n-k-1}\sqrt{CM_E\,\mathbf{x}_0'(\mathbf{X}'\mathbf{X})^{-1}\mathbf{x}_0}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:21px; text-align:center;">
+El término bajo la raíz mide la precisión de la estimación, que depende de $CM_E$ y de la posición de $\mathbf{x}_0$ respecto a los datos observados.
+</div>
+
+## Ejemplo: predicción del rendimiento esperado
+
+<p style="font-size:24px; text-align:justify; line-height:1.4;">
+Se desea estimar el rendimiento <strong>promedio</strong> de caña de azúcar para condiciones típicas: precipitación $=155$ mm/mes, nitrógeno $=150$ kg/ha y horas de sol $=5.75$ h/día (valores cercanos a las medias del estudio).
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:8px solid #1b4d2e; margin-top:14px; font-size:23px; text-align:center;">
+$$
+\hat y_0=32.585+0.109(155)+0.124(150)+2.689(5.75)=83.59 \text{ ton/ha}
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; margin-top:10px; font-size:23px; text-align:center;">
+$$
+IC_{95\%}(\text{media})=(81.81,\;85.36) \text{ ton/ha}
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:21px; text-align:center;">
+Se estima con 95% de confianza que el rendimiento <strong>promedio</strong> de los lotes con estas condiciones está entre 81.8 y 85.4 ton/ha.
+</div>
+
+## Predicción de una nueva observación individual
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Es distinto predecir el rendimiento <strong>promedio</strong> que predecir el rendimiento de <strong>un lote particular</strong> nuevo. La segunda incluye, además, la variabilidad propia de una observación individual.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Intervalo de predicción</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+\hat y_0 \pm t_{\alpha/2,\,n-k-1}\sqrt{CM_E\left(1+\mathbf{x}_0'(\mathbf{X}'\mathbf{X})^{-1}\mathbf{x}_0\right)}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:21px; text-align:center;">
+El "$+1$" adicional bajo la raíz hace que el intervalo de predicción sea <strong>siempre más ancho</strong> que el de confianza para la media.
+</div>
+
+## Comparación numérica: IC de la media versus intervalo de predicción
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:8px;">
+Para el mismo punto ($x_1=155$, $x_2=150$, $x_3=5.75$), con $\hat y_0=83.59$ ton/ha:
+</div>
+
+<table style="width:100%; font-size:22px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Tipo de intervalo</th><th style="padding:8px;">Límite inferior</th><th style="padding:8px;">Límite superior</th><th style="padding:8px;">Ancho</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Confianza para la media</td><td style="padding:8px;">81.81</td><td style="padding:8px;">85.36</td><td style="padding:8px;">3.55</td></tr>
+<tr><td style="padding:8px;">Predicción individual</td><td style="padding:8px;">74.11</td><td style="padding:8px;">93.06</td><td style="padding:8px;">18.95</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:10px; font-size:21px; text-align:center;">
+El intervalo de predicción es más de 5 veces más ancho: refleja la incertidumbre adicional de una observación individual frente a un promedio.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Uso práctico: si el agrónomo quiere planificar la producción esperada de la región (promedio), usa el IC de la media; si quiere anticipar el resultado de un lote nuevo específico, usa el intervalo de predicción.
+</div>
+
+## Errores comunes: intervalos de confianza y predicción
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Usar el intervalo de confianza para la media cuando el objetivo es predecir una observación individual (subestima la incertidumbre real).
+- Construir intervalos para combinaciones de covariables muy alejadas del rango observado (extrapolación), donde el modelo pierde validez.
+- Interpretar el ancho del intervalo de predicción como un error en el modelo, cuando en realidad refleja la variabilidad natural entre lotes.
+</div>
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<p style="font-size: 48px; font-weight: bold; color: #3b82f6;">
+Diagnóstico del Modelo de Regresión
+</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+¿El modelo ajustado es confiable? ¿Existen observaciones que distorsionan los resultados?
+</p>
+
+</div>
+
+## Residuos escalados: estandarizados y estudentizados
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Los residuos crudos $e_i=y_i-\hat y_i$ no son directamente comparables entre sí, pues su varianza depende de la posición de cada observación. Por ello se escalan.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:21px; text-align:center;">
+<strong>Residuo estandarizado</strong>
+$$
+r_i=\frac{e_i}{\sqrt{CM_E(1-h_{ii})}}
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:21px; text-align:center;">
+<strong>Residuo estudentizado</strong> (eliminado)
+$$
+t_i=\frac{e_i}{\sqrt{CM_{E(i)}(1-h_{ii})}}
+$$
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:10px; font-size:20px; text-align:center;">
+$h_{ii}$ es el leverage de la observación $i$. El residuo estudentizado usa $CM_{E(i)}$, calculado <strong>sin</strong> la observación $i$, por lo que es más sensible para detectar valores atípicos.
+</div>
+
+## Residuos escalados: resultado del ejemplo
 
 ```{r}
-#| echo: true
-set.seed(25)
-proteina <- rnorm(12, 17.4, 0.9)
-mu0 <- 18.0
-
-# Verificar normalidad
-sw <- shapiro.test(proteina)
-cat("Shapiro-Wilk p-valor:", round(sw$p.value, 4), "\n")
-
-# Prueba t unilateral izquierda (H1: mu < 18)
-resultado <- t.test(proteina, mu = mu0, alternative = "less", conf.level = 0.95)
-cat("t =", round(resultado$statistic, 4), "\n")
-cat("Valor-p =", round(resultado$p.value, 4), "\n")
-cat("Decisión:", ifelse(resultado$p.value < 0.05, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
+#| label: residuos-escalados
+#| echo: false
+#| fig-height: 3.2
+plot(rstudent(modelo), pch = 19, col = "#1a3a6b",
+     xlab = "Lote", ylab = "Residuo estudentizado",
+     main = "Residuos estudentizados por lote", ylim = c(-3.5, 3.5))
+abline(h = c(-2, 0, 2), lty = c(2, 1, 2), col = c("#b91c1c", "gray40", "#b91c1c"))
 ```
 
-## Taller 2: prueba Z para proporción
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>El ICA reporta que el 45% de los predios avícolas de Cundinamarca cumplen con la normativa de bioseguridad. Una ONG inspecciona 200 predios y encuentra que 100 cumplen. ¿Es la tasa observada significativamente diferente del 45% reportado? Use $\alpha = 0.05$.</p>
-  </div>
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:21px; text-align:center;">
+El lote 24 presenta el residuo estudentizado más extremo ($t_{24}=-2.95$), superando el umbral usual de $\pm2$; merece revisión adicional.
 </div>
 
-## Taller 2: solución
+## Estadístico PRESS
 
-```{r}
-#| echo: true
-x <- 100; n <- 200; p0 <- 0.45
-
-resultado <- prop.test(x, n, p = p0, alternative = "two.sided", correct = FALSE)
-cat("p̂ =", x/n, "\n")
-cat("Z =", round(sqrt(resultado$statistic), 4), "\n")
-cat("Valor-p =", round(resultado$p.value, 4), "\n")
-cat("IC 95%: [", round(resultado$conf.int[1], 4), ",",
-    round(resultado$conf.int[2], 4), "]\n")
-cat("Decisión:", ifelse(resultado$p.value < 0.05, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-```
-
-## Taller 3: prueba chi-cuadrado para la varianza
-
-<div class="block-example fragment fade-up" data-fragment-index="1">
-  <div class="block-title">Problema</div>
-  <div class="block-body">
-  <p>En un proceso de dosificación de fertilizante líquido, la variabilidad no debe superar $\sigma^2 = 0.04\,\text{L}^2$. Se tomaron 25 mediciones con $s^2 = 0.06\,\text{L}^2$. ¿Hay evidencia de que la varianza supera el límite? $\alpha = 0.01$.</p>
-  </div>
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El estadístico <strong>PRESS</strong> (<em>Prediction Sum of Squares</em>) mide la capacidad predictiva del modelo, usando residuos eliminados (<em>leave-one-out</em>): cada observación se predice con un modelo ajustado sin ella.
 </div>
 
-## Taller 3: solución
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Estadístico PRESS</div>
+<div class="block-body" style="font-size:26px; text-align:center;">
+$$
+PRESS=\sum_{i=1}^n \left(\frac{e_i}{1-h_{ii}}\right)^2
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:10px; font-size:22px; text-align:center;">
+Resultado del ejemplo: $PRESS=639.61$. Como $SC_T=2174.14$:
+$$
+R^2_{pred}=1-\frac{PRESS}{SC_T}=1-\frac{639.61}{2174.14}=0.706
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+$R^2_{pred}=0.706$ es razonablemente cercano a $R^2=0.775$: el modelo predice de forma consistente en datos no usados para su ajuste.
+</div>
+
+## Diagnósticos de influencia: leverage
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El <strong>leverage</strong> ($h_{ii}$, elementos diagonales de la matriz $\mathbf{H}=\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$) mide cuán alejada está una observación en el <strong>espacio de las covariables</strong> ($x$), independientemente de su valor de $y$.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Regla práctica de leverage alto</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+h_{ii}>\frac{2(k+1)}{n}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+En el ejemplo: $k=3$, $n=28$, umbral $=2(4)/28=0.286$. El promedio de los $h_{ii}$ siempre es $(k+1)/n=0.143$.
+</div>
+
+## Resultado del ejemplo: leverage por lote
 
 ```{r}
-#| echo: true
-n <- 25; s2 <- 0.06; sigma2_0 <- 0.04; alpha <- 0.01
-
-chi2_obs  <- (n - 1) * s2 / sigma2_0
-chi2_crit <- qchisq(1 - alpha, df = n - 1)
-vp        <- pchisq(chi2_obs, df = n - 1, lower.tail = FALSE)
-
-cat("χ² observado:", round(chi2_obs, 4), "\n")
-cat("χ² crítico (1%):", round(chi2_crit, 4), "\n")
-cat("Valor-p:", round(vp, 4), "\n")
-cat("Decisión:", ifelse(vp < alpha, "RECHAZAR H0", "NO RECHAZAR H0"), "\n")
-cat("Conclusión: con α = 0.01", ifelse(vp < alpha,
-    "hay evidencia de que la varianza supera el límite de proceso.",
-    "no hay evidencia suficiente para afirmar que la varianza supera el límite."), "\n")
+#| label: leverage-plot
+#| echo: false
+#| fig-height: 3.2
+hv <- hatvalues(modelo)
+plot(hv, pch = 19, col = "#1a3a6b", xlab = "Lote", ylab = "Leverage (h_ii)",
+     main = "Leverage por observación", ylim = c(0, 0.35))
+abline(h = 2*4/28, col = "#b91c1c", lty = 2, lwd = 2)
+text(28, 2*4/28 + 0.015, "Umbral 2(k+1)/n", col = "#b91c1c", cex = 0.7, pos = 2)
 ```
 
-## Próxima clase
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:21px; text-align:center;">
+El lote 14 tiene leverage $h_{14}=0.324>0.286$: presenta una combinación inusual de precipitación, nitrógeno y horas de sol respecto a los demás lotes.
+</div>
 
-<div class="block-note fragment fade-up" data-fragment-index="1">
-  <div class="block-body">
-  <p><strong>Clase 26: Comparación de medias y proporciones.</strong> Extenderemos las pruebas al caso de dos grupos: prueba t de dos muestras independientes, prueba t pareada y prueba Z para diferencia de proporciones.</p>
-  </div>
+## Distancia de Cook
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+La <strong>distancia de Cook</strong> combina el leverage con la magnitud del residuo: mide cuánto cambiarían las estimaciones $\hat{\boldsymbol\beta}$ si se eliminara la observación $i$.
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Distancia de Cook</div>
+<div class="block-body" style="font-size:25px; text-align:center;">
+$$
+D_i=\frac{r_i^2}{k+1}\cdot\frac{h_{ii}}{1-h_{ii}}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; margin-top:8px; font-size:21px; text-align:center;">
+Regla práctica usual: observaciones con $D_i>4/n$ se consideran potencialmente influyentes (en el ejemplo, umbral $=4/28=0.143$).
+</div>
+
+## Resultado del ejemplo: distancia de Cook
+
+```{r}
+#| label: cook-plot
+#| echo: false
+#| fig-height: 3.2
+cd <- cooks.distance(modelo)
+plot(cd, type = "h", col = "#1a3a6b", lwd = 3, xlab = "Lote", ylab = "Distancia de Cook",
+     main = "Distancia de Cook por observación")
+points(cd, pch = 19, col = "#1a3a6b")
+abline(h = 4/28, col = "#b91c1c", lty = 2, lwd = 2)
+text(28, 4/28 + 0.01, "Umbral 4/n", col = "#b91c1c", cex = 0.7, pos = 2)
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:20px; text-align:center;">
+Los lotes 14 ($D_{14}=0.157$) y 27 ($D_{27}=0.157$) superan el umbral $4/n=0.143$: ambos son observaciones potencialmente influyentes, aunque por razones distintas (leverage alto en el lote 14, residuo grande en el lote 27).
+</div>
+
+## DFFITS y DFBETAS
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Mientras la distancia de Cook resume la influencia en <strong>todos</strong> los coeficientes a la vez, DFFITS y DFBETAS detallan la influencia sobre el valor ajustado y sobre cada coeficiente individual, respectivamente.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:7px solid #1a3a6b; font-size:20px; text-align:center;">
+<strong>DFFITS</strong>: cambio estandarizado en $\hat y_i$ al eliminar la observación $i$.
+$$\text{Umbral: }|DFFITS_i|>2\sqrt{(k+1)/n}$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:7px solid #1b4d2e; font-size:20px; text-align:center;">
+<strong>DFBETAS</strong>: cambio estandarizado en cada $\hat\beta_j$ al eliminar la observación $i$.
+$$\text{Umbral: }|DFBETAS_{ij}|>2/\sqrt{n}$$
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:10px; font-size:20px; text-align:center;">
+En el ejemplo, $2\sqrt{4/28}=0.756$. El lote 14 tiene $DFFITS_{14}=0.798>0.756$: confirma su influencia sobre el valor ajustado, consistente con su alta distancia de Cook.
+</div>
+
+## Identificación de observaciones influyentes: síntesis
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Lote</th><th style="padding:8px;">Leverage $h_{ii}$</th><th style="padding:8px;">Residuo estudentizado</th><th style="padding:8px;">Cook $D_i$</th><th style="padding:8px;">Diagnóstico</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">14</td><td style="padding:8px;">0.324</td><td style="padding:8px;">$-2.95$</td><td style="padding:8px;">0.157</td><td style="padding:8px;">Leverage alto y residuo grande</td></tr>
+<tr><td style="padding:8px;">27</td><td style="padding:8px;">0.131</td><td style="padding:8px;">2.20</td><td style="padding:8px;">0.157</td><td style="padding:8px;">Residuo grande, leverage normal</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:12px; border-radius:14px; border-left:8px solid #b91c1c; margin-top:12px; font-size:21px; text-align:justify;">
+El lote 14 (alto leverage en nitrógeno: 210.3 kg/ha, casi el máximo del estudio) y el lote 27 (rendimiento inusualmente alto, 100.5 ton/ha) requieren verificación de campo antes de decidir si se excluyen o se mantienen en el análisis.
+</div>
+
+## Prueba de falta de ajuste: motivación
+
+<div style="font-size:26px; text-align:justify; line-height:1.4;">
+Cuando existen <strong>réplicas</strong> (observaciones con los mismos valores, o casi idénticos, de las covariables), es posible separar el error total en dos componentes: el <strong>error puro</strong> (variabilidad entre réplicas) y el <strong>error por falta de ajuste</strong> (desviación sistemática del modelo).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:center;">
+Ejemplo conceptual: si en tres lotes distintos se aplicó exactamente la misma dosis de nitrógeno (150 kg/ha) bajo condiciones similares de precipitación y sol, la variación del rendimiento entre esos tres lotes es <strong>error puro</strong>, no atribuible al modelo.
+</div>
+
+## Tabla ANOVA con descomposición de falta de ajuste
+
+<div style="font-size:23px; text-align:justify; line-height:1.3; margin-bottom:6px;">
+Cuando hay réplicas, $SC_E$ se descompone en error puro ($SC_{EP}$) y falta de ajuste ($SC_{FA}$):
+</div>
+
+<table style="width:100%; font-size:19px; border-collapse:collapse; text-align:center;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Fuente</th><th style="padding:6px;">SC</th><th style="padding:6px;">gl</th><th style="padding:6px;">CM</th><th style="padding:6px;">F</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Regresión</td><td style="padding:6px;">$SC_{Reg}$</td><td style="padding:6px;">$k$</td><td style="padding:6px;">$CM_{Reg}$</td><td style="padding:6px;"></td></tr>
+<tr><td style="padding:6px;">Falta de ajuste</td><td style="padding:6px;">$SC_{FA}$</td><td style="padding:6px;">$m-k-1$</td><td style="padding:6px;">$CM_{FA}$</td><td style="padding:6px;" rowspan="2">$F=\dfrac{CM_{FA}}{CM_{EP}}$</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Error puro</td><td style="padding:6px;">$SC_{EP}$</td><td style="padding:6px;">$n-m$</td><td style="padding:6px;">$CM_{EP}$</td></tr>
+<tr><td style="padding:6px;">Total</td><td style="padding:6px;">$SC_T$</td><td style="padding:6px;">$n-1$</td><td style="padding:6px;"></td><td style="padding:6px;"></td></tr>
+</table>
+
+<div style="font-size:18px; margin-top:6px;">$m$: número de combinaciones distintas de niveles de las covariables.</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:8px; font-size:20px; text-align:center;">
+Se rechaza el supuesto de adecuación del modelo si $F_{calc}=CM_{FA}/CM_{EP}>F_{\alpha,\,m-k-1,\,n-m}$: el modelo lineal no captura toda la estructura sistemática.
+</div>
+
+## Ejemplo conceptual: falta de ajuste en el cultivo de caña
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Supóngase que, en un estudio complementario, se registran tres lotes adicionales con exactamente la misma combinación de precipitación (160 mm/mes), nitrógeno (150 kg/ha) y sol (6.0 h/día), obteniendo rendimientos de 84.1, 85.6 y 83.2 ton/ha.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-top:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:center;">
+La variabilidad entre estas tres réplicas (84.1, 85.6, 83.2) es <strong>error puro</strong>: refleja variación natural del suelo o el clima, no del modelo.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:14px; border-radius:14px; border-top:8px solid #1b4d2e; margin-top:10px; font-size:22px; text-align:center;">
+Si el promedio ajustado por el modelo para ese punto difiere sistemáticamente del promedio de las réplicas (84.3), esa diferencia indica <strong>falta de ajuste</strong>: el modelo lineal podría no ser adecuado (faltan términos cuadráticos o interacciones).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:10px; font-size:20px; text-align:center;">
+En la práctica agronómica, las réplicas suelen obtenerse mediante diseños experimentales planeados, no observacionales como el de este ejemplo.
+</div>
+
+## Errores comunes: diagnóstico del modelo
+
+<div class="block-alert fragment fade-up" data-fragment-index="1">
+<div class="block-title">Advertencia: errores frecuentes</div>
+<div class="block-body" style="font-size:23px; line-height:1.4;">
+- Eliminar automáticamente toda observación con alta distancia de Cook sin verificar primero si es un error de registro o una observación válida.
+- Confundir leverage alto (posición inusual en $x$) con residuo grande (mal ajuste en $y$): son diagnósticos distintos y complementarios.
+- Calcular PRESS o residuos estudentizados sin re-ajustar correctamente el modelo "leave-one-out" (las fórmulas exactas evitan recalcular $n$ regresiones).
+- Aplicar la prueba de falta de ajuste sin verificar que existan verdaderas réplicas en los niveles de las covariables.
+</div>
+</div>
+
+## Taller en Clase {.center .middle}
+
+## Instrucciones
+
+<div style="font-size:27px; text-align:justify; line-height:1.5;">
+Resuelva los siguientes ejercicios aplicando los conceptos de regresión lineal múltiple desarrollados en esta clase: estimación de parámetros, pruebas de hipótesis, intervalos de confianza y predicción, y diagnóstico del modelo.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:23px; text-align:center;">
+Para cada ejercicio: plantee las hipótesis, calcule el estadístico correspondiente, aplique el criterio de decisión y concluya en el contexto del problema agrícola.
+</div>
+
+## Ejercicio 1
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Un agrónomo del Tolima ajusta un modelo de regresión múltiple para el rendimiento de arroz (ton/ha) en función de la dosis de fósforo ($x_1$, kg/ha) y la densidad de siembra ($x_2$, plantas/m²), con $n=20$ parcelas. Obtiene:
+$$\hat y=2.1+0.045x_1+0.38x_2 \qquad EE(\hat\beta_1)=0.014 \qquad EE(\hat\beta_2)=0.11$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:22px; text-align:justify;">
+a) Realice la prueba t para cada coeficiente con $\alpha=0.05$ y concluya.<br>
+b) Construya el IC 95% para $\beta_1$.<br>
+c) Interprete $\hat\beta_2$ en el contexto agronómico.
+</div>
+
+## Ejercicio 2
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Para un modelo de rendimiento de papa (ton/ha) en función de altitud (msnm), precipitación (mm) y dosis de potasio (kg/ha), con $n=24$, se obtiene la tabla ANOVA:
+</div>
+
+<table style="width:100%; font-size:21px; text-align:center; margin-top:10px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:7px;">Fuente</th><th style="padding:7px;">SC</th><th style="padding:7px;">gl</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:7px;">Regresión</td><td style="padding:7px;">845.2</td><td style="padding:7px;">3</td></tr>
+<tr><td style="padding:7px;">Error</td><td style="padding:7px;">312.6</td><td style="padding:7px;">20</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:22px; text-align:justify;">
+a) Complete la tabla ANOVA (CM, F).<br>
+b) Realice la prueba de significancia global con $\alpha=0.05$.<br>
+c) Calcule $R^2$ e interprete.
+</div>
+
+## Ejercicio 3
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Una asociación de ganaderos del Casanare modela la ganancia de peso de novillos (kg/mes) en función de la carga animal (UA/ha), la oferta forrajera (kg MS/ha) y la suplementación mineral (g/animal/día). El modelo completo tiene $SC_E=145.3$ con $gl=26$; el modelo sin la variable suplementación mineral tiene $SC_E=189.7$ con $gl=27$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:12px; border-radius:14px; border-left:8px solid #1b4d2e; margin-top:12px; font-size:22px; text-align:justify;">
+a) Calcule el estadístico F parcial para evaluar el aporte de la suplementación mineral.<br>
+b) Use $\alpha=0.05$ y concluya.<br>
+c) Verifique la relación $F=t^2$ si el valor t individual reportado es $2.31$.
+</div>
+
+## Ejercicio 4
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+En un cultivo de flores (rosas) en Cundinamarca se ajusta un modelo de regresión para el número de tallos exportables por planta en función de la radiación solar acumulada y la frecuencia de riego, con $n=18$. Para un punto específico se obtiene $\hat y_0=42.5$ tallos, con error estándar de la media estimada $=1.8$ y $CM_E=12.4$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:12px; font-size:22px; text-align:justify;">
+a) Construya el IC 95% para la respuesta media en ese punto ($t_{0.025,15}=2.131$).<br>
+b) Construya el intervalo de predicción 95% para una nueva planta en esas condiciones.<br>
+c) Explique por qué el segundo intervalo es más ancho.
+</div>
+
+## Ejercicio 5
+
+<div style="font-size:25px; text-align:justify; line-height:1.5;">
+Para el modelo de rendimiento de caña de azúcar visto en esta clase ($n=28$, $k=3$), un nuevo lote presenta leverage $h_{ii}=0.41$ y distancia de Cook $D_i=0.21$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:12px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:12px; font-size:22px; text-align:justify;">
+a) Compare $h_{ii}$ contra el umbral $2(k+1)/n$. ¿Es un punto de alto leverage?<br>
+b) Compare $D_i$ contra el umbral $4/n$. ¿Es una observación influyente?<br>
+c) Proponga dos posibles explicaciones agronómicas para que este lote tenga alto leverage.
 </div>
