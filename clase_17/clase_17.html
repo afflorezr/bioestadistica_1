@@ -1,0 +1,4263 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="clase_17_files/libs/clipboard/clipboard.min.js"></script>
+<script src="clase_17_files/libs/quarto-html/tabby.min.js"></script>
+<script src="clase_17_files/libs/quarto-html/popper.min.js"></script>
+<script src="clase_17_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="clase_17_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="clase_17_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="clase_17_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
+
+  <meta name="author" content="">
+  <title>Bioestadística Fundamental</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="clase_17_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="clase_17_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="clase_17_files/libs/revealjs/dist/theme/quarto-f4b8bf52ea76bea8fba8b4c3a5ceb036.css">
+  <link rel="stylesheet" href="../assets/syntax-highlight.css">
+  <link rel="stylesheet" href="../assets/custom.css">
+  <link rel="stylesheet" href="../assets/pacman.css">
+  <link href="clase_17_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="clase_17_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="clase_17_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="clase_17_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
+  <script defer="" src="../assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+  <script>
+  window.addEventListener('load', function() {
+    if (typeof Reveal === 'undefined') return;
+    function updateLogoVisibility() {
+      if (typeof Reveal.getCurrentSlide !== 'function') return;
+      var logos = document.querySelectorAll('.reveal .slide-logo');
+      if (!logos.length) return;
+      var current = Reveal.getCurrentSlide();
+      var isTitle = current && current.id === 'title-slide';
+      logos.forEach(function(logo) {
+        logo.style.display = isTitle ? 'none' : '';
+      });
+    }
+    updateLogoVisibility();
+    Reveal.on('slidechanged', updateLogoVisibility);
+  });
+  </script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Bioestadística Fundamental</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+ 
+</div>
+        <p class="quarto-title-affiliation">
+            Departamento de Estadística, Sede Bogotá
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="clase-17" class="slide level2 center middle">
+<h2>Clase 17</h2>
+</section>
+<section id="contenido" class="slide level2">
+<h2>Contenido</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 30px; margin-bottom: 14px; color: #1b4d2e;">
+Parte I: Modelo de Regresión Multiple
+</h3>
+<ul>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="2">
+Introducción.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="3">
+Comparación Modelo Simple vs Multiple.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="4">
+Modelo de regresión múltiple.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="5">
+Tipos de variables.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="6">
+Estimación por MCO.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="7">
+Interpretación de los coeficientes.
+</li>
+</ul>
+</div>
+<div>
+<h3 class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; margin-bottom: 14px; color: #1a3a6b;">
+Parte II: Inferencia y diagnóstico
+</h3>
+<ul>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="9">
+Bondad de ajuste y prueba F.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="10">
+Pruebas t para coeficientes.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="11">
+Supuestos y diagnóstico de residuos.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="12">
+Multicolinealidad.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="13">
+Interacciones entre variables.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="14">
+Criterios de selección de variables.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="15">
+Predicción y validación.
+</li>
+</ul>
+</div>
+<div style="text-align: center; margin-top: 40px;">
+<h3 class="fragment fade-in" data-fragment-index="16" style="font-size: 30px; margin-bottom: 14px; color: #88351c;">
+Parte III: Aplicaciones y Ejemplos
+</h3>
+<ul>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="17">
+Ejemplo con variables cuantitativas.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="18">
+Ejemplo con variables mixtas.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="19">
+Introducción a la regresión logística.
+</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="20">
+Taller en clase.
+</li>
+</ul>
+</div>
+</div>
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">
+Análisis de Regresión Múltiple
+</p>
+<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">
+Modelar una respuesta con varias variables explicativas
+</p>
+<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">
+Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá
+</p>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div style="
+height:500px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;">
+<div class="fragment fade-in" data-fragment-index="1" style="
+font-size:28px;
+font-weight:600;
+color:#64748b;
+letter-spacing:2px;">
+<p>PARTE I</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="
+margin-top:20px;
+font-size:54px;
+font-weight:bold;
+color:#1e3a8a;">
+<p>Modelo de Regresión Lineal Multiple</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="
+margin-top:30px;
+width:70%;
+height:4px;
+background:#3b82f6;
+border-radius:10px;">
+
+</div>
+<div class="fragment fade-in" data-fragment-index="4" style="
+margin-top:35px;
+font-size:24px;
+color:#475569;">
+<p>Introducción a la regresión multiple │ Comparación Modelo Simple vs Multiple │ Modelo de regresión múltiple. │ Tipos de variables. │ Estimación por MCO. │ Interpretación de los coeficientes │</p>
+</div>
+</div>
+</section>
+<section id="introducción-a-la-regresión-lineal-múltiple" class="slide level2">
+<h2>Introducción a la regresión lineal múltiple</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 12px;">
+¿Qué es?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 26px; text-align: justify;">
+La regresión lineal múltiple modela la relación entre una variable respuesta <span class="math inline">\(Y\)</span> y dos o más variables explicativas <span class="math inline">\(X_1, X_2, \ldots, X_k\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Permite estimar el <strong>efecto individual</strong> de cada predictor controlando por los demás factores.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+Es una de las herramientas más utilizadas en la investigación científica para analizar datos observacionales y experimentales.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 26px; margin-bottom: 12px;">
+Áreas de aplicación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+<strong>Agronomía:</strong> rendimiento de cultivos según fertilización, riego, densidad y suelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
+<strong>Salud pública:</strong> factores de riesgo asociados a enfermedades crónicas.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
+<strong>Ecología:</strong> biodiversidad en función de variables ambientales y de hábitat.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
+<strong>Ingeniería:</strong> calidad de producto según parámetros de proceso.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
+<strong>Economía:</strong> modelos de demanda, producción y precios agrícolas.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="cuándo-usar-regresión-lineal-múltiple" class="slide level2">
+<h2>¿Cuándo usar regresión lineal múltiple?</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 12px;">
+Se aplica cuando…
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
+Se sospecha que <strong>más de un factor</strong> influye sobre la variable respuesta. Por ejemplo, el rendimiento de un cultivo no depende solo del fertilizante, sino también del riego, el tipo de suelo y la temperatura.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+Se desea <strong>separar el efecto</strong> de cada variable explicativa sobre <span class="math inline">\(Y\)</span>, manteniendo las demás constantes. Esto es fundamental cuando los predictores están correlacionados entre sí.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+Se necesita <strong>controlar variables confusoras</strong> que podrían sesgar la relación aparente entre un predictor y la respuesta si no se incluyen en el modelo.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 26px; margin-bottom: 12px;">
+Condiciones necesarias
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+La variable respuesta <span class="math inline">\(Y\)</span> debe ser <strong>cuantitativa continua</strong> (peso, rendimiento, concentración, altura).
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
+La relación entre <span class="math inline">\(Y\)</span> y los predictores debe ser aproximadamente <strong>lineal en los parámetros</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
+Se dispone de una muestra con <strong>suficientes observaciones</strong> relativas al número de predictores (regla práctica: al menos 10–15 observaciones por predictor).
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
+Los predictores <strong>no deben ser redundantes</strong> entre sí (ausencia de colinealidad perfecta).
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="qué-preguntas-responde-el-modelo" class="slide level2">
+<h2>¿Qué preguntas responde el modelo?</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #2c3e50; padding: 16px 20px;">
+<h4 style="color:#2c3e50; font-size: 26px; margin-bottom: 12px;">
+Preguntas que podemos abordar
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
+¿Cuánto <strong>aumenta el rendimiento</strong> por cada kg adicional de nitrógeno aplicado, si la precipitación y la materia orgánica permanecen constantes?
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+¿La <strong>precipitación</strong> tiene un efecto significativo sobre el rendimiento una vez que se controla por la fertilización?
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+¿Cuál de los predictores tiene el <strong>mayor impacto</strong> relativo sobre la respuesta?
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
+¿El modelo en conjunto <strong>explica</strong> una proporción significativa de la variabilidad observada en <span class="math inline">\(Y\)</span>?
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="border-left: 4px solid #8e44ad; padding: 16px 20px;">
+<h4 style="color:#8e44ad; font-size: 26px; margin-bottom: 12px;">
+Ejemplo en agronomía
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 25px; text-align: justify;">
+Un investigador mide en 80 parcelas: rendimiento de maíz (kg/ha), fertilizante nitrogenado (kg/ha), precipitación acumulada (mm) y materia orgánica del suelo (%).
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
+<strong>Objetivo:</strong> determinar cuáles factores influyen significativamente y cuantificar su efecto individual.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
+<strong>¿Por qué no regresión simple?</strong> Porque analizar cada predictor por separado ignora que los efectos se mezclan si no se controlan mutuamente.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="regresión-simple-vs.-regresión-múltiple" class="slide level2">
+<h2>Regresión simple vs.&nbsp;regresión múltiple</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 12px;">
+Regresión lineal simple
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;">
+<strong>Modelo:</strong> <span class="math inline">\(Y = \beta_0 + \beta_1 X + \varepsilon\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;">
+Un solo predictor <span class="math inline">\(X\)</span> explica la variabilidad de <span class="math inline">\(Y\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+Geométricamente: una <strong>recta</strong> en el plano <span class="math inline">\(\mathbb{R}^2\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
+<span class="math inline">\(\beta_1\)</span> mide el cambio promedio en <span class="math inline">\(Y\)</span> por unidad de <span class="math inline">\(X\)</span>, sin controlar otros factores.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+Útil cuando el fenómeno depende principalmente de una sola variable o como análisis exploratorio inicial.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 26px; margin-bottom: 12px;">
+Regresión lineal múltiple
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 25px; text-align: justify;">
+<strong>Modelo:</strong> <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_k X_k + \varepsilon\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
+Varios predictores <span class="math inline">\(X_1, X_2, \ldots, X_k\)</span> explican conjuntamente a <span class="math inline">\(Y\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
+Geométricamente: un <strong>hiperplano</strong> en <span class="math inline">\(\mathbb{R}^{k+1}\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
+Cada <span class="math inline">\(\beta_i\)</span> mide el efecto de <span class="math inline">\(X_i\)</span> <strong>controlando</strong> por las demás variables.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
+Permite modelar fenómenos complejos donde múltiples factores actúan simultáneamente.
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="13" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 8px; padding: 16px 24px; margin-top: 20px;">
+<p style="font-size: 28px; text-align: center; color: #1e1b4b; margin: 0;">
+<strong>Idea clave:</strong> la regresión múltiple no es simplemente “más variables”; cambia la interpretación de cada coeficiente porque ahora cada <span class="math inline">\(\beta_i\)</span> está ajustado por la presencia de los demás predictores.
+</p>
+</div>
+</section>
+<section id="modelo-de-regresión-múltiple" class="slide level2">
+<h2>Modelo de regresión múltiple</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Definición
+</div>
+<div class="block-body">
+<p style="font-size: 26px; text-align: justify;">
+El modelo de regresión lineal múltiple expresa la variable respuesta <span class="math inline">\(Y\)</span> como una combinación lineal de <span class="math inline">\(k\)</span> predictores más un término de error:
+</p>
+<p style="font-size: 30px; text-align: center; margin: 16px 0;">
+<span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_k X_k + \varepsilon\)</span>
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 25px; margin-bottom: 10px;">
+Componentes
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+<strong><span class="math inline">\(Y\)</span>:</strong> variable respuesta. Lo que queremos explicar (ej: rendimiento en kg/ha).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+<strong><span class="math inline">\(X_1, X_2, \ldots, X_k\)</span>:</strong> variables explicativas o predictores (ej: fertilizante, precipitación, materia orgánica).
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+<strong><span class="math inline">\(\varepsilon\)</span>:</strong> error aleatorio. Representa la variabilidad no explicada por los predictores.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 25px; margin-bottom: 10px;">
+Parámetros
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px; text-align: justify;">
+<strong><span class="math inline">\(\beta_0\)</span>:</strong> intercepto. Valor esperado de <span class="math inline">\(Y\)</span> cuando todos los predictores valen cero.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px; text-align: justify;">
+<strong><span class="math inline">\(\beta_1, \beta_2, \ldots, \beta_k\)</span>:</strong> coeficientes de regresión. Cada <span class="math inline">\(\beta_i\)</span> mide el cambio promedio en <span class="math inline">\(Y\)</span> por unidad de <span class="math inline">\(X_i\)</span>, manteniendo los demás predictores constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
+Los parámetros son <strong>desconocidos</strong> y se estiman a partir de los datos observados mediante mínimos cuadrados.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="representación-matricial-del-modelo" class="slide level2">
+<h2>Representación matricial del modelo</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 12px 20px; margin-bottom: 10px;">
+<p style="font-size: 24px; text-align: center; margin: 0;">
+El modelo de regresión múltiple <span class="math inline">\(\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span> se puede descomponer matricialmente como:
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 16px; margin-bottom: 10px; text-align: center; font-size: 50%;">
+<p><span class="math display">\[\underbrace{\begin{pmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_n \end{pmatrix}}_{\mathbf{Y}} \;=\; \underbrace{\begin{pmatrix} 1 &amp; X_{11} &amp; X_{12} &amp; \cdots &amp; X_{1k} \\ 1 &amp; X_{21} &amp; X_{22} &amp; \cdots &amp; X_{2k} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; X_{n1} &amp; X_{n2} &amp; \cdots &amp; X_{nk} \end{pmatrix}}_{\mathbf{X}} \;\underbrace{\begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_k \end{pmatrix}}_{\boldsymbol{\beta}} \;+\; \underbrace{\begin{pmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_n \end{pmatrix}}_{\boldsymbol{\varepsilon}}\]</span></p>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Lectura de la expresión
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+Cada <strong>fila</strong> de <span class="math inline">\(\mathbf{X}\)</span> contiene los valores de los <span class="math inline">\(k\)</span> predictores para una observación.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+La <strong>primera columna</strong> de <span class="math inline">\(\mathbf{X}\)</span> es de unos: esto genera el intercepto <span class="math inline">\(\beta_0\)</span> en el producto.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+El producto <span class="math inline">\(\mathbf{X}\boldsymbol{\beta}\)</span> da el vector de <strong>valores predichos</strong> <span class="math inline">\(\hat{\mathbf{Y}}\)</span> para todas las observaciones.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+El vector <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> captura lo que el modelo <strong>no logra explicar</strong>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+¿Por qué esta notación?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+Resume las <span class="math inline">\(n\)</span> ecuaciones individuales en <strong>una sola expresión</strong> compacta y elegante.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+Facilita obtener la solución analítica por MCO: <span class="math inline">\(\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{Y}\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+Es exactamente lo que R resuelve internamente con la función <code>lm()</code>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="tipos-de-modelos-según-las-variables" class="slide level2">
+<h2>Tipos de modelos según las variables</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 12px 20px; margin-bottom: 12px;">
+<p style="font-size: 24px; text-align: center; margin: 0;">
+El modelo de regresión múltiple es flexible: puede incorporar diferentes tipos de variables explicativas y respuesta.
+</p>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Según los predictores
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: justify;">
+<strong>Todas cuantitativas:</strong> el caso clásico. Ej: predecir rendimiento a partir de fertilizante (kg/ha), precipitación (mm) y temperatura (°C).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+<strong>Mixto (cuantitativas + cualitativas):</strong> se incluyen variables categóricas mediante <strong>variables indicadoras</strong> (dummy). Ej: tipo de suelo (arcilloso, arenoso) junto con dosis de riego.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+Las variables dummy toman valores 0 o 1 y permiten comparar categorías dentro del mismo modelo lineal.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+Según la variable respuesta
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 22px; text-align: justify;">
+<strong><span class="math inline">\(Y\)</span> cuantitativa continua:</strong> regresión lineal múltiple clásica (lo que estamos estudiando).
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+<strong><span class="math inline">\(Y\)</span> binaria (0/1):</strong> se requiere <strong>regresión logística</strong>. Ej: ¿la planta sobrevive o no? ¿el suelo está contaminado o no?
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+La regresión logística modela la <strong>probabilidad</strong> de que ocurra un evento, no un valor continuo.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+Más adelante haremos una introducción a este tipo de regresión.
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="11" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 8px; padding: 12px 20px; margin-top: 12px;">
+<p style="font-size: 24px; text-align: center; color: #1e1b4b; margin: 0;">
+<strong>En este curso:</strong> nos centraremos en la regresión lineal múltiple con <span class="math inline">\(Y\)</span> continua, pero es importante saber que el marco se extiende a otros escenarios.
+</p>
+</div>
+</section>
+<section id="estimación-por-mínimos-cuadrados-ordinarios" class="slide level2">
+<h2>Estimación por mínimos cuadrados ordinarios</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Idea central
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+El método de <strong>Mínimos Cuadrados Ordinarios (MCO)</strong> busca los valores de <span class="math inline">\(\boldsymbol{\beta}\)</span> que hacen que las predicciones del modelo estén lo más cerca posible de los valores observados, minimizando la suma de los errores al cuadrado:
+</p>
+<p style="font-size: 26px; text-align: center; margin: 10px 0;">
+<span class="math inline">\(S(\boldsymbol{\beta}) = \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2\)</span>
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Solución analítica
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+Se derivan las ecuaciones normales igualando las derivadas parciales a cero.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+La solución en forma matricial es:
+</li>
+</ul>
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: center; margin: 8px 0;">
+<span class="math inline">\(\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{Y}\)</span>
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 21px; text-align: justify;">
+Esta solución es <strong>única</strong> siempre que <span class="math inline">\(\mathbf{X}^\top\mathbf{X}\)</span> sea invertible (no haya colinealidad perfecta).
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 21px; text-align: justify;">
+<strong>Nota:</strong> también se puede resolver el sistema de ecuaciones normales de forma escalar (derivada parcial por cada <span class="math inline">\(\beta_i\)</span>), pero la notación matricial es equivalente, más compacta y es la que usan los software como R.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+¿Qué obtenemos?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+<strong>Valores ajustados:</strong> <span class="math inline">\(\hat{\mathbf{Y}} = \mathbf{X}\hat{\boldsymbol{\beta}}\)</span>, las predicciones del modelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+<strong>Residuos:</strong> <span class="math inline">\(\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}}\)</span>, la diferencia entre lo observado y lo predicho.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 21px; text-align: justify;">
+Los residuos son clave para evaluar la calidad del ajuste y verificar los supuestos del modelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 21px; text-align: justify;">
+el método por mínimos cuadrados ordinarios (MCO) no requiere normalidad para estimar <span class="math inline">\(\boldsymbol{\beta}\)</span>; la normalidad se necesita para la <strong>inferencia</strong> (pruebas e intervalos).
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="interpretación-de-los-coeficientes" class="slide level2">
+<h2>Interpretación de los coeficientes</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Principio fundamental
+</div>
+<div class="block-body">
+<p style="font-size: 25px; text-align: justify;">
+En regresión múltiple, cada coeficiente <span class="math inline">\(\beta_i\)</span> mide el <strong>efecto parcial</strong> de <span class="math inline">\(X_i\)</span> sobre <span class="math inline">\(Y\)</span>: el cambio promedio en <span class="math inline">\(Y\)</span> cuando <span class="math inline">\(X_i\)</span> aumenta una unidad, <strong>manteniendo todos los demás predictores constantes</strong>.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Ejemplo concreto
+</h4>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: center; margin: 8px 0; background-color: #f8fafc; padding: 10px; border-radius: 6px;">
+<span class="math inline">\(\hat{Y} = 1200 + 2.5\,X_1 + 0.8\,X_2 + 180\,X_3\)</span>
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; text-align: justify;">
+<strong><span class="math inline">\(\hat{\beta}_1 = 2.5\)</span>:</strong> por cada kg/ha adicional de fertilizante, el rendimiento aumenta en promedio 2.5 kg/ha, si precipitación y materia orgánica no cambian.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: justify;">
+<strong><span class="math inline">\(\hat{\beta}_2 = 0.8\)</span>:</strong> por cada mm adicional de precipitación, el rendimiento sube 0.8 kg/ha, manteniendo las demás variables constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 22px; text-align: justify;">
+<strong><span class="math inline">\(\hat{\beta}_3 = 180\)</span>:</strong> por cada unidad porcentual adicional de materia orgánica, el rendimiento aumenta 180 kg/ha, manteniendo las demás variables constantes.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+Consideraciones importantes
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: justify;">
+<strong>Intercepto (<span class="math inline">\(\hat{\beta}_0\)</span>):</strong> valor esperado de <span class="math inline">\(Y\)</span> cuando todos los predictores son cero. Solo tiene sentido si el origen está en la zona de observación.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 22px; text-align: justify;">
+<strong>Coeficiente ajustado ≠ marginal:</strong> el valor de <span class="math inline">\(\beta_i\)</span> cambia si se agregan o quitan predictores del modelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 22px; text-align: justify;">
+<strong>Magnitud no es importancia:</strong> los coeficientes dependen de las unidades; no se pueden comparar directamente entre predictores con escalas distintas.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 22px; text-align: justify;">
+<strong>Correlación ≠ causalidad:</strong> un coeficiente significativo no implica que <span class="math inline">\(X_i\)</span> cause cambios en <span class="math inline">\(Y\)</span>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div style="
+height:500px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;">
+<div class="fragment fade-in" data-fragment-index="1" style="
+font-size:28px;
+font-weight:600;
+color:#64748b;
+letter-spacing:2px;">
+<p>PARTE II</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="
+margin-top:20px;
+font-size:54px;
+font-weight:bold;
+color:#1e3a8a;">
+<p>Inferencia y Diagnóstico</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="
+margin-top:30px;
+width:70%;
+height:4px;
+background:#3b82f6;
+border-radius:10px;">
+
+</div>
+<div class="fragment fade-in" data-fragment-index="4" style="
+margin-top:35px;
+font-size:24px;
+color:#475569;">
+<p>Bondad de ajuste y prueba F │ Pruebas t para coeficientes │ Supuestos y diagnóstico de residuos │ Multicolinealidad │ Interacciones entre variables │ Selección de variables │ Predicción y validación │</p>
+</div>
+</div>
+</section>
+<section id="bondad-de-ajuste-r2-y-r2-ajustado" class="slide level2">
+<h2>Bondad de ajuste: <span class="math inline">\(R^2\)</span> y <span class="math inline">\(R^2\)</span> ajustado</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Qué tan bien ajusta el modelo?
+</div>
+<div class="block-body">
+<p style="font-size: 21px; text-align: justify;">
+Una vez estimado el modelo, necesitamos medir <strong>qué proporción de la variabilidad de <span class="math inline">\(Y\)</span> logra explicar</strong>. Para esto usamos el coeficiente de determinación <span class="math inline">\(R^2\)</span> y su versión ajustada <span class="math inline">\(R^2_{adj}\)</span>.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+<span class="math inline">\(R^2\)</span> (R cuadrado)
+</h4>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: center; margin: 6px 0;">
+<span class="math inline">\(R^2 = 1 - \dfrac{SCR}{SCT} = \dfrac{SCE}{SCT}\)</span>
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
+Mide la proporción de la variabilidad total de <span class="math inline">\(Y\)</span> que es explicada por el modelo. Va de 0 a 1.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
+<strong>Problema:</strong> siempre aumenta al agregar más predictores, aunque no aporten información real.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
+Poco confiable para comparar modelos con diferente número de variables.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+<span class="math inline">\(R^2_{adj}\)</span> (R cuadrado ajustado)
+</h4>
+<p class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: center; margin: 6px 0;">
+<span class="math inline">\(R^2_{adj} = 1 - \dfrac{SCR/(n-k-1)}{SCT/(n-1)}\)</span>
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 20px; text-align: justify;">
+<strong>Penaliza</strong> predictores que no mejoran el modelo: si una variable no aporta, el <span class="math inline">\(R^2_{adj}\)</span> puede <strong>disminuir</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 20px; text-align: justify;">
+Tiene en cuenta el número de predictores (<span class="math inline">\(k\)</span>) y el tamaño de muestra (<span class="math inline">\(n\)</span>), corrigiendo la sobreestimación del <span class="math inline">\(R^2\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 20px; text-align: justify;">
+Permite comparar modelos con diferente número de variables de forma justa.
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="12" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 8px; padding: 8px 16px; margin-top: 8px;">
+<p style="font-size: 22px; text-align: center; color: #1e1b4b; margin: 0;">
+<strong>En regresión múltiple se tiene más en cuenta el <span class="math inline">\(R^2_{adj}\)</span></strong> porque evita inflar artificialmente la bondad de ajuste al agregar variables innecesarias.
+</p>
+</div>
+</section>
+<section id="prueba-f-global-el-modelo-sirve" class="slide level2">
+<h2>Prueba F global: ¿el modelo sirve?</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Por qué necesitamos esta prueba?
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+Antes de interpretar coeficientes individuales, debemos responder una pregunta fundamental: <strong>¿el conjunto de predictores explica algo de la variabilidad de <span class="math inline">\(Y\)</span>, o el modelo no aporta más que usar simplemente el promedio <span class="math inline">\(\bar{Y}\)</span>?</strong>
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Hipótesis
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+<strong><span class="math inline">\(H_0\)</span>:</strong> <span class="math inline">\(\beta_1 = \beta_2 = \cdots = \beta_k = 0\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+Ningún predictor tiene efecto sobre <span class="math inline">\(Y\)</span>. El modelo no aporta información.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 21px; text-align: justify;">
+<strong><span class="math inline">\(H_1\)</span>:</strong> al menos un <span class="math inline">\(\beta_i \neq 0\)</span>
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 21px; text-align: justify;">
+Al menos uno de los predictores contribuye a explicar la variabilidad de <span class="math inline">\(Y\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+Descomposición de la variabilidad
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+<strong>SCT</strong> (Suma de Cuadrados Total): variabilidad total de <span class="math inline">\(Y\)</span> respecto a su media.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+<strong>SCE</strong> (Suma de Cuadrados Explicada): variabilidad que el modelo logra capturar.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+<strong>SCR</strong> (Suma de Cuadrados Residual): variabilidad que el modelo no explica.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 21px; text-align: justify;">
+Relación: <span class="math inline">\(SCT = SCE + SCR\)</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="prueba-f-global-estadístico-e-interpretación" class="slide level2">
+<h2>Prueba F global: estadístico e interpretación</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Estadístico de prueba
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+Compara cuánta variabilidad explica el modelo (por predictor) frente a cuánta queda sin explicar (por observación):
+</p>
+<p style="font-size: 24px; text-align: center; margin: 10px 0;">
+<span class="math inline">\(F = \dfrac{SCE / k}{SCR / (n - k - 1)} = \dfrac{\text{Cuadrado Medio de Regresión}}{\text{Cuadrado Medio del Error}}\)</span>
+</p>
+<p style="font-size: 21px; text-align: justify;">
+Bajo <span class="math inline">\(H_0\)</span>, este estadístico sigue una distribución <span class="math inline">\(F\)</span> de Fisher con <span class="math inline">\(k\)</span> y <span class="math inline">\(n-k-1\)</span> grados de libertad.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+¿Cómo decidimos?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+Se calcula el <strong>valor-<span class="math inline">\(p\)</span></strong> asociado al estadístico <span class="math inline">\(F\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+Si el valor-<span class="math inline">\(p &lt; \alpha\)</span> (generalmente 0.05), se <strong>rechaza <span class="math inline">\(H_0\)</span></strong>: el modelo explica una parte significativa de la variabilidad.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 21px; text-align: justify;">
+Si el valor-<span class="math inline">\(p \geq \alpha\)</span>, <strong>no se rechaza <span class="math inline">\(H_0\)</span></strong>: no hay evidencia de que los predictores aporten al modelo.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+Interpretación práctica
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 21px; text-align: justify;">
+Un <span class="math inline">\(F\)</span> <strong>grande</strong> indica que el modelo explica mucho más de lo que deja sin explicar.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+<strong>Rechazar <span class="math inline">\(H_0\)</span> no significa que todos los predictores sirvan</strong>, solo que al menos uno es útil.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+Para saber <strong>cuáles</strong> predictores son significativos, se necesitan las pruebas t individuales.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+En R, el valor de <span class="math inline">\(F\)</span> y su valor-<span class="math inline">\(p\)</span> aparecen al final del <code>summary(modelo)</code>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="pruebas-t-individuales-cuáles-predictores-importan" class="slide level2">
+<h2>Pruebas t individuales: ¿cuáles predictores importan?</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Por qué necesitamos pruebas individuales?
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+La prueba F nos dice que <strong>al menos un predictor es útil</strong>, pero no cuál. Las pruebas t evalúan la significancia de <strong>cada coeficiente por separado</strong>, manteniendo los demás predictores en el modelo.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Hipótesis y estadístico
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+<strong><span class="math inline">\(H_0\)</span>:</strong> <span class="math inline">\(\beta_i = 0\)</span> (el predictor <span class="math inline">\(X_i\)</span> no aporta al modelo).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+<strong><span class="math inline">\(H_1\)</span>:</strong> <span class="math inline">\(\beta_i \neq 0\)</span> (el predictor <span class="math inline">\(X_i\)</span> sí tiene efecto sobre <span class="math inline">\(Y\)</span>).
+</li>
+</ul>
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 22px; text-align: center; margin: 8px 0;">
+<span class="math inline">\(t_i = \dfrac{\hat{\beta}_i}{\text{EE}(\hat{\beta}_i)}\)</span>
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 21px; text-align: justify;">
+Bajo <span class="math inline">\(H_0\)</span>, sigue una distribución <span class="math inline">\(t\)</span> de Student con <span class="math inline">\(n - k - 1\)</span> grados de libertad.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+¿Cómo se interpreta?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+Si el valor-<span class="math inline">\(p &lt; \alpha\)</span>, se <strong>rechaza <span class="math inline">\(H_0\)</span></strong>: el predictor es estadísticamente significativo.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+Si el valor-<span class="math inline">\(p \geq \alpha\)</span>, <strong>no se rechaza <span class="math inline">\(H_0\)</span></strong>: no hay evidencia suficiente de que ese predictor aporte al modelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+Un predictor <strong>no significativo</strong> podría ser candidato a eliminarse del modelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 21px; text-align: justify;">
+En R, cada prueba t aparece en la tabla de coeficientes del <code>summary(modelo)</code>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="intervalos-de-confianza-para-los-coeficientes" class="slide level2">
+<h2>Intervalos de confianza para los coeficientes</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Para qué sirven?
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+Además del valor-<span class="math inline">\(p\)</span>, los intervalos de confianza ofrecen un <strong>rango plausible de valores</strong> para cada coeficiente. Son complementarios a las pruebas t y aportan más información sobre la magnitud del efecto.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Fórmula e interpretación
+</h4>
+<p class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: center; margin: 8px 0;">
+<span class="math inline">\(\hat{\beta}_i \pm t_{\alpha/2,\,n-k-1} \cdot \text{EE}(\hat{\beta}_i)\)</span>
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+Con un 95% de confianza, el verdadero valor de <span class="math inline">\(\beta_i\)</span> se encuentra dentro de ese rango.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 21px; text-align: justify;">
+Si el intervalo <strong>contiene el cero</strong>, el coeficiente no es significativo a ese nivel de confianza.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 21px; text-align: justify;">
+Si el intervalo <strong>no contiene el cero</strong>, hay evidencia de que <span class="math inline">\(X_i\)</span> tiene un efecto real sobre <span class="math inline">\(Y\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+¿Por qué reportarlos?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+El valor-<span class="math inline">\(p\)</span> solo dice si el efecto es significativo o no. El intervalo dice <strong>cuánto podría valer</strong> el efecto.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+Un intervalo estrecho indica una estimación <strong>precisa</strong>; uno amplio indica <strong>incertidumbre</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+Siempre es buena práctica reportar tanto el valor-<span class="math inline">\(p\)</span> como el intervalo de confianza.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 21px; text-align: justify;">
+En R se obtienen con <code>confint(modelo, level = 0.95)</code>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="supuestos-del-modelo-cuándo-podemos-confiar-en-los-resultados" class="slide level2">
+<h2>Supuestos del modelo: ¿cuándo podemos confiar en los resultados?</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Por qué importan los supuestos?
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+Las pruebas F, t e intervalos de confianza que acabamos de ver son <strong>válidas solo si se cumplen ciertos supuestos</strong> sobre los errores del modelo. Si se violan, las conclusiones pueden ser incorrectas.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Supuestos sobre los errores
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+<strong>Linealidad:</strong> la relación entre predictores y respuesta es lineal en los parámetros.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+<strong>Independencia:</strong> los errores <span class="math inline">\(\varepsilon_i\)</span> no están correlacionados entre sí.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 21px; text-align: justify;">
+<strong>Homocedasticidad:</strong> la varianza de los errores es constante: <span class="math inline">\(\text{Var}(\varepsilon_i) = \sigma^2\)</span> para todo <span class="math inline">\(i\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 21px; text-align: justify;">
+<strong>Normalidad:</strong> <span class="math inline">\(\varepsilon_i \sim N(0, \sigma^2)\)</span>. Necesario para que las pruebas t y F sean exactas.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+Supuesto sobre los predictores
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+<strong>No multicolinealidad perfecta:</strong> ningún predictor puede ser combinación lineal exacta de otros.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+Si se viola, la matriz <span class="math inline">\(\mathbf{X}^\top\mathbf{X}\)</span> no es invertible y no se puede calcular <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>.
+</li>
+</ul>
+<h4 class="fragment fade-up" data-fragment-index="10" style="color:#1a3a6b; font-size: 24px; margin-top: 14px; margin-bottom: 10px;">
+¿Qué pasa si se violan?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 21px; text-align: justify;">
+Los estimadores pueden seguir siendo útiles, pero los <strong>errores estándar, pruebas e intervalos</strong> dejan de ser confiables.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="diagnóstico-de-residuos-verificando-los-supuestos" class="slide level2">
+<h2>Diagnóstico de residuos: verificando los supuestos</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Cómo verificamos los supuestos?
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+Los supuestos se verifican analizando los <strong>residuos</strong> <span class="math inline">\(e_i = Y_i - \hat{Y}_i\)</span>. En R, la función <code>plot(modelo)</code> genera 4 gráficos de diagnóstico que cubren los supuestos principales.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Gráficos clave
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+<strong>Residuos vs.&nbsp;ajustados:</strong> verifica linealidad y homocedasticidad. Se espera una nube sin patrón.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+<strong>QQ-plot:</strong> verifica normalidad. Los puntos deben seguir la línea diagonal.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 21px; text-align: justify;">
+<strong>Scale-Location:</strong> verifica homocedasticidad. La línea roja debe ser aproximadamente horizontal.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 21px; text-align: justify;">
+<strong>Residuos vs.&nbsp;Leverage:</strong> detecta observaciones que influyen demasiado en el ajuste del modelo.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+¿Qué buscar?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+<strong>Curvatura</strong> en residuos vs.&nbsp;ajustados → falta de linealidad. Considerar transformaciones o términos cuadráticos.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+<strong>Forma de embudo</strong> → heterocedasticidad. Los errores crecen con el valor predicho.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+<strong>Colas pesadas</strong> en el QQ-plot → los errores no son normales. Afecta las pruebas de inferencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 21px; text-align: justify;">
+<strong>Puntos influyentes:</strong> una observación es influyente si al quitarla del modelo, los coeficientes cambian mucho. La <strong>distancia de Cook</strong> mide exactamente esto: valores mayores a 1 indican observaciones que merecen revisión.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="multicolinealidad-los-predictores-se-repiten" class="slide level2">
+<h2>Multicolinealidad: ¿los predictores se repiten?</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Qué es y por qué importa?
+</div>
+<div class="block-body">
+<p style="font-size: 20px; text-align: justify;">
+La <strong>multicolinealidad</strong> ocurre cuando dos o más predictores están altamente correlacionados entre sí. El modelo sigue prediciendo bien en conjunto, pero <strong>no puede distinguir el efecto individual</strong> de cada predictor, lo que infla los errores estándar y hace que las pruebas t pierdan poder.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 12px 16px;">
+<h4 style="color:#1b4d2e; font-size: 22px; margin-bottom: 6px;">
+¿Cómo detectarla?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 19px; text-align: justify;">
+<strong>Paso 1 — Matriz de correlaciones:</strong> correlaciones altas (<span class="math inline">\(|r| &gt; 0.7\)</span>–<span class="math inline">\(0.8\)</span>) son una primera señal. En R: <code>cor(datos[, predictores])</code>.
+</li>
+</ul>
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: center; margin: 6px 0;">
+<strong>Paso 2 — VIF:</strong> <span class="math inline">\(\;\text{VIF}_i = \dfrac{1}{1 - R^2_i}\)</span>
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 19px; text-align: justify;">
+<span class="math inline">\(R^2_i\)</span>: <span class="math inline">\(R^2\)</span> de regresión de <span class="math inline">\(X_i\)</span> contra los demás predictores.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 19px; text-align: justify;">
+<strong>VIF = 1:</strong> sin correlación. <strong>VIF &gt; 5:</strong> moderada. <strong>VIF &gt; 10:</strong> problemática.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 12px 16px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 6px;">
+¿Qué hacer si existe?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 19px; text-align: justify;">
+<strong>Eliminar</strong> uno de los predictores redundantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 19px; text-align: justify;">
+<strong>Combinar</strong> variables correlacionadas en un índice o componente.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 19px; text-align: justify;">
+<strong>No ignorarla:</strong> un predictor puede parecer no significativo solo por la multicolinealidad, no porque no tenga efecto real.
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="11" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 8px; padding: 8px 16px; margin-top: 8px;">
+<p style="font-size: 21px; text-align: center; color: #1e1b4b; margin: 0;">
+<strong>Síntoma típico:</strong> <span class="math inline">\(R^2\)</span> alto y prueba F significativa, pero ninguna prueba t es significativa → los predictores explican <span class="math inline">\(Y\)</span> en conjunto, pero no se puede separar el aporte individual de cada uno.
+</p>
+</div>
+</section>
+<section id="interacciones-entre-variables" class="slide level2">
+<h2>Interacciones entre variables</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Qué es una interacción?
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+Una <strong>interacción</strong> ocurre cuando el efecto de un predictor <span class="math inline">\(X_1\)</span> sobre <span class="math inline">\(Y\)</span> <strong>depende del valor de otro predictor</strong> <span class="math inline">\(X_2\)</span>. Se modela agregando el producto <span class="math inline">\(X_1 \cdot X_2\)</span> como un término adicional:
+</p>
+<p style="font-size: 22px; text-align: center; margin: 8px 0;">
+<span class="math inline">\(\hat{Y} = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 (X_1 \cdot X_2)\)</span>
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+¿Cuándo tiene sentido incluirlas?
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+Cuando la <strong>teoría o el conocimiento del área</strong> sugiere que el efecto de una variable cambia según otra.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+Ejemplo: el efecto del fertilizante sobre el rendimiento puede ser mayor cuando hay suficiente precipitación.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 21px; text-align: justify;">
+Si <span class="math inline">\(\beta_3\)</span> es significativo, la interacción es real: el efecto de <span class="math inline">\(X_1\)</span> <strong>no es constante</strong>, sino que varía con <span class="math inline">\(X_2\)</span>.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+Riesgos de incluir interacciones
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 21px; text-align: justify;">
+Cada interacción agrega un parámetro más: con <span class="math inline">\(k\)</span> predictores pueden existir muchas combinaciones posibles.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+<strong>Infla el <span class="math inline">\(R^2\)</span></strong> artificialmente: agregar términos siempre mejora el ajuste, pero no necesariamente la predicción.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+Puede generar <strong>multicolinealidad</strong> entre los predictores originales y el término de interacción.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+Solo incluir interacciones cuando hay <strong>justificación teórica</strong>, no por mejorar el <span class="math inline">\(R^2\)</span>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="selección-de-variables-cuáles-predictores-incluir" class="slide level2">
+<h2>Selección de variables: ¿cuáles predictores incluir?</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+El problema
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+No siempre todos los predictores disponibles deben entrar al modelo. Incluir variables innecesarias <strong>aumenta la complejidad sin mejorar la predicción</strong> y puede generar multicolinealidad. Necesitamos estrategias para seleccionar el mejor subconjunto.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Estrategias paso a paso
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+<strong>Selección hacia adelante (<em>forward</em>):</strong> se parte del modelo vacío y se agrega de a uno el predictor que más mejora el modelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+<strong>Eliminación hacia atrás (<em>backward</em>):</strong> se parte del modelo completo y se elimina de a uno el predictor que menos aporta.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 21px; text-align: justify;">
+<strong>Paso a paso (<em>stepwise</em>):</strong> combina ambas direcciones. En cada paso puede agregar o eliminar variables. Es la estrategia más usada.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+Criterios de información
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 21px; text-align: justify;">
+<strong>AIC</strong> (Akaike): equilibra ajuste y complejidad. Se prefiere el modelo con <strong>menor AIC</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+<strong>BIC</strong> (Bayesiano): similar al AIC pero penaliza más los modelos con muchos predictores.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+En R: <code>step(modelo, direction = “both”)</code> realiza selección stepwise usando AIC automáticamente.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+Ningún criterio reemplaza el <strong>juicio del investigador</strong>: el contexto del problema siempre importa.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="predicción-y-validación-del-modelo" class="slide level2">
+<h2>Predicción y validación del modelo</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Cómo sabemos si el modelo funciona bien?
+</div>
+<div class="block-body">
+<p style="font-size: 22px; text-align: justify;">
+Un modelo que ajusta bien los datos de entrenamiento no necesariamente predice bien datos nuevos. La <strong>validación</strong> consiste en evaluar el modelo con datos que no se usaron para estimarlo.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Estrategia de validación
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 21px; text-align: justify;">
+Dividir los datos en <strong>entrenamiento</strong> (70-80%) y <strong>prueba</strong> (20-30%).
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 21px; text-align: justify;">
+Ajustar el modelo solo con los datos de entrenamiento.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 21px; text-align: justify;">
+Predecir con los datos de prueba y comparar predicciones vs.&nbsp;valores reales.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 21px; text-align: justify;">
+<strong>Alternativa más robusta:</strong> la <strong>validación cruzada</strong> (<em>k-fold cross-validation</em>) repite este proceso <span class="math inline">\(k\)</span> veces, rotando la partición, para obtener una evaluación más estable del modelo.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">
+Métricas de error
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 21px; text-align: justify;">
+<strong>RMSE</strong> (raíz del error cuadrático medio): mide el error promedio en las mismas unidades de <span class="math inline">\(Y\)</span>. Menor es mejor.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 21px; text-align: justify;">
+<strong>MAE</strong> (error absoluto medio): menos sensible a errores extremos que el RMSE.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 21px; text-align: justify;">
+<strong><span class="math inline">\(R^2\)</span> en prueba:</strong> qué proporción de la variabilidad explica el modelo en datos nuevos.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 21px; text-align: justify;">
+Si las métricas son similares entre entrenamiento y prueba, el modelo <strong>generaliza bien</strong>.
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="resumen-parte-ii-flujo-de-análisis" class="slide level2">
+<h2>Resumen Parte II: flujo de análisis</h2>
+<div style="margin-top: 15px;">
+<!-- Fila 1 -->
+<div class="fragment fade-up" data-fragment-index="1" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px;">
+<div style="background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 14px 18px; border-radius: 12px; font-size: 18px; font-weight: 600; text-align: center; width: 28%; box-shadow: 0 3px 10px rgba(30,58,138,0.3);">
+<p>Ajustar modelo<br><span style="font-size: 14px; font-weight: 400; opacity: 0.9;">Evaluar <span class="math inline">\(R^2_{adj}\)</span></span></p>
+</div>
+<div style="font-size: 26px; color: #3b82f6;">
+→
+</div>
+<div style="background: linear-gradient(135deg, #1b4d2e, #16a34a); color: white; padding: 14px 18px; border-radius: 12px; font-size: 18px; font-weight: 600; text-align: center; width: 28%; box-shadow: 0 3px 10px rgba(27,77,46,0.3);">
+<p>Prueba F global<br><span style="font-size: 14px; font-weight: 400; opacity: 0.9;">¿El modelo sirve?</span></p>
+</div>
+<div style="font-size: 26px; color: #3b82f6;">
+→
+</div>
+<div style="background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 14px 18px; border-radius: 12px; font-size: 18px; font-weight: 600; text-align: center; width: 28%; box-shadow: 0 3px 10px rgba(30,58,138,0.3);">
+<p>Pruebas t + IC<br><span style="font-size: 14px; font-weight: 400; opacity: 0.9;">¿Cuáles predictores?</span></p>
+</div>
+</div>
+<!-- Flecha hacia abajo central -->
+<div class="fragment fade-up" data-fragment-index="2" style="text-align: center; font-size: 26px; color: #3b82f6; margin: 4px 0;">
+↓
+</div>
+<!-- Fila 2 -->
+<div class="fragment fade-up" data-fragment-index="2" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px;">
+<div style="background: linear-gradient(135deg, #1b4d2e, #16a34a); color: white; padding: 14px 18px; border-radius: 12px; font-size: 18px; font-weight: 600; text-align: center; width: 28%; box-shadow: 0 3px 10px rgba(27,77,46,0.3);">
+<p>Supuestos<br><span style="font-size: 14px; font-weight: 400; opacity: 0.9;">Diagnóstico residuos</span></p>
+</div>
+<div style="font-size: 26px; color: #3b82f6;">
+→
+</div>
+<div style="background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 14px 18px; border-radius: 12px; font-size: 18px; font-weight: 600; text-align: center; width: 28%; box-shadow: 0 3px 10px rgba(30,58,138,0.3);">
+<p>Multicolinealidad<br><span style="font-size: 14px; font-weight: 400; opacity: 0.9;">VIF + Interacciones</span></p>
+</div>
+<div style="font-size: 26px; color: #3b82f6;">
+→
+</div>
+<div style="background: linear-gradient(135deg, #1b4d2e, #16a34a); color: white; padding: 14px 18px; border-radius: 12px; font-size: 18px; font-weight: 600; text-align: center; width: 28%; box-shadow: 0 3px 10px rgba(27,77,46,0.3);">
+<p>Selección variables<br><span style="font-size: 14px; font-weight: 400; opacity: 0.9;">AIC / BIC / Stepwise</span></p>
+</div>
+</div>
+<!-- Flecha hacia abajo central -->
+<div class="fragment fade-up" data-fragment-index="3" style="text-align: center; font-size: 26px; color: #5737cc; margin: 4px 0;">
+↓
+</div>
+<!-- Caja final -->
+<div class="fragment fade-up" data-fragment-index="3" style="display: flex; justify-content: center;">
+<div style="background: linear-gradient(135deg, #5737cc, #7c3aed); color: white; padding: 16px 30px; border-radius: 14px; font-size: 20px; font-weight: 700; text-align: center; width: 50%; box-shadow: 0 4px 14px rgba(87,55,204,0.35);">
+<p>Validación del modelo<br><span style="font-size: 15px; font-weight: 400; opacity: 0.9;">Train/Test · RMSE · MAE · <span class="math inline">\(R^2\)</span> en prueba</span></p>
+</div>
+</div>
+<!-- Flecha hacia conclusión -->
+<div class="fragment fade-up" data-fragment-index="4" style="text-align: center; font-size: 26px; color: #b45309; margin: 4px 0;">
+↓
+</div>
+<!-- Conclusión modelo óptimo -->
+<div class="fragment fade-up" data-fragment-index="4" style="display: flex; justify-content: center;">
+<div style="background: linear-gradient(135deg, #92400e, #d97706); color: white; padding: 14px 30px; border-radius: 14px; font-size: 19px; font-weight: 700; text-align: center; width: 65%; box-shadow: 0 4px 14px rgba(217,119,6,0.35); border: 2px solid #fbbf24;">
+<p>Modelo óptimo<br><span style="font-size: 15px; font-weight: 400; opacity: 0.95;">Parsimonioso, con supuestos validados, buena predicción y coeficientes interpretables</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div style="
+height:500px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;">
+<div class="fragment fade-in" data-fragment-index="1" style="
+font-size:28px;
+font-weight:600;
+color:#64748b;
+letter-spacing:2px;">
+<p>PARTE III</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="2" style="
+margin-top:20px;
+font-size:54px;
+font-weight:bold;
+color:#88351c;">
+<p>Aplicaciones y Ejemplos</p>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="
+margin-top:30px;
+width:70%;
+height:4px;
+background:#dc6b38;
+border-radius:10px;">
+
+</div>
+<div class="fragment fade-in" data-fragment-index="4" style="
+margin-top:35px;
+font-size:24px;
+color:#475569;">
+<p>Ejemplo con variables cuantitativas │ Ejemplo con variables mixtas │ Introducción a la regresión logística │ Taller en clase │</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-regresión-lineal-multiple-con-variables-cuantitativas" class="slide level2">
+<h2>Ejemplo 1: Regresión lineal multiple con variables cuantitativas</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Contexto
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+Un grupo de investigadores del Centro Nacional de Investigaciones de Café (Cenicafé) quiere entender qué factores influyen en el <strong>rendimiento de café pergamino seco</strong> (kg/ha) en fincas del Eje Cafetero colombiano. Se recolectaron datos de <span class="math inline">\(n = 60\)</span> parcelas en Caldas, Risaralda y Quindío.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 12px 16px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 6px;">
+Variables del estudio
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 23px;">
+<strong><span class="math inline">\(Y\)</span>:</strong> rendimiento (kg/ha)
+</li>
+<li style="font-size: 23px;">
+<strong><span class="math inline">\(X_1\)</span>:</strong> fertilizante (kg N/ha)
+</li>
+<li style="font-size: 23px;">
+<strong><span class="math inline">\(X_2\)</span>:</strong> altitud (m.s.n.m.)
+</li>
+<li style="font-size: 23px;">
+<strong><span class="math inline">\(X_3\)</span>:</strong> densidad (plantas/ha)
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Preguntas a responder
+</h4>
+<ol>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
+¿El modelo en conjunto explica el rendimiento? (Prueba F)
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
+¿Cuáles predictores son significativos individualmente? (Pruebas t)
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
+¿Qué proporción de la variabilidad explica? (R² ajustado)
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
+¿Hay problemas de multicolinealidad? (VIF)
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
+¿Se cumplen los supuestos del modelo?
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="resultados-del-modelo" class="slide level2">
+<h2>Resultados del modelo</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 22px; margin-bottom: 10px;">
+Coeficientes estimados
+</h4>
+<table style="width:100%; font-size: 18px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 6px;">
+Variable
+</th>
+<th style="padding: 6px;">
+<span class="math inline">\(\hat{\beta}\)</span>
+</th>
+<th style="padding: 6px;">
+Error est.
+</th>
+<th style="padding: 6px;">
+Valor-<span class="math inline">\(p\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+(Intercepto)
+</td>
+<td>
+812.4
+</td>
+<td>
+298.1
+</td>
+<td>
+0.008
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+fertilizante
+</td>
+<td>
+1.82
+</td>
+<td>
+0.31
+</td>
+<td style="color: #15803d; font-weight: bold;">
+&lt; 0.001
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+altitud
+</td>
+<td>
+−0.49
+</td>
+<td>
+0.14
+</td>
+<td style="color: #15803d; font-weight: bold;">
+&lt; 0.001
+</td>
+</tr>
+<tr>
+<td style="padding: 5px;">
+densidad
+</td>
+<td>
+0.11
+</td>
+<td>
+0.02
+</td>
+<td style="color: #b45309;">
+0.067
+</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up" data-fragment-index="2" style="margin-top: 10px;">
+<table style="width:100%; font-size: 16px; border-collapse: collapse; text-align: center;">
+<tbody><tr style="background-color: #f0fdf4;">
+<td style="padding: 5px; border-radius: 6px 0 0 6px; color: #1b4d2e;">
+<strong><span class="math inline">\(R^2\)</span></strong><br>0.78
+</td>
+<td style="padding: 5px; color: #1b4d2e;">
+<strong><span class="math inline">\(R^2_{adj}\)</span></strong><br>0.77
+</td>
+<td style="padding: 5px; border-radius: 0 6px 6px 0; color: #1b4d2e;">
+<strong>Prueba F</strong><br><span class="math inline">\(p &lt; 0.001\)</span>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 12px 16px;">
+<h4 style="color:#1a3a6b; font-size: 20px; margin-bottom: 6px;">
+Matriz de correlaciones
+</h4>
+<table style="width:100%; font-size: 16px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 4px;">
+</th>
+<th style="padding: 4px;">
+Fert.
+</th>
+<th style="padding: 4px;">
+Altitud
+</th>
+<th style="padding: 4px;">
+Densidad
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px; font-weight: bold; color: #1a3a6b;">
+Fert.
+</td>
+<td>
+1.00
+</td>
+<td style="color: #15803d;">
+−0.05
+</td>
+<td style="color: #15803d;">
+0.08
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px; font-weight: bold; color: #1a3a6b;">
+Altitud
+</td>
+<td style="color: #15803d;">
+−0.05
+</td>
+<td>
+1.00
+</td>
+<td style="color: #15803d;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="padding: 4px; font-weight: bold; color: #1a3a6b;">
+Densidad
+</td>
+<td style="color: #15803d;">
+0.08
+</td>
+<td style="color: #15803d;">
+0.03
+</td>
+<td>
+1.00
+</td>
+</tr>
+</tbody>
+</table>
+<h4 class="fragment fade-up" data-fragment-index="4" style="color:#1a3a6b; font-size: 20px; margin: 10px 0 6px 0;">
+IC 95% y VIF
+</h4>
+<table class="fragment fade-up" data-fragment-index="4" style="width:100%; font-size: 16px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 4px;">
+Variable
+</th>
+<th style="padding: 4px;">
+IC inf.
+</th>
+<th style="padding: 4px;">
+IC sup.
+</th>
+<th style="padding: 4px;">
+VIF
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+fertilizante
+</td>
+<td>
+1.20
+</td>
+<td>
+2.44
+</td>
+<td style="color: #15803d;">
+1.02
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+altitud
+</td>
+<td>
+−0.77
+</td>
+<td>
+−0.21
+</td>
+<td style="color: #15803d;">
+1.01
+</td>
+</tr>
+<tr>
+<td style="padding: 4px;">
+densidad
+</td>
+<td>
+−0.01
+</td>
+<td>
+0.23
+</td>
+<td style="color: #15803d;">
+1.03
+</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up" data-fragment-index="5" style="margin-top: 8px; background-color: #eef2ff; border-radius: 6px; padding: 5px 10px;">
+<p style="font-size: 16px; text-align: center; margin: 0; color: #1a3a6b;">
+Correlaciones bajas + VIF ≈ 1 → <strong>sin multicolinealidad</strong>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="diagnóstico-de-residuos" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+
+<img data-src="clase_17_files/figure-revealjs/unnamed-chunk-2-1.png" width="1920" class="r-stretch"><div class="fragment fade-up" data-fragment-index="1" style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 20px;">
+<table style="font-size: 18px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 6px 14px; text-align: left;">
+Supuesto
+</th>
+<th style="padding: 6px 14px;">
+Prueba
+</th>
+<th style="padding: 6px 14px;">
+Valor-<span class="math inline">\(p\)</span>
+</th>
+<th style="padding: 6px 14px;">
+Decisión
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 6px 14px; text-align: left;">
+Normalidad
+</td>
+<td>
+Shapiro-Wilk
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.42
+</td>
+<td style="color: #15803d;">
+No se rechaza
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 6px 14px; text-align: left;">
+Homocedasticidad
+</td>
+<td>
+Breusch-Pagan
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.61
+</td>
+<td style="color: #15803d;">
+No se rechaza
+</td>
+</tr>
+<tr>
+<td style="padding: 6px 14px; text-align: left;">
+Independencia
+</td>
+<td>
+Durbin-Watson
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.38
+</td>
+<td style="color: #15803d;">
+No se rechaza
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="margin-top: 10px; background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 8px; padding: 8px 16px; text-align: center;">
+<p style="font-size: 19px; margin: 0; color: #1b4d2e;">
+<strong>Conclusión:</strong> <span class="math inline">\(p &gt; 0.05\)</span> en todas las pruebas → los supuestos del modelo se cumplen satisfactoriamente.
+</p>
+</div>
+</section>
+<section id="interpretación-y-conclusiones" class="slide level2">
+<h2>Interpretación y conclusiones</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 10px; padding: 10px 20px; text-align: center; margin-bottom: 12px;">
+<p style="font-size: 20px; margin: 0; color: #1e1b4b;">
+<strong>Modelo ajustado por MCO:</strong><br> <span class="math inline">\(\hat{Y} = 812.4 + 1.82\,\text{Fertilizante} - 0.49\,\text{Altitud} + 0.11\,\text{Densidad}\)</span>
+</p>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 22px; margin-bottom: 8px;">
+Respuestas
+</h4>
+<ol style="padding-left: 20px; margin: 0;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 18px; margin-bottom: 6px;">
+<strong>¿Explica el rendimiento?</strong> Sí. Prueba F: <span class="math inline">\(p &lt; 0.001\)</span>. <span class="math inline">\(R^2_{adj} = 0.77\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 18px; margin-bottom: 4px;">
+<strong>¿Cuáles predictores son significativos?</strong>
+<table style="width:100%; font-size: 15px; border-collapse: collapse; text-align: center; margin-top: 4px;">
+<tbody><tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 3px;">
+Variable
+</th>
+<th style="padding: 3px;">
+Valor-<span class="math inline">\(p\)</span>
+</th>
+<th style="padding: 3px;">
+Signif.
+</th>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 3px;">
+fertilizante
+</td>
+<td>
+&lt; 0.001
+</td>
+<td style="color: #15803d; font-weight: bold;">
+Sí
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 3px;">
+altitud
+</td>
+<td>
+&lt; 0.001
+</td>
+<td style="color: #15803d; font-weight: bold;">
+Sí
+</td>
+</tr>
+<tr>
+<td style="padding: 3px;">
+densidad
+</td>
+<td>
+0.067
+</td>
+<td style="color: #b45309;">
+No
+</td>
+</tr>
+</tbody></table>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 18px; margin-bottom: 6px;">
+<strong>¿Cuánto explica?</strong> Con un <span class="math inline">\(R^2_{adj} = 0.77\)</span>, el 77% de la variabilidad del rendimiento es explicada por las variables regresoras (fertilizante, altitud y densidad).
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 18px; margin-bottom: 6px;">
+<strong>¿Multicolinealidad?</strong> No.&nbsp;VIF ≈ 1.0 en todos los predictores.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 18px; margin-bottom: 2px;">
+<strong>¿Supuestos se cumplen?</strong> Sí.
+<table style="width:100%; font-size: 15px; border-collapse: collapse; text-align: center; margin-top: 4px;">
+<tbody><tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 3px;">
+Prueba
+</th>
+<th style="padding: 3px;">
+Valor-<span class="math inline">\(p\)</span>
+</th>
+<th style="padding: 3px;">
+Cumple
+</th>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 3px;">
+Shapiro-Wilk
+</td>
+<td>
+0.42
+</td>
+<td style="color: #15803d; font-weight: bold;">
+Sí
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 3px;">
+Breusch-Pagan
+</td>
+<td>
+0.61
+</td>
+<td style="color: #15803d; font-weight: bold;">
+Sí
+</td>
+</tr>
+<tr>
+<td style="padding: 3px;">
+Durbin-Watson
+</td>
+<td>
+0.38
+</td>
+<td style="color: #15803d; font-weight: bold;">
+Sí
+</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 8px;">
+Conclusión
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 19px; text-align: justify;">
+Por cada kg adicional de N/ha, el rendimiento aumenta en promedio <strong>1.82 kg/ha</strong>, manteniendo las demás variables constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 19px; text-align: justify;">
+Por cada metro adicional de altitud, el rendimiento disminuye en promedio <strong>0.49 kg/ha</strong>, manteniendo las demás variables constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 19px; text-align: justify;">
+La densidad de siembra no es estadísticamente significativa (<span class="math inline">\(p = 0.067\)</span>, IC incluye 0). Sin embargo, su inclusión o exclusión queda a <strong>criterio de los investigadores</strong> según el contexto agronómico y los objetivos del estudio.
+</li>
+</ul>
+<div class="fragment fade-up" data-fragment-index="12" style="background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 6px; padding: 8px 12px; margin-top: 10px;">
+<p style="font-size: 18px; text-align: center; color: #1b4d2e; margin: 0;">
+<strong>Recomendación:</strong> invertir en fertilización nitrogenada es la estrategia más efectiva para mejorar el rendimiento en estas condiciones.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-2-regresión-lineal-múltiple-con-variables-mixtas" class="slide level2">
+<h2>Ejemplo 2: Regresión lineal múltiple con variables mixtas</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Contexto
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+Un equipo de investigación de Corpoica estudia los factores que influyen en la <strong>producción de tomate</strong> (kg/planta) en invernaderos del altiplano cundiboyacense. Se registraron datos de <span class="math inline">\(n = 80\)</span> parcelas con variables cuantitativas y categóricas.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 12px 16px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 6px;">
+Variables del estudio
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+<strong><span class="math inline">\(Y\)</span>:</strong> producción (kg/planta)
+</li>
+<li style="font-size: 21px;">
+<strong><span class="math inline">\(X_1\)</span>:</strong> riego semanal (litros) — cuantitativa
+</li>
+<li style="font-size: 21px;">
+<strong><span class="math inline">\(X_2\)</span>:</strong> temperatura promedio (°C) — cuantitativa
+</li>
+<li style="font-size: 21px;">
+<strong><span class="math inline">\(X_3\)</span>:</strong> fertilización orgánica (Sí/No) — categórica
+</li>
+<li style="font-size: 21px;">
+<strong><span class="math inline">\(X_4\)</span>:</strong> variedad (Chonto/Cherry/Milano) — categórica
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Preguntas a responder
+</h4>
+<ol>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
+¿El modelo en conjunto explica la producción de tomate?
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
+¿Cuáles variables son significativas?
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
+¿Cuánta variabilidad explica el modelo?
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
+¿Qué modelo seleccionan los métodos forward, backward y stepwise usando el criterio AIC?
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
+¿Se cumplen los supuestos del modelo final?
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="resultados-del-modelo-completo" class="slide level2">
+<h2>Resultados del modelo completo</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 23px; margin-bottom: 10px;">
+Coeficientes estimados
+</h4>
+<table style="width:100%; font-size: 17px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 5px;">
+Variable
+</th>
+<th style="padding: 5px;">
+<span class="math inline">\(\hat{\beta}\)</span>
+</th>
+<th style="padding: 5px;">
+Error est.
+</th>
+<th style="padding: 5px;">
+Valor-<span class="math inline">\(p\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+(Intercepto)
+</td>
+<td>
+1.24
+</td>
+<td>
+0.85
+</td>
+<td>
+0.149
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+riego
+</td>
+<td>
+0.18
+</td>
+<td>
+0.03
+</td>
+<td style="color: #15803d; font-weight: bold;">
+&lt; 0.001
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+temperatura
+</td>
+<td>
+−0.12
+</td>
+<td>
+0.04
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.003
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+fertilización (Sí)
+</td>
+<td>
+0.95
+</td>
+<td>
+0.22
+</td>
+<td style="color: #15803d; font-weight: bold;">
+&lt; 0.001
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+variedad (Cherry)
+</td>
+<td>
+−0.42
+</td>
+<td>
+0.28
+</td>
+<td style="color: #b45309;">
+0.138
+</td>
+</tr>
+<tr>
+<td style="padding: 4px;">
+variedad (Milano)
+</td>
+<td>
+0.18
+</td>
+<td>
+0.26
+</td>
+<td style="color: #b45309;">
+0.492
+</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up" data-fragment-index="2" style="margin-top: 10px;">
+<table style="width:100%; font-size: 16px; border-collapse: collapse; text-align: center;">
+<tbody><tr style="background-color: #f0fdf4;">
+<td style="padding: 5px; border-radius: 6px 0 0 6px; color: #1b4d2e;">
+<strong><span class="math inline">\(R^2\)</span></strong><br>0.82
+</td>
+<td style="padding: 5px; color: #1b4d2e;">
+<strong><span class="math inline">\(R^2_{adj}\)</span></strong><br>0.81
+</td>
+<td style="padding: 5px; border-radius: 0 6px 6px 0; color: #1b4d2e;">
+<strong>Prueba F</strong><br><span class="math inline">\(p &lt; 0.001\)</span>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 23px; margin-bottom: 10px;">
+Interpretación de variables categóricas
+</h4>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-bottom: 12px;">
+<p style="font-size: 19px; text-align: justify; margin: 0;">
+<strong>Fertilización (Sí):</strong> las parcelas con fertilización orgánica producen en promedio <strong>0.95 kg/planta más</strong> que las que no la reciben, manteniendo las demás variables constantes.
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="5" style="margin-bottom: 12px;">
+<p style="font-size: 19px; text-align: justify; margin: 0;">
+<strong>Variedad (Cherry):</strong> las plantas Cherry producen en promedio <strong>0.42 kg/planta menos</strong> que las Chonto (categoría de referencia), pero <strong>no es significativo</strong> (<span class="math inline">\(p = 0.138\)</span>).
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="6" style="margin-bottom: 12px;">
+<p style="font-size: 19px; text-align: justify; margin: 0;">
+<strong>Variedad (Milano):</strong> la diferencia de 0.18 kg/planta respecto a Chonto <strong>no es significativa</strong> (<span class="math inline">\(p = 0.492\)</span>).
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="7" style="background-color: #eef2ff; border-radius: 6px; padding: 6px 10px;">
+<p style="font-size: 17px; text-align: center; margin: 0; color: #1a3a6b;">
+<strong>Nota:</strong> la categoría de referencia para variedad es <em>Chonto</em> y para fertilización es <em>No</em>.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="selección-de-variables" class="slide level2">
+<h2>Selección de variables</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Modelo completo vs.&nbsp;modelo reducido
+</div>
+<div class="block-body">
+<p style="font-size: 21px; text-align: justify;">
+El modelo completo incluye 4 predictores (5 coeficientes + intercepto). ¿Podemos simplificarlo sin perder poder explicativo? Apliquemos los tres métodos de selección automática basados en AIC.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 22px; margin-bottom: 10px;">
+Resultados por método
+</h4>
+<table style="width:100%; font-size: 17px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 5px;">
+Método
+</th>
+<th style="padding: 5px;">
+Variables seleccionadas
+</th>
+<th style="padding: 5px;">
+AIC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+Forward
+</td>
+<td>
+riego, temperatura, fertilización, variedad
+</td>
+<td>
+542.3
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+Backward
+</td>
+<td>
+riego, temperatura, fertilización
+</td>
+<td style="color: #15803d; font-weight: bold;">
+540.8
+</td>
+</tr>
+<tr>
+<td style="padding: 5px;">
+Stepwise
+</td>
+<td>
+riego, temperatura, fertilización
+</td>
+<td style="color: #15803d; font-weight: bold;">
+540.8
+</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up" data-fragment-index="3" style="margin-top: 10px; background-color: #f0fdf4; border-radius: 6px; padding: 6px 10px;">
+<p style="font-size: 17px; text-align: center; margin: 0; color: #1b4d2e;">
+Backward y stepwise coinciden: eliminan <strong>variedad</strong> del modelo.
+</p>
+</div>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 10px;">
+Modelo seleccionado
+</h4>
+<div class="fragment fade-up" data-fragment-index="5" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 8px; padding: 10px 14px; text-align: center; margin-bottom: 12px;">
+<p style="font-size: 18px; margin: 0; color: #1e1b4b;">
+<span class="math inline">\(\hat{Y} = 2.10 + 0.18\,\text{Riego} - 0.11\,\text{Temperatura} + 0.97\,\text{Fertilización}\)</span>
+</p>
+</div>
+<table class="fragment fade-up" data-fragment-index="6" style="width:100%; font-size: 17px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 5px;">
+Métrica
+</th>
+<th style="padding: 5px;">
+Completo
+</th>
+<th style="padding: 5px;">
+Reducido
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+<span class="math inline">\(R^2_{adj}\)</span>
+</td>
+<td>
+0.81
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.80
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+AIC
+</td>
+<td>
+542.3
+</td>
+<td style="color: #15803d; font-weight: bold;">
+540.8
+</td>
+</tr>
+<tr>
+<td style="padding: 5px;">
+N° parámetros
+</td>
+<td>
+6
+</td>
+<td style="color: #15803d; font-weight: bold;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up" data-fragment-index="7" style="margin-top: 10px;">
+<p style="font-size: 17px; text-align: justify; margin: 0;">
+El modelo reducido es <strong>más parsimonioso</strong>: pierde solo 1% de <span class="math inline">\(R^2_{adj}\)</span> pero usa 2 parámetros menos y tiene menor AIC.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="diagnóstico-del-modelo-seleccionado" class="slide level2">
+<h2>Diagnóstico del modelo seleccionado</h2>
+
+<img data-src="clase_17_files/figure-revealjs/unnamed-chunk-4-1.png" width="1920" class="r-stretch"><div class="fragment fade-up" data-fragment-index="1" style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 20px;">
+<table style="font-size: 18px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 6px 14px; text-align: left;">
+Supuesto
+</th>
+<th style="padding: 6px 14px;">
+Prueba
+</th>
+<th style="padding: 6px 14px;">
+Valor-<span class="math inline">\(p\)</span>
+</th>
+<th style="padding: 6px 14px;">
+Decisión
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 6px 14px; text-align: left;">
+Normalidad
+</td>
+<td>
+Shapiro-Wilk
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.35
+</td>
+<td style="color: #15803d;">
+No se rechaza
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 6px 14px; text-align: left;">
+Homocedasticidad
+</td>
+<td>
+Breusch-Pagan
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.52
+</td>
+<td style="color: #15803d;">
+No se rechaza
+</td>
+</tr>
+<tr>
+<td style="padding: 6px 14px; text-align: left;">
+Independencia
+</td>
+<td>
+Durbin-Watson
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.44
+</td>
+<td style="color: #15803d;">
+No se rechaza
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="margin-top: 10px; background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 8px; padding: 8px 16px; text-align: center;">
+<p style="font-size: 19px; margin: 0; color: #1b4d2e;">
+<strong>Conclusión:</strong> <span class="math inline">\(p &gt; 0.05\)</span> en todas las pruebas → los supuestos del modelo seleccionado se cumplen.
+</p>
+</div>
+</section>
+<section id="interpretación-y-conclusiones-1" class="slide level2">
+<h2>Interpretación y conclusiones</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 10px; padding: 10px 20px; text-align: center; margin-bottom: 12px;">
+<p style="font-size: 20px; margin: 0; color: #1e1b4b;">
+<strong>Modelo final ajustado por MCO:</strong><br> <span class="math inline">\(\hat{Y} = 2.10 + 0.18\,\text{Riego} - 0.11\,\text{Temperatura} + 0.97\,\text{Fertilización}\)</span>
+</p>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">
+Respuestas
+</h4>
+<ol style="padding-left: 20px; margin: 0;">
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px; margin-bottom: 8px;">
+<strong>¿Explica la producción?</strong> Sí. Prueba F: <span class="math inline">\(p &lt; 0.001\)</span>. <span class="math inline">\(R^2_{adj} = 0.80\)</span>.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; margin-bottom: 6px;">
+<strong>¿Cuáles son significativas?</strong>
+<table style="width:100%; font-size: 16px; border-collapse: collapse; text-align: center; margin-top: 4px;">
+<tbody><tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 3px;">
+Variable
+</th>
+<th style="padding: 3px;">
+Valor-<span class="math inline">\(p\)</span>
+</th>
+<th style="padding: 3px;">
+Signif.
+</th>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 3px;">
+riego
+</td>
+<td>
+&lt; 0.001
+</td>
+<td style="color: #15803d; font-weight: bold;">
+Sí
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 3px;">
+temperatura
+</td>
+<td>
+0.003
+</td>
+<td style="color: #15803d; font-weight: bold;">
+Sí
+</td>
+</tr>
+<tr>
+<td style="padding: 3px;">
+fertilización (Sí)
+</td>
+<td>
+&lt; 0.001
+</td>
+<td style="color: #15803d; font-weight: bold;">
+Sí
+</td>
+</tr>
+</tbody></table>
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px; margin-bottom: 8px;">
+<strong>¿Cuánto explica?</strong> Con un <span class="math inline">\(R^2_{adj} = 0.80\)</span>, el 80% de la variabilidad de la producción de tomate es explicada por las variables regresoras.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; margin-bottom: 8px;">
+<strong>¿Qué seleccionaron los métodos?</strong> Backward y stepwise coinciden: eliminan variedad (menor AIC).
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px; margin-bottom: 2px;">
+<strong>¿Supuestos?</strong> Sí, todos se cumplen (Shapiro, B-P, D-W con <span class="math inline">\(p &gt; 0.05\)</span>).
+</li>
+</ol>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 8px;">
+Conclusión
+</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 19px; text-align: justify;">
+Por cada litro adicional de riego semanal, la producción aumenta en promedio <strong>0.18 kg/planta</strong>, manteniendo las demás variables constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 19px; text-align: justify;">
+Por cada °C adicional de temperatura, la producción disminuye en promedio <strong>0.11 kg/planta</strong>, manteniendo las demás variables constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 19px; text-align: justify;">
+Aplicar fertilización orgánica incrementa la producción en promedio <strong>0.97 kg/planta</strong> respecto a no aplicarla.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 19px; text-align: justify;">
+La variedad no aportó significativamente al modelo y fue excluida por los métodos de selección. Su inclusión queda a <strong>criterio de los investigadores</strong>.
+</li>
+</ul>
+<div class="fragment fade-up" data-fragment-index="13" style="background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 6px; padding: 8px 12px; margin-top: 10px;">
+<p style="font-size: 18px; text-align: center; color: #1b4d2e; margin: 0;">
+<strong>Recomendación:</strong> optimizar el riego y aplicar fertilización orgánica son las estrategias más efectivas para mejorar la producción de tomate en invernadero.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="guía-de-funciones-en-r-para-regresión-múltiple" class="slide level2">
+<h2>Guía de funciones en R para regresión múltiple</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Análisis completo paso a paso
+</div>
+<div class="block-body">
+<p style="font-size: 21px; text-align: justify;">
+Esta rutina cubre: exploración, ajuste, evaluación, selección y diagnóstico. Los resultados se presentan con tablas para mantener la salida limpia y pedagógica.
+</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 6px; padding: 6px 12px; text-align: center; margin-bottom: 10px;">
+<p style="font-size: 16px; margin: 0; color: #1b4d2e;">
+<strong>Nota:</strong> las funciones de R base no requieren instalación. Solo se indica la librería cuando es externa.
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="3">
+<table style="width:100%; font-size: 18px; border-collapse: collapse; text-align: left; border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden;">
+<thead>
+<tr style="background-color: #1b4d2e; color: white;">
+<th style="padding: 10px 14px; width: 8%;">
+Paso
+</th>
+<th style="padding: 10px 14px; width: 22%;">
+Etapa
+</th>
+<th style="padding: 10px 14px; width: 50%;">
+Funciones en R
+</th>
+<th style="padding: 10px 14px; width: 20%;">
+Librería externa
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+1
+</td>
+<td style="padding: 8px 14px;">
+<strong>Exploración</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>cor()</code>, <code>plot()</code>, <code>ggpairs()</code>
+</td>
+<td style="padding: 8px 14px;">
+<code>GGally</code>
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+2
+</td>
+<td style="padding: 8px 14px;">
+<strong>Estimación</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>lm(Y ~ X1 + X2 + factor(X3), data = datos)</code>
+</td>
+<td style="padding: 8px 14px;">
+—
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+3
+</td>
+<td style="padding: 8px 14px;">
+<strong>Evaluación</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>summary(modelo)</code>, <code>confint(modelo)</code>, <code>vif(modelo)</code>
+</td>
+<td style="padding: 8px 14px;">
+<code>car</code>
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+4
+</td>
+<td style="padding: 8px 14px;">
+<strong>Selección</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>step(modelo, direction = “forward/backward/both”)</code>
+</td>
+<td style="padding: 8px 14px;">
+—
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+5
+</td>
+<td style="padding: 8px 14px;">
+<strong>Diagnóstico gráfico</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>par(mfrow = c(2, 2))</code> + <code>plot(modelo)</code>
+</td>
+<td style="padding: 8px 14px;">
+—
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+6
+</td>
+<td style="padding: 8px 14px;">
+<strong>Diagnóstico numérico</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>shapiro.test(residuals)</code>, <code>bptest(modelo)</code>, <code>durbinWatsonTest(modelo)</code>
+</td>
+<td style="padding: 8px 14px;">
+<code>lmtest</code>, <code>car</code>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 16px; background-color: #eef2ff; border: 1px solid #5737cc; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 17px; margin: 0; color: #1a3a6b;">
+<strong>Instalación de librerías externas:</strong> <code>install.packages(c(“car”, “lmtest”, “GGally”))</code>
+</p>
+</div>
+</section>
+<section id="introducción-a-la-regresión-logística" class="slide level2">
+<h2>Introducción a la regresión logística</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Cuándo usarla?
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+La regresión logística se usa cuando la variable respuesta <span class="math inline">\(Y\)</span> es <strong>categórica</strong>, típicamente con dos categorías: 0/1, Sí/No, Éxito/Fracaso, Enfermo/Sano.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 8px;">
+Regresión lineal
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+<span class="math inline">\(Y\)</span> es cuantitativa continua.
+</li>
+<li style="font-size: 21px;">
+Modelo: <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \cdots + \epsilon\)</span>.
+</li>
+<li style="font-size: 21px;">
+Predice un valor promedio.
+</li>
+<li style="font-size: 21px;">
+Ejemplo: rendimiento de café (kg/ha).
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Regresión logística
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+<span class="math inline">\(Y\)</span> es binaria (0/1).
+</li>
+<li style="font-size: 21px;">
+Modelo: predice la <strong>probabilidad</strong> de <span class="math inline">\(Y = 1\)</span>.
+</li>
+<li style="font-size: 21px;">
+Usa una función que acota entre 0 y 1.
+</li>
+<li style="font-size: 21px;">
+Ejemplo: ¿la planta sobrevive? ¿hay contaminación?
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 14px; background-color: #eef2ff; border: 1px solid #5737cc; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 18px; margin: 0; color: #1a3a6b;">
+<strong>Idea clave:</strong> en lugar de predecir el valor de <span class="math inline">\(Y\)</span>, predecimos la <strong>probabilidad de que ocurra el evento</strong>.
+</p>
+</div>
+</section>
+<section id="por-qué-no-usar-regresión-lineal" class="slide level2">
+<h2>¿Por qué no usar regresión lineal?</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Problemas con <span class="math inline">\(Y\)</span> binaria
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+Si ajustamos una regresión lineal con <span class="math inline">\(Y \in \{0, 1\}\)</span>, las predicciones pueden salir fuera del intervalo <span class="math inline">\([0, 1]\)</span> y los errores no cumplen normalidad ni homocedasticidad.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 8px;">
+Problemas
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+Predicciones <span class="math inline">\(&lt; 0\)</span> o <span class="math inline">\(&gt; 1\)</span>.
+</li>
+<li style="font-size: 21px;">
+Residuos no son normales.
+</li>
+<li style="font-size: 21px;">
+Varianza no es constante.
+</li>
+<li style="font-size: 21px;">
+Relación no es lineal.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Solución
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+Transformar la probabilidad con <strong>logit</strong> o <strong>probit</strong>.
+</li>
+<li style="font-size: 21px;">
+El resultado queda acotado entre 0 y 1.
+</li>
+<li style="font-size: 21px;">
+Se usa estimación por <strong>máxima verosimilitud</strong>.
+</li>
+<li style="font-size: 21px;">
+En R: <code>glm(Y ~ X, family = binomial(link = “logit”))</code>.
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 14px; background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 18px; margin: 0; color: #1b4d2e;">
+<strong>Recuerden:</strong> la regresión logística modela una probabilidad, no una cantidad continua.
+</p>
+</div>
+</section>
+<section id="definición-del-modelo-logístico" class="slide level2">
+<h2>Definición del modelo logístico</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Función logit
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: center;">
+<span class="math inline">\(\log\left(\dfrac{p}{1-p}\right) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_k X_k\)</span>
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 8px;">
+Componentes
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+<strong><span class="math inline">\(p\)</span>:</strong> probabilidad de que <span class="math inline">\(Y = 1\)</span>.
+</li>
+<li style="font-size: 21px;">
+<strong><span class="math inline">\(p/(1-p)\)</span>:</strong> <em>odds</em> o ventaja.
+</li>
+<li style="font-size: 21px;">
+<strong>Logit:</strong> logaritmo de los odds.
+</li>
+<li style="font-size: 21px;">
+<strong><span class="math inline">\(\beta_i\)</span>:</strong> cambio en el logit.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Probabilidad estimada
+</h4>
+<p style="font-size: 21px; text-align: center; margin: 0;">
+<span class="math inline">\(\hat{p} = \dfrac{1}{1 + e^{-(\hat{\beta}_0 + \hat{\beta}_1 X_1 + \cdots + \hat{\beta}_k X_k)}}\)</span>
+</p>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color: #eef2ff; border-radius: 6px; padding: 8px 10px; margin-top: 10px;">
+<p style="font-size: 18px; text-align: center; margin: 0; color: #1a3a6b;">
+Esta fórmula garantiza <span class="math inline">\(0 &lt; \hat{p} &lt; 1\)</span>.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretación-de-coeficientes" class="slide level2">
+<h2>Interpretación de coeficientes</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Odds ratio
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+En regresión logística los coeficientes se interpretan en términos de <strong>odds ratio</strong> (<span class="math inline">\(OR\)</span>): el factor por el cual cambian los odds de que ocurra el evento cuando <span class="math inline">\(X_i\)</span> aumenta una unidad, manteniendo las demás variables constantes.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 8px;">
+Fórmula
+</h4>
+<p style="font-size: 21px; text-align: center; margin: 0;">
+<span class="math inline">\(OR_i = e^{\hat{\beta}_i}\)</span>
+</p>
+<ul style="margin-top: 10px; padding-left: 18px;">
+<li style="font-size: 21px;">
+<span class="math inline">\(OR = 1\)</span>: no hay efecto.
+</li>
+<li style="font-size: 21px;">
+<span class="math inline">\(OR &gt; 1\)</span>: aumentan los odds.
+</li>
+<li style="font-size: 21px;">
+<span class="math inline">\(OR &lt; 1\)</span>: disminuyen los odds.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Ejemplo
+</h4>
+<p style="font-size: 21px; text-align: justify; margin: 0;">
+Si <span class="math inline">\(\hat{\beta}_1 = 0.69\)</span>, entonces <span class="math inline">\(OR_1 = e^{0.69} \approx 2\)</span>.
+</p>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color: #eef2ff; border-radius: 6px; padding: 8px 10px; margin-top: 10px;">
+<p style="font-size: 18px; text-align: center; margin: 0; color: #1a3a6b;">
+Por cada unidad adicional de <span class="math inline">\(X_1\)</span>, los odds de que <span class="math inline">\(Y=1\)</span> se duplican.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="función-de-enlace-logit" class="slide level2">
+<h2>Función de enlace: logit</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Por qué logit?
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+El logit transforma una probabilidad en una escala que va de <span class="math inline">\(-\infty\)</span> a <span class="math inline">\(+\infty\)</span>, permitiendo usar una combinación lineal de predictores. Es la función de enlace más usada en regresión logística porque produce resultados interpretables.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 8px;">
+Fórmula
+</h4>
+<p style="font-size: 19px; text-align: center; margin: 0; background-color: #f0fdf4; border-radius: 6px; padding: 6px;">
+<span class="math inline">\(g(p) = \log\left(\dfrac{p}{1-p}\right)\)</span>
+</p>
+<ul style="margin-top: 8px; padding-left: 18px;">
+<li style="font-size: 21px;">
+Transforma probabilidades en <em>log-odds</em>.
+</li>
+<li style="font-size: 21px;">
+Garantiza que <span class="math inline">\(0 &lt; p &lt; 1\)</span>.
+</li>
+<li style="font-size: 21px;">
+Coeficientes → odds ratios.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+En R y en la práctica
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+En R: <code>family = binomial(link = “logit”)</code>.
+</li>
+<li style="font-size: 21px;">
+Es la opción por defecto en la mayoría de software.
+</li>
+<li style="font-size: 21px;">
+Existen otras funciones de enlace como <strong>probit</strong>, pero en esta clase trabajaremos con logit.
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 14px; background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 18px; margin: 0; color: #1b4d2e;">
+<strong>Consejo:</strong> para una primera aproximación, siempre usar <strong>logit</strong>. Es más intuitivo para interpretar resultados.
+</p>
+</div>
+</section>
+<section id="supuestos-y-diagnóstico" class="slide level2">
+<h2>Supuestos y diagnóstico</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Supuestos principales
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+La regresión logística no exige normalidad ni homocedasticidad de los residuos, pero sí otros supuestos importantes.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 8px;">
+Supuestos
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+<strong>Independencia</strong> de observaciones.
+</li>
+<li style="font-size: 21px;">
+<strong>Linealidad</strong> entre logit y predictores.
+</li>
+<li style="font-size: 21px;">
+No multicolinealidad extrema.
+</li>
+<li style="font-size: 21px;">
+Tamaño de muestra adecuado.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Diagnóstico
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+<code>summary(modelo)</code>: prueba <span class="math inline">\(z\)</span> para coeficientes.
+</li>
+<li style="font-size: 21px;">
+<code>confint(modelo)</code>: intervalos de confianza.
+</li>
+<li style="font-size: 21px;">
+<code>vif(modelo)</code>: multicolinealidad.
+</li>
+<li style="font-size: 21px;">
+<code>anova(modelo, test = “Chisq”)</code>: prueba de razón de verosimilitudes.
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 14px; background-color: #eef2ff; border: 1px solid #5737cc; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 18px; margin: 0; color: #1a3a6b;">
+<strong>Bondad de ajuste:</strong> se evalúa con la prueba de Hosmer-Lemeshow o el AIC, no con <span class="math inline">\(R^2\)</span>.
+</p>
+</div>
+</section>
+<section id="evaluación-curva-roc-y-auc" class="slide level2">
+<h2>Evaluación: curva ROC y AUC</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+¿Qué mide?
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+La curva ROC muestra el balance entre la capacidad del modelo para detectar eventos positivos y no confundir negativos. El <strong>AUC</strong> resume esa curva en un solo número.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 8px;">
+Curva ROC
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+Eje X: proporción de falsos positivos.
+</li>
+<li style="font-size: 21px;">
+Eje Y: proporción de verdaderos positivos.
+</li>
+<li style="font-size: 21px;">
+Muestra todos los puntos de corte posibles.
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+AUC
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+<strong>0.5:</strong> modelo no discrimina.
+</li>
+<li style="font-size: 21px;">
+<strong>0.7–0.8:</strong> discriminación aceptable.
+</li>
+<li style="font-size: 21px;">
+<strong>0.8–0.9:</strong> muy buena.
+</li>
+<li style="font-size: 21px;">
+<strong>1.0:</strong> clasificación perfecta.
+</li>
+</ul>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 14px; background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 18px; margin: 0; color: #1b4d2e;">
+<strong>En R:</strong> <code>prediction()</code> y <code>performance()</code> del paquete <code>ROCR</code>, o <code>roc()</code> del paquete <code>pROC</code>.
+</p>
+</div>
+</section>
+<section id="ejemplo-3-regresión-logística" class="slide level2">
+<h2>Ejemplo 3: Regresión logística</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Contexto
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+Un equipo de Corpoica estudia la presencia de trips (Y = 1) en cultivos de uchuva del altiplano cundiboyacense. Se registraron n = 150 parcelas con variables cuantitativas y categóricas durante un ciclo productivo.
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 12px 16px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 6px;">
+Variables
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 21px;">
+<strong>Y:</strong> presencia de trips (0/1).
+</li>
+<li style="font-size: 21px;">
+<strong>X₁:</strong> humedad relativa (%).
+</li>
+<li style="font-size: 21px;">
+<strong>X₂:</strong> temperatura promedio (°C).
+</li>
+<li style="font-size: 21px;">
+<strong>X₃:</strong> aplicación de insecticida (Sí/No).
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Preguntas a responder
+</h4>
+<ol style="margin: 0; padding-left: 20px;">
+<li style="font-size: 21px;">
+¿Qué variables influyen en la presencia de trips?
+</li>
+<li style="font-size: 21px;">
+¿Cuánto cambian los odds de presencia?
+</li>
+<li style="font-size: 21px;">
+¿El modelo es útil para clasificar parcelas?
+</li>
+<li style="font-size: 21px;">
+¿Qué conclusión práctica se obtiene?
+</li>
+</ol>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 12px; background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 18px; margin: 0; color: #1b4d2e;">
+<strong>Modelo en R:</strong> <code>glm(trips ~ humedad + temperatura + insecticida, family = binomial(link = “logit”), data = datos)</code>
+</p>
+</div>
+</section>
+<section id="resultados-del-modelo-logístico" class="slide level2">
+<h2>Resultados del modelo logístico</h2>
+<div class="fragment fade-up" data-fragment-index="1" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 10px; padding: 10px 20px; text-align: center; margin-bottom: 12px;">
+<p style="font-size: 20px; margin: 0; color: #1e1b4b;">
+<strong>Logit estimado:</strong><br> <span class="math inline">\(\log\left(\dfrac{\hat{p}}{1-\hat{p}}\right) = -3.20 + 0.08\,\text{Humedad} + 0.35\,\text{Temperatura} - 1.40\,\text{Insecticida}\)</span>
+</p>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 22px; margin-bottom: 10px;">
+Coeficientes y odds ratios
+</h4>
+<table style="width:100%; font-size: 16px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 5px;">
+Variable
+</th>
+<th style="padding: 5px;">
+β
+</th>
+<th style="padding: 5px;">
+OR
+</th>
+<th style="padding: 5px;">
+IC 95%
+</th>
+<th style="padding: 5px;">
+p
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+Intercepto
+</td>
+<td>
+-3.20
+</td>
+<td>
+—
+</td>
+<td>
+—
+</td>
+<td>
+&lt; 0.001
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+Humedad
+</td>
+<td>
+0.08
+</td>
+<td>
+1.08
+</td>
+<td>
+(1.01, 1.16)
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.023
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+Temperatura
+</td>
+<td>
+0.35
+</td>
+<td>
+1.42
+</td>
+<td>
+(1.18, 1.71)
+</td>
+<td style="color: #15803d; font-weight: bold;">
+&lt; 0.001
+</td>
+</tr>
+<tr>
+<td style="padding: 5px;">
+Insecticida
+</td>
+<td>
+-1.40
+</td>
+<td>
+0.25
+</td>
+<td>
+(0.12, 0.48)
+</td>
+<td style="color: #15803d; font-weight: bold;">
+&lt; 0.001
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 10px;">
+Cómo interpretar
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 19px; margin-bottom: 8px;">
+<strong>Humedad:</strong> por cada punto porcentual adicional, los odds de presencia aumentan 1.08 veces.
+</li>
+<li style="font-size: 19px; margin-bottom: 8px;">
+<strong>Temperatura:</strong> por cada °C adicional, los odds de presencia se multiplican por 1.42.
+</li>
+<li style="font-size: 19px; margin-bottom: 8px;">
+<strong>Insecticida:</strong> aplicar insecticida reduce los odds a una cuarta parte (OR = 0.25).
+</li>
+</ul>
+<div class="fragment fade-up" data-fragment-index="4" style="background-color: #f0fdf4; border-radius: 6px; padding: 6px 10px; margin-top: 8px;">
+<p style="font-size: 16px; text-align: center; margin: 0; color: #1b4d2e;">
+<strong>Nota:</strong> odds ratio = 1 significa que la variable no tiene efecto.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluación-del-modelo" class="slide level2">
+<h2>Evaluación del modelo</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 22px; margin-bottom: 10px;">
+Bondad de ajuste
+</h4>
+<table style="width:100%; font-size: 17px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 5px;">
+Métrica
+</th>
+<th style="padding: 5px;">
+Valor
+</th>
+<th style="padding: 5px;">
+Interpretación
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+AIC
+</td>
+<td>
+142.5
+</td>
+<td>
+Menor es mejor
+</td>
+</tr>
+<tr>
+<td style="padding: 5px;">
+AUC
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.84
+</td>
+<td>
+Muy buena discriminación
+</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up" data-fragment-index="2" style="margin-top: 10px; background-color: #f0fdf4; border-radius: 6px; padding: 6px 10px;">
+<p style="font-size: 16px; text-align: center; margin: 0; color: #1b4d2e;">
+<strong>Prueba de razón de verosimilitudes:</strong> χ² = 48.7, p &lt; 0.001. El modelo mejora significativamente respecto al nulo.
+</p>
+</div>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 10px;">
+Curva ROC
+</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="clase_17_files/figure-revealjs/unnamed-chunk-5-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 12px; background-color: #eef2ff; border: 1px solid #5737cc; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 18px; margin: 0; color: #1a3a6b;">
+<strong>Conclusión de la evaluación:</strong> el modelo clasifica bien las parcelas según su probabilidad de presentar trips. En R: <code>roc(datos<span class="math inline">\(trips, fitted(modelo))\)</span>auc</code> con el paquete <code>pROC</code>.
+</p>
+</div>
+</section>
+<section id="interpretación-y-conclusiones-2" class="slide level2">
+<h2>Interpretación y conclusiones</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 18px 22px;">
+<h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 12px;">
+Respuestas
+</h4>
+<ol style="padding-left: 24px; margin: 0;">
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 23px; margin-bottom: 10px; line-height: 1.4;">
+<strong>¿Qué variables influyen?</strong> Humedad, temperatura e insecticida son significativas (p &lt; 0.05).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 23px; margin-bottom: 10px; line-height: 1.4;">
+<strong>¿Cuánto cambian los odds?</strong> Cada °C adicional multiplica los odds por 1.42; el insecticida los reduce a 0.25 veces.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px; margin-bottom: 10px; line-height: 1.4;">
+<strong>¿El modelo clasifica bien?</strong> Sí, AUC = 0.84 indica muy buena discriminación.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px; margin-bottom: 2px; line-height: 1.4;">
+<strong>¿Conclusión práctica?</strong> La temperatura y la humedad aumentan el riesgo de trips; el insecticida es el factor protector más importante.
+</li>
+</ol>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="border-left: 4px solid #1a3a6b; padding: 18px 22px;">
+<h4 style="color:#1a3a6b; font-size: 26px; margin-bottom: 12px;">
+Conclusión
+</h4>
+<ul style="margin: 0; padding-left: 22px;">
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px; text-align: justify; margin-bottom: 10px; line-height: 1.4;">
+Parcelas con mayor temperatura y humedad relativa tienen mayor probabilidad de presentar trips en uchuva.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 24px; text-align: justify; margin-bottom: 10px; line-height: 1.4;">
+La aplicación de insecticida reduce fuertemente la probabilidad de presencia (OR = 0.25).
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px; text-align: justify; margin-bottom: 10px; line-height: 1.4;">
+El modelo permite identificar parcelas de mayor riesgo y orientar decisiones de manejo integrado.
+</li>
+</ul>
+<div class="fragment fade-up" data-fragment-index="10" style="background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 6px; padding: 12px 16px; margin-top: 14px;">
+<p style="font-size: 22px; text-align: center; color: #1b4d2e; margin: 0;">
+<strong>Recomendación:</strong> monitorear parcelas en épocas cálidas y húmedas, y priorizar aplicaciones preventivas de insecticida.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="guía-de-funciones-en-r-para-regresión-logística" class="slide level2">
+<h2>Guía de funciones en R para regresión logística</h2>
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Análisis completo paso a paso
+</div>
+<div class="block-body">
+<p style="font-size: 21px; text-align: justify;">
+Esta rutina cubre: ajuste del modelo, extracción de coeficientes, odds ratios, evaluación y diagnóstico. Los resultados se presentan con tablas para mantener la salida limpia y pedagógica.
+</p>
+</div>
+</div>
+<div class="fragment fade-up" data-fragment-index="2" style="background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 6px; padding: 6px 12px; text-align: center; margin-bottom: 10px;">
+<p style="font-size: 16px; margin: 0; color: #1b4d2e;">
+<strong>Nota:</strong> <code>glm()</code> y <code>summary()</code> son de R base. Solo se indica la librería cuando es externa.
+</p>
+</div>
+<div class="fragment fade-up" data-fragment-index="3">
+<table style="width:100%; font-size: 17px; border-collapse: collapse; text-align: left; border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden;">
+<thead>
+<tr style="background-color: #1b4d2e; color: white;">
+<th style="padding: 10px 14px; width: 8%;">
+Paso
+</th>
+<th style="padding: 10px 14px; width: 22%;">
+Etapa
+</th>
+<th style="padding: 10px 14px; width: 50%;">
+Funciones en R
+</th>
+<th style="padding: 10px 14px; width: 20%;">
+Librería externa
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+1
+</td>
+<td style="padding: 8px 14px;">
+<strong>Ajuste</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>glm(Y ~ X1 + X2, family = binomial(link = “logit”), data = datos)</code>
+</td>
+<td style="padding: 8px 14px;">
+—
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+2
+</td>
+<td style="padding: 8px 14px;">
+<strong>Resumen</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>summary(modelo)</code>, <code>confint(modelo)</code>
+</td>
+<td style="padding: 8px 14px;">
+—
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+3
+</td>
+<td style="padding: 8px 14px;">
+<strong>Odds ratios</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>exp(coef(modelo))</code>, <code>exp(confint(modelo))</code>
+</td>
+<td style="padding: 8px 14px;">
+—
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+4
+</td>
+<td style="padding: 8px 14px;">
+<strong>Multicolinealidad</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>vif(modelo)</code>
+</td>
+<td style="padding: 8px 14px;">
+<code>car</code>
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+5
+</td>
+<td style="padding: 8px 14px;">
+<strong>Comparación con el nulo</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>anova(modelo_nulo, modelo, test = “Chisq”)</code>
+</td>
+<td style="padding: 8px 14px;">
+—
+</td>
+</tr>
+<tr>
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">
+6
+</td>
+<td style="padding: 8px 14px;">
+<strong>Curva ROC y AUC</strong>
+</td>
+<td style="padding: 8px 14px;">
+<code>roc(datos<span class="math inline">\(Y, fitted(modelo))\)</span>auc</code>
+</td>
+<td style="padding: 8px 14px;">
+<code>pROC</code>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 16px; background-color: #eef2ff; border: 1px solid #5737cc; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 17px; margin: 0; color: #1a3a6b;">
+<strong>Instalación de librerías externas:</strong> <code>install.packages(c(“car”, “pROC”))</code>
+</p>
+</div>
+</section>
+<section id="taller-en-clase" class="slide level2 center middle">
+<h2>Taller en clase</h2>
+</section>
+<section id="ejercicio" class="slide level2">
+<h2>Ejercicio</h2>
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">
+Enunciado
+</div>
+<div class="block-body">
+<p style="font-size: 23px; text-align: justify;">
+Un agrónomo quiere modelar el <strong>rendimiento de frijol (ton/ha)</strong> en fincas del Eje Cafetero. Se registraron datos de 80 parcelas y se midieron tres variables cuantitativas: precipitación (mm), dosis de fertilizante (kg/ha) y materia orgánica del suelo (%).
+</p>
+</div>
+</div>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 12px 16px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 6px;">
+Variables del estudio
+</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 23px;">
+<strong>Y:</strong> rendimiento (ton/ha)
+</li>
+<li style="font-size: 23px;">
+<strong>X₁:</strong> precipitación (mm)
+</li>
+<li style="font-size: 23px;">
+<strong>X₂:</strong> fertilizante (kg/ha)
+</li>
+<li style="font-size: 23px;">
+<strong>X₃:</strong> materia orgánica (%)
+</li>
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">
+Preguntas a responder
+</h4>
+<ol>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; text-align: justify;">
+¿El modelo en conjunto explica el rendimiento? (Prueba F)
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 20px; text-align: justify;">
+¿Cuáles predictores son significativos individualmente? (Pruebas t)
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 20px; text-align: justify;">
+¿Qué proporción de la variabilidad explica? (R² ajustado)
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 20px; text-align: justify;">
+¿Hay problemas de multicolinealidad? (VIF)
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 20px; text-align: justify;">
+¿Se cumplen los supuestos del modelo?
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="resultados-del-modelo-1" class="slide level2">
+<h2>Resultados del modelo</h2>
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 22px; margin-bottom: 10px;">
+Coeficientes estimados
+</h4>
+<table style="width:100%; font-size: 17px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 5px;">
+Variable
+</th>
+<th style="padding: 5px;">
+Coef.
+</th>
+<th style="padding: 5px;">
+Error est.
+</th>
+<th style="padding: 5px;">
+Valor-p
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+(Intercepto)
+</td>
+<td>
+2.50
+</td>
+<td>
+0.95
+</td>
+<td>
+0.012
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+precipitación
+</td>
+<td>
+0.03
+</td>
+<td>
+0.01
+</td>
+<td style="color: #15803d; font-weight: bold;">
+&lt; 0.001
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px;">
+fertilizante
+</td>
+<td>
+0.08
+</td>
+<td>
+0.03
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.003
+</td>
+</tr>
+<tr>
+<td style="padding: 4px;">
+materia orgánica
+</td>
+<td>
+0.40
+</td>
+<td>
+0.15
+</td>
+<td style="color: #15803d; font-weight: bold;">
+0.015
+</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up" data-fragment-index="2" style="margin-top: 10px;">
+<table style="width:100%; font-size: 16px; border-collapse: collapse; text-align: center;">
+<tbody><tr style="background-color: #f0fdf4;">
+<td style="padding: 5px; border-radius: 6px 0 0 6px; color: #1b4d2e;">
+<strong>R²</strong><br>0.79
+</td>
+<td style="padding: 5px; color: #1b4d2e;">
+<strong>R² ajustado</strong><br>0.78
+</td>
+<td style="padding: 5px; border-radius: 0 6px 6px 0; color: #1b4d2e;">
+<strong>Prueba F</strong><br>p &lt; 0.001
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 10px;">
+Matriz de correlaciones
+</h4>
+<table style="width:100%; font-size: 15px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 4px;">
+</th>
+<th style="padding: 4px;">
+Prec.
+</th>
+<th style="padding: 4px;">
+Fert.
+</th>
+<th style="padding: 4px;">
+M.O.
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px; font-weight: bold; color: #1a3a6b;">
+Prec.
+</td>
+<td>
+1.00
+</td>
+<td style="color: #15803d;">
+0.05
+</td>
+<td style="color: #15803d;">
+−0.03
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 4px; font-weight: bold; color: #1a3a6b;">
+Fert.
+</td>
+<td style="color: #15803d;">
+0.05
+</td>
+<td>
+1.00
+</td>
+<td style="color: #15803d;">
+0.08
+</td>
+</tr>
+<tr>
+<td style="padding: 4px; font-weight: bold; color: #1a3a6b;">
+M.O.
+</td>
+<td style="color: #15803d;">
+−0.03
+</td>
+<td style="color: #15803d;">
+0.08
+</td>
+<td>
+1.00
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="diagnóstico-y-validación-de-supuestos" class="slide level2">
+<h2>Diagnóstico y validación de supuestos</h2>
+
+<img data-src="clase_17_files/figure-revealjs/unnamed-chunk-7-1.png" width="1728" class="r-stretch"><div class="twocol" style="margin-top: 8px;">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 12px 16px;">
+<h4 style="color:#1b4d2e; font-size: 22px; margin-bottom: 8px;">
+Pruebas de diagnóstico
+</h4>
+<table style="width:100%; font-size: 17px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 6px;">
+Supuesto
+</th>
+<th style="padding: 6px;">
+Prueba
+</th>
+<th style="padding: 6px;">
+Estadístico
+</th>
+<th style="padding: 6px;">
+Valor-p
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+Normalidad
+</td>
+<td>
+Shapiro-Wilk
+</td>
+<td>
+W = 0.97
+</td>
+<td>
+0.31
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+Homocedasticidad
+</td>
+<td>
+Breusch-Pagan
+</td>
+<td>
+BP = 2.8
+</td>
+<td>
+0.42
+</td>
+</tr>
+<tr>
+<td style="padding: 5px;">
+Independencia
+</td>
+<td>
+Durbin-Watson
+</td>
+<td>
+DW = 1.9
+</td>
+<td>
+0.38
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1a3a6b; padding: 12px 16px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 8px;">
+VIF
+</h4>
+<table style="width:100%; font-size: 17px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 6px;">
+Variable
+</th>
+<th style="padding: 6px;">
+VIF
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+precipitación
+</td>
+<td style="color: #15803d;">
+1.01
+</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">
+fertilizante
+</td>
+<td style="color: #15803d;">
+1.02
+</td>
+</tr>
+<tr>
+<td style="padding: 5px;">
+materia orgánica
+</td>
+<td style="color: #15803d;">
+1.01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/logo_unal_3.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="clase_17_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="clase_17_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="clase_17_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="clase_17_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'multiplex': {"secret":null,"id":"f6d0b5d517e77530f3b5efb3fe492ef930b4a5e80ec6ee09c83d7febdca781ad","url":"https://multiplex.up.railway.app/"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
