@@ -1,0 +1,901 @@
+---
+title: "Taller 2: Regresion Lineal Multiple"
+subtitle: "Bioestadistica Fundamental"
+author: "Andres Felipe Florez Rivera"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    keep_md: false
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: tango
+    css: "../../assets/workshop.css"
+  pdf_document:
+    toc: true
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width  = 8,
+  fig.height = 5
+)
+
+paquetes <- c("car", "lmtest", "ggplot2", "gridExtra")
+nuevos   <- paquetes[!paquetes %in% installed.packages()[, "Package"]]
+if (length(nuevos)) install.packages(nuevos, repos = "https://cloud.r-project.org")
+
+mostrar_tabla <- function(x, n = 15, caption = NULL) {
+  x_mostrar <- head(x, n)
+  if (knitr::is_html_output()) {
+    tabla_html <- knitr::kable(
+      x_mostrar,
+      format     = "html",
+      caption    = caption,
+      table.attr = 'class="table table-striped table-hover table-condensed"'
+    )
+    knitr::asis_output(
+      paste0('<div class="table-scroll">', as.character(tabla_html), '</div>')
+    )
+  } else {
+    knitr::kable(x_mostrar, format = "latex", caption = caption, booktabs = TRUE)
+  }
+}
+```
+
+<div class="cover-division">Universidad Nacional de Colombia &mdash; Departamento de Estadistica, Sede Bogota</div>
+
+Este taller tiene dos partes. La **Parte I** presenta las herramientas en R necesarias para realizar un analisis completo de regresion lineal multiple por MCO. La **Parte II** plantea el trabajo que los estudiantes deben entregar, aplicando todas las herramientas aprendidas a un nuevo conjunto de datos.
+
+---
+
+# Parte I: Herramientas en R para Regresion Lineal Multiple
+
+Para ilustrar cada herramienta se usa un conjunto de datos simulado con contexto agronomico: rendimiento de cafe pergamino seco (kg/ha) en funcion de tres factores medidos en 60 parcelas del Eje Cafetero. Los datos se generan de forma reproducible con `set.seed(42)`.
+
+```{r datos}
+set.seed(42)
+n            <- 60
+fertilizante <- round(runif(n, 80, 300), 1)
+altitud      <- round(runif(n, 1200, 1900), 0)
+densidad     <- round(runif(n, 4000, 8000), 0)
+variedad     <- factor(sample(c("Castillo", "Colombia", "Cenicafe1"), n, replace = TRUE))
+
+rendimiento  <- round(
+  800 + 1.8 * fertilizante - 0.5 * altitud + 0.12 * densidad +
+  ifelse(variedad == "Colombia",  80, 0) +
+  ifelse(variedad == "Cenicafe1", 50, 0) +
+  rnorm(n, 0, 80), 1
+)
+
+datos <- data.frame(rendimiento, fertilizante, altitud, densidad, variedad)
+
+mostrar_tabla(datos, caption = "Rendimiento de cafe y variables explicativas")
+```
+
+Las variables son:
+
+| Variable | Tipo | Descripcion | Unidad / Categorias |
+|:---------|:-----|:------------|:--------------------|
+| `rendimiento` | Cuantitativa | Rendimiento de cafe pergamino seco | kg/ha |
+| `fertilizante` | Cuantitativa | Dosis de fertilizante nitrogenado aplicada | kg N/ha |
+| `altitud` | Cuantitativa | Altitud de la parcela sobre el nivel del mar | m.s.n.m. |
+| `densidad` | Cuantitativa | Densidad de siembra | plantas/ha |
+| `variedad` | Cualitativa | Variedad de cafe sembrada | Castillo / Colombia / Cenicafe1 |
+
+---
+
+## 1. Exploracion inicial de los datos
+
+Antes de ajustar un modelo de regresion siempre se deben explorar los datos.
+
+### 1.1 Estadisticas descriptivas
+
+```{r descriptivas}
+summary(datos)
+```
+
+### 1.2 Matriz de correlaciones (variables cuantitativas)
+
+La matriz de correlaciones solo aplica a variables cuantitativas. La variable `variedad` se excluye de este calculo.
+
+```{r correlaciones}
+vars_num <- c("rendimiento", "fertilizante", "altitud", "densidad")
+mat_cor  <- round(cor(datos[, vars_num]), 4)
+mostrar_tabla(as.data.frame(mat_cor), caption = "Matriz de correlaciones entre variables cuantitativas")
+```
+
+> Correlaciones altas entre $Y$ y los predictores indican que esas variables son buenos candidatos para el modelo. Correlaciones altas entre predictores ($|r| > 0.7$) son una primera senal de posible multicolinealidad.
+
+### 1.3 Exploracion de la variable cualitativa
+
+Para variables cualitativas se usan tablas de frecuencias y diagramas de caja.
+
+```{r explora-cualitativa}
+table(datos$variedad)
+
+boxplot(
+  rendimiento ~ variedad,
+  data  = datos,
+  col   = c("#bbf7d0", "#bfdbfe", "#e9d5ff"),
+  xlab  = "Variedad",
+  ylab  = "Rendimiento (kg/ha)",
+  main  = "Rendimiento por variedad de cafe"
+)
+grid()
+```
+
+> El diagrama de caja permite evaluar si las variedades tienen rendimientos promedio distintos, lo que justifica incluir la variable en el modelo.
+
+### 1.4 Diagramas de dispersion por pares (cuantitativas)
+
+```{r dispersion}
+pairs(
+  datos[, vars_num],
+  col  = "#2563eb",
+  pch  = 19,
+  cex  = 0.8,
+  main = "Diagramas de dispersion por pares"
+)
+```
+
+> Cada panel muestra la relacion entre dos variables cuantitativas.
+
+---
+
+## 2. El modelo de regresion lineal multiple
+
+El modelo poblacional con $k$ predictores es:
+
+$$Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \cdots + \beta_k X_{ki} + e_i, \quad e_i \sim N(0, \sigma^2), \quad i = 1, \ldots, n$$
+
+En notacion matricial compacta: $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \mathbf{e}$
+
+| Componente | Significado |
+|:----------:|:------------|
+| $Y_i$ | Valor observado de la variable respuesta |
+| $X_{1i}, X_{2i}, \ldots, X_{ki}$ | Valores de los $k$ predictores para la observacion $i$ |
+| $\beta_0$ | Intercepto: valor esperado de $Y$ cuando todos los predictores valen cero |
+| $\beta_1, \ldots, \beta_k$ | Efecto parcial de cada predictor sobre $Y$, manteniendo los demas constantes |
+| $e_i$ | Error aleatorio asociado a la observacion $i$ |
+
+En este ejemplo con tres variables cuantitativas y una cualitativa con tres categorias ("Castillo" es la categoria de referencia):
+
+$$Y_i = \beta_0 + \beta_1 \text{Fertilizante}_i + \beta_2 \text{Altitud}_i + \beta_3 \text{Densidad}_i + \beta_4 D_{\text{Colombia},i} + \beta_5 D_{\text{Cenicafe1},i} + e_i$$
+
+Donde $D_{\text{Colombia}}$ y $D_{\text{Cenicafe1}}$ son **variables indicadoras** (dummy) que valen 1 si la parcela pertenece a esa variedad y 0 en caso contrario. R las crea automaticamente al incluir un `factor` en `lm()`.
+
+> **Categoria de referencia:** cuando $D_{\text{Colombia}} = 0$ y $D_{\text{Cenicafe1}} = 0$, la observacion pertenece a la variedad "Castillo". Los coeficientes $\beta_4$ y $\beta_5$ miden la diferencia en rendimiento respecto a "Castillo", manteniendo los demas predictores constantes.
+
+---
+
+## 3. Estimacion por Minimos Cuadrados Ordinarios (MCO)
+
+En regresion multiple, MCO minimiza la suma de cuadrados de los residuos:
+
+$$S(\boldsymbol{\beta}) = \sum_{i=1}^{n} e_i^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$$
+
+La solucion matricial es:
+
+$$\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{Y}$$
+
+Esta es la expresion que R resuelve internamente con `lm()`.
+
+### 3.1 Ajuste del modelo con `lm()`
+
+```{r ajuste}
+modelo <- lm(rendimiento ~ fertilizante + altitud + densidad + variedad, data = datos)
+summary(modelo)
+```
+
+### 3.2 Extraccion de los coeficientes estimados
+
+```{r coeficientes}
+coefs <- coef(modelo)
+for (nm in names(coefs)) {
+  cat(nm, "=", round(coefs[nm], 4), "\n")
+}
+```
+
+### 3.3 Interpretacion de los coeficientes
+
+Cada coeficiente mide el efecto **parcial** de su predictor sobre el rendimiento, manteniendo los demas predictores constantes.
+
+```{r interpretacion}
+b0  <- coefs[1]; b1 <- coefs[2]; b2 <- coefs[3]
+b3  <- coefs[4]
+b4  <- coefs["variedadColombia"]
+b5  <- coefs["variedadCenicafe1"]
+
+cat("b0 =", round(b0, 2), "\n")
+cat("   Rendimiento esperado para variedad Castillo cuando los predictores cuantitativos valen cero.\n\n")
+
+cat("b1 =", round(b1, 4), "\n")
+cat("   Por cada kg/ha adicional de fertilizante, el rendimiento cambia en promedio",
+    round(b1, 4), "kg/ha,\n   manteniendo altitud, densidad y variedad constantes.\n\n")
+
+cat("b2 =", round(b2, 4), "\n")
+cat("   Por cada metro adicional de altitud, el rendimiento cambia en promedio",
+    round(b2, 4), "kg/ha,\n   manteniendo fertilizante, densidad y variedad constantes.\n\n")
+
+cat("b3 =", round(b3, 4), "\n")
+cat("   Por cada planta/ha adicional en la densidad, el rendimiento cambia en promedio",
+    round(b3, 4), "kg/ha,\n   manteniendo fertilizante, altitud y variedad constantes.\n\n")
+
+cat("b4 (Colombia) =", round(b4, 4), "\n")
+cat("   Las parcelas con variedad Colombia tienen en promedio", round(b4, 2),
+    "kg/ha", ifelse(b4 > 0, "mas", "menos"),
+    "que las de variedad Castillo,\n   manteniendo los demas predictores constantes.\n\n")
+
+cat("b5 (Cenicafe1) =", round(b5, 4), "\n")
+cat("   Las parcelas con variedad Cenicafe1 tienen en promedio", round(b5, 2),
+    "kg/ha", ifelse(b5 > 0, "mas", "menos"),
+    "que las de variedad Castillo,\n   manteniendo los demas predictores constantes.\n")
+```
+
+---
+
+## 4. Valores ajustados y residuos
+
+Una vez estimado el modelo se obtiene para cada observacion:
+
+- **Valor ajustado:** $\hat{y}_i = b_0 + b_1 x_{1i} + b_2 x_{2i} + b_3 x_{3i} + b_4 D_{\text{Colombia},i} + b_5 D_{\text{Cenicafe1},i}$ — lo que el modelo predice.
+- **Residuo:** $e_i = y_i - \hat{y}_i$ — diferencia entre lo observado y lo predicho.
+
+```{r ajustados-residuos}
+datos$y_hat   <- fitted(modelo)
+datos$residuo <- residuals(modelo)
+
+datos_mostrar <- datos
+datos_mostrar[, sapply(datos_mostrar, is.numeric)] <- round(
+  datos_mostrar[, sapply(datos_mostrar, is.numeric)], 3
+)
+mostrar_tabla(datos_mostrar, caption = "Valores ajustados y residuos (primeras filas)")
+```
+
+### 4.1 Residuos vs valores ajustados
+
+En regresion multiple no existe una recta en el plano para graficar. En cambio, se grafica el residuo contra el valor ajustado para verificar patrones.
+
+```{r graf-residuos}
+plot(
+  residuals(modelo) ~ fitted(modelo),
+  pch  = 19,
+  col  = "#2563eb",
+  cex  = 1.1,
+  xlab = "Valores ajustados (kg/ha)",
+  ylab = "Residuos (kg/ha)",
+  main = "Residuos vs. Valores ajustados"
+)
+abline(h = 0, col = "#dc2626", lwd = 2, lty = 2)
+grid()
+```
+
+> Una nube sin patron alrededor de cero indica que el modelo es adecuado. Un patron sistematico (curva, embudo) sugiere violacion de supuestos.
+
+---
+
+## 5. Bondad de ajuste: $R^2$ y $R^2$ ajustado
+
+En regresion multiple se usan dos medidas complementarias:
+
+$$R^2 = 1 - \frac{SCR}{SCT}, \qquad R^2_{adj} = 1 - \frac{SCR/(n-k-1)}{SCT/(n-1)}$$
+
+| Cantidad | Formula | Significado |
+|:---------|:--------|:------------|
+| $SCT$ | $\sum(y_i - \bar{y})^2$ | Variabilidad total en $Y$ |
+| $SCR$ | $\sum(y_i - \hat{y}_i)^2$ | Variabilidad no explicada (residual) |
+| $SCE$ | $\sum(\hat{y}_i - \bar{y})^2$ | Variabilidad explicada por el modelo |
+
+> En regresion multiple **siempre** se reporta el $R^2$ ajustado porque el $R^2$ simple aumenta artificialmente al agregar mas predictores, aunque no aporten informacion real.
+
+```{r r2}
+SCT <- sum((datos$rendimiento - mean(datos$rendimiento))^2)
+SCR <- sum(datos$residuo^2)
+SCE <- sum((datos$y_hat - mean(datos$rendimiento))^2)
+k   <- 5  # numero de coeficientes (3 cuantitativos + 2 dummies de variedad)
+
+cat("SCT =", round(SCT, 2), "\n")
+cat("SCR =", round(SCR, 2), "\n")
+cat("SCE =", round(SCE, 2), "\n")
+cat("SCE + SCR =", round(SCE + SCR, 2), " (debe coincidir con SCT)\n\n")
+
+R2_manual    <- 1 - SCR / SCT
+R2_adj_manual <- 1 - (SCR / (n - k - 1)) / (SCT / (n - 1))
+R2_lm        <- summary(modelo)$r.squared
+R2_adj_lm    <- summary(modelo)$adj.r.squared
+
+cat("R^2 (manual)      =", round(R2_manual, 4), "\n")
+cat("R^2 ajustado (manual) =", round(R2_adj_manual, 4), "\n")
+cat("R^2 (lm)          =", round(R2_lm,     4), "\n")
+cat("R^2 ajustado (lm) =", round(R2_adj_lm, 4), "\n")
+cat("\nEl modelo explica el", round(R2_adj_lm * 100, 2),
+    "% de la variabilidad del rendimiento (R^2 ajustado).\n")
+```
+
+> **Alerta:** un $R^2$ alto no garantiza que los supuestos del modelo se cumplan. Siempre debe acompanarse con el diagnostico de residuos.
+
+---
+
+## 6. Inferencia: prueba F y pruebas t
+
+En regresion multiple la inferencia tiene dos niveles: la prueba **global** (prueba F) y las pruebas **individuales** (pruebas t).
+
+### 6.1 Prueba F global: ¿el modelo sirve?
+
+Evalua si el conjunto de predictores explica algo de la variabilidad de $Y$:
+
+$$H_0: \beta_1 = \beta_2 = \cdots = \beta_k = 0 \quad \text{vs} \quad H_1: \text{al menos un } \beta_i \neq 0$$
+
+$$F = \frac{SCE / k}{SCR / (n - k - 1)}$$
+
+Se rechaza $H_0$ cuando el valor $p < 0.05$: el modelo en conjunto explica significativamente la variabilidad de $Y$.
+
+```{r prueba-f}
+resumen <- summary(modelo)
+F_stat  <- resumen$fstatistic
+F_valor <- F_stat[1]
+F_df1   <- F_stat[2]
+F_df2   <- F_stat[3]
+F_pval  <- pf(F_valor, F_df1, F_df2, lower.tail = FALSE)
+
+cat("Estadistico F =", round(F_valor, 4), "\n")
+cat("Grados de libertad:", F_df1, "y", F_df2, "\n")
+cat("Valor p          =", format(F_pval, scientific = TRUE, digits = 4), "\n")
+cat(ifelse(F_pval < 0.05,
+    "Se rechaza H0: el modelo en conjunto es significativo.",
+    "No se rechaza H0: el modelo no explica la variabilidad de Y."), "\n")
+```
+
+> **Importante:** rechazar $H_0$ en la prueba F solo indica que al menos un predictor es util. Para saber cuales, se necesitan las pruebas t individuales.
+
+### 6.2 Pruebas t individuales: ¿cuales predictores importan?
+
+Para cada coeficiente $\beta_i$:
+
+$$H_0: \beta_i = 0 \quad \text{vs} \quad H_1: \beta_i \neq 0$$
+
+$$t_i = \frac{\hat{\beta}_i}{\text{EE}(\hat{\beta}_i)}$$
+
+Se rechaza $H_0$ cuando el valor $p < 0.05$: el predictor $X_i$ aporta significativamente al modelo, manteniendo los demas predictores constantes.
+
+```{r pruebas-t}
+tabla_coef <- as.data.frame(summary(modelo)$coefficients)
+names(tabla_coef) <- c("Estimado", "Error_std", "t_valor", "p_valor")
+tabla_coef        <- round(tabla_coef, 6)
+tabla_coef$Decision <- ifelse(tabla_coef$p_valor < 0.05, "Rechazar H0", "No rechazar H0")
+mostrar_tabla(tabla_coef, caption = "Pruebas t individuales sobre los coeficientes")
+```
+
+### 6.3 Intervalos de confianza para los coeficientes
+
+```{r ic-coef}
+ic <- confint(modelo, level = 0.95)
+mostrar_tabla(round(as.data.frame(ic), 4),
+              caption = "Intervalos de confianza al 95% para los coeficientes")
+```
+
+> Un IC del 95% para $\beta_i$ que **no contenga el cero** confirma que ese predictor es estadisticamente significativo. Si el intervalo contiene el cero, el predictor podria no aportar al modelo.
+
+---
+
+## 7. Visualizacion del ajuste: predichos vs. observados
+
+En regresion multiple no hay una recta simple en el plano. La forma mas directa de visualizar el ajuste es graficar los valores predichos contra los valores observados: si el modelo ajusta bien, los puntos deben seguir la diagonal.
+
+```{r graf-ajuste}
+r2_adj <- summary(modelo)$adj.r.squared
+
+plot(
+  datos$y_hat ~ datos$rendimiento,
+  pch  = 19,
+  col  = "#2563eb",
+  cex  = 1.2,
+  xlab = "Rendimiento observado (kg/ha)",
+  ylab = "Rendimiento predicho (kg/ha)",
+  main = "Valores predichos vs. observados"
+)
+abline(a = 0, b = 1, col = "#dc2626", lwd = 2, lty = 2)
+grid()
+legend(
+  "topleft",
+  legend = paste0("R^2 ajustado = ", round(r2_adj, 3)),
+  bty = "n", cex = 0.95
+)
+```
+
+> Los puntos deben distribuirse alrededor de la linea roja (diagonal de 45 grados). Desviaciones sistematicas indican que el modelo no captura bien alguna parte de la variabilidad.
+
+---
+
+## 8. Diagnostico de supuestos
+
+Para que las pruebas F, t e intervalos de confianza sean validos, el modelo debe satisfacer:
+
+| Supuesto | Descripcion | Herramienta grafica | Prueba estadistica |
+|:---------|:------------|:--------------------|:-------------------|
+| Linealidad | $E(Y|\mathbf{X}) = \mathbf{X}\boldsymbol{\beta}$ | Residuos vs Ajustados | — |
+| Independencia | Los $e_i$ son independientes | — | Durbin-Watson |
+| Homocedasticidad | $\text{Var}(e_i) = \sigma^2$ constante | Scale-Location | Breusch-Pagan |
+| Normalidad | $e_i \sim N(0, \sigma^2)$ | Q-Q plot | Shapiro-Wilk |
+
+### 8.1 Graficos de diagnostico
+
+```{r diagnostico, fig.height=8}
+par(mfrow = c(2, 2))
+plot(modelo, col = "#1a3a6b", pch = 19, cex = 0.9)
+par(mfrow = c(1, 1))
+```
+
+> En regresion multiple los graficos de diagnostico se interpretan igual que en regresion simple. La diferencia es que los residuos se calculan respecto al hiperplano ajustado, no a una recta.
+
+- **Residuals vs Fitted:** puntos distribuidos aleatoriamente alrededor de cero indican linealidad y homocedasticidad.
+- **Normal Q-Q:** los puntos deben seguir la diagonal. Desviaciones indican falta de normalidad.
+- **Scale-Location:** la dispersion debe mantenerse constante a lo largo de los valores ajustados.
+- **Residuals vs Leverage:** identifica observaciones influyentes mediante la distancia de Cook.
+
+### 8.2 Prueba de Shapiro-Wilk (normalidad)
+
+La prueba contrasta:
+
+$$H_0: \text{los residuos provienen de una distribucion normal} \quad \text{vs} \quad H_1: \text{no provienen de una distribucion normal}$$
+
+```{r shapiro}
+sw <- shapiro.test(residuals(modelo))
+cat("Estadistico W =", round(sw$statistic, 4), "\n")
+cat("Valor p       =", round(sw$p.value,   4), "\n")
+cat(ifelse(sw$p.value > 0.05,
+    "No se rechaza H0: los residuos son compatibles con normalidad.",
+    "Se rechaza H0: los residuos no siguen una distribucion normal."), "\n")
+```
+
+> **Interpretacion:** el valor $p > 0.05$, por lo tanto **no se rechaza $H_0$**. Los residuos siguen una distribucion aproximadamente normal. El supuesto de normalidad **se cumple**.
+
+### 8.3 Prueba de Breusch-Pagan (homocedasticidad)
+
+La prueba contrasta:
+
+$$H_0: \text{la varianza de los errores es constante} \quad \text{vs} \quad H_1: \text{la varianza no es constante (heterocedasticidad)}$$
+
+```{r bptest}
+library(lmtest)
+bp <- bptest(modelo)
+print(bp)
+cat(ifelse(bp$p.value > 0.05,
+    "No se rechaza H0: varianza constante (homocedasticidad).",
+    "Se rechaza H0: hay evidencia de heterocedasticidad."), "\n")
+```
+
+> **Interpretacion:** el valor $p > 0.05$, por lo tanto **no se rechaza $H_0$**. La varianza de los errores es constante a lo largo de los valores de $X$. El supuesto de homocedasticidad **se cumple**.
+
+### 8.4 Prueba de Durbin-Watson (independencia)
+
+La prueba contrasta:
+
+$$H_0: \text{los residuos son independientes} \quad \text{vs} \quad H_1: \text{hay autocorrelacion en los residuos}$$
+
+El estadistico $DW$ toma valores entre 0 y 4; valores cercanos a 2 indican independencia.
+
+```{r dwtest}
+dw <- dwtest(modelo)
+print(dw)
+cat(ifelse(dw$p.value > 0.05,
+    "No se rechaza H0: los residuos son independientes.",
+    "Se rechaza H0: hay autocorrelacion en los residuos."), "\n")
+```
+
+> **Interpretacion:** el valor $p > 0.05$, por lo tanto **no se rechaza $H_0$**. Los residuos son independientes entre si. El supuesto de independencia **se cumple**.
+
+### 8.5 Histograma y Q-Q plot de residuos
+
+```{r hist-qq, fig.height=4}
+library(ggplot2)
+
+df_res <- data.frame(residuos = residuals(modelo))
+
+p1 <- ggplot(df_res, aes(x = residuos)) +
+  geom_histogram(bins = 8, fill = "#1a3a6b", color = "white", alpha = 0.85) +
+  geom_vline(xintercept = 0, color = "#dc2626", linetype = "dashed") +
+  labs(title = "Histograma de residuos", x = "Residuo", y = "Frecuencia") +
+  theme_minimal(base_size = 12)
+
+p2 <- ggplot(df_res, aes(sample = residuos)) +
+  stat_qq(color = "#1a3a6b", size = 2.5) +
+  stat_qq_line(color = "#dc2626", linewidth = 0.9) +
+  labs(title = "Q-Q plot de residuos",
+       x = "Cuantiles teoricos", y = "Cuantiles muestrales") +
+  theme_minimal(base_size = 12)
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+```
+
+---
+
+## 9. Multicolinealidad: deteccion con VIF
+
+La **multicolinealidad** ocurre cuando dos o mas predictores estan altamente correlacionados entre si. Sus consecuencias son: errores estandar inflados, pruebas t poco potentes y coeficientes inestables. Se detecta con el **Factor de Inflacion de la Varianza (VIF)**:
+
+$$\text{VIF}_i = \frac{1}{1 - R^2_i}$$
+
+donde $R^2_i$ es el $R^2$ de la regresion de $X_i$ sobre los demas predictores.
+
+| Valor VIF | Interpretacion |
+|:---------:|:---------------|
+| $\approx 1$ | Sin correlacion con otros predictores |
+| $> 5$ | Multicolinealidad moderada: revisar |
+| $> 10$ | Multicolinealidad grave: actuar |
+
+Para variables cualitativas con mas de dos categorias, `car::vif()` reporta el **GVIF** (VIF generalizado). La columna relevante para comparar es $\text{GVIF}^{1/(2\cdot\text{df})}$, que se interpreta igual que el VIF clasico.
+
+```{r vif}
+library(car)
+vif_vals <- vif(modelo)
+mostrar_tabla(round(as.data.frame(vif_vals), 4),
+              caption = "VIF / GVIF por predictor (incluye variable cualitativa)")
+```
+
+> **Interpretacion:** valores $\text{GVIF}^{1/(2\cdot\text{df})} < \sqrt{5} \approx 2.24$ indican ausencia de multicolinealidad problematica. Si alguno superara ese umbral, se recomendaria revisar la correlacion entre predictores.
+
+---
+
+## 10. Prediccion con `predict()`
+
+Una vez validado el modelo puede usarse para predecir $Y$ para nuevas combinaciones de valores de los predictores.
+
+### 10.1 Prediccion puntual
+
+```{r pred-puntual}
+nuevos <- data.frame(
+  fertilizante = c(100, 150, 200, 250),
+  altitud      = c(1400, 1500, 1600, 1700),
+  densidad     = c(5000, 5500, 6000, 6500),
+  variedad     = factor(c("Castillo", "Colombia", "Cenicafe1", "Castillo"),
+                        levels = levels(datos$variedad))
+)
+pred <- predict(modelo, newdata = nuevos)
+
+resultado <- cbind(nuevos, rendimiento_predicho = round(pred, 1))
+mostrar_tabla(resultado, caption = "Predicciones puntuales del rendimiento (kg/ha)")
+```
+
+### 10.2 Intervalo de confianza vs intervalo de prediccion
+
+Igual que en regresion simple, existen dos tipos de intervalos:
+
+**Intervalo de confianza (IC) para la media:**
+
+$$\hat{y} \pm t_{\alpha/2,\, n-k-1} \cdot SE(\bar{y}|\mathbf{x}^*)$$
+
+Estima el rango donde se encuentra el **valor promedio** de $Y$ para una combinacion de predictores dada.
+
+**Intervalo de prediccion (IP) para una observacion individual:**
+
+$$\hat{y} \pm t_{\alpha/2,\, n-k-1} \cdot SE(y_\text{nuevo}|\mathbf{x}^*)$$
+
+Estima el rango donde caera **una nueva observacion individual**. Siempre es mas ancho que el IC.
+
+```{r pred-intervalos}
+ic <- predict(modelo, newdata = nuevos, interval = "confidence", level = 0.95)
+ip <- predict(modelo, newdata = nuevos, interval = "prediction",  level = 0.95)
+
+tabla_pred <- data.frame(
+  Fertilizante = nuevos$fertilizante,
+  Altitud      = nuevos$altitud,
+  Densidad     = nuevos$densidad,
+  Variedad     = nuevos$variedad,
+  Prediccion   = round(ic[, "fit"], 1),
+  IC_inf       = round(ic[, "lwr"], 1),
+  IC_sup       = round(ic[, "upr"], 1),
+  IP_inf       = round(ip[, "lwr"], 1),
+  IP_sup       = round(ip[, "upr"], 1)
+)
+mostrar_tabla(tabla_pred,
+              caption = "IC para la media e IP para observacion individual al 95%")
+```
+
+> El IP es mas ancho que el IC porque predecir una observacion individual es mas incierto que predecir un promedio.
+
+---
+
+## 11. Seleccion de variables con criterio AIC
+
+No siempre todos los predictores disponibles deben entrar al modelo. La funcion `step()` aplica seleccion **stepwise** automatica usando el criterio AIC: en cada paso agrega o elimina el predictor que mas mejora el modelo, hasta que ningun cambio reduce el AIC.
+
+```{r stepwise}
+modelo_completo <- lm(rendimiento ~ fertilizante + altitud + densidad + variedad, data = datos)
+modelo_step     <- step(modelo_completo, direction = "both", trace = TRUE)
+cat("\nModelo seleccionado por AIC:\n")
+summary(modelo_step)
+```
+
+> Si el modelo stepwise coincide con el modelo completo, todos los predictores son utiles. Si elimina alguno, ese predictor no mejoraba el criterio AIC y puede prescindirse de el.
+
+---
+
+## 12. Resumen del flujo de trabajo en R
+
+```r
+#--- 1. Generar / cargar los datos ---
+set.seed(42)
+datos <- data.frame(rendimiento, fertilizante, altitud, densidad, variedad)
+
+#--- 2. Exploracion ---
+summary(datos)
+cor(datos[, sapply(datos, is.numeric)])  # solo variables numericas
+table(datos$variedad)                    # frecuencias de la variable cualitativa
+boxplot(rendimiento ~ variedad, data = datos)
+pairs(datos[, sapply(datos, is.numeric)])
+
+#--- 3. Ajuste del modelo ---
+modelo <- lm(rendimiento ~ fertilizante + altitud + densidad + variedad, data = datos)
+summary(modelo)
+confint(modelo)
+
+#--- 4. Bondad de ajuste ---
+# R^2 y R^2 ajustado en summary(modelo)
+# Prueba F global en summary(modelo)
+
+#--- 5. Multicolinealidad ---
+library(car)
+vif(modelo)
+
+#--- 6. Diagnostico de supuestos ---
+par(mfrow = c(2, 2))
+plot(modelo)
+
+shapiro.test(residuals(modelo))   # Normalidad
+library(lmtest)
+bptest(modelo)                    # Homocedasticidad
+dwtest(modelo)                    # Independencia
+
+#--- 7. Seleccion de variables ---
+modelo_step <- step(modelo, direction = "both")
+
+#--- 8. Prediccion ---
+nuevos <- data.frame(fertilizante = 150, altitud = 1500, densidad = 5500)
+predict(modelo, newdata = nuevos)
+predict(modelo, newdata = nuevos, interval = "confidence")
+predict(modelo, newdata = nuevos, interval = "prediction")
+```
+
+---
+
+# Parte II: Trabajo para Entregar
+
+## Instrucciones generales
+
+El trabajo debe presentarse en formato de **articulo cientifico** con las siguientes secciones obligatorias: portada, introduccion, metodologia, desarrollo, conclusiones y bibliografia. Puede elaborarse en **Word, Google Docs, R Markdown o cualquier procesador de texto** de su preferencia, y debe entregarse en formato **PDF**.
+
+El enfoque del trabajo es el **analisis e interpretacion de resultados**: cada salida de R debe ir acompanada de su correspondiente interpretacion en el contexto del problema. No basta con pegar el output; se debe explicar que significa.
+
+**Fecha de entrega:** segun lo indicado por el docente.  
+**Trabajo individual.**
+
+---
+
+## Contexto del problema
+
+Un grupo de investigadores del Centro Internacional de Agricultura Tropical (CIAT) quiere identificar que factores agronomicos y ambientales determinan el **rendimiento del cultivo de frijol** (variable $Y$, en kg/ha) en parcelas experimentales del departamento de Nariño. Para ello se registraron datos de **50 parcelas** con las siguientes variables:
+
+| Columna | Tipo | Descripcion | Unidad / Categorias |
+|:--------|:-----|:------------|:--------------------|
+| `rendimiento` | Cuantitativa | Rendimiento del cultivo de frijol | kg/ha |
+| `nitrogeno` | Cuantitativa | Dosis de nitrogeno aplicada | kg N/ha |
+| `precipitacion` | Cuantitativa | Precipitacion acumulada durante el ciclo | mm |
+| `temperatura` | Cuantitativa | Temperatura media diaria durante el ciclo | °C |
+| `materia_org` | Cuantitativa | Contenido de materia organica del suelo | % |
+| `sistema` | Cualitativa | Sistema de siembra utilizado | Tradicional / Asociado / Tecnificado |
+
+Los datos se generan con el siguiente codigo, que debe ejecutarse **una sola vez** para crear el archivo `datos_frijol.csv` en su directorio de trabajo. Luego puede cargarlo normalmente con `read.csv()`.
+
+```{r generar-datos-frijol, eval=FALSE}
+set.seed(321)
+m             <- 50
+nitrogeno     <- round(runif(m, 40, 160), 1)
+precipitacion <- round(runif(m, 350, 750), 0)
+temperatura   <- round(runif(m, 14, 22), 1)
+materia_org   <- round(runif(m, 1.5, 5.5), 2)
+sistema       <- factor(sample(c("Tradicional", "Asociado", "Tecnificado"),
+                               m, replace = TRUE))
+rendimiento   <- round(
+  300 + 2.1 * nitrogeno + 0.6 * precipitacion -
+  8.5 * temperatura + 45 * materia_org +
+  ifelse(sistema == "Asociado",    60, 0) +
+  ifelse(sistema == "Tecnificado", 120, 0) +
+  rnorm(m, 0, 55), 1
+)
+datos_frijol <- data.frame(rendimiento, nitrogeno, precipitacion,
+                           temperatura, materia_org, sistema)
+write.csv(datos_frijol, "datos_frijol.csv", row.names = FALSE)
+```
+
+Una vez creado el archivo, cargue los datos con:
+
+```r
+datos <- read.csv("datos_frijol.csv")
+```
+
+---
+
+## Estructura del articulo
+
+### Portada
+
+La portada debe incluir:
+
+- Titulo del trabajo
+- Nombre completo del estudiante y codigo
+- Nombre del curso y grupo
+- Nombre del docente
+- Fecha de entrega
+- Universidad y facultad
+
+---
+
+### 1. Introduccion
+
+Redacte un parrafo de introduccion que incluya:
+
+- Importancia del cultivo de frijol en Colombia y en el departamento de Nariño.
+- Por que es necesario un modelo de regresion multiple (y no simple) para este problema.
+- Objetivo del analisis estadistico.
+- Breve descripcion de la metodologia que se usara (regresion lineal multiple por MCO).
+
+---
+
+### 2. Metodologia
+
+Describa brevemente:
+
+- El modelo estadistico utilizado, incluyendo las variables indicadoras (dummies) para la variable cualitativa `sistema` (con "Tradicional" como categoria de referencia):
+$$Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \beta_3 X_{3i} + \beta_4 X_{4i} + \beta_5 D_{\text{Asociado},i} + \beta_6 D_{\text{Tecnificado},i} + e_i$$
+- El metodo de estimacion (MCO) y su solucion matricial $\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{Y}$.
+- Las herramientas de R empleadas.
+- Los supuestos del modelo y las pruebas estadisticas usadas para verificarlos.
+
+---
+
+### 3. Desarrollo
+
+Esta es la seccion principal. Debe incluir codigo R, resultados y su interpretacion para cada uno de los siguientes puntos:
+
+#### 3.1 Carga y exploracion de los datos
+
+Cargue el archivo `datos_frijol.csv`. Presente las estadisticas descriptivas, la matriz de correlaciones de las variables cuantitativas, un diagrama de caja de `rendimiento` por `sistema`, y los diagramas de dispersion por pares (solo variables cuantitativas).
+
+**Preguntas:**
+
+a) Que predictores cuantitativos tienen la correlacion mas alta con el rendimiento? Esto es coherente con lo esperado agronomicamente?  
+b) Hay algun par de predictores con correlacion mayor a 0.7? Que puede implicar esto para el modelo?  
+c) El diagrama de caja sugiere que el sistema de siembra afecta el rendimiento? Justifique.
+
+#### 3.2 Ajuste del modelo de regresion multiple
+
+Ajuste el modelo completo con los cuatro predictores cuantitativos y la variable cualitativa `sistema` usando `lm()`. Presente el resumen completo del modelo.
+
+**Preguntas:**
+
+a) Escriba la ecuacion del modelo estimado con cuatro decimales para cada coeficiente.  
+b) Interprete el coeficiente de `nitrogeno` en el contexto del problema.  
+c) Interprete el coeficiente de `temperatura` en el contexto del problema.  
+d) Interprete el coeficiente de `sistemaAsociado`. Que significa en terminos del rendimiento respecto al sistema Tradicional, manteniendo los demas predictores constantes?  
+e) Interprete el intercepto $b_0$. Tiene sentido practico en este contexto?
+
+#### 3.3 Bondad de ajuste
+
+Reporte el $R^2$ y el $R^2$ ajustado del modelo completo.
+
+**Preguntas:**
+
+a) Que porcentaje de la variabilidad del rendimiento explica el modelo (use el $R^2$ ajustado)?  
+b) Por que en regresion multiple se prefiere el $R^2$ ajustado sobre el $R^2$ simple?
+
+#### 3.4 Prueba F global e inferencia sobre los coeficientes
+
+Reporte el estadistico F, sus grados de libertad y el valor $p$. Luego presente la tabla de pruebas t individuales y los intervalos de confianza al 95% para cada coeficiente.
+
+**Preguntas:**
+
+a) La prueba F es significativa al nivel del 5%? Que concluye sobre el modelo en conjunto?  
+b) Cuales predictores son estadisticamente significativos al nivel del 5% segun las pruebas t?  
+c) El IC al 95% para `precipitacion` contiene el cero? Que implica esto?  
+d) Los coeficientes de `sistemaAsociado` y `sistemaTecnificado` son significativos? Que indica esto sobre el efecto del sistema de siembra en el rendimiento?  
+e) Hay algun predictor que no sea significativo? Podria eliminarse del modelo?
+
+#### 3.5 Diagnostico de multicolinealidad
+
+Calcule el VIF para cada predictor usando `car::vif()`. Recuerde que para la variable cualitativa `sistema` se reporta el GVIF; la columna relevante es $\text{GVIF}^{1/(2\cdot\text{df})}$.
+
+**Preguntas:**
+
+a) Hay evidencia de multicolinealidad segun los valores VIF / GVIF? Justifique.  
+b) El valor $\text{GVIF}^{1/(2\cdot\text{df})}$ de `sistema` supera el umbral de $\sqrt{5} \approx 2.24$? Que indica esto?  
+c) Si hubiera multicolinealidad entre dos predictores, como afectaria la interpretacion de los coeficientes?
+
+#### 3.6 Validacion de supuestos
+
+Presente los cuatro graficos de diagnostico (`plot(modelo)`) y aplique las tres pruebas estadisticas.
+
+**Preguntas:**
+
+a) **Normalidad:** reporte el estadistico $W$ y el valor $p$ de la prueba de Shapiro-Wilk. Se rechaza $H_0$? El supuesto se cumple?  
+b) **Homocedasticidad:** reporte el valor $p$ de la prueba de Breusch-Pagan. Se rechaza $H_0$? El supuesto se cumple?  
+c) **Independencia:** reporte el estadistico $DW$ y el valor $p$. Se rechaza $H_0$? El supuesto se cumple?  
+d) A partir de los graficos y las pruebas, el modelo es valido para realizar inferencias?
+
+#### 3.7 Seleccion de variables
+
+Aplique seleccion stepwise con `step(modelo, direction = "both")`. Compare el modelo seleccionado con el modelo completo.
+
+**Preguntas:**
+
+a) El modelo stepwise elimino algun predictor? Cual es el modelo final seleccionado?  
+b) El $R^2$ ajustado del modelo seleccionado es mayor o menor que el del modelo completo? Que implica esto?  
+c) Segun el criterio AIC, es preferible el modelo completo o el modelo reducido?
+
+#### 3.8 Prediccion
+
+Use `predict()` para predecir el rendimiento para las siguientes tres parcelas nuevas:
+
+| Parcela | `nitrogeno` | `precipitacion` | `temperatura` | `materia_org` | `sistema` |
+|:-------:|:-----------:|:---------------:|:-------------:|:-------------:|:---------:|
+| A | 80 | 500 | 16 | 3.5 | Tradicional |
+| B | 120 | 650 | 18 | 4.2 | Tecnificado |
+| C | 60 | 420 | 20 | 2.8 | Asociado |
+
+Reporte la prediccion puntual, el IC y el IP al 95% para cada caso.
+
+**Preguntas:**
+
+a) Para la parcela B (sistema Tecnificado), cual es el rendimiento esperado?  
+b) Compare la prediccion de la parcela A (Tradicional) con la parcela B (Tecnificado), manteniendo similares los demas valores. A que se debe la diferencia?  
+c) Por que el intervalo de prediccion es mas ancho que el intervalo de confianza?
+
+---
+
+### 4. Conclusiones
+
+Redacte un parrafo de conclusiones que sintetice:
+
+- Cuales factores influyen significativamente en el rendimiento del frijol.
+- La magnitud e interpretacion de los coeficientes significativos.
+- El ajuste del modelo ($R^2$ ajustado) y su implicacion practica.
+- El cumplimiento de los supuestos y la validez del modelo.
+- Una recomendacion practica para los productores de frijol en Nariño basada en los resultados.
+
+---
+
+### 5. Bibliografia
+
+Toda fuente consultada debe citarse: libros, articulos, paginas web o documentacion de R. Use formato APA.
+
+Ejemplos:
+
+> Montgomery, D. C., Peck, E. A., & Vining, G. G. (2012). *Introduction to Linear Regression Analysis* (5th ed.). Wiley.
+
+> R Core Team (2024). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing. https://www.R-project.org/
+
+> Nombre del autor o sitio (ano). *Titulo de la pagina o articulo*. Recuperado de: [URL completa]
+
+---
+
+## Criterios de evaluacion
+
+| Criterio | Puntaje |
+|:---------|:-------:|
+| Portada completa | 0.5 |
+| Introduccion con contexto y justificacion del modelo multiple | 1.0 |
+| Metodologia bien descrita | 0.5 |
+| Ajuste del modelo e interpretacion de coeficientes | 1.5 |
+| Bondad de ajuste: $R^2$ ajustado y prueba F interpretados | 1.0 |
+| Pruebas t e IC con interpretacion individual | 1.0 |
+| Diagnostico de multicolinealidad (VIF) con interpretacion | 1.0 |
+| Validacion de supuestos con pruebas e interpretacion | 1.5 |
+| Seleccion de variables y comparacion de modelos | 1.0 |
+| Prediccion con IC e IP interpretados | 0.5 |
+| Conclusiones pertinentes | 0.5 |
+| **Total** | **10.0** |

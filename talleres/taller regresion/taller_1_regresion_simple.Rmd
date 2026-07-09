@@ -1,0 +1,750 @@
+---
+title: "Taller 1: Regresion Lineal Simple"
+subtitle: "Bioestadistica Fundamental"
+author: "Andres Felipe Florez Rivera"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    keep_md: false
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: tango
+    css: "../../assets/workshop.css"
+  pdf_document:
+    toc: true
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width  = 8,
+  fig.height = 5
+)
+
+mostrar_tabla <- function(x, n = 15, caption = NULL) {
+  x_mostrar <- head(x, n)
+  if (knitr::is_html_output()) {
+    tabla_html <- knitr::kable(
+      x_mostrar,
+      format     = "html",
+      caption    = caption,
+      table.attr = 'class="table table-striped table-hover table-condensed"'
+    )
+    knitr::asis_output(
+      paste0('<div class="table-scroll">', as.character(tabla_html), '</div>')
+    )
+  } else {
+    knitr::kable(x_mostrar, format = "latex", caption = caption, booktabs = TRUE)
+  }
+}
+```
+
+<div class="cover-division">Universidad Nacional de Colombia &mdash; Departamento de Estadistica, Sede Bogota</div>
+
+Este taller tiene dos partes. La **Parte I** presenta las herramientas en R necesarias para realizar un analisis completo de regresion lineal simple por MCO. La **Parte II** plantea el trabajo que los estudiantes deben entregar, aplicando todas las herramientas aprendidas a un nuevo conjunto de datos.
+
+---
+
+# Parte I: Herramientas en R para Regresion Lineal Simple
+
+Para ilustrar cada herramienta se usa un conjunto de datos simulado con contexto agronomico: precipitacion acumulada durante el ciclo del cultivo (mm) y rendimiento del arroz (t/ha) en 30 lotes experimentales. Los datos se generan de forma reproducible con `set.seed(2024)`.
+
+```{r datos}
+set.seed(2024)
+precipitacion <- round(runif(30, 400, 900), 0)
+rendimiento   <- round(2.5 + 0.008 * precipitacion + rnorm(30, 0, 0.4), 2)
+
+datos <- data.frame(precipitacion, rendimiento)
+
+mostrar_tabla(datos, caption = "Precipitacion (mm) y rendimiento de arroz (t/ha)")
+```
+
+Las variables son:
+
+| Variable | Descripcion | Unidad |
+|:---------|:------------|:-------|
+| `precipitacion` | Precipitacion acumulada durante el ciclo del cultivo | mm |
+| `rendimiento` | Rendimiento del arroz | t/ha |
+
+---
+
+## 1. Exploracion inicial de los datos
+
+Antes de ajustar un modelo de regresion siempre se deben explorar los datos.
+
+### 1.1 Estadisticas descriptivas
+
+```{r descriptivas}
+summary(datos)
+```
+
+### 1.2 Correlacion de Pearson
+
+El coeficiente de correlacion de Pearson mide la fuerza y la direccion de la relacion lineal entre dos variables cuantitativas. Su valor esta entre $-1$ y $1$.
+
+$$r = \frac{\sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y)}{\sqrt{\sum_{i=1}^n (X_i-\bar X)^2 \cdot \sum_{i=1}^n (Y_i-\bar Y)^2}}$$
+
+```{r correlacion}
+r <- cor(datos$precipitacion, datos$rendimiento)
+cat("Correlacion de Pearson r =", round(r, 4), "\n")
+```
+
+> Un valor cercano a $1$ indica una relacion lineal positiva fuerte, lo que sugiere que un modelo lineal es apropiado.
+
+### 1.3 Diagrama de dispersion
+
+```{r dispersion}
+plot(
+  rendimiento ~ precipitacion,
+  data = datos,
+  pch  = 19,
+  col  = "#2563eb",
+  cex  = 1.3,
+  xlab = "Precipitacion acumulada (mm)",
+  ylab = "Rendimiento del arroz (t/ha)",
+  main = "Relacion entre precipitacion y rendimiento del arroz"
+)
+grid()
+```
+
+> A medida que aumenta la precipitacion, el rendimiento del cultivo tiende a aumentar. La tendencia es aproximadamente lineal y positiva.
+
+---
+
+## 2. El modelo de regresion lineal simple
+
+El modelo poblacional es:
+
+$$Y_i = \beta_0 + \beta_1 X_i + e_i, \quad e_i \sim N(0, \sigma^2), \quad i = 1, \ldots, n$$
+
+| Componente | Significado |
+|:----------:|:------------|
+| $Y_i$ | Valor observado de la variable respuesta |
+| $X_i$ | Valor observado de la variable explicativa |
+| $\beta_0$ | Intercepto: valor esperado de $Y$ cuando $X = 0$ |
+| $\beta_1$ | Pendiente: cambio promedio en $Y$ por cada unidad adicional de $X$ |
+| $e_i$ | Error aleatorio asociado a la observacion $i$ |
+
+Cada observacion se descompone en una **parte sistematica** $(\beta_0 + \beta_1 X_i)$ y una **parte aleatoria** $(e_i)$.
+
+---
+
+## 3. Estimacion por Minimos Cuadrados Ordinarios (MCO)
+
+El criterio MCO consiste en encontrar los valores de $\beta_0$ y $\beta_1$ que minimizan la suma de los errores al cuadrado:
+
+$$\min_{b_0,\, b_1} \sum_{i=1}^{n} e_i^2 = \min_{b_0,\, b_1} \sum_{i=1}^{n} (y_i - b_0 - b_1 x_i)^2$$
+
+La solucion analitica es:
+
+$$b_1 = \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i=1}^{n}(X_i - \bar{X})(Y_i - \bar{Y})}{\sum_{i=1}^{n}(X_i - \bar{X})^2}, \qquad b_0 = \bar{Y} - b_1 \bar{X}$$
+
+### 3.1 Calculo manual paso a paso
+
+```{r mco-manual}
+xbar <- mean(datos$precipitacion)
+ybar <- mean(datos$rendimiento)
+n    <- nrow(datos)
+
+tabla_aux <- data.frame(
+  X      = datos$precipitacion,
+  Y      = datos$rendimiento,
+  X_Xbar = datos$precipitacion - xbar,
+  Y_Ybar = datos$rendimiento   - ybar
+)
+tabla_aux$XY <- tabla_aux$X_Xbar * tabla_aux$Y_Ybar
+tabla_aux$X2 <- tabla_aux$X_Xbar^2
+
+mostrar_tabla(round(tabla_aux, 4), caption = "Tabla auxiliar para el calculo MCO")
+
+Sxy <- sum(tabla_aux$XY)
+Sxx <- sum(tabla_aux$X2)
+
+b1_manual <- Sxy / Sxx
+b0_manual <- ybar - b1_manual * xbar
+
+cat("Sxy =", round(Sxy, 4), "\n")
+cat("Sxx =", round(Sxx, 4), "\n")
+cat("b1  =", round(b1_manual, 6), "\n")
+cat("b0  =", round(b0_manual, 4), "\n")
+cat("\nModelo estimado: rendimiento =", round(b0_manual, 4),
+    "+", round(b1_manual, 6), "* precipitacion\n")
+```
+
+### 3.2 Ajuste con `lm()` y verificacion
+
+```{r ajuste}
+modelo <- lm(rendimiento ~ precipitacion, data = datos)
+
+b0 <- coef(modelo)[1]
+b1 <- coef(modelo)[2]
+
+cat("b0 (lm):     ", round(b0, 6), "  |  b0 (manual):", round(b0_manual, 6), "\n")
+cat("b1 (lm):     ", round(b1, 6), "  |  b1 (manual):", round(b1_manual, 6), "\n")
+```
+
+> Los resultados son identicos: `lm()` implementa el metodo MCO.
+
+### 3.3 Interpretacion de los coeficientes
+
+```{r interpretacion}
+cat("b0 =", round(b0, 4), "\n")
+cat("   Rendimiento esperado cuando la precipitacion es cero mm.\n\n")
+cat("b1 =", round(b1, 6), "\n")
+cat("   Por cada mm adicional de precipitacion, el rendimiento del arroz\n")
+cat("   aumenta en promedio", round(b1, 4), "t/ha.\n")
+```
+
+---
+
+## 4. Valores ajustados y residuos
+
+Una vez estimada la recta se obtiene para cada observacion:
+
+- **Valor ajustado:** $\hat{y}_i = b_0 + b_1 x_i$ — lo que el modelo predice.
+- **Residuo:** $e_i = y_i - \hat{y}_i$ — diferencia entre lo observado y lo predicho.
+
+```{r ajustados-residuos}
+datos$y_hat   <- fitted(modelo)
+datos$residuo <- residuals(modelo)
+
+mostrar_tabla(round(datos, 4), caption = "Valores ajustados y residuos")
+```
+
+### 4.1 Visualizacion de los residuos sobre la recta
+
+```{r graf-residuos}
+plot(
+  rendimiento ~ precipitacion,
+  data = datos,
+  pch  = 19,
+  col  = "#2563eb",
+  cex  = 1.2,
+  xlab = "Precipitacion acumulada (mm)",
+  ylab = "Rendimiento del arroz (t/ha)",
+  main = "Recta ajustada y residuos"
+)
+abline(modelo, col = "#dc2626", lwd = 3)
+segments(
+  x0  = datos$precipitacion, y0 = datos$rendimiento,
+  x1  = datos$precipitacion, y1 = datos$y_hat,
+  lty = 2, lwd = 1.4, col = "#6b7280"
+)
+grid()
+```
+
+> Las lineas punteadas representan los residuos: la distancia vertical de cada punto observado a la recta ajustada.
+
+---
+
+## 5. Bondad de ajuste: el coeficiente de determinacion $R^2$
+
+El $R^2$ mide la proporcion de la variabilidad total de $Y$ que es explicada por el modelo:
+
+$$R^2 = 1 - \frac{SCR}{SCT} = \frac{SCM}{SCT}$$
+
+| Cantidad | Formula | Significado |
+|:---------|:--------|:------------|
+| $SCT$ | $\sum(y_i - \bar{y})^2$ | Variabilidad total en $Y$ |
+| $SCR$ | $\sum(y_i - \hat{y}_i)^2$ | Variabilidad no explicada (residual) |
+| $SCM$ | $\sum(\hat{y}_i - \bar{y})^2$ | Variabilidad explicada por el modelo |
+
+```{r r2}
+SCT <- sum((datos$rendimiento - mean(datos$rendimiento))^2)
+SCR <- sum(datos$residuo^2)
+SCM <- sum((datos$y_hat - mean(datos$rendimiento))^2)
+
+cat("SCT =", round(SCT, 4), "\n")
+cat("SCR =", round(SCR, 4), "\n")
+cat("SCM =", round(SCM, 4), "\n")
+cat("SCM + SCR =", round(SCM + SCR, 4), " (debe coincidir con SCT)\n\n")
+
+R2_manual <- 1 - SCR / SCT
+R2_lm     <- summary(modelo)$r.squared
+
+cat("R^2 (manual) =", round(R2_manual, 4), "\n")
+cat("R^2 (lm)     =", round(R2_lm,     4), "\n")
+cat("\nEl modelo explica el", round(R2_lm * 100, 2),
+    "% de la variabilidad del rendimiento.\n")
+```
+
+> **Alerta:** un $R^2$ alto no garantiza que los supuestos del modelo se cumplan. Siempre debe acompanarse con el diagnostico de residuos.
+
+---
+
+## 6. Inferencia sobre los coeficientes
+
+### 6.1 Resumen completo del modelo
+
+```{r resumen}
+summary(modelo)
+```
+
+El resumen reporta:
+
+- **Coefficients:** estimaciones $b_0$, $b_1$, errores estandar, estadistico $t$ y valor $p$.
+- **Residual standard error:** estimacion de $\sigma$.
+- **Multiple R-squared:** $R^2$.
+- **F-statistic:** prueba global de significancia del modelo.
+
+### 6.2 Prueba de hipotesis sobre la pendiente
+
+La prueba evalua si la variable explicativa tiene un efecto lineal significativo sobre la variable respuesta:
+
+$$H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0$$
+
+El estadistico de prueba es:
+
+$$t = \frac{b_1}{SE(b_1)}$$
+
+Se rechaza $H_0$ cuando el valor $p < 0.05$, lo que indica que existe una relacion lineal significativa entre $X$ e $Y$.
+
+```{r prueba-h}
+tabla_coef <- as.data.frame(summary(modelo)$coefficients)
+names(tabla_coef) <- c("Estimado", "Error_std", "t_valor", "p_valor")
+tabla_coef[, 1:4]   <- round(tabla_coef[, 1:4], 6)
+tabla_coef$Decision <- ifelse(tabla_coef$p_valor < 0.05, "Rechazar H0", "No rechazar H0")
+mostrar_tabla(tabla_coef, caption = "Prueba de hipotesis sobre los coeficientes")
+```
+
+### 6.3 Intervalos de confianza para los coeficientes
+
+```{r ic-coef}
+confint(modelo, level = 0.95)
+```
+
+> Un IC del 95% para $\beta_1$ que **no contenga el cero** confirma que la pendiente es estadisticamente significativa.
+
+---
+
+## 7. Visualizacion de la recta ajustada
+
+```{r recta-final}
+r2_val <- summary(modelo)$r.squared
+
+plot(
+  rendimiento ~ precipitacion,
+  data = datos,
+  pch  = 19,
+  col  = "#2563eb",
+  cex  = 1.3,
+  xlab = "Precipitacion acumulada (mm)",
+  ylab = "Rendimiento del arroz (t/ha)",
+  main = "Recta de regresion ajustada por MCO"
+)
+abline(modelo, col = "#dc2626", lwd = 3)
+grid()
+legend(
+  "topleft",
+  legend = paste0("Y = ", round(b0, 3), " + ", round(b1, 5), " X",
+                  "   |   R^2 = ", round(r2_val, 3)),
+  col = "#dc2626", lwd = 2, bty = "n", cex = 0.95
+)
+```
+
+---
+
+## 8. Diagnostico de supuestos
+
+Para que las estimaciones MCO sean confiables, el modelo debe satisfacer:
+
+| Supuesto | Descripcion | Herramienta grafica | Prueba estadistica |
+|:---------|:------------|:--------------------|:-------------------|
+| Linealidad | $E(Y\|X) = \beta_0 + \beta_1 X$ | Residuos vs Ajustados | — |
+| Independencia | Los $e_i$ son independientes | — | Durbin-Watson |
+| Homocedasticidad | $\text{Var}(e_i) = \sigma^2$ constante | Scale-Location | Breusch-Pagan |
+| Normalidad | $e_i \sim N(0, \sigma^2)$ | Q-Q plot | Shapiro-Wilk |
+
+### 8.1 Graficos de diagnostico
+
+```{r diagnostico, fig.height=8}
+par(mfrow = c(2, 2))
+plot(modelo, col = "#1a3a6b", pch = 19, cex = 0.9)
+par(mfrow = c(1, 1))
+```
+
+- **Residuals vs Fitted:** puntos distribuidos aleatoriamente alrededor de cero indican linealidad y homocedasticidad.
+- **Normal Q-Q:** los puntos deben seguir la diagonal. Desviaciones indican falta de normalidad.
+- **Scale-Location:** la dispersion debe mantenerse constante a lo largo de los valores ajustados.
+- **Residuals vs Leverage:** identifica observaciones influyentes mediante la distancia de Cook.
+
+### 8.2 Prueba de Shapiro-Wilk (normalidad)
+
+La prueba contrasta:
+
+$$H_0: \text{los residuos provienen de una distribucion normal} \quad \text{vs} \quad H_1: \text{no provienen de una distribucion normal}$$
+
+```{r shapiro}
+sw <- shapiro.test(residuals(modelo))
+cat("Estadistico W =", round(sw$statistic, 4), "\n")
+cat("Valor p       =", round(sw$p.value,   4), "\n")
+cat(ifelse(sw$p.value > 0.05,
+    "No se rechaza H0: los residuos son compatibles con normalidad.",
+    "Se rechaza H0: los residuos no siguen una distribucion normal."), "\n")
+```
+
+> **Interpretacion:** el valor $p > 0.05$, por lo tanto **no se rechaza $H_0$**. Los residuos siguen una distribucion aproximadamente normal. El supuesto de normalidad **se cumple**.
+
+### 8.3 Prueba de Breusch-Pagan (homocedasticidad)
+
+La prueba contrasta:
+
+$$H_0: \text{la varianza de los errores es constante} \quad \text{vs} \quad H_1: \text{la varianza no es constante (heterocedasticidad)}$$
+
+```{r bptest}
+library(lmtest)
+bp <- bptest(modelo)
+print(bp)
+cat(ifelse(bp$p.value > 0.05,
+    "No se rechaza H0: varianza constante (homocedasticidad).",
+    "Se rechaza H0: hay evidencia de heterocedasticidad."), "\n")
+```
+
+> **Interpretacion:** el valor $p > 0.05$, por lo tanto **no se rechaza $H_0$**. La varianza de los errores es constante a lo largo de los valores de $X$. El supuesto de homocedasticidad **se cumple**.
+
+### 8.4 Prueba de Durbin-Watson (independencia)
+
+La prueba contrasta:
+
+$$H_0: \text{los residuos son independientes} \quad \text{vs} \quad H_1: \text{hay autocorrelacion en los residuos}$$
+
+El estadistico $DW$ toma valores entre 0 y 4; valores cercanos a 2 indican independencia.
+
+```{r dwtest}
+dw <- dwtest(modelo)
+print(dw)
+cat(ifelse(dw$p.value > 0.05,
+    "No se rechaza H0: los residuos son independientes.",
+    "Se rechaza H0: hay autocorrelacion en los residuos."), "\n")
+```
+
+> **Interpretacion:** el valor $p > 0.05$, por lo tanto **no se rechaza $H_0$**. Los residuos son independientes entre si. El supuesto de independencia **se cumple**.
+
+### 8.5 Histograma y Q-Q plot de residuos
+
+```{r hist-qq, fig.height=4}
+library(ggplot2)
+
+df_res <- data.frame(residuos = residuals(modelo))
+
+p1 <- ggplot(df_res, aes(x = residuos)) +
+  geom_histogram(bins = 8, fill = "#1a3a6b", color = "white", alpha = 0.85) +
+  geom_vline(xintercept = 0, color = "#dc2626", linetype = "dashed") +
+  labs(title = "Histograma de residuos", x = "Residuo", y = "Frecuencia") +
+  theme_minimal(base_size = 12)
+
+p2 <- ggplot(df_res, aes(sample = residuos)) +
+  stat_qq(color = "#1a3a6b", size = 2.5) +
+  stat_qq_line(color = "#dc2626", linewidth = 0.9) +
+  labs(title = "Q-Q plot de residuos",
+       x = "Cuantiles teoricos", y = "Cuantiles muestrales") +
+  theme_minimal(base_size = 12)
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+```
+
+---
+
+## 9. Prediccion con `predict()`
+
+Una vez validado el modelo puede usarse para predecir $Y$ para nuevos valores de $X$.
+
+### 9.1 Prediccion puntual
+
+```{r pred-puntual}
+nuevos <- data.frame(precipitacion = c(450, 600, 700, 850))
+pred   <- predict(modelo, newdata = nuevos)
+
+resultado <- cbind(nuevos, rendimiento_predicho = round(pred, 3))
+mostrar_tabla(resultado, caption = "Predicciones puntuales del rendimiento")
+```
+
+### 9.2 Intervalo de confianza vs intervalo de prediccion
+
+Cuando se predice con un modelo de regresion existen dos tipos de intervalos:
+
+**Intervalo de confianza (IC) para la media:**
+
+$$\hat{y} \pm t_{\alpha/2,\, n-2} \cdot SE(\bar{y}|x^*)$$
+
+Estima el rango donde se encuentra el **valor promedio** de $Y$ para un $X = x^*$ dado. Refleja la incertidumbre sobre la posicion de la recta.
+
+**Intervalo de prediccion (IP) para una observacion individual:**
+
+$$\hat{y} \pm t_{\alpha/2,\, n-2} \cdot SE(y_\text{nuevo}|x^*)$$
+
+Estima el rango donde caera **una nueva observacion individual** cuando $X = x^*$. Incorpora tanto la incertidumbre del modelo como la variabilidad propia de cada individuo.
+
+> El IP **siempre es mas ancho** que el IC porque predecir una observacion individual es mas incierto que predecir un promedio.
+
+```{r pred-intervalos}
+ic <- predict(modelo, newdata = nuevos, interval = "confidence", level = 0.95)
+ip <- predict(modelo, newdata = nuevos, interval = "prediction",  level = 0.95)
+
+tabla_pred <- data.frame(
+  Precipitacion = nuevos$precipitacion,
+  Prediccion    = round(ic[, "fit"], 3),
+  IC_inf        = round(ic[, "lwr"], 3),
+  IC_sup        = round(ic[, "upr"], 3),
+  IP_inf        = round(ip[, "lwr"], 3),
+  IP_sup        = round(ip[, "upr"], 3)
+)
+mostrar_tabla(tabla_pred,
+              caption = "IC para la media e IP para observacion individual (95%)")
+```
+
+### 9.3 Banda de prediccion sobre el diagrama
+
+```{r banda-pred}
+rango_x  <- data.frame(precipitacion = seq(min(datos$precipitacion),
+                                           max(datos$precipitacion), length.out = 200))
+banda_ic <- as.data.frame(predict(modelo, newdata = rango_x, interval = "confidence"))
+banda_ip <- as.data.frame(predict(modelo, newdata = rango_x, interval = "prediction"))
+
+df_bandas <- data.frame(
+  x      = rango_x$precipitacion,
+  ic_fit = banda_ic$fit,
+  ic_lwr = banda_ic$lwr, ic_upr = banda_ic$upr,
+  ip_lwr = banda_ip$lwr, ip_upr = banda_ip$upr
+)
+
+ggplot() +
+  geom_ribbon(data = df_bandas,
+              aes(x = x, ymin = ip_lwr, ymax = ip_upr),
+              fill = "#d4ac0d", alpha = 0.15) +
+  geom_ribbon(data = df_bandas,
+              aes(x = x, ymin = ic_lwr, ymax = ic_upr),
+              fill = "#1a3a6b", alpha = 0.25) +
+  geom_line(data = df_bandas,
+            aes(x = x, y = ic_fit),
+            color = "#dc2626", linewidth = 1.2) +
+  geom_point(data = datos,
+             aes(x = precipitacion, y = rendimiento),
+             color = "#2563eb", size = 2.5) +
+  labs(
+    title   = "Recta ajustada con bandas de confianza y prediccion",
+    x       = "Precipitacion acumulada (mm)",
+    y       = "Rendimiento del arroz (t/ha)",
+    caption = "Azul: IC 95% para la media | Amarillo: IP 95% para observacion individual"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+---
+
+## 10. Resumen del flujo de trabajo en R
+
+```r
+#--- 1. Generar / cargar los datos ---
+set.seed(2024)
+precipitacion <- round(runif(30, 400, 900), 0)
+rendimiento   <- round(2.5 + 0.008 * precipitacion + rnorm(30, 0, 0.4), 2)
+datos <- data.frame(precipitacion, rendimiento)
+
+#--- 2. Exploracion ---
+summary(datos)
+cor(datos$precipitacion, datos$rendimiento)
+plot(rendimiento ~ precipitacion, data = datos)
+
+#--- 3. Ajuste del modelo ---
+modelo <- lm(rendimiento ~ precipitacion, data = datos)
+summary(modelo)
+confint(modelo)
+
+#--- 4. Diagnostico de supuestos ---
+par(mfrow = c(2, 2))
+plot(modelo)
+
+shapiro.test(residuals(modelo))   # Normalidad
+library(lmtest)
+bptest(modelo)                    # Homocedasticidad
+dwtest(modelo)                    # Independencia
+
+#--- 5. Prediccion ---
+nuevos <- data.frame(precipitacion = c(450, 600, 700))
+predict(modelo, newdata = nuevos)
+predict(modelo, newdata = nuevos, interval = "confidence")
+predict(modelo, newdata = nuevos, interval = "prediction")
+```
+
+---
+
+# Parte II: Trabajo para Entregar
+
+## Instrucciones generales
+
+El trabajo debe presentarse en formato de **articulo cientifico** con las siguientes secciones obligatorias: portada, introduccion, metodologia, desarrollo, conclusiones y bibliografia. Puede elaborarse en **Word, Google Docs, R Markdown o cualquier procesador de texto** de su preferencia, y debe entregarse en formato **PDF**.
+
+El enfoque del trabajo es el **analisis e interpretacion de resultados**: cada salida de R debe ir acompanada de su correspondiente interpretacion en el contexto del problema. No basta con pegar el output; se debe explicar que significa.
+
+**Fecha de entrega:** segun lo indicado por el docente.  
+**Trabajo individual.**
+
+---
+
+## Contexto del problema
+
+Un grupo de investigadores del sector agropecuario quiere determinar si la **temperatura media diaria durante el ciclo vegetativo** (variable $X$, en °C) tiene un efecto significativo sobre el **rendimiento del cultivo de papa** (variable $Y$, en t/ha). Para ello se registraron datos de 45 lotes experimentales distribuidos en diferentes zonas de produccion.
+
+Los datos se encuentran en el archivo **`datos_papa.csv`** que se entrega junto con este taller. El archivo contiene tres columnas:
+
+| Columna | Descripcion | Unidad |
+|:--------|:------------|:-------|
+| `lote` | Identificador del lote experimental | — |
+| `temperatura_C` | Temperatura media diaria durante el ciclo | °C |
+| `rendimiento_tha` | Rendimiento del cultivo de papa | t/ha |
+
+Para cargar los datos en R use:
+
+```r
+datos <- read.csv("datos_papa.csv")
+```
+
+---
+
+## Estructura del articulo
+
+### Portada
+
+La portada debe incluir:
+
+- Titulo del trabajo
+- Nombre completo del estudiante y codigo
+- Nombre del curso y grupo
+- Nombre del docente
+- Fecha de entrega
+- Universidad y facultad
+
+---
+
+### 1. Introduccion
+
+Redacte un parrafo de introduccion que incluya:
+
+- Importancia del cultivo de papa en Colombia y/o en la region.
+- Relacion esperada entre la temperatura y el rendimiento agricola.
+- Objetivo del analisis estadistico.
+- Breve descripcion de la metodologia que se usara (regresion lineal simple por MCO).
+
+---
+
+### 2. Metodologia
+
+Describa brevemente:
+
+- El modelo estadistico utilizado: $Y_i = \beta_0 + \beta_1 X_i + e_i$.
+- El metodo de estimacion (MCO) y su criterio de minimizacion.
+- Las herramientas de R empleadas.
+- Los supuestos del modelo y las pruebas estadisticas usadas para verificarlos.
+
+---
+
+### 3. Desarrollo
+
+Esta es la seccion principal. Debe incluir codigo R, resultados y su interpretacion para cada uno de los siguientes puntos:
+
+#### 3.1 Carga y exploracion de los datos
+
+Cargue el archivo `datos_papa.csv`, presente las estadisticas descriptivas y el diagrama de dispersion. Calcule la correlacion de Pearson e interprete su valor en el contexto del problema.
+
+**Preguntas:**
+
+a) Describa la relacion entre la temperatura y el rendimiento a partir del diagrama de dispersion. La relacion parece lineal?  
+b) El valor de la correlacion indica una relacion fuerte o debil? Positiva o negativa?
+
+#### 3.2 Estimacion del modelo por MCO
+
+Construya la tabla auxiliar con las columnas $(X_i - \bar{X})$, $(Y_i - \bar{Y})$, $(X_i - \bar{X})(Y_i - \bar{Y})$ y $(X_i - \bar{X})^2$. Calcule $b_0$ y $b_1$ usando las formulas MCO y verifique con `lm()`.
+
+**Preguntas:**
+
+a) Escriba la ecuacion de la recta estimada con cuatro decimales.  
+b) Interprete el intercepto $b_0$ en el contexto del problema.  
+c) Interprete la pendiente $b_1$ en el contexto del problema.
+
+#### 3.3 Bondad de ajuste
+
+Calcule manualmente $SCT$, $SCR$ y $SCM$. Verifique que $SCT = SCM + SCR$. Obtenga el $R^2$ manualmente y compare con `summary()`.
+
+**Preguntas:**
+
+a) Que porcentaje de la variabilidad del rendimiento es explicado por la temperatura?  
+b) El valor de $R^2$ indica un buen ajuste del modelo?
+
+#### 3.4 Inferencia sobre los coeficientes
+
+Use `summary()` y `confint()` para obtener las pruebas de hipotesis e intervalos de confianza.
+
+**Preguntas:**
+
+a) La pendiente $\beta_1$ es estadisticamente significativa al nivel del 5%? Justifique con el valor $p$.  
+b) El intervalo de confianza al 95% para $\beta_1$ contiene el cero? Que implica esto?  
+c) Cual es la conclusion sobre la relacion entre temperatura y rendimiento?
+
+#### 3.5 Validacion de supuestos
+
+Presente los cuatro graficos de diagnostico (`plot(modelo)`) y aplique las tres pruebas estadisticas.
+
+**Preguntas:**
+
+a) **Normalidad:** reporte el estadistico $W$ y el valor $p$ de la prueba de Shapiro-Wilk. Se rechaza $H_0$? El supuesto se cumple?  
+b) **Homocedasticidad:** reporte el valor $p$ de la prueba de Breusch-Pagan. Se rechaza $H_0$? El supuesto se cumple?  
+c) **Independencia:** reporte el estadistico $DW$ y el valor $p$. Se rechaza $H_0$? El supuesto se cumple?  
+d) A partir de los graficos y las pruebas, el modelo es valido para realizar inferencias?
+
+#### 3.6 Prediccion
+
+Use `predict()` para predecir el rendimiento para temperaturas de **12 °C**, **18 °C** y **23 °C**. Reporte el IC y el IP al 95% para cada caso.
+
+**Preguntas:**
+
+a) Para una temperatura de 18 °C, cual es el rendimiento esperado?  
+b) Por que el intervalo de prediccion es mas ancho que el intervalo de confianza?  
+c) Un productor reporta una temperatura promedio de 30 °C en su lote. Seria apropiado usar este modelo para predecir su rendimiento? Justifique.
+
+---
+
+### 4. Conclusiones
+
+Redacte un parrafo de conclusiones que sintetice:
+
+- Si existe relacion lineal significativa entre temperatura y rendimiento.
+- La magnitud e interpretacion de los coeficientes.
+- El ajuste del modelo ($R^2$) y su implicacion practica.
+- El cumplimiento de los supuestos y la validez del modelo.
+- Una recomendacion practica para los productores de papa basada en los resultados.
+
+---
+
+### 5. Bibliografia
+
+Toda fuente consultada debe citarse: libros, articulos, paginas web o documentacion de R. Use formato APA.
+
+Ejemplos:
+
+> Montgomery, D. C., Peck, E. A., & Vining, G. G. (2012). *Introduction to Linear Regression Analysis* (5th ed.). Wiley.
+
+> R Core Team (2024). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing. https://www.R-project.org/
+
+> Nombre del autor o sitio (ano). *Titulo de la pagina o articulo*. Recuperado de: [URL completa]
+
+---
+
+## Criterios de evaluacion
+
+| Criterio | Puntaje |
+|:---------|:-------:|
+| Portada completa | 0.5 |
+| Introduccion con contexto y objetivo claro | 1.0 |
+| Metodologia bien descrita | 0.5 |
+| Estimacion MCO manual y con `lm()` correcta | 1.5 |
+| Interpretacion de coeficientes y $R^2$ | 1.5 |
+| Validacion de supuestos con pruebas e interpretacion | 2.0 |
+| Prediccion con IC e IP interpretados | 1.5 |
+| Conclusiones pertinentes | 1.0 |
+| Bibliografia de fuentes consultadas | 0.5 |
+| **Total** | **10.0** |

@@ -1,7 +1,7 @@
 ---
-title: "Taller 1:Regresion Simple"
-subtitle: "Bioestadística Fundamental"
-author: "Andrés Felipe Flórez Rivera"
+title: "Taller 3: Regresion Lineal Simple"
+subtitle: "Bioestadistica Fundamental"
+author: "Andres Felipe Florez Rivera"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -10,7 +10,7 @@ output:
     toc_float: true
     theme: united
     highlight: tango
-    css: "../../../dm/dm_2016325/shared/styles/workshop.css"
+    css: "../../assets/workshop.css"
   pdf_document:
     toc: true
     latex_engine: xelatex
@@ -43,578 +43,491 @@ mostrar_tabla <- function(x, n = 10, caption = NULL) {
 }
 ```
 
-<div class="cover-division">Universidad Nacional de Colombia &mdash; Departamento de Estadística, Sede Bogotá</div>
+<div class="cover-division">Universidad Nacional de Colombia &mdash; Departamento de Estadistica, Sede Bogota</div>
 
-Este taller es una introducción práctica al lenguaje R y al entorno RStudio, orientada a los temas trabajados en las clases 1 a 8 de Bioestadística Fundamental. No se asume experiencia previa en programación.
-
----
-
-## 1. ¿Qué es R y qué es RStudio?
-
-### R
-
-**R** es un lenguaje de programación de código abierto diseñado específicamente para el análisis estadístico y la visualización de datos. Fue creado por Ross Ihaka y Robert Gentleman en la Universidad de Auckland (Nueva Zelanda) a principios de la década de 1990, y hoy es mantenido por el **R Core Team**.
-
-Sus principales características son:
-
-- Es **gratuito** y de código abierto.
-- Tiene una comunidad enorme: más de 20 000 paquetes disponibles en [CRAN](https://cran.r-project.org/).
-- Es el estándar en estadística académica, ciencias de la salud, biología, agronomía y ciencias sociales.
-- Permite producir gráficos de alta calidad listos para publicación.
-
-### RStudio
-
-**RStudio** es un entorno de desarrollo integrado (IDE) que facilita trabajar con R. Proporciona:
-
-- Un editor de código con resaltado de sintaxis.
-- Una consola para ejecutar comandos directamente.
-- Un panel de visualización de gráficas y resultados.
-- Un panel de gestión de archivos, paquetes y variables.
-
-> **Analogía:** si R es el motor, RStudio es el tablero de control del automóvil. Se puede usar R sin RStudio, pero RStudio hace el trabajo mucho más cómodo.
+Este taller acompana la Clase 16 de Bioestadistica Fundamental. Trabajamos con el mismo ejemplo visto en clase: la relacion entre la dosis de nitrogeno aplicada (kg/ha) y el rendimiento del maiz (t/ha). El objetivo es implementar en R cada etapa del analisis de regresion lineal simple estudiada teoricamente.
 
 ---
 
-## 2. Instalación en Windows
+## 1. El modelo de regresion lineal simple
 
-### Paso 1: instalar R
+En la clase se estudio que la relacion entre una variable respuesta $Y$ y una variable explicativa $X$ puede resumirse mediante:
 
-1. Abra el navegador y vaya a <https://cran.r-project.org/bin/windows/base/>.
-2. Haga clic en el enlace **"Download R X.X.X for Windows"** (la versión más reciente).
-3. Ejecute el instalador descargado (`.exe`) y siga el asistente con las opciones predeterminadas.
-4. Al finalizar, R estará instalado en su equipo.
+$$Y_i = \beta_0 + \beta_1 X_i + e_i, \quad e_i \sim N(0, \sigma^2)$$
 
-### Paso 2: instalar RStudio
+donde:
 
-1. Vaya a <https://posit.co/download/rstudio-desktop/>.
-2. Haga clic en **"Download RStudio Desktop"** (versión gratuita).
-3. Descargue el instalador para Windows (`.exe`) y ejecútelo.
-4. Siga el asistente de instalación con las opciones predeterminadas.
+- $\beta_0$: intercepto — valor esperado de $Y$ cuando $X = 0$.
+- $\beta_1$: pendiente — cambio promedio en $Y$ por cada unidad adicional de $X$.
+- $e_i$: error aleatorio, independiente, con media cero y varianza constante $\sigma^2$.
 
-### Paso 3: verificar la instalación
+Los parametros se estiman por **Minimos Cuadrados Ordinarios (MCO)**:
 
-Abra RStudio. En la consola (panel inferior izquierdo) escriba:
-
-```r
-version
-```
-
-Si aparece información sobre la versión de R, la instalación fue exitosa.
+$$\hat{\beta}_1 = b_1 = \frac{\sum_{i=1}^{n}(X_i - \bar{X})(Y_i - \bar{Y})}{\sum_{i=1}^{n}(X_i - \bar{X})^2}, \qquad \hat{\beta}_0 = b_0 = \bar{Y} - b_1 \bar{X}$$
 
 ---
 
-## 3. Paquetes en R
+## 2. Datos del ejemplo
 
-Un **paquete** (*package*) es una colección de funciones, datos y documentación que extiende las capacidades base de R. Los paquetes se instalan una sola vez y se cargan en cada sesión de trabajo.
+Los datos corresponden al experimento de fertilizacion nitrogenada visto en clase.
 
-### Instalar un paquete
+| Dosis N (kg/ha) | Rendimiento (t/ha) |
+|:-:|:-:|
+| 40 | 4.2 |
+| 60 | 4.8 |
+| 80 | 5.3 |
+| 100 | 5.9 |
+| 120 | 6.4 |
+| 140 | 6.8 |
+| 160 | 7.3 |
+| 180 | 7.8 |
 
-```{r instalar-paquetes, eval=FALSE}
-install.packages("ggplot2")
-install.packages("readxl")
-install.packages("tidyverse")
-```
+```{r datos}
+nitrogeno   <- c(40, 60, 80, 100, 120, 140, 160, 180)
+rendimiento <- c(4.2, 4.8, 5.3, 5.9, 6.4, 6.8, 7.3, 7.8)
 
-### Cargar un paquete en la sesión
+datos <- data.frame(nitrogeno, rendimiento)
 
-```{r cargar-paquetes}
-library(ggplot2)
-library(readxl)
-library(tidyverse)
-```
-
-### Instalar y cargar varios paquetes de una vez
-
-El siguiente patrón instala solo los paquetes que aún no están disponibles y luego los carga todos:
-
-```{r paquetes-automatico}
-paquetes <- c("ggplot2", "readxl", "tidyverse", "knitr", "kableExtra")
-
-instalados <- rownames(installed.packages())
-pendientes <- setdiff(paquetes, instalados)
-
-if (length(pendientes) > 0) {
-  install.packages(pendientes)
-}
-
-invisible(lapply(paquetes, library, character.only = TRUE))
-```
-
-> **Nota:** `install.packages()` requiere conexión a internet. Solo es necesario ejecutarlo una vez por paquete. `library()` debe ejecutarse cada vez que se inicia una sesión de R.
-
----
-
-## 4. Carga de datos
-
-R puede leer datos desde varios formatos. A continuación se muestran los más comunes.
-
-### 4.1 Archivos CSV
-
-Un archivo `.csv` (valores separados por comas) es el formato más universal para intercambiar datos tabulares.
-
-```{r leer-csv, eval=FALSE}
-# Con R base
-datos_csv <- read.csv("ruta/al/archivo.csv")
-
-# Con readr (parte del tidyverse, más rápido y con mejor detección de tipos)
-library(readr)
-datos_csv <- read_csv("ruta/al/archivo.csv")
-
-# Si el separador es punto y coma (común en archivos exportados en español)
-datos_csv <- read_csv2("ruta/al/archivo.csv")
-```
-
-Para este taller usaremos datos simulados de cultivos colombianos:
-
-```{r datos-ejemplo}
-set.seed(42)
-n <- 80
-
-datos_cultivo <- data.frame(
-  region       = sample(c("Andina", "Caribe", "Pacífico", "Orinoquía"), n, replace = TRUE),
-  cultivo      = sample(c("Café", "Maíz", "Arroz", "Papa"), n, replace = TRUE),
-  rendimiento  = round(rnorm(n, mean = 3.2, sd = 0.8), 2),  # toneladas/ha
-  precipitacion = round(rnorm(n, mean = 1800, sd = 400), 0), # mm/año
-  temperatura  = round(rnorm(n, mean = 18, sd = 4), 1),      # °C
-  plagas       = sample(c("Sí", "No"), n, replace = TRUE, prob = c(0.3, 0.7))
-)
-
-mostrar_tabla(datos_cultivo, n = 8, caption = "Primeras filas del conjunto de datos de cultivos")
-```
-
-### 4.2 Archivos Excel (.xlsx)
-
-```{r leer-excel, eval=FALSE}
-library(readxl)
-
-# Leer la primera hoja
-datos_excel <- read_excel("ruta/al/archivo.xlsx")
-
-# Especificar hoja y rango
-datos_excel <- read_excel("ruta/al/archivo.xlsx", sheet = "Hoja2", range = "A1:F50")
-```
-
-### 4.3 Archivos de texto (.txt)
-
-```{r leer-txt, eval=FALSE}
-# Separado por tabulaciones
-datos_txt <- read.table("ruta/al/archivo.txt", header = TRUE, sep = "\t")
-
-# Separado por espacios
-datos_txt <- read.table("ruta/al/archivo.txt", header = TRUE)
-```
-
-### 4.4 Explorar el conjunto de datos cargado
-
-Una vez cargados los datos, siempre conviene inspeccionarlos antes de cualquier análisis:
-
-```{r explorar-datos}
-# Dimensiones: filas y columnas
-dim(datos_cultivo)
-
-# Nombres de las variables
-names(datos_cultivo)
-
-# Estructura y tipos de cada variable
-str(datos_cultivo)
-
-# Resumen estadístico rápido
-summary(datos_cultivo)
+mostrar_tabla(datos, caption = "Dosis de nitrogeno y rendimiento del maiz")
 ```
 
 ---
 
-## 5. Funciones básicas para análisis de datos
+## 3. Exploracion inicial de los datos
 
-### 5.1 Operaciones con vectores
+Antes de ajustar el modelo es importante explorar las variables y visualizar su relacion.
 
-```{r vectores}
-x <- c(12, 15, 9, 21, 18, 14, 7, 25, 11, 16)
+### 3.1 Estadisticas descriptivas
 
-length(x)      # número de elementos
-sum(x)         # suma
-min(x)         # mínimo
-max(x)         # máximo
-range(x)       # rango (mín y máx)
+```{r descriptivas}
+summary(datos)
 ```
 
-### 5.2 Selección y filtrado de datos
-
-```{r filtrado}
-# Filtrar filas donde el cultivo es Café
-cafe <- subset(datos_cultivo, cultivo == "Café")
-nrow(cafe)
-
-# Con tidyverse
-cafe_tidy <- datos_cultivo |> filter(cultivo == "Café")
-
-# Seleccionar columnas específicas
-datos_cultivo |> select(cultivo, rendimiento, region) |> head(5)
-```
-
-### 5.3 Crear nuevas variables
-
-```{r nuevas-variables}
-datos_cultivo <- datos_cultivo |>
-  mutate(
-    rendimiento_alto = ifelse(rendimiento > 3.5, "Alto", "Normal"),
-    temp_categoria   = cut(temperatura,
-                           breaks = c(-Inf, 15, 20, Inf),
-                           labels = c("Frío", "Templado", "Cálido"))
-  )
-```
-
-### 5.4 Tablas de resumen
-
-```{r resumen-grupo}
-datos_cultivo |>
-  group_by(cultivo) |>
-  summarise(
-    n              = n(),
-    rendimiento_promedio = round(mean(rendimiento), 2),
-    rendimiento_sd       = round(sd(rendimiento), 2)
-  )
-```
-
----
-
-## 6. Estadísticas descriptivas: ejemplos prácticos
-
-Esta sección recoge los principales temas vistos en las clases 1 a 8.
-
-### 6.1 Media, mediana y moda (Clase 3)
-
-```{r media-mediana-moda}
-rendimientos <- datos_cultivo$rendimiento
-
-# Media aritmética
-media <- mean(rendimientos)
-cat("Media:", round(media, 3), "\n")
-
-# Mediana
-mediana <- median(rendimientos)
-cat("Mediana:", round(mediana, 3), "\n")
-
-# Moda (R base no tiene función directa; la calculamos manualmente)
-moda <- function(x) {
-  tabla <- table(x)
-  as.numeric(names(tabla)[tabla == max(tabla)])
-}
-
-cat("Moda del rendimiento:", moda(round(rendimientos, 1)), "\n")
-```
-
-### 6.2 Medidas de dispersión (Clase 4)
-
-```{r dispersion}
-# Rango
-rango <- max(rendimientos) - min(rendimientos)
-cat("Rango:", round(rango, 3), "\n")
-
-# Varianza muestral
-varianza <- var(rendimientos)
-cat("Varianza:", round(varianza, 4), "\n")
-
-# Desviación estándar
-de <- sd(rendimientos)
-cat("Desviación estándar:", round(de, 4), "\n")
-
-# Coeficiente de variación (%)
-cv <- (de / media) * 100
-cat("Coeficiente de variación:", round(cv, 2), "%\n")
-```
-
-### 6.3 Cuartiles y percentiles (Clase 4)
-
-```{r cuartiles}
-# Cuartiles
-cuartiles <- quantile(rendimientos, probs = c(0.25, 0.50, 0.75))
-cat("Q1:", round(cuartiles[1], 3), "\n")
-cat("Q2 (mediana):", round(cuartiles[2], 3), "\n")
-cat("Q3:", round(cuartiles[3], 3), "\n")
-
-# Rango intercuartílico
-riq <- IQR(rendimientos)
-cat("Rango intercuartílico (IQR):", round(riq, 3), "\n")
-
-# Percentil 90
-p90 <- quantile(rendimientos, 0.90)
-cat("Percentil 90:", round(p90, 3), "\n")
-```
-
-### 6.4 Asimetría y curtosis (Clase 4)
-
-```{r asimetria-curtosis}
-# Instalamos e2tools si es necesario
-if (!requireNamespace("e1071", quietly = TRUE)) install.packages("e1071")
-library(e1071)
-
-asim <- skewness(rendimientos)
-curt <- kurtosis(rendimientos)
-
-cat("Asimetría:", round(asim, 4), "\n")
-cat("Curtosis (exceso):", round(curt, 4), "\n")
-
-if (abs(asim) < 0.5) {
-  cat("Distribución aproximadamente simétrica.\n")
-} else if (asim > 0) {
-  cat("Distribución con asimetría positiva (cola derecha).\n")
-} else {
-  cat("Distribución con asimetría negativa (cola izquierda).\n")
-}
-```
-
-### 6.5 Tabla de frecuencias (Clase 2)
-
-```{r tabla-frecuencias}
-# Tabla de frecuencias para una variable cualitativa
-tabla_cultivo <- table(datos_cultivo$cultivo)
-tabla_df <- data.frame(
-  Cultivo             = names(tabla_cultivo),
-  Frecuencia_absoluta = as.integer(tabla_cultivo),
-  Frecuencia_relativa = round(prop.table(tabla_cultivo), 3),
-  Frecuencia_porcentual = round(prop.table(tabla_cultivo) * 100, 1)
-)
-row.names(tabla_df) <- NULL
-
-mostrar_tabla(tabla_df, n = nrow(tabla_df), caption = "Tabla de frecuencias: tipo de cultivo")
-```
-
-### 6.6 Tabla de contingencia (Clase 5)
-
-```{r tabla-contingencia}
-tabla_cont <- table(datos_cultivo$cultivo, datos_cultivo$plagas)
-colnames(tabla_cont) <- c("Sin plagas", "Con plagas")
-
-mostrar_tabla(
-  as.data.frame.matrix(tabla_cont),
-  n = 4,
-  caption = "Tabla de contingencia: cultivo × presencia de plagas"
-)
-```
-
-### 6.7 Covarianza y correlación de Pearson (Clase 5)
+### 3.2 Correlacion de Pearson
 
 ```{r correlacion}
-cov_rp <- cov(datos_cultivo$rendimiento, datos_cultivo$precipitacion)
-cor_rp <- cor(datos_cultivo$rendimiento, datos_cultivo$precipitacion)
-
-cat("Covarianza (rendimiento, precipitación):", round(cov_rp, 3), "\n")
-cat("Correlación de Pearson:", round(cor_rp, 4), "\n")
+r <- cor(datos$nitrogeno, datos$rendimiento)
+cat("Correlacion de Pearson r =", round(r, 4), "\n")
 ```
 
-### 6.8 Permutaciones y combinaciones (Clase 6)
+> **Interpretacion:** un valor de $r$ cercano a 1 indica una relacion lineal positiva fuerte entre la dosis de nitrogeno y el rendimiento. Esto sugiere que un modelo lineal es apropiado.
 
-En probabilidad usamos conteo combinatorio para calcular espacios muestrales.
+### 3.3 Diagrama de dispersion
 
-```{r permutaciones-combinaciones}
-# Permutaciones: P(n, k) = n! / (n-k)!
-permutacion <- function(n, k) factorial(n) / factorial(n - k)
+En clase se mostro que el diagrama de dispersion permite identificar la **direccion**, la **intensidad** y la **forma** de la relacion entre variables.
 
-# Combinaciones: C(n, k) = n! / (k! * (n-k)!)
-combinacion <- function(n, k) choose(n, k)
+```{r dispersion}
+plot(
+  rendimiento ~ nitrogeno,
+  data  = datos,
+  pch   = 19,
+  col   = "#2563eb",
+  cex   = 1.3,
+  xlab  = "Dosis de nitrogeno (kg/ha)",
+  ylab  = "Rendimiento (t/ha)",
+  main  = "Relacion entre nitrogeno y rendimiento del maiz"
+)
+grid()
+```
 
-# Ejemplo: en un lote de 10 plantas, ¿de cuántas formas se pueden
-# seleccionar 3 para inspección (sin importar el orden)?
-cat("Combinaciones C(10,3):", combinacion(10, 3), "\n")
+> A medida que aumenta la dosis de nitrogeno, el rendimiento del cultivo aumenta. La tendencia parece aproximadamente lineal.
 
-# ¿Y si el orden importa (primer, segundo y tercer lugar)?
-cat("Permutaciones P(10,3):", permutacion(10, 3), "\n")
+---
 
-# Espacio muestral al lanzar un dado y una moneda
-cat("Tamaño del espacio muestral (dado × moneda):", 6 * 2, "\n")
+## 4. Ajuste del modelo con `lm()`
+
+La funcion `lm()` ajusta el modelo de regresion lineal por MCO. La sintaxis basica es:
+
+```r
+modelo <- lm(Y ~ X, data = datos)
+```
+
+```{r ajuste}
+modelo <- lm(rendimiento ~ nitrogeno, data = datos)
+```
+
+### 4.1 Resumen completo con `summary()`
+
+```{r resumen}
+summary(modelo)
+```
+
+El resumen reporta:
+
+- **Coefficients:** estimaciones de $b_0$ y $b_1$, errores estandar, estadistico $t$ y valor $p$.
+- **Residual standard error:** estimacion de $\sigma$ (error estandar residual).
+- **Multiple R-squared ($R^2$):** proporcion de variabilidad de $Y$ explicada por el modelo.
+- **F-statistic:** prueba global de significancia del modelo.
+
+### 4.2 Extraccion de coeficientes
+
+```{r coeficientes}
+b0 <- coef(modelo)[1]
+b1 <- coef(modelo)[2]
+
+cat("Intercepto b0 =", round(b0, 4), "\n")
+cat("Pendiente  b1 =", round(b1, 4), "\n")
+cat("\nModelo estimado: rendimiento =", round(b0, 4), "+", round(b1, 4), "* nitrogeno\n")
+```
+
+> **Interpretacion de los coeficientes (como en clase):**
+>
+> - $b_0 = 3.26$: rendimiento esperado cuando no se aplica nitrogeno al cultivo.
+> - $b_1 = 0.0258$: por cada kg/ha adicional de nitrogeno, el rendimiento aumenta en promedio 0.0258 t/ha.
+
+---
+
+## 5. Bondad de ajuste e inferencia
+
+### 5.1 Coeficiente de determinacion $R^2$
+
+En clase se definio:
+
+$$R^2 = 1 - \frac{SCR}{SCT} = \frac{SCM}{SCT}$$
+
+donde SCR es la Suma de Cuadrados Residual, SCM la del Modelo y SCT la Total.
+
+```{r r2}
+r2   <- summary(modelo)$r.squared
+r2aj <- summary(modelo)$adj.r.squared
+
+cat("R^2          =", round(r2, 4), "\n")
+cat("R^2 ajustado =", round(r2aj, 4), "\n")
+cat("El modelo explica el", round(r2 * 100, 1), "% de la variabilidad del rendimiento.\n")
+```
+
+### 5.2 Intervalos de confianza para los coeficientes
+
+```{r intervalos}
+confint(modelo, level = 0.95)
+```
+
+Un IC del 95% para $\beta_1$ que **no contenga el cero** indica que la pendiente es estadisticamente significativa al nivel del 5%.
+
+### 5.3 Prueba de hipotesis sobre la pendiente
+
+En clase se planteo:
+
+$$H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0$$
+
+El estadistico de prueba es $t = \hat{\beta}_1 / SE(\hat{\beta}_1)$. Se rechaza $H_0$ cuando el valor $p < 0.05$.
+
+```{r inferencia}
+resumen    <- summary(modelo)
+tabla_coef <- as.data.frame(resumen$coefficients)
+names(tabla_coef) <- c("Estimado", "Error_std", "t_valor", "p_valor")
+tabla_coef[, 1:4] <- round(tabla_coef[, 1:4], 6)
+tabla_coef$Significativo <- ifelse(tabla_coef$p_valor < 0.05, "Si", "No")
+mostrar_tabla(tabla_coef, caption = "Coeficientes del modelo con inferencia")
 ```
 
 ---
 
-## 7. Visualización de datos
+## 6. Visualizacion de la recta ajustada
 
-### 7.1 Histograma (Clase 2 y 4)
-
-```{r histograma}
-ggplot(datos_cultivo, aes(x = rendimiento)) +
-  geom_histogram(bins = 12, fill = "#1b4d2e", color = "white", alpha = 0.85) +
-  geom_vline(xintercept = mean(datos_cultivo$rendimiento),
-             color = "#c0392b", linetype = "dashed", linewidth = 1) +
-  labs(
-    title    = "Distribución del rendimiento agrícola",
-    subtitle = "Línea roja: media muestral",
-    x        = "Rendimiento (ton/ha)",
-    y        = "Frecuencia",
-    caption  = "Datos simulados de cultivos colombianos"
-  ) +
-  theme_minimal(base_size = 13)
-```
-
-### 7.2 Boxplot (Clase 5)
-
-El boxplot muestra la mediana, los cuartiles Q1 y Q3, y los valores atípicos.
-
-```{r boxplot}
-ggplot(datos_cultivo, aes(x = cultivo, y = rendimiento, fill = cultivo)) +
-  geom_boxplot(alpha = 0.8, outlier.color = "#c0392b", outlier.size = 2) +
-  scale_fill_manual(values = c("#1b4d2e", "#1a3a6b", "#7a1515", "#d4ac0d")) +
-  labs(
-    title   = "Rendimiento por tipo de cultivo",
-    x       = "Cultivo",
-    y       = "Rendimiento (ton/ha)",
-    caption = "Datos simulados de cultivos colombianos"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(legend.position = "none")
-```
-
-### 7.3 Gráfico de barras (Clase 2)
-
-```{r barras}
-datos_cultivo |>
-  count(cultivo) |>
-  ggplot(aes(x = reorder(cultivo, -n), y = n, fill = cultivo)) +
-  geom_col(alpha = 0.85) +
-  scale_fill_manual(values = c("#1b4d2e", "#1a3a6b", "#7a1515", "#d4ac0d")) +
-  labs(
-    title = "Frecuencia de cultivos en la muestra",
-    x     = "Cultivo",
-    y     = "Número de parcelas"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(legend.position = "none")
-```
-
-### 7.4 Diagrama de dispersión (Clase 5)
-
-```{r dispersion-plot}
-ggplot(datos_cultivo, aes(x = precipitacion, y = rendimiento, color = cultivo)) +
-  geom_point(size = 2.5, alpha = 0.75) +
-  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 0.8,
-              linetype = "dashed") +
-  scale_color_manual(values = c("#1b4d2e", "#1a3a6b", "#7a1515", "#d4ac0d")) +
-  labs(
-    title   = "Relación entre precipitación y rendimiento",
-    x       = "Precipitación (mm/año)",
-    y       = "Rendimiento (ton/ha)",
-    color   = "Cultivo",
-    caption = paste0("r = ", round(cor(datos_cultivo$precipitacion,
-                                       datos_cultivo$rendimiento), 3))
-  ) +
-  theme_minimal(base_size = 13)
-```
-
-### 7.5 Gráfico de barras agrupadas (Clase 5)
-
-```{r barras-agrupadas}
-datos_cultivo |>
-  count(cultivo, plagas) |>
-  ggplot(aes(x = cultivo, y = n, fill = plagas)) +
-  geom_col(position = "dodge", alpha = 0.85) +
-  scale_fill_manual(values = c("#1a3a6b", "#c0392b"),
-                    labels = c("Sin plagas", "Con plagas")) +
-  labs(
-    title = "Presencia de plagas por tipo de cultivo",
-    x     = "Cultivo",
-    y     = "Número de parcelas",
-    fill  = "Plagas"
-  ) +
-  theme_minimal(base_size = 13)
-```
-
-### 7.6 Resumen visual completo por región
-
-```{r facetas}
-ggplot(datos_cultivo, aes(x = cultivo, y = rendimiento, fill = cultivo)) +
-  geom_boxplot(alpha = 0.75, outlier.size = 1.5) +
-  scale_fill_manual(values = c("#1b4d2e", "#1a3a6b", "#7a1515", "#d4ac0d")) +
-  facet_wrap(~region) +
-  labs(
-    title = "Rendimiento por cultivo y región",
-    x     = "Cultivo",
-    y     = "Rendimiento (ton/ha)"
-  ) +
-  theme_minimal(base_size = 11) +
-  theme(legend.position = "none",
-        axis.text.x = element_text(angle = 30, hjust = 1))
+```{r recta-ajustada}
+plot(
+  rendimiento ~ nitrogeno,
+  data = datos,
+  pch  = 19,
+  col  = "#2563eb",
+  cex  = 1.3,
+  xlab = "Dosis de nitrogeno (kg/ha)",
+  ylab = "Rendimiento (t/ha)",
+  main = "Recta de regresion ajustada"
+)
+abline(modelo, col = "#dc2626", lwd = 3)
+grid()
+legend(
+  "topleft",
+  legend = paste0("Y = ", round(b0, 3), " + ", round(b1, 4), " X   |   R^2 = ", round(r2, 3)),
+  col    = "#dc2626",
+  lwd    = 2,
+  bty    = "n",
+  cex    = 0.95
+)
 ```
 
 ---
 
-## 8. Probabilidad: ejemplos en R (Clases 6, 7 y 8)
+## 7. Diagnostico de residuos
 
-### 8.1 Probabilidad clásica
+En clase se establecio que los supuestos del modelo son:
 
-```{r prob-clasica}
-# Espacio muestral: lanzar dos dados
-omega <- expand.grid(dado1 = 1:6, dado2 = 1:6)
-nrow(omega)  # 36 resultados igualmente probables
+1. **Linealidad:** $E(Y|X) = \beta_0 + \beta_1 X$.
+2. **Independencia:** los errores $e_i$ son independientes entre si.
+3. **Homocedasticidad:** $\text{Var}(e_i) = \sigma^2$ constante.
+4. **Normalidad:** $e_i \sim N(0, \sigma^2)$.
 
-# Evento A: la suma es mayor que 8
-A <- subset(omega, dado1 + dado2 > 8)
-prob_A <- nrow(A) / nrow(omega)
-cat("P(suma > 8):", round(prob_A, 4), "\n")
+### 7.1 Graficos de diagnostico
 
-# Evento B: el primer dado muestra un número par
-B <- subset(omega, dado1 %% 2 == 0)
-prob_B <- nrow(B) / nrow(omega)
-cat("P(dado1 par):", round(prob_B, 4), "\n")
+Los cuatro graficos de `plot(modelo)` permiten evaluar visualmente los supuestos:
+
+```{r diagnostico, fig.height=8}
+par(mfrow = c(2, 2))
+plot(modelo, col = "#1a3a6b", pch = 19, cex = 0.8)
+par(mfrow = c(1, 1))
 ```
 
-### 8.2 Probabilidad condicional (Clase 7)
+**Lectura de los graficos (como en clase):**
 
-```{r prob-condicional}
-# P(A | B): suma mayor que 8 dado que el primer dado es par
-AB <- subset(omega, dado1 %% 2 == 0 & dado1 + dado2 > 8)
+- **Residuals vs Fitted:** puntos distribuidos aleatoriamente alrededor de cero indican linealidad y homocedasticidad. Patrones curvos o en embudo son senales de alerta.
+- **Normal Q-Q:** los puntos deben seguir la diagonal. Desviaciones importantes sugieren falta de normalidad.
+- **Scale-Location:** verifica homocedasticidad; la dispersion debe mantenerse constante.
+- **Residuals vs Leverage:** identifica observaciones influyentes (distancia de Cook).
 
-prob_A_dado_B <- nrow(AB) / nrow(B)
-cat("P(suma > 8 | dado1 par):", round(prob_A_dado_B, 4), "\n")
+### 7.2 Extraccion de residuos y valores ajustados
 
-# Verificación con la definición: P(A ∩ B) / P(B)
-cat("Verificación:", round((nrow(AB) / nrow(omega)) / prob_B, 4), "\n")
+```{r residuos}
+datos$y_hat    <- fitted(modelo)
+datos$residuos <- residuals(modelo)
+datos$res_std  <- rstandard(modelo)
+
+mostrar_tabla(datos, caption = "Valores ajustados y residuos del modelo")
 ```
 
-### 8.3 Teorema de Bayes (Clase 8)
+### 7.3 Prueba de normalidad de Shapiro-Wilk
 
-Ejemplo de prueba diagnóstica para resistencia a la roya en café:
+En clase se menciono esta prueba para evaluar el supuesto de normalidad de los errores.
 
-- Prevalencia de resistencia: P(R) = 0.35
-- Sensibilidad de la prueba: P(+|R) = 0.90
-- Especificidad: P(−|R^c) = 0.85
+```{r shapiro}
+sw <- shapiro.test(residuals(modelo))
+cat("Estadistico W =", round(sw$statistic, 4), "\n")
+cat("Valor p       =", round(sw$p.value, 4), "\n")
+cat(ifelse(sw$p.value > 0.05,
+           "No se rechaza H0: los residuos son compatibles con normalidad.",
+           "Se rechaza H0: los residuos no siguen una distribucion normal."), "\n")
+```
 
-```{r bayes}
-p_R    <- 0.35   # prevalencia
-sens   <- 0.90   # P(+ | R)
-espec  <- 0.85   # P(- | R^c)
+### 7.4 Prueba de Breusch-Pagan (homocedasticidad)
 
-p_Rc   <- 1 - p_R
-p_pos_Rc <- 1 - espec  # P(+ | R^c) = tasa de falsos positivos
+```{r bptest}
+library(lmtest)
+bptest(modelo)
+```
 
-# Probabilidad total de resultado positivo
-p_pos  <- sens * p_R + p_pos_Rc * p_Rc
+> Si el valor $p > 0.05$, no se rechaza la hipotesis de varianza constante (homocedasticidad).
 
-# Teorema de Bayes: P(R | +)
-p_R_dado_pos <- (sens * p_R) / p_pos
+### 7.5 Prueba de Durbin-Watson (independencia)
 
-cat("P(resultado positivo):", round(p_pos, 4), "\n")
-cat("P(resistente | prueba positiva):", round(p_R_dado_pos, 4), "\n")
-cat("Valor predictivo positivo (VPP):", round(p_R_dado_pos * 100, 1), "%\n")
+```{r dwtest}
+dwtest(modelo)
+```
+
+> Si el valor $p > 0.05$, hay evidencia de independencia en los residuos.
+
+### 7.6 Histograma y Q-Q plot de residuos
+
+```{r hist-residuos, fig.height=4}
+library(ggplot2)
+
+p1 <- ggplot(datos, aes(x = residuos)) +
+  geom_histogram(bins = 6, fill = "#1a3a6b", color = "white", alpha = 0.85) +
+  geom_vline(xintercept = 0, color = "#dc2626", linetype = "dashed") +
+  labs(title = "Histograma de residuos", x = "Residuo", y = "Frecuencia") +
+  theme_minimal(base_size = 12)
+
+p2 <- ggplot(datos, aes(sample = residuos)) +
+  stat_qq(color = "#1a3a6b", size = 2.5) +
+  stat_qq_line(color = "#dc2626", linewidth = 0.9) +
+  labs(title = "Q-Q plot de residuos",
+       x = "Cuantiles teoricos", y = "Cuantiles muestrales") +
+  theme_minimal(base_size = 12)
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
 ```
 
 ---
 
-## 9. Ejercicio propuesto
+## 8. Prediccion con `predict()`
 
-Con el conjunto de datos `datos_cultivo` construido en este taller:
+Una vez validado el modelo, se puede usar para predecir el rendimiento para nuevas dosis de nitrogeno.
 
-1. Calcule la media, mediana y desviación estándar del rendimiento para cada tipo de cultivo. ¿Cuál cultivo presenta mayor variabilidad?
+### 8.1 Prediccion puntual
 
-2. Construya una tabla de frecuencias de la variable `temp_categoria`. ¿Qué proporción de parcelas se encuentra en la categoría "Cálido"?
+```{r pred-puntual}
+nuevos <- data.frame(nitrogeno = c(50, 110, 170, 200))
+pred   <- predict(modelo, newdata = nuevos)
 
-3. Elabore un histograma de la variable `precipitacion`. Describa la forma de la distribución (simétrica, asimétrica positiva, asimétrica negativa).
+resultado <- cbind(nuevos, rendimiento_predicho = round(pred, 3))
+mostrar_tabla(resultado, caption = "Predicciones puntuales del rendimiento")
+```
 
-4. Calcule la correlación de Pearson entre `temperatura` y `rendimiento`. Interprete el resultado.
+### 8.2 Intervalos de confianza e intervalos de prediccion
 
-5. En un lote con 40% de probabilidad de presencia de plagas (evento P):
-   - Si se sabe que la temperatura es cálida y P(plaga | cálido) = 0.55, ¿cuál es la probabilidad de que una parcela cálida tenga plagas?
-   - Usando el Teorema de Bayes, si P(cálido | plaga) = 0.60 y P(cálido) = 0.45, calcule P(plaga | cálido) y compare con el valor anterior.
+En clase se establecio la diferencia:
 
-```{r ejercicio-espacio, echo=FALSE}
+- **Intervalo de confianza (IC):** estima donde esta la **media** de $Y$ para un $X$ dado.
+- **Intervalo de prediccion (IP):** estima donde caera una **observacion individual** futura; siempre es mas ancho que el IC.
+
+```{r pred-intervalos}
+ic <- predict(modelo, newdata = nuevos, interval = "confidence", level = 0.95)
+ip <- predict(modelo, newdata = nuevos, interval = "prediction",  level = 0.95)
+
+tabla_pred <- data.frame(
+  nitrogeno    = nuevos$nitrogeno,
+  prediccion   = round(ic[, "fit"], 3),
+  IC_inf       = round(ic[, "lwr"], 3),
+  IC_sup       = round(ic[, "upr"], 3),
+  IP_inf       = round(ip[, "lwr"], 3),
+  IP_sup       = round(ip[, "upr"], 3)
+)
+mostrar_tabla(tabla_pred,
+              caption = "IC para la media e IP para observacion individual (95%)")
+```
+
+### 8.3 Banda de prediccion sobre el diagrama
+
+```{r banda-pred}
+rango_x  <- data.frame(nitrogeno = seq(min(datos$nitrogeno),
+                                       max(datos$nitrogeno), length.out = 200))
+banda_ic <- as.data.frame(predict(modelo, newdata = rango_x, interval = "confidence"))
+banda_ip <- as.data.frame(predict(modelo, newdata = rango_x, interval = "prediction"))
+
+df_bandas <- data.frame(
+  x      = rango_x$nitrogeno,
+  ic_lwr = banda_ic$lwr, ic_upr = banda_ic$upr, ic_fit = banda_ic$fit,
+  ip_lwr = banda_ip$lwr, ip_upr = banda_ip$upr
+)
+
+ggplot() +
+  geom_ribbon(data = df_bandas, aes(x = x, ymin = ip_lwr, ymax = ip_upr),
+              fill = "#d4ac0d", alpha = 0.15) +
+  geom_ribbon(data = df_bandas, aes(x = x, ymin = ic_lwr, ymax = ic_upr),
+              fill = "#1a3a6b", alpha = 0.25) +
+  geom_line(data = df_bandas, aes(x = x, y = ic_fit),
+            color = "#dc2626", linewidth = 1.2) +
+  geom_point(data = datos, aes(x = nitrogeno, y = rendimiento),
+             color = "#2563eb", size = 3) +
+  labs(
+    title   = "Recta ajustada con bandas de confianza y prediccion",
+    x       = "Dosis de nitrogeno (kg/ha)",
+    y       = "Rendimiento (t/ha)",
+    caption = "Azul: IC 95% para la media | Amarillo: IP 95% para observacion individual"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+---
+
+## 9. Tabla resumen del analisis
+
+```{r tabla-resumen}
+fstat <- summary(modelo)$fstatistic
+pval_F <- pf(fstat[1], fstat[2], fstat[3], lower.tail = FALSE)
+
+tab <- data.frame(
+  Elemento = c(
+    "Intercepto b0",
+    "Pendiente b1",
+    "R2",
+    "R2 ajustado",
+    "Error estandar residual",
+    "Estadistico F",
+    "Valor p (F)"
+  ),
+  Valor = c(
+    round(coef(modelo)[1], 4),
+    round(coef(modelo)[2], 6),
+    round(summary(modelo)$r.squared, 4),
+    round(summary(modelo)$adj.r.squared, 4),
+    round(summary(modelo)$sigma, 4),
+    round(fstat[1], 2),
+    format.pval(pval_F, digits = 4)
+  )
+)
+mostrar_tabla(tab, caption = "Resumen del modelo de regresion lineal simple")
+```
+
+---
+
+## 10. Implementacion completa en R
+
+A continuacion se presenta el codigo completo del analisis tal como se presento en clase.
+
+```{r codigo-completo, eval=FALSE}
+#=========================================
+# 1. Ingreso de los datos
+#=========================================
+nitrogeno   <- c(40, 60, 80, 100, 120, 140, 160, 180)
+rendimiento <- c(4.2, 4.8, 5.3, 5.9, 6.4, 6.8, 7.3, 7.8)
+datos <- data.frame(nitrogeno, rendimiento)
+
+#=========================================
+# 2. Exploracion grafica
+#=========================================
+plot(rendimiento ~ nitrogeno, data = datos,
+     pch = 19, col = "#2563eb", cex = 1.4,
+     xlab = "Dosis de nitrogeno (kg/ha)",
+     ylab = "Rendimiento (t/ha)")
+abline(lm(rendimiento ~ nitrogeno, data = datos),
+       col = "#dc2626", lwd = 3)
+
+#=========================================
+# 3. Ajuste del modelo
+#=========================================
+modelo <- lm(rendimiento ~ nitrogeno, data = datos)
+summary(modelo)
+confint(modelo)
+
+#=========================================
+# 4. Diagnostico grafico
+#=========================================
+par(mfrow = c(1, 3))
+plot(modelo, which = 1:3, pch = 19, col = "#1a3a6b")
+
+#=========================================
+# 5. Pruebas de supuestos
+#=========================================
+shapiro.test(residuals(modelo))
+library(lmtest)
+bptest(modelo)
+dwtest(modelo)
+
+#=========================================
+# 6. Predicciones
+#=========================================
+nuevos <- data.frame(nitrogeno = c(50, 110, 170))
+predict(modelo, newdata = nuevos)
+predict(modelo, newdata = nuevos, interval = "confidence")
+predict(modelo, newdata = nuevos, interval = "prediction")
+```
+
+---
+
+## 11. Ejercicios propuestos
+
+Utilice los datos del ejemplo de la clase (o los datos del taller en clase) para responder las siguientes preguntas. Incluya el codigo R, los resultados y su interpretacion.
+
+**Ejercicio 1.** Con los datos del experimento de fertilizacion nitrogenada, calcule manualmente $b_1$ y $b_0$ usando las formulas MCO vistas en clase. Construya la tabla auxiliar con las columnas $(X_i - \bar{X})$, $(Y_i - \bar{Y})$, $(X_i - \bar{X})(Y_i - \bar{Y})$ y $(X_i - \bar{X})^2$. Compare sus resultados con los de `lm()`.
+
+**Ejercicio 2.** Ajuste el modelo en R y reporte la ecuacion de la recta estimada. Interprete el intercepto y la pendiente en el contexto del problema (fertilizacion nitrogenada y rendimiento del maiz).
+
+**Ejercicio 3.** El coeficiente de la pendiente es estadisticamente significativo al nivel del 5%? Justifique con el valor $p$ y el intervalo de confianza al 95%.
+
+**Ejercicio 4.** Que porcentaje de la variabilidad del rendimiento es explicado por la dosis de nitrogeno? El valor obtenido es alto o bajo? Que significa esto?
+
+**Ejercicio 5.** Examine los graficos de diagnostico. Se cumplen los supuestos de linealidad, homocedasticidad y normalidad? Respalde su respuesta con las pruebas de Shapiro-Wilk, Breusch-Pagan y Durbin-Watson.
+
+**Ejercicio 6.** Prediga el rendimiento esperado para una dosis de 130 kg/ha de nitrogeno. Reporte el intervalo de confianza y el intervalo de prediccion al 95%. Por que el intervalo de prediccion es mas ancho que el de confianza?
+
+**Ejercicio 7.** El investigador desea aplicar 250 kg/ha de nitrogeno. Seria apropiado usar este modelo para predecir el rendimiento en ese caso? Justifique.
+
+**Ejercicio 8 (Taller en clase).** Con los datos del cafe en Antioquia (ejercicio 1 del taller en clase):
+
+| X: Nitrogeno (kg/ha) | Y: Rendimiento cafe (kg/ha) |
+|:-:|:-:|
+| 50 | 1800 |
+| 80 | 2200 |
+| 100 | 2500 |
+| 120 | 2700 |
+| 150 | 3100 |
+
+a) Ajuste el modelo de regresion lineal simple en R.
+b) Interprete los coeficientes.
+c) Evalúe los supuestos del modelo.
+d) Prediga el rendimiento para una dosis de 110 kg/ha.
+
+```{r espacio-ejercicios, echo=FALSE}
 # Espacio para que el estudiante complete los ejercicios
 ```
