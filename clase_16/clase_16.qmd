@@ -40,53 +40,1766 @@ execute:
   echo: true
 ---
 
-## Clase 16 {.center .middle}
-
 ## Contenido
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 42px; margin-top: 20px; font-size: 30px; align-items: start;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 20px; font-size: 30px; align-items: start;">
+
 <div>
-<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 30px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Modelo de Regresión Lineal Simple</h3>
+<h3 class="fragment fade-in" data-fragment-index="1" style="font-size: 30px; margin-bottom: 14px; color: #1b4d2e;">Parte I: Repaso Clase 15</h3>
 <ul>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="2">Introducción a la regresión lineal.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="3">Análisis de datos bivariados.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="4">Asociacion y causalidad.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="5">Diagrama de dispersión.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="6">Modelo de regresión lineal simple.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="7">Interpretación de los parámetros.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="2">Errores tipo I y tipo II.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="3">Potencia estadística y función de potencia.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="4">Determinación del tamaño de muestra.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="5">Prueba de razón de varianzas (distribución $F$).</li>
 </ul>
 </div>
 
-
 <div>
-<h3 class="fragment fade-in" data-fragment-index="8" style="font-size: 30px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Estimación</h3>
+<h3 class="fragment fade-in" data-fragment-index="6" style="font-size: 30px; margin-bottom: 14px; color: #1a3a6b;">Parte II: Modelo de Regresión Lineal Simple</h3>
 <ul>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="9">Estimación de parámetros.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="10">Valores ajustados y residuos.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="11">Método de mínimos cuadrados.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="12">Estimación de los coeficientes.</li>
-<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="13">Coeficiente de determinación $R^2$.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="7">Introducción a la regresión lineal.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="8">Análisis de datos bivariados.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="9">Asociación y causalidad.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="10">Diagrama de dispersión.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="11">Modelo de regresión lineal simple.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="12">Interpretación de los parámetros.</li>
 </ul>
 </div>
 
+<div>
+<h3 class="fragment fade-in" data-fragment-index="13" style="font-size: 30px; margin-bottom: 14px; color: #6b3f1a;">Parte III: Estimación del Modelo</h3>
+<ul>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="14">Estimación de parámetros.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="15">Valores ajustados y residuos.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="16">Método de mínimos cuadrados.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="17">Estimación de los coeficientes.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="18">Coeficiente de determinación $R^2$.</li>
+</ul>
+</div>
 
 <div>
-<h3 class="fragment fade-in" data-fragment-index="14" style="font-size: 30px; margin-bottom: 14px; color: #6b3f1a;">Parte III: Validación Estadística del Modelo</h3>
+<h3 class="fragment fade-in" data-fragment-index="19" style="font-size: 30px; margin-bottom: 14px; color: #5b21b6;">Parte IV: Validación Estadística</h3>
 <ul>
-<li style="font-size: 25px;"class="fragment fade-in" data-fragment-index="15">Supuestos del modelo.</li>
-<li style="font-size: 25px;"class="fragment fade-in" data-fragment-index="16">Diagnósticos del modelo</li>
-<li style="font-size: 25px;"class="fragment fade-in" data-fragment-index="17">Inferencia sobre los coeficientes.</li>
-<li style="font-size: 25px;"class="fragment fade-in" data-fragment-index="18">Códigos usados en R.</li>
-<li style="font-size: 25px;"class="fragment fade-in" data-fragment-index="19">Ejemplo de aplicación.</li>
-<li style="font-size: 25px;"class="fragment fade-in" data-fragment-index="20">Taller en Clase.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="20">Supuestos del modelo.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="21">Diagnósticos del modelo.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="22">Inferencia sobre los coeficientes.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="23">Códigos en R.</li>
+<li style="font-size: 25px;" class="fragment fade-in" data-fragment-index="24">Ejemplo de aplicación y taller.</li>
+</ul>
+</div>
+
+</div>
+
+
+
+## Recapitulación: Clase 15
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:30px;">
+
+<div class="fragment fade-in" data-fragment-index="1" style="border-radius:10px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.10);">
+<div style="background:#1b4d2e; color:#fff; padding:12px 18px; font-size:27px; font-weight:700;">Parte I: Diferencia de medias</div>
+<div style="background:#d6f0dd; padding:16px 18px; font-size:27px; color:#1e293b; line-height:1.55;">
+<ul style="margin:0; padding-left:22px;">
+<li><strong>Muestras independientes:</strong> estadístico $t$ con varianzas iguales o distintas.</li>
+<li><strong>Muestras pareadas:</strong> se analiza la diferencia $d_i = X_{1i} - X_{2i}$.</li>
+<li>Criterio: rechazar $H_0$ si $|t| > t_{\alpha/2,\,\nu}$.</li>
 </ul>
 </div>
 </div>
 
-<div style="text-align: center; margin-top: 35px;">
-<p style="font-size: 40px; font-weight: bold; color: #3b82f6;">Regresión Lineal Simple</p>
-<p style="font-size: 32px; color: #1b4d2e; font-weight: 600; margin-top: 10px;">Modelando la relación entre variables mediante mínimos cuadrados</p>
-<p style="font-size: 24px; color: #9ca3af; margin-top: 30px;">Bioestadística Fundamental, Departamento de Estadística, UNAL Bogotá</p>
+<div class="fragment fade-in" data-fragment-index="2" style="border-radius:10px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.10);">
+<div style="background:#1a3a6b; color:#fff; padding:12px 18px; font-size:27px; font-weight:700;">Parte II: Diferencia de proporciones</div>
+<div style="background:#dce9f7; padding:16px 18px; font-size:27px; color:#1e293b; line-height:1.55;">
+<ul style="margin:0; padding-left:22px;">
+<li>Estadístico $Z$ basado en la proporción combinada $\hat{p}$.</li>
+<li>$H_0: p_1 = p_2$ vs. $H_1: p_1 \neq p_2$ (o unilateral).</li>
+<li>Válido cuando $n\hat{p} \geq 5$ y $n(1-\hat{p}) \geq 5$.</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<p class="fragment fade-in" data-fragment-index="3" style="margin-top:16px; padding:12px 20px; background:#fef9c3; border-left:6px solid #b45309; border-radius:8px; font-size:30px; color:#1e293b; line-height:1.45;">
+<strong>Idea central:</strong> se cuantifica la distancia entre estimaciones muestrales en unidades de error estándar y se compara con un valor crítico de la distribución de referencia.
+</p>
+
+##
+
+<div style="
+height:500px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;">
+
+<div class="fragment fade-in"
+data-fragment-index="1"
+style="
+font-size:28px;
+font-weight:600;
+color:#64748b;
+letter-spacing:2px;">
+
+PRIMERA PARTE
+
+</div>
+
+<div class="fragment fade-in"
+data-fragment-index="2"
+style="
+margin-top:20px;
+font-size:54px;
+font-weight:bold;
+color:#1b4d2e;">
+
+Repaso: Errores, Potencia y Razón de Varianzas
+
+</div>
+
+<div class="fragment fade-in"
+data-fragment-index="3"
+style="
+margin-top:30px;
+width:70%;
+height:4px;
+background:#1b4d2e;
+border-radius:10px;">
+</div>
+
+<div class="fragment fade-in"
+data-fragment-index="4"
+style="
+margin-top:35px;
+font-size:24px;
+color:#475569;">
+
+Errores tipo I y II
+│
+Potencia estadística
+│
+Función de potencia
+│
+Tamaño de muestra
+│
+Prueba de razón de varianzas ($F$)
+
+</div>
+
+</div>
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+<p style="font-size: 52px; font-weight: bold; color: #3b82f6;">¿Por qué pueden ocurrir errores?</p>
+
+<p style="font-size: 28px; color: #1b4d2e; font-weight: 600; margin-top: 10px; text-align: justify;">
+Como las decisiones se basan en muestras y no en toda la población, siempre existe la posibilidad de tomar una decisión incorrecta.
+</p>
+</div>
+
+
+## Errores en las pruebas de hipótesis
+
+<p style="font-size:30px;text-align:justify;line-height:1.2;">
+Las decisiones en una prueba de hipótesis se basan en información muestral. Por esta razón, siempre existe la posibilidad de tomar una decisión incorrecta respecto a la realidad de la población.
+</p>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+
+Error Tipo I
+
+</div>
+
+<div style="font-size:34px;
+font-weight:bold;
+text-align:center;
+margin-top:10px;">
+
+$$
+\alpha
+$$
+
+</div>
+
+<div style="font-size:28px;text-align:center;line-height:1.5;">
+Rechazar una hipótesis nula verdadera.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:20px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Error Tipo II
+
+</div>
+
+<div style="font-size:34px;
+font-weight:bold;
+text-align:center;
+margin-top:10px;">
+
+$$
+\beta
+$$
+
+</div>
+
+<div style="font-size:28px;text-align:center;line-height:1.5;">
+No rechazar una hipótesis nula falsa.
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"style="background-color:#eef7ee;padding:18px;border-radius:18px;border-left:8px solid #1b4d2e;font-size:30px;text-align:center;line-height:1;margin-top:30px">
+
+Toda prueba de hipótesis busca controlar la probabilidad de cometer estos errores.
+</div>
+
+## Posibles decisiones en una prueba de hipótesis
+
+<p style="font-size:30px;
+text-align:justify;
+line-height:1.2;
+margin-top:40px">
+La decisión tomada por el investigador puede coincidir o no con la realidad, generando cuatro posibles escenarios.
+</p>
+
+<table style="width:100%;
+font-size:22px;
+text-align:center;
+border-collapse:collapse;
+margin-top:20px;">
+
+<tr style="background-color:#dbeafe;">
+<th style="padding:8px;"></th>
+<th style="padding:8px;">$H_0$ verdadera</th>
+<th style="padding:8px;">$H_0$ falsa</th>
+</tr>
+
+<tr>
+
+<td style="padding:10px;font-weight:bold;">
+No rechazar $H_0$
+</td>
+
+<td style="background-color:#eef7ee;padding:10px;">
+
+✓ Decisión correcta
+
+</td>
+
+<td style="background-color:#fff7e8;padding:10px;">
+
+Error Tipo II: $(\beta)$
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;font-weight:bold;">
+Rechazar $H_0$
+</td>
+
+<td style="background-color:#fdecec;padding:10px;">
+
+Error Tipo I: $(\alpha)$
+
+</td>
+
+<td style="background-color:#eef7ee;padding:10px;">
+
+✓ Decisión correcta
+
+</td>
+
+</tr>
+
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1a3a6b;
+margin-top:20px;
+font-size:28px;
+text-align:center;
+line-height:1;">
+Las probabilidades de cometer estos errores se representan mediante
+$\alpha$ y $\beta$.
+</div>
+
+
+## Ejemplo: Errores en una prueba de hipótesis
+
+<div style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;
+text-align:justify;
+line-height:1.2;">
+Un investigador desea evaluar si un nuevo fertilizante aumenta el rendimiento promedio de un cultivo de fresa.
+</div>
+<ul style="padding-left:30px; margin-top:10px;font-size:30px;">
+<li>$H_0$: El fertilizante no aumenta el rendimiento.</li>
+<li>$H_1$: El fertilizante aumenta el rendimiento.</li>
+</ul>
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+
+Error Tipo I ($\alpha$)
+
+</div>
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.2;">
+
+Se concluye que el fertilizante mejora el rendimiento y se rechaza $H_0$, cuando en realidad no produce ningún efecto. 
+<br>
+**Interpretación**: Se recomienda un fertilizante que realmente no funciona. 
+
+**Consecuencia**: pérdidas económicas para los productores.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:27px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Error Tipo II ($\beta$)
+
+</div>
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.2;">
+
+Se concluye que el fertilizante no mejora el rendimiento y no se rechaza $H_0$, cuando en realidad sí produce una mejora. 
+<br>
+**Interpretación**: Se descarta un fertilizante que realmente sí funciona.  
+
+**Consecuencia**: se pierde una oportunidad de aumentar la producción.
+</div>
+
+</div>
+
+</div>
+
+## Potencia estadística
+
+<div style="font-size:32px;text-align:justify;line-height:1.2;">
+Además de controlar el riesgo de cometer errores, es importante que una prueba tenga **capacidad para detectar diferencias** o efectos reales cuando estos existen.
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"style="background-color:#eef4fb;padding:20px;border-radius:18px;border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;font-weight:bold;text-align:center;color:#1a3a6b;">
+Definición
+</div>
+
+<div style="font-size:30px;text-align:center;line-height:1.7;">
+La potencia es la probabilidad de rechazar correctamente $H_0$ cuando realmente es falsa.
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"style="background-color:#eef7ee;padding:20px;border-radius:18px;border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px;font-weight:bold;text-align:center;color:#1b4d2e;">
+Relación con el Error Tipo II
+</div>
+
+<div style="font-size:26px;text-align:center;line-height:1.8;">
+
+$$
+\text{Potencia}=1-\beta
+$$
+
+</div>
+
+<div style="font-size:28px;text-align:center;line-height:1.5;">
+Como $\beta$ representa la probabilidad de cometer un Error Tipo II, la potencia corresponde a la probabilidad de detectar correctamente un efecto o diferencia real.
+</div>
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:18px;
+border-radius:18px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+
+<div style="font-size:30px;text-align:center;line-height:1.5;">
+Por ejemplo: si $\beta=0.20$, entonces la potencia es $0.80$, lo que significa que existe un 80% de probabilidad de detectar un efecto real.
+</div>
+</div>
+
+
+## Factores que afectan la potencia
+
+<div class="fragment fade-up" data-fragment-index="1" style="font-size:30px;
+text-align:justify;
+line-height:1.2;">
+La potencia de una prueba no es fija. Su valor depende de varios factores relacionados con el diseño del estudio y las características de la población.
+</div>
+
+<table class="fragment fade-up" data-fragment-index="2" style="margin-top:30px;width:100%; font-size:28px;">
+
+<tr style="background-color:#dbeafe;">
+<th>Factor</th>
+<th>Efecto sobre la potencia</th>
+</tr>
+
+<tr>
+<td>Tamaño de muestra</td>
+<td>$n \uparrow \Rightarrow$ Potencia $\uparrow$</td>
+</tr>
+
+<tr>
+<td>Nivel de significancia</td>
+<td>$\alpha \uparrow \Rightarrow$ Potencia $\uparrow$</td>
+</tr>
+
+<tr>
+<td>Variabilidad</td>
+<td>$\sigma \downarrow \Rightarrow$ Potencia $\uparrow$</td>
+</tr>
+
+<tr>
+<td>Tamaño del efecto</td>
+<td>Efecto $\uparrow \Rightarrow$ Potencia $\uparrow$</td>
+</tr>
+
+</table>
+
+<div class="fragment fade-up" data-fragment-index="3"style="background-color:#eef7ee;padding:16px;border-radius:16px;border-left:8px solid #1b4d2e;margin-top:30px;font-size:30px;text-align:center;line-height:1;">
+En general, una prueba tendrá mayor capacidad para detectar efectos reales cuando la información disponible sea más precisa y abundante.
+</div>
+
+
+## Función de potencia
+
+<div style="font-size:30px;text-align:justify;line-height:1.5;">
+La potencia de una prueba no suele ser un valor fijo. Su magnitud depende del valor real del parámetro poblacional. La función de potencia describe la **probabilidad de rechazar la hipótesis nula** para cada posible valor del parámetro de interés.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"style="background-color:#eef4fb;padding:16px;border-radius:18px;border-top:8px solid #1a3a6b;margin-top:12px;">
+<div style="font-size:30px;text-align:center;line-height:1.5;">
+Cuando el parámetro real es muy cercano al valor planteado en $\small H_0$, resulta más difícil detectar diferencias y la potencia suele ser menor.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"style="background-color:#fff7e8;padding:16px;border-radius:18px;border-top:8px solid #d97706;margin-top:12px;">
+
+<div style="font-size:30px;text-align:center;line-height:1.5;">
+
+A medida que el parámetro se aleja del valor establecido en $\small H_0$, la evidencia en contra de la hipótesis nula aumenta y la potencia tiende a incrementarse.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"style="background-color:#eef7ee;padding:16px;border-radius:16px;border-left:8px solid #1b4d2e;margin-top:12px;">
+<div style="font-size:30px;text-align:center;line-height:1.5;">
+La función de potencia permite evaluar la capacidad de una prueba para detectar distintos tamaños de efecto y comparar diferentes diseños de estudio.
+</div>
+</div>
+
+## Definición de la función de potencia
+
+<div class="fragment fade-up" data-fragment-index="1"style="font-size:28px;
+text-align:justify;
+line-height:1.6;
+background-color:#f4f8ff;
+padding:18px;
+border-left:6px solid #2b6cb0;
+border-radius:10px;">
+
+La función de potencia de una prueba estadística se define como:
+
+$$
+\pi(\theta) = P(\text{rechazar } H_0 \mid \theta)
+$$
+
+donde $(\theta)$ representa el valor real del parámetro poblacional.
+
+Esta función mide la probabilidad de detectar un efecto cuando este realmente existe.
+
+</div>
+
+
+
+<div class="fragment fade-up" data-fragment-index="2" style="font-size:28px;
+text-align:justify;
+line-height:1.6;
+background-color:#fff7ed;
+padding:18px;
+border-left:6px solid #ed8936;border-radius:10px;margin-top:10px;">
+
+La potencia está relacionada con el error tipo II $(\beta)$ a través de la siguiente relación:
+
+$$
+\text{Potencia} = 1 - \beta
+$$
+
+Un aumento en la potencia implica una menor probabilidad de no detectar un efecto real.
+
+</div>
+
+
+## Representación gráfica de la función de potencia
+
+<div style="font-size:30px;text-align:justify;line-height:1.6;background-color:#f4f8ff;padding:18px;border-left:6px solid #020202;border-radius:10px;">
+La función de potencia se representa como una curva creciente. A medida que el valor del parámetro se aleja de $\small (H_0)$, aumenta la probabilidad de rechazarla.
+</div>
+
+```{r, echo=FALSE, fig.width=30, fig.height=10}
+theta <- seq(0, 1, by = 0.1)
+
+power <- c(0.05, 0.10, 0.25, 0.50, 0.80,
+           0.95, 0.98, 0.995, 0.999, 1, 1)
+
+library(ggplot2)
+
+df <- data.frame(theta, power)
+
+ggplot(df, aes(theta, power)) +
+  geom_line(linewidth = 2, colour = "steelblue") +
+  geom_point(size = 4, colour = "steelblue") +
+  labs(
+    title = "Curva de función de potencia",
+    x = expression("Distancia respecto al valor de H_0​"),
+    y = "Potencia"
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, 0.2)
+  ) +
+  theme_minimal(base_size = 20) +
+  theme(
+    plot.title = element_text(
+      size = 28,
+      face = "bold",
+      hjust = 0.5
+    ),
+    axis.title = element_text(size = 25),
+    axis.text = element_text(size = 25)
+  )
+```
+
+
+## Efecto del tamaño de muestra sobre la potencia
+
+<div style="font-size:32px;text-align:justify;line-height:1;">
+El tamaño de muestra es uno de los factores que más influye en la potencia de una prueba estadística.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"style="background-color:#eef4fb;padding:16px;border-radius:18px;border-top:8px solid #1a3a6b;margin-top:12px;">
+<div style="font-size:30px;text-align:center;line-height:1.2;">
+Al aumentar el tamaño de muestra, disminuye la variabilidad de los estimadores y resulta más fácil detectar diferencias reales.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"style="background-color:#fff7e8;padding:16px;border-radius:18px;border-top:8px solid #d97706;margin-top:12px;">
+
+<div style="font-size:30px;text-align:center;line-height:1.2;">
+Por esta razón, pruebas realizadas con muestras más grandes suelen presentar una mayor potencia.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"style="background-color:#eef7ee;padding:16px;border-radius:16px;border-left:8px solid #1b4d2e;margin-top:12px;">
+
+<div style="font-size:26px;text-align:center;line-height:1.5;">
+En general:
+<br>
+
+$n \uparrow \quad \Longrightarrow \quad \beta \downarrow \quad \Longrightarrow \quad \text{Potencia} \uparrow$
+
+</div>
+
+</div>
+
+## Gráfico del efecto del tamaño de muestra sobre la potencia
+
+
+```{r, echo=FALSE, fig.width=30, fig.height=8}
+library(ggplot2)
+
+theta <- seq(0, 1, by = 0.01)
+
+datos <- rbind(
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(20)*3),  n = "n = 20"),
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(50)*3),  n = "n = 50"),
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(100)*3), n = "n = 100")
+)
+
+ggplot(datos,
+       aes(theta, potencia,
+           linetype = n)) +
+  geom_line(linewidth = 1.4) +
+  geom_vline(xintercept = 0.5,
+             linetype = "dashed") +
+  labs(
+    x = expression(theta),
+    y = "Potencia",
+    title = "Efecto del tamaño de muestra sobre la potencia"
+  ) +
+  theme_minimal(base_size = 18) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(hjust = 0.5)
+  )
+```
+
+<div style="font-size:26px;text-align:center;margin-top:10px;">
+A medida que aumenta el tamaño de muestra, la potencia crece más rápidamente y la prueba tiene mayor capacidad para detectar diferencias reales.
+</div>
+
+## Ejemplo: Determinación del tamaño de muestra
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+
+<!-- Columna izquierda -->
+
+<div>
+
+<div class="fragment fade-up" data-fragment-index="1"style="background-color:#eef4fb;padding:16px;border-radius:18px;border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px;font-weight:bold;color:#1a3a6b;margin-bottom:10px;">
+Problema
+</div>
+
+<div style="font-size:28px;text-align:justify;line-height:1.2;">
+Un investigador desea evaluar un nuevo fertilizante en cultivos de fresa. Se considera importante detectar una diferencia mínima de:
+
+$$
+d=4 \text{ toneladas/ha}
+$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"style="background-color:#eef7ee;padding:16px;border-radius:18px;border-top:8px solid #1b4d2e;font-size:28px;font-weight:bold;color:#1b4d2e;margin-bottom:8px;">
+Datos
+<div style="font-size:26px;text-align:center;line-height:1.6;">
+
+$$
+\sigma=8
+$$
+
+$$
+\alpha=0.05
+\qquad
+\text{Potencia}=0.80
+$$
+
+$$\beta=0.20$$
+
+$$
+Z_{\alpha/2}=1.96
+\qquad
+Z_{\beta}=0.84
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Columna derecha -->
+
+<div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;font-size:28px;
+font-weight:bold;
+color:#d97706;
+margin-bottom:8px;">
+Cálculo
+
+<div style="font-size:20px;
+text-align:center;
+line-height:1.6;">
+
+$$
+n=
+\left(
+\frac{(Z_{\alpha/2}+Z_{\beta})\sigma}
+{d}
+\right)^2
+$$
+
+$$
+n=
+\left(
+\frac{(1.96+0.84)(8)}
+{4}
+\right)^2
+$$
+
+$$
+n=31.36
+\approx 32
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-left:8px solid #1b4d2e;">
+
+<div style="font-size:28px;text-align:justify;line-height:1.5;">
+Se requieren al menos $n=32$ unidades experimentales para detectar una diferencia de $4$ toneladas/ha con un nivel de significancia del $5\%$ y una potencia del $80\%$.
+</div>
+</div>
+</div>
+
+</div>
+
+## Resumen: Errores, potencia y tamaño de muestra
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Error Tipo I
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+Rechazar $H_0$
+
+cuando es verdadera.
+
+Controlado por: $\small \alpha$
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fdecec;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:24px;
+font-weight:bold;
+text-align:center;
+color:#b91c1c;">
+
+Error Tipo II
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+No rechazar $H_0$
+
+cuando es falsa.
+
+Representado por: $\small \beta$
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Potencia
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+Probabilidad de detectar una diferencia real.
+
+$$
+1-\beta
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Tamaño de muestra
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+Principal herramienta para aumentar la potencia.
+
+$$
+n\uparrow
+\Rightarrow
+\beta\downarrow
+\Rightarrow
+\text{Potencia}\uparrow
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+Una prueba estadística confiable busca controlar el Error Tipo I y minimizar el Error Tipo II mediante un tamaño de muestra adecuado y una potencia suficiente.
+
+</div>
+
+</div>
+
+
+## {.center .middle}
+
+<div style="text-align: center; margin-top: 40px;">
+
+<div style="font-size: 40px; font-weight: bold; color: #3b82f6;">
+Pruebas de Hipótesis para la Razón de Varianzas
+</div>
+
+<div style="font-size: 30px;color: #071327;font-weight: 600;margin-top: 10px;text-align: justify;line-height: 1.2;">
+Las pruebas para la razón de varianzas permiten determinar si una población es más dispersa que otra y son útiles en el análisis estadístico y el diseño de experimentos.
+</div>
+</div>
+
+## ¿Para qué sirve la prueba de razón de varianzas?
+
+<div style="font-size:32px;text-align:justify;line-height:1.2;margin-top:40px;">
+En muchos estudios no solo interesa comparar promedios, sino también analizar la variabilidad de los datos. La prueba para la razón de varianzas permite determinar si dos poblaciones presentan niveles de dispersión similares o si una de ellas es significativamente más variable que la otra.
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:40px;">
+
+<div class="fragment fade-up"style="background-color:#eef4fb;padding:16px;border-radius:18px;border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;font-weight:bold;text-align:center;color:#1a3a6b;">
+¿Qué compara?
+</div>
+
+<div style="font-size:30px;text-align:center;line-height:1.5;">
+La variabilidad de dos poblaciones independientes.
+</div>
+</div>
+
+<div class="fragment fade-up"style="background-color:#eef7ee;padding:16px;border-radius:18px;border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px;font-weight:bold;text-align:center;color:#1b4d2e;">
+
+¿Por qué es importante?
+
+</div>
+
+<div style="font-size:30px;text-align:center;line-height:1.2;">
+Permite verificar si ambas poblaciones presentan una dispersión similar.
+</div>
+</div>
+
+</div>
+
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #d97706;
+margin-top:40px;">
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.5;">
+
+Esta prueba constituye una herramienta fundamental en ANOVA y Diseño de Experimentos.
+
+</div>
+
+</div>
+
+## ¿Cuándo se utiliza?
+
+<div style="font-size:32px;
+text-align:justify;
+line-height:1.6;">
+La prueba de razón de varianzas se utiliza cuando se **desea comparar la dispersión de dos poblaciones** y verificar si presentan niveles de variabilidad estadísticamente similares.
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:40px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;
+text-align:center;">
+
+✓ Dos muestras independientes
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px;
+text-align:center;">
+
+✓ Datos cuantitativos
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:30px;
+text-align:center;">
+
+✓ Comparación de varianzas
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #b91c1c;">
+
+<div style="font-size:30px;
+text-align:center;">
+
+✓ Poblaciones aproximadamente normales
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.5;">
+
+La normalidad es un supuesto importante para que la distribución $F$ sea válida.
+
+</div>
+
+</div>
+
+## Parámetros de interés
+
+<div style="font-size:30px;
+text-align:justify;
+line-height:1.6;">
+El objetivo de esta prueba consiste en comparar la variabilidad de dos poblaciones mediante sus varianzas poblacionales.
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Población 1
+
+</div>
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.8;">
+
+$$
+\sigma_1^2
+$$
+
+</div>
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.4;">
+
+Varianza poblacional del primer grupo.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Población 2
+
+</div>
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.8;">
+
+$$
+\sigma_2^2
+$$
+
+</div>
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.4;">
+
+Varianza poblacional del segundo grupo.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #d97706;
+margin-top:14px;">
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.5;">
+
+Como las varianzas poblacionales son desconocidas, la inferencia se realiza utilizando las varianzas muestrales
+
+$$
+s_1^2
+\qquad \text{y} \qquad
+s_2^2
+$$
+
+obtenidas a partir de muestras independientes.
+
+</div>
+
+</div>
+
+## Hipótesis de investigación
+
+<div style="font-size:30px;
+text-align:justify;
+line-height:1.2;">
+
+La formulación de las hipótesis depende de la pregunta de investigación planteada. En la comparación de varianzas pueden realizarse pruebas bilaterales o unilaterales.
+</div>
+
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:14px;
+margin-top:40px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Bilateral
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.6;">
+
+$$
+H_0:\sigma_1^2=\sigma_2^2
+$$
+
+$$
+H_1:\sigma_1^2\neq\sigma_2^2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Cola derecha
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.6;">
+
+$$
+H_0:\sigma_1^2\leq\sigma_2^2
+$$
+
+$$
+H_1:\sigma_1^2>\sigma_2^2
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Cola izquierda
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.6;">
+
+$$
+H_0:\sigma_1^2\geq\sigma_2^2
+$$
+
+$$
+H_1:\sigma_1^2<\sigma_2^2
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;font-size:30px;
+text-align:center;">
+
+En la práctica, la prueba bilateral es la más utilizada para evaluar la homogeneidad de varianzas.
+</div>
+
+
+## Distribución $F$ y estadístico de prueba
+
+<p style="font-size:30px;
+text-align:justify;
+line-height:1.2;">
+La prueba para la razón de varianzas utiliza la distribución $F$ de Fisher-Snedecor, la cual se obtiene a partir de la razón entre dos varianzas muestrales provenientes de poblaciones **normales** e **independientes**.
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:18px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;
+margin-top:12px;">
+
+<div style="font-size:26px;
+text-align:center;
+line-height:1.8;">
+
+$$
+F=\frac{s_1^2}{s_2^2}
+$$
+
+</div>
+
+<div style="font-size:30px;text-align:center;line-height:1.2;">
+Por convención, suele colocarse la mayor varianza en el numerador para obtener valores de: $\small F \geq 1$.
+</div>
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Numerador
+
+</div>
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.6;">
+
+$$
+gl_1=n_1-1
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Denominador
+
+</div>
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.6;">
+
+$$
+gl_2=n_2-1
+$$
+
+</div>
+
+</div>
+
+</div>
+
+## Hipótesis y criterio de decisión
+
+<div style="font-size:30px;
+text-align:justify;
+line-height:1.2;">
+Una vez calculado el estadístico de prueba, la decisión se toma comparando el valor observado con un valor crítico obtenido de la distribución F de Fisher-Snedecor.
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:16px;
+margin-top:14px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Hipótesis nula
+
+</div>
+
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+
+$$
+H_0:\sigma_1^2=\sigma_2^2
+$$
+
+</div>
+
+<div style="font-size:18px;
+text-align:center;">
+
+Igual variabilidad.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Hipótesis alterna
+
+</div>
+
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+
+$$
+H_1:\sigma_1^2\neq\sigma_2^2
+$$
+
+</div>
+
+<div style="font-size:18px;
+text-align:center;">
+
+Diferente variabilidad.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8;
+padding:14px;
+border-radius:16px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:25px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Regla de decisión
+
+</div>
+
+<div style="font-size:25px;
+text-align:center;
+line-height:1.7;">
+
+Si
+
+$$
+F_{calc}>F_{\alpha/2,gl_1,gl_2}
+$$
+
+</div>
+
+<div style="font-size:18px;
+text-align:center;">
+
+Se rechaza $H_0$.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+
+<div style="font-size:28px;
+text-align:center;
+line-height:1.5;">
+
+Valores grandes de $F$ indican que las diferencias observadas entre las varianzas son demasiado importantes para atribuirse únicamente al azar.
+
+</div>
+
+</div>
+
+
+## Ejemplo
+
+<div style="font-size:30px;
+text-align:justify;
+line-height:1.6;">
+
+Un investigador desea comparar la variabilidad del rendimiento en un cultivo de fresa obtenida bajo dos sistemas de riego. Para ello selecciona dos muestras independientes, usa un nivel de significancia de $\small \alpha=0.05$ y obtiene la siguiente información:
+
+</div>
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:14px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Sistema A
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.8;">
+
+$$
+s_A^2=18.5
+$$
+
+$$
+n_A=15
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1b4d2e;">
+
+<div style="font-size:30px;
+font-weight:bold;
+text-align:center;
+color:#1b4d2e;">
+
+Sistema B
+
+</div>
+
+<div style="font-size:24px;
+text-align:center;
+line-height:1.8;">
+
+$$
+s_B^2=8.2
+$$
+
+$$
+n_B=12
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+
+<div style="font-size:30px;
+text-align:center;
+line-height:1.6;">
+
+**Contrastar**:
+
+$$
+H_0:\sigma_A^2=\sigma_B^2
+$$
+
+$$
+H_1:\sigma_A^2\neq\sigma_B^2
+$$
+
+</div>
+
+</div>
+
+## Solución
+
+<div style="display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;">
+
+<div class="fragment fade-up"
+style="background-color:#eef4fb;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #1a3a6b;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#1a3a6b;">
+
+Estadístico de prueba
+
+</div>
+
+<div style="font-size:22px;
+text-align:center;
+line-height:1.8;">
+
+$$
+F=\frac{s_A^2}{s_B^2}
+$$
+$$
+F=\frac{18.5}{8.2}
+$$
+
+$$
+F=2.26
+$$
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fff7e8;
+padding:16px;
+border-radius:18px;
+border-top:8px solid #d97706;">
+
+<div style="font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#d97706;">
+
+Valor crítico
+
+</div>
+
+<div style="font-size:21px;
+text-align:center;
+line-height:1.7;">
+
+$$
+gl_1=14
+$$
+
+$$
+gl_2=11
+$$
+
+$$
+F_{crit}=F_{0.025,14,11}=3.29
+$$
+
+</div>
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#fdecec;
+padding:14px;
+border-radius:16px;
+border-left:8px solid #b91c1c;
+margin-top:14px;">
+
+<div style="font-size:30px;
+text-align:center;">
+
+Como $2.26 < 3.29$, no se rechaza $H_0$.
+
+</div>
+
+</div>
+
+<div class="fragment fade-up"
+style="background-color:#eef7ee;
+padding:16px;
+border-radius:16px;
+border-left:8px solid #1b4d2e;
+margin-top:14px;">
+
+<div style="font-size:30px;
+text-align:justify;
+line-height:1.2;">
+
+Con un nivel de significancia del $5\%$, no existe evidencia estadística suficiente para afirmar que los sistemas de riego presentan variabilidades diferentes en el rendimiento de fresa.
+
+</div>
+
 </div>
 
 
@@ -108,7 +1821,7 @@ font-weight:600;
 color:#64748b;
 letter-spacing:2px;">
 
-PRIMERA PARTE
+SEGUNDA PARTE
 
 </div>
 
@@ -166,18 +1879,18 @@ Interpretación de los parámetros
 
 <div style="display: flex; gap: 40px; align-items: flex-start; margin-top: 20px;">
 
-<div style="width: 58%; font-size: 28px; line-height: 1.6; text-align: justify;">
+<div style="width: 58%; font-size: 30px; line-height: 1.6; text-align: justify;">
 
 <p class="fragment fade-in" data-fragment-index="1">
-En numerosos problemas científicos, agrícolas, económicos e industriales surge la necesidad de comprender cómo una variable responde a los cambios observados en otra.
+En numerosos problemas científicos, agrícolas, económicos e industriales surge la necesidad de comprender cómo una **variable responde a los cambios observados en otra**.
 </p>
 
 <p class="fragment fade-in" data-fragment-index="2">
-La <b>regresión lineal</b> es una herramienta estadística que permite modelar esta relación mediante una ecuación matemática sencilla, facilitando la explicación de fenómenos y la realización de predicciones.
+La <b>regresión lineal</b> es una herramienta estadística que permite modelar esta relación mediante una **ecuación matemática sencilla**, facilitando la explicación de fenómenos y la realización de predicciones.
 </p>
 
 <p class="fragment fade-in" data-fragment-index="3">
-Su principal objetivo es describir y cuantificar la relación existente entre una variable respuesta y una variable explicativa.
+Su principal objetivo es describir y **cuantificar la relación existente** entre una variable respuesta y una variable explicativa.
 </p>
 
 </div>
@@ -219,74 +1932,13 @@ La regresión lineal permite explicar, cuantificar y predecir relaciones entre v
 
 </div>
 
-## Análisis de Datos Bivariados
 
-<div style="font-size:28px; line-height:1.6; text-align:justify; margin-top:15px;">
+## Importancia de las relaciones entre variables
 
-<p class="fragment fade-in" data-fragment-index="1">
-En numerosos estudios es necesario analizar simultáneamente dos variables medidas sobre las mismas unidades experimentales con el propósito de identificar posibles patrones de asociación entre ellas.
-</p>
-
-<p class="fragment fade-in" data-fragment-index="2">
-Cada observación se representa mediante un par ordenado $(X,Y)$, donde una variable actúa como explicativa y la otra como respuesta.
-</p>
-
-</div>
-
-<div style="display:flex; gap:40px; margin-top:25px;">
-
-<div style="width:50%;">
-
-<h3 class="fragment fade-in"
-data-fragment-index="3"
-style="color:#1b4d2e; margin-bottom:12px;">
-Variable Explicativa ($X$)
-</h3>
-
-<p class="fragment fade-in"
-data-fragment-index="4"
-style="font-size:26px; text-align:justify;">
-Corresponde a la variable utilizada para explicar o predecir el comportamiento de otra variable.
-</p>
-
-<p class="fragment fade-in"
-data-fragment-index="5"
-style="font-size:25px; margin-top:15px;">
-<b>Ejemplo:</b><br>
-Fertilizante aplicado (kg/ha)
-</p>
-
-</div>
-
-<div style="width:50%;">
-
-<h3 class="fragment fade-in"
-data-fragment-index="6"
-style="color:#1a3a6b; margin-bottom:12px;">
-Variable Respuesta ($Y$)
-</h3>
-
-<p class="fragment fade-in"
-data-fragment-index="7"
-style="font-size:26px; text-align:justify;">
-Representa la característica cuyo comportamiento se desea explicar o predecir.
-</p>
-<p class="fragment fade-in"
-data-fragment-index="8"
-style="font-size:25px; margin-top:15px;">
-<b>Ejemplo:</b><br>
-Rendimiento del cultivo (t/ha)
-</p>
-
-</div>
-</div>
-
-## Importancia del Estudio de Relaciones entre Variables
-
-<div style="font-size:27px; line-height:1.6; text-align:justify;">
+<div style="font-size:30px; line-height:1.6; text-align:justify;">
 
 <p class="fragment fade-in" data-fragment-index="1">
-El análisis de relaciones entre variables constituye uno de los objetivos fundamentales de la estadística, ya que permite comprender cómo diferentes características de un fenómeno interactúan entre sí.
+El análisis de relaciones entre variables constituye uno de los objetivos fundamentales de la estadística, ya que **permite comprender cómo diferentes características de un fenómeno interactúan entre sí**.
 </p>
 
 <p class="fragment fade-in" data-fragment-index="2">
@@ -360,16 +2012,11 @@ El análisis de relaciones entre variables permite pasar de una descripción de 
 
 ## Asociación y Causalidad
 
-<div style="font-size:27px; line-height:1.6; text-align:justify;">
+<div style="margin-top:40px;font-size:28px; line-height:1.6; text-align:justify;">
 
 <p class="fragment fade-in" data-fragment-index="1">
-En el análisis estadístico es frecuente encontrar variables que presentan algún grado de asociación. Sin embargo, la existencia de una relación estadística no implica necesariamente una relación de causa y efecto.
+En el análisis estadístico es frecuente encontrar variables que presentan algún grado de asociación. Sin embargo, la existencia de una relación estadística **no implica necesariamente una relación de causa y efecto**. Dos variables pueden variar conjuntamente debido a múltiples factores, incluyendo la presencia de variables externas o simplemente coincidencias observadas en los datos.
 </p>
-
-<p class="fragment fade-in" data-fragment-index="2">
-Dos variables pueden variar conjuntamente debido a múltiples factores, incluyendo la presencia de variables externas o simplemente coincidencias observadas en los datos.
-</p>
-
 </div>
 
 <div style="display:flex; gap:25px; margin-top:20px;">
@@ -382,7 +2029,7 @@ style="width:50%; padding:15px; background:#eef6ff; border-left:6px solid #3b82f
 Asociación
 </h4>
 
-<p style="font-size:24px;">
+<p style="font-size:28px;">
 Existe cuando los cambios observados en una variable se acompañan de cambios en otra variable.
 </p>
 
@@ -396,7 +2043,7 @@ style="width:50%; padding:15px; background:#fff7ed; border-left:6px solid #f59e0
 Causalidad
 </h4>
 
-<p style="font-size:24px;">
+<p style="font-size:28px;">
 Existe cuando las variaciones en una variable producen directamente cambios en la otra.
 </p>
 
@@ -404,26 +2051,15 @@ Existe cuando las variaciones en una variable producen directamente cambios en l
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="5"
-style="margin-top:25px; text-align:center; font-size:34px; font-weight:bold; color:#dc2626;">
-
-$$\text{Asociación ≠ Causalidad}$$
-
+<div class="fragment fade-in" data-fragment-index="5" style="margin-top:22px; padding:16px 22px; background:#d6f0dd; border-left:6px solid #1b4d2e; border-radius:8px; font-size:28px; color:#1e293b; line-height:1.5;">
+Por ejemplo, aumentar la dosis de nitrógeno aplicada al suelo <strong>produce directamente</strong> un mayor rendimiento de maíz (kg/ha), siempre que los demás factores (agua, luz, temperatura) se mantengan constantes. Aquí la relación es causal: la variable explicativa actúa físicamente sobre la variable respuesta. $\small \text{Asociación ≠ Causalidad}$
 </div>
+
 
 
 ## Ejemplos de Asociación y Causalidad
 
-<p class="fragment fade-in"
-data-fragment-index="1"
-style="font-size:20px; text-align:center; margin-bottom:25px;">
-
-La presencia de una asociación entre variables no siempre implica una relación de causa y efecto.
-
-</p>
-
-<table style="width:80%; border-collapse:collapse; font-size:20px;">
+<table style="width:100%; border-collapse:collapse; font-size:28px;">
 
 <tr style="background:#1a3a6b; color:white;">
 
@@ -476,23 +2112,6 @@ Posiblemente sí, pero la respuesta también depende del suelo, clima, manejo y 
 </tr>
 
 <tr class="fragment fade-in"
-data-fragment-index="4">
-
-<td style="padding:12px;">
-Ventas de helados y ahogamientos
-</td>
-
-<td style="padding:12px;">
-Positiva: ambas variables tienden a aumentar durante épocas cálidas.
-</td>
-
-<td style="padding:12px;">
-No. La temperatura actúa como una variable externa que afecta simultáneamente ambas variables.
-</td>
-
-</tr>
-
-<tr class="fragment fade-in"
 data-fragment-index="5"
 style="background:#f8fafc;">
 
@@ -530,78 +2149,44 @@ La causalidad implica que una variable produce cambios directos en la otra.
 
 ## Tipos de Asociación entre Variables
 
-<p class="fragment fade-in"
-data-fragment-index="1"
-style="font-size:28px; text-align:justify; line-height:1.6;">
-
-La relación entre dos variables puede manifestarse de diferentes formas dependiendo de cómo cambien sus valores de manera conjunta.
-
-</p>
-
-<br>
+<p class="fragment fade-in" data-fragment-index="1" style="margin-top:40px;font-size:30px; text-align:justify; line-height:1.2;"> La relación entre dos variables puede manifestarse de diferentes formas dependiendo de cómo cambien sus valores de manera conjunta. </p>
 
 <div style="display:flex; gap:25px; margin-top:25px;">
 
-<div class="fragment fade-in"
-data-fragment-index="2"
-style="width:33%; padding:15px; background:#eef6ff; border-top:6px solid #3b82f6;">
+<div class="fragment fade-in" data-fragment-index="2" style="width:33%; padding:15px; background:#eef6ff; border-top:6px solid #3b82f6;">
 
-<h3 style="text-align:center; color:#1a3a6b;">
-Positiva
-</h3>
+<h3 style="text-align:center; color:#1a3a6b;">Positiva</h3>
 
-<p style="font-size:24px;">
-Cuando una variable aumenta, la otra tiende a aumentar.
-</p>
+<p style="text-align:justify;font-size:24px;"> Cuando una variable aumenta, la otra tiende a aumentar.</p>
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="3"
-style="width:33%; padding:15px; background:#fefce8; border-top:6px solid #eab308;">
+<div class="fragment fade-in" data-fragment-index="3" style="width:33%; padding:15px; background:#fefce8; border-top:6px solid #eab308;">
 
-<h3 style="text-align:center; color:#92400e;">
-Negativa
-</h3>
-
-<p style="font-size:24px;">
-Cuando una variable aumenta, la otra tiende a disminuir.
-</p>
+<h3 style="text-align:center; color:#92400e;">Negativa</h3>
+<p style="text-align:justify;font-size:24px;"> Cuando una variable aumenta, la otra tiende a disminuir.</p>
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="width:33%; padding:15px; background:#f3f4f6; border-top:6px solid #6b7280;">
+<div class="fragment fade-in" data-fragment-index="4" style="width:33%; padding:15px; background:#f3f4f6; border-top:6px solid #6b7280;">
 
-<h3 style="text-align:center; color:#374151;">
-Nula
-</h3>
-
-<p style="font-size:24px;">
-No se observa un patrón claro de cambio entre las variables.
-</p>
+<h3 style="text-align:center; color:#374151;">Nula</h3>
+<p style="text-align:justify;font-size:24px;">No se observa un patrón claro de cambio entre las variables.</p>
 
 </div>
 
 </div>
 
-<br>
-
-<div class="fragment fade-in"
-data-fragment-index="5"
-style="margin-top:25px; padding:15px; background:#f8fafc; border-left:6px solid #10b981; font-size:27px;">
-
+<div class="fragment fade-in" data-fragment-index="5" style="margin-top:25px; padding:15px; background:#f8fafc; border-left:6px solid #10b981; font-size:30px;">
 La dirección de la asociación es uno de los primeros aspectos que se evalúan al analizar datos bivariados.
-
 </div>
 
 ## Diagrama de Dispersión
 
-<div style="font-size:28px; line-height:1.6; text-align:justify;">
+<div style="margin-top:50px; font-size:30px; line-height:1.2; text-align:justify;">
 
 <p class="fragment fade-in" data-fragment-index="2">
-Formalmente, esta representación gráfica recibe el nombre de <b>diagrama de dispersión</b> y constituye una de las herramientas más importantes en el análisis de datos bivariados.
+El <b>diagrama de dispersión</b> constituye una de las herramientas más importantes en el análisis de datos bivariados.
 </p>
 
 <p class="fragment fade-in" data-fragment-index="3">
@@ -612,7 +2197,7 @@ Cada observación se representa mediante un punto cuyas coordenadas corresponden
 
 <div class="fragment fade-in"
 data-fragment-index="4"
-style="margin-top:20px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:27px;">
+style="margin-top:20px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:30px;">
 
 A partir de un diagrama de dispersión es posible identificar la dirección, la intensidad y la forma de la relación entre variables, información fundamental para la construcción de modelos de regresión.
 
@@ -667,150 +2252,107 @@ Lineal o no lineal.
 
 
 
-## Gráficamente
+## Dirección
 
-<div style="font-size:28px; text-align:center; margin-bottom:10px;">
+<div style="font-size:30px; text-align:justify; margin-bottom:10px;">
 
 La dirección de la asociación puede identificarse mediante el patrón observado en un diagrama de dispersión.
 
 </div>
 
 ```{r fig.width=20, fig.height=5, echo=FALSE, warning=FALSE, message=FALSE}
-
+library(ggplot2); library(patchwork)
 set.seed(123)
 
-par(
-  mfrow = c(1,3),
-  mar = c(4,4,3,1),
-  cex.main = 1.2,
-  cex.lab = 1.1
-)
+tema_disp <- theme_minimal(base_size = 17) +
+  theme(
+    plot.title    = element_text(face = "bold", hjust = 0.5, size = 19, color = "#1a3a6b"),
+    axis.title    = element_text(size = 16, color = "#374151"),
+    axis.text     = element_text(size = 14, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border  = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6)
+  )
 
-# -------------------------
-# Asociación positiva
-# -------------------------
+x20 <- 1:20
+df_pos <- data.frame(x = x20, y = x20 + rnorm(20, 0, 2))
+df_neg <- data.frame(x = x20, y = 25 - x20 + rnorm(20, 0, 2))
+df_nul <- data.frame(x = runif(25, 0, 20), y = runif(25, 0, 20))
 
-x <- 1:20
-y <- x + rnorm(20,0,2)
+p1 <- ggplot(df_pos, aes(x, y)) +
+  geom_point(color = "#1a3a6b", size = 3, alpha = 0.85) +
+  geom_smooth(method = "lm", se = FALSE, color = "#b91c1c", linewidth = 1.3) +
+  labs(title = "Asociación Positiva", x = "Variable X", y = "Variable Y") +
+  tema_disp
 
-plot(
-  x, y,
-  pch = 19,
-  main = "Asociación Positiva",
-  xlab = "Variable X",
-  ylab = "Variable Y"
-)
+p2 <- ggplot(df_neg, aes(x, y)) +
+  geom_point(color = "#1b4d2e", size = 3, alpha = 0.85) +
+  geom_smooth(method = "lm", se = FALSE, color = "#b91c1c", linewidth = 1.3) +
+  labs(title = "Asociación Negativa", x = "Variable X", y = "Variable Y") +
+  tema_disp
 
-abline(lm(y ~ x), lwd = 2)
+p3 <- ggplot(df_nul, aes(x, y)) +
+  geom_point(color = "#78716c", size = 3, alpha = 0.85) +
+  labs(title = "Asociación Nula", x = "Variable X", y = "Variable Y") +
+  tema_disp
 
-# -------------------------
-# Asociación negativa
-# -------------------------
-
-x <- 1:20
-y <- 25 - x + rnorm(20,0,2)
-
-plot(
-  x, y,
-  pch = 19,
-  main = "Asociación Negativa",
-  xlab = "Variable X",
-  ylab = "Variable Y"
-)
-
-abline(lm(y ~ x), lwd = 2)
-
-# -------------------------
-# Asociación nula
-# -------------------------
-
-x <- runif(25,0,20)
-y <- runif(25,0,20)
-
-plot(
-  x, y,
-  pch = 19,
-  main = "Asociación Nula",
-  xlab = "Variable X",
-  ylab = "Variable Y"
-)
+p1 + p2 + p3
 ```
 
-<div style="margin-top:15px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:25px;">
-
+<div style="text-align:justify;margin-top:15px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:28px;">
 <b>Interpretación:</b> Una asociación positiva presenta una tendencia ascendente, una asociación negativa muestra una tendencia descendente y una asociación nula no exhibe un patrón claramente identificable.
-
 </div> 
 
 
 ## Fuerza de la Asociación
 
-<div style="font-size:28px; text-align:center; margin-bottom:10px;">
+<div style="font-size:28px; text-align:justify; margin-bottom:10px;">
 
 Además de la dirección de la relación, es importante evaluar qué tan cerca se encuentran las observaciones de una tendencia común.
 
 </div>
 
-```{r fig.width=20, fig.height=4.5, echo=FALSE}
+```{r fig.width=20, fig.height=4.5, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2); library(patchwork)
 set.seed(123)
 
-par(
-  mfrow = c(1,3),
-  mar = c(4,4,3,1),
-  cex.main = 1.2,
-  cex.lab = 1.1
-)
+tema_f <- theme_minimal(base_size = 17) +
+  theme(
+    plot.title    = element_text(face = "bold", hjust = 0.5, size = 19, color = "#1a3a6b"),
+    plot.subtitle = element_text(hjust = 0.5, size = 14, color = "#64748b"),
+    axis.title    = element_text(size = 16, color = "#374151"),
+    axis.text     = element_text(size = 14, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border  = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6)
+  )
 
-x <- 1:30
+x30 <- 1:30
+df_deb <- data.frame(x = x30, y = x30 + rnorm(30, 0, 12))
+df_mod <- data.frame(x = x30, y = x30 + rnorm(30, 0, 5))
+df_fue <- data.frame(x = x30, y = x30 + rnorm(30, 0, 1.5))
 
-# Asociación débil
-y1 <- x + rnorm(30,0,12)
+make_p <- function(df, titulo, subtit, col) {
+  ggplot(df, aes(x, y)) +
+    geom_point(color = col, size = 2.8, alpha = 0.8) +
+    geom_smooth(method = "lm", se = TRUE, color = "#b91c1c",
+                fill = "#fecaca", linewidth = 1.2, alpha = 0.25) +
+    labs(title = titulo, subtitle = subtit,
+         x = "Variable X", y = "Variable Y") +
+    tema_f
+}
 
-plot(
-  x,y1,
-  pch=19,
-  main="Débil",
-  xlab="Variable X",
-  ylab="Variable Y"
-)
+p1 <- make_p(df_deb, "Asociación Débil",    "r ≈ 0.10", "#78716c")
+p2 <- make_p(df_mod, "Asociación Moderada", "r ≈ 0.50", "#1b4d2e")
+p3 <- make_p(df_fue, "Asociación Fuerte",   "r ≈ 0.95", "#1a3a6b")
 
-abline(lm(y1~x), lwd=2)
-
-# Asociación moderada
-y2 <- x + rnorm(30,0,5)
-
-plot(
-  x,y2,
-  pch=19,
-  main="Moderada",
-  xlab="Variable X",
-  ylab="Variable Y"
-)
-
-abline(lm(y2~x), lwd=2)
-
-# Asociación fuerte
-y3 <- x + rnorm(30,0,1.5)
-
-plot(
-  x,y3,
-  pch=19,
-  main="Fuerte",
-  xlab="Variable X",
-  ylab="Variable Y"
-)
-
-abline(lm(y3~x), lwd=2)
+p1 + p2 + p3
 ```
 
-<div style="margin-top:15px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:25px;">
-
+<div style="text-align:justify;margin-top:15px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:28px;">
 <b>Interpretación:</b> Cuanto más próximos se encuentren los puntos a una línea recta, mayor será la intensidad de la asociación entre las variables.
-
 </div>
 
 
-## ¿Cómo Resumir la Relación Observada?
+## ¿Cómo resumir la relación observada?
 
 <div style="font-size:28px; line-height:1.6; text-align:justify;">
 
@@ -819,11 +2361,11 @@ El diagrama de dispersión constituye una herramienta fundamental para visualiza
 </p>
 
 <p class="fragment fade-in" data-fragment-index="2">
-Sin embargo, cuando el número de observaciones es grande, resulta difícil describir la tendencia general únicamente mediante una inspección visual.
+Sin embargo, cuando el **número de observaciones es grande**, resulta difícil describir la tendencia general únicamente mediante una inspección visual.
 </p>
 
 <p class="fragment fade-in" data-fragment-index="3">
-Surge entonces la necesidad de encontrar una representación matemática que resuma el comportamiento promedio de los datos observados.
+Surge entonces la necesidad de encontrar una **representación matemática** que resuma el comportamiento promedio de los datos observados.
 </p>
 
 </div>
@@ -852,135 +2394,87 @@ En muchos fenómenos reales, la tendencia observada puede aproximarse mediante u
 
 </div>
 
-## La Idea Fundamental de la Regresión Lineal
+## La recta de regresión
 
-<div style="font-size:28px; line-height:1.6; text-align:justify;">
+<div style="font-size:27px; line-height:1.5; text-align:justify; margin-bottom:8px;">
 
-<p class="fragment fade-in" data-fragment-index="1">
-Cuando los datos muestran una tendencia aproximadamente lineal, resulta útil resumir dicha relación mediante una recta.
-</p>
-
-<p class="fragment fade-in" data-fragment-index="2">
-Esta recta representa el comportamiento promedio de la variable respuesta para diferentes valores de la variable explicativa.
-</p>
-
-<p class="fragment fade-in" data-fragment-index="3">
-En regresión lineal, el objetivo consiste en encontrar la recta que mejor describa la tendencia general observada en los datos.
-</p>
+<span class="fragment fade-in" data-fragment-index="1">
+Cuando los datos muestran una tendencia aproximadamente lineal, resulta útil resumir dicha relación mediante una <b>recta de regresión</b>, que representa el comportamiento promedio de la variable respuesta para distintos valores de la variable explicativa.
+</span>
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="margin-top:20px; text-align:center; font-size:30px; font-weight:600; color:#1a3a6b;">
+<div class="fragment fade-in" data-fragment-index="2">
 
-La recta que resume la relación entre las variables se denomina <b>Recta de Regresión</b>.
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="5"
-style="margin-top:25px; padding:18px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:27px;">
-
-La regresión lineal busca construir una recta que represente de la mejor manera posible la tendencia observada en la nube de puntos.
-
-</div>
-
-## La Recta de Regresión
-
-<div style="font-size:28px; line-height:1.6; text-align:justify;">
-
-<p class="fragment fade-in" data-fragment-index="1">
-Cuando existe una tendencia aproximadamente lineal entre dos variables, resulta posible resumir dicha relación mediante una recta.
-</p>
-
-<p class="fragment fade-in" data-fragment-index="2">
-Esta recta representa el comportamiento promedio de la variable respuesta a medida que cambia la variable explicativa.
-</p>
-
-</div>
-<div class="fragment fade-in" data-fragment-index="3">
-```{r fig.width=20, fig.height=5, echo=FALSE}
+```{r fig.width=18, fig.height=4.5, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
 set.seed(123)
+x <- seq(1, 20)
+y <- 8 + 1.8 * x + rnorm(20, 0, 3)
+df <- data.frame(x = x, y = y)
 
-x <- seq(1,20)
-y <- 8 + 1.8*x + rnorm(20,0,3)
+ggplot(df, aes(x, y)) +
+  geom_point(color = "#1a3a6b", size = 3.5, alpha = 0.85) +
+  geom_smooth(method = "lm", se = TRUE, color = "#b91c1c",
+              fill = "#fecaca", linewidth = 1.5, alpha = 0.2) +
+  labs(
+    title = "Nube de puntos y recta de regresión",
+    x = "Variable Explicativa (X)",
+    y = "Variable Respuesta (Y)"
+  ) +
+  theme_minimal(base_size = 17) +
+  theme(
+    plot.title   = element_text(face = "bold", hjust = 0.5, size = 19, color = "#1a3a6b"),
+    axis.title   = element_text(size = 16, color = "#374151"),
+    axis.text    = element_text(size = 14, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6)
+  )
 
-modelo <- lm(y~x)
-
-par(
-  mar=c(4,4,2,1),
-  cex.lab=1.1,
-  cex.axis=1
-)
-
-plot(
-  x,y,
-  pch=19,
-  cex=1.3,
-  xlab="Variable Explicativa (X)",
-  ylab="Variable Respuesta (Y)",
-  main="Nube de puntos y recta de regresión"
-)
-
-abline(modelo,lwd=3)
 ```
-
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="margin-top:15px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:25px;">
-
-La línea representa la tendencia general observada en los datos y recibe el nombre de <b>recta de regresión</b>.
-
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top:10px; padding:14px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:28px;">
+La regresión lineal busca construir la recta que <b>mejor describa</b> la tendencia observada en la nube de puntos. La banda sombreada indica la incertidumbre de la estimación.
 </div>
 
 
-## ¿La Recta Describe Perfectamente los Datos?
+## ¿La recta describe perfectamente los datos?
 
-<div style="font-size:28px; line-height:1.6; text-align:justify;">
-
+<div style="margin-top:30px;font-size:28px; line-height:1.2; text-align:justify;">
 <p class="fragment fade-in" data-fragment-index="1">
-Aunque la recta resume la tendencia general de los datos, las observaciones individuales no suelen ubicarse exactamente sobre ella.
+Aunque la recta resume la tendencia general de los datos, las observaciones individuales no suelen ubicarse exactamente sobre ella. Cada punto presenta una pequeña diferencia respecto al valor predicho por la recta.
 </p>
-
-<p class="fragment fade-in" data-fragment-index="2">
-Cada punto presenta una pequeña diferencia respecto al valor predicho por la recta.
-</p>
-
 </div>
 
 <div class="fragment fade-in" data-fragment-index="3">
-```{r fig.width=20, fig.height=5, echo=FALSE}
-set.seed(123)
 
+```{r fig.width=18, fig.height=4.5, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
 x <- c(1,2,3,4,5,6,7,8)
 y <- c(8,10,11,16,15,21,24,25)
+df <- data.frame(x = x, y = y)
 
-modelo <- lm(y~x)
-
-plot(
-  x,y,
-  pch=19,
-  xlab="Variable X",
-  ylab="Variable Y"
-)
-
-abline(modelo,lwd=3)
+ggplot(df, aes(x, y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#b91c1c", linewidth = 1.6) +
+  geom_point(color = "#1a3a6b", size = 5, alpha = 0.9) +
+  labs(x = "Variable X", y = "Variable Y") +
+  theme_minimal(base_size = 18) +
+  theme(
+    axis.title   = element_text(size = 17, color = "#374151"),
+    axis.text    = element_text(size = 15, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6)
+  )
 ```
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="margin-top:15px; padding:15px; background:#fefce8; border-left:6px solid #eab308; font-size:25px;">
-
-La recta representa una tendencia promedio, no una descripción exacta de cada observación.
-
+<div class="fragment fade-in" data-fragment-index="4" style="margin-top:15px; padding:15px; background:#fefce8; border-left:6px solid #eab308; font-size:28px;">
+La recta representa una **tendencia promedio**, no una descripción exacta de cada observación.
 </div>
 
-## Variabilidad Alrededor de la Recta
+## Variabilidad alrededor de la recta
 
 <div style="font-size:28px; line-height:1.6; text-align:justify;">
 
@@ -995,33 +2489,41 @@ Estas discrepancias pueden originarse por factores no observados, errores de med
 </div>
 
 <div class="fragment fade-in" data-fragment-index="3">
-```{r fig.width=20, fig.height=5, echo=FALSE}
-set.seed(123)
 
-x <- c(1,2,3,4,5,6,7,8)
-y <- c(8,10,11,16,15,21,24,25)
+```{r fig.width=18, fig.height=4.8, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+set.seed(42)
+n <- 22
+x <- seq(1, 11, length.out = n)
+y <- 5 + 2.3 * x + rnorm(n, 0, 4.5)
+df <- data.frame(x = x, y = y)
+mod <- lm(y ~ x, data = df)
+df$yhat <- fitted(mod)
+df$residuo <- residuals(mod)
+df$color_res <- ifelse(df$residuo > 0, "positivo", "negativo")
 
-modelo <- lm(y~x)
-
-plot(
-  x,y,
-  pch=19,
-  xlab="Variable X",
-  ylab="Variable Y"
-)
-
-abline(modelo,lwd=3)
-
-yhat <- predict(modelo)
-
-segments(
-  x0=x,
-  y0=y,
-  x1=x,
-  y1=yhat,
-  lty=2,
-  lwd=2
-)
+ggplot(df, aes(x, y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#b91c1c", linewidth = 1.8) +
+  geom_segment(aes(x = x, xend = x, y = yhat, yend = y, color = color_res),
+               linewidth = 1.3, linetype = "solid") +
+  geom_point(aes(y = yhat), shape = 18, color = "#b91c1c", size = 3.5) +
+  geom_point(color = "#1a3a6b", size = 4.5, alpha = 0.9) +
+  scale_color_manual(
+    values = c("positivo" = "#16a34a", "negativo" = "#d97706"),
+    labels = c("positivo" = "Residuo > 0  (obs. sobre la recta)",
+               "negativo" = "Residuo < 0  (obs. bajo la recta)"),
+    name = NULL
+  ) +
+  labs(x = "Variable X", y = "Variable Y") +
+  theme_minimal(base_size = 18) +
+  theme(
+    axis.title      = element_text(size = 17, color = "#374151"),
+    axis.text       = element_text(size = 15, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border    = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6),
+    legend.position = "top",
+    legend.text     = element_text(size = 15, color = "#374151")
+  )
 ```
 
 </div>
@@ -1034,12 +2536,12 @@ Las líneas punteadas representan las diferencias entre los valores observados y
 
 </div>
 
-## ¿Por Qué los Puntos No Caen Exactamente Sobre la Recta?
+## ¿Por qué los puntos no caen sobre la recta?
 
-<div style="font-size:28px; line-height:1.6; text-align:justify;">
+<div style="margin-top:40px;font-size:28px; line-height:1.2; text-align:justify;">
 
 <p class="fragment fade-in" data-fragment-index="1">
-La recta de regresión representa una tendencia promedio, pero las observaciones reales suelen presentar cierta variabilidad alrededor de dicha tendencia.
+La recta de regresión representa una **tendencia promedio**, pero las observaciones reales suelen presentar cierta variabilidad alrededor de dicha tendencia.
 </p>
 
 <p class="fragment fade-in" data-fragment-index="2">
@@ -1077,98 +2579,105 @@ Variables que influyen en la respuesta pero que no fueron incluidas en el análi
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="
-flex:1;
-padding:8px;
-background:#f0fdf4;
-border-radius:8px;
-border-top:5px solid #10b981;">
-
-<h4 style="
-margin:0;
-color:#166534;
-font-size:28px;">
-Error de medición
-</h4>
-
-<div style="
-font-size:28px;
-line-height:1.25;
-margin-top:6px;">
-
+<div class="fragment fade-in" data-fragment-index="4" style="flex:1;padding:8px;background:#f0fdf4;border-radius:8px;border-top:5px solid #10b981;">
+<h4 style="margin:0;color:#166534;font-size:28px;">Error de medición</h4>
+<div style="font-size:28px;line-height:1.25;margin-top:6px;">
 Imprecisiones durante el proceso de observación o registro de los datos.
-
+</div>
 </div>
 
+<div class="fragment fade-in" data-fragment-index="5" style="flex:1;padding:8px;background:#fefce8;border-radius:8px;border-top:5px solid #eab308;">
+<h4 style="margin:0;color:#92400e;font-size:28px;">Variabilidad natural</h4>
+
+<div style="font-size:28px;line-height:1.25;margin-top:6px;">Fluctuaciones inherentes al fenómeno que se está estudiando.
 </div>
-
-<div class="fragment fade-in"
-data-fragment-index="5"
-style="
-flex:1;
-padding:8px;
-background:#fefce8;
-border-radius:8px;
-border-top:5px solid #eab308;">
-
-<h4 style="
-margin:0;
-color:#92400e;
-font-size:28px;">
-Variabilidad natural
-</h4>
-
-<div style="
-font-size:28px;
-line-height:1.25;
-margin-top:6px;">
-
-Fluctuaciones inherentes al fenómeno que se está estudiando.
-
 </div>
-
-</div>
-
 </div>
 
 <div class="fragment fade-in"
 data-fragment-index="6"
-style="
-margin-top:20px;
-padding:15px;
-background:#f8fafc;
-border-left:6px solid #3b82f6;
-font-size:28px;">
-
-La recta explica parte de la variabilidad observada, pero no toda la variación presente en los datos.
-
+style="margin-top:20px;padding:15px;background:#f8fafc;border-left:6px solid #3b82f6;font-size:28px;">La recta explica parte de la variabilidad observada, pero no toda la variación presente en los datos.
 </div>
 
 
-## Construcción del Modelo de Regresión Lineal Simple
+## Primer paso en regresión: definir $X$ y $Y$
 
-<div style="font-size:28px; line-height:1.6; text-align:justify;">
+<div style="font-size:30px; line-height:1.6; text-align:justify; margin-top:15px;">
 
 <p class="fragment fade-in" data-fragment-index="1">
-La relación observada entre dos variables puede describirse mediante una componente sistemática representada por una recta y una componente aleatoria asociada a la variabilidad presente en los datos.
+En numerosos estudios es necesario **analizar simultáneamente** dos variables medidas sobre las mismas unidades experimentales con el propósito de **identificar posibles patrones** de asociación entre ellas.
 </p>
 
 <p class="fragment fade-in" data-fragment-index="2">
-Al combinar ambos elementos se obtiene el modelo de regresión lineal simple, una herramienta que permite describir y estudiar la relación entre una variable respuesta y una variable explicativa.
+Cada observación se representa mediante un par ordenado $\small (X,Y)$, donde una variable actúa como explicativa y la otra como respuesta.
 </p>
 
 </div>
 
-<div class="fragment fade-in"
+<div style="display:flex; gap:40px; margin-top:25px;">
+
+<div style="width:50%;">
+
+<h3 class="fragment fade-in"
 data-fragment-index="3"
-style="
-margin-top:25px;
-text-align:center;
-font-size:42px;
-font-weight:bold;
-color:#1a3a6b;">
+style="color:#1b4d2e; margin-bottom:12px;">
+Variable Explicativa ($X$)
+</h3>
+
+<p class="fragment fade-in"
+data-fragment-index="4"
+style="font-size:30px; text-align:justify;">
+Corresponde a la variable utilizada para explicar o predecir el comportamiento de otra variable.
+</p>
+
+<p class="fragment fade-in"
+data-fragment-index="5"
+style="font-size:30px; margin-top:15px;">
+<b>Ejemplo:</b><br>
+Fertilizante aplicado (kg/ha)
+</p>
+
+</div>
+
+<div style="width:50%;">
+
+<h3 class="fragment fade-in"
+data-fragment-index="6"
+style="color:#1a3a6b; margin-bottom:12px;">
+Variable Respuesta ($Y$)
+</h3>
+
+<p class="fragment fade-in"
+data-fragment-index="7"
+style="font-size:30px; text-align:justify;">
+Representa la característica cuyo comportamiento se desea explicar o predecir.
+</p>
+<p class="fragment fade-in"
+data-fragment-index="8"
+style="font-size:30px; margin-top:15px;">
+<b>Ejemplo:</b><br>
+Rendimiento del cultivo (t/ha)
+</p>
+
+</div>
+</div>
+
+
+## Construcción del modelo
+
+<div style="margin-top:40px;font-size:28px; line-height:1.6; text-align:justify;">
+
+<p class="fragment fade-in" data-fragment-index="1">
+La relación observada entre dos variables puede describirse mediante una **componente sistemática** representada por una recta y una **componente aleatoria** asociada a la variabilidad presente en los datos.
+</p>
+
+<p class="fragment fade-in" data-fragment-index="2">
+Al combinar ambos elementos se obtiene el modelo de **regresión lineal simple**, una herramienta que permite describir y estudiar la relación entre una variable respuesta y una variable explicativa.
+</p>
+
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top:25px;text-align:center;font-size:34px;font-weight:bold;color:#1a3a6b;">
 
 $$
 Y=\beta_0+\beta_1X+e
@@ -1178,86 +2687,40 @@ $$
 
 <div style="display:flex; gap:15px; margin-top:20px;">
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="
-flex:1;
-padding:10px;
-background:#eef6ff;
-border-radius:8px;
-border-top:5px solid #3b82f6;">
+<div class="fragment fade-in" data-fragment-index="4" style="flex:1;padding:10px;background:#eef6ff;border-radius:8px;border-top:5px solid #3b82f6;">
 
-<h4 style="margin:0; color:#1a3a6b; font-size:22px;">
-Parte sistemática
-</h4>
+<h4 style="margin:0; color:#1a3a6b; font-size:28px;">Parte sistemática</h4>
 
-<div style="font-size:22px; margin-top:6px;">
-
+<div style="font-size:28px; margin-top:6px;">
 Representa la tendencia promedio descrita por la recta.
-
 </div>
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="5"
-style="
-flex:1;
-padding:10px;
-background:#fefce8;
-border-radius:8px;
-border-top:5px solid #eab308;">
+<div class="fragment fade-in" data-fragment-index="5" style="flex:1;padding:10px;background:#fefce8;border-radius:8px;border-top:5px solid #eab308;">
 
-<h4 style="margin:0; color:#92400e; font-size:22px;">
-Parte aleatoria
-</h4>
+<h4 style="margin:0; color:#92400e; font-size:28px;"> Parte aleatoria </h4>
 
-<div style="font-size:22px; margin-top:6px;">
-
-Representa la variabilidad no explicada por la recta.
-
+<div style="font-size:28px; margin-top:6px;"> Representa la variabilidad no explicada por la recta.</div>
+</div>
 </div>
 
-</div>
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="6"
-style="
-margin-top:20px;
-padding:12px;
-background:#f8fafc;
-border-left:6px solid #3b82f6;
-font-size:24px;">
-
+<div class="fragment fade-in" data-fragment-index="6" style="margin-top:20px;padding:12px;background:#f8fafc;border-left:6px solid #3b82f6;font-size:28px;">
 El modelo combina una tendencia promedio y una componente aleatoria para representar el comportamiento de los datos.
-
 </div>
 
 
-## Modelo de Regresión Lineal Simple
+## Modelo de regresión lineal simple
 
-<div style="font-size:28px; line-height:1.6; text-align:justify;">
+<div style="font-size:28px; line-height:1.2; text-align:justify;">
 
 <p class="fragment fade-in" data-fragment-index="1">
-El modelo de regresión lineal simple describe la relación entre una variable respuesta y una variable explicativa mediante una ecuación lineal.
-</p>
-
-<p class="fragment fade-in" data-fragment-index="2">
-Este modelo permite representar la tendencia promedio observada en los datos e incorporar la variabilidad asociada a factores no observados.
+El modelo de regresión lineal simple **describe la relación** entre una variable respuesta y una variable explicativa mediante una ecuación lineal. Este modelo permite representar la **tendencia promedio observada** en los datos e incorporar la variabilidad asociada a factores no observados.
 </p>
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="3"
-style="
-margin-top:20px;
-text-align:center;
-font-size:40px;
-font-weight:bold;
-color:#1a3a6b;">
+<div class="fragment fade-in" data-fragment-index="3" style=" margin-top:20px; text-align:center; font-size:36px; font-weight:bold; color:#1a3a6b;">
 
 $$
 Y_i=\beta_0+\beta_1X_i+e_i
@@ -1335,36 +2798,21 @@ Error aleatorio asociado a la observación.
 
 </table>
 
-<div class="fragment fade-in"
-data-fragment-index="5"
-style="
-margin-top:18px;
-padding:12px;
-background:#eef6ff;
-border-left:6px solid #3b82f6;
-font-size:22px;">
-
-Cada observación puede expresarse como la suma de una componente sistemática
-$(\beta_0+\beta_1X_i)$ y una componente aleatoria $(\varepsilon_i)$.
-
+<div class="fragment fade-in" data-fragment-index="5" style="padding:12px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:28px;">
+Cada observación puede expresarse como la suma de una componente sistemática $\small (\beta_0+\beta_1X_i)$ y una componente aleatoria $(\varepsilon_i)$.
 </div>
 
 
-## Interpretación Geométrica de los Parámetros
+## Interpretación geométrica de los parámetros
 
-<div style="font-size:27px; line-height:1.5; text-align:justify;">
-
-<p class="fragment fade-in" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="1" style="font-size:28px; line-height:1.2; text-align:justify;">
 Los parámetros del modelo determinan completamente la posición y la forma de la recta de regresión. Cada uno cumple una función específica que puede visualizarse geométricamente.
 </p>
 
-</div>
-
-
 <div style="display:flex; gap:20px; margin-top:15px;">
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="width:50%;">
+<div class="fragment fade-in" data-fragment-index="2" style="width:50%;">
+
 ```{r echo=FALSE, fig.width=5, fig.height=4, out.width='80%'}
 library(ggplot2)
 library(grid)
@@ -1441,6 +2889,7 @@ ggplot(datos,aes(x,y,color=beta0))+
 data-fragment-index="3"style="width:50%;">
 
 ```{r echo=FALSE, fig.width=5, fig.height=4, out.width='80%'}
+
 library(ggplot2)
 library(grid)
 
@@ -1534,17 +2983,8 @@ ggplot(datos,aes(x,y,color=Beta))+
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="
-margin-top:15px;
-padding:12px;
-background:#f8fafc;
-border-left:6px solid #3b82f6;
-font-size:28px;">
-
+<div class="fragment fade-in" data-fragment-index="4" style=" padding:12px; background:#f8fafc; border-left:6px solid #3b82f6; font-size:28px;">
 Mientras el intercepto desplaza la recta verticalmente, la pendiente modifica su inclinación y la intensidad de la relación entre las variables.
-
 </div>
 
 ## 
@@ -1592,12 +3032,7 @@ border-radius:10px;">
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="
-margin-top:35px;
-font-size:24px;
-color:#475569;">
+<div class="fragment fade-in" data-fragment-index="4" style=" margin-top:35px; font-size:24px; color:#475569;">
 
 Estimación de parámetros
 │
@@ -1613,39 +3048,20 @@ Coeficiente de determinación
 
 </div>
 
-## Estimación de Parámetros
+## Estimación de parámetros
 
 <div style="font-size:28px; line-height:1.6; text-align:justify;">
 
 <p class="fragment fade-in" data-fragment-index="1">
-El modelo de regresión lineal simple describe la relación entre las variables mediante los parámetros poblacionales $\beta_0$ y $\beta_1$.
+El modelo de regresión lineal simple describe la relación entre las variables mediante los parámetros poblacionales $\beta_0$ y $\beta_1$. Sin embargo, estos parámetros son **generalmente desconocidos** porque no se dispone de información de toda la población.
 </p>
-
-<p class="fragment fade-in" data-fragment-index="2">
-Sin embargo, estos parámetros son generalmente desconocidos porque no se dispone de información de toda la población.
-</p>
-
 </div>
 
-<div style="
-display:flex;
-justify-content:space-around;
-align-items:center;
-margin-top:30px;">
+<div style="display:flex;justify-content:space-around;align-items:center;margin-top:30px;">
 
-<div class="fragment fade-in"
-data-fragment-index="3"
-style="
-width:40%;
-padding:15px;
-background:#eef6ff;
-border-radius:10px;
-border-top:5px solid #3b82f6;
-text-align:center;">
+<div class="fragment fade-in" data-fragment-index="3" style="width:40%;padding:15px;background:#eef6ff;border-radius:10px;border-top:5px solid #3b82f6;text-align:center;">
 
-<h3 style="color:#1a3a6b; margin-top:0;">
-Modelo Poblacional
-</h3>
+<h3 style="color:#1a3a6b; margin-top:0;"> Modelo Poblacional</h3>
 
 $$
 Y_i=\beta_0+\beta_1X_i+e_i
@@ -1653,29 +3069,14 @@ $$
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="
-font-size:50px;
-color:#3b82f6;">
+<div class="fragment fade-in" data-fragment-index="4" style=" font-size:50px; color:#3b82f6;">
 
 $\Longrightarrow$
-
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="5"
-style="
-width:40%;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-border-top:5px solid #10b981;
-text-align:center;">
+<div class="fragment fade-in" data-fragment-index="5" style=" width:40%; padding:15px; background:#f0fdf4; border-radius:10px; border-top:5px solid #10b981; text-align:center;">
 
-<h3 style="color:#166534; margin-top:0;">
-Modelo Estimado
-</h3>
+<h3 style="color:#166534; margin-top:0;"> Modelo Estimado </h3>
 
 $$
 \hat{Y}_i=b_0+b_1X_i
@@ -1685,41 +3086,20 @@ $$
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="6"
-style="
-margin-top:25px;
-padding:12px;
-background:#f8fafc;
-border-left:6px solid #3b82f6;
-font-size:22px;">
-
-A partir de una muestra, los parámetros desconocidos $\beta_0$ y $\beta_1$ son reemplazados por sus estimaciones $b_0$ y $b_1$.
-
+<div class="fragment fade-in" data-fragment-index="6" style=" margin-top:25px; padding:12px; background:#f8fafc; border-left:6px solid #3b82f6; font-size:28px;">
+A partir de una muestra, los parámetros desconocidos $\small \beta_0$ y $\small \beta_1$ son reemplazados por sus estimaciones $\small b_0$ y $\small b_1$.
 </div>
 
-## Valores Ajustados y Residuos
+## Valores ajustados y residuos
 
-<div style="font-size:27px; line-height:1.6; text-align:justify;">
+<div style="font-size:28px; line-height:1.2; text-align:justify;">
 
 <p class="fragment fade-in" data-fragment-index="1">
-Una vez estimada la recta de regresión, es posible obtener para cada observación un valor predicho o ajustado por el modelo.
+Una vez estimada la recta de regresión, es posible obtener para cada observación $x_i$ un **valor predicho o ajustado** por el modelo $\small \hat{y}_i$. La diferencia entre el valor observado y el valor ajustado recibe el nombre de **residuo**:
 </p>
-
-<p class="fragment fade-in" data-fragment-index="2">
-La diferencia entre el valor observado y el valor ajustado recibe el nombre de residuo.
-</p>
-
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="3"
-style="
-margin-top:15px;
-text-align:center;
-font-size:34px;
-font-weight:bold;
-color:#1a3a6b;">
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top:15px;text-align:center;font-size:34px;font-weight:bold;color:#1a3a6b;">
 
 $$
 e_i = y_i-\hat y_i
@@ -1727,74 +3107,39 @@ $$
 
 </div>
 
-<div style="
-display:flex;
-gap:20px;
-margin-top:20px;">
+<div style="display:flex;gap:20px;margin-top:20px;">
 
-<div class="fragment fade-in"
-data-fragment-index="4"
-style="
-width:50%;
-padding:12px;
-background:#eef6ff;
-border-radius:10px;
-border-top:5px solid #3b82f6;">
+<div class="fragment fade-in" data-fragment-index="4" style=" width:50%; padding:12px; background:#eef6ff; border-radius:10px; border-top:5px solid #3b82f6;">
 
-<h3 style="margin-top:0; color:#1a3a6b;">
-Valor Ajustado
-</h3>
+<h3 style="margin-top:0; color:#1a3a6b;">Valor Ajustado</h3>
 
-<div style="font-size:20px; line-height:1.5;">
+<p style="font-size:28px;">Es el valor estimado por la recta de regresión para una observación dada.</p>
 
-Es el valor estimado por la recta de regresión para una observación dada.
+<div style="font-size:24px; line-height:1.5;">
 
 $$
 \hat y_i=b_0+b_1x_i
 $$
-
+</div>
 </div>
 
-</div>
+<div class="fragment fade-in" data-fragment-index="5" style=" width:50%; padding:12px; background:#fefce8; border-radius:10px; border-top:5px solid #eab308;">
 
-<div class="fragment fade-in"
-data-fragment-index="5"
-style="
-width:50%;
-padding:12px;
-background:#fefce8;
-border-radius:10px;
-border-top:5px solid #eab308;">
+<h3 style="margin-top:0; color:#92400e;">Residuo</h3>
+<p style="font-size:28px;">Mide qué tan lejos se encuentra una observación respecto a la recta ajustada.</p>
 
-<h3 style="margin-top:0; color:#92400e;">
-Residuo
-</h3>
-
-<div style="font-size:20px; line-height:1.5;">
-
-Mide qué tan lejos se encuentra una observación respecto a la recta ajustada.
+<div style="font-size:24px; line-height:1.2;">
 
 $$
 e_i=y_i-\hat y_i
 $$
-
+</div>
 </div>
 
 </div>
 
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="6"
-style="
-margin-top:18px;
-padding:12px;
-background:#f8fafc;
-border-left:6px solid #10b981;
-font-size:22px;">
-
+<div class="fragment fade-in" data-fragment-index="6" style=" margin-top:18px; padding:12px; background:#f8fafc; border-left:6px solid #10b981; font-size:28px;">
 Los residuos cuantifican el error de predicción del modelo para cada observación.
-
 </div>
 
 
@@ -1878,81 +3223,41 @@ ggplot(datos,aes(x,y)) +
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="2"
-style="
-margin-top:15px;
-padding:10px;
-background:#f0fdf4;
-border-left:6px solid #10b981;
-font-size:28px;
-text-align:center;">
-
+<div class="fragment fade-in" data-fragment-index="2" style=" margin-top:15px; padding:10px; background:#f0fdf4; border-left:6px solid #10b981; font-size:28px; text-align:center;">
 El <b>Método de los Mínimos Cuadrados Ordinarios (MCO)</b> permite identificar la recta que mejor se ajusta a los datos observados.
-
 </div>
 
-## Método de Mínimos Cuadrados Ordinarios (MCO)
+## Método de mínimos cuadrados ordinarios (MCO)
 
-<div class="fragment fade-in"
-data-fragment-index="1" 
-style="
-font-size:24px;
-text-align:justify;
-">
-
-El <b>Método de Mínimos Cuadrados Ordinarios (MCO)</b> es el procedimiento utilizado para estimar los parámetros de un modelo de regresión lineal.
-
-Su objetivo es encontrar la recta que mejor representa la relación entre las variables, determinando los valores de $b_0$ y $b_1$ que reducen al mínimo la diferencia entre los valores observados y los valores estimados.
-
+<div class="fragment fade-in" data-fragment-index="1"  style=" font-size:28px; text-align:justify; ">
+El <b>MCO</b> es el procedimiento utilizado para estimar los parámetros de un modelo de regresión lineal. Su objetivo es encontrar la recta que mejor representa la relación entre las variables, determinando los valores de $b_0$ y $b_1$ que reducen al mínimo la diferencia entre los valores observados y los valores estimados.
 </div>
 
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-margin-top:20px;
-padding:12px;
-background:#eff6ff;
-border-left:6px solid #2563eb;
-font-size:28px;
-text-align:center;
-">
+<div class="fragment fade-in" data-fragment-index="2" style=" margin-top:20px; padding:12px; font-size:32px; text-align:center; ">
 
 $$
 \hat{y_i}=b_0+b_1x_i
 $$
-
 </div>
 
 
-<div class="fragment fade-in"
-data-fragment-index="3" style="
-display:flex;
-gap:25px;
-margin-top:25px;
-font-size:22px;
-">
+<div class="fragment fade-in" data-fragment-index="3" style=" display:flex; gap:25px; margin-top:25px; font-size:28px; ">
 
-<div style="
-flex:1;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-">
 
+
+<div style="font-size:24px;flex:1; padding:15px; background:#f0fdf4; border-radius:10px; ">
 <b>Residuo</b>
+
 $$
 e_i=y_i-\hat{y_i}
 $$
-
 Diferencia entre el valor observado y el valor estimado.
-
 </div>
 
 
-<div class="fragment fade-in"
-data-fragment-index="4" style="
-flex:1;padding:15px;background:#fef2f2;border-radius:10px;">
+
+<div class="fragment fade-in" data-fragment-index="4" style="font-size:24px;flex:1;padding:15px;background:#fef2f2;border-radius:10px;">
 
 <b>Criterio de MCO</b>
 
@@ -1968,59 +3273,25 @@ Busca minimizar la suma de los errores al cuadrado.
 
 ## Propiedades del MCO
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:28px;
-text-align:justify;
-">
-
-En el Método de Mínimos Cuadrados Ordinarios (MCO) se busca estimar los parámetros del modelo minimizando la suma de los errores al cuadrado:
-
+<div class="fragment fade-in" data-fragment-index="1" style=" font-size:28px; text-align:justify; ">
+En el MCO se busca estimar los parámetros del modelo minimizando la suma de los errores al cuadrado:
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-margin-top:18px;
-padding:12px;
-background:#eff6ff;
-border-left:6px solid #2563eb;
-font-size:26px;
-text-align:center;
-">
+<div class="fragment fade-in" data-fragment-index="2" style="font-size:24px; text-align:center; ">
 
 $$
 \min \sum_{i=1}^{n} (y_i - \hat{y_i})^2
 $$
-
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="3" style="
-margin-top:15px;
-font-size:25px;
-text-align:justify;
-">
-
-El uso del cuadrado no es arbitrario, sino que garantiza propiedades matemáticas importantes que hacen que el método sea estable y resoluble.
-
+<div class="fragment fade-in" data-fragment-index="3" style=" margin-top:15px; font-size:28px; text-align:justify; ">
+El uso del cuadrado **no es arbitrario**, sino que garantiza propiedades matemáticas importantes que hacen que el método sea estable y resoluble.
 </div>
 
 
-<div class="fragment fade-in"
-data-fragment-index="4" style="
-display:flex;
-gap:20px;
-margin-top:18px;
-font-size:22px;
-">
+<div class="fragment fade-in" data-fragment-index="4" style=" display:flex; gap:20px; margin-top:18px;">
 
-<div class="fragment fade-in"
-data-fragment-index="4" style="
-flex:1;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-">
+<div class="fragment fade-in" data-fragment-index="4" style="font-size:26px;flex:1; padding:15px; background:#f0fdf4; border-radius:10px; ">
 
 <b>Propiedades del criterio MCO</b>
 
@@ -2029,27 +3300,17 @@ border-radius:10px;
 <li>Penaliza de forma más fuerte los errores grandes.</li>
 <li>Genera una función objetivo continua y diferenciable.</li>
 <li>Permite obtener estimadores con solución analítica cerrada.</li>
-<li>Conduce a un problema de optimización convexa (mínimo único).</li>
 </ul>
 
 </div>
 
 
-<div class="fragment fade-in"
-data-fragment-index="5" style="
-flex:1;
-padding:15px;
-background:#fef2f2;
-border-radius:10px;
-">
+<div class="fragment fade-in" data-fragment-index="5" style="font-size:26px;flex:1; padding:15px; background:#fef2f2; border-radius:10px; ">
 
 <b>Interpretación geométrica</b>
 
 
-Cada término representa la distancia vertical entre un punto observado y la recta ajustada.
-
-El MCO busca la recta que minimiza la suma de todas esas distancias al cuadrado.
-
+Cada término representa la distancia vertical entre un punto observado y la recta ajustada. El MCO busca la recta que minimiza la suma de todas esas distancias al cuadrado.
 
 $$
 e_i = y_i - \hat{y_i}
@@ -2059,41 +3320,21 @@ $$
 
 </div>
 
-## Estimadores de Mínimos Cuadrados Ordinarios (MCO)
+## Estimadores de MCO
 
-<div class="fragment fade-in"
-data-fragment-index="1"style="
-font-size:28px;
-text-align:justify;
-">
+<div class="fragment fade-in" data-fragment-index="1"style=" font-size:28px; text-align:justify; ">
 
-A partir de la minimización de la suma de los errores al cuadrado, se obtienen las expresiones cerradas para los estimadores de los parámetros del modelo de regresión lineal.
-
-Estos estimadores son los valores de $\beta_0$ y $\beta_1$ que mejor ajustan la recta a los datos observados.
-
+A partir de la minimización de la suma de los errores al cuadrado, se obtienen las expresiones cerradas para los estimadores de los parámetros del modelo de regresión lineal. Estos estimadores son los valores de $\small \beta_0$ y $\small \beta_1$ que mejor ajustan la recta a los datos observados.
 </div>
 
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-display:flex;
-gap:20px;
-margin-top:20px;
-font-size:22px;
-">
+<div class="fragment fade-in" data-fragment-index="2" style=" display:flex; gap:20px; margin-top:20px; font-size:26px; ">
 
-<div 
- style="
-flex:1;
-padding:15px;
-background:#eff6ff;
-border-radius:10px;
-text-align:center;
-">
+<div style="flex:1;padding:15px;background:#eff6ff;border-radius:10px;text-align:center;">
 
 <b>Pendiente $\beta_1$</b>
 
-<br><br>
+<br>
 
 $$
 \hat{\beta}_1 =b_1=
@@ -2104,14 +3345,7 @@ $$
 </div>
 
 
-<div class="fragment fade-in"
-data-fragment-index="3" style="
-flex:1;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-text-align:center;
-">
+<div class="fragment fade-in" data-fragment-index="3" style=" flex:1; padding:15px; background:#f0fdf4; border-radius:10px; text-align:center; ">
 
 <b>Intercepto $\hat{\beta}_0$</b>
 
@@ -2137,27 +3371,13 @@ Estas expresiones muestran que la recta de regresión depende únicamente de la 
 
 </div>
 
-## Coeficiente de determinación ($R^2$)
+## Coeficiente de determinación $\small (R^2)$
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:22px;
-text-align:justify;">
-El coeficiente de determinación <b>$R^2$</b> mide la proporción de la variabilidad total de la variable respuesta que es explicada por el modelo de regresión.
-
-Cuanto mayor sea su valor, mejor será la capacidad explicativa del modelo.
-
+<div class="fragment fade-in" data-fragment-index="1" style=" font-size:28px; text-align:justify;">
+El coeficiente de determinación <b>$\small R^2$</b> indica qué proporción de la variabilidad de $Y$ es explicada por el modelo de regresión. Cuanto mayor sea su valor, mejor será la capacidad explicativa del modelo.
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-margin-top:18px;
-padding:12px;
-background:#eff6ff;
-border-left:6px solid #2563eb;
-font-size:20px;
-text-align:center;
-">
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top:18px;padding:12px;background:#eff6ff;border-left:6px solid #2563eb;font-size:20px;text-align:center;">
 
 $$
 R^2
@@ -2172,20 +3392,9 @@ $$
 
 </div>
 
-<div style="
-display:flex;
-gap:20px;
-margin-top:20px;
-">
+<div style="display:flex;gap:20px;margin-top:20px;">
 
-<div class="fragment fade-in"
-data-fragment-index="3" style="
-flex:1;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-font-size:20px;
-">
+<div class="fragment fade-in" data-fragment-index="3" style=" flex:1; padding:15px; background:#f0fdf4; border-radius:10px; font-size:20px; ">
 
 <b>Donde:</b>
 
@@ -2207,24 +3416,15 @@ $$
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4" style="
-flex:1;
-padding:15px;
-background:#fefce8;
-border-radius:10px;
-font-size:21px;
-">
+<div class="fragment fade-in" data-fragment-index="4" style=" flex:1; padding:15px; background:#fefce8; border-radius:10px; font-size:24px; ">
 
 <b>Interpretación</b>
-<br>
-<li>$R^2 = 1$: ajuste perfecto</li>
-<br>
-<li>$R^2 = 0$: modelo no explica nada</li>
-<br>
-<li>$R^2 = 0.75$: el modelo explica el 75% de la variabilidad</li>
-<br>
-<p style="text-align:justify;margin:0;font-size:21px;color:#1e293b;line-height:1.5;"><b>Alerta:</b> Un $R^2$ alto no garantiza buen ajuste si los supuestos se violan. Siempre acompañar con diagnóstico de residuos.</p>
+<ul style="font-size:26px;line-height:1.5;">
+<li>$\small R^2 = 1$: ajuste perfecto</li>
+<li>$\small R^2 = 0$: modelo no explica nada</li>
+<li>$\small R^2 = 0.75$: el modelo explica el 75% de la variabilidad</li>
+</ul>
+<p style="text-align:justify;margin:0;font-size:24px;color:#1e293b;line-height:1.5;"><b>Alerta:</b> Un $R^2$ alto no garantiza buen ajuste si los supuestos se violan. Siempre acompañar con diagnóstico de residuos.</p>
 
 </div>
 
@@ -2300,197 +3500,124 @@ Taller en Clase.
 </div>
 
 
-## Importancia de los Residuos para la Validación del Modelo
 
-<div class="fragment fade-in"
-data-fragment-index="1"
-style="
-margin-top:10px;
-padding:18px;
-background:#f8fafc;
-border-radius:14px;
-border-left:6px solid #2563eb;
-font-size:24px;
-text-align:justify;
-line-height:1.5;
-">
+## ¿Por qué se le imponen supuestos a los residuos?
 
-Los <b>residuos</b> representan la diferencia entre los valores observados y los valores estimados por el modelo de regresión.
+<div style="display:grid; grid-template-columns:1fr 1.6fr; gap:30px; margin-top:30px; align-items:start;">
 
-Su análisis permite evaluar la calidad del ajuste y constituye la base para verificar si los supuestos estadísticos del modelo son razonables.
+<div class="fragment fade-in" data-fragment-index="1">
+<p style="font-size:27px; color:#1a3a6b; font-weight:700; border-bottom:3px solid #1a3a6b; padding-bottom:8px; margin-bottom:16px;">El modelo separa dos mundos</p>
+<p style="font-size:27px; color:#1e293b; line-height:1.55; text-align:justify;">
+Todo valor observado $y_i$ tiene dos componentes:
+</p>
+<div style="margin:16px 0; padding:14px 18px; border-left:4px solid #1b4d2e; background:#f0fdf4; border-radius:0 8px 8px 0;">
+<p style="font-size:28px; margin:0; text-align:center;">$y_i = \underbrace{\hat{y}_i}_{\text{señal}} + \underbrace{e_i}_{\text{ruido}}$</p>
+</div>
+<p style="font-size:26px; color:#475569; line-height:1.5; text-align:justify;">
+La <strong style="color:#1a3a6b;">señal</strong> es lo que el modelo explica. El <strong style="color:#b91c1c;">ruido</strong> es todo lo demás, lo que el modelo no puede capturar.
+</p>
+</div>
 
-<div style="
-margin-top:10px;
-text-align:center;
-font-size:18px;
-color:#64748b;
-font-style:italic;
-">
+<div style="display:flex; flex-direction:column; gap:18px;">
+
+<div class="fragment fade-in" data-fragment-index="2" style="background:#f8fafc; border-radius:10px; padding:18px 20px; border-top:4px solid #1b4d2e;margin-top:50px">
+<p style="font-size:30px; color:#1e293b; margin:0; line-height:1.5; text-align:justify;">
+Imagine que aplica la misma dosis de nitrógeno a 30 parcelas idénticas de maíz. El rendimiento varía entre parcelas porque intervienen **factores no controlados**: microclima, textura local del suelo, profundidad radicular, actividad microbiana. Ningún modelo puede predecir todos estos factores, **ellos forman el ruido**.
+</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-in" data-fragment-index="3" style="background:#f8fafc; border-radius:10px; padding:18px 20px; border-top:4px solid #1a3a6b;">
+<p style="font-size:30px; color:#1e293b; margin:0; line-height:1.5; text-align:justify;">
+Para extraer conclusiones válidas de la señal, necesitamos que el ruido sea <strong>predecible en su comportamiento colectivo</strong>: que se cancele en promedio, que no dependa del tratamiento aplicado, y que sea consistente entre parcelas. Sin esos supuestos, no sabríamos si el efecto del nitrógeno es real o solo un artefacto del ruido.
+</p>
+</div>
+
+
+
+
+## Importancia de los residuos
+
+<div class="fragment fade-in" data-fragment-index="1"style="margin-top:10px;padding:18px;background:#f8fafc;border-radius:14px;border-left:6px solid #2563eb;font-size:28px;text-align:justify;line-height:1.5;">
+
+Como ya vimos, los <b>residuos</b> representan la diferencia entre los valores observados y los valores estimados por el modelo de regresión. Su análisis permite evaluar la calidad del ajuste y constituye la base para verificar si **los supuestos estadísticos** del modelo son razonables.
+
+<div style="margin-top:10px;text-align:center;font-size:28px;font-style:italic;">
 
 $$e_i = y_i - \hat{y}_i$$
-
 </div>
 
 </div>
 
 
 
-<div class="fragment fade-in"
-data-fragment-index="2"
-style="
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-top:20px;
-">
+<div class="fragment fade-in" data-fragment-index="2"style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:20px;">
 
 
-<div style="
-background:#eff6ff;
-padding:18px;
-border-radius:14px;
-text-align:center;
-">
+<div style="background:#eff6ff;padding:18px;border-radius:14px;text-align:center;">
 
-<div style="
-font-size:25px;
-font-weight:700;
-color:#1d4ed8;
-margin-bottom:8px;
-">
-
+<div style=" font-size:28px; font-weight:700; color:#1d4ed8; margin-bottom:8px; ">
 Linealidad
-
 </div>
 
-<div style="
-font-size:25px;
-">
-
+<div style="text-align:center;font-size:28px;">
 Los residuos ayudan a identificar patrones que indiquen una relación mal especificada.
-
 </div>
 
 </div>
 
 
 
-<div style="
-background:#f0fdf4;
-padding:18px;
-border-radius:14px;
-text-align:center;
-">
+<div style="background:#f0fdf4;padding:18px;border-radius:14px;text-align:center;">
 
-<div style="
-font-size:25px;
-font-weight:700;
-color:#15803d;
-margin-bottom:8px;
-">
-
+<div style="font-size:28px;font-weight:700;color:#15803d;margin-bottom:8px;">
 Varianza Constante
-
 </div>
 
-<div style="
-font-size:25px;
-">
-
+<div style="text-align:center;font-size:28px;">
 Permiten verificar si la dispersión de los errores permanece estable.
-
 </div>
 
 </div>
 
 
 
-<div style="
-background:#fffbeb;
-padding:18px;
-border-radius:14px;
-text-align:center;
-">
+<div style="background:#fffbeb;padding:18px;border-radius:14px;text-align:center;">
 
-<div style="
-font-size:25px;
-font-weight:700;
-color:#b45309;
-margin-bottom:8px;
-">
-
+<div style="font-size:28px;font-weight:700;color:#b45309;margin-bottom:8px;">
 Normalidad e Independencia
-
 </div>
 
-<div style="
-font-size:25px;
-">
-
+<div style="text-align:center;font-size:28px;">
 Su comportamiento permite validar los supuestos necesarios para la inferencia.
-
+</div>
 </div>
 
 </div>
 
-</div>
 
 
-
-<div class="fragment fade-in"
-data-fragment-index="3"
-style="
-margin-top:20px;
-padding:16px;
-background:linear-gradient(90deg,#dbeafe,#eff6ff);
-border-radius:14px;
-font-size:24px;
-font-weight:600;
-color:#1e3a8a;
-text-align:center;
-">
-
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top:20px;padding:16px;background:linear-gradient(90deg,#dbeafe,#eff6ff);border-radius:14px;font-size:28px;font-weight:600;color:#1e3a8a;text-align:center;">
 Los supuestos del modelo se evalúan a partir del comportamiento de los residuos.
-
 </div>
 
 ## Supuestos del modelo de regresión lineal simple
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:28px;
-text-align:justify;
-">
-
-Para que las estimaciones obtenidas mediante el método de Mínimos Cuadrados Ordinarios (MCO) sean confiables, el modelo debe satisfacer ciertos supuestos fundamentales.
-
+<div class="fragment fade-in"data-fragment-index="1" style="font-size:30px;text-align:justify;">
+Para que las estimaciones obtenidas mediante **MCO** sean confiables, el modelo debe satisfacer ciertos supuestos fundamentales:
 </div>
 
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-gap:22px;
-margin-top:16px;
-">
-
-<!-- COLUMNA IZQUIERDA -->
-<div style="
-width:48%;
-display:flex;
-flex-direction:column;
-gap:12px;
-">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:22px;margin-top:16px;">
+<div style="width:48%;display:flex;flex-direction:column;gap:12px;">
 
 <div class="fragment fade-up" data-fragment-index="2"
      style="background:linear-gradient(160deg,#eef4ff,#dce9f7);border-radius:18px;padding:14px 18px;">
 
-<p style="margin:0;font-size:25px;font-weight:700;color:#1a3a6b;">
-Linealidad
+<p style="margin:0;font-size:28px;font-weight:700;color:#1a3a6b;">
+Linealidad: $\small E(Y|X)=\beta_0+\beta_1X$
 </p>
-
-<p style="margin:4px 0 0 0;font-size:25px;color:#1e293b;line-height:1.4;">
-$E(Y|X)=\beta_0+\beta_1X$ <br> La relación entre <strong>X</strong> e <strong>Y</strong> debe ser aproximadamente lineal.
+<p style="margin:4px 0 0 0;font-size:28px;color:#1e293b;line-height:1.4;">
+La relación entre <strong>X</strong> e <strong>Y</strong> debe ser aproximadamente lineal.
 </p>
 
 </div>
@@ -2498,11 +3625,11 @@ $E(Y|X)=\beta_0+\beta_1X$ <br> La relación entre <strong>X</strong> e <strong>Y
 <div class="fragment fade-up" data-fragment-index="3"
      style="background:linear-gradient(160deg,#f0fdf4,#d6f0dd);border-radius:18px;padding:14px 18px;">
 
-<p style="margin:0;font-size:25px;font-weight:700;color:#1b4d2e;">
+<p style="margin:0;font-size:28px;font-weight:700;color:#1b4d2e;">
 Independencia
 </p>
 
-<p style="margin:4px 0 0 0;font-size:25px;color:#1e293b;line-height:1.4;">
+<p style="margin:4px 0 0 0;font-size:28px;color:#1e293b;line-height:1.4;">
 Los errores $e_i$ son independientes entre sí.
 </p>
 
@@ -2511,12 +3638,11 @@ Los errores $e_i$ son independientes entre sí.
 <div class="fragment fade-up" data-fragment-index="4"
      style="background:linear-gradient(160deg,#fffbeb,#fef3c7);border-radius:18px;padding:14px 18px;">
 
-<p style="margin:0;font-size:25px;font-weight:700;color:#b45309;">
-Normalidad
+<p style="margin:0;font-size:28px;font-weight:700;color:#b45309;">
+Normalidad: $\small e_i \sim N(0,\sigma^2)$
 </p>
 
-<p style="margin:4px 0 0 0;font-size:25px;color:#1e293b;line-height:1.4;">
-$e_i \sim N(0,\sigma^2)$.
+<p style="margin:4px 0 0 0;font-size:28px;color:#1e293b;line-height:1.4;">
 Necesaria para intervalos de confianza y pruebas de hipótesis.
 </p>
 
@@ -2524,7 +3650,7 @@ Necesaria para intervalos de confianza y pruebas de hipótesis.
 
 </div>
 
-<!-- COLUMNA DERECHA -->
+
 <div style="
 width:48%;
 display:flex;
@@ -2535,13 +3661,11 @@ gap:12px;
 <div class="fragment fade-up" data-fragment-index="5"
      style="background:linear-gradient(160deg,#fdf2f8,#f3e8ff);border-radius:18px;padding:14px 18px;">
 
-<p style="margin:0;font-size:25px;font-weight:700;color:#6b21a8;">
-Homocedasticidad
+<p style="margin:0;font-size:28px;font-weight:700;color:#6b21a8;">
+Homocedasticidad: $\small \text{Var}(e_i)=\sigma^2$ constante
 </p>
 
-<div style="margin:4px 0 0 0;font-size:25px;color:#1e293b;line-height:1.4;">
-$\text{Var}(e_i)=\sigma^2$ constante.
-
+<div style="margin:4px 0 0 0;font-size:28px;color:#1e293b;line-height:1.4;">
 Si la varianza cambia con los valores de $X$, se presenta heterocedasticidad.
 </div>
 
@@ -2550,18 +3674,9 @@ Si la varianza cambia con los valores de $X$, se presenta heterocedasticidad.
 <div class="fragment fade-up" data-fragment-index="6"
      style="background:#f8fafc;border-radius:18px;padding:14px 18px;border:1.5px solid #e2e8f0;">
 
-<div class="fragment fade-in"
-data-fragment-index="6"style="
-margin:0;
-font-size:25px;
-color:#1e293b;
-text-align:justify;
-line-height:1.45;
-">
+<div class="fragment fade-in" data-fragment-index="6"style="margin:0;font-size:28px;color:#1e293b;text-align:justify;line-height:1.2;">
 
-<strong>Idea clave:</strong>
-
-La linealidad garantiza que el modelo represente adecuadamente la relación entre las variables, mientras que la normalidad y la homocedasticidad permiten realizar inferencias estadísticas confiables.
+<strong>Idea clave:</strong> La linealidad garantiza que el modelo represente adecuadamente la relación entre las variables, mientras que la normalidad y la homocedasticidad permiten realizar inferencias estadísticas confiables.
 
 </div>
 
@@ -2572,55 +3687,47 @@ La linealidad garantiza que el modelo represente adecuadamente la relación entr
 </div>
 
 
-<div class="fragment fade-up" data-fragment-index="7"style="
-font-size:28px;
-text-align:justify;
-">
+<div class="fragment fade-up" data-fragment-index="7"style="font-size:27px;text-align:justify;">
 El incumplimiento de estos supuestos puede afectar la validez de las inferencias realizadas sobre el modelo.
 </div>
 
 
 ## Diagnóstico del modelo
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:30px;
-text-align:justify;
-">
-
-Una vez ajustado el modelo de regresión lineal, es necesario verificar si los supuestos estudiados se cumplen razonablemente.
-
-Para ello se utilizan herramientas gráficas y pruebas estadísticas basadas en el análisis de los residuos.
-
+<div class="fragment fade-in" data-fragment-index="1" style="font-size:30px;text-align:justify;">
+Una vez ajustado el modelo de regresión lineal, es necesario verificar si los supuestos estudiados se cumplen razonablemente. Para ello se utilizan herramientas gráficas y pruebas estadísticas basadas en el análisis de los residuos.
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-margin-top:20px;
-padding:15px;
-background:#eff6ff;
-border-radius:10px;
-font-size:30px;
-">
-
-| Supuesto | Herramienta de diagnóstico |
-|:----------|:--------------------------|
-| Linealidad | Residuos vs Ajustados |
-| Independencia | Durbin-Watson |
-| Homocedasticidad | Breusch-Pagan |
-| Normalidad | Histograma y QQ-Plot |
-
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top:20px;">
+<table style="width:100%; border-collapse:collapse; font-size:28px; border-radius:10px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.10);">
+  <thead>
+    <tr style="background:#1a3a6b; color:#ffffff;">
+      <th style="padding:13px 20px; text-align:left; font-weight:700; width:38%;">Supuesto</th>
+      <th style="padding:13px 20px; text-align:left; font-weight:700;">Herramienta de diagnóstico</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:#dce9f7;">
+      <td style="padding:11px 20px; font-weight:600; color:#1a3a6b;"> Linealidad</td>
+      <td style="padding:11px 20px; color:#1e293b;">Gráfico de residuos vs. valores ajustados</td>
+    </tr>
+    <tr style="background:#f0f7ff;">
+      <td style="padding:11px 20px; font-weight:600; color:#1a3a6b;"> Independencia</td>
+      <td style="padding:11px 20px; color:#1e293b;">Prueba de Durbin-Watson</td>
+    </tr>
+    <tr style="background:#dce9f7;">
+      <td style="padding:11px 20px; font-weight:600; color:#1a3a6b;"> Homocedasticidad</td>
+      <td style="padding:11px 20px; color:#1e293b;">Prueba de Breusch-Pagan</td>
+    </tr>
+    <tr style="background:#f0f7ff;">
+      <td style="padding:11px 20px; font-weight:600; color:#1a3a6b;"> Normalidad</td>
+      <td style="padding:11px 20px; color:#1e293b;">Histograma de residuos y QQ-Plot</td>
+    </tr>
+  </tbody>
+</table>
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="3" style="
-margin-top:28px;
-padding:12px;
-background:#fefce8;
-border-left:6px solid #eab308;
-border-radius:8px;
-font-size:30px;
-">
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top:28px;padding:12px;background:#fefce8;border-left:6px solid #eab308;border-radius:8px;font-size:30px;">
 
 <strong>Objetivo:</strong> comprobar que los residuos se comportan de acuerdo con los supuestos del modelo.
 
@@ -2629,33 +3736,10 @@ font-size:30px;
 
 ## Gráfico de residuos
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:28px;
-text-align:justify;
-">
-
-Los residuos representan las diferencias entre los valores observados y los valores predichos por el modelo.
-
-Su comportamiento permite evaluar simultáneamente los supuestos de linealidad y homocedasticidad.
-
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top:70px;font-size:30px; text-align:justify; ">
+El comportamiento de los residuos $e_i$ permite evaluar simultáneamente los supuestos de linealidad y homocedasticidad.
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-margin-top:20px;
-padding:15px;
-background:#eff6ff;
-border-left:6px solid #2563eb;
-font-size:28px;
-text-align:center;
-">
-
-$$
-e_i = y_i - \hat{y}_i
-$$
-
-</div>
 
 <div style="
 display:flex;
@@ -2663,14 +3747,7 @@ gap:20px;
 margin-top:20px;
 ">
 
-<div class="fragment fade-in"
-data-fragment-index="3" style="
-flex:1;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-font-size:28px;
-">
+<div class="fragment fade-in" data-fragment-index="3" style="flex:1;padding:15px;background:#f0fdf4;border-radius:10px;font-size:30px;">
 
 <strong>Comportamiento esperado</strong>
 
@@ -2682,14 +3759,7 @@ font-size:28px;
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4" style="
-flex:1;
-padding:15px;
-background:#fef2f2;
-border-radius:10px;
-font-size:28px;
-">
+<div class="fragment fade-in" data-fragment-index="4" style="flex:1;padding:15px;background:#fef2f2;border-radius:10px;font-size:30px;">
 
 <strong>Señales de alerta</strong>
 
@@ -2706,56 +3776,39 @@ font-size:28px;
 
 ## Diagnóstico de normalidad
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:28px;
-text-align:justify;
-">
+<div class="fragment fade-in" data-fragment-index="1" style="font-size:30px; text-align:justify; margin-top:40px; line-height:1.45;">
+La normalidad de los errores es fundamental para la validez de los <strong>intervalos de confianza</strong> y las <strong>pruebas de hipótesis</strong> en regresión lineal.
+</div>
 
-La normalidad de los errores es importante para la construcción de intervalos de confianza y pruebas de hipótesis.
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; margin-bottom:18px;">
+
+<div class="fragment fade-in" data-fragment-index="2" style="background:#dce9f7; border-top:5px solid #1a3a6b; border-radius:10px; padding:18px 16px; text-align:center;">
+  <div style="font-size:38px; margin-bottom:8px;">📊</div>
+  <div style="font-size:24px; font-weight:700; color:#1a3a6b; margin-bottom:6px;">Histograma</div>
+  <div style="font-size:22px; color:#1e293b; line-height:1.4;">Verifica si los residuos tienen forma de campana simétrica.</div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="background:#d6f0dd; border-top:5px solid #1b4d2e; border-radius:10px; padding:18px 16px; text-align:center;">
+  <div style="font-size:38px; margin-bottom:8px;">📈</div>
+  <div style="font-size:24px; font-weight:700; color:#1b4d2e; margin-bottom:6px;">Gráfico Q-Q</div>
+  <div style="font-size:22px; color:#1e293b; line-height:1.4;">Los puntos deben seguir la diagonal para indicar normalidad.</div>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="4" style="background:#fef9c3; border-top:5px solid #b45309; border-radius:10px; padding:18px 16px; text-align:center;">
+  <div style="font-size:38px; margin-bottom:8px;">🔬</div>
+  <div style="font-size:24px; font-weight:700; color:#92400e; margin-bottom:6px;">Shapiro-Wilk</div>
+  <div style="font-size:22px; color:#1e293b; line-height:1.4;">Prueba formal: $p > 0.05$ sugiere normalidad de los residuos.</div>
+</div>
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-margin-top:20px;
-padding:15px;
-background:#eff6ff;
-border-radius:10px;
-font-size:28px;
-">
-
-Herramientas utilizadas:
-
-<ul>
-<li>Histograma de residuos.</li>
-<li>Gráfico Q-Q.</li>
-<li>Prueba de Shapiro-Wilk.</li>
-</ul>
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="3" style="
-margin-top:20px;
-padding:15px;
-background:#f0fdf4;
-border-radius:10px;
-font-size:28px;
-">
-
-<strong>Interpretación:</strong>
-
-Si los puntos del gráfico Q-Q siguen aproximadamente la diagonal, existe evidencia de que los residuos se distribuyen normalmente.
-
+<div class="fragment fade-in" data-fragment-index="5" style="padding:14px 18px; background:#f0fdf4; border-left:6px solid #1b4d2e; border-radius:6px; font-size:26px; color:#1e293b;">
+<strong>Regla práctica:</strong> si los puntos del Q-Q se alejan notablemente de la diagonal, considere transformaciones de la variable respuesta.
 </div>
 
 ## Diagnóstico visual de los supuestos
 
-<div style="
-font-size:23px;
-text-align:justify;
-">
+<div style="margin-top:40px;font-size:30px;text-align:justify;">
 
 Los supuestos de regresión lineal pueden evaluarse visualmente mediante gráficos diagnósticos generados a partir de los residuos del modelo.
 
@@ -2763,257 +3816,170 @@ Los supuestos de regresión lineal pueden evaluarse visualmente mediante gráfic
 
 ```{r}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 3.8
+#| warning: false
+#| message: false
+#| fig-width: 16
+#| fig-height: 4.5
 #| fig-align: center
 #| out-width: "100%"
 
-par(
-  mfrow = c(1,3),
-  mar = c(4,4,3,1)
-)
+library(ggplot2); library(patchwork)
 set.seed(123)
-
 n <- 100
-
 x <- runif(n, 0, 10)
+y <- 5 + 2 * x + rnorm(n, mean = 0, sd = 2)
+modelo <- lm(y ~ x)
 
-y <- 5 + 2*x + rnorm(n, mean = 0, sd = 2)
-
-datos <- data.frame(x, y)
-
-modelo <- lm(y ~ x, data = datos)
-
-plot(
-  modelo,
-  which = 1,
-  col = "#1a3a6b",
-  pch = 19,
-  cex = 0.6
+df_diag <- data.frame(
+  ajustados  = fitted(modelo),
+  residuos   = residuals(modelo),
+  std_res    = rstandard(modelo),
+  sqrt_std   = sqrt(abs(rstandard(modelo)))
 )
 
-plot(
-  modelo,
-  which = 2,
-  col = "#1a3a6b",
-  pch = 19,
-  cex = 0.6
-)
+tema_diag <- theme_minimal(base_size = 15) +
+  theme(
+    plot.title    = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1a3a6b"),
+    plot.subtitle = element_text(hjust = 0.5, size = 13, face = "bold",
+                                 color = "#ffffff",
+                                 margin = margin(t = 4, b = 2)),
+    plot.caption  = element_text(hjust = 0.5, size = 0),
+    axis.title    = element_text(size = 14, color = "#374151"),
+    axis.text     = element_text(size = 12, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border  = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.5)
+  )
 
-plot(
-  modelo,
-  which = 3,
-  col = "#1a3a6b",
-  pch = 19,
-  cex = 0.6
-)
+etiqueta <- function(texto, color) {
+  ggplot() +
+    annotate("label", x = 0.5, y = 0.5, label = texto,
+             fill = color, color = "white", size = 5.2,
+             fontface = "bold", label.size = 0, label.padding = unit(0.45, "lines")) +
+    theme_void() +
+    coord_cartesian(xlim = c(0, 1), ylim = c(0, 1))
+}
+
+# 1. Residuos vs Ajustados
+p1 <- ggplot(df_diag, aes(ajustados, residuos)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#b91c1c", linewidth = 0.9) +
+  geom_point(color = "#1a3a6b", size = 2, alpha = 0.7) +
+  geom_smooth(method = "loess", se = FALSE, color = "#d97706", linewidth = 1.1) +
+  labs(title = "Residuos vs. Ajustados",
+       x = "Valores ajustados", y = "Residuos") +
+  tema_diag
+
+e1 <- etiqueta("Valida: Linealidad y Homocedasticidad", "#1a3a6b")
+
+# 2. Q-Q Plot
+p2 <- ggplot(df_diag, aes(sample = std_res)) +
+  stat_qq(color = "#1a3a6b", size = 2, alpha = 0.75) +
+  stat_qq_line(color = "#b91c1c", linewidth = 1.1, linetype = "dashed") +
+  labs(title = "Q-Q Plot de residuos",
+       x = "Cuantiles teóricos", y = "Cuantiles muestrales") +
+  tema_diag
+
+e2 <- etiqueta("Valida: Normalidad de los residuos", "#1b4d2e")
+
+# 3. Scale-Location
+p3 <- ggplot(df_diag, aes(ajustados, sqrt_std)) +
+  geom_point(color = "#1b4d2e", size = 2, alpha = 0.7) +
+  geom_smooth(method = "loess", se = FALSE, color = "#d97706", linewidth = 1.1) +
+  labs(title = "Scale-Location",
+       x = "Valores ajustados", y = expression(sqrt("|Residuos estand.|"))) +
+  tema_diag
+
+e3 <- etiqueta("Valida: Homocedasticidad", "#b45309")
+
+col1 <- p1 / e1 + plot_layout(heights = c(4, 0.6))
+col2 <- p2 / e2 + plot_layout(heights = c(4, 0.6))
+col3 <- p3 / e3 + plot_layout(heights = c(4, 0.6))
+col1 | col2 | col3
 ```
 
 ## Interpretación de los gráficos diagnósticos
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-display:flex;
-gap:20px;
-margin-top:15px;
-">
+<table class="fragment fade-in" data-fragment-index="1" style="width:100%; border-collapse:separate; border-spacing:14px; margin-top:40px;">
+<thead>
+<tr>
+<th style="background:#1a3a6b; color:#fff; padding:14px 18px; font-size:28px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">📐 Residuos vs. Ajustados</th>
+<th style="background:#1b4d2e; color:#fff; padding:14px 18px; font-size:28px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">📈 Q-Q Plot</th>
+<th style="background:#b45309; color:#fff; padding:14px 18px; font-size:28px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">📊 Scale-Location</th>
+</tr>
+</thead>
+<tbody>
+<tr style="vertical-align:top;">
+<td style="background:#dce9f7; padding:18px 20px; border-radius:0 0 10px 10px;">
+<ul style="font-size:28px; color:#1e293b; line-height:1.6; margin:0; padding-left:22px;">
+<li>Puntos distribuidos <strong>aleatoriamente</strong> alrededor de cero.</li>
+<li>Sin patrones ni curvaturas visibles.</li>
+</ul>
+<p style="margin:14px 0 0; background:#1a3a6b; color:#fff; border-radius:6px; padding:7px 0; font-size:26px; text-align:center; font-weight:600;">Evalúa: Linealidad</p>
+</td>
+<td style="background:#d6f0dd; padding:18px 20px; border-radius:0 0 10px 10px;">
+<ul style="font-size:28px; color:#1e293b; line-height:1.6; margin:0; padding-left:22px;">
+<li>Puntos siguen <strong>aproximadamente la diagonal</strong>.</li>
+<li>Desviaciones en los extremos sugieren colas pesadas.</li>
+</ul>
+<p style="margin:14px 0 0; background:#1b4d2e; color:#fff; border-radius:6px; padding:7px 0; font-size:26px; text-align:center; font-weight:600;">Evalúa: Normalidad</p>
+</td>
+<td style="background:#fef9c3; padding:18px 20px; border-radius:0 0 10px 10px;">
+<ul style="font-size:28px; color:#1e293b; line-height:1.6; margin:0; padding-left:22px;">
+<li>Dispersión <strong>aproximadamente constante</strong> a lo largo del eje.</li>
+<li>Forma de embudo indica heterocedasticidad.</li>
+</ul>
+<p style="margin:14px 0 0; background:#b45309; color:#fff; border-radius:6px; padding:7px 0; font-size:26px; text-align:center; font-weight:600;">Evalúa: Homocedasticidad</p>
+</td>
+</tr>
+</tbody>
+</table>
 
-<div style="
-width:33%;
-padding:15px;
-background:#eef4ff;
-border-radius:14px;
-font-size:28px;
-">
-
-<b>Residuos vs Ajustados</b>
-
-<br>
-
-✓ Los puntos deben distribuirse aleatoriamente alrededor de cero.
-
-<br>
-
-✓ No deben observarse patrones ni curvaturas.
-
-<br>
-
-<b>Evalúa:</b> Linealidad.
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="2"style="
-width:33%;
-padding:15px;
-background:#f0fdf4;
-border-radius:14px;
-font-size:28px;
-">
-
-<b>QQ-Plot</b>
-
-<br>
-
-✓ Los puntos deben seguir aproximadamente la línea diagonal.
-
-<br>
-
-✓ Desviaciones importantes sugieren falta de normalidad.
-
-<br>
-
-<b>Evalúa:</b> Normalidad.
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="3"style="
-width:33%;
-padding:15px;
-background:#fffbeb;
-border-radius:14px;
-font-size:28px;
-">
-
-<b>Scale-Location</b>
-
-<br>
-
-✓ La dispersión debe mantenerse aproximadamente constante.
-
-<br>
-
-✓ Formas de embudo sugieren heterocedasticidad.
-
-<br>
-
-<b>Evalúa:</b> Homocedasticidad.
-
-</div>
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="4" style="
-margin-top:18px;
-padding:12px;
-background:#eff6ff;
-border-radius:10px;
-font-size:28px;
-text-align:center;
-">
-
-<b>Si los tres gráficos presentan el comportamiento esperado, los supuestos del modelo pueden considerarse razonablemente satisfechos.</b>
-
-</div>
+<p class="fragment fade-in" data-fragment-index="2" style="margin-top:18px; padding:14px 20px; background:#1a3a6b; border-radius:8px; font-size:28px; text-align:center; color:#fff;">
+Si los tres gráficos muestran el patrón esperado, los supuestos pueden considerarse <strong>razonablemente satisfechos</strong>.
+</p>
 
 
 ## Inferencia sobre los coeficientes
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="font-size:26px;text-align:justify;">
+<p class="fragment fade-in" data-fragment-index="1" style="font-size:30px; text-align:justify; margin-bottom:18px; line-height:1.45;">
+Una vez ajustado el modelo, se evalúa si la variable explicativa tiene un efecto <strong>estadísticamente significativo</strong> sobre la variable respuesta mediante pruebas de hipótesis sobre los coeficientes.
+</p>
 
-Una vez ajustado el modelo, es necesario evaluar si la variable explicativa tiene un efecto significativo sobre la variable respuesta.
-
-Para ello se realizan pruebas de hipótesis sobre los coeficientes de regresión.
-
-</div>
-
-<div class="fragment fade-in"data-fragment-index="2"
-style="display:flex;gap:20px;margin-top:18px;">
-
-<div style="width:48%;padding:15px;background:#eef4ff;border-radius:16px;">
-
-<div style="font-size:24px;font-weight:700;color:#1a3a6b;">
-
-Prueba de hipótesis
-
-</div>
-
-<div style="font-size:70%;">
-
-$$
-H_0:\beta_1=0
-$$
-
-$$
-H_1:\beta_1\neq0
-$$
-
-</div>
-
-<div style="font-size:22px;line-height:1.5;">
-
-<b>$H_0$:</b> No existe relación lineal.
-
-<b>$H_1$:</b> Existe relación lineal entre $X$ e $Y$.
-
-</div>
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="3" style="width:48%;padding:15px;background:#f0fdf4;border-radius:16px;">
-
-<div style="font-size:24px;font-weight:700;color:#166534;">
-
-Estadístico de prueba
-
-</div>
-
-<div style="font-size:70%;">
-
-$$
-t=
-\frac{\hat{\beta}_1}
-{SE(\hat{\beta}_1)}
-$$
-
-</div>
-
-<div style="font-size:22px;line-height:1.5;">
-
-Compara el efecto estimado con la incertidumbre de la estimación.
-
-</div>
-
-</div>
-
-</div>
-
-<div class="fragment fade-in"
-data-fragment-index="4" style="
-margin-top:18px;
-padding:15px;
-background:#fefce8;
-border-radius:16px;
-font-size:22px;
-">
-
-<b>Decisión mediante el valor-p</b>
-
-<ul>
-<li>Si $p < 0.05$, se rechaza $H_0$.</li>
-
-<li>Si $p \ge 0.05$, no existe evidencia suficiente para rechazar $H_0$.</li>
+<table class="fragment fade-in" data-fragment-index="2" style="width:100%; border-collapse:separate; border-spacing:14px; margin-top:0;">
+<thead>
+<tr>
+<th style="background:#1a3a6b; color:#fff; padding:13px 20px; font-size:28px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:50%;">🔬 Hipótesis</th>
+<th style="background:#1b4d2e; color:#fff; padding:13px 20px; font-size:28px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:50%;">📐 Estadístico de prueba</th>
+</tr>
+</thead>
+<tbody>
+<tr style="vertical-align:top;">
+<td style="background:#dce9f7; padding:18px 24px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; margin:6px 0;">$H_0: \beta_1 = 0$</p>
+<p style="font-size:26px; margin:6px 0 14px;">$H_1: \beta_1 \neq 0$</p>
+<ul style="font-size:27px; color:#1e293b; line-height:1; text-align:left; margin:0; padding-left:22px;">
+<li><strong>$H_0$:</strong> No existe relación lineal.</li>
+<li><strong>$H_1$:</strong> Existe relación lineal entre $X$ e $Y$.</li>
 </ul>
+</td>
+<td style="background:#d6f0dd; padding:18px 24px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; margin:6px 0 14px;">$t = \dfrac{\hat{\beta}_1}{SE(\hat{\beta}_1)}$</p>
+<ul style="font-size:27px; color:#1e293b; line-height:1; text-align:left; margin:0; padding-left:22px;">
+<li>Cociente entre el efecto estimado y su incertidumbre.</li>
+<li>Sigue una distribución $t$ con $n-2$ grados de libertad.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 
-<b>Interpretación:</b>
-Un valor-p pequeño indica que la variable explicativa contribuye significativamente al modelo.
-</div>
+<p class="fragment fade-in" data-fragment-index="3" style="margin-top:16px; padding:13px 22px; background:#fef9c3; border-left:6px solid #b45309; border-radius:8px; font-size:28px; color:#1e293b;">
+<strong>Decisión:</strong> si $\small p< 0.05$ se rechaza $H_0$; la variable explicativa contribuye <strong>significativamente</strong> al modelo.
+</p>
 
 ## Flujo de trabajo en R para regresión lineal simple
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:28px;
-text-align:justify;
-margin-bottom:15px;
-">
-
+<div class="fragment fade-in" data-fragment-index="1" style="font-size:28px;text-align:justify;margin-bottom:15px;">
 El análisis de una regresión lineal simple sigue una secuencia lógica que va desde la exploración de los datos hasta la interpretación de los resultados.
-
 </div>
 
 <table class="fragment fade-in"
@@ -3075,78 +4041,31 @@ font-size:28px;
 
 ## Ejemplo
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:28px;
-text-align:justify;
-margin-bottom:18px;
-">
-
+<div class="fragment fade-in" data-fragment-index="1" style="font-size:30px;text-align:justify;margin-bottom:18px;">
 La fertilización nitrogenada es una de las prácticas de manejo más importantes en la producción de maíz, ya que influye directamente sobre el crecimiento vegetativo y el rendimiento del cultivo.
-
 </div>
 
-<div  style="
-display:flex;
-gap:20px;
-margin-top:10px;
-">
+<div  style="display:flex;gap:20px;margin-top:10px;">
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-width:40%;
-padding:16px;
-background:linear-gradient(160deg,#eef4ff,#dce9f7);
-border-radius:18px;
-">
+<div class="fragment fade-in" data-fragment-index="2" style="width:40%;padding:16px;background:linear-gradient(160deg,#eef4ff,#dce9f7);border-radius:18px;">
 
-<div style="
-font-size:25px;
-font-weight:700;
-color:#1a3a6b;
-">
-
+<div style="font-size:28px;font-weight:700;color:#1a3a6b;">
 Contexto
-
 </div>
 
-<div style="
-font-size:25px;
-line-height:1.5;
-margin-top:8px;
-text-align:justify;
-">
-
-Un ingeniero agrónomo desea determinar si incrementar la dosis de nitrógeno aplicada al cultivo genera aumentos en el rendimiento del maíz.
-
+<div style="font-size:28px;line-height:1.5;margin-top:8px;text-align:justify;">
+Un ingeniero desea determinar si incrementar la dosis de nitrógeno aplicada al cultivo genera aumentos en el rendimiento del maíz.
 </div>
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="3"style="
-width:33%;
-padding:16px;
-background:linear-gradient(160deg,#f0fdf4,#d6f0dd);
-border-radius:18px;
-">
+<div class="fragment fade-in" data-fragment-index="3"style="width:33%;padding:16px;background:linear-gradient(160deg,#f0fdf4,#d6f0dd);border-radius:18px;">
 
-<div style="
-font-size:23px;
-font-weight:700;
-color:#166534;
-">
-
+<div style="font-size:28px;font-weight:700;color:#166534;">
 Variables
-
 </div>
 
-<div style="
-font-size:23px;
-margin-top:8px;
-line-height:1.6;
-">
-
+<div style="font-size:24px;margin-top:8px;line-height:1.6;">
 <b>Variable explicativa</b>
 
 $$
@@ -3163,54 +4082,24 @@ $$
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="4" style="
-width:40%;
-padding:16px;
-background:linear-gradient(160deg,#fffbeb,#fef3c7);
-border-radius:18px;
-">
+<div class="fragment fade-in" data-fragment-index="4" style="width:40%;padding:16px;background:linear-gradient(160deg,#fffbeb,#fef3c7);border-radius:18px;">
 
-<div  style="
-font-size:28px;
-font-weight:700;
-color:#b45309;
-">
-
+<div  style="font-size:28px;font-weight:700;color:#b45309;">
 Objetivo
-
 </div>
 
-<div style="
-font-size:28px;
-line-height:1.5;
-margin-top:8px;
-text-align:justify;
-">
-
+<div style="font-size:28px;line-height:1.5;margin-top:8px;text-align:justify;">
 Evaluar si existe una relación lineal significativa entre la dosis de nitrógeno aplicada y el rendimiento obtenido en el cultivo.
-
 </div>
 
 </div>
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="5" style="
-margin-top:18px;
-padding:12px;
-background:#eff6ff;
-border-left:6px solid #2563eb;
-border-radius:10px;
-font-size:28px;
-text-align:center;
-">
-
+<div class="fragment fade-in" data-fragment-index="5" style="margin-top:18px;padding:12px;background:#eff6ff;border-left:6px solid #2563eb;border-radius:10px;font-size:30px;text-align:center;">
 <strong>Pregunta de investigación:</strong>
 
 ¿El aumento de la fertilización nitrogenada produce incrementos significativos en el rendimiento del maíz?
-
 </div>
 
 ## Datos experimentales
@@ -3254,7 +4143,7 @@ A simple vista parece existir una tendencia creciente entre ambas variables.
 
 ## Exploración inicial de los datos
 
-<div style="font-size:23px;text-align:justify;margin-bottom:15px;">
+<div style="font-size:28px;text-align:justify;margin-bottom:15px;">
 
 Antes de ajustar un modelo de regresión, es importante visualizar la relación entre las variables para identificar posibles tendencias, patrones o valores atípicos.
 
@@ -3262,40 +4151,56 @@ Antes de ajustar un modelo de regresión, es importante visualizar la relación 
 
 ```{r}
 #| echo: false
-#| fig-width: 10
+#| warning: false
+#| message: false
+#| fig-width: 12
 #| fig-height: 5
 #| fig-align: center
 
-nitrogeno <- c(
-  40, 60, 80, 100,
-  120, 140, 160, 180
-)
+library(ggplot2)
 
-rendimiento <- c(
-  4.2, 4.8, 5.3, 5.9,
-  6.4, 6.8, 7.3, 7.8
-)
+nitrogeno   <- c(40, 60, 80, 100, 120, 140, 160, 180)
+rendimiento <- c(4.2, 4.8, 5.3, 5.9, 6.4, 6.8, 7.3, 7.8)
+df <- data.frame(nitrogeno = nitrogeno, rendimiento = rendimiento)
 
-plot(
-  rendimiento ~ nitrogeno,
-  pch = 19,
-  col = "#2563eb",
-  cex = 1.3,
-  xlab = "Dosis de nitrógeno (kg/ha)",
-  ylab = "Rendimiento (t/ha)",
-  main = "Relación entre nitrógeno y rendimiento"
-)
+mod   <- lm(rendimiento ~ nitrogeno, data = df)
+r2    <- round(summary(mod)$r.squared, 3)
+b0    <- round(coef(mod)[1], 3)
+b1    <- round(coef(mod)[2], 4)
+label <- paste0("hat(Y) == ", b0, " + ", b1, " * X\n",
+                "R^2 == ", r2)
 
-grid()
-
-abline(
-  lm(rendimiento ~ nitrogeno),
-  col = "#dc2626",
-  lwd = 3
-)
+ggplot(df, aes(nitrogeno, rendimiento)) +
+  geom_smooth(method = "lm", se = TRUE,
+              color = "#b91c1c", fill = "#fecaca",
+              linewidth = 1.6, alpha = 0.2) +
+  geom_point(color = "#1a3a6b", size = 5, alpha = 0.9) +
+  annotate("label",
+           x = 60, y = 7.5,
+           label = label,
+           parse = TRUE,
+           size = 5.5, color = "#1a3a6b",
+           fill = "#dce9f7", label.size = 0.6,
+           fontface = "bold") +
+  scale_x_continuous(breaks = seq(40, 180, 20)) +
+  scale_y_continuous(breaks = seq(4, 8, 0.5)) +
+  labs(
+    title = "Relación entre dosis de nitrógeno y rendimiento del cultivo",
+    x     = "Dosis de nitrógeno (kg/ha)",
+    y     = "Rendimiento (t/ha)"
+  ) +
+  theme_minimal(base_size = 18) +
+  theme(
+    plot.title   = element_text(face = "bold", hjust = 0.5,
+                                size = 19, color = "#1a3a6b"),
+    axis.title   = element_text(size = 17, color = "#374151"),
+    axis.text    = element_text(size = 15, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6)
+  )
 ```
 
-<div style=" margin-top:15px; display:flex; gap:20px; "> <div style=" width:50%; padding:14px; background:#eef4ff; border-radius:14px; font-size:25px; ">
+<div style=" margin-top:15px; display:flex; gap:20px; "> <div style=" width:50%; padding:14px; background:#eef4ff; border-radius:14px; font-size:28px; ">
 
 <b>Observación visual</b>
 
@@ -3303,7 +4208,7 @@ A medida que aumenta la dosis de nitrógeno, el rendimiento del cultivo parece i
 
 </div> 
 
-<div style=" width:50%; padding:14px; background:#f0fdf4; border-radius:14px; font-size:25px; ">
+<div style=" width:50%; padding:14px; background:#f0fdf4; border-radius:14px; font-size:28px; ">
 
 <b>Primera hipótesis</b>
 
@@ -3314,82 +4219,37 @@ Podría existir una relación lineal positiva entre ambas variables.
 
 ## Ajuste e interpretación del modelo
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-font-size:28px;
-text-align:justify;
-">
-
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top:20px;font-size:28px; text-align:justify;">
 Para cuantificar la relación entre la dosis de nitrógeno y el rendimiento del maíz, se ajustó un modelo de regresión lineal simple mediante mínimos cuadrados ordinarios.
-
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-margin-top:10px;
-padding:8px;
-background:#eff6ff;
-border-left:4px solid #2563eb;
-border-radius:8px;
-text-align:center;
-font-size:75%;
-">
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top:10px;padding:8px;background:#eff6ff;border-left:4px solid #2563eb;border-radius:8px;text-align:center; font-size:28px;">
 
-<div style="
-font-size:25px;
-font-weight:700;
-color:#1a3a6b;
-margin-bottom:8px;
-">
-
+<div style="font-size:26px;font-weight:700;color:#1a3a6b;margin-bottom:8px;">
 Modelo estimado por MCO en R
-
 </div>
 
 $$
 \hat{Y}=3.26+0.0258X
 $$
-
 </div>
 
-<div style="
-display:flex;
-gap:20px;
-margin-top:18px;
-">
-<br>
-<div class="fragment fade-in"
-data-fragment-index="3"style="
-width:48%;
-padding:15px;
-background:linear-gradient(160deg,#eef4ff,#dce9f7);
-border-radius:16px;
-">
+<div style=" display:flex; gap:20px; margin-top:18px; ">
 
-<div style="
-font-size:22px;
-font-weight:700;
-color:#1a3a6b;
-">
+<div class="fragment fade-in" data-fragment-index="3"style=" width:48%; padding:15px; background:linear-gradient(160deg,#eef4ff,#dce9f7); border-radius:16px; ">
 
-Intercepto $(b_0)$
+<div style=" font-size:28px;">
+<p style=" font-weight:700;color:#1a3a6b;">Intercepto $(b_0)$</p>
 
-</div>
-
-<div style="
-font-size:20px;
-line-height:1.5;
-margin-top:10px;
-">
+<div style=" font-size:26px;">
 
 $$
 b_0 = 3.26
 $$
-
+</div>
 Corresponde al rendimiento esperado cuando no se aplica nitrógeno al cultivo.
 
 </div>
-
 </div>
 
 <div class="fragment fade-in"
@@ -3400,25 +4260,15 @@ background:linear-gradient(160deg,#f0fdf4,#d6f0dd);
 border-radius:16px;
 ">
 
-<div style="
-font-size:22px;
-font-weight:700;
-color:#166534;
-">
+<div style="text-align:justify;font-size:27px;">
+<p style=" font-weight:700;color:#166534;">Pendiente $(b_1)$</p>
 
-Pendiente $(b_1)$
-
-</div>
-
-<div style="
-font-size:25px;
-line-height:1.5;
-margin-top:10px;
-">
+<div style="font-size:26px;line-height:1">
 
 $$
 b_1 = 0.0258
 $$
+</div>
 
 Por cada kilogramo adicional de nitrógeno aplicado, el rendimiento aumenta en promedio 0.0258 t/ha.
 
@@ -3428,21 +4278,8 @@ Por cada kilogramo adicional de nitrógeno aplicado, el rendimiento aumenta en p
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="5" style="
-margin-top:18px;
-padding:12px;
-background:#fefce8;
-border-left:6px solid #eab308;
-border-radius:10px;
-font-size:25px;
-text-align:center;
-">
-
-<strong>Interpretación general:</strong>
-
-Mayores dosis de nitrógeno se asocian con mayores rendimientos del maíz dentro del rango estudiado.
-
+<div class="fragment fade-in" data-fragment-index="5" style="margin-top:18px;padding:12px;background:#fefce8;border-left:6px solid #eab308;border-radius:10px;font-size:25px;text-align:justify;">
+<strong>Interpretación general:</strong> Mayores dosis de nitrógeno se asocian con mayores rendimientos del maíz dentro del rango estudiado.
 </div>
 
 ## Bondad de ajuste e inferencia del modelo
@@ -3580,72 +4417,74 @@ text-align:center;
 
 ```{r}
 #| echo: false
-#| fig-width: 15
-#| fig-height: 5
+#| warning: false
+#| message: false
+#| fig-width: 16
+#| fig-height: 4.8
 #| fig-align: center
 #| out-width: "100%"
 
-par(
-  mfrow = c(1,3),
-  mar = c(4,4,3,1)
-)
-x<- c(
-  40, 60, 80, 100,
-  120, 140, 160, 180
-)
+library(ggplot2); library(patchwork)
 
-y <- c(
-  4.2, 4.8, 5.3, 5.9,
-  6.4, 6.8, 7.3, 7.8
-)
+nitrogeno   <- c(40, 60, 80, 100, 120, 140, 160, 180)
+rendimiento <- c(4.2, 4.8, 5.3, 5.9, 6.4, 6.8, 7.3, 7.8)
+modelo <- lm(rendimiento ~ nitrogeno)
 
-
-datos <- data.frame(x, y)
-
-modelo <- lm(y ~ x, data = datos)
-
-plot(
-  modelo,
-  which = 1,
-  col = "#1a3a6b",
-  pch = 19,
-  cex = 0.6
+df_diag <- data.frame(
+  ajustados = fitted(modelo),
+  residuos  = residuals(modelo),
+  std_res   = rstandard(modelo),
+  sqrt_std  = sqrt(abs(rstandard(modelo)))
 )
 
-plot(
-  modelo,
-  which = 2,
-  col = "#1a3a6b",
-  pch = 19,
-  cex = 0.6
-)
+tema_d <- theme_minimal(base_size = 16) +
+  theme(
+    plot.title       = element_text(face = "bold", hjust = 0.5,
+                                    size = 17, color = "#1a3a6b"),
+    plot.subtitle    = element_text(hjust = 0.5, size = 13,
+                                    color = "#64748b"),
+    axis.title       = element_text(size = 15, color = "#374151"),
+    axis.text        = element_text(size = 13, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border     = element_rect(color = "#cbd5e1", fill = NA,
+                                    linewidth = 0.5)
+  )
 
-plot(
-  modelo,
-  which = 3,
-  col = "#1a3a6b",
-  pch = 19,
-  cex = 0.6
-)
+p1 <- ggplot(df_diag, aes(ajustados, residuos)) +
+  geom_hline(yintercept = 0, linetype = "dashed",
+             color = "#b91c1c", linewidth = 1) +
+  geom_point(color = "#1a3a6b", size = 4, alpha = 0.85) +
+  geom_smooth(method = "loess", se = FALSE,
+              color = "#d97706", linewidth = 1.1) +
+  labs(title = "Residuos vs. Ajustados",
+       subtitle = "Evalúa: Linealidad",
+       x = "Valores ajustados", y = "Residuos") +
+  tema_d
+
+p2 <- ggplot(df_diag, aes(sample = std_res)) +
+  stat_qq(color = "#1a3a6b", size = 4, alpha = 0.85) +
+  stat_qq_line(color = "#b91c1c", linewidth = 1.1, linetype = "dashed") +
+  labs(title = "Q-Q Plot de residuos",
+       subtitle = "Evalúa: Normalidad",
+       x = "Cuantiles teóricos", y = "Cuantiles muestrales") +
+  tema_d
+
+p3 <- ggplot(df_diag, aes(ajustados, sqrt_std)) +
+  geom_point(color = "#1b4d2e", size = 4, alpha = 0.85) +
+  geom_smooth(method = "loess", se = FALSE,
+              color = "#d97706", linewidth = 1.1) +
+  labs(title = "Scale-Location",
+       subtitle = "Evalúa: Homocedasticidad",
+       x = "Valores ajustados",
+       y = expression(sqrt("|Residuos estand.|"))) +
+  tema_d
+
+p1 + p2 + p3
 ```
 
-<div style="
-margin-top:15px;
-padding:12px;
-background:#f0fdf4;
-border-left:6px solid #16a34a;
-border-radius:10px;
-font-size:21px;
-text-align:justify;
-">
-
-<strong>Conclusión del diagnóstico:</strong>
-
-Los gráficos de residuos no muestran patrones sistemáticos importantes. 
-Los residuos se distribuyen alrededor de cero, presentan un comportamiento aproximadamente normal y mantienen una dispersión relativamente constante.
-
-<br>
-
+<div style="margin-top:15px;padding:12px;background:#f0fdf4;border-left:6px solid #16a34a;border-radius:10px;font-size:28px;text-align:justify;">
+<strong>Conclusión del diagnóstico:</strong> Los gráficos de residuos no muestran patrones sistemáticos importantes. Los residuos se distribuyen alrededor de cero, presentan un comportamiento aproximadamente normal y mantienen una dispersión relativamente constante.
+<br><br>
 Por lo tanto, existe evidencia gráfica de que los supuestos de 
 <strong>linealidad, normalidad e igualdad de varianzas (homocedasticidad)</strong>
 son razonablemente aceptables para el modelo ajustado.
@@ -3654,124 +4493,65 @@ son razonablemente aceptables para el modelo ajustado.
 
 ## Validación de supuestos mediante pruebas estadísticas
 
-<div class="fragment fade-in"
-data-fragment-index="1"style="
-font-size:28px;
-text-align:justify;
-margin-bottom:15px;
-">
-
-Además del diagnóstico visual, los supuestos del modelo pueden evaluarse mediante pruebas estadísticas que permiten respaldar las conclusiones obtenidas a partir de los gráficos.
-
-</div>
-
-<div style="
-display:flex;
-gap:18px;
-margin-top:10px;
-">
-
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-width:33%;
-padding:14px;
-background:#eef4ff;
-border-radius:16px;
-">
-
-<div style="
-font-size:25px;
-font-weight:700;
-color:#1a3a6b;
-">
-
-Normalidad
-
-</div>
-
-<div style="
-font-size:19px;
-margin-top:8px;
-">
-
-Prueba de Shapiro-Wilk
-
 ```{r}
-shapiro.test(residuals(modelo))
-
-```
-
-</div> <div style=" font-size:18px; margin-top:8px; ">
-
-Debido a que el $\text{valor-p es mayor que 0.05}$, no se rechaza la normalidad de los residuos.
-
-</div> 
-</div> 
-
-<div class="fragment fade-in"
-data-fragment-index="3"style=" width:33%; padding:14px; background:#f0fdf4; border-radius:16px; "> <div style=" font-size:21px; font-weight:700; color:#166534; ">
-
-Homocedasticidad
-
-</div> 
-<div style=" font-size:19px; margin-top:8px; ">
-
-Prueba de Breusch-Pagan
-```{r}
+#| echo: false
+#| warning: false
+#| message: false
 library(lmtest)
-
-bptest(modelo)
-
+sw  <- shapiro.test(residuals(modelo))
+bp  <- bptest(modelo)
+dw  <- dwtest(modelo)
+sw_w  <- round(sw$statistic, 4)
+sw_p  <- round(sw$p.value,   4)
+bp_bp <- round(bp$statistic, 4)
+bp_p  <- round(bp$p.value,   4)
+dw_d  <- round(dw$statistic, 4)
+dw_p  <- round(dw$p.value,   4)
 ```
 
-</div> <div style=" font-size:18px; margin-top:8px; ">
+<p class="fragment fade-in" data-fragment-index="1" style="font-size:28px; text-align:justify; margin-bottom:18px; line-height:1.45;">
+Además del diagnóstico visual, los supuestos se respaldan con pruebas estadísticas formales aplicadas sobre los residuos del modelo.
+</p>
 
-De acuerdo a este resultado: $\text{valor-p es mayor que 0.05}$, se considera constante la varianza de los errores.
+<table class="fragment fade-in" data-fragment-index="2" style="width:100%; border-collapse:separate; border-spacing:14px; margin-top:0;">
+<thead>
+<tr>
+<th style="background:#1a3a6b; color:#fff; padding:13px 18px; font-size:27px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">🔔 Normalidad</th>
+<th style="background:#1b4d2e; color:#fff; padding:13px 18px; font-size:27px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">📊 Homocedasticidad</th>
+<th style="background:#b45309; color:#fff; padding:13px 18px; font-size:27px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">🔗 Independencia</th>
+</tr>
+</thead>
+<tbody>
+<tr style="vertical-align:top;">
+<td style="background:#dce9f7; padding:20px 22px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; font-weight:700; color:#1a3a6b; margin:0 0 12px;">Shapiro-Wilk</p>
+<p style="font-size:28px; margin:0 0 6px;">$W =$ `r sw_w`</p>
+<p style="font-size:28px; margin:0 0 16px;">$p\text{-valor} =$ `r sw_p`</p>
+<p style="font-size:26px; color:#1e293b; margin:0; line-height:1.4; background:#fff; border-radius:8px; padding:10px;">$p > 0.05$ ✅<br><strong>No se rechaza</strong> la normalidad.</p>
+</td>
+<td style="background:#d6f0dd; padding:20px 22px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; font-weight:700; color:#1b4d2e; margin:0 0 12px;">Breusch-Pagan</p>
+<p style="font-size:28px; margin:0 0 6px;">$BP =$ `r bp_bp`</p>
+<p style="font-size:28px; margin:0 0 16px;">$p\text{-valor} =$ `r bp_p`</p>
+<p style="font-size:26px; color:#1e293b; margin:0; line-height:1.4; background:#fff; border-radius:8px; padding:10px;">$p > 0.05$ ✅<br>Varianza de errores <strong>constante</strong>.</p>
+</td>
+<td style="background:#fef9c3; padding:20px 22px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; font-weight:700; color:#92400e; margin:0 0 12px;">Durbin-Watson</p>
+<p style="font-size:28px; margin:0 0 6px;">$DW =$ `r dw_d`</p>
+<p style="font-size:28px; margin:0 0 16px;">$p\text{-valor} =$ `r dw_p`</p>
+<p style="font-size:26px; color:#1e293b; margin:0; line-height:1.4; background:#fff; border-radius:8px; padding:10px;">$p > 0.05$ ✅<br><strong>Independencia</strong> confirmada.</p>
+</td>
+</tr>
+</tbody>
+</table>
 
-</div> 
-</div> 
-<div class="fragment fade-in"
-data-fragment-index="4"style=" width:33%; padding:14px; background:#fffbeb; border-radius:16px; "> <div style=" font-size:21px; font-weight:700; color:#b45309; ">
 
-Independencia
-
-</div> <div style=" font-size:19px; margin-top:8px; ">
-
-Prueba de Durbin-Watson
-```{r}
-library(lmtest)
-
-dwtest(modelo)
-
-```
-
-</div> 
-<div style=" font-size:18px; margin-top:8px; ">
-
-Como el valor-p de la prueba dio mayor a $0.05$ Hay independencia de los residuos.
-
-</div> 
-</div> 
-</div> 
 
 ## Conclusión del diagnóstico del modelo
 
-<div class="fragment fade-in"
-data-fragment-index="1" style="
-margin-top:15px;
-padding:18px;
-background:#eff6ff;
-border-left:6px solid #2563eb;
-border-radius:12px;
-font-size:25px;
-text-align:justify;
-">
+<div class="fragment fade-in" data-fragment-index="1" style="margin-top:15px;padding:18px;background:#eff6ff;border-left:6px solid #2563eb;border-radius:12px;font-size:28px;text-align:justify;">
 
-Los gráficos diagnósticos y las pruebas estadísticas indican que los residuos del modelo presentan un comportamiento compatible con los supuestos de regresión lineal.
-
-La normalidad de los errores, la estabilidad de la varianza y la independencia de las observaciones permiten considerar adecuado el modelo ajustado.
-
-Por lo tanto, el modelo:
+Los gráficos diagnósticos y las pruebas estadísticas indican que los residuos del modelo presentan un comportamiento compatible con los supuestos de regresión lineal. La normalidad de los errores, la estabilidad de la varianza y la independencia de las observaciones permiten considerar adecuado el modelo ajustado. Por lo tanto, el modelo:
 
 $$
 \hat{Y}=3.26+0.0258X
@@ -3781,105 +4561,12 @@ proporciona una representación válida de la relación entre la dosis de nitró
 
 </div>
 
-<div class="fragment fade-in"
-data-fragment-index="2" style="
-margin-top:15px;
-padding:12px;
-background:#f0fdf4;
-border-radius:10px;
-font-size:28px;
-text-align:center;
-">
+<div class="fragment fade-in" data-fragment-index="2" style="margin-top:15px;padding:12px;background:#f0fdf4;border-radius:10px;font-size:28px;text-align:justify;">
 
-<strong>Conclusión</strong>
-
-El incremento de la fertilización nitrogenada se relaciona con aumentos significativos en el rendimiento del cultivo, por lo que el modelo puede utilizarse como herramienta de apoyo para interpretar la respuesta productiva del maíz.
+<strong>Conclusión:</strong> El incremento de la fertilización nitrogenada se relaciona con aumentos significativos en el rendimiento del cultivo, por lo que el modelo puede utilizarse como herramienta de apoyo para interpretar la respuesta productiva del maíz.
 
 </div>
 
-## Implementación completa en R
-
-```r
-#=========================================
-# 1. Ingreso de los datos
-#=========================================
-
-nitrogeno <- c(
-  40, 60, 80, 100,
-  120, 140, 160, 180
-)
-
-rendimiento <- c(
-  4.2, 4.8, 5.3, 5.9,
-  6.4, 6.8, 7.3, 7.8
-)
-
-datos <- data.frame(
-  nitrogeno,
-  rendimiento
-)
-
-#=========================================
-# 2. Exploración gráfica
-#=========================================
-
-plot(
-  rendimiento ~ nitrogeno,
-  pch = 19,
-  col = "#2563eb",
-  cex = 1.4,
-  xlab = "Dosis de nitrógeno (kg/ha)",
-  ylab = "Rendimiento (t/ha)"
-)
-
-abline(
-  lm(rendimiento ~ nitrogeno),
-  col = "#dc2626",
-  lwd = 3
-)
-
-#=========================================
-# 3. Ajuste del modelo
-#=========================================
-
-modelo <- lm(
-  rendimiento ~ nitrogeno,
-  data = datos
-)
-
-summary(modelo)
-
-#=========================================
-# 4. Diagnóstico gráfico
-#=========================================
-
-par(mfrow = c(1,3))
-
-plot(
-  modelo,
-  which = 1:3,
-  pch = 19,
-  col = "#1a3a6b"
-)
-
-#=========================================
-# 5. Pruebas de supuestos
-#=========================================
-
-shapiro.test(residuals(modelo))
-
-library(lmtest)
-
-bptest(modelo)
-
-dwtest(modelo)
-
-#=========================================
-# 6. Predicciones
-#=========================================
-
-predict(modelo)
-```
 ## Resumen Regresión lineal simple
 
 <div style="
