@@ -55,7 +55,7 @@ Este taller tiene dos partes. La **Parte I** presenta las herramientas en R nece
 
 # Parte I: Herramientas en R para Regresion Lineal Multiple
 
-Para ilustrar cada herramienta se usa un conjunto de datos simulado con contexto agronomico: rendimiento de cafe pergamino seco (kg/ha) en funcion de tres factores medidos en 60 parcelas del Eje Cafetero. Los datos se generan de forma reproducible con `set.seed(42)`.
+Para ilustrar cada herramienta se usa un conjunto de datos simulado con contexto agronomico: contenido de cafeina del grano de cafe (mg/g) en funcion de tres factores medidos en 60 parcelas del Eje Cafetero. Los datos se generan de forma reproducible con `set.seed(42)`.
 
 ```{r datos}
 set.seed(42)
@@ -65,23 +65,23 @@ altitud      <- round(runif(n, 1200, 1900), 0)
 densidad     <- round(runif(n, 4000, 8000), 0)
 variedad     <- factor(sample(c("Castillo", "Colombia", "Cenicafe1"), n, replace = TRUE))
 
-rendimiento  <- round(
-  800 + 1.8 * fertilizante - 0.5 * altitud + 0.12 * densidad +
-  ifelse(variedad == "Colombia",  80, 0) +
-  ifelse(variedad == "Cenicafe1", 50, 0) +
-  rnorm(n, 0, 80), 1
+cafeina  <- round(
+  15 + 0.025 * fertilizante - 0.003 * altitud + 0.001 * densidad +
+  ifelse(variedad == "Colombia",  2.0, 0) +
+  ifelse(variedad == "Cenicafe1", 1.5, 0) +
+  rnorm(n, 0, 1.0), 2
 )
 
-datos <- data.frame(rendimiento, fertilizante, altitud, densidad, variedad)
+datos <- data.frame(cafeina, fertilizante, altitud, densidad, variedad)
 
-mostrar_tabla(datos, caption = "Rendimiento de cafe y variables explicativas")
+mostrar_tabla(datos, caption = "Cafeina y variables explicativas")
 ```
 
 Las variables son:
 
 | Variable | Tipo | Descripcion | Unidad / Categorias |
 |:---------|:-----|:------------|:--------------------|
-| `rendimiento` | Cuantitativa | Rendimiento de cafe pergamino seco | kg/ha |
+| `cafeina` | Cuantitativa | Contenido de cafeina del grano de cafe | mg/g |
 | `fertilizante` | Cuantitativa | Dosis de fertilizante nitrogenado aplicada | kg N/ha |
 | `altitud` | Cuantitativa | Altitud de la parcela sobre el nivel del mar | m.s.n.m. |
 | `densidad` | Cuantitativa | Densidad de siembra | plantas/ha |
@@ -104,7 +104,7 @@ summary(datos)
 La matriz de correlaciones solo aplica a variables cuantitativas. La variable `variedad` se excluye de este calculo.
 
 ```{r correlaciones}
-vars_num <- c("rendimiento", "fertilizante", "altitud", "densidad")
+vars_num <- c("cafeina", "fertilizante", "altitud", "densidad")
 mat_cor  <- round(cor(datos[, vars_num]), 4)
 mostrar_tabla(as.data.frame(mat_cor), caption = "Matriz de correlaciones entre variables cuantitativas")
 ```
@@ -119,17 +119,17 @@ Para variables cualitativas se usan tablas de frecuencias y diagramas de caja.
 table(datos$variedad)
 
 boxplot(
-  rendimiento ~ variedad,
+  cafeina ~ variedad,
   data  = datos,
   col   = c("#bbf7d0", "#bfdbfe", "#e9d5ff"),
   xlab  = "Variedad",
-  ylab  = "Rendimiento (kg/ha)",
-  main  = "Rendimiento por variedad de cafe"
+  ylab  = "Cafeina (mg/g)",
+  main  = "Cafeina por variedad de cafe"
 )
 grid()
 ```
 
-> El diagrama de caja permite evaluar si las variedades tienen rendimientos promedio distintos, lo que justifica incluir la variable en el modelo.
+> El diagrama de caja permite evaluar si las variedades tienen contenidos promedio de cafeina distintos, lo que justifica incluir la variable en el modelo.
 
 ### 1.4 Diagramas de dispersion por pares (cuantitativas)
 
@@ -169,7 +169,7 @@ $$Y_i = \beta_0 + \beta_1 \text{Fertilizante}_i + \beta_2 \text{Altitud}_i + \be
 
 Donde $D_{\text{Colombia}}$ y $D_{\text{Cenicafe1}}$ son **variables indicadoras** (dummy) que valen 1 si la parcela pertenece a esa variedad y 0 en caso contrario. R las crea automaticamente al incluir un `factor` en `lm()`.
 
-> **Categoria de referencia:** cuando $D_{\text{Colombia}} = 0$ y $D_{\text{Cenicafe1}} = 0$, la observacion pertenece a la variedad "Castillo". Los coeficientes $\beta_4$ y $\beta_5$ miden la diferencia en rendimiento respecto a "Castillo", manteniendo los demas predictores constantes.
+> **Categoria de referencia:** cuando $D_{\text{Colombia}} = 0$ y $D_{\text{Cenicafe1}} = 0$, la observacion pertenece a la variedad "Castillo". Los coeficientes $\beta_4$ y $\beta_5$ miden la diferencia en contenido de cafeina respecto a "Castillo", manteniendo los demas predictores constantes.
 
 ---
 
@@ -188,7 +188,7 @@ Esta es la expresion que R resuelve internamente con `lm()`.
 ### 3.1 Ajuste del modelo con `lm()`
 
 ```{r ajuste}
-modelo <- lm(rendimiento ~ fertilizante + altitud + densidad + variedad, data = datos)
+modelo <- lm(cafeina ~ fertilizante + altitud + densidad + variedad, data = datos)
 summary(modelo)
 ```
 
@@ -203,7 +203,7 @@ for (nm in names(coefs)) {
 
 ### 3.3 Interpretacion de los coeficientes
 
-Cada coeficiente mide el efecto **parcial** de su predictor sobre el rendimiento, manteniendo los demas predictores constantes.
+Cada coeficiente mide el efecto **parcial** de su predictor sobre el contenido de cafeina, manteniendo los demas predictores constantes.
 
 ```{r interpretacion}
 b0  <- coefs[1]; b1 <- coefs[2]; b2 <- coefs[3]
@@ -212,28 +212,28 @@ b4  <- coefs["variedadColombia"]
 b5  <- coefs["variedadCenicafe1"]
 
 cat("b0 =", round(b0, 2), "\n")
-cat("   Rendimiento esperado para variedad Castillo cuando los predictores cuantitativos valen cero.\n\n")
+cat("   Contenido de cafeina esperado para variedad Castillo cuando los predictores cuantitativos valen cero.\n\n")
 
 cat("b1 =", round(b1, 4), "\n")
-cat("   Por cada kg/ha adicional de fertilizante, el rendimiento cambia en promedio",
-    round(b1, 4), "kg/ha,\n   manteniendo altitud, densidad y variedad constantes.\n\n")
+cat("   Por cada kg/ha adicional de fertilizante, el contenido de cafeina cambia en promedio",
+    round(b1, 4), "mg/g,\n   manteniendo altitud, densidad y variedad constantes.\n\n")
 
 cat("b2 =", round(b2, 4), "\n")
-cat("   Por cada metro adicional de altitud, el rendimiento cambia en promedio",
-    round(b2, 4), "kg/ha,\n   manteniendo fertilizante, densidad y variedad constantes.\n\n")
+cat("   Por cada metro adicional de altitud, el contenido de cafeina cambia en promedio",
+    round(b2, 4), "mg/g,\n   manteniendo fertilizante, densidad y variedad constantes.\n\n")
 
 cat("b3 =", round(b3, 4), "\n")
-cat("   Por cada planta/ha adicional en la densidad, el rendimiento cambia en promedio",
-    round(b3, 4), "kg/ha,\n   manteniendo fertilizante, altitud y variedad constantes.\n\n")
+cat("   Por cada planta/ha adicional en la densidad, el contenido de cafeina cambia en promedio",
+    round(b3, 4), "mg/g,\n   manteniendo fertilizante, altitud y variedad constantes.\n\n")
 
 cat("b4 (Colombia) =", round(b4, 4), "\n")
 cat("   Las parcelas con variedad Colombia tienen en promedio", round(b4, 2),
-    "kg/ha", ifelse(b4 > 0, "mas", "menos"),
+    "mg/g", ifelse(b4 > 0, "mas", "menos"),
     "que las de variedad Castillo,\n   manteniendo los demas predictores constantes.\n\n")
 
 cat("b5 (Cenicafe1) =", round(b5, 4), "\n")
 cat("   Las parcelas con variedad Cenicafe1 tienen en promedio", round(b5, 2),
-    "kg/ha", ifelse(b5 > 0, "mas", "menos"),
+    "mg/g", ifelse(b5 > 0, "mas", "menos"),
     "que las de variedad Castillo,\n   manteniendo los demas predictores constantes.\n")
 ```
 
@@ -267,8 +267,8 @@ plot(
   pch  = 19,
   col  = "#2563eb",
   cex  = 1.1,
-  xlab = "Valores ajustados (kg/ha)",
-  ylab = "Residuos (kg/ha)",
+  xlab = "Valores ajustados (mg/g)",
+  ylab = "Residuos (mg/g)",
   main = "Residuos vs. Valores ajustados"
 )
 abline(h = 0, col = "#dc2626", lwd = 2, lty = 2)
@@ -294,9 +294,9 @@ $$R^2 = 1 - \frac{SCR}{SCT}, \qquad R^2_{adj} = 1 - \frac{SCR/(n-k-1)}{SCT/(n-1)
 > En regresion multiple **siempre** se reporta el $R^2$ ajustado porque el $R^2$ simple aumenta artificialmente al agregar mas predictores, aunque no aporten informacion real.
 
 ```{r r2}
-SCT <- sum((datos$rendimiento - mean(datos$rendimiento))^2)
+SCT <- sum((datos$cafeina - mean(datos$cafeina))^2)
 SCR <- sum(datos$residuo^2)
-SCE <- sum((datos$y_hat - mean(datos$rendimiento))^2)
+SCE <- sum((datos$y_hat - mean(datos$cafeina))^2)
 k   <- 5  # numero de coeficientes (3 cuantitativos + 2 dummies de variedad)
 
 cat("SCT =", round(SCT, 2), "\n")
@@ -314,7 +314,7 @@ cat("R^2 ajustado (manual) =", round(R2_adj_manual, 4), "\n")
 cat("R^2 (lm)          =", round(R2_lm,     4), "\n")
 cat("R^2 ajustado (lm) =", round(R2_adj_lm, 4), "\n")
 cat("\nEl modelo explica el", round(R2_adj_lm * 100, 2),
-    "% de la variabilidad del rendimiento (R^2 ajustado).\n")
+    "% de la variabilidad del contenido de cafeina (R^2 ajustado).\n")
 ```
 
 > **Alerta:** un $R^2$ alto no garantiza que los supuestos del modelo se cumplan. Siempre debe acompanarse con el diagnostico de residuos.
@@ -391,12 +391,12 @@ En regresion multiple no hay una recta simple en el plano. La forma mas directa 
 r2_adj <- summary(modelo)$adj.r.squared
 
 plot(
-  datos$y_hat ~ datos$rendimiento,
+  datos$y_hat ~ datos$cafeina,
   pch  = 19,
   col  = "#2563eb",
   cex  = 1.2,
-  xlab = "Rendimiento observado (kg/ha)",
-  ylab = "Rendimiento predicho (kg/ha)",
+  xlab = "Cafeina observada (mg/g)",
+  ylab = "Cafeina predicha (mg/g)",
   main = "Valores predichos vs. observados"
 )
 abline(a = 0, b = 1, col = "#dc2626", lwd = 2, lty = 2)
@@ -529,16 +529,23 @@ donde $R^2_i$ es el $R^2$ de la regresion de $X_i$ sobre los demas predictores.
 | $> 5$ | Multicolinealidad moderada: revisar |
 | $> 10$ | Multicolinealidad grave: actuar |
 
-Para variables cualitativas con mas de dos categorias, `car::vif()` reporta el **GVIF** (VIF generalizado). La columna relevante para comparar es $\text{GVIF}^{1/(2\cdot\text{df})}$, que se interpreta igual que el VIF clasico.
+Cuando el modelo incluye variables cualitativas, `car::vif()` reporta una medida generalizada. Para seguir la interpretacion estandar del VIF, se extrae el valor correspondiente a las variables cuantitativas (equivalente al VIF usual) y se omite el factor `variedad` de esta tabla.
 
 ```{r vif}
 library(car)
 vif_vals <- vif(modelo)
-mostrar_tabla(round(as.data.frame(vif_vals), 4),
-              caption = "VIF / GVIF por predictor (incluye variable cualitativa)")
+
+vif_df <- as.data.frame(vif_vals)
+vif_df$Variable <- rownames(vif_df)
+vif_df <- vif_df[vif_df$Df == 1, c("Variable", "GVIF")]
+names(vif_df)[2] <- "VIF"
+vif_df$VIF <- round(vif_df$VIF, 4)
+
+mostrar_tabla(vif_df,
+              caption = "VIF por predictor (variables cuantitativas)")
 ```
 
-> **Interpretacion:** valores $\text{GVIF}^{1/(2\cdot\text{df})} < \sqrt{5} \approx 2.24$ indican ausencia de multicolinealidad problematica. Si alguno superara ese umbral, se recomendaria revisar la correlacion entre predictores.
+> **Interpretacion:** valores VIF menores a 5 indican ausencia de multicolinealidad problematica. Si alguno superara ese umbral, se recomendaria revisar la correlacion entre predictores.
 
 ---
 
@@ -558,8 +565,8 @@ nuevos <- data.frame(
 )
 pred <- predict(modelo, newdata = nuevos)
 
-resultado <- cbind(nuevos, rendimiento_predicho = round(pred, 1))
-mostrar_tabla(resultado, caption = "Predicciones puntuales del rendimiento (kg/ha)")
+resultado <- cbind(nuevos, cafeina_predicha = round(pred, 2))
+mostrar_tabla(resultado, caption = "Predicciones puntuales del contenido de cafeina (mg/g)")
 ```
 
 ### 10.2 Intervalo de confianza vs intervalo de prediccion
@@ -606,7 +613,7 @@ mostrar_tabla(tabla_pred,
 No siempre todos los predictores disponibles deben entrar al modelo. La funcion `step()` aplica seleccion **stepwise** automatica usando el criterio AIC: en cada paso agrega o elimina el predictor que mas mejora el modelo, hasta que ningun cambio reduce el AIC.
 
 ```{r stepwise}
-modelo_completo <- lm(rendimiento ~ fertilizante + altitud + densidad + variedad, data = datos)
+modelo_completo <- lm(cafeina ~ fertilizante + altitud + densidad + variedad, data = datos)
 modelo_step     <- step(modelo_completo, direction = "both", trace = TRUE)
 cat("\nModelo seleccionado por AIC:\n")
 summary(modelo_step)
@@ -621,17 +628,17 @@ summary(modelo_step)
 ```r
 #--- 1. Generar / cargar los datos ---
 set.seed(42)
-datos <- data.frame(rendimiento, fertilizante, altitud, densidad, variedad)
+datos <- data.frame(cafeina, fertilizante, altitud, densidad, variedad)
 
 #--- 2. Exploracion ---
 summary(datos)
 cor(datos[, sapply(datos, is.numeric)])  # solo variables numericas
 table(datos$variedad)                    # frecuencias de la variable cualitativa
-boxplot(rendimiento ~ variedad, data = datos)
+boxplot(cafeina ~ variedad, data = datos)
 pairs(datos[, sapply(datos, is.numeric)])
 
 #--- 3. Ajuste del modelo ---
-modelo <- lm(rendimiento ~ fertilizante + altitud + densidad + variedad, data = datos)
+modelo <- lm(cafeina ~ fertilizante + altitud + densidad + variedad, data = datos)
 summary(modelo)
 confint(modelo)
 
@@ -679,11 +686,11 @@ El enfoque del trabajo es el **analisis e interpretacion de resultados**: cada s
 
 ## Contexto del problema
 
-Un grupo de investigadores del Centro Internacional de Agricultura Tropical (CIAT) quiere identificar que factores agronomicos y ambientales determinan el **rendimiento del cultivo de frijol** (variable $Y$, en kg/ha) en parcelas experimentales del departamento de Nariño. Para ello se registraron datos de **50 parcelas** con las siguientes variables:
+Un grupo de investigadores del Centro Internacional de Agricultura Tropical (CIAT) quiere identificar que factores agronomicos y ambientales determinan el **contenido de proteina del grano de frijol** (variable $Y$, en %) en parcelas experimentales del departamento de Nariño. Para ello se registraron datos de **50 parcelas** con las siguientes variables:
 
 | Columna | Tipo | Descripcion | Unidad / Categorias |
 |:--------|:-----|:------------|:--------------------|
-| `rendimiento` | Cuantitativa | Rendimiento del cultivo de frijol | kg/ha |
+| `proteina` | Cuantitativa | Contenido de proteina del grano de frijol | % |
 | `nitrogeno` | Cuantitativa | Dosis de nitrogeno aplicada | kg N/ha |
 | `precipitacion` | Cuantitativa | Precipitacion acumulada durante el ciclo | mm |
 | `temperatura` | Cuantitativa | Temperatura media diaria durante el ciclo | °C |
@@ -701,14 +708,14 @@ temperatura   <- round(runif(m, 14, 22), 1)
 materia_org   <- round(runif(m, 1.5, 5.5), 2)
 sistema       <- factor(sample(c("Tradicional", "Asociado", "Tecnificado"),
                                m, replace = TRUE))
-rendimiento   <- round(
-  300 + 2.1 * nitrogeno + 0.6 * precipitacion -
-  8.5 * temperatura + 45 * materia_org +
-  ifelse(sistema == "Asociado",    60, 0) +
-  ifelse(sistema == "Tecnificado", 120, 0) +
-  rnorm(m, 0, 55), 1
+proteina   <- round(
+  18 + 0.03 * nitrogeno + 0.01 * precipitacion -
+  0.15 * temperatura + 0.8 * materia_org +
+  ifelse(sistema == "Asociado",    1.5, 0) +
+  ifelse(sistema == "Tecnificado", 3.0, 0) +
+  rnorm(m, 0, 1.2), 2
 )
-datos_frijol <- data.frame(rendimiento, nitrogeno, precipitacion,
+datos_frijol <- data.frame(proteina, nitrogeno, precipitacion,
                            temperatura, materia_org, sistema)
 write.csv(datos_frijol, "datos_frijol.csv", row.names = FALSE)
 ```
@@ -765,13 +772,13 @@ Esta es la seccion principal. Debe incluir codigo R, resultados y su interpretac
 
 #### 3.1 Carga y exploracion de los datos
 
-Cargue el archivo `datos_frijol.csv`. Presente las estadisticas descriptivas, la matriz de correlaciones de las variables cuantitativas, un diagrama de caja de `rendimiento` por `sistema`, y los diagramas de dispersion por pares (solo variables cuantitativas).
+Cargue el archivo `datos_frijol.csv`. Presente las estadisticas descriptivas, la matriz de correlaciones de las variables cuantitativas, un diagrama de caja de `proteina` por `sistema`, y los diagramas de dispersion por pares (solo variables cuantitativas).
 
 **Preguntas:**
 
-a) Que predictores cuantitativos tienen la correlacion mas alta con el rendimiento? Esto es coherente con lo esperado agronomicamente?  
+a) Que predictores cuantitativos tienen la correlacion mas alta con el contenido de proteina? Esto es coherente con lo esperado agronomicamente?  
 b) Hay algun par de predictores con correlacion mayor a 0.7? Que puede implicar esto para el modelo?  
-c) El diagrama de caja sugiere que el sistema de siembra afecta el rendimiento? Justifique.
+c) El diagrama de caja sugiere que el sistema de siembra afecta el contenido de proteina? Justifique.
 
 #### 3.2 Ajuste del modelo de regresion multiple
 
@@ -782,7 +789,7 @@ Ajuste el modelo completo con los cuatro predictores cuantitativos y la variable
 a) Escriba la ecuacion del modelo estimado con cuatro decimales para cada coeficiente.  
 b) Interprete el coeficiente de `nitrogeno` en el contexto del problema.  
 c) Interprete el coeficiente de `temperatura` en el contexto del problema.  
-d) Interprete el coeficiente de `sistemaAsociado`. Que significa en terminos del rendimiento respecto al sistema Tradicional, manteniendo los demas predictores constantes?  
+d) Interprete el coeficiente de `sistemaAsociado`. Que significa en terminos del contenido de proteina respecto al sistema Tradicional, manteniendo los demas predictores constantes?  
 e) Interprete el intercepto $b_0$. Tiene sentido practico en este contexto?
 
 #### 3.3 Bondad de ajuste
@@ -791,7 +798,7 @@ Reporte el $R^2$ y el $R^2$ ajustado del modelo completo.
 
 **Preguntas:**
 
-a) Que porcentaje de la variabilidad del rendimiento explica el modelo (use el $R^2$ ajustado)?  
+a) Que porcentaje de la variabilidad del contenido de proteina explica el modelo (use el $R^2$ ajustado)?  
 b) Por que en regresion multiple se prefiere el $R^2$ ajustado sobre el $R^2$ simple?
 
 #### 3.4 Prueba F global e inferencia sobre los coeficientes
@@ -803,17 +810,17 @@ Reporte el estadistico F, sus grados de libertad y el valor $p$. Luego presente 
 a) La prueba F es significativa al nivel del 5%? Que concluye sobre el modelo en conjunto?  
 b) Cuales predictores son estadisticamente significativos al nivel del 5% segun las pruebas t?  
 c) El IC al 95% para `precipitacion` contiene el cero? Que implica esto?  
-d) Los coeficientes de `sistemaAsociado` y `sistemaTecnificado` son significativos? Que indica esto sobre el efecto del sistema de siembra en el rendimiento?  
+d) Los coeficientes de `sistemaAsociado` y `sistemaTecnificado` son significativos? Que indica esto sobre el efecto del sistema de siembra en el contenido de proteina?  
 e) Hay algun predictor que no sea significativo? Podria eliminarse del modelo?
 
 #### 3.5 Diagnostico de multicolinealidad
 
-Calcule el VIF para cada predictor usando `car::vif()`. Recuerde que para la variable cualitativa `sistema` se reporta el GVIF; la columna relevante es $\text{GVIF}^{1/(2\cdot\text{df})}$.
+Calcule el VIF para los predictores cuantitativos usando `car::vif()`. Para la variable cualitativa `sistema` no se reporta un VIF estandar, asi que omitala de la tabla y revise solo los valores de las variables continuas.
 
 **Preguntas:**
 
-a) Hay evidencia de multicolinealidad segun los valores VIF / GVIF? Justifique.  
-b) El valor $\text{GVIF}^{1/(2\cdot\text{df})}$ de `sistema` supera el umbral de $\sqrt{5} \approx 2.24$? Que indica esto?  
+a) Hay evidencia de multicolinealidad segun los valores VIF? Justifique.  
+b) El VIF maximo supera el umbral de 5? Que indica esto?  
 c) Si hubiera multicolinealidad entre dos predictores, como afectaria la interpretacion de los coeficientes?
 
 #### 3.6 Validacion de supuestos
@@ -839,7 +846,7 @@ c) Segun el criterio AIC, es preferible el modelo completo o el modelo reducido?
 
 #### 3.8 Prediccion
 
-Use `predict()` para predecir el rendimiento para las siguientes tres parcelas nuevas:
+Use `predict()` para predecir el contenido de proteina para las siguientes tres parcelas nuevas:
 
 | Parcela | `nitrogeno` | `precipitacion` | `temperatura` | `materia_org` | `sistema` |
 |:-------:|:-----------:|:---------------:|:-------------:|:-------------:|:---------:|
@@ -851,7 +858,7 @@ Reporte la prediccion puntual, el IC y el IP al 95% para cada caso.
 
 **Preguntas:**
 
-a) Para la parcela B (sistema Tecnificado), cual es el rendimiento esperado?  
+a) Para la parcela B (sistema Tecnificado), cual es el contenido de proteina esperado?  
 b) Compare la prediccion de la parcela A (Tradicional) con la parcela B (Tecnificado), manteniendo similares los demas valores. A que se debe la diferencia?  
 c) Por que el intervalo de prediccion es mas ancho que el intervalo de confianza?
 
@@ -861,7 +868,7 @@ c) Por que el intervalo de prediccion es mas ancho que el intervalo de confianza
 
 Redacte un parrafo de conclusiones que sintetice:
 
-- Cuales factores influyen significativamente en el rendimiento del frijol.
+- Cuales factores influyen significativamente en el contenido de proteina del frijol.
 - La magnitud e interpretacion de los coeficientes significativos.
 - El ajuste del modelo ($R^2$ ajustado) y su implicacion practica.
 - El cumplimiento de los supuestos y la validez del modelo.
@@ -880,22 +887,3 @@ Ejemplos:
 > R Core Team (2024). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing. https://www.R-project.org/
 
 > Nombre del autor o sitio (ano). *Titulo de la pagina o articulo*. Recuperado de: [URL completa]
-
----
-
-## Criterios de evaluacion
-
-| Criterio | Puntaje |
-|:---------|:-------:|
-| Portada completa | 0.5 |
-| Introduccion con contexto y justificacion del modelo multiple | 1.0 |
-| Metodologia bien descrita | 0.5 |
-| Ajuste del modelo e interpretacion de coeficientes | 1.5 |
-| Bondad de ajuste: $R^2$ ajustado y prueba F interpretados | 1.0 |
-| Pruebas t e IC con interpretacion individual | 1.0 |
-| Diagnostico de multicolinealidad (VIF) con interpretacion | 1.0 |
-| Validacion de supuestos con pruebas e interpretacion | 1.5 |
-| Seleccion de variables y comparacion de modelos | 1.0 |
-| Prediccion con IC e IP interpretados | 0.5 |
-| Conclusiones pertinentes | 0.5 |
-| **Total** | **10.0** |
