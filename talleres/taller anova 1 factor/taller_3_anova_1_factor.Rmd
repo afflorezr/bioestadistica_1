@@ -1,0 +1,550 @@
+---
+title: "Taller 3: ANOVA de un Factor"
+subtitle: "Bioestadistica Fundamental"
+author: "Andres Felipe Florez Rivera"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    keep_md: false
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: tango
+    css: "../../assets/workshop.css"
+  pdf_document:
+    toc: true
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width  = 8,
+  fig.height = 5
+)
+
+mostrar_tabla <- function(x, n = 15, caption = NULL) {
+  x_mostrar <- head(x, n)
+  if (knitr::is_html_output()) {
+    tabla_html <- knitr::kable(
+      x_mostrar,
+      format     = "html",
+      caption    = caption,
+      table.attr = 'class="table table-striped table-hover table-condensed"'
+    )
+    knitr::asis_output(
+      paste0('<div class="table-scroll">', as.character(tabla_html), '</div>')
+    )
+  } else {
+    knitr::kable(x_mostrar, format = "latex", caption = caption, booktabs = TRUE)
+  }
+}
+```
+
+<div class="cover-division">Universidad Nacional de Colombia &mdash; Departamento de Estadistica, Sede Bogota</div>
+
+Este taller tiene dos partes. La **Parte I** presenta las herramientas en R necesarias para realizar un analisis completo de ANOVA de un factor. La **Parte II** plantea el trabajo que los estudiantes deben entregar, aplicando todas las herramientas aprendidas a un nuevo conjunto de datos.
+
+---
+
+# Parte I: Herramientas en R para ANOVA de un Factor
+
+Para ilustrar cada herramienta se usa un conjunto de datos simulado con contexto agronomico: rendimiento del cultivo de maiz (t/ha) bajo cuatro tipos de fertilizante aplicados en 40 parcelas experimentales (10 parcelas por tipo). Los datos se generan de forma reproducible con `set.seed(2024)`.
+
+```{r datos}
+set.seed(2024)
+n_por_grupo  <- 10
+fertilizante <- factor(rep(c("Organico", "Quimico", "Mixto", "Control"), each = n_por_grupo))
+
+medias_reales <- c(Organico = 5.6, Quimico = 6.4, Mixto = 6.9, Control = 4.8)
+rendimiento <- round(
+  medias_reales[as.character(fertilizante)] + rnorm(length(fertilizante), 0, 0.6),
+  2
+)
+
+datos <- data.frame(fertilizante, rendimiento)
+
+mostrar_tabla(datos, caption = "Rendimiento (t/ha) de maiz segun tipo de fertilizante")
+```
+
+Las variables son:
+
+| Variable | Descripcion | Tipo |
+|:---------|:------------|:-----|
+| `fertilizante` | Tipo de fertilizante aplicado (Organico, Quimico, Mixto, Control) | Cualitativa (factor con 4 niveles) |
+| `rendimiento` | Rendimiento del cultivo de maiz | Cuantitativa (t/ha) |
+
+---
+
+## 1. Exploracion inicial de los datos
+
+Antes de ajustar un modelo ANOVA siempre se deben explorar los datos por grupo.
+
+### 1.1 Estadisticas descriptivas por grupo
+
+```{r descriptivas}
+resumen_grupos <- aggregate(
+  rendimiento ~ fertilizante,
+  data = datos,
+  FUN  = function(x) c(n = length(x), media = mean(x), sd = sd(x))
+)
+resumen_grupos <- do.call(data.frame, resumen_grupos)
+names(resumen_grupos) <- c("fertilizante", "n", "media", "sd")
+mostrar_tabla(round_df <- transform(resumen_grupos,
+                                     media = round(media, 3),
+                                     sd    = round(sd, 3)),
+              caption = "Estadisticas descriptivas por tipo de fertilizante")
+```
+
+### 1.2 Diagrama de cajas por grupo
+
+```{r boxplot}
+boxplot(
+  rendimiento ~ fertilizante,
+  data = datos,
+  col  = c("#2563eb", "#16a34a", "#d97706", "#dc2626"),
+  xlab = "Tipo de fertilizante",
+  ylab = "Rendimiento de maiz (t/ha)",
+  main = "Rendimiento de maiz segun tipo de fertilizante"
+)
+grid(nx = NA, ny = NULL)
+```
+
+> Se observan diferencias visibles en la mediana y la dispersion del rendimiento entre los cuatro tipos de fertilizante, lo que sugiere que el factor podria tener un efecto significativo.
+
+---
+
+## 2. El modelo ANOVA de un factor
+
+El modelo poblacional para un diseno de un factor con $k$ niveles es:
+
+$$Y_{ij} = \mu + \tau_i + e_{ij}, \quad e_{ij} \sim N(0, \sigma^2), \quad i = 1,\ldots,k, \quad j = 1,\ldots,n_i$$
+
+| Componente | Significado |
+|:----------:|:------------|
+| $Y_{ij}$ | Observacion $j$ del tratamiento (nivel) $i$ |
+| $\mu$ | Media general de la poblacion |
+| $\tau_i$ | Efecto del tratamiento $i$ ($\tau_i = \mu_i - \mu$) |
+| $e_{ij}$ | Error aleatorio asociado a la observacion $ij$ |
+
+La hipotesis de interes es:
+
+$$H_0: \mu_1 = \mu_2 = \cdots = \mu_k \quad \text{vs} \quad H_1: \text{al menos una } \mu_i \text{ es diferente}$$
+
+Equivalentemente, en terminos de los efectos: $H_0: \tau_1 = \tau_2 = \cdots = \tau_k = 0$.
+
+---
+
+## 3. Descomposicion de la variabilidad
+
+La variabilidad total de las observaciones se descompone en la variabilidad **entre** tratamientos y la variabilidad **dentro** de los tratamientos:
+
+$$\underbrace{\sum_{i=1}^{k}\sum_{j=1}^{n_i} (y_{ij} - \bar{y})^2}_{SCTr\text{atamientos}} + \underbrace{\sum_{i=1}^{k}\sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2}_{SCE} = \underbrace{\sum_{i=1}^{k}\sum_{j=1}^{n_i} (y_{ij} - \bar{y})^2}_{SCT}$$
+
+| Cantidad | Formula | Significado |
+|:---------|:--------|:------------|
+| $SCTr$ | $\sum_i n_i (\bar{y}_i - \bar{y})^2$ | Variabilidad explicada por el factor (entre grupos) |
+| $SCE$ | $\sum_i \sum_j (y_{ij} - \bar{y}_i)^2$ | Variabilidad no explicada (dentro de los grupos) |
+| $SCT$ | $\sum_i \sum_j (y_{ij} - \bar{y})^2$ | Variabilidad total |
+
+### 3.1 Calculo manual paso a paso
+
+```{r suma-cuadrados-manual}
+ybar   <- mean(datos$rendimiento)
+medias_i <- tapply(datos$rendimiento, datos$fertilizante, mean)
+n_i      <- tapply(datos$rendimiento, datos$fertilizante, length)
+k        <- length(medias_i)
+N        <- nrow(datos)
+
+SCTr <- sum(n_i * (medias_i - ybar)^2)
+SCE  <- sum((datos$rendimiento - medias_i[as.character(datos$fertilizante)])^2)
+SCT  <- sum((datos$rendimiento - ybar)^2)
+
+cat("Media general       =", round(ybar, 4), "\n")
+cat("SCTr (entre grupos) =", round(SCTr, 4), "\n")
+cat("SCE  (dentro grupos)=", round(SCE, 4), "\n")
+cat("SCT  (total)        =", round(SCT, 4), "\n")
+cat("SCTr + SCE =", round(SCTr + SCE, 4), " (debe coincidir con SCT)\n")
+```
+
+### 3.2 Tabla ANOVA manual
+
+```{r tabla-anova-manual}
+gl_tr <- k - 1
+gl_e  <- N - k
+gl_t  <- N - 1
+
+CMTr <- SCTr / gl_tr
+CME  <- SCE  / gl_e
+F_obs <- CMTr / CME
+p_valor <- pf(F_obs, gl_tr, gl_e, lower.tail = FALSE)
+
+tabla_anova <- data.frame(
+  Fuente       = c("Fertilizante (entre)", "Error (dentro)", "Total"),
+  GL           = c(gl_tr, gl_e, gl_t),
+  SC           = round(c(SCTr, SCE, SCT), 4),
+  CM           = c(round(CMTr, 4), round(CME, 4), NA),
+  F_valor      = c(round(F_obs, 4), NA, NA),
+  p_valor      = c(round(p_valor, 6), NA, NA)
+)
+mostrar_tabla(tabla_anova, caption = "Tabla ANOVA calculada manualmente")
+```
+
+---
+
+## 4. Ajuste con `aov()` y verificacion
+
+```{r ajuste-aov}
+modelo <- aov(rendimiento ~ fertilizante, data = datos)
+summary(modelo)
+```
+
+> Los valores de $SC$, $GL$, $CM$, $F$ y el valor $p$ coinciden con el calculo manual: `aov()` implementa la misma descomposicion de varianza.
+
+### 4.1 Ruta alternativa: `lm()` + `anova()`
+
+```{r ajuste-lm}
+modelo_lm <- lm(rendimiento ~ fertilizante, data = datos)
+anova(modelo_lm)
+```
+
+> `aov()` y `lm()` ajustan el mismo modelo lineal; `anova()` sobre el objeto `lm` reproduce la tabla ANOVA.
+
+### 4.2 Decision estadistica
+
+```{r decision}
+cat("Estadistico F =", round(F_obs, 4), "\n")
+cat("Valor p       =", format.pval(p_valor, digits = 4), "\n")
+cat(ifelse(p_valor < 0.05,
+    "Se rechaza H0: al menos un tipo de fertilizante difiere en el rendimiento medio.",
+    "No se rechaza H0: no hay evidencia de diferencias entre los rendimientos medios."), "\n")
+```
+
+---
+
+## 5. Medida de efecto: $R^2$ del ANOVA
+
+Al igual que en regresion, la proporcion de variabilidad explicada por el factor se mide con:
+
+$$R^2 = \frac{SCTr}{SCT}$$
+
+```{r r2-anova}
+R2_manual <- SCTr / SCT
+R2_lm     <- summary(modelo_lm)$r.squared
+
+cat("R^2 (manual) =", round(R2_manual, 4), "\n")
+cat("R^2 (lm)     =", round(R2_lm,     4), "\n")
+cat("\nEl tipo de fertilizante explica el", round(R2_lm * 100, 2),
+    "% de la variabilidad del rendimiento.\n")
+```
+
+---
+
+## 6. Diagnostico de supuestos
+
+Para que el ANOVA sea valido, el modelo debe satisfacer:
+
+| Supuesto | Descripcion | Herramienta grafica | Prueba estadistica |
+|:---------|:------------|:--------------------|:-------------------|
+| Normalidad | $e_{ij} \sim N(0, \sigma^2)$ | Q-Q plot de residuos | Shapiro-Wilk |
+| Homogeneidad de varianzas | $\sigma_1^2 = \sigma_2^2 = \cdots = \sigma_k^2$ | Boxplot / residuos vs ajustados | Bartlett |
+| Independencia | Las observaciones son independientes entre si | — | Diseno experimental |
+
+### 6.1 Graficos de diagnostico
+
+```{r diagnostico, fig.height=8}
+par(mfrow = c(2, 2))
+plot(modelo, col = "#1a3a6b", pch = 19, cex = 0.9)
+par(mfrow = c(1, 1))
+```
+
+### 6.2 Prueba de Shapiro-Wilk (normalidad)
+
+$$H_0: \text{los residuos provienen de una distribucion normal} \quad \text{vs} \quad H_1: \text{no provienen de una distribucion normal}$$
+
+```{r shapiro}
+sw <- shapiro.test(residuals(modelo))
+cat("Estadistico W =", round(sw$statistic, 4), "\n")
+cat("Valor p       =", round(sw$p.value,   4), "\n")
+cat(ifelse(sw$p.value > 0.05,
+    "No se rechaza H0: los residuos son compatibles con normalidad.",
+    "Se rechaza H0: los residuos no siguen una distribucion normal."), "\n")
+```
+
+> **Interpretacion:** el valor $p > 0.05$, por lo tanto **no se rechaza $H_0$**. Los residuos siguen una distribucion aproximadamente normal. El supuesto de normalidad **se cumple**.
+
+### 6.3 Prueba de Bartlett (homogeneidad de varianzas)
+
+$$H_0: \sigma_1^2 = \sigma_2^2 = \cdots = \sigma_k^2 \quad \text{vs} \quad H_1: \text{al menos una varianza es diferente}$$
+
+```{r bartlett}
+bt <- bartlett.test(rendimiento ~ fertilizante, data = datos)
+print(bt)
+cat(ifelse(bt$p.value > 0.05,
+    "No se rechaza H0: las varianzas son homogeneas.",
+    "Se rechaza H0: hay evidencia de heterogeneidad de varianzas."), "\n")
+```
+
+> **Interpretacion:** el valor $p > 0.05$, por lo tanto **no se rechaza $H_0$**. Las varianzas de los cuatro grupos son homogeneas. El supuesto de homogeneidad **se cumple**.
+
+### 6.4 Independencia
+
+La independencia de las observaciones se garantiza por el **diseno del experimento** (asignacion aleatoria de parcelas a tratamientos) y no por una prueba posterior a los datos. Si el experimento se realizo con aleatorizacion adecuada y sin medidas repetidas sobre la misma unidad experimental, el supuesto se considera valido.
+
+---
+
+## 7. Comparaciones multiples: prueba de Tukey (HSD)
+
+Cuando el ANOVA rechaza $H_0$, es necesario identificar **cuales** medias difieren entre si. La prueba de Tukey (HSD, *Honestly Significant Difference*) compara todos los pares de medias controlando el error tipo I global.
+
+```{r tukey}
+tukey <- TukeyHSD(modelo)
+print(tukey)
+```
+
+```{r tukey-plot, fig.height=6}
+par(mar = c(5, 10, 4, 2))
+plot(tukey, las = 1, col = "#1a3a6b")
+```
+
+> Un intervalo de confianza que **no contiene el cero** indica una diferencia estadisticamente significativa entre ese par de tratamientos.
+
+---
+
+## 8. Visualizacion final: medias con intervalos de confianza
+
+```{r medias-ic, fig.height=5}
+library(ggplot2)
+
+resumen <- data.frame(
+  fertilizante = names(medias_i),
+  media        = as.numeric(medias_i),
+  n            = as.numeric(n_i)
+)
+resumen$sd  <- as.numeric(tapply(datos$rendimiento, datos$fertilizante, sd))
+resumen$se  <- resumen$sd / sqrt(resumen$n)
+resumen$ic  <- qt(0.975, resumen$n - 1) * resumen$se
+
+ggplot(resumen, aes(x = reorder(fertilizante, media), y = media)) +
+  geom_col(fill = "#1a3a6b", alpha = 0.85, width = 0.6) +
+  geom_errorbar(aes(ymin = media - ic, ymax = media + ic), width = 0.15, color = "#dc2626") +
+  labs(
+    title = "Rendimiento medio de maiz por tipo de fertilizante",
+    x     = "Tipo de fertilizante",
+    y     = "Rendimiento medio (t/ha) con IC 95%"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+---
+
+## 9. Resumen del flujo de trabajo en R
+
+```r
+#--- 1. Generar / cargar los datos ---
+set.seed(2024)
+datos <- data.frame(fertilizante, rendimiento)
+
+#--- 2. Exploracion ---
+aggregate(rendimiento ~ fertilizante, data = datos, FUN = mean)
+boxplot(rendimiento ~ fertilizante, data = datos)
+
+#--- 3. Ajuste del modelo ---
+modelo <- aov(rendimiento ~ fertilizante, data = datos)
+summary(modelo)
+
+#--- 4. Diagnostico de supuestos ---
+par(mfrow = c(2, 2))
+plot(modelo)
+
+shapiro.test(residuals(modelo))                      # Normalidad
+bartlett.test(rendimiento ~ fertilizante, data = datos) # Homogeneidad de varianzas
+
+#--- 5. Comparaciones multiples ---
+TukeyHSD(modelo)
+plot(TukeyHSD(modelo))
+```
+
+---
+
+# Parte II: Trabajo para Entregar
+
+## Instrucciones generales
+
+El trabajo debe presentarse en formato de **articulo cientifico** con las siguientes secciones obligatorias: portada, introduccion, metodologia, desarrollo, conclusiones y bibliografia. Puede elaborarse en **Word, Google Docs, R Markdown o cualquier procesador de texto** de su preferencia, y debe entregarse en formato **PDF**.
+
+El enfoque del trabajo es el **analisis e interpretacion de resultados**: cada salida de R debe ir acompanada de su correspondiente interpretacion en el contexto del problema. No basta con pegar el output; se debe explicar que significa.
+
+**Fecha de entrega:** segun lo indicado por el docente.
+**Trabajo individual.**
+
+---
+
+## Contexto del problema
+
+Un grupo de investigadores del sector agropecuario quiere determinar si la **variedad de cafe sembrada** (variable factor $X$, con cuatro niveles) tiene un efecto significativo sobre la **produccion de cafe pergamino seco** (variable $Y$, en kg/parcela) en fincas cafeteras del Eje Cafetero. Para ello se registraron datos de 48 parcelas experimentales (12 por variedad), asignadas de forma aleatoria.
+
+Los datos se encuentran en el archivo **`datos_cafe_anova.csv`**, generado con el siguiente codigo, que debe ejecutarse **una sola vez** para crear el archivo en su directorio de trabajo. Luego puede cargarlo normalmente con `read.csv()`.
+
+```{r generar-datos-cafe, eval=FALSE}
+set.seed(777)
+n_grupo  <- 12
+variedad <- factor(rep(c("Castillo", "Colombia", "Cenicafe1", "Caturra"), each = n_grupo))
+
+medias_variedad <- c(Castillo = 48, Colombia = 52, Cenicafe1 = 55, Caturra = 44)
+produccion <- round(
+  medias_variedad[as.character(variedad)] + rnorm(length(variedad), 0, 4.5),
+  1
+)
+
+datos_cafe <- data.frame(parcela = 1:length(variedad), variedad, produccion)
+write.csv(datos_cafe, "datos_cafe_anova.csv", row.names = FALSE)
+```
+
+```r
+datos <- read.csv("datos_cafe_anova.csv")
+datos$variedad <- factor(datos$variedad)
+```
+
+El archivo contiene tres columnas:
+
+| Columna | Descripcion | Unidad / Categorias |
+|:--------|:------------|:---------------------|
+| `parcela` | Identificador de la parcela experimental | — |
+| `variedad` | Variedad de cafe sembrada | Castillo / Colombia / Cenicafe1 / Caturra |
+| `produccion` | Produccion de cafe pergamino seco | kg/parcela |
+
+---
+
+## Estructura del articulo
+
+### Portada
+
+La portada debe incluir:
+
+- Titulo del trabajo
+- Nombre completo del estudiante y codigo
+- Nombre del curso y grupo
+- Nombre del docente
+- Fecha de entrega
+- Universidad y facultad
+
+---
+
+### 1. Introduccion
+
+Redacte un parrafo de introduccion que incluya:
+
+- Importancia del cultivo de cafe en Colombia y/o en el Eje Cafetero.
+- Relevancia de comparar variedades para la produccion agricola.
+- Objetivo del analisis estadistico.
+- Breve descripcion de la metodologia que se usara (ANOVA de un factor).
+
+---
+
+### 2. Metodologia
+
+Describa brevemente:
+
+- El modelo estadistico utilizado: $Y_{ij} = \mu + \tau_i + e_{ij}$.
+- La hipotesis nula y alterna del ANOVA.
+- La descomposicion de la variabilidad ($SCT = SCTr + SCE$).
+- Las herramientas de R empleadas.
+- Los supuestos del modelo y las pruebas estadisticas usadas para verificarlos.
+
+---
+
+### 3. Desarrollo
+
+Esta es la seccion principal. Debe incluir codigo R, resultados y su interpretacion para cada uno de los siguientes puntos:
+
+#### 3.1 Carga y exploracion de los datos
+
+Cargue el archivo `datos_cafe_anova.csv`, presente las estadisticas descriptivas por variedad (media, desviacion estandar y tamano de muestra) y el diagrama de cajas.
+
+**Preguntas:**
+
+a) Que variedad presenta la mayor produccion media? Y la menor?
+b) A partir del diagrama de cajas, considera que existen diferencias visibles entre las variedades?
+
+#### 3.2 Descomposicion de la variabilidad y tabla ANOVA
+
+Calcule manualmente $SCTr$, $SCE$ y $SCT$. Verifique que $SCT = SCTr + SCE$. Construya la tabla ANOVA (fuente, GL, SC, CM, $F$, valor $p$) y verifique con `aov()`.
+
+**Preguntas:**
+
+a) Cuantos grados de libertad tiene la fuente "entre grupos" y cuantos la fuente "error"? Justifique con la formula.
+b) Que proporcion de la variabilidad total corresponde a la variabilidad entre variedades ($R^2$)?
+
+#### 3.3 Prueba de hipotesis global
+
+Plantee formalmente $H_0$ y $H_1$ para este problema. Use `summary(aov(...))` para obtener el estadistico $F$ y el valor $p$.
+
+**Preguntas:**
+
+a) Se rechaza $H_0$ al nivel de significancia del 5%? Justifique con el valor $p$.
+b) Que se puede concluir sobre el efecto de la variedad en la produccion de cafe?
+
+#### 3.4 Validacion de supuestos
+
+Presente los graficos de diagnostico (`plot(modelo)`) y aplique las pruebas de Shapiro-Wilk y Bartlett.
+
+**Preguntas:**
+
+a) **Normalidad:** reporte el estadistico $W$ y el valor $p$ de Shapiro-Wilk. Se rechaza $H_0$? El supuesto se cumple?
+b) **Homogeneidad de varianzas:** reporte el estadistico y el valor $p$ de Bartlett. Se rechaza $H_0$? El supuesto se cumple?
+c) **Independencia:** a partir del diseno del experimento (asignacion aleatoria de parcelas), justifique si el supuesto es razonable.
+d) A partir de los graficos y las pruebas, el modelo es valido para realizar inferencias?
+
+#### 3.5 Comparaciones multiples
+
+Si el ANOVA resulto significativo, aplique la prueba de Tukey (`TukeyHSD()`) y presente el grafico de intervalos.
+
+**Preguntas:**
+
+a) Que pares de variedades presentan diferencias estadisticamente significativas?
+b) Que variedad recomendaria a un productor que busca maximizar la produccion? Justifique con los resultados de Tukey.
+
+---
+
+### 4. Conclusiones
+
+Redacte un parrafo de conclusiones que sintetice:
+
+- Si existe un efecto significativo de la variedad sobre la produccion de cafe.
+- Los resultados de las comparaciones multiples y su interpretacion practica.
+- El cumplimiento de los supuestos y la validez del modelo.
+- Una recomendacion practica para los caficultores basada en los resultados.
+
+---
+
+### 5. Bibliografia
+
+Toda fuente consultada debe citarse: libros, articulos, paginas web o documentacion de R. Use formato APA.
+
+Ejemplos:
+
+> Montgomery, D. C. (2017). *Design and Analysis of Experiments* (9th ed.). Wiley.
+
+> R Core Team (2024). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing. https://www.R-project.org/
+
+> Nombre del autor o sitio (ano). *Titulo de la pagina o articulo*. Recuperado de: [URL completa]
+
+---
+
+## Criterios de evaluacion
+
+| Criterio | Porcentaje |
+|:---------|:----------:|
+| Presentacion del trabajo (portada, redaccion y formato) | 15% |
+| Introduccion con contexto y objetivo claro | 10% |
+| Metodologia bien descrita | 10% |
+| Descomposicion de variabilidad y tabla ANOVA manual y con `aov()` | 15% |
+| Prueba de hipotesis global e interpretacion | 15% |
+| Validacion de supuestos con pruebas e interpretacion | 15% |
+| Comparaciones multiples (Tukey) interpretadas | 10% |
+| Conclusiones pertinentes | 5% |
+| Bibliografia de fuentes consultadas | 5% |
+| **Total** | **100%** |
