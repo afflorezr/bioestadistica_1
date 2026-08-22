@@ -1,0 +1,58 @@
+## ¿Qué muestra un boxplot?
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top: 50px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Mediana.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Cuartil 1 y cuartil 3.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Rango intercuartílico.</li>
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 28px;">Bigotes.</li>
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 28px;">Valores extremos o atípicos.</li>
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 28px;">Posibles diferencias en simetría entre grupos.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="9" style="margin-top: 50px;">
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Datos simulados coherentes con tu tabla resumen
+set.seed(123)
+
+datos <- data.frame(
+  Tratamiento = rep(c("A", "B", "C"), each = 12),
+  Peso = c(
+    rnorm(12, mean = 48.2, sd = 3.1),
+    rnorm(12, mean = 52.6, sd = 2.8),
+    rnorm(12, mean = 55.4, sd = 4.0)
+  )
+)
+
+# Boxplot bonito
+ggplot(datos, aes(x = Tratamiento, y = Peso, fill = Tratamiento)) +
+  geom_boxplot(alpha = 0.8, width = 0.6, outlier.color = "red", outlier.size = 2) +
+  
+  # Mediana resaltada
+  stat_summary(fun = median, geom = "point", size = 3, color = "black") +
+  
+  scale_fill_manual(values = c("#4C72B0", "#55A868", "#C44E52")) +
+  
+  labs(
+    title = "Distribución del peso por tratamiento",
+    subtitle = "Mediana, cuartiles, rango intercuartílico y valores atípicos",
+    x = "Tratamiento",
+    y = "Peso (kg)"
+  ) +
+  
+  theme_minimal(base_size = 16) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    legend.position = "none"
+  )
+```
+
+</div>
+</div>
+

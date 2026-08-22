@@ -1,0 +1,35 @@
+## Verificación de supuestos en R
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">QQ-plot y prueba de Shapiro-Wilk</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.4;">
+```{r}
+#| fig-height: 2.6
+set.seed(5)
+x <- rgamma(25, shape=3, scale=0.5)  # productividad asimétrico
+par(mfrow=c(1,2), mar=c(4,4,2.5,1), family="sans")
+qqnorm(x, main="QQ-plot", cex.main=1.0); qqline(x, col="#dc2626", lwd=2)
+hist(x, probability=TRUE, main="Histograma", col="#bfdbfe",
+     border="white", cex.main=1.0)
+lines(density(x), col="#1e3a8a", lwd=2)
+```
+```{r}
+shapiro.test(x)   # H0: normalidad; p < 0.05 → rechazar
+```
+</div>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<h4 style="font-size: 25px; color: #1b4d2e; margin-bottom: 8px;">¿Qué hacer si se violan los supuestos?</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;"><strong>Distribución no normal, n pequeño:</strong> usar transformación logarítmica o bootstrap.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;"><strong>Datos dependientes (series, corrales adyacentes):</strong> modelar la autocorrelación antes de calcular el IC.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;"><strong>Outliers extremos:</strong> investigar causa; si son errores, corregir; si son reales, usar IC robusto (mediana + bootstrap).</li>
+</ul>
+</div>
+
+</div>
+
+

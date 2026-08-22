@@ -1,0 +1,147 @@
+## Gráfica Asimetría y curtosis 
+
+```{r}
+#| echo: false
+#| fig-width: 16
+#| fig-height: 7
+
+par(
+  mfrow = c(1,4),
+  mar = c(4,3.5,3,1),
+  family = "sans"
+)
+
+# -------------------------
+# 1. Distribución simétrica
+# -------------------------
+x1 <- rnorm(5000, 0, 1)
+
+hist(
+  x1,
+  probability = TRUE,
+  col = "#bfdbfe",
+  border = "white",
+  main = "Simétrica",
+  sub = "Asimetría ≈ 0",
+  xlab = "x",
+  cex.main = 1.2,
+  cex.sub = 1,
+  cex.lab = 1.1
+)
+
+curve(
+  dnorm(x, mean(x1), sd(x1)),
+  add = TRUE,
+  lwd = 3,
+  col = "#1d4ed8"
+)
+
+abline(v = mean(x1),
+       col = "#991b1b",
+       lwd = 2,
+       lty = 2)
+
+# -------------------------
+# 2. Sesgo positivo
+# -------------------------
+x2 <- rexp(5000, 0.5)
+
+hist(
+  x2,
+  probability = TRUE,
+  col = "#bbf7d0",
+  border = "white",
+  main = "Sesgo positivo",
+  sub = "Cola hacia la derecha",
+  xlab = "x",
+  cex.main = 1.2,
+  cex.sub = 1,
+  cex.lab = 1.1
+)
+
+lines(
+  density(x2),
+  lwd = 3,
+  col = "#15803d"
+)
+
+abline(v = mean(x2),
+       col = "#991b1b",
+       lwd = 2,
+       lty = 2)
+
+# -------------------------
+# 3. Sesgo negativo
+# -------------------------
+x3 <- -rexp(5000, 0.5) + 8
+
+hist(
+  x3,
+  probability = TRUE,
+  col = "#fecaca",
+  border = "white",
+  main = "Sesgo negativo",
+  sub = "Cola hacia la izquierda",
+  xlab = "x",
+  cex.main = 1.2,
+  cex.sub = 1,
+  cex.lab = 1.1
+)
+
+lines(
+  density(x3),
+  lwd = 3,
+  col = "#b91c1c"
+)
+
+abline(v = mean(x3),
+       col = "#7f1d1d",
+       lwd = 2,
+       lty = 2)
+
+# -------------------------
+# 4. Curtosis
+# -------------------------
+x4 <- rt(5000, df = 3)
+
+hist(
+  x4,
+  probability = TRUE,
+  breaks = 40,
+  xlim = c(-8,8),
+  col = "#ddd6fe",
+  border = "white",
+  main = "Alta curtosis",
+  sub = "Colas pesadas",
+  xlab = "x",
+  cex.main = 1.2,
+  cex.sub = 1,
+  cex.lab = 1.1
+)
+
+lines(
+  density(x4),
+  lwd = 3,
+  col = "#6d28d9"
+)
+
+curve(
+  dnorm(x, mean(x4), sd(x4)),
+  add = TRUE,
+  lwd = 2,
+  lty = 2,
+  col = "black"
+)
+
+legend(
+  "topright",
+  legend = c("Distribución", "Normal"),
+  col = c("#6d28d9", "black"),
+  lwd = c(3,2),
+  lty = c(1,2),
+  bty = "n",
+  cex = 0.9
+)
+```
+
+

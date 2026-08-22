@@ -1,0 +1,47 @@
+## Selección de variables: ¿cuáles predictores incluir?
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-body">
+<p style="font-size: 28px; text-align: justify;">
+No siempre todos los predictores disponibles deben entrar al modelo. Incluir variables innecesarias <strong>aumenta la complejidad sin mejorar la predicción</strong> y puede generar multicolinealidad. Necesitamos estrategias para seleccionar el mejor subconjunto.
+</p>
+</div>
+</div>
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 10px;">Estrategias paso a paso</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Selección hacia adelante (<em>forward</em>):</strong> se parte del modelo vacío y se agrega de a uno el predictor que más mejora el modelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>Eliminación hacia atrás (<em>backward</em>):</strong> se parte del modelo completo y se elimina de a uno el predictor que menos aporta.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<strong>Paso a paso (<em>stepwise</em>):</strong> combina ambas direcciones. En cada paso puede agregar o eliminar variables. Es la estrategia más usada.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 26px; margin-bottom: 10px;">Criterios de información</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 26px; text-align: justify;">
+<strong>AIC</strong> (Akaike): equilibra ajuste y complejidad. Se prefiere el modelo con <strong>menor AIC</strong>.
+</li>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+<strong>BIC</strong> (Bayesiano): similar al AIC pero penaliza más los modelos con muchos predictores.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px; text-align: justify;">
+En R: <code>step(modelo, direction = "both")</code> realiza selección stepwise usando AIC automáticamente.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px; text-align: justify;">
+Ningún criterio reemplaza el <strong>juicio del investigador</strong>: el contexto del problema siempre importa.
+</li>
+</ul>
+</div>
+
+</div>
+

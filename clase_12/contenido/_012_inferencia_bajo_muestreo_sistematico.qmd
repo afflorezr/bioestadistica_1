@@ -1,0 +1,43 @@
+## Inferencia bajo muestreo sistemático
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Estimador</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle\bar{x}_{sys} = \frac{1}{n}\sum_{j=0}^{n-1} x_{r+jk}$
+
+Media de las $n$ unidades con arranque $r$ e intervalo $k$. <span style="color:#1b4d2e;">Insesgado si $r$ se sortea en $\{1,\ldots,k\}$.</span>
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Varianza del estimador</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle\widehat{\text{Var}}(\bar{x}_{sys}) \approx \frac{s^2}{n}\!\left(1-\frac{n}{N}\right)$
+
+Válida si no hay <strong>periodicidad</strong> en la lista. <span style="color:#7a1515;">Si hay ciclos (ej. surcos alternados), subestima el error real.</span>
+</div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="3">
+<div class="block-title">Tamaño de muestra</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$n$ queda fijado por el intervalo de salto: $\displaystyle n = \left\lfloor \frac{N}{k} \right\rfloor$
+
+Se elige $k$ de modo que el $n$ resultante cumpla la precisión deseada, usando la fórmula del MAS como referencia.
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="4">
+<div class="block-title">Intervalo de confianza</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle\bar{x}_{sys} \pm z_{\alpha/2}\sqrt{\frac{s^2}{n}\!\left(1-\frac{n}{N}\right)}$
+
+<span style="color:#1b4d2e;">Aproximación válida si el arranque es aleatorio y la lista no tiene estructura periódica.</span>
+</div>
+</div>
+
+</div>
+
+

@@ -1,0 +1,107 @@
+## Diagnóstico Gráfico del Modelo
+
+
+<div style="
+display:grid;
+grid-template-columns:50% 50%;
+gap:15px;
+height:85%;
+">
+
+
+<!-- GRÁFICO DE DISPERSIÓN -->
+
+
+<div style="
+background:#f8fafc;
+border-radius:12px;
+padding:12px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+">
+
+
+<h4 style="margin-top:0;">
+Relación entre Variables
+</h4>
+
+
+```{r}
+#| echo: false
+#| fig-width: 7
+#| fig-height: 4
+#| fig-align: center
+#| out-width: "100%"
+# Datos del experimento
+set.seed(123)
+
+agua <- seq(2, 16, by = 1)
+
+rendimiento <- 1.5 + 0.32*agua + rnorm(
+  length(agua),
+  mean = 0,
+  sd = 0.9
+)
+
+datos <- data.frame(
+  agua,
+  rendimiento
+)
+
+# Modelo
+modelo <- lm(rendimiento ~ agua,
+             data = datos)
+
+            
+plot(rendimiento ~ agua,
+     data = datos,
+     pch = 19,
+     xlab = "Agua",
+     ylab = "Rendimiento")
+
+abline(modelo,
+       col = "red",
+       lwd = 2)
+
+```
+
+</div>
+
+
+
+
+<!-- DIAGNÓSTICO -->
+
+
+<div style="
+background:#f8fafc;
+border-radius:12px;
+padding:12px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+">
+
+
+<h4 style="margin-top:0;">
+Diagnóstico de Residuos
+</h4>
+
+
+```{r}
+#| echo: false
+#| fig-width: 7
+#| fig-height: 4
+#| fig-align: center
+#| out-width: "100%"
+
+
+par(mfrow = c(1,3))
+
+plot(modelo, which = c(1,2,3))
+
+```
+
+</div>
+
+
+</div>
+
+

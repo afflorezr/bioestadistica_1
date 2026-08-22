@@ -1,0 +1,73 @@
+## Interpretación y conclusiones
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color: #eef2ff; border: 2px solid #5737cc; border-radius: 10px; padding: 10px 20px; text-align: center; margin-bottom: 12px;">
+<p style="font-size: 26px; margin: 0; color: #1e1b4b;">
+<strong>Modelo final ajustado por MCO:</strong><br>
+$\hat{Y} = 2.10 + 0.18\,\text{Riego} - 0.11\,\text{Temperatura} + 0.97\,\text{Fertilización}$
+</p>
+</div>
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">Respuestas</h4>
+<ol style="padding-left: 20px; margin: 0;">
+
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 20px; margin-bottom: 8px;">
+<strong>¿Explica la producción?</strong> Sí. Prueba F: $\small p < 0.001$. $R^2_{adj} = 0.80$.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 20px; margin-bottom: 6px;">
+<strong>¿Cuáles son significativas?</strong>
+<table style="width:100%; font-size:20px; border-collapse: collapse; text-align: center; margin-top: 4px;">
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 3px;">Variable</th><th style="padding: 3px;">Valor-$p$</th><th style="padding: 3px;">Signif.</th>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 3px;">riego</td><td>< 0.001</td><td style="color: #15803d; font-weight: bold;">Sí</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 3px;">temperatura</td><td>0.003</td><td style="color: #15803d; font-weight: bold;">Sí</td>
+</tr>
+<tr>
+<td style="padding: 3px;">fertilización (Sí)</td><td>< 0.001</td><td style="color: #15803d; font-weight: bold;">Sí</td>
+</tr>
+</table>
+</li>
+
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; margin-bottom: 8px;">
+<strong>¿Cuánto explica?</strong> Con un $\small R^2_{adj} = 0.80$, el 80% de la variabilidad de la producción de tomate es explicada por las variables regresoras.
+</li>
+
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px; margin-bottom: 8px;">
+<strong>¿Qué seleccionaron los métodos?</strong> Backward y stepwise coinciden: eliminan variedad (menor AIC).
+</li>
+
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 24px; margin-bottom: 2px;">
+<strong>¿Supuestos?</strong> Sí, todos se cumplen (Shapiro, B-P, D-W con $\small p > 0.05$).
+</li>
+
+</ol>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 8px;">Conclusión</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 25px; text-align: justify;">
+Por cada litro adicional de riego semanal, la producción aumenta en promedio <strong>0.18 kg/planta</strong>, manteniendo las demás variables constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 25px; text-align: justify;">
+Por cada °C adicional de temperatura, la producción disminuye en promedio <strong>0.11 kg/planta</strong>, manteniendo las demás variables constantes.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 25px; text-align: justify;">
+Aplicar fertilización orgánica incrementa la producción en promedio <strong>0.97 kg/planta</strong> respecto a no aplicarla.
+</li>
+<li class="fragment fade-up" data-fragment-index="12" style="font-size: 25px; text-align: justify;">
+La variedad no aportó significativamente al modelo y fue excluida por los métodos de selección. Su inclusión queda a <strong>criterio de los investigadores</strong>.
+</li>
+</ul>
+
+</div>
+
+</div>
+

@@ -1,0 +1,35 @@
+## IC bajo muestreo por conglomerados
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Fórmula</div>
+<div class="block-body" style="font-size: 26px; line-height: 1.45;">
+Sean $m$ conglomerados seleccionados de $M$ totales, con media $\bar{x}_i$ en el grupo $i$:
+
+$$\bar{x}_{cl} \pm z_{\alpha/2}\sqrt{\frac{s_c^2}{m}\!\left(1-\frac{m}{M}\right)}$$
+
+donde $s_c^2 = \frac{1}{m-1}\sum(\bar{x}_i - \bar{x}_{cl})^2$ es la varianza <strong>entre</strong> conglomerados.
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">Ejemplo: leche en Nariño (10 veredas de 80)</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.4;">
+```{r}
+set.seed(3)
+medias_veredas <- c(17.1,18.3,16.8,19.2,17.5,
+                    18.0,16.5,19.8,17.3,18.6)
+m <- 10; M <- 80
+xbar_cl <- mean(medias_veredas)
+sc2     <- var(medias_veredas)
+e_cl    <- 1.96*sqrt(sc2/m*(1-m/M))
+cat("IC 95%: [", round(xbar_cl-e_cl,2), ",",
+    round(xbar_cl+e_cl,2), "] L/día\n")
+```
+</div>
+</div>
+
+</div>
+
+

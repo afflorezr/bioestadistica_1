@@ -1,0 +1,65 @@
+## Guía de funciones en R para regresión logística
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title" style="font-size: 28px;">Análisis completo paso a paso</div>
+  <div class="block-body">
+  <p style="font-size: 28px; text-align: justify;">
+  Esta rutina cubre: ajuste del modelo, extracción de coeficientes, odds ratios, evaluación y diagnóstico. Los resultados se presentan con tablas para mantener la salida limpia y pedagógica.
+  </p>
+  </div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3">
+
+<table style="width:100%; font-size: 26px; border-collapse: collapse; text-align: left; border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden;">
+<thead>
+<tr style="background-color: #1b4d2e; color: white;">
+<th style="padding: 10px 14px; width: 8%;">Paso</th>
+<th style="padding: 10px 14px; width: 22%;">Etapa</th>
+<th style="padding: 10px 14px; width: 50%;">Funciones en R</th>
+<th style="padding: 10px 14px; width: 20%;">Librería externa</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">1</td>
+<td style="padding: 8px 14px;"><strong>Ajuste</strong></td>
+<td style="padding: 8px 14px;"><code>glm(Y ~ X1 + X2, family = binomial(link = "logit"), data = datos)</code></td>
+<td style="padding: 8px 14px;">,</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">2</td>
+<td style="padding: 8px 14px;"><strong>Resumen</strong></td>
+<td style="padding: 8px 14px;"><code>summary(modelo)</code>, <code>confint(modelo)</code></td>
+<td style="padding: 8px 14px;">,</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">3</td>
+<td style="padding: 8px 14px;"><strong>Odds ratios</strong></td>
+<td style="padding: 8px 14px;"><code>exp(coef(modelo))</code>, <code>exp(confint(modelo))</code></td>
+<td style="padding: 8px 14px;">,</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">4</td>
+<td style="padding: 8px 14px;"><strong>Multicolinealidad</strong></td>
+<td style="padding: 8px 14px;"><code>vif(modelo)</code></td>
+<td style="padding: 8px 14px;"><code>car</code></td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">5</td>
+<td style="padding: 8px 14px;"><strong>Comparación con el nulo</strong></td>
+<td style="padding: 8px 14px;"><code>anova(modelo_nulo, modelo, test = "Chisq")</code></td>
+<td style="padding: 8px 14px;">,</td>
+</tr>
+<tr>
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">6</td>
+<td style="padding: 8px 14px;"><strong>Curva ROC y AUC</strong></td>
+<td style="padding: 8px 14px;"><code>roc(datos$Y, fitted(modelo))$auc</code></td>
+<td style="padding: 8px 14px;"><code>pROC</code></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+

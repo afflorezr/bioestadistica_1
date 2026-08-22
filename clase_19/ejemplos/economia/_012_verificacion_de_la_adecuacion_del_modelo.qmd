@@ -1,0 +1,25 @@
+## Verificación de la adecuación del modelo
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+Como en cualquier ANOVA, los residuos $e_{ij}=y_{ij}-\hat y_{ij}$ deben revisarse para validar normalidad, homogeneidad de varianza e independencia.
+</div>
+
+```{r}
+#| label: qqplot-industria
+#| echo: false
+#| fig-height: 3.2
+qqnorm(residuals(modelo_rcbd), main = "Gráfico de probabilidad normal de los residuos",
+       pch = 19, col = "#1a3a6b")
+qqline(residuals(modelo_rcbd), col = "#b91c1c", lwd = 2)
+```
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:21px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Shapiro-Wilk:</strong> $W=0.947$, valor-p$=0.319$.
+<strong style="color:#1b4d2e; margin-left:10px;">Bartlett:</strong> $K^2=1.73$, gl$=3$, valor-p$=0.630$.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:20px; text-align:center;">
+Ambos supuestos se cumplen razonablemente: no hay evidencia para rechazar normalidad ni homogeneidad de varianzas.
+</div>
+

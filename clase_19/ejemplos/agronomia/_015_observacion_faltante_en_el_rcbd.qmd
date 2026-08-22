@@ -1,0 +1,31 @@
+## Observación faltante en el RCBD
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+En campo es común perder una observación (planta muerta, parcela inundada). El procedimiento de Yates permite <strong>estimar</strong> el valor faltante para mantener el análisis balanceado.
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title" style="font-size:24px;">Fórmula de Yates para un dato faltante</div>
+<div class="block-body" style="font-size:24px; text-align:center;">
+$$
+\hat y_{ij}=\frac{a\,B_j+b\,T_i-Y}{(a-1)(b-1)}
+$$
+</div>
+</div>
+
+<div style="font-size:21px; line-height:1.4; margin-top:8px;">
+- $B_j$: total del bloque $j$ (sin el dato faltante).
+- $T_i$: total del tratamiento $i$ (sin el dato faltante).
+- $Y$: gran total (sin el dato faltante).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:21px; text-align:center; margin-top:8px;">
+Suponga que se pierde el dato de ICA Única en Tausa (valor real $33.2$). Con $B_{Tausa}=94.0$, $T_{ICA}=127.7$, $Y=551.8$:
+$$\hat y=\frac{4(94.0)+5(127.7)-551.8}{(4-1)(5-1)}=\frac{376+638.5-551.8}{12}\approx38.6$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:6px; font-size:20px; text-align:center;">
+El valor estimado debe usarse con $1$ grado de libertad menos en el error, y el análisis posterior debe interpretarse con cautela: la estimación introduce algo de optimismo en la precisión.
+</div>
+

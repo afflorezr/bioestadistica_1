@@ -1,0 +1,43 @@
+## Inferencia bajo muestreo por conglomerados
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Estimador</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle\bar{x}_{cl} = \frac{1}{m}\sum_{i=1}^{m} \bar{x}_i$
+
+$m$ conglomerados elegidos de $M$ totales; $\bar{x}_i$ es la media del grupo $i$. <span style="color:#1b4d2e;">Insesgado si los grupos se sortean con MAS.</span>
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Varianza del estimador</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle\widehat{\text{Var}}(\bar{x}_{cl}) = \frac{s_c^2}{m}\!\left(1-\frac{m}{M}\right)$
+
+$s_c^2 = \frac{1}{m-1}\sum_{i=1}^m (\bar{x}_i - \bar{x}_{cl})^2$: varianza <strong>entre</strong> grupos. <span style="color:#7a1515;">Aumenta si los grupos son internamente homogéneos.</span>
+</div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="3">
+<div class="block-title">Número de conglomerados</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle m = \frac{M\,z_{\alpha/2}^2\,s_c^2}{M\,e^2 + z_{\alpha/2}^2\,s_c^2}$
+
+$s_c^2$ se estima con un estudio piloto. $m$ es número de <em>grupos</em>, no de individuos.
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="4">
+<div class="block-title">Intervalo de confianza</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle\bar{x}_{cl} \pm z_{\alpha/2}\sqrt{\frac{s_c^2}{m}\!\left(1-\frac{m}{M}\right)}$
+
+Ej.: $m=10$ veredas, $M=80$, $\bar{x}_{cl}=18$ L, $s_c=3$ L $\Rightarrow 18 \pm 1.96\sqrt{\tfrac{9}{10}(1-\tfrac{10}{80})} \approx 18 \pm 1.71$ L
+</div>
+</div>
+
+</div>
+
+

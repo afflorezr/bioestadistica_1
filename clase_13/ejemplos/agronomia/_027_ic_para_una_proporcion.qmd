@@ -1,0 +1,36 @@
+## IC para una proporción
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Intervalo de Wald (grandes muestras)</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.45;">
+$$\hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$
+
+Condición de validez: $n\hat{p} \geq 5$ y $n(1-\hat{p}) \geq 5$.
+
+Para muestras pequeñas o $\hat{p}$ extremos: intervalo exacto de Wilson o Clopper-Pearson.
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">Ejemplo: roya en cafetales, Huila</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.4;">
+$n = 200$, $x = 54$ plantas con roya $\Rightarrow \hat{p} = 0.27$.
+
+Condición: $200 \times 0.27 = 54 \geq 5$ ✓
+
+$$0.27 \pm 1.96\sqrt{\frac{0.27 \times 0.73}{200}} = 0.27 \pm 0.062$$
+
+$$\text{IC}_{95\%}: [0.208,\; 0.332]$$
+
+```{r}
+p_hat <- 54/200; n <- 200
+round(p_hat + c(-1,1)*1.96*sqrt(p_hat*(1-p_hat)/n), 3)
+```
+</div>
+</div>
+
+</div>
+
+

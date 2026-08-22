@@ -1,0 +1,135 @@
+---
+title: "Bioestadística, Agronomía"
+subtitle: "Pruebas de hipótesis"
+author: " "
+institute: "Departamento de Estadística, Sede Bogotá"
+bibliography: ../referencias.bib
+csl: ../ieee.csl
+output-file: clase_14_agronomia.html
+format:
+  revealjs:
+    logo: ../images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../../assets/syntax-highlight.css, ../../assets/custom.css, ../../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="../../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
+      <script defer src="../../assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+{{< include ../contenido/_000_seccion.qmd >}}
+
+{{< include ../contenido/_001_contenido.qmd >}}
+
+{{< include ../ejemplos/agronomia/_002_breve_resumen.qmd >}}
+
+{{< include ../contenido/_003_seccion.qmd >}}
+
+{{< include ../contenido/_004_prueba_de_hipotesis_estadistica.qmd >}}
+
+{{< include ../contenido/_005_conceptos_basicos_y_terminologia.qmd >}}
+
+{{< include ../contenido/_006_otros_conceptos_importantes.qmd >}}
+
+{{< include ../contenido/_007_hipotesis_nula_e_hipotesis_alternativa.qmd >}}
+
+{{< include ../contenido/_008_tipos_de_pruebas_de_hipotesis.qmd >}}
+
+{{< include ../ejemplos/agronomia/_009_ejemplo.qmd >}}
+
+{{< include ../contenido/_010_estadistico_de_prueba_y_region_de_rechazo.qmd >}}
+
+{{< include ../contenido/_011_nivel_de_significancia_alpha.qmd >}}
+
+{{< include ../ejemplos/agronomia/_012_ejemplo.qmd >}}
+
+{{< include ../contenido/_013_seccion.qmd >}}
+
+{{< include ../contenido/_014_prueba_de_hipotesis_para_la_media_mu.qmd >}}
+
+{{< include ../contenido/_015_prueba_de_hipotesis_para_la_proporcion_p.qmd >}}
+
+{{< include ../contenido/_016_seleccion_del_estadistico_de_prueba.qmd >}}
+
+{{< include ../contenido/_017_criterios_de_decision.qmd >}}
+
+{{< include ../contenido/_018_reglas_de_decision_para_la_media_mu.qmd >}}
+
+{{< include ../contenido/_019_reglas_de_decision_para_la_proporcion_p.qmd >}}
+
+{{< include ../contenido/_020_criterio_usando_el_valor_p.qmd >}}
+
+{{< include ../contenido/_021_seccion.qmd >}}
+
+{{< include ../contenido/_022_comparando_hipotesis_la_idea_central.qmd >}}
+
+{{< include ../contenido/_023_lema_de_neyman_pearson.qmd >}}
+
+{{< include ../ejemplos/agronomia/_024_lema_de_neyman_pearson_intuicion.qmd >}}
+
+{{< include ../contenido/_025_razon_de_verosimilitud_lrt.qmd >}}
+
+{{< include ../contenido/_026_lrt_conexion_con_las_pruebas_habituales.qmd >}}
+
+{{< include ../ejemplos/agronomia/_027_ejemplo_prueba_de_hipotesis_con_lrt.qmd >}}
+
+{{< include ../ejemplos/agronomia/_028_ejemplo_calculo_de_lambda_y_decision.qmd >}}
+
+{{< include ../ejemplos/agronomia/_029_pruebas_ui_e_iu.qmd >}}
+
+{{< include ../ejemplos/agronomia/_030_ui_vs_iu_cuando_usar_cada_una.qmd >}}
+
+{{< include ../ejemplos/agronomia/_031_prueba_de_hipotesis_para_la_varianza.qmd >}}
+
+{{< include ../contenido/_032_reglas_de_decision_varianza_poblacional.qmd >}}
+
+{{< include ../ejemplos/agronomia/_033_ejemplo_prueba_para_la_varianza.qmd >}}
+
+{{< include ../contenido/_034_codigo_en_r_prueba_para_la_varianza.qmd >}}
+
+{{< include ../ejemplos/agronomia/_035_ejemplos_y_aplicaciones_en_r.qmd >}}
+
+{{< include ../ejemplos/agronomia/_036_ejemplo_1_produccion_de_cafe.qmd >}}
+
+{{< include ../ejemplos/agronomia/_037_ejemplo_2_rendimiento_de_papa_criolla.qmd >}}
+
+{{< include ../ejemplos/agronomia/_038_ejemplo_3_insectos_por_planta_en_cana.qmd >}}
+
+{{< include ../ejemplos/agronomia/_039_ejemplo_4_germinacion_de_semillas_de_maiz.qmd >}}
+
+{{< include ../contenido/_040_representacion_grafica_de_la_decision.qmd >}}
+
+{{< include ../contenido/_041_resumen_de_la_clase.qmd >}}
+
+{{< include ../contenido/_042_resumen_general_de_pruebas_de_hipotesis.qmd >}}
+
+{{< include ../ejemplos/agronomia/_043_taller_en_clase.qmd >}}
+
+{{< include ../contenido/_044_pruebas_de_hipotesis_para_la_media_y_la_proporcion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_045_ejercicios_propuestos.qmd >}}

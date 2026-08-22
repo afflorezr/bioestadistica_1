@@ -1,0 +1,33 @@
+## Cobertura del IC: simulación en R
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| fig-align: center
+set.seed(123)
+mu <- 5.2; sigma <- 0.8; n <- 30; m <- 40
+ics <- replicate(m, {
+  x <- rnorm(n, mu, sigma)
+  mean(x) + c(-1, 1) * 1.96 * sigma / sqrt(n)
+})
+cubre <- ics[1,] <= mu & mu <= ics[2,]
+par(mar = c(4, 4, 3, 1), family = "sans")
+plot(0, 0, type = "n", xlim = c(4.4, 6.0), ylim = c(0, m+1),
+     xlab = "Producción (millones/sucursal)", ylab = "Número de muestra",
+     main = paste0("40 ICs al 95%: ", sum(cubre), "/40 contienen μ = 5.2"),
+     cex.main = 1.2, cex.lab = 1.1)
+abline(v = mu, col = "#15803d", lwd = 2.5, lty = 2)
+col_ic <- ifelse(cubre, "#1e3a8a", "#dc2626")
+for (i in 1:m) {
+  lines(ics[, i], c(i, i), col = col_ic[i], lwd = 1.5)
+  points(mean(ics[, i]), i, pch = 19, cex = 0.7, col = col_ic[i])
+}
+legend("bottomright",
+       legend = c(paste0("Contiene μ (", sum(cubre), ")"),
+                  paste0("No contiene μ (", sum(!cubre), ")")),
+       col = c("#1e3a8a", "#dc2626"), lwd = 2, bty = "n", cex = 1)
+box(col = "gray40")
+```
+
+

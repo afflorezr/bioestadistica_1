@@ -1,0 +1,120 @@
+## Visualización de percentiles (Ejemplo 5)
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 5.5
+
+# Parámetros
+mu <- 109
+sigma <- 5
+
+# Dominio
+x <- seq(90, 128, length = 600)
+fx <- dnorm(x, mu, sigma)
+
+# Percentiles
+probs <- c(0.10, 0.25, 0.50, 0.75, 0.90)
+qs <- qnorm(probs, mu, sigma)
+
+# Colores
+cols <- c("#dc2626", "#f59e0b", "#166534",
+          "#f59e0b", "#dc2626")
+
+labs <- c("P10", "Q1", "Mediana", "Q3", "P90")
+
+# Márgenes
+par(
+  mar = c(4.5, 4.5, 3, 1),
+  family = "sans"
+)
+
+# Base del gráfico
+plot(
+  x, fx,
+  type = "n",
+  ylim = c(0, max(fx) * 1.15),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Percentiles en una distribución Normal",
+  cex.main = 1.4,
+  cex.lab = 1.2,
+  cex.axis = 1.05
+)
+
+# Cuadrícula
+grid(col = "gray90")
+
+# Área bajo la curva
+polygon(
+  c(min(x), x, max(x)),
+  c(0, fx, 0),
+  col = adjustcolor("#bfdbfe", alpha.f = 0.6),
+  border = NA
+)
+
+# Curva normal
+lines(
+  x, fx,
+  lwd = 4,
+  col = "#1e3a8a"
+)
+
+# Percentiles
+for(i in seq_along(qs)){
+
+  abline(
+    v = qs[i],
+    col = cols[i],
+    lwd = 2.8,
+    lty = 2
+  )
+
+  points(
+    qs[i],
+    dnorm(qs[i], mu, sigma),
+    pch = 19,
+    cex = 1.4,
+    col = cols[i]
+  )
+
+  text(
+    qs[i],
+    dnorm(qs[i], mu, sigma) + 0.01,
+    labels = labs[i],
+    col = cols[i],
+    cex = 1,
+    font = 2
+  )
+}
+
+# Línea de la media
+abline(
+  v = mu,
+  col = "#111827",
+  lwd = 2,
+  lty = 3
+)
+
+# Leyenda
+legend(
+  "topright",
+  legend = c(
+    "P10 y P90",
+    "Q1 y Q3",
+    "Mediana",
+    "Media"
+  ),
+  col = c(
+    "#dc2626",
+    "#f59e0b",
+    "#166534",
+    "#111827"
+  ),
+  lwd = c(2.8, 2.8, 2.8, 2),
+  lty = c(2,2,2,3),
+  bty = "n",
+  cex = 1
+)
+```
+

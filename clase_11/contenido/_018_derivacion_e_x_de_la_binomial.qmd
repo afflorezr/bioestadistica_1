@@ -1,0 +1,74 @@
+## Derivación: E(X) de la Binomial
+<div class="block-proof fragment fade-up" data-fragment-index="1"
+     style="width: 98%; margin: auto;">
+
+   <div class="block-title">Demostración: E(X) = np, para Bin(n,p)</div>
+
+  <div class="block-body" style="padding: 10px;">
+
+<div class="columns">
+
+<div class="column" style="width:50%; font-size:25px; line-height:1.3;">
+
+$$
+E(X)=\sum_{k=0}^{n}
+k\binom{n}{k}p^k(1-p)^{n-k}
+$$
+
+Usando:
+
+$$
+k\binom{n}{k}
+=
+n\binom{n-1}{k-1}
+$$
+
+obtenemos:
+
+$$
+E(X)=
+\sum_{k=1}^{n}
+n\binom{n-1}{k-1}
+p^k(1-p)^{n-k}
+$$
+
+</div>
+
+<div class="column" style="width:50%; font-size:25px; line-height:1.3;">
+
+Factorizando $np$:
+
+$$
+E(X)=
+np
+\sum_{k=1}^{n}
+\binom{n-1}{k-1}
+p^{k-1}(1-p)^{n-k}
+$$
+
+Con $j=k-1$:
+
+$$
+E(X)=
+np
+\sum_{j=0}^{n-1}
+\binom{n-1}{j}
+p^j(1-p)^{(n-1)-j}
+$$
+
+$$
+=
+np(p+1-p)^{n-1}
+=
+\boxed{np}
+$$
+
+</div>
+
+</div>
+
+  </div>
+</div>
+
+
+

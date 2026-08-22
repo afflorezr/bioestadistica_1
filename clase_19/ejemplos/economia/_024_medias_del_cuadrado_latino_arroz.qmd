@@ -1,0 +1,40 @@
+## Medias del cuadrado latino: servicios
+
+```{r}
+#| label: interaccion-servicios
+#| echo: false
+#| fig-height: 3.2
+trt_servicios <- c("Estrategia_60","Estrategia_67","Estrategia_2000","Estrategia D")
+lotes <- paste0("Lote_", 1:4)
+fechas <- paste0("Fecha_", 1:4)
+LS <- matrix(c(1,2,3,4, 2,3,4,1, 3,4,1,2, 4,1,2,3), nrow=4, byrow=TRUE)
+mu2 <- 7.2
+alpha_fila <- c(0, 0.3, -0.4, 0.5)
+beta_col   <- c(0, -0.5, 0.6, 0.2)
+tau_trt    <- c(0, 0.8, 1.3, -0.6)
+set.seed(202)
+dat_servicios <- data.frame()
+for (i in 1:4) for (j in 1:4) {
+  k <- LS[i,j]
+  y <- mu2 + alpha_fila[i] + beta_col[j] + tau_trt[k] + rnorm(1,0,0.35)
+  dat_servicios <- rbind(dat_servicios, data.frame(lote=lotes[i], fecha=fechas[j],
+                                            estrategia=trt_servicios[k], rend=round(y,2)))
+}
+dat_servicios$lote <- factor(dat_servicios$lote, levels=lotes)
+dat_servicios$fecha <- factor(dat_servicios$fecha, levels=fechas)
+dat_servicios$estrategia <- factor(dat_servicios$estrategia, levels=trt_servicios)
+modelo_ls <- aov(rend ~ estrategia + lote + fecha, data=dat_servicios)
+boxplot(rend ~ estrategia, data = dat_servicios,
+        col = c("#dbeafe","#d6f0dd","#fde68a","#fecaca"),
+        xlab = "Estrategia", ylab = "Rentabilidad (millones/sucursal)",
+        main = "Rentabilidad de servicios por estrategia")
+```
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th>Estrategia</th><th>$\bar y_{..k}$</th></tr>
+<tr style="background-color:#eef4fb;"><td>Estrategia A</td><td>7.082</td></tr>
+<tr><td>Estrategia B</td><td>8.373</td></tr>
+<tr style="background-color:#eef4fb;"><td>Estrategia C</td><td>8.525</td></tr>
+<tr><td>Estrategia D</td><td>6.605</td></tr>
+</table>
+

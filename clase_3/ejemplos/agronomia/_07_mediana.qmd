@@ -1,0 +1,76 @@
+## Ejemplo 1: $n$ impar, sin agrupar
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Horas de estudio de 13 estudiantes</div>
+  <div class="block-body">
+<p>Datos: 4, 6, 5, 7, 3, 8, 6, 5, 9, 7, 4, 6, 10. Calcule la mediana.</p>
+  </div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+Datos ordenados: 3, 4, 4, 5, 5, 6, **6**, 6, 7, 7, 8, 9, 10. Con $n=13$ (impar):
+$$Me = x_{\left(\frac{13+1}{2}\right)} = x_{(7)} = 6\,\text{horas}$$
+El 50 % de los estudiantes estudia <strong>6 horas o menos</strong>, y el otro 50 % estudia 6 horas o más.
+  </div>
+</div>
+
+## Ejemplo 2: $n$ par, sin agrupar
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Producción de 14 parcelas agrícolas (kg)</div>
+  <div class="block-body">
+<p>Datos: 12, 15, 18, 20, 14, 16, 19, 17, 13, 21, 22, 11, 23, 24. Calcule la mediana.</p>
+  </div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2">
+  <div class="block-title">Solución</div>
+  <div class="block-body">
+Datos ordenados: 11, 12, 13, 14, 15, 16, **17**, **18**, 19, 20, 21, 22, 23, 24. Con $n=14$ (par):
+$$Me = \frac{x_{(7)} + x_{(8)}}{2} = \frac{17 + 18}{2} = 17{,}5\,\text{kg}$$
+La mitad de las parcelas produce <strong>17,5 kg o menos</strong> y la otra mitad produce 17,5 kg o más.
+  </div>
+</div>
+
+## Datos agrupados sin intervalos
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<p style="font-size: 24px; text-align: justify; font-weight: 600; margin-bottom: 8px;">Procedimiento:</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 24px; text-align: justify;">
+Calcule $\frac{N+1}{2}$ (si $N$ es impar) o $\frac{N}{2}$ y $\frac{N}{2}+1$ (si $N$ es par).
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+Busque esa(s) posición(es) en la columna de frecuencias acumuladas $F_i$.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: justify;">
+El valor $x_i$ que corresponde a la $F_i$ donde se alcanza o supera la posición buscada es la mediana.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+Si los dos valores centrales (caso par) caen en la misma $F_i$, no se promedia: ese $x_i$ es la mediana.
+</li>
+</ul>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="6">
+  <div class="block-title">Ejemplo: frutos por planta ($N=13$, impar)</div>
+  <div class="block-body">
+<table style="width: 90%; border-collapse: collapse; margin: auto; font-size: 21px; text-align: center;">
+  <tr style="background-color: #1a3a6b; color: white;"><th>$x_i$</th><th>$f_i$</th><th>$F_i$</th></tr>
+  <tr style="background-color: #EAF2F8;"><td>2</td><td>2</td><td>2</td></tr>
+  <tr style="background-color: #FFFFFF;"><td>3</td><td>3</td><td>5</td></tr>
+  <tr style="background-color: #bfdbfe; font-weight: bold;"><td>4</td><td>4</td><td>9</td></tr>
+  <tr style="background-color: #FFFFFF;"><td>5</td><td>2</td><td>11</td></tr>
+  <tr style="background-color: #EAF2F8;"><td>6</td><td>1</td><td>12</td></tr>
+  <tr style="background-color: #FFFFFF;"><td>7</td><td>1</td><td>13</td></tr>
+</table>
+$\frac{13+1}{2}=7$; la posición 7 cae en $F_i=9$, que corresponde a $x_i=4$. **$Me = 4$ frutos.**
+  </div>
+</div>
+
+</div>
+

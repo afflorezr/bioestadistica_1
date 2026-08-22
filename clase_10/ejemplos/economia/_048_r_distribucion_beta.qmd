@@ -1,0 +1,60 @@
+## R: Distribución Beta
+
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+Cobertura vegetal en sucursales del <strong>Amazonas colombiano</strong>, $\text{Beta}(2, 5)$. Calcule $P(X \leq 0.3)$, $P(X > 0.5)$, $P(X \geq 0.5)$ y $P(0.2 \leq X \leq 0.5)$.
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+
+<div class="scrollable-code" style="min-width: 0;">
+
+```{r}
+#| echo: true
+#| comment: ""
+#| class-source: scrollable-code
+alpha <- 2; beta_par <- 5
+
+# Menor o igual que 0.3
+pbeta(0.3, alpha, beta_par)
+
+# Estrictamente menor que 0.3 (igual para continua)
+pbeta(0.3, alpha, beta_par)
+
+# Mayor que 0.5
+pbeta(0.5, alpha, beta_par, lower.tail = FALSE)
+
+# Mayor o igual que 0.5 (igual para continua)
+pbeta(0.5, alpha, beta_par, lower.tail = FALSE)
+
+# Entre 0.2 y 0.5 (inclusive)
+pbeta(0.5, alpha, beta_par) -
+pbeta(0.2, alpha, beta_par)
+```
+</div>
+
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<strong><code>dbeta(x, shape1, shape2): </code></strong>
+<span style="color:#374151;font-size:24px">$f(x)$</span><br><br>
+
+<strong><code>pbeta(q, shape1, shape2):</code></strong>
+<span style="color:#374151;font-size:24px">$P(X \leq q)$</span><br><br>
+
+<strong><code>lower.tail = FALSE: </code></strong>
+<span style="color:#374151;font-size:24px">$P(X > q)$</span><br><br>
+
+<strong><code>pbeta(b) - pbeta(a): </code></strong>
+<span style="color:#374151;font-size:24px">$P(a \leq X \leq b)$</span><br><br>
+
+<div class="block-alert" style="margin-top: 8px;">
+<div class="block-title">Nota: variable continua</div>
+<div class="block-body" style="font-size: 21px;">
+$P(X = x) = 0$ siempre.<br>
+$P(X \leq q) = P(X < q)$
+</div>
+</div>
+</div>
+
+</div>
+

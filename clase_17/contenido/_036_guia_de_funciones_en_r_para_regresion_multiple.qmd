@@ -1,0 +1,65 @@
+## Guía de funciones en R para regresión múltiple
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title" style="font-size: 28px;">Análisis completo paso a paso</div>
+  <div class="block-body">
+  <p style="font-size: 28px; text-align: justify;">
+  Esta rutina cubre: exploración, ajuste, evaluación, selección y diagnóstico. Los resultados se presentan con tablas para mantener la salida limpia y pedagógica.
+  </p>
+  </div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3">
+
+<table style="width:100%; font-size: 25px; border-collapse: collapse; text-align: left; border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden;">
+<thead>
+<tr style="background-color: #1b4d2e; color: white;">
+<th style="padding: 10px 14px; width: 8%;">Paso</th>
+<th style="padding: 10px 14px; width: 22%;">Etapa</th>
+<th style="padding: 10px 14px; width: 50%;">Funciones en R</th>
+<th style="padding: 10px 14px; width: 20%;">Librería externa</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">1</td>
+<td style="padding: 8px 14px;"><strong>Exploración</strong></td>
+<td style="padding: 8px 14px;"><code>cor()</code>, <code>plot()</code>, <code>ggpairs()</code></td>
+<td style="padding: 8px 14px;"><code>GGally</code></td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">2</td>
+<td style="padding: 8px 14px;"><strong>Estimación</strong></td>
+<td style="padding: 8px 14px;"><code>lm(Y ~ X1 + X2 + factor(X3), data = datos)</code></td>
+<td style="padding: 8px 14px;">,</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">3</td>
+<td style="padding: 8px 14px;"><strong>Evaluación</strong></td>
+<td style="padding: 8px 14px;"><code>summary(modelo)</code>, <code>confint(modelo)</code>, <code>vif(modelo)</code></td>
+<td style="padding: 8px 14px;"><code>car</code></td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">4</td>
+<td style="padding: 8px 14px;"><strong>Selección</strong></td>
+<td style="padding: 8px 14px;"><code>step(modelo, direction = "forward/backward/both")</code></td>
+<td style="padding: 8px 14px;">,</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">5</td>
+<td style="padding: 8px 14px;"><strong>Diagnóstico gráfico</strong></td>
+<td style="padding: 8px 14px;"><code>par(mfrow = c(2, 2))</code> + <code>plot(modelo)</code></td>
+<td style="padding: 8px 14px;">,</td>
+</tr>
+<tr>
+<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">6</td>
+<td style="padding: 8px 14px;"><strong>Diagnóstico numérico</strong></td>
+<td style="padding: 8px 14px;"><code>shapiro.test(residuals)</code>, <code>bptest(modelo)</code>, <code>durbinWatsonTest(modelo)</code></td>
+<td style="padding: 8px 14px;"><code>lmtest</code>, <code>car</code></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+

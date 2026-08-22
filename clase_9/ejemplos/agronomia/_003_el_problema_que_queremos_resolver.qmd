@@ -1,0 +1,49 @@
+## El problema que queremos resolver
+
+<div style="margin-top: 10px;">
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+<div class="block-body" style="font-size: 28px; text-align: justify;">
+En un lote de <strong>10 semillas de maíz</strong>, cada semilla germina con probabilidad $p = 0.8$. ¿Cuál es la probabilidad de que germinen <em>exactamente 7</em>?
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 16px;">
+
+<div>
+<p class="fragment fade-up" data-fragment-index="2" style="font-size: 22px; color: #7a1515; font-weight: 700; margin-bottom: 6px;">❌ Enfoque de clases 4–7: listar eventos</p>
+
+<div class="block-alert fragment fade-up" data-fragment-index="3" style="max-width: 750px;">
+<div class="block-title">Espacio muestral</div>
+<div class="block-body" style="font-size: 25px;">
+$\Omega = \{GGGGGGGGGG,\; FGGGGGGGGG,\;\ldots\}$
+<br><br>
+$|\Omega| = 2^{10} = \mathbf{1024}$ <strong>resultados posibles.</strong>
+<br><br>
+Para $P(\text{exactamente 7 germinan})$ hay que contar todos los subconjuntos de tamaño 7... $\binom{10}{7} = 120$ eventos.
+</div>
+</div>
+</div>
+
+<div>
+<p class="fragment fade-up" data-fragment-index="4" style="font-size: 22px; color: #1b4d2e; font-weight: 700; margin-bottom: 6px;">✓ Enfoque nuevo: distribución de probabilidad</p>
+<div class="block-definition fragment fade-up" data-fragment-index="5">
+<div class="block-title">Variable aleatoria + fórmula</div>
+<div class="block-body" style="font-size: 24px;">
+Sea $X =$ número de semillas que germinan. Entonces $X \sim \text{Bin}(10,\, 0.8)$ y:
+<br><br>
+$P(X = 7) = \binom{10}{7}(0.8)^7(0.2)^3 \approx 0.201$
+<br><br>
+Una sola expresión reemplaza los 1024 casos.
+</div>
+</div>
+</div>
+
+</div>
+
+<p class="fragment fade-up" data-fragment-index="6" style="font-size: 27px; text-align: center; margin-top: 16px; color: #1a3a6b; font-weight: 700;">
+Las distribuciones son atajos que condensan toda la probabilidad de un fenómeno en una fórmula.
+</p>
+
+</div>
+

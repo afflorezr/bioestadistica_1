@@ -1,0 +1,44 @@
+## Inferencia bajo muestreo estratificado
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Estimador</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle\bar{x}_{st} = \sum_{h=1}^{H} W_h\,\bar{x}_h, \quad W_h = \frac{N_h}{N}$
+
+Promedio ponderado de las medias por estrato. Proporción: $\displaystyle\hat{p}_{st} = \sum_{h=1}^{H} W_h\,\hat{p}_h$
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Varianza del estimador</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle\widehat{\text{Var}}(\bar{x}_{st}) = \sum_{h=1}^{H} W_h^2 \frac{s_h^2}{n_h}\!\left(1-\frac{n_h}{N_h}\right)$
+
+$s_h^2$: varianza dentro del estrato $h$. <span style="color:#1b4d2e;">Menor que la del MAS si los estratos son homogéneos.</span>
+</div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="3">
+<div class="block-title">Tamaño de muestra total</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.35;">
+$\displaystyle n = \frac{z_{\alpha/2}^2 \sum_h N_h s_h^2 / N}{e^2 + z_{\alpha/2}^2 \sum_h N_h s_h^2 / N^2}$
+
+Luego $n_h = n \cdot N_h/N$. Si $s_h^2 \approx s^2\ \forall h$, reduce a la fórmula del MAS.
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="4">
+<div class="block-title">Intervalo de confianza</div>
+<div class="block-body" style="font-size: 20px; line-height: 1.35;">
+$\displaystyle\bar{x}_{st} \pm z_{\alpha/2}\sqrt{\sum_{h=1}^H W_h^2 \frac{s_h^2}{n_h}\!\left(1-\frac{n_h}{N_h}\right)}$
+
+Para $p$: $\displaystyle\hat{p}_{st} \pm z_{\alpha/2}\sqrt{\sum_{h=1}^H W_h^2 \frac{\hat{p}_h(1-\hat{p}_h)}{n_h}\!\left(1-\frac{n_h}{N_h}\right)}$
+
+</div>
+</div>
+
+</div>
+
+

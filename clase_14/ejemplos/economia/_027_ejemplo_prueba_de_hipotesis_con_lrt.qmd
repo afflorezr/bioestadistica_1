@@ -1,0 +1,26 @@
+## Ejemplo: Prueba de hipótesis con LRT
+
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 28px; text-align: justify; line-height: 1.3; margin-bottom: 10px;">
+Una empresa productora de producto Hass afirma que el peso promedio del fruto es de 200 g. En una muestra de $\small n=36$ frutos se obtuvo $\small \bar{x}=194$ g, con $\small \sigma=15$ g (conocida) y $\small \alpha=0.05$. ¿Hay evidencia de que el peso promedio es diferente de 200 g?
+</p>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size: 28px; line-height: 1; margin-bottom: 10px;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+
+<div style="font-size: 24px;">
+$$H_0:\mu=200 \qquad H_1:\mu\neq200$$
+</div>
+
+Es decir, $\small \Theta_0=\{200\}$ (un único valor posible) y $\small \Theta=\mathbb{R}$ (todos los valores posibles).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:10px 14px; font-size: 28px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Fórmula de $\lambda(\mathbf{x})$:</strong>
+En $\small \Theta_0$ la única opción es $\small \mu_0=200$; en $\small \Theta$ la verosimilitud se maximiza en $\small \hat\mu=\bar{x}$. Como ambas son densidades normales con la misma $\small \sigma$, $\lambda$ es exactamente <strong>el cociente de esas dos normales</strong>:
+
+<div style="font-size: 16px;">
+$$\lambda(\mathbf{x})=\frac{L(\mu_0)}{L(\hat\mu)}=\frac{(2\pi\sigma^2)^{-n/2}\exp\!\left(-\dfrac{\sum(x_i-\mu_0)^2}{2\sigma^2}\right)}{(2\pi\sigma^2)^{-n/2}\exp\!\left(-\dfrac{\sum(x_i-\hat\mu)^2}{2\sigma^2}\right)}=\exp\!\left(-\frac{n(\bar{x}-\mu_0)^2}{2\sigma^2}\right)$$
+</div>
+El factor $\small (2\pi\sigma^2)^{-n/2}$ es igual en ambas normales y se cancela; solo queda la diferencia entre los dos exponentes.
+</div>
+

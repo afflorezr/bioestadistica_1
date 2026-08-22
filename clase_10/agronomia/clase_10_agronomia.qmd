@@ -1,0 +1,179 @@
+---
+title: "Bioestadística, Agronomía"
+subtitle: "Clase 10: Distribuciones de probabilidad y aplicaciones"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: ../referencias.bib
+csl: ../ieee.csl
+output-file: clase_10_agronomia.html
+format:
+  revealjs:
+    embed-resources: true
+    logo: ../images/logo_unal_3.png
+    code-overflow: scroll
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../../assets/syntax-highlight.css, ../../assets/custom.css, ../../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="../../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
+      <script defer src="../../assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+{{< include ../contenido/_000_seccion.qmd >}}
+
+{{< include ../contenido/_001_contenido.qmd >}}
+
+{{< include ../contenido/_002_seccion.qmd >}}
+
+{{< include ../contenido/_003_resumen_clase_9.qmd >}}
+
+{{< include ../contenido/_004_el_hilo_del_curso_clases_1_a_10.qmd >}}
+
+{{< include ../contenido/_005_fmp_y_fda.qmd >}}
+
+{{< include ../contenido/_006_seccion.qmd >}}
+
+{{< include ../contenido/_007_fmp_y_fda_distribucion_binomial.qmd >}}
+
+{{< include ../contenido/_008_grafica_fmp_y_fda_binomial_n_3_p_0_4.qmd >}}
+
+{{< include ../contenido/_009_efecto_de_los_parametros_en_la_distribucion_binomial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_010_r_distribucion_binomial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_011_aplicaciones_en_agronomia_distribucion_binomial.qmd >}}
+
+{{< include ../contenido/_012_seccion.qmd >}}
+
+{{< include ../contenido/_013_fmp_y_fda_formulas_de_la_distribucion_poisson.qmd >}}
+
+{{< include ../contenido/_014_fmp_y_fda_distribucion_poisson_lambda_0_3.qmd >}}
+
+{{< include ../contenido/_015_efecto_del_parametro_en_la_distribucion_poisson.qmd >}}
+
+{{< include ../contenido/_016_r_distribucion_poisson.qmd >}}
+
+{{< include ../contenido/_017_relacion_diferencial_entre_fdp_y_fda.qmd >}}
+
+{{< include ../ejemplos/agronomia/_018_aplicaciones_en_agronomia_distribucion_poisson.qmd >}}
+
+{{< include ../contenido/_019_seccion.qmd >}}
+
+{{< include ../contenido/_020_fdp_y_fda_de_la_distribucion_uniforme.qmd >}}
+
+{{< include ../contenido/_021_fdp_y_fda_distribucion_uniforme_con_a_1_y_b_4.qmd >}}
+
+{{< include ../ejemplos/agronomia/_022_r_distribucion_uniforme.qmd >}}
+
+{{< include ../ejemplos/agronomia/_023_aplicaciones_en_agronomia_distribucion_uniforme.qmd >}}
+
+{{< include ../contenido/_024_seccion.qmd >}}
+
+{{< include ../contenido/_025_fdp_y_fda_de_la_distribucion_normal.qmd >}}
+
+{{< include ../contenido/_026_grafica_fdp_y_fda_normal_mu_3_sigma_7.qmd >}}
+
+{{< include ../contenido/_027_efecto_de_y_en_la_normal.qmd >}}
+
+{{< include ../contenido/_028_la_regla_del_68_95_y_99_7.qmd >}}
+
+{{< include ../contenido/_029_uso_de_la_tabla_z_estandarizacion.qmd >}}
+
+{{< include ../contenido/_030_procedimiento_general_para_usar_la_tabla_z.qmd >}}
+
+{{< include ../contenido/_031_probabilidades_usando_la_tabla_z.qmd >}}
+
+{{< include ../contenido/_032_r_distribucion_normal.qmd >}}
+
+{{< include ../ejemplos/agronomia/_033_aplicaciones_en_agronomia_distribucion_normal.qmd >}}
+
+{{< include ../contenido/_034_seccion.qmd >}}
+
+{{< include ../contenido/_035_fdp_y_fda_de_la_distribucion_exponencial.qmd >}}
+
+{{< include ../contenido/_036_grafico_de_la_fdp_y_fda_de_una_distribucion_exponencial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_037_propiedad_sin_memoria_de_la_exponencial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_038_r_distribucion_exponencial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_039_aplicaciones_en_agronomia_distribucion_exponencial.qmd >}}
+
+{{< include ../contenido/_040_seccion.qmd >}}
+
+{{< include ../contenido/_041_fdp_y_fda_de_la_distribucion_gamma.qmd >}}
+
+{{< include ../contenido/_042_efecto_de_los_parametros_en_la_distribucion_gamma.qmd >}}
+
+{{< include ../contenido/_043_r_distribucion_gamma.qmd >}}
+
+{{< include ../ejemplos/agronomia/_044_aplicaciones_en_agronomia_distribucion_gamma.qmd >}}
+
+{{< include ../contenido/_045_seccion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_046_fdp_y_fda_de_la_distribucion_beta.qmd >}}
+
+{{< include ../contenido/_047_formas_de_la_distribucion_beta_segun_los_parametros.qmd >}}
+
+{{< include ../ejemplos/agronomia/_048_r_distribucion_beta.qmd >}}
+
+{{< include ../ejemplos/agronomia/_049_aplicaciones_en_agronomia_distribucion_beta.qmd >}}
+
+{{< include ../contenido/_050_seccion.qmd >}}
+
+{{< include ../contenido/_051_fdp_y_fda_de_la_distribucion_chi_cuadrado.qmd >}}
+
+{{< include ../contenido/_052_efecto_de_nu_en_la_distribucion_chi_cuadrado.qmd >}}
+
+{{< include ../ejemplos/agronomia/_053_r_distribucion_chi_cuadrado.qmd >}}
+
+{{< include ../ejemplos/agronomia/_054_aplicaciones_en_agronomia_chi_cuadrado.qmd >}}
+
+{{< include ../contenido/_055_seccion.qmd >}}
+
+{{< include ../contenido/_056_fdp_y_fda_de_la_distribucion_t_de_student.qmd >}}
+
+{{< include ../contenido/_057_efecto_de_nu_en_la_distribucion_t_de_student.qmd >}}
+
+{{< include ../contenido/_058_comparacion_normal_vs_t_de_student.qmd >}}
+
+{{< include ../contenido/_059_r_distribucion_t_de_student.qmd >}}
+
+{{< include ../ejemplos/agronomia/_060_aplicaciones_en_agronomia_t_de_student.qmd >}}
+
+{{< include ../contenido/_061_aproximaciones_entre_distribuciones.qmd >}}
+
+{{< include ../ejemplos/agronomia/_062_taller_en_clase.qmd >}}
+
+{{< include ../ejemplos/agronomia/_063_1_fmp_de_la_binomial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_064_2_calculo_con_la_fdp_normal.qmd >}}
+
+{{< include ../contenido/_065_3_distribucion_poisson_parametro_desconocido.qmd >}}
+
+{{< include ../contenido/_066_4_comparar_distribuciones.qmd >}}

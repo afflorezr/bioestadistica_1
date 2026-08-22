@@ -1,0 +1,241 @@
+## Gráfico de barras
+
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="text-align:justify; margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align:justify;">
+Representa datos mediante barras separadas, permitiendo comparar diferentes categorías.
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Altura de la barra = valor o frecuencia
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b> Ganancia diaria de peso (kg/día) en cuatro lotes de cerdos.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=8
+fig.height=5
+lotes <- c("Lote A", "Lote B", "Lote C", "Lote D")
+ganancia <- c(0.65, 0.72, 0.68, 0.75)
+
+library(ggplot2)
+
+datos <- data.frame(
+  lote = lotes,
+  ganancia = ganancia
+)
+
+ggplot(datos, aes(x = lote, y = ganancia, fill = lote)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Ganancia diaria de peso por lote",
+       x = "Lotes",
+       y = "kg por día") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 16, face = "bold"))
+
+```
+
+</div>
+
+</div>
+
+## Histograma
+
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 25px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Representa la distribución de una variable **cuantitativa continua** mediante barras unidas.
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Permite observar la forma de la distribución (simétrica, sesgada, etc.) y ver que intervalo o categoría tiene mayor frecuencia.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b> Las calificaciones de 10 estudiantes en un examen final fueron 60, 62, 65, 70, 72, 75, 78, 80, 85, 90.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=8
+fig.height=5
+datos <- c(60, 62, 65, 70, 72, 75, 78, 80, 85, 90)
+
+hist(datos,
+     col = "#66CDAA",
+     main = "Distribución de valores",
+     xlab = "Valores",
+     ylab = "Frecuencia",
+     breaks = 5,
+     border = "white",
+     cex.main = 1.5,
+     cex.lab = 1.2,
+     cex.axis = 1.1)
+
+```
+
+</div>
+
+</div>
+
+## Polígono de frecuencias
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+
+<ul >
+<li class="fragment fade-in" data-fragment-index="2" style="text-aling:justify;">
+Se construye uniendo con líneas los puntos medios de los intervalos de una distribución de datos. 
+</li>
+
+<li class="fragment fade-in" data-fragment-index="4">
+Permite ver la forma, concentración y tendencia de los datos.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b> Peso vivo de los cerdos.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=10
+fig.height=7
+datos <- c(60, 62, 65, 70, 72, 73, 74, 75, 78, 80, 85, 90)
+
+# Crear histograma
+h <- hist(datos,
+          col = "lightgreen",
+          main = "Polígono de Frecuencias",
+          xlab = "Valores",
+          ylab = "Frecuencia",
+          breaks = 5,
+          border = "white")
+
+# Agregar polígono
+lines(h$mids, h$counts,
+      type = "o",
+      col = "darkgreen",
+      lwd = 2,
+      pch = 16)
+```
+</div>
+</div>
+
+
+
+## Gráfico circular (pie plot)
+
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="height: 300px; margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Muestra proporciones o porcentajes de un total.
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Permite identificar qué categoría tiene mayor participación.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b> Composición de la dieta
+</li>
+</ul>
+
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="margin-top:60px;width:90%" >
+```{r echo=FALSE, fig.width=8, fig.height=8}
+
+library(ggplot2)
+
+proporcion_dieta <- c(50, 30, 15, 5)
+componentes <- c("Forraje", "Concentrado", "Suplemento", "Otros")
+
+df <- data.frame(componentes, proporcion_dieta)
+
+ggplot(df, aes(x = 2, y = proporcion_dieta, fill = componentes)) +
+  geom_col(color = "white") +
+  coord_polar(theta = "y") +
+  xlim(0.5, 2.5) +  # crea el hueco (donut)
+  geom_text(aes(label = paste0(proporcion_dieta, "%")),
+            position = position_stack(vjust = 0.5),
+            color = "white",
+            size = 5) +
+  labs(title = "Composición simulada de la dieta", fill = "") +
+  theme_void() +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+    legend.position = "right"
+  )
+```
+</div>
+</div>
+
+## Gráfico de líneas
+<div class="twocol">
+
+<div class="fragment fade-up info-box" style="height: 250px; margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2">
+Se usa para mostrar tendencias a lo largo del tiempo.
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+Permite observar aumentos y disminuciones
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+<b>Ejemplo:</b> Producción anual de leche.
+</li>
+
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="7" style="height: 200px; margin-top:60px;width:130%" >
+```{r echo=FALSE}
+
+library(ggplot2)
+
+años <- c(2018, 2019, 2020, 2021, 2022)
+leche <- c(10, 12, 15, 14, 18)
+
+df <- data.frame(años, leche)
+
+ggplot(df, aes(x = años, y = leche)) +
+  geom_line(color = "#FF8C00", linewidth = 1.5) +
+  geom_point(color = "#FF8C00", size = 3) +
+  geom_text(aes(label = leche), vjust = -1, size = 5) +
+  labs(
+    title = "Producción simulada de leche por año",
+    x = "Año",
+    y = "Miles de litros"
+  ) +
+  ylim(0, 20) +
+  theme_minimal(base_size = 16) +
+  theme(
+    plot.title = element_text(face = "bold", size = 18),
+    axis.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+</div>
+
+</div>
+
+## Conclusión
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+
+<p style="text-align: justify; padding-right:50px">
+Las gráficas, tanto en **contextos generales** como en las ciencias pecuarias, **permiten** analizar datos de manera visual, **identificar patrones importantes** y apoyar la toma de decisiones en procesos productivos y científicos.
+</p>
+
+</div>
+

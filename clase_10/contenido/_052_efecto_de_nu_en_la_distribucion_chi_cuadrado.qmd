@@ -1,0 +1,32 @@
+## Efecto de $\nu$ en la Distribución Chi-cuadrado
+
+```{r}
+#| echo: false
+#| fig-width: 14
+#| fig-height: 5
+#| fig-align: center
+library(ggplot2)
+library(dplyr)
+
+gls <- c(1, 2, 5, 10, 20, 50)
+cols <- c("#7a1515","#d54e53","#e78c45","#1a3a6b","#1b4d2e","#6b7280")
+x <- seq(0.01, 80, length.out = 500)
+
+df_all <- do.call(rbind, lapply(seq_along(gls), function(i) {
+  data.frame(x = x, fx = dchisq(x, gls[i]),
+             nu = paste0("ν = ", gls[i]))
+}))
+df_all$nu <- factor(df_all$nu, levels = paste0("ν = ", gls))
+
+ggplot(df_all, aes(x, fx, color = nu)) +
+  geom_line(linewidth = 1.1) +
+  scale_color_manual(values = setNames(cols, paste0("ν = ", gls))) +
+  scale_y_continuous(limits = c(0, 0.5)) +
+  scale_x_continuous(limits = c(0, 60)) +
+  labs(title = "FDP de χ²(ν) para distintos grados de libertad",
+       x = "x", y = "f(x)", color = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "right",
+        plot.title = element_text(face = "bold", color = "#1a3a6b", size = 16))
+```
+

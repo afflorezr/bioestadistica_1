@@ -1,0 +1,23 @@
+## Relación entre σ y IQR en la distribución normal
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">IQR de la Normal</div>
+  <div class="block-body">
+Para $X \sim N(\mu, \sigma^2)$:
+$$IQR = Q_3 - Q_1 = \mu + 0.6745\sigma - (\mu - 0.6745\sigma) = 2 \times 0.6745\sigma \approx 1.35\sigma$$
+  </div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">IQR de la Normal</div>
+  <div class="block-body">
+```{r}
+# Verificación
+sigma <- 1
+IQR_norm <- diff(qnorm(c(0.25, 0.75)))
+cat("IQR N(0,1) =", round(IQR_norm, 4), "\n")
+cat("1.35*sigma =", round(1.35*sigma, 4), "\n")
+```
+
+  </div>
+</div>
+

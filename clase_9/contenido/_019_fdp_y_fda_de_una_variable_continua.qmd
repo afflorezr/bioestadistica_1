@@ -1,0 +1,29 @@
+## FDP y FDA de una variable continua 
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 4.5
+#| fig-align: center
+
+# FDP de una Normal estándar
+x <- seq(-4, 4, length = 1000)
+y <- dnorm(x, mean = 0, sd = 1)
+
+par(mfrow = c(1,2), mar = c(4,4,2,1))
+
+# FDP
+plot(x, y, type = "l", lwd = 3, col = "#2563eb",
+     main = "Función de densidad f(x)",
+     xlab = "x", ylab = "f(x)",
+     cex.lab = 1.3, cex.main = 1.3)
+
+# FDA
+plot(x, pnorm(x), type = "l", lwd = 3, col = "#15803d",
+     main = "FDA F(x)",
+     xlab = "x", ylab = "F(x)",
+     cex.lab = 1.3, cex.main = 1.3)
+
+```
+
+

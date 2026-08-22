@@ -1,0 +1,26 @@
+## Implementación en R: tipos de muestreo
+
+```{r}
+#| echo: true
+set.seed(42)
+N <- 500   # fincas cafeteras en Huila
+
+# MAS sin reemplazo, n = 50
+mas <- sample(1:N, 50, replace = FALSE)
+
+# Sistemático: k = 10, arranque aleatorio
+k <- 10; r <- sample(1:k, 1)
+sist <- seq(r, N, by = k)
+
+# Estratificado proporcional (altitud baja=250, media=180, alta=70)
+Nh <- c(250, 180, 70); n <- 50
+nh <- round(n * Nh / N)
+id <- split(1:N, rep(c("baja","media","alta"), Nh))
+estrat <- unlist(mapply(sample, id, nh))
+
+cat("MAS:", length(mas), "| Sist:", length(sist),
+    "| Estrat:", sum(nh), "\n")
+cat("n por estrato:", nh, "\n")
+```
+
+

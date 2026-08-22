@@ -1,0 +1,49 @@
+## Fuerza de la Asociación
+
+<div style="font-size:28px; text-align:justify; margin-bottom:10px;">
+
+Además de la dirección de la relación, es importante evaluar qué tan cerca se encuentran las observaciones de una tendencia común.
+
+</div>
+
+```{r fig.width=20, fig.height=4.5, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2); library(patchwork)
+set.seed(123)
+
+tema_f <- theme_minimal(base_size = 17) +
+  theme(
+    plot.title    = element_text(face = "bold", hjust = 0.5, size = 19, color = "#1a3a6b"),
+    plot.subtitle = element_text(hjust = 0.5, size = 14, color = "#64748b"),
+    axis.title    = element_text(size = 16, color = "#374151"),
+    axis.text     = element_text(size = 14, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border  = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6)
+  )
+
+x30 <- 1:30
+df_deb <- data.frame(x = x30, y = x30 + rnorm(30, 0, 12))
+df_mod <- data.frame(x = x30, y = x30 + rnorm(30, 0, 5))
+df_fue <- data.frame(x = x30, y = x30 + rnorm(30, 0, 1.5))
+
+make_p <- function(df, titulo, subtit, col) {
+  ggplot(df, aes(x, y)) +
+    geom_point(color = col, size = 2.8, alpha = 0.8) +
+    geom_smooth(method = "lm", se = TRUE, color = "#b91c1c",
+                fill = "#fecaca", linewidth = 1.2, alpha = 0.25) +
+    labs(title = titulo, subtitle = subtit,
+         x = "Variable X", y = "Variable Y") +
+    tema_f
+}
+
+p1 <- make_p(df_deb, "Asociación Débil",    "r ≈ 0.10", "#78716c")
+p2 <- make_p(df_mod, "Asociación Moderada", "r ≈ 0.50", "#1b4d2e")
+p3 <- make_p(df_fue, "Asociación Fuerte",   "r ≈ 0.95", "#1a3a6b")
+
+p1 + p2 + p3
+```
+
+<div style="text-align:justify;margin-top:15px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:28px;">
+<b>Interpretación:</b> Cuanto más próximos se encuentren los puntos a una línea recta, mayor será la intensidad de la asociación entre las variables.
+</div>
+
+

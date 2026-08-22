@@ -1,0 +1,92 @@
+## FDP y FDA: Distribución Uniforme con $a=1$ y $b=4$
+```{r}
+#| echo: false
+#| fig-width: 16
+#| fig-height: 7
+#| fig-align: center
+#| warning: false
+
+par(
+  mfrow = c(1,2),
+  mar = c(5,5,3,1),
+  bg = "white",
+  family = "sans"
+)
+
+# Parámetros
+a <- 1
+b <- 4
+
+# Colores
+col_fdp <- "#2e7d32"
+col_fda <- "#b23a48"
+
+# =========================
+# FDP Uniforme
+# =========================
+curve(
+  dunif(x, a, b),
+  from = 0,
+  to = 5,
+  lwd = 4,
+  col = col_fdp,
+  ylim = c(0,0.42),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Función de densidad U(1,4)",
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85")
+
+# Líneas verticales del soporte
+abline(v = c(a,b), lty = 2, lwd = 2, col = "gray45")
+
+# Área sombreada
+polygon(
+  c(a, a, b, b),
+  c(0, 1/(b-a), 1/(b-a), 0),
+  col = adjustcolor(col_fdp, alpha.f = 0.20),
+  border = NA
+)
+
+text(
+  2.5, 0.37,
+  labels = "Densidad constante",
+  cex = 1.1
+)
+
+# =========================
+# FDA Uniforme
+# =========================
+curve(
+  punif(x, a, b),
+  from = 0,
+  to = 5,
+  lwd = 4,
+  col = col_fda,
+  ylim = c(0,1.05),
+  xlab = "x",
+  ylab = "F(x)",
+  main = "Función acumulada U(1,4)",
+  cex.main = 1.5,
+  cex.lab = 1.3,
+  cex.axis = 1.1
+)
+
+grid(col = "gray85")
+
+abline(v = c(a,b), lty = 2, lwd = 2, col = "gray45")
+abline(h = c(0,1), lty = 3, col = "gray60")
+
+points(c(a,b), c(0,1), pch = 19, cex = 1.3, col = col_fda)
+
+text(
+  2.7, 0.55,
+  labels = "Incremento lineal",
+  cex = 1.1
+)
+```
+

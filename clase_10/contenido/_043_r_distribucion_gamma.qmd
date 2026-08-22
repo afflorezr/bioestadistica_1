@@ -1,0 +1,63 @@
+## R: Distribución Gamma
+
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+El tiempo en días hasta la 3ª lluvia sigue una $\text{Gamma}(\alpha=3,\, \beta=4)$. Calcule $P(X \leq 10)$, $P(X > 15)$, $P(X \geq 15)$ y $P(8 \leq X \leq 20)$.
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+
+<div class="scrollable-code" style="min-width: 0;">
+
+```{r}
+#| echo: true
+#| comment: ""
+#| class-source: scrollable-code
+alpha <- 3; beta_par <- 4
+
+# Menor o igual que 10
+pgamma(10, shape = alpha, scale = beta_par)
+
+# Estrictamente menor que 10 (igual para continua)
+pgamma(10, shape = alpha, scale = beta_par)
+
+# Mayor que 15
+pgamma(15, shape = alpha, scale = beta_par,
+       lower.tail = FALSE)
+
+# Mayor o igual que 15 (igual para continua)
+pgamma(15, shape = alpha, scale = beta_par,
+       lower.tail = FALSE)
+
+# Entre 8 y 20 (inclusive)
+pgamma(20, shape = alpha, scale = beta_par) -
+pgamma(8,  shape = alpha, scale = beta_par)
+```
+</div>
+
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<strong><code>dgamma(x, shape, scale): </code></strong>
+<span style="color:#374151;font-size:24px">$f(x)$.</span><br><br>
+
+<strong><code>pgamma(q, shape, scale):</code></strong>
+<span style="color:#374151;font-size:24px">$P(X \leq q)$</span><br><br>
+
+<strong><code>lower.tail = FALSE: </code></strong>
+<span style="color:#374151;font-size:24px">$P(X > q)$</span><br><br>
+
+<strong><code>pgamma(b) - pgamma(a): </code></strong>
+<span style="color:#374151;font-size:24px">$P(a \leq X \leq b)$</span><br><br>
+
+<div class="block-alert" style="margin-top: 8px;">
+<div class="block-title">Nota: variable continua</div>
+<div class="block-body" style="font-size: 21px;">
+$P(X = x) = 0$ siempre.<br>
+$P(X \leq q) = P(X < q)$
+</div>
+</div>
+</div>
+
+</div>
+
+

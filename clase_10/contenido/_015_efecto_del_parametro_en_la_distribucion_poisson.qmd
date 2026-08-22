@@ -1,0 +1,19 @@
+## Efecto del parámetro λ en la Distribución Poisson
+
+```{r}
+#| echo: false
+#| fig-width: 16
+#| fig-height: 7
+par(mfrow = c(1,4), mar = c(4,3,2,1))
+for(lam in c(0.5, 2, 5, 10)) {
+  k <- 0:20
+  barplot(dpois(k, lam), names.arg = k, col = "#7a1515", border = NA,
+          main = paste0("Poi(", lam, ")"), xlab = "k",
+          cex.main = 1.2, cex.names = 0.8)
+}
+```
+
+<p class="fragment fade-up" style="font-size: 30px; text-align: center;" data-fragment-index="1">
+Para $\lambda$ grande, la Poisson se aproxima a una distribución Normal.
+</p>
+

@@ -1,0 +1,41 @@
+## Coeficiente de curtosis
+
+<div class="twocol">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Definición: Curtosis de Fisher</div>
+  <div class="block-body" style="font-size: 24px; height:100%">
+  Se basa en el <strong>cuarto momento central</strong>:
+  $$m_4 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^4}{n} \qquad g_2 = \frac{m_4}{s^4} - 3$$
+  El $-3$ (corrección de Fisher) hace que la distribución normal tenga $g_2 = 0$.
+  </div>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3">
+<ul>
+
+<li class="fragment fade-in" data-fragment-index="4" style="font-size: 24px; text-align: justify; list-style: none;">
+<strong>Interpretación del exceso de curtosis ($g_2$):</strong>
+</li>
+
+<li class="fragment fade-in" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+$g_2 = 0$: mesocúrtica (igual que la normal).
+</li>
+
+<li class="fragment fade-in" data-fragment-index="6" style="font-size: 24px; text-align: justify;">
+$g_2 > 0$: leptocúrtica. Pico pronunciado, colas pesadas.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="7" style="font-size: 24px; text-align: justify;">
+$g_2 < 0$: platicúrtica. Distribución aplanada, colas ligeras.
+</li>
+
+<li class="fragment fade-in" data-fragment-index="8" style="font-size: 24px; text-align: justify;">
+En R: `e1071::kurtosis(x)` devuelve $g_2$ (exceso); `moments::kurtosis(x)` devuelve $g_2 + 3$.
+</li>
+
+</ul>
+</div>
+
+</div>
+

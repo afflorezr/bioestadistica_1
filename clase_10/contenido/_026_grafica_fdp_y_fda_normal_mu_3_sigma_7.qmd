@@ -1,0 +1,69 @@
+## Gráfica FDP y FDA: Normal ($\mu = 3,\ \sigma = 7$)
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px;">
+
+<div>
+
+```{r}
+#| echo: false
+#| fig-width: 5.5
+#| fig-height: 4.2
+#| fig-align: center
+library(ggplot2)
+
+mu <- 3; sigma <- 7
+x  <- seq(mu - 4*sigma, mu + 4*sigma, length.out = 400)
+df <- data.frame(x = x, fx = dnorm(x, mu, sigma))
+
+ggplot(df, aes(x, fx)) +
+  geom_area(fill = "#dce9f7", alpha = 0.6) +
+  geom_line(color = "#1a3a6b", linewidth = 1.2) +
+  geom_vline(xintercept = mu, linetype = "dashed", color = "#7a1515", linewidth = 0.9) +
+  annotate("text", x = mu + 1.5, y = max(df$fx) * 0.92,
+           label = expression(mu == 3), color = "#7a1515", size = 5, hjust = 0) +
+  labs(title = "FDP: f(x)",
+       subtitle = expression(X ~ "~" ~ N(3, 49)),
+       x = "x", y = "f(x)") +
+  theme_minimal(base_size = 15) +
+  theme(plot.title    = element_text(face = "bold", size = 17, color = "#1a3a6b"),
+        plot.subtitle = element_text(size = 13, color = "#374151"))
+```
+</div>
+
+<div>
+
+```{r}
+#| echo: false
+#| fig-width: 5.5
+#| fig-height: 4.2
+#| fig-align: center
+library(ggplot2)
+
+mu <- 3; sigma <- 7
+x  <- seq(mu - 4*sigma, mu + 4*sigma, length.out = 400)
+df <- data.frame(x = x, Fx = pnorm(x, mu, sigma))
+
+ggplot(df, aes(x, Fx)) +
+  geom_line(color = "#1a3a6b", linewidth = 1.2) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "#7a1515", linewidth = 0.9) +
+  geom_vline(xintercept = mu, linetype = "dashed", color = "#7a1515", linewidth = 0.9) +
+  annotate("text", x = mu + 1.5, y = 0.42,
+           label = expression(F(mu) == 0.5), color = "#7a1515", size = 5, hjust = 0) +
+  scale_y_continuous(limits = c(0, 1.05), breaks = seq(0, 1, 0.25)) +
+  labs(title = "FDA: F(x) = P(X ≤ x)",
+       subtitle = expression(X ~ "~" ~ N(3, 49)),
+       x = "x", y = "F(x)") +
+  theme_minimal(base_size = 15) +
+  theme(plot.title    = element_text(face = "bold", size = 17, color = "#1a3a6b"),
+        plot.subtitle = element_text(size = 13, color = "#374151"))
+```
+</div>
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 8px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+La FDP es simétrica en $\mu = 3$ · La FDA cruza $0.5$ exactamente en $x = \mu$ · $\sigma = 7$ produce una campana <strong>ancha</strong> con alta dispersión.
+</div>
+</div>
+

@@ -1,0 +1,43 @@
+## Inferencia bajo MAS
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Estimador</div>
+<div class="block-body" style="font-size: 23px;">
+Media: $\displaystyle\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i \quad$ <span style="color:#1b4d2e;">insesgado: $E(\bar{x})=\mu$</span>
+
+Proporción: $\displaystyle\hat{p} = \frac{\text{núm. de éxitos}}{n} \quad$ <span style="color:#1b4d2e;">insesgado: $E(\hat{p})=p$</span>
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Varianza del estimador (SR)</div>
+<div class="block-body" style="font-size: 23px">
+$$\widehat{\text{Var}}(\bar{x}) = \frac{s^2}{n}\!\left(1-\frac{n}{N}\right) \quad \widehat{\text{Var}}(\hat{p}) = \frac{\hat{p}(1-\hat{p})}{n}\!\left(1-\frac{n}{N}\right)$$
+El término $\left(1-\dfrac{n}{N}\right)$ es el <strong>FPC</strong> (factor de corrección finita). Se omite cuando $n/N \leq 0.05$.
+</div>
+</div>
+
+<div class="block-alert fragment fade-up" data-fragment-index="3">
+<div class="block-title">Tamaño de muestra</div>
+<div class="block-body" style="font-size: 23px;">
+Para $\mu$: $\displaystyle n = \frac{N z_{\alpha/2}^2 s^2}{N e^2 + z_{\alpha/2}^2 s^2}$
+
+Para $p$: $\displaystyle n = \frac{N z_{\alpha/2}^2 \hat{p}(1-\hat{p})}{N e^2 + z_{\alpha/2}^2 \hat{p}(1-\hat{p})}$
+
+Si $N\to\infty$ recuperan las fórmulas de la clase 11.
+</div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="4">
+<div class="block-title">Intervalo de confianza</div>
+<div class="block-body" style="font-size: 23px;">
+Para $\mu$: $\displaystyle\bar{x} \pm z_{\alpha/2}\sqrt{\frac{s^2}{n}\!\left(1-\frac{n}{N}\right)}$
+
+Para $p$: $\displaystyle\hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}\!\left(1-\frac{n}{N}\right)}$
+</div>
+</div>
+
+</div>
+
+

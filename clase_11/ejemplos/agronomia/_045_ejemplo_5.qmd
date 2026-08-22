@@ -1,0 +1,27 @@
+## Ejemplo 5
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Distribución Normal</div>
+  <div class="block-body">
+<p>La talla de niños de 5 años en Colombia sigue $X \sim N(109, 5^2)$ cm. Calcule:</p>
+<ol>
+<li>El percentil 10 (talla baja).</li>
+<li>El percentil 90 (talla alta).</li>
+<li>La proporción de niños entre $Q_1$ y $Q_3$.</li>
+</ol>
+  </div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2">
+
+```{r}
+mu <- 109; sigma <- 5
+# P10 y P90
+qnorm(0.10, mu, sigma)
+qnorm(0.90, mu, sigma)
+# Proporción entre Q1 y Q3 (siempre 50% en cualquier distribución)
+diff(pnorm(qnorm(c(0.25, 0.75), mu, sigma), mu, sigma))
+```
+</div>
+
+

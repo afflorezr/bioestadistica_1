@@ -1,0 +1,47 @@
+## $n$ para distintos márgenes y confianzas
+
+```{r}
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.6
+#| fig-align: center
+
+library(ggplot2)
+
+# e en las mismas unidades que σ (ej. kg, cm, L)
+# σ representa variabilidad económico típica:
+#   0.5 kg → frutos pequeños (producto, industria)
+#   1.0 kg → rentabilidad por empresa
+#   2.0 kg → producción por lote
+e_seq  <- seq(0.05, 0.8, length = 300)
+sigmas <- c(0.5, 1.0, 2.0)
+z95    <- 1.96; z99 <- 2.576
+
+df <- do.call(rbind, lapply(sigmas, function(s) {
+  rbind(
+    data.frame(e = e_seq,
+               n = ceiling((z95 * s / e_seq)^2),
+               sigma = paste0("σ = ", s, " kg"),
+               conf = "95%"),
+    data.frame(e = e_seq,
+               n = ceiling((z99 * s / e_seq)^2),
+               sigma = paste0("σ = ", s, " kg"),
+               conf = "99%")
+  )
+}))
+
+ggplot(df, aes(x = e, y = n, color = conf, linetype = conf)) +
+  geom_line(linewidth = 1.2) +
+  facet_wrap(~sigma, scales = "free_y") +
+  scale_color_manual(values = c("95%" = "#1e3a8a", "99%" = "#991b1b")) +
+  labs(x = "Margen de error e (kg)",
+       y = "Tamaño de muestra n",
+       title = "Tamaño de muestra para estimar la media: efecto del margen de error y la variabilidad",
+       color = "Confianza", linetype = "Confianza") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "bottom",
+        plot.title = element_text(size = 12, face = "bold"),
+        strip.text = element_text(size = 13, face = "bold"))
+```
+
+

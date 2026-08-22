@@ -1,0 +1,42 @@
+## FDP y FDA de la Distribución t de Student
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Distribución t de Student $T \sim t(\nu)$</div>
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+Surge como cociente $T = Z / \sqrt{Q/\nu}$ donde $Z \sim N(0,1)$ y $Q \sim \chi^2(\nu)$ independientes. Simétrica en 0, con colas más pesadas que la Normal.
+<span style="color:#6b7280; font-size:24px;">, Parámetro: $\nu$ grados de libertad. Soporte: $t \in (-\infty, \infty)$.</span>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Función de Densidad (FDP)</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+$$f(t) = \frac{\Gamma\!\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\;\Gamma\!\left(\frac{\nu}{2}\right)} \left(1+\frac{t^2}{\nu}\right)^{-(\nu+1)/2}$$
+<p style="font-size: 23px; color: #374151; margin-top: 8px;">
+Simétrica en 0. Cuando $\nu \to \infty$, converge a $N(0,1)$.
+</p>
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">Función de Distribución Acumulada (FDA)</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+$$F(t) = I_x\!\left(\tfrac{\nu}{2},\,\tfrac{1}{2}\right), \quad x = \frac{\nu}{\nu + t^2}$$
+<p style="font-size: 23px; color: #374151; margin-top: 8px;">
+Sin forma cerrada. Se calcula con <code>pt()</code> en R. Por simetría: $P(T > t) = P(T < -t)$.
+</p>
+</div>
+</div>
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+Colas más pesadas que $N(0,1)$ &nbsp;·&nbsp;
+$t(\nu) \xrightarrow{\nu\to\infty} N(0,1)$ &nbsp;·&nbsp;
+Usada en pruebas $t$ e intervalos de confianza para medias
+</div>
+</div>
+

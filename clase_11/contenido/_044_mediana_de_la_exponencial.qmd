@@ -1,0 +1,22 @@
+## Mediana de la Exponencial
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Cálculo de la Mediana de Exp(λ)</div>
+  <div class="block-body">
+La mediana $m$ de $X \sim \text{Exp}(\lambda)$:
+$$F(m) = 1 - e^{-\lambda m} = 0.5 \implies e^{-\lambda m} = 0.5 \implies m = \frac{\ln 2}{\lambda}$$
+Para $\lambda = 0.2$: $m = \ln(2)/0.2 \approx 3.47$ horas, mientras que $E(X) = 1/0.2 = 5$ horas.
+  </div>
+</div>
+<div class="block-example fragment fade-up" data-fragment-index="2">
+  <div class="block-title">En R</div>
+  <div class="block-body">
+
+```{r}
+lambda <- 0.2
+c(mediana = qexp(0.5, lambda), media = 1/lambda)
+```
+
+</div>
+</div>
+

@@ -1,0 +1,18 @@
+## Gráfico descriptivo: boxplot por tratamiento
+
+```{r}
+#| label: boxplot-descriptivo
+#| echo: false
+#| fig-height: 3.3
+boxplot(productividad ~ fert * dieta, data = datos,
+        col = rep(c("#dbeafe", "#fde68a"), 3),
+        las = 2, cex.axis = 0.7,
+        xlab = "", ylab = "Productividad (kg/animal)",
+        main = "Ganancia de peso porcina por tratamiento")
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:21px; text-align:center;">
+El nivel Alto de suplementación aumenta el productividad en las 3 dietas, pero el incremento parece mayor en Dieta C.
+</div>
+

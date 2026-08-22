@@ -1,0 +1,43 @@
+## Cobertura nominal vs real y bootstrap
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Simulación de cobertura real</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.4;">
+```{r}
+set.seed(99)
+cob <- function(dist_fn, mu, n, B = 2000)
+  mean(replicate(B, {
+    x  <- dist_fn(n)
+    ic <- mean(x) + c(-1,1)*qt(0.975,n-1)*sd(x)/sqrt(n)
+    ic[1] <= mu & mu <= ic[2]
+  }))
+ns <- c(5, 15, 30, 80)
+cat("Normal :", sapply(ns, cob,
+  dist_fn=function(n) rnorm(n,5,1), mu=5), "\n")
+cat("Exp(1/5):", sapply(ns, cob,
+  dist_fn=function(n) rexp(n,rate=1/5), mu=5), "\n")
+```
+</div>
+</div>
+
+<div class="block-definition fragment fade-up" data-fragment-index="2">
+<div class="block-title">Bootstrap: inferencia sin supuestos</div>
+<div class="block-body" style="font-size: 24px; line-height: 1.4;">
+Usa la muestra como sustituto de la población. Genera $B$ remuestras con reemplazo y construye el IC con los percentiles de la distribución empírica del estadístico.
+
+```{r}
+set.seed(7)
+x <- c(5.1,4.8,5.6,4.9,5.3,5.0,5.4,4.7)
+boot_means <- replicate(4000,
+  mean(sample(x, length(x), replace = TRUE)))
+round(quantile(boot_means, c(0.025, 0.975)), 3)
+```
+No requiere normalidad ni fórmulas cerradas.
+</div>
+</div>
+
+</div>
+
+

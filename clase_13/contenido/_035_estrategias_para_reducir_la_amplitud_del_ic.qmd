@@ -1,0 +1,36 @@
+## Estrategias para reducir la amplitud del IC
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px;">
+
+<div class="fragment fade-up" data-fragment-index="1" style="border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,.1);">
+<div style="background:#1b4d2e; padding:9px 14px;"><span style="font-size:21px; font-weight:700; color:#fff;">Aumentar $n$</span></div>
+<div style="background:#d6f0dd; padding:12px 14px; font-size:22px; line-height:1.4;">
+El método más directo. Efecto $\propto 1/\sqrt{n}$: costoso para ganancias pequeñas. Pasar de $n=100$ a $n=400$ reduce el margen a la mitad.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,.1);">
+<div style="background:#1a3a6b; padding:9px 14px;"><span style="font-size:21px; font-weight:700; color:#fff;">Estratificar</span></div>
+<div style="background:#dce9f7; padding:12px 14px; font-size:22px; line-height:1.4;">
+Dividir en estratos homogéneos antes de muestrear. Puede reducir la varianza efectiva significativamente sin aumentar $n$ total.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,.1);">
+<div style="background:#92400e; padding:9px 14px;"><span style="font-size:21px; font-weight:700; color:#fff;">Reducir confianza</span></div>
+<div style="background:#fef3c7; padding:12px 14px; font-size:22px; line-height:1.4;">
+Pasar de 99% a 95% reduce $z$ de 2.576 a 1.96 (reducción del 24%). Justificable si 95% es suficiente para la decisión.
+</div>
+</div>
+
+</div>
+
+```{r}
+#| echo: true
+sigma <- 1.5; e_obj <- 0.3; z95 <- 1.96; z99 <- 2.576
+cat("n (95%, MAS):", ceiling((z95*sigma/e_obj)^2), "\n")
+cat("n (99%, MAS):", ceiling((z99*sigma/e_obj)^2), "\n")
+cat("n (95%, DEFF=0.7):", ceiling((z95*sigma/e_obj)^2 * 0.7), "\n")
+```
+
+

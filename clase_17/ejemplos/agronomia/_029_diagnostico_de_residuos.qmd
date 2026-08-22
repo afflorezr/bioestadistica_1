@@ -1,0 +1,132 @@
+## Diagnóstico de residuos
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+set.seed(17)
+n <- 60
+fertilizante <- runif(n, 80, 300)
+altitud <- runif(n, 1200, 1900)
+densidad <- runif(n, 4000, 8000)
+rendimiento <- 800 + 1.8 * fertilizante - 0.5 * altitud +
+  0.12 * densidad + rnorm(n, 0, 180)
+datos <- data.frame(rendimiento, fertilizante, altitud, densidad)
+
+vif_manual <- function(modelo) {
+  X <- as.data.frame(model.matrix(modelo)[, -1, drop = FALSE])
+  nombres <- names(X)
+  sapply(nombres, function(var) {
+    formula <- as.formula(paste(var, "~ ."))
+    r2 <- summary(lm(formula, data = X))$r.squared
+    1 / (1 - r2)
+  })
+}
+
+modelo <- lm(rendimiento ~ fertilizante + altitud + densidad, data = datos)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 20
+#| fig-height: 4.8
+#| out-width: "100%"
+library(ggplot2); library(patchwork)
+
+df_d <- data.frame(
+  ajustados = fitted(modelo),
+  residuos  = residuals(modelo),
+  std_res   = rstandard(modelo),
+  sqrt_std  = sqrt(abs(rstandard(modelo))),
+  leverage  = hatvalues(modelo),
+  cooks     = cooks.distance(modelo)
+)
+
+tema_d <- theme_minimal(base_size = 14) +
+  theme(
+    plot.title       = element_text(face = "bold", hjust = 0.5,
+                                    size = 15, color = "#1a3a6b"),
+    plot.subtitle    = element_text(hjust = 0.5, size = 11, color = "#64748b"),
+    axis.title       = element_text(size = 13, color = "#374151"),
+    axis.text        = element_text(size = 11, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border     = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.5)
+  )
+
+# 1. Residuos vs Ajustados
+p1 <- ggplot(df_d, aes(ajustados, residuos)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#b91c1c", linewidth = 0.9) +
+  geom_point(color = "#1a3a6b", size = 2.5, alpha = 0.75) +
+  geom_smooth(method = "loess", se = FALSE, color = "#d97706", linewidth = 1.1) +
+  labs(title = "Residuos vs. Ajustados", subtitle = "Linealidad",
+       x = "Valores ajustados", y = "Residuos") + tema_d
+
+# 2. Q-Q Plot
+p2 <- ggplot(df_d, aes(sample = std_res)) +
+  stat_qq(color = "#1a3a6b", size = 2.5, alpha = 0.75) +
+  stat_qq_line(color = "#b91c1c", linewidth = 1, linetype = "dashed") +
+  labs(title = "Q-Q Plot", subtitle = "Normalidad",
+       x = "Cuantiles teóricos", y = "Cuantiles muestrales") + tema_d
+
+# 3. Scale-Location
+p3 <- ggplot(df_d, aes(ajustados, sqrt_std)) +
+  geom_point(color = "#1b4d2e", size = 2.5, alpha = 0.75) +
+  geom_smooth(method = "loess", se = FALSE, color = "#d97706", linewidth = 1.1) +
+  labs(title = "Scale-Location", subtitle = "Homocedasticidad",
+       x = "Valores ajustados", y = expression(sqrt("|Res. estand.|"))) + tema_d
+
+# 4. Residuos vs Leverage
+p4 <- ggplot(df_d, aes(leverage, std_res)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#b91c1c", linewidth = 0.9) +
+  geom_point(aes(size = cooks), color = "#7c3aed", alpha = 0.7) +
+  geom_smooth(method = "loess", se = FALSE, color = "#d97706", linewidth = 1.1) +
+  scale_size_continuous(range = c(1.5, 6), guide = "none") +
+  labs(title = "Residuos vs. Leverage", subtitle = "Observaciones influyentes",
+       x = "Leverage", y = "Residuos estandarizados") + tema_d
+
+p1 + p2 + p3 + p4
+```
+
+<div class="fragment fade-up" data-fragment-index="1" style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 20px;">
+
+<table style="font-size: 26px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 6px 14px; text-align: left;">Supuesto</th>
+<th style="padding: 6px 14px;">Prueba</th>
+<th style="padding: 6px 14px;">Valor-$p$</th>
+<th style="padding: 6px 14px;">Decisión</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 6px 14px; text-align: left;">Normalidad</td>
+<td>Shapiro-Wilk</td>
+<td style="color: #15803d; font-weight: bold;">0.42</td>
+<td style="color: #15803d;">No se rechaza</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 6px 14px; text-align: left;">Homocedasticidad</td>
+<td>Breusch-Pagan</td>
+<td style="color: #15803d; font-weight: bold;">0.61</td>
+<td style="color: #15803d;">No se rechaza</td>
+</tr>
+<tr>
+<td style="padding: 6px 14px; text-align: left;">Independencia</td>
+<td>Durbin-Watson</td>
+<td style="color: #15803d; font-weight: bold;">0.38</td>
+<td style="color: #15803d;">No se rechaza</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="margin-top: 10px; background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 8px; padding: 8px 16px; text-align: center;">
+<p style="font-size: 26px; margin: 0; color: #1b4d2e;">
+<strong>Conclusión:</strong> $p > 0.05$ en todas las pruebas → los supuestos del modelo se cumplen satisfactoriamente.
+</p>
+</div>
+

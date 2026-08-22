@@ -1,0 +1,48 @@
+## Ejemplo 2
+
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 26px; text-align: justify; line-height: 1.2; margin-bottom: 6px;">
+Un investigador desea comparar la producción promedio de ganado (kg/animal) entre granjas de Caldas y Huila. En Caldas, $\small n_1=20$ granjas con $\small \bar{x}_1=34.5$ y $\small s_1=4.8$; en Huila, $\small n_2=22$ granjas con $\small \bar{x}_2=31.2$ y $\small s_2=5.1$. ¿Existe evidencia suficiente para afirmar que la producción promedio difiere entre ambos departamentos? $\small \alpha=0.05$.
+</p>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top: 6px; align-items:start;">
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 1. Hipótesis:</strong>
+$$H_0:\mu_1-\mu_2=0 \qquad H_1:\mu_1-\mu_2\neq0$$
+Prueba de dos colas.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 2. Estadístico:</strong>
+Prueba $t$ ($\sigma$ desconocida), $\small gl=n_1+n_2-2=40$:
+
+<div style="font-size:18px;">
+
+$$t=\frac{(34.5-31.2)-0}{\sqrt{\frac{4.8^2}{20}+\frac{5.1^2}{22}}}=2.16$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1a3a6b;">Paso 3. Criterio de decisión:</strong>
+Para $\alpha=0.05$ y $gl=40$, valor crítico $t_{0.025,40}=2.021$.
+$$t_{cal}=2.16 > t_{crit}=2.021 \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4" style="background-color:#eef7ee; border-left:6px solid #1b4d2e; border-radius:8px; padding:8px 12px; font-size: 24px; line-height: 1.2;">
+<strong style="color:#1b4d2e;">Paso 4. Valor$-p$:</strong>
+
+<div style="font-size:18px;">
+$$p=0.037 < 0.05 \;\Rightarrow\; \text{se rechaza } H_0$$
+$$IC_{95\%}=(0.21,\;6.39), \;\; 0\notin IC \;\Rightarrow\; \text{se rechaza } H_0$$
+</div>
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px;">
+<div style="font-size:26px; text-align:justify; line-height:1.3; margin-top:4px;">
+Los tres criterios conducen a la misma decisión: existe evidencia estadística suficiente para afirmar que la producción promedio de ganado difiere entre las granjas evaluadas de Caldas y Huila, con un nivel de significancia del $5\%$.
+</div>
+</div>
+
+

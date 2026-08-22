@@ -1,0 +1,36 @@
+## IC para la media: $\sigma$ desconocida
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Distribución $t$ de Student</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.45;">
+Cuando $\sigma$ es desconocida se estima con $s$:
+$$T = \frac{\bar{X}-\mu}{s/\sqrt{n}} \sim t_{n-1}$$
+$$\bar{x} \pm t_{n-1,\,\alpha/2}\,\frac{s}{\sqrt{n}}$$
+La distribución $t$ tiene colas más pesadas que la Normal: IC más ancho para $n$ pequeño. Cuando $n \to \infty$, $t \to z$.
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">Ejemplo: leche bovina, Nariño</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.4;">
+$n = 16$ vacas, $\bar{x} = 17.4$ L/día, $s = 2.8$ L.
+
+$t_{15,\,0.025} = 2.131$
+
+$$17.4 \pm 2.131 \times \frac{2.8}{\sqrt{16}} = 17.4 \pm 1.49$$
+$$\text{IC}_{95\%}: [15.9,\; 18.9] \text{ L/día}$$
+
+```{r}
+xbar <- 17.4; s <- 2.8; n <- 16
+round(xbar + c(-1,1)*qt(0.975, n-1)*s/sqrt(n), 2)
+```
+</div>
+</div>
+
+</div>
+
+
+
+

@@ -1,0 +1,39 @@
+## Medias por tratamiento y por bloque
+
+<table style="width:100%; font-size:23px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Dieta</th><th style="padding:8px;">$\bar y_{i.}$ (kg/animal)</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Dieta B</td><td style="padding:8px;">28.22</td></tr>
+<tr><td style="padding:8px;">Dieta A</td><td style="padding:8px;">31.22</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">ICA Única</td><td style="padding:8px;">32.18</td></tr>
+<tr><td style="padding:8px;">Dieta C</td><td style="padding:8px;">25.38</td></tr>
+</table>
+
+```{r}
+#| label: boxplot-cerdos
+#| echo: false
+#| fig-height: 3.2
+dietas <- c("Pastusa_Suprema", "Diacol_Capiro", "ICA_Unica", "Criolla_Colombia")
+granjas <- c("Subachoque","Toca","Villapinzon","Tausa","Zipaquira")
+set.seed(101)
+mu <- 28
+tau <- c(0, 2.4, 4.1, -1.8); names(tau) <- dietas
+beta <- c(0, 1.5, -1.0, 3.0, -2.5); names(beta) <- granjas
+dat_cerdos <- expand.grid(granja = granjas, dieta = dietas)
+dat_cerdos$rend <- mu + tau[dat_cerdos$dieta] + beta[dat_cerdos$granja] + rnorm(nrow(dat_cerdos), 0, 1.3)
+dat_cerdos$rend <- round(dat_cerdos$rend, 1)
+dat_cerdos$dieta <- factor(dat_cerdos$dieta, levels = dietas)
+dat_cerdos$granja <- factor(dat_cerdos$granja, levels = granjas)
+modelo_rcbd <- aov(rend ~ dieta + granja, data = dat_cerdos)
+boxplot(rend ~ dieta, data = dat_cerdos,
+        col = c("#cbd5e1", "#dbeafe", "#d6f0dd", "#fde68a"),
+        xlab = "Dieta", ylab = "Productividad (kg/animal)",
+        main = "Ganancia de peso porcina por dieta (5 granjas)")
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:20px; text-align:center;">
+La media general es $\bar y_{..}=29.25$ kg/animal. Las granjas también difieren: Tausa promedia 31.80 kg/animal y Zipaquirá solo 25.95 kg/animal, evidenciando la necesidad de bloquear.
+</div>
+

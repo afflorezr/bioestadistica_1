@@ -1,0 +1,27 @@
+## Efecto de diseño: concepto y cálculo
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Definición del DEFF</div>
+<div class="block-body" style="font-size: 26px; line-height: 1.45;">
+El <strong>efecto de diseño</strong> mide la eficiencia relativa del diseño usado frente al MAS de igual $n$:
+$$\text{DEFF} = \frac{\widehat{\text{Var}}_{\text{diseño}}(\bar{x})}{\widehat{\text{Var}}_{\text{MAS}}(\bar{x})} = \frac{\widehat{\text{Var}}_{\text{diseño}}(\bar{x})}{s^2/n}$$
+
+- DEFF $< 1$: el diseño es <strong>más eficiente</strong> que el MAS (ej. estratificado bien hecho).
+- DEFF $> 1$: el diseño es <strong>menos eficiente</strong> (ej. conglomerados homogéneos).
+</div>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<h4 style="font-size: 26px; color: #1a3a6b; margin-bottom: 8px;">Uso del DEFF en práctica</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;"><strong>Tamaño de muestra ajustado:</strong> $n_{\text{real}} = n_{\text{MAS}} \times \text{DEFF}$.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;"><strong>IC ajustado:</strong> multiplicar el SE del MAS por $\sqrt{\text{DEFF}}$.</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">Software como R (`survey`) y SPSS calculan el DEFF automáticamente al declarar el diseño complejo.</li>
+</ul>
+</div>
+
+</div>
+
+

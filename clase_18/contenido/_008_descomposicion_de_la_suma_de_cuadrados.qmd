@@ -1,0 +1,64 @@
+## Descomposición de la suma de cuadrados
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#f8fafc; padding:5px; border-radius:10px; border-left:6px solid #475569; margin-top:6px; font-size:26px; text-align:justify;">
+
+El modelo $\small y_{ij}=\mu+\tau_i+\varepsilon_{ij}$ no se observa directamente: $\small \mu$, $\small \tau_i$ y $\small \varepsilon_{ij}$ se <strong>estiman</strong> con promedios.
+
+<div style="font-size:24px;">
+
+$$\hat\mu=\bar y_{..} \qquad \hat\mu+\hat\tau_i=\bar y_{i.} \qquad \hat\varepsilon_{ij}=y_{ij}-\bar y_{i.}$$
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef4fb; padding:8px; border-radius:10px; border-top:6px solid #1a3a6b; margin-top:6px; font-size:26px; text-align:justify;">
+Para cada dato, $\small y_{ij}-\bar y_{..}$ mide su variación total respecto a la media general, y puede partirse en dos piezas:
+
+<div style="font-size:22px;">
+$$y_{ij}-\bar y_{..}=\underbrace{(\bar y_{i.}-\bar y_{..})}_{\text{variación por tratamiento}}+\underbrace{(y_{ij}-\bar y_{i.})}_{\text{variación por error}}$$
+</div>
+</div>
+
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="margin-top:20px;font-size:28px; text-align:justify; line-height:1.2;">
+Elevando al cuadrado y sumando sobre todas las observaciones, la variabilidad total se descompone en dos componentes:
+</div>
+
+
+<div class="twocol">
+<div class="block-definition fragment fade-up" data-fragment-index="3">
+<div class="block-body" style="font-size:20px; text-align:center;">
+$$
+\underbrace{\sum_{i=1}^a\sum_{j=1}^{n_i}(y_{ij}-\bar y_{..})^2}_{SC_T}
+=
+\underbrace{\sum_{i=1}^a n_i(\bar y_{i.}-\bar y_{..})^2}_{SC_{Trat}}
++
+\underbrace{\sum_{i=1}^a\sum_{j=1}^{n_i}(y_{ij}-\bar y_{i.})^2}_{SC_E}
+$$
+</div>
+</div>
+
+<div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef4fb; padding:8px; border-radius:10px; border-top:6px solid #1a3a6b; font-size:26px; text-align:justify;">
+$\small SC_{Trat}$: variabilidad explicada por el tratamiento (entre grupos).
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#eef7ee; padding:8px; border-radius:10px; border-top:6px solid #1b4d2e; font-size:26px; text-align:justify;">
+$\small SC_E$: variabilidad no explicada, o error (dentro de los grupos).
+</div>
+
+</div>
+
+</div>
+
+
+
+

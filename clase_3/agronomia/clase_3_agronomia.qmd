@@ -1,0 +1,83 @@
+---
+title: "Bioestadística, Agronomía"
+subtitle: "Tasas, razones, proporciones y tendencia central"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: ../referencias.bib
+csl: ../ieee.csl
+output-file: clase_3_agronomia.html
+format:
+  revealjs:
+    logo: ../images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../../assets/syntax-highlight.css, ../../assets/custom.css, ../../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="../../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
+      <script defer src="../../assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+{{< include ../contenido/_01_apertura.qmd >}}
+
+{{< include ../ejemplos/agronomia/_01_contexto.qmd >}}
+
+{{< include ../contenido/_02_definicion_tasas.qmd >}}
+
+{{< include ../ejemplos/agronomia/_02_tasas.qmd >}}
+
+{{< include ../contenido/_03_definicion_razones.qmd >}}
+
+{{< include ../ejemplos/agronomia/_03_razones.qmd >}}
+
+{{< include ../contenido/_04_definicion_proporciones.qmd >}}
+
+{{< include ../ejemplos/agronomia/_04_proporciones.qmd >}}
+
+{{< include ../contenido/_05_proporcion_estadistica.qmd >}}
+
+{{< include ../ejemplos/agronomia/_05_porcentajes.qmd >}}
+
+{{< include ../contenido/_06_introduccion_media.qmd >}}
+
+{{< include ../ejemplos/agronomia/_06_media.qmd >}}
+
+{{< include ../contenido/_07_introduccion_mediana.qmd >}}
+
+{{< include ../ejemplos/agronomia/_07_mediana.qmd >}}
+
+{{< include ../contenido/_08_mediana_agrupada.qmd >}}
+
+{{< include ../ejemplos/agronomia/_08_mediana_intervalos.qmd >}}
+
+{{< include ../contenido/_09_introduccion_moda.qmd >}}
+
+{{< include ../ejemplos/agronomia/_09_moda.qmd >}}
+
+{{< include ../contenido/_10_cierre.qmd >}}
+
+{{< include ../ejemplos/agronomia/_10_taller.qmd >}}

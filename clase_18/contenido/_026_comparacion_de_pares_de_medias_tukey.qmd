@@ -1,0 +1,50 @@
+## Comparación de pares de medias: Tukey
+
+<div style="margin-top:30px;font-size:30px; text-align:justify; line-height:1.2;">
+La prueba de <strong>Tukey (HSD)</strong> es el método más utilizado para comparar <strong>todos los pares</strong> de medias de tratamiento, controlando el error global tipo I en $\alpha$.
+</div>
+
+
+<div class="twocol">
+<table style="width:100%; font-size:19px; text-align:center; margin-top:8px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:6px;">Comparación</th><th>Diferencia</th><th>IC 95%</th><th>valor-p</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">Foliar - Control</td><td>2.00</td><td>(-1.37, 5.37)</td><td>0.369</td></tr>
+<tr><td style="padding:6px;">Orgánico - Control</td><td>4.08</td><td>(0.72, 7.45)</td><td>0.014</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK - Control</td><td>10.55</td><td>(7.18, 13.92)</td><td>&lt;0.0001</td></tr>
+<tr><td style="padding:6px;">Orgánico - Foliar</td><td>2.08</td><td>(-1.28, 5.45)</td><td>0.334</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:6px;">NPK - Foliar</td><td>8.55</td><td>(5.18, 11.92)</td><td>&lt;0.0001</td></tr>
+<tr><td style="padding:6px;">NPK - Orgánico</td><td>6.47</td><td>(3.10, 9.83)</td><td>0.0002</td></tr>
+</table>
+
+<div>
+
+```{r}
+#| label: tukey-plot
+#| echo: false
+#| fig-height: 3.4
+library(ggplot2)
+tukey_df <- as.data.frame(TukeyHSD(modelo)$trat)
+tukey_df$comparacion <- rownames(tukey_df)
+tukey_df$significativo <- ifelse(tukey_df$`p adj` < 0.05, "Sí", "No")
+
+ggplot(tukey_df, aes(x = diff, y = comparacion, color = significativo)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray40") +
+  geom_pointrange(aes(xmin = lwr, xmax = upr), size = 0.8, fatten = 3) +
+  scale_color_manual(values = c("Sí" = "#1a3a6b", "No" = "#94a3b8")) +
+  labs(x = "Diferencia de medias (IC 95%)", y = NULL,
+       title = "Intervalos de Tukey para las diferencias de medias", color = "Significativo") +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b", size = 12),
+        legend.position = "bottom")
+```
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:28px; text-align:justify; line-height:1.2;">
+Los intervalos que no contienen el cero indican pares con diferencias significativas: <strong>NPK</strong> difiere de los tres tratamientos restantes, y <strong>Orgánico</strong> difiere del Control. Foliar no se distingue claramente del Control ni del Orgánico.
+</div>
+

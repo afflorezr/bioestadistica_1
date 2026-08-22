@@ -1,0 +1,56 @@
+## IC para la media: ejemplo paso a paso
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 14px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Paso 1: datos</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.4;">
+Peso de terneros Hass, Antioquia.
+
+$n = 49$ frutos, $\bar{x} = 278$ g, $s = 28$ g.
+
+Queremos IC al 95%.
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Paso 2: elegir distribución</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.4;">
+$n = 49 \geq 30$ y $\sigma$ desconocida (usamos $s$).
+
+$t_{48,\,0.025} = 2.011$
+
+(Para $n \geq 30$, $t \approx z$)
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="3">
+<div class="block-title">Paso 3: calcular</div>
+<div class="block-body" style="font-size: 23px; line-height: 1.4;">
+$e = 2.011 \times \dfrac{28}{\sqrt{49}} = 8.04$ g
+
+$[278-8, 278+8]$
+
+$= [270,\; 286]$ g
+</div>
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="4">
+<div class="block-body" style="font-size: 23px; line-height: 1.4;">
+<strong>Paso 4: interpretar</strong>
+
+Con 95% de confianza, el peso promedio real de los terneros Hass está entre 270 y 286 g.
+</div>
+</div>
+
+</div>
+
+```{r}
+#| echo: true
+xbar <- 278; s <- 28; n <- 49
+e <- qt(0.975, df = n-1) * s / sqrt(n)
+cat("Margen de error:", round(e, 2), "g\n")
+cat("IC 95%: [", round(xbar-e,1), ",", round(xbar+e,1), "] g\n")
+```
+
+

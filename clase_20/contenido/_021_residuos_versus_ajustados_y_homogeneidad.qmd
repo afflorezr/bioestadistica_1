@@ -1,0 +1,17 @@
+## Residuos versus ajustados y homogeneidad
+
+```{r}
+#| label: residuos-vs-ajustados
+#| echo: false
+#| fig-height: 3.3
+plot(fitted(modelo), residuals(modelo), pch = 19, col = "#1b4d2e",
+     xlab = "Valores ajustados", ylab = "Residuo",
+     main = "Residuos vs. valores ajustados")
+abline(h = 0, lty = 2, col = "#b91c1c")
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:20px; text-align:center;">
+Dispersión similar entre celdas, sin forma de embudo. Prueba de Bartlett entre las 6 celdas: $K^2=6.23$, $gl=5$, valor-p$=0.285>0.05$: se cumple la homogeneidad de varianza.
+</div>
+

@@ -1,0 +1,64 @@
+## R: Distribución Binomial
+
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+En un lote de $n=50$ empresas comerciales, con $p=0.15$ de tener incumplimiento. Calcule $P(X=8)$, $P(X \leq 10)$, $P(X > 12)$, $P(X \geq 12)$ y $P(5 \leq X \leq 12)$.
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+
+<div class="scrollable-code" style="min-width: 0; max-height: 500px; overflow-y: auto; overflow-x: auto;">
+
+```{r}
+#| echo: true
+#| comment: ""
+#| class-source: scrollable-code
+
+n <- 50; p <- 0.15
+
+# Exactamente 8 empresas
+dbinom(8, n, p)
+
+# Menor o igual que 10
+pbinom(10, n, p)
+
+# Estrictamente menor que 10
+pbinom(9, n, p)
+
+# Mayor que 12
+pbinom(12, n, p, lower.tail = FALSE)
+
+# Mayor o igual que 12
+pbinom(11, n, p,lower.tail = FALSE)
+
+# Entre 5 y 12 (inclusive)
+pbinom(12, n, p) - pbinom(4, n, p)
+
+```
+
+</div>
+
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<strong><code>dbinom(x, n, p): </code></strong>
+<span style="color:#374151;font-size:24px">$P(X = x)$</span><br><br>
+
+<strong><code>pbinom(q, n, p):</code></strong>
+<span style="color:#374151;font-size:24px">$P(X \leq q)$</span><br><br>
+
+<strong><code>pbinom(q-1, n, p): </code></strong>
+<span style="color:#374151;font-size:24px">$P(X < q)$</span><br><br>
+
+<strong><code>lower.tail = FALSE: </code></strong>
+<span style="color:#374151;font-size:24px">$P(X > q)$</span><br><br>
+
+<strong><code>pbinom(q-1,...,FALSE): </code></strong>
+<span style="color:#374151;font-size:24px">$P(X \geq q)$</span><br><br>
+
+<strong><code>pbinom(b) - pbinom(a-1): </code></strong>
+<span style="color:#374151;font-size:24px">$P(a \leq X \leq b)$</span>
+</div>
+
+</div>
+
+

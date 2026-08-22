@@ -1,0 +1,35 @@
+## IC con transformaciones: variables asimétricas
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">El problema de la asimetría</div>
+<div class="block-body" style="font-size: 26px; line-height: 1.45;">
+Muchas variables agrícolas son <strong>log-normales</strong> (rendimiento, concentraciones, conteos): $X > 0$ con distribución muy sesgada.
+
+Para estas variables, el IC clásico puede incluir valores negativos y tener cobertura real inferior a la nominal.
+
+<strong>Solución:</strong> aplicar transformación logarítmica antes de calcular el IC.
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">IC en escala log → volver a la original</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.4;">
+```{r}
+set.seed(9)
+x <- exp(rnorm(25, mean=1.8, sd=0.5)) # log-normal
+log_x <- log(x)
+ic_log <- mean(log_x) + c(-1,1)*qt(0.975,24)*sd(log_x)/sqrt(25)
+ic_orig <- exp(ic_log)  # volver a escala original
+cat("IC 95% (escala log):", round(ic_log,3), "\n")
+cat("IC 95% (escala orig):", round(ic_orig,2), "\n")
+cat("(asimétrico en escala original, correcto)\n")
+```
+El IC en la escala original es <strong>asimétrico</strong>, reflejando la asimetría de la distribución.
+</div>
+</div>
+
+</div>
+
+

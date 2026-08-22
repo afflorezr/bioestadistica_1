@@ -1,0 +1,293 @@
+## Tipos de distribuciones
+
+<div class="twocol">
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+<h3 class="fragment fade-in" data-fragment-index="2" >Distribución simétrica</h3>
+<ul>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Características:</b>
+</li>
+<ul>
+<li class="fragment fade-in" data-fragment-index="4">
+Forma de “campana”.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+Media ≈ mediana ≈ moda.
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Igual comportamiento a ambos lados.
+</li>
+</ul>
+<li class="fragment fade-in" data-fragment-index="7">
+<b>Ejemplo:</b> Se mide la precio (en miles de pesos) de 100 productos comparables en un mercado simulado.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="9" style="margin-top:60px;width:130%" >
+```{r echo=FALSE}
+fig.width=10
+fig.height=7
+set.seed(123)
+library(ggplot2)
+
+precio <- rnorm(100, mean = 150, sd = 10)
+df <- data.frame(precio)
+
+ggplot(df, aes(x = precio)) +
+  geom_histogram(
+    aes(y = ..density..),
+    bins = 10,
+    fill = "#3CB371",
+    color = "white",
+    alpha = 0.7
+  ) +
+  geom_density(
+    color = "#1B5E20",
+    linewidth = 1.5
+  ) +
+  labs(
+    title = "Distribución simulada de precios",
+    x = "Precio (miles de pesos)",
+    y = "Densidad"
+  ) +
+  theme_minimal(base_size = 16)
+
+```
+
+</div>
+
+</div>
+
+## Interpretación
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+La mayoría de los productos tiene precios cercanos a 150 mil pesos.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+La distribución es simétrica, indicando precios relativamente homogéneos.
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify;">
+Hay pocos productos con precios muy bajos o muy altos.
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align: justify;">
+En estos datos simulados, los precios presentan dispersión moderada.
+</li>
+</ul >
+</div>
+
+## Tipos de distribuciones
+
+<div class="twocol">
+<div class="fragment fade-up info-box" style="margin-top: 50px; font-size: 28px;" data-fragment-index="1">
+<h3 class="fragment fade-in" data-fragment-index="2">Distribución asimétrica positiva</h3>
+<p class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">Los datos se concentran en las primeras categorías (valores bajos) y hay una “cola” hacia la derecha.</p>
+<ul>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Características:</b>
+</li>
+<ul>
+<li class="fragment fade-in" data-fragment-index="4">
+Cola hacia valores altos
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+Media > mediana.
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Pocos valores grandes influyen en el promedio.
+</li>
+</ul>
+<li class="fragment fade-in" data-fragment-index="7">
+<b>Ejemplo:</b> Ingresos simulados de una muestra de hogares.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="9" style="margin-top:60px;width:140%" >
+```{r echo=FALSE}
+fig.width=10
+fig.height=7
+set.seed(123)
+
+# Datos concentrados + algunos valores altos (sin huecos grandes)
+library(ggplot2)
+
+ingresos <- c(rnorm(90, mean = 1000, sd = 150),
+              1500, 1800, 2000, 2500)
+
+df <- data.frame(ingresos)
+ggplot(df, aes(x = ingresos)) +
+  geom_histogram(
+    bins = 12,
+    fill = "#4A90E2",
+    color = "white",
+    alpha = 0.8
+  ) +
+  geom_vline(xintercept = mean(ingresos),
+             color = "red",
+             linewidth = 1.2,
+             linetype = "dashed") +
+  annotate("text",
+           x = mean(ingresos),
+           y = 15,
+           label = "Media",
+           color = "red",
+           vjust = -1) +
+  labs(
+    title = "Distribución de ingresos",
+    subtitle = "Presencia de valores atípicos altos",
+    x = "Ingresos",
+    y = "Frecuencia"
+  ) +
+  theme_minimal(base_size = 16)
+
+```
+
+</div>
+
+</div>
+
+## Interpretación
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+La mayoría de los datos se concentra en valores bajos y medios.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+Los valores disminuyen gradualmente hacia la derecha.
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify;">
+Se observa una cola hacia la derecha.
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align: justify;">
+La distribución presenta asimetría positiva.
+</li>
+</ul >
+</div>
+
+## Tipos de distribuciones
+
+<div class="twocol">
+<div class="fragment fade-up info-box" style="padding-right: 50px; margin-top: 50px; font-size: 25px;" data-fragment-index="1">
+<h3 class="fragment fade-in" data-fragment-index="2">Distribución asimétrica negativa</h3>
+<p class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">La asimetría negativa ocurre cuando los datos se concentran en valores altos y presentan una cola hacia los valores bajos.</p>
+
+<ul>
+<li class="fragment fade-in" data-fragment-index="3">
+<b>Características:</b>
+</li>
+<ul>
+<li class="fragment fade-in" data-fragment-index="4">
+La cola se extiende hacia la izquierda.
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+Media < mediana.
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+Existen pocos valores bajos que afectan la distribución.
+</li>
+</ul>
+<li class="fragment fade-in" data-fragment-index="7" style="text-align:justify">
+<b>Ejemplo:</b> Ventas mensuales (millones de pesos), donde la mayoría de las unidades presenta valores altos, pero algunas registran valores bajos.
+</li>
+</ul>
+</div> 
+
+<div class="fragment" data-fragment-index="9" style="margin-top:60px;width:140%" >
+```{r echo=FALSE}
+library(ggplot2)
+
+ventas <- c(rnorm(90, mean = 20, sd = 2),
+                12, 10, 8, 6)
+
+df <- data.frame(ventas)
+
+ggplot(df, aes(x = ventas)) +
+  geom_histogram(
+    aes(y = ..density..),
+    bins = 12,
+    fill = "#3CB371",   # verde consistente
+    color = "white",
+    alpha = 0.8
+  ) +
+  geom_density(
+    color = "#1B5E20",  # verde oscuro
+    linewidth = 1.5
+  ) +
+  geom_vline(
+    xintercept = mean(ventas),
+    color = "#1C3D5A",  # azul oscuro (consistente con ingresos)
+    linewidth = 1.2,
+    linetype = "dashed"
+  ) +
+  labs(
+    title = "Ventas mensuales simuladas",
+    subtitle = "Presencia de valores atípicos bajos",
+    x = "Millones de pesos",
+    y = "Densidad"
+  ) +
+  theme_minimal(base_size = 16) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+</div>
+
+</div>
+
+## Interpretación
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2"style="text-align: justify;">
+La mayoría de los valores se concentra en ventas altas.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify;">
+Existen pocos valores bajos que generan una cola hacia la izquierda.
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify;">
+La distribución presenta asimetría negativa.
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align: justify;">
+El gráfico indica que la mayoría de las unidades presenta ventas altas, pero en algunos casos presentan bajo desempeño.
+</li>
+</ul >
+</div>
+
+## Conclusiones presentación gráfica
+<div class="fragment fade-up info-box"  style="padding-right:50px; margin-top: 100px;" data-fragment-index="1">
+<p class="fragment fade-in" data-fragment-index="2" style="text-align: justify;">
+La forma de una gráfica permite entender cómo se comportan los datos, identificar posibles problemas (valores atípicos) y tomar decisiones más informadas, especialmente en áreas como la economía donde la variabilidad es clave.
+</p>
+</div>
+
+## Conclusiones finales presentación tabular y gráfica
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="text-align: justify; font-size: 30px;">
+La presentación tabular permite organizar los datos de manera estructurada, facilitando su lectura y análisis detallado.
+</li>
+<li class="fragment fade-up" data-fragment-index="3" style="text-align: justify; font-size: 30px;">
+La presentación gráfica complementa las tablas al representar la información de forma visual, permitiendo identificar patrones, tendencias y comportamientos de manera rápida.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="text-align: justify; font-size: 30px;">
+El uso conjunto de tablas y gráficas mejora la comprensión de los datos y facilita la interpretación de la información.
+</li>
+
+</ul>
+</div>
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4">
+<ul>
+<li class="fragment fade-in" data-fragment-index="5" style="text-align: justify; font-size: 30px;">
+Las gráficas permiten detectar características importantes como la simetría, la asimetría y la presencia de valores atípicos.
+</li>
+<li class="fragment fade-in" data-fragment-index="6" style="text-align: justify; font-size: 30px;">
+Una adecuada presentación de los datos es fundamental para apoyar la toma de decisiones en diferentes áreas, como la economía y otras disciplinas.
+</li>
+</ul>
+</div>
+</div>
+

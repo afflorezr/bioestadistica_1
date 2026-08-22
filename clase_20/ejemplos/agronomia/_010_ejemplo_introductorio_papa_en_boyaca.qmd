@@ -1,0 +1,42 @@
+## Ejemplo introductorio: papa en Boyacá
+
+<p class="fragment fade-up" data-fragment-index="0" style="font-size: 25px; text-align: justify; line-height: 1.3; margin-bottom: 6px;">
+Un agrónomo de Boyacá desea evaluar el rendimiento de papa (ton/ha) bajo tres variedades (<strong>Diacol Capiro</strong>, <strong>Pastusa Suprema</strong>, <strong>Criolla Colombia</strong>) y dos niveles de fertilización NPK (<strong>Bajo</strong> y <strong>Alto</strong>). Se siembran 4 parcelas por combinación variedad x fertilización ($n=4$, 6 tratamientos, $N=24$).
+</p>
+
+```{r}
+#| label: setup-datos
+#| include: false
+variedad <- factor(rep(c("Diacol Capiro", "Pastusa Suprema", "Criolla Colombia"), each = 8),
+                    levels = c("Diacol Capiro", "Pastusa Suprema", "Criolla Colombia"))
+fert <- factor(rep(rep(c("Bajo", "Alto"), each = 4), times = 3), levels = c("Bajo", "Alto"))
+
+mu <- c(
+  "Diacol Capiro.Bajo" = 22, "Diacol Capiro.Alto" = 27,
+  "Pastusa Suprema.Bajo" = 24, "Pastusa Suprema.Alto" = 30,
+  "Criolla Colombia.Bajo" = 19, "Criolla Colombia.Alto" = 29
+)
+celda <- paste(variedad, fert, sep = ".")
+set.seed(2026)
+rendimiento <- round(rnorm(24, mean = mu[celda], sd = 1.6), 1)
+datos <- data.frame(variedad, fert, rendimiento)
+modelo <- aov(rendimiento ~ variedad * fert, data = datos)
+```
+
+<table style="width:100%; font-size:18px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#dbeafe;">
+<th>Parcela</th><th>D.Capiro/Bajo</th><th>D.Capiro/Alto</th><th>Pastusa/Bajo</th><th>Pastusa/Alto</th><th>Criolla/Bajo</th><th>Criolla/Alto</th>
+</tr>
+<tr><td>1</td><td>22.8</td><td>25.9</td><td>24.2</td><td>29.6</td><td>20.0</td><td>28.5</td></tr>
+<tr><td>2</td><td>20.3</td><td>23.0</td><td>23.2</td><td>29.6</td><td>19.3</td><td>28.7</td></tr>
+<tr><td>3</td><td>22.2</td><td>25.8</td><td>23.3</td><td>25.9</td><td>17.7</td><td>26.8</td></tr>
+<tr><td>4</td><td>21.9</td><td>25.4</td><td>22.8</td><td>32.2</td><td>20.1</td><td>31.3</td></tr>
+</table>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:8px;">
+<div style="font-size:22px; text-align:center;">
+¿La fertilización afecta el rendimiento? ¿La variedad lo afecta? ¿El efecto de la fertilización depende de la variedad sembrada?
+</div>
+</div>
+

@@ -1,0 +1,19 @@
+## Código en R: Prueba para la varianza
+
+```{r}
+n <- 20
+s2 <- 6.1
+sigma2_0 <- 4
+
+# Estadístico chi-cuadrado
+chi2 <- (n - 1) * s2 / sigma2_0
+chi2
+
+# Valor-p (cola derecha)
+pvalor <- pchisq(chi2, df = n - 1, lower.tail = FALSE)
+pvalor
+
+# Valor crítico al 5%
+qchisq(0.95, df = n - 1)
+```
+

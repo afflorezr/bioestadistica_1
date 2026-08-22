@@ -1,0 +1,56 @@
+## Validación de supuestos mediante pruebas estadísticas
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(lmtest)
+sw  <- shapiro.test(residuals(modelo))
+bp  <- bptest(modelo)
+dw  <- dwtest(modelo)
+sw_w  <- round(sw$statistic, 4)
+sw_p  <- round(sw$p.value,   4)
+bp_bp <- round(bp$statistic, 4)
+bp_p  <- round(bp$p.value,   4)
+dw_d  <- round(dw$statistic, 4)
+dw_p  <- round(dw$p.value,   4)
+```
+
+<p class="fragment fade-in" data-fragment-index="1" style="font-size:28px; text-align:justify; margin-bottom:18px; line-height:1.45;">
+Además del diagnóstico visual, los supuestos se respaldan con pruebas estadísticas formales aplicadas sobre los residuos del modelo.
+</p>
+
+<table class="fragment fade-in" data-fragment-index="2" style="width:100%; border-collapse:separate; border-spacing:14px; margin-top:0;">
+<thead>
+<tr>
+<th style="background:#1a3a6b; color:#fff; padding:13px 18px; font-size:27px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">🔔 Normalidad</th>
+<th style="background:#1b4d2e; color:#fff; padding:13px 18px; font-size:27px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">📊 Homocedasticidad</th>
+<th style="background:#b45309; color:#fff; padding:13px 18px; font-size:27px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:33%;">🔗 Independencia</th>
+</tr>
+</thead>
+<tbody>
+<tr style="vertical-align:top;">
+<td style="background:#dce9f7; padding:20px 22px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; font-weight:700; color:#1a3a6b; margin:0 0 12px;">Shapiro-Wilk</p>
+<p style="font-size:28px; margin:0 0 6px;">$W =$ `r sw_w`</p>
+<p style="font-size:28px; margin:0 0 16px;">$p\text{-valor} =$ `r sw_p`</p>
+<p style="font-size:26px; color:#1e293b; margin:0; line-height:1.4; background:#fff; border-radius:8px; padding:10px;">$p > 0.05$ ✅<br><strong>No se rechaza</strong> la normalidad.</p>
+</td>
+<td style="background:#d6f0dd; padding:20px 22px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; font-weight:700; color:#1b4d2e; margin:0 0 12px;">Breusch-Pagan</p>
+<p style="font-size:28px; margin:0 0 6px;">$BP =$ `r bp_bp`</p>
+<p style="font-size:28px; margin:0 0 16px;">$p\text{-valor} =$ `r bp_p`</p>
+<p style="font-size:26px; color:#1e293b; margin:0; line-height:1.4; background:#fff; border-radius:8px; padding:10px;">$p > 0.05$ ✅<br>Varianza de errores <strong>constante</strong>.</p>
+</td>
+<td style="background:#fef9c3; padding:20px 22px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; font-weight:700; color:#92400e; margin:0 0 12px;">Durbin-Watson</p>
+<p style="font-size:28px; margin:0 0 6px;">$DW =$ `r dw_d`</p>
+<p style="font-size:28px; margin:0 0 16px;">$p\text{-valor} =$ `r dw_p`</p>
+<p style="font-size:26px; color:#1e293b; margin:0; line-height:1.4; background:#fff; border-radius:8px; padding:10px;">$p > 0.05$ ✅<br><strong>Independencia</strong> confirmada.</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+

@@ -1,0 +1,61 @@
+## R: Distribución Poisson
+
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+Brotes de sigatoka por semana en banano, $\lambda=4.2$. Calcule $P(X=3)$, $P(X \leq 5)$, $P(X > 6)$, $P(X \geq 7)$ y $P(3 \leq X \leq 6)$.
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+
+<div class="scrollable-code" style="min-width: 0;">
+
+```{r}
+#| echo: true
+#| comment: ""
+#| class-source: scrollable-code
+lambda <- 4.2
+
+# Exactamente 3 brotes
+dpois(3, lambda)
+
+# Menor o igual que 5
+ppois(5, lambda)
+
+# Estrictamente menor que 5
+ppois(4, lambda)
+
+# Mayor que 6
+ppois(6, lambda, lower.tail = FALSE)
+
+# Mayor o igual que 7
+ppois(6, lambda, lower.tail = FALSE)
+
+# Entre 3 y 6 (inclusive)
+ppois(6, lambda) - ppois(2, lambda)
+```
+</div>
+
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<strong><code>dpois(x, lambda): </code></strong>
+<span style="color:#374151;font-size:24px">$P(X = x)$</span><br><br>
+
+<strong><code>ppois(q, lambda):</code></strong>
+<span style="color:#374151;font-size:24px">$P(X \leq q)$</span><br><br>
+
+<strong><code>ppois(q-1, lambda): </code></strong>
+<span style="color:#374151;font-size:24px">$P(X < q)$</span><br><br>
+
+<strong><code>lower.tail = FALSE: </code></strong>
+<span style="color:#374151;font-size:24px">$P(X > q)$</span><br><br>
+
+<strong><code>ppois(q-1,...,FALSE): </code></strong>
+<span style="color:#374151;font-size:24px">$P(X \geq q)$</span><br><br>
+
+<strong><code>ppois(b) - ppois(a-1): </code></strong>
+<span style="color:#374151;font-size:24px">$P(a \leq X \leq b)$</span>
+</div>
+
+</div>
+
+

@@ -1,0 +1,40 @@
+## Medias del cuadrado latino: aves
+
+```{r}
+#| label: interaccion-aves
+#| echo: false
+#| fig-height: 3.2
+trt_aves <- c("Dieta_60","Dieta_67","Dieta_2000","Dieta D")
+lotes <- paste0("Lote_", 1:4)
+fechas <- paste0("Fecha_", 1:4)
+LS <- matrix(c(1,2,3,4, 2,3,4,1, 3,4,1,2, 4,1,2,3), nrow=4, byrow=TRUE)
+mu2 <- 7.2
+alpha_fila <- c(0, 0.3, -0.4, 0.5)
+beta_col   <- c(0, -0.5, 0.6, 0.2)
+tau_trt    <- c(0, 0.8, 1.3, -0.6)
+set.seed(202)
+dat_aves <- data.frame()
+for (i in 1:4) for (j in 1:4) {
+  k <- LS[i,j]
+  y <- mu2 + alpha_fila[i] + beta_col[j] + tau_trt[k] + rnorm(1,0,0.35)
+  dat_aves <- rbind(dat_aves, data.frame(lote=lotes[i], fecha=fechas[j],
+                                            dieta=trt_aves[k], rend=round(y,2)))
+}
+dat_aves$lote <- factor(dat_aves$lote, levels=lotes)
+dat_aves$fecha <- factor(dat_aves$fecha, levels=fechas)
+dat_aves$dieta <- factor(dat_aves$dieta, levels=trt_aves)
+modelo_ls <- aov(rend ~ dieta + lote + fecha, data=dat_aves)
+boxplot(rend ~ dieta, data = dat_aves,
+        col = c("#dbeafe","#d6f0dd","#fde68a","#fecaca"),
+        xlab = "Dieta", ylab = "Productividad (kg/animal)",
+        main = "Producción de huevos por dieta")
+```
+
+<table style="width:100%; font-size:20px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th>Dieta</th><th>$\bar y_{..k}$</th></tr>
+<tr style="background-color:#eef4fb;"><td>Dieta A</td><td>7.082</td></tr>
+<tr><td>Dieta B</td><td>8.373</td></tr>
+<tr style="background-color:#eef4fb;"><td>Dieta C</td><td>8.525</td></tr>
+<tr><td>Dieta D</td><td>6.605</td></tr>
+</table>
+

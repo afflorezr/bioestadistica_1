@@ -1,0 +1,127 @@
+## Diagnóstico y validación de supuestos
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 5.5
+#| fig-width: 18
+
+
+library(ggplot2); library(patchwork)
+
+df_t <- data.frame(
+  ajustados = fitted(modelo_taller),
+  residuos  = residuals(modelo_taller),
+  std_res   = rstandard(modelo_taller),
+  sqrt_std  = sqrt(abs(rstandard(modelo_taller))),
+  leverage  = hatvalues(modelo_taller),
+  cooks     = cooks.distance(modelo_taller)
+)
+
+tema_t <- theme_minimal(base_size = 14) +
+  theme(
+    plot.title       = element_text(face = "bold", hjust = 0.5,
+                                    size = 15, color = "#1a3a6b"),
+    plot.subtitle    = element_text(hjust = 0.5, size = 11, color = "#64748b"),
+    axis.title       = element_text(size = 13, color = "#374151"),
+    axis.text        = element_text(size = 11, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border     = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.5)
+  )
+
+p1 <- ggplot(df_t, aes(ajustados, residuos)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#b91c1c", linewidth = 0.9) +
+  geom_point(color = "#1a3a6b", size = 2.5, alpha = 0.75) +
+  geom_smooth(method = "loess", se = FALSE, color = "#d97706", linewidth = 1.1) +
+  labs(title = "Residuos vs. Ajustados", subtitle = "Linealidad",
+       x = "Valores ajustados", y = "Residuos") + tema_t
+
+p2 <- ggplot(df_t, aes(sample = std_res)) +
+  stat_qq(color = "#1a3a6b", size = 2.5, alpha = 0.75) +
+  stat_qq_line(color = "#b91c1c", linewidth = 1, linetype = "dashed") +
+  labs(title = "Q-Q Plot", subtitle = "Normalidad",
+       x = "Cuantiles teóricos", y = "Cuantiles muestrales") + tema_t
+
+p3 <- ggplot(df_t, aes(ajustados, sqrt_std)) +
+  geom_point(color = "#1b4d2e", size = 2.5, alpha = 0.75) +
+  geom_smooth(method = "loess", se = FALSE, color = "#d97706", linewidth = 1.1) +
+  labs(title = "Scale-Location", subtitle = "Homocedasticidad",
+       x = "Valores ajustados", y = expression(sqrt("|Res. estand.|"))) + tema_t
+
+p4 <- ggplot(df_t, aes(leverage, std_res)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#b91c1c", linewidth = 0.9) +
+  geom_point(aes(size = cooks), color = "#7c3aed", alpha = 0.7) +
+  geom_smooth(method = "loess", se = FALSE, color = "#d97706", linewidth = 1.1) +
+  scale_size_continuous(range = c(1.5, 6), guide = "none") +
+  labs(title = "Residuos vs. Leverage", subtitle = "Obs. influyentes",
+       x = "Leverage", y = "Residuos estandarizados") + tema_t
+
+p1 + p2 + p3 + p4
+
+```
+
+<div class="twocol" style="margin-top: 8px;">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="border-left: 4px solid #1b4d2e; padding: 12px 16px;">
+<h4 style="color:#1b4d2e; font-size: 28px; margin-bottom: 8px;">Pruebas de diagnóstico</h4>
+<table style="width:100%; font-size: 22px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1b4d2e; color: #1b4d2e;">
+<th style="padding: 6px;">Supuesto</th>
+<th style="padding: 6px;">Prueba</th>
+<th style="padding: 6px;">Estadístico</th>
+<th style="padding: 6px;">Valor-p</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">Normalidad</td>
+<td>Shapiro-Wilk</td>
+<td>W = 0.97</td>
+<td>0.31</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">Homocedasticidad</td>
+<td>Breusch-Pagan</td>
+<td>BP = 2.8</td>
+<td>0.42</td>
+</tr>
+<tr>
+<td style="padding: 5px;">Independencia</td>
+<td>Durbin-Watson</td>
+<td>DW = 1.9</td>
+<td>0.38</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1a3a6b; padding: 12px 16px;">
+<h4 style="color:#1a3a6b; font-size: 28px; margin-bottom: 8px;">VIF</h4>
+<table style="width:100%; font-size: 26px; border-collapse: collapse; text-align: center;">
+<thead>
+<tr style="border-bottom: 2px solid #1a3a6b; color: #1a3a6b;">
+<th style="padding: 6px;">Variable</th>
+<th style="padding: 6px;">VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">precipitación</td>
+<td style="color: #15803d;">1.01</td>
+</tr>
+<tr style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 5px;">fertilizante</td>
+<td style="color: #15803d;">1.02</td>
+</tr>
+<tr>
+<td style="padding: 5px;">materia orgánica</td>
+<td style="color: #15803d;">1.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+

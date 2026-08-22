@@ -1,0 +1,50 @@
+## ¿Cómo verificamos los supuestos?
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-body">
+<p style="font-size: 28px; text-align: justify;">
+Los supuestos se verifican analizando los <strong>residuos</strong> $\small e_i = Y_i - \hat{Y}_i$. En R, la función <code>plot(modelo)</code> genera 4 gráficos de diagnóstico que cubren los supuestos principales.
+</p>
+</div>
+</div>
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 10px;">Gráficos clave</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<strong>Residuos vs. ajustados:</strong> verifica linealidad y homocedasticidad. Se espera una nube sin patrón.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<strong>QQ-plot:</strong> verifica normalidad. Los puntos deben seguir la línea diagonal.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<strong>Scale-Location:</strong> verifica homocedasticidad. La línea roja debe ser aproximadamente horizontal.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+<strong>Residuos vs. Leverage:</strong> detecta observaciones que influyen demasiado en el ajuste del modelo.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 26px; margin-bottom: 10px;">¿Qué buscar?</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+<strong>Curvatura</strong> en residuos vs. ajustados → falta de linealidad. Considerar transformaciones o términos cuadráticos.
+</li>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px; text-align: justify;">
+<strong>Forma de embudo</strong> → heterocedasticidad. Los errores crecen con el valor predicho.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px; text-align: justify;">
+<strong>Colas pesadas</strong> en el QQ-plot → los errores no son normales. Afecta las pruebas de inferencia.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 26px; text-align: justify;">
+<strong>Puntos influyentes:</strong> una observación es influyente si al quitarla del modelo, los coeficientes cambian mucho. La <strong>distancia de Cook</strong> mide exactamente esto.
+</li>
+</ul>
+</div>
+
+</div>
+

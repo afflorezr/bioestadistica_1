@@ -1,0 +1,36 @@
+## IC de Wilson: proporciones con muestras pequeñas
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Intervalo de Wilson</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.45;">
+El intervalo de Wald falla cuando $\hat{p}$ es extremo (cercano a 0 o 1) o $n$ es pequeño. El intervalo de <strong>Wilson</strong> es más preciso:
+$$\frac{\hat{p} + \frac{z_{\alpha/2}^2}{2n} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z_{\alpha/2}^2}{4n^2}}}{1+\frac{z_{\alpha/2}^2}{n}}$$
+Recomendado siempre que $n\hat{p} < 5$ o $n(1-\hat{p}) < 5$.
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">Comparación: Wald vs Wilson</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.4;">
+$n = 20$ animales, $x = 2$ enfermas ($\hat{p} = 0.10$). Condición: $20 \times 0.10 = 2 < 5$ → Wald no válido.
+
+```{r}
+n <- 20; x <- 2; p <- x/n; z <- 1.96
+# Wald
+wald <- p + c(-1,1)*z*sqrt(p*(1-p)/n)
+# Wilson
+num  <- p + z^2/(2*n)
+den  <- 1 + z^2/n
+rad  <- z*sqrt(p*(1-p)/n + z^2/(4*n^2))/den
+wilson <- c(num/den - rad, num/den + rad)
+cat("Wald  :", round(wald, 3), "\n")
+cat("Wilson:", round(wilson, 3), "\n")
+```
+</div>
+</div>
+
+</div>
+
+

@@ -1,0 +1,46 @@
+## FMP y FDA: Distribución Binomial
+
+<div class="twocol" style="margin-top: 10px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">FMP: $X \sim \text{Bin}(3,\, 0.4)$</div>
+<div class="block-body" style="font-size: 26px;">
+$$p(x) = \binom{3}{x}(0.4)^x(0.6)^{3-x}$$
+
+<table class="slide-table" style="width:100%; font-size:25px; margin-top:10px;">
+<thead><tr><th>$x$</th><th>$p(x) = P(X=x)$</th></tr></thead>
+<tbody>
+<tr><td style="text-align:center;">0</td><td style="text-align:center;">$\binom{3}{0}(0.4)^0(0.6)^3 = 0.216$</td></tr>
+<tr><td style="text-align:center;">1</td><td style="text-align:center;">$\binom{3}{1}(0.4)^1(0.6)^2 = 0.432$</td></tr>
+<tr><td style="text-align:center;">2</td><td style="text-align:center;">$\binom{3}{2}(0.4)^2(0.6)^1 = 0.288$</td></tr>
+<tr><td style="text-align:center;">3</td><td style="text-align:center;">$\binom{3}{3}(0.4)^3(0.6)^0 = 0.064$</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">FDA: $F(x) = P(X \leq x)$</div>
+<div class="block-body" style="font-size: 26px;">
+$$F(x) = \sum_{x_i \leq x} p(x_i)$$
+
+<table class="slide-table" style="width:100%; font-size:25px; margin-top:10px;">
+<thead><tr><th>$x$</th><th>$F(x) = P(X \leq x)$</th></tr></thead>
+<tbody>
+<tr><td style="text-align:center;">0</td><td style="text-align:center;">$0.216$</td></tr>
+<tr><td style="text-align:center;">1</td><td style="text-align:center;">$0.216 + 0.432 = 0.648$</td></tr>
+<tr><td style="text-align:center;">2</td><td style="text-align:center;">$0.648 + 0.288 = 0.936$</td></tr>
+<tr><td style="text-align:center;">3</td><td style="text-align:center;">$0.936 + 0.064 = 1.000$</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="3" style="margin-top: 12px;">
+<div class="block-body" style="font-size: 24px; text-align: center;">
+$P(X \leq 1) = F(1) = 0.648$; &nbsp; $P(X = 2) = F(2) - F(1) = 0.936 - 0.648 = 0.288$; &nbsp; $P(X > 2) = 1 - F(2) = 0.064$
+</div>
+</div>
+

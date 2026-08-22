@@ -1,0 +1,90 @@
+## Formas de la distribución Beta según los parámetros
+
+```{r}
+#| echo: false
+#| fig-width: 16
+#| fig-height: 7
+#| warning: false
+
+par(
+  mfrow = c(2,3),
+  mar = c(4,4,3,1),
+  bg = "white",
+  family = "sans"
+)
+
+# Parámetros Beta
+params <- list(
+  c(1,1),
+  c(2,2),
+  c(5,2),
+  c(0.5,0.5),
+  c(2,5),
+  c(5,1)
+)
+
+# Títulos
+titles <- c(
+  expression(Beta(1,1)),
+  expression(Beta(2,2)),
+  expression(Beta(5,2)),
+  expression(Beta(0.5,0.5)),
+  expression(Beta(2,5)),
+  expression(Beta(5,1))
+)
+
+# Colores
+cols <- c(
+  "#1f4e79",
+  "#2e7d32",
+  "#b23a48",
+  "#7b1fa2",
+  "#d17a22",
+  "#00838f"
+)
+
+# Valores de x
+x <- seq(0.001, 0.999, length = 600)
+
+# Crear gráficos
+for(i in seq_along(params)) {
+
+  a <- params[[i]][1]
+  b <- params[[i]][2]
+
+  y <- dbeta(x, a, b)
+
+  plot(
+    x, y,
+    type = "l",
+    lwd = 4,
+    col = cols[i],
+    main = titles[i],
+    xlab = "x",
+    ylab = "f(x)",
+    cex.main = 1.3,
+    cex.lab = 1.1,
+    cex.axis = 1,
+    ylim = c(0, max(y)*1.10)
+  )
+
+  grid(col = "gray88")
+
+  # Área sombreada
+  polygon(
+    c(x, rev(x)),
+    c(y, rep(0, length(y))),
+    col = adjustcolor(cols[i], alpha.f = 0.18),
+    border = NA
+  )
+
+  # Curva nuevamente encima
+  lines(x, y, lwd = 4, col = cols[i])
+
+  # Línea vertical en la media
+  abline(v = a/(a+b), lty = 2, lwd = 2, col = "gray35")
+
+}
+```
+
+

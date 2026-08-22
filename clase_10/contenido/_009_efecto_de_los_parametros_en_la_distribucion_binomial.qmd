@@ -1,0 +1,19 @@
+## Efecto de los parámetros en la Distribución Binomial 
+
+```{r}
+#| echo: false
+#| fig-width: 16
+#| fig-height: 6
+par(mfrow = c(2,3), mar = c(3,3,2,1))
+for(p in c(0.3, 0.5, 0.7)) {
+  k <- 0:20
+  barplot(dbinom(k, 20, p), names.arg = k, col = "#3b82f6", border = NA,
+          main = paste0("Bin(20,", p, ")"), cex.main = 1.1, cex.names = 0.7)
+}
+for(n in c(5, 20, 50)) {
+  k <- 0:n
+  barplot(dbinom(k, n, 0.4), names.arg = k, col = "#1b4d2e", border = NA,
+          main = paste0("Bin(",n,",0.4)"), cex.main = 1.1, cex.names = 0.7)
+}
+```
+

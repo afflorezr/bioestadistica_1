@@ -1,0 +1,40 @@
+## Evaluación: curva ROC y AUC
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title" style="font-size: 28px;">¿Qué mide?</div>
+  <div class="block-body">
+  <p style="font-size: 28px; text-align: justify;">
+  La curva ROC muestra el balance entre la capacidad del modelo para detectar eventos positivos y no confundir negativos. El <strong>AUC</strong> resume esa curva en un solo número.
+  </p>
+  </div>
+</div>
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 14px 18px;">
+<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 8px;">Curva ROC</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 28px;">Eje X: proporción de falsos positivos.</li>
+<li style="font-size: 28px;">Eje Y: proporción de verdaderos positivos.</li>
+<li style="font-size: 28px;">Muestra todos los puntos de corte posibles.</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1a3a6b; padding: 14px 18px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 8px;">AUC</h4>
+<ul style="margin: 0; padding-left: 18px;">
+<li style="font-size: 28px;"><strong>0.5:</strong> modelo no discrimina.</li>
+<li style="font-size: 28px;"><strong>0.7–0.8:</strong> discriminación aceptable.</li>
+<li style="font-size: 28px;"><strong>0.8–0.9:</strong> muy buena.</li>
+<li style="font-size: 28px;"><strong>1.0:</strong> clasificación perfecta.</li>
+</ul>
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4" style="margin-top: 14px; background-color: #f0fdf4; border: 1px solid #1b4d2e; border-radius: 8px; padding: 10px 16px; text-align: center;">
+<p style="font-size: 28px; margin: 0; color: #1b4d2e;">
+<strong>En R:</strong> <code>prediction()</code> y <code>performance()</code> del paquete <code>ROCR</code>, o <code>roc()</code> del paquete <code>pROC</code>.
+</p>
+</div>
+

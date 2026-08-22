@@ -1,0 +1,32 @@
+## Tamaño de muestra para estimar la media
+
+<div class="twocol">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+<div class="block-title">Fórmula</div>
+<div class="block-body" style="font-size: 27px; line-height: 1.5;">
+Despejando $n$ de $e = z_{\alpha/2}\,\sigma/\sqrt{n}$:
+
+$$\boxed{n = \left\lceil \frac{z_{\alpha/2}^2\,\sigma^2}{e^2} \right\rceil}$$
+
+$\sigma$ se obtiene de estudios previos, literatura o una muestra piloto ($s$). Si se usa $s$, reemplazar $z$ por $t_{n_0-1,\,\alpha/2}$ (iterativo).
+</div>
+</div>
+
+<div class="block-example fragment fade-up" data-fragment-index="2">
+<div class="block-title">Ejemplo: peso de fríjol, Nariño</div>
+<div class="block-body" style="font-size: 26px; line-height: 1.45;">
+Se quiere estimar el peso promedio de vainas con un error máximo de $e = 2$ g, confianza del 95%, y se sabe que $\sigma \approx 8$ g.
+
+$$n = \left\lceil \frac{1.96^2 \times 64}{4} \right\rceil = \left\lceil \frac{245.86}{4} \right\rceil = \lceil 61.5 \rceil = 62$$
+
+```{r}
+#| echo: true
+ceiling((1.96^2 * 8^2) / 2^2)
+```
+</div>
+</div>
+
+</div>
+
+

@@ -1,0 +1,42 @@
+## FDP y FDA de la Distribución Beta
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Distribución Beta $X \sim \text{Beta}(\alpha,\, \beta)$</div>
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+Modela <strong>proporciones y probabilidades</strong>: prevalencia de enfermedades, porcentaje de germinación, eficacia de tratamientos. $\alpha$ controla el comportamiento cerca de 0; $\beta$ cerca de 1.
+<span style="color:#6b7280; font-size:24px;">, Soporte: $x \in (0, 1)$. &nbsp; Función Beta: $B(\alpha,\beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$.</span>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Función de Densidad (FDP)</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+$$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}, \quad 0 < x < 1$$
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+Muy flexible: uniforme ($\alpha=\beta=1$), forma de U ($\alpha,\beta<1$), campana simétrica ($\alpha=\beta>1$), asimétrica ($\alpha \neq \beta$).
+</p>
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">Función de Distribución Acumulada (FDA)</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+$$F(x) = I_x(\alpha,\, \beta) = \frac{B(x;\,\alpha,\beta)}{B(\alpha,\beta)}, \quad 0 < x < 1$$
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+$I_x(\alpha,\beta)$ es la función Beta incompleta regularizada. Sin forma cerrada, se calcula con <code>pbeta()</code> en R.
+</p>
+</div>
+</div>
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+Caso especial: &nbsp; $\text{Beta}(1, 1) = U(0, 1)$ &nbsp;·&nbsp;
+Si $\alpha = \beta$: distribución simétrica alrededor de $0.5$
+</div>
+</div>
+
+

@@ -1,0 +1,29 @@
+## Superficie de respuesta: ejemplo con proteína
+
+```{r}
+#| label: rs-setup
+#| include: false
+set.seed(7)
+Nf <- rep(c(50, 100, 150, 200), each = 5)
+rend_rs <- round(70 + 0.55*Nf - 0.0016*Nf^2 + rnorm(20, 0, 2.2), 1)
+datos_rs <- data.frame(N = Nf, rend = rend_rs)
+mod_quad <- lm(rend ~ N + I(N^2), data = datos_rs)
+```
+
+```{r}
+#| label: rs-plot
+#| echo: false
+#| fig-height: 3.3
+plot(datos_rs$N, datos_rs$rend, pch = 19, col = "#1a3a6b",
+     xlab = "Proteína aplicado (kg/animal)", ylab = "Productividad (kg/animal)",
+     main = "Ajuste cuadrático: proteína y productividad de avicultura")
+curve_x <- seq(50, 200, length.out = 100)
+curve_y <- predict(mod_quad, newdata = data.frame(N = curve_x))
+lines(curve_x, curve_y, col = "#b91c1c", lwd = 2)
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:20px; text-align:center;">
+Modelo ajustado: $\hat y=64.31+0.671N-0.00205N^2$ ($R^2=0.95$). El término cuadrático es significativo ($p<0.0001$), lo que confirma una relación curva, no lineal.
+</div>
+

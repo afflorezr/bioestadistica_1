@@ -1,0 +1,21 @@
+## Tabla resumen: IC para distintos parámetros
+
+<div style="font-size: 23px; margin-top: 14px;">
+
+| Parámetro | Condición | Estadístico pivote | Intervalo |
+|:---|:---|:---|:---|
+| $\mu$ ($\sigma$ conocida) | cualquier $n$ | $Z = \frac{\bar{X}-\mu}{\sigma/\sqrt{n}}$ | $\bar{x} \pm z_{\alpha/2}\,\sigma/\sqrt{n}$ |
+| $\mu$ ($\sigma$ desconocida) | pop. normal | $T = \frac{\bar{X}-\mu}{S/\sqrt{n}}\sim t_{n-1}$ | $\bar{x} \pm t_{n-1}\,s/\sqrt{n}$ |
+| $\mu_1-\mu_2$ | indep., var. iguales | $T \sim t_{n_1+n_2-2}$ | $(\bar{x}_1-\bar{x}_2) \pm t\cdot S_p\sqrt{1/n_1+1/n_2}$ |
+| $p$ | $n\hat{p}\geq5$, $n(1-\hat{p})\geq5$ | $Z = \frac{\hat{p}-p}{\text{SE}}$ | $\hat{p} \pm z_{\alpha/2}\sqrt{\hat{p}(1-\hat{p})/n}$ |
+| $\sigma^2$ | pop. normal | $\chi^2_{n-1} = (n-1)S^2/\sigma^2$ | $\left[\frac{(n-1)s^2}{\chi^2_u},\frac{(n-1)s^2}{\chi^2_l}\right]$ |
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="1" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 25px; text-align: center;">
+Todos los ICs tienen la misma estructura: <strong>estimador ± factor crítico × error estándar</strong>. Lo que varía es el estadístico pivote y su distribución.
+</div>
+</div>
+
+

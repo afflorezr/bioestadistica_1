@@ -1,0 +1,36 @@
+## Gráfico del efecto del tamaño de muestra sobre la potencia
+
+
+```{r, echo=FALSE, fig.width=30, fig.height=8}
+library(ggplot2)
+
+theta <- seq(0, 1, by = 0.01)
+
+datos <- rbind(
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(20)*3),  n = "n = 20"),
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(50)*3),  n = "n = 50"),
+  data.frame(theta, potencia = pnorm((theta-0.5)*sqrt(100)*3), n = "n = 100")
+)
+
+ggplot(datos,
+       aes(theta, potencia,
+           linetype = n)) +
+  geom_line(linewidth = 1.4) +
+  geom_vline(xintercept = 0.5,
+             linetype = "dashed") +
+  labs(
+    x = expression(theta),
+    y = "Potencia",
+    title = "Efecto del tamaño de muestra sobre la potencia"
+  ) +
+  theme_minimal(base_size = 18) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(hjust = 0.5)
+  )
+```
+
+<div style="font-size:26px;text-align:center;margin-top:10px;">
+A medida que aumenta el tamaño de muestra, la potencia crece más rápidamente y la prueba tiene mayor capacidad para detectar diferencias reales.
+</div>
+

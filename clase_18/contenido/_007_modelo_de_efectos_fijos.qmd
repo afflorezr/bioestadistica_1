@@ -1,0 +1,61 @@
+## Modelo de efectos fijos
+
+<div style="font-size:30px; text-align:justify; line-height:1.2;">
+El **ANOVA** de un factor con $a$ tratamientos se representa mediante el siguiente modelo lineal estadístico:
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1" style="border-radius:12px;">
+<div class="block-body" style="font-size:28px; text-align:center;">
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="2">
+$$
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}
+\qquad
+\begin{cases}
+i=1,\ldots,a \\
+j=1,\ldots,n_i
+\end{cases}
+$$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3" style="font-size:25px; line-height:1.1;">
+<ul>
+<li>$y_{ij}$: observación $j$ del tratamiento $i$.</li>
+<li>$\mu$: media general.</li> 
+<li>$\tau_i=\mu_i-\mu$: efecto del tratamiento $i$.</li>
+<li>$\varepsilon_{ij}$: error aleatorio, $\varepsilon_{ij} \sim N(0,\sigma^2)$ independientes.</li>
+<li>Restricción usual: $\sum_{i=1}^a n_i\tau_i = 0$.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:8px;">
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-top:6px solid #1a3a6b; font-size:24PX; text-align:center;">
+<strong>Normalidad</strong><br>$\varepsilon_{ij}\sim N(0,\sigma^2)$
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-top:6px solid #1b4d2e; font-size:24PX; text-align:center;">
+<strong>Homogeneidad</strong><br>Varianza $\sigma^2$ constante
+</div>
+
+<div class="fragment fade-up" data-fragment-index="5"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-top:6px solid #d97706; font-size:24PX; text-align:center;">
+<strong>Independencia</strong><br>Asignación aleatoria
+</div>
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="6"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:24px; text-align:center;">
+$$H_0:\tau_1=\tau_2=\cdots=\tau_a=0 \qquad \text{vs.} \qquad H_1: \text{algún } \tau_i \neq 0 \qquad \big(\text{equivalente a } H_0:\mu_1=\cdots=\mu_a\big)$$
+</div>
+

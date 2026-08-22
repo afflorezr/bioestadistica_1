@@ -1,0 +1,418 @@
+## Ejemplo 1 
+
+<h4 class="fragment fade-in" data-fragment-index="1" style="margin-top:80px">Variable cuantitativa discreta:</h4>
+<p class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 34px;">
+Se entrevistan 1.000 familias de la Ciudad de Buenos Aires, para saber cuántos hijos tiene cada familia. Los datos son: 0, 0, 3, 1, 1, 1, 2, 2, 2, 3, 1, 1, 2, 0, 0, 0, 2, 1, 8, 1, 1, 2, 3,... Donde cada número es la cantidad de hijos de cada una de las familias entrevistadas. 
+</p>
+
+
+##  Resultados
+
+<div class="twocol">
+
+<div class="fragment fade-in" data-fragment-index="1" style="max-width:800px; margin:auto; font-family:Arial;">
+<p class="fragment fade-in" data-fragment-index="1" style="text-align: justify; font-size: 28px;">
+Debido a que la muestra es grande, es necesario resumir la información:
+</p>
+
+<table class="fragment fade-in" data-fragment-index="3" style="width:100%; border-collapse:collapse; font-size:24px;">
+<tr style="background:#0b84c6; color:white;">
+<th style="padding:10px;">Número de hijos</th>
+<th style="padding:10px;">Número de familias</th>
+</tr>
+
+<tr><td style="padding:8px;">0</td><td>250</td></tr>
+<tr><td style="padding:8px;">1</td><td>200</td></tr>
+<tr><td style="padding:8px;">2</td><td>300</td></tr>
+<tr><td style="padding:8px;">3</td><td>160</td></tr>
+<tr><td style="padding:8px;">4</td><td>50</td></tr>
+<tr><td style="padding:8px;">5</td><td>20</td></tr>
+<tr><td style="padding:8px;">6</td><td>10</td></tr>
+<tr><td style="padding:8px;">7</td><td>7</td></tr>
+<tr><td style="padding:8px;">8</td><td>2</td></tr>
+<tr><td style="padding:8px;">9</td><td>1</td></tr>
+</table>
+</div>
+
+<div>
+<ul >
+<li class="fragment fade-in" data-fragment-index="4" style="text-align: justify; font-size: 28px;">
+En este caso **no es necesario** determinar el número de clases o intervalos, ya que la variable es **cuantitativa discreta** y los datos se pueden agrupar por su valor individual.
+</li>
+<li class="fragment fade-in" data-fragment-index="5" style="text-align: justify; font-size: 28px;">
+Aplicando los pasos para construir la tabla de frecuencias, se obtiene la siguiente tabla:
+</li>
+</ul >
+</div>
+
+</div>
+
+
+
+
+## 
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+library(knitr)
+library(kableExtra)
+
+# Datos
+hijos <- 0:9
+fi <- c(250, 200, 300, 160, 50, 20, 10, 7, 2, 1)
+
+# Cálculos
+Fi <- cumsum(fi)
+hi <- fi / sum(fi)
+Hi <- cumsum(hi)
+porcentaje <- hi * 100
+porcentaje_acum <- Hi * 100
+
+# Tabla
+tabla <- data.frame(
+  "Cantidad de hijos" = hijos,
+  "fi" = fi,
+  "Fi" = Fi,
+  "hi" = round(hi,3),
+  "Hi" = round(Hi,3),
+  "Porcentaje %" = round(porcentaje,1),
+  "Porcentaje.acumulado" = round(porcentaje_acum,1)
+)
+
+# Fila total
+total_fila <- data.frame(
+  "Cantidad de hijos" = "Total",
+  "fi" = sum(fi),
+  "Fi" = "",
+  "hi" = 1,
+  "Hi" = "",
+  "Porcentaje %" = 100,
+  "Porcentaje.acumulado" = ""
+)
+
+tabla <- rbind(tabla, total_fila)
+
+colnames(tabla) <- c(
+  "Nro. Hijos",
+  "\\(f_{i}\\)",
+  "\\(F_{i}\\)",
+  "\\(h_{i}\\)",
+  "\\(H_{i}\\)",
+  "%",
+  "% Acum"
+)
+
+# TABLA PRO
+tabla %>%
+kbl(align = "c", escape = FALSE) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    full_width = FALSE,
+    font_size = 26
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#0b84c6") %>%  # encabezado oscuro elegante
+  row_spec(nrow(tabla), bold = TRUE, background = "#8fbdf1") %>%         # fila total destacada
+  kable_paper("striped", full_width = TRUE) %>%                          # filas alternadas
+  column_spec(1, bold = TRUE) %>%                                        # primera columna resaltada
+  column_spec(2:ncol(tabla), width = "4cm")                              # columnas más anchas
+
+```
+
+## Hallazgos
+<div class="fragment fade-up info-box"  style="margin-top: 100px; padding-right:50px" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+El número de hijos más común es 2, con una frecuencia absoluta de 300 familias, lo que representa el 30% de la muestra, seguido por 0 hijos con 250 familias (25%) y 1 hijo con 200 familias (20%).
+</li> 
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 28px;">  
+Sumando los primeros 4 primeros porcentajes, se obtiene que el 91% de las familias tienen entre 0 y 3 hijos y el 9% restante tienen entre 4 y 9 hijos.
+</li>
+<li class="fragment fade-in" data-fragment-index="4" style="text-align: justify; font-size: 28px;">
+Segun el estudio pocas familias tienen 4 o más hijos, lo que puede indicar una tendencia hacia familias más pequeñas en la Ciudad de Buenos Aires.
+</li>
+</ul >
+</div>
+
+## Ejemplo 2
+<h4 class="fragment fade-in" data-fragment-index="1" style="margin-top:80px">Variable cualitativa nominal:</h4>
+<p class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 34px;">
+Se hizo una encuesta a 200 estudiantes de la universidad nacional  para conocer cual color de ojos era el mas predominante. Los resultados fueron los siguientes: 
+</p>
+<ul style="padding-left: 50px">
+<li class="fragment fade-in" data-fragment-index="3"style="text-align: justify; font-size: 28px;">
+Café: 90
+</li>
+<li class="fragment fade-in" data-fragment-index="4"style="text-align: justify; font-size: 28px;">
+Negro: 60
+</li>
+<li class="fragment fade-in" data-fragment-index="5"style="text-align:  justify; font-size: 28px;" >
+Azul: 25
+</li>
+<li class="fragment fade-in" data-fragment-index="6"style="text-align: justify; font-size: 28px;">
+Verde: 15
+</li>
+<li class="fragment fade-in" data-fragment-index="7"style="text-align: justify; font-size: 28px;">
+Miel:10
+</li>
+</ul >
+
+## Tabla de frecuencias
+
+<ul>
+<li class="fragment fade-in" data-fragment-index="1" style="text-align: justify; font-size: 30px;">
+En este caso no es necesario determinar el número de clases o intervalos, ya que la variable es cualitativa nominal y los datos se pueden agrupar por categorías.
+</li>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 30px;">
+Aplicando los pasos para construir la tabla de frecuencias, se obtiene la siguiente tabla:
+</li>
+</ul >
+
+:::{.fragment}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+library(knitr)
+library(kableExtra)
+
+# Datos
+ojos <- c("Café", "Negro", "Azul", "Verde", "Miel")
+fi <- c(90, 60, 25, 15, 10)
+
+# Cálculos
+Fi <- cumsum(fi)
+hi <- fi / sum(fi)
+Hi <- cumsum(hi)
+porcentaje <- hi * 100
+porcentaje_acum <- Hi * 100
+
+# Tabla
+tabla <- data.frame(
+  "Color de Ojos" = ojos,
+  "fi" = fi,
+  "Fi" = Fi,
+  "hi" = sprintf("%.3f", hi),              # formato exacto
+  "Hi" = sprintf("%.3f", Hi),
+  "Porcentaje" = paste0(round(porcentaje,1), "%"),
+  "Porcentaje.Acumulado" = paste0(round(porcentaje_acum,1), "%")
+)
+
+# Fila total
+total_fila <- data.frame(
+  "Color de Ojos" = "Total",
+  "fi" = sum(fi),
+  "Fi" = "",
+  "hi" = "1.000",
+  "Hi" = "",
+  "Porcentaje" = "100%",
+  "Porcentaje.Acumulado" = ""
+)
+
+tabla <- rbind(tabla, total_fila)
+
+colnames(tabla) <- c(
+  "Color",
+  "\\(f_{i}\\)",
+  "\\(F_{i}\\)",
+  "\\(h_{i}\\)",
+  "\\(H_{i}\\)",
+  "%",
+  "% Acum"
+)
+
+# TABLA ESTILO EXACTO 
+kable(tabla, align = "c") %>%
+  kable_styling(
+    full_width = TRUE,
+    position = "center",
+    font_size = 26
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#0b84c6") %>%  # azul encabezado
+  row_spec(1:(nrow(tabla)-1), background = "#ffffff") %>%                # gris claro uniforme
+  row_spec(nrow(tabla), bold = TRUE, background = "#8fbdf1") %>%         # total gris más fuerte
+  column_spec(1, bold = TRUE)       
+
+```
+:::
+
+## Hallazgos
+<div class="fragment fade-up info-box"  style="margin-top: 100px;" data-fragment-index="1">
+<ul>
+<li class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 28px;">
+El color de ojos más común entre los estudiantes encuestados es el café, con una frecuencia absoluta de 90 estudiantes, lo que representa el 45% de la muestra, seguido por el color negro con 60 estudiantes (30%), el azul con 25 estudiantes (12.5%), el verde con 15 estudiantes (7.5%) y el miel con 10 estudiantes (5%).
+</li>
+<li class="fragment fade-in" data-fragment-index="3" style="text-align: justify; font-size: 28px;">
+Los colores de ojos que mas predominaron fueron el café y el negro, con una participación del 75% en total.
+</li>
+</ul >
+</div>
+
+## Ejemplo 3
+
+<h4 class="fragment fade-in" data-fragment-index="1" style="margin-top: 100px;">Variable cuantitativa continua:</h4>
+<p class="fragment fade-in" data-fragment-index="2" style="text-align: justify; font-size: 34px;">
+Los siguientes datos corresponden a las precios unitarios (en miles de pesos) de 100 productos observados en un ejercicio simulado. Los precios son datos continuos, ya que su valor se mide y puede tomar cualquier valor dentro de un intervalo: 60, 60.5, 61, 61, 61.5, 63.5, 63.5, 63.5, 64, 64, 64, 64....
+</p>
+
+
+## 
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+  Para organizar y resumir esta información, se procede a construir una tabla de frecuencias agrupando las alturas en intervalos, para eso se determina:
+<ul style="padding-left: 50px;">
+<li class="fragment fade-in" data-fragment-index="2">
+el número de clases,
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+el rango,  
+</li>
+<li class="fragment fade-in" data-fragment-index="4">
+la amplitud del intervalo,
+</li>
+<li class="fragment fade-in" data-fragment-index="5">
+se arman los intervalos,
+</li>
+<li class="fragment fade-in" data-fragment-index="6">
+se ubican las frecuencias en cada intervalo,
+</li>
+<li class="fragment fade-in" data-fragment-index="7">
+se llena la tabla de frecuencias.
+</li>
+</ul>
+</div>
+
+## Pasos para construir la tabla de frecuencias
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 30px;" data-fragment-index="1">
+<ol>
+<li class="fragment fade-in" data-fragment-index="2">
+Determinar el número de clases o intervalos. En el caso de este ejemplo, $𝑛=100$:  
+$$k=\sqrt{100}=10$$
+$$k=1+3.3322\log_{10}(100)=7.644≈8$$
+Tomaremos 8 intervalos para este ejemplo, por lo tanto $k=8$.
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+Hallar el rango, el valor mínimo es 60 y el valor máximo es 74, por lo tanto el rango se calcula como:  
+$$ 𝑅𝑎𝑛𝑔𝑜: R = 74 - 60 = 14 $$
+</li>
+</ol>
+</div>
+
+## Pasos para construir la tabla de frecuencias
+
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ol start="3">
+<li class="fragment fade-in" data-fragment-index="2">
+Determinar la amplitud del intervalo. La amplitud se calcula como:
+$$ A = \frac{R}{k} = \frac{14}{8} = 1.75 $$
+Redondeando a un número más conveniente, se puede tomar una amplitud de 2 mil pesos.
+</li>
+<li class="fragment fade-in" data-fragment-index="3"> 
+Armar los intervalos.
+<ul>
+<li>El primer intervalo se establece desde el mínimo (60 mil pesos) hasta el mínimo más la amplitud (62 mil pesos), es decir, [60, 62).</li>
+<li>El segundo intervalo será [62, 64), el tercero [64, 66), el cuarto [66, 68), el quinto [68, 70), el sexto [70, 72), el séptimo [72, 74) y el octavo [74, 76).
+</li>
+</ul>
+</li>
+</ol>
+</div>
+
+## Pasos para construir la tabla de frecuencias
+  
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+<ol start="5">
+<li class="fragment fade-in" data-fragment-index="2">
+Ubicar las frecuencias en los intervalos.
+<ul>
+<li>Se cuenta cuántos precios caen dentro de cada intervalo,</li>
+<li>se registra esa cantidad como la frecuencia absoluta $f_i$ para cada intervalo.</li>
+</ul>  
+</li>
+<li class="fragment fade-in" data-fragment-index="3">
+Llenar la tabla de frecuencias.  
+<ul>
+<li>Se completa la tabla de frecuencias con los elementos correspondientes (marca de clase, frecuencia absoluta, frecuencia acumulada, frecuencia relativa, etc.).</li>
+</ul>  
+</li>
+</ol>
+</div>
+
+## Tabla de Frecuencias
+
+<p style="font-size: 30px;text-align: justify;" class="fragment fade-in" data-fragment-index="1">
+Haciendo todos los cálculos la tabla de frecuencias queda de la siguiente forma:
+</p>
+
+:::{.fragment}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+library(kableExtra)
+tabla <- data.frame(
+  Intervalo = c("[60-62)", "[62-64)", "[64-66)", "[66-68)", "[68-70)", "[70-72)", "[72-74)", "[74-76)"),
+  xi = c(61, 63, 65, 67, 69, 71, 73, 75),
+  fi = c(5, 3, 15, 40, 17, 12, 7, 1),
+  Fi = c(5, 8, 23, 63, 80, 92, 99, 100),
+  hi = c(0.05, 0.03, 0.15, 0.40, 0.17, 0.12, 0.07, 0.01),
+  Hi = c(0.05, 0.08, 0.23, 0.63, 0.80, 0.92, 0.99, 1.00),
+  Porcentaje = c("5%", "3%", "15%", "40%", "17%", "12%", "7%", "1%"),
+  P.Acumulado = c("5%", "8%", "23%", "63%", "80%", "92%", "99%", "100%"),
+  stringsAsFactors = FALSE
+)
+
+# 🔹 Crear fila Total (sin dplyr)
+fila_total <- data.frame(
+  Intervalo = "Total",
+  xi = "",
+  fi = sum(tabla$fi),
+  Fi = "",
+  hi = sum(tabla$hi),
+  Hi = "",
+  Porcentaje = "100%",
+  P.Acumulado = "",
+  stringsAsFactors = FALSE
+)
+
+# 🔹 Unir tablas (base R)
+tabla_final <- rbind(tabla, fila_total)
+
+colnames(tabla_final) <- c(
+  "Intervalo",
+  "\\(x_{i}\\)",
+  "\\(f_{i}\\)",
+  "\\(F_{i}\\)",
+  "\\(h_{i}\\)",
+  "\\(H_{i}\\)",
+  "%",
+  "% Acum"
+)
+
+# 🔹 Mostrar tabla
+tabla_final %>%
+  kbl(align = "c", escape = FALSE) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    full_width = FALSE,
+    font_size = 26
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#0b2c6b", color = "white") %>%
+  row_spec(nrow(tabla_final), bold = TRUE, background = "#0b2c6b", color = "white") %>%
+  column_spec(1, width = "7em") %>%
+  column_spec(2:8, width = "5em")
+
+```
+:::
+
+
+
+## Hallazgos
+<div class="fragment fade-up info-box" style="margin-top: 100px; font-size: 28px;" data-fragment-index="1">
+  <ul>
+    <li class="fragment fade-in" data-fragment-index="2">
+      El intervalo con la mayor frecuencia absoluta es [66-68), con 40 productos, lo que representa el 40% de la muestra.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="3">
+      El 80% de los productos tiene precios menores a 70 mil pesos, mientras que el 20% restante tiene precios mayores a 70 mil pesos.
+    </li>
+    <li class="fragment fade-in" data-fragment-index="4">
+      La distribución de los precios muestra una mayor concentración en los intervalos [64-66), [66-68) y [68-70) indicando que la mayoría de los productos se encuentra en esa franja de altura, con un 72%.
+    </li>
+  </ul>
+</div>
+

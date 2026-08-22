@@ -1,0 +1,51 @@
+## Curvas características de operación
+
+<div style="margin-top:30px;font-size:30px; text-align:justify; line-height:1.4;">
+Las <strong>curvas características de operación</strong> (curvas OC) relacionan la probabilidad de cometer un Error Tipo II ($\small \beta$) con el tamaño de muestra y la magnitud de las diferencias entre tratamientos.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="0" style="margin-top:20px;">
+
+```{r}
+#| label: curva-oc
+#| echo: false
+#| fig-height: 3.6
+#| fig-width: 8
+#| fig-align: center
+library(ggplot2)
+ns <- 4:20
+sigma <- 2.08
+deltas <- c(2, 4, 6)
+
+oc_df <- do.call(rbind, lapply(deltas, function(d) {
+  bv <- (d^2) * (3/16)
+  pot <- sapply(ns, function(n) {
+    tryCatch(power.anova.test(groups = 4, n = n, between.var = bv,
+                               within.var = sigma^2)$power,
+             error = function(e) NA)
+  })
+  data.frame(n = ns, potencia = pot, delta = paste0("δ = ", d))
+}))
+
+ggplot(oc_df, aes(x = n, y = potencia, color = delta)) +
+  geom_line(linewidth = 1.3) +
+  geom_hline(yintercept = 0.8, linetype = "dashed", color = "gray40") +
+  scale_color_manual(values = c("#1a3a6b", "#1b4d2e", "#d97706")) +
+  scale_x_continuous(breaks = seq(4, 20, 4)) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
+  labs(x = "n (por tratamiento)", y = "Potencia (1 - β)", color = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(legend.position = "top",
+        legend.text = element_text(size = 16),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 15))
+```
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:10px; border-radius:12px; border-left:8px solid #1a3a6b; font-size:30px; text-align:justify;">
+A mayor diferencia $\delta$ a detectar, se necesita un $n$ menor para alcanzar la misma potencia; a menor $\delta$, se requiere un $n$ mucho mayor.
+</div>
+
+

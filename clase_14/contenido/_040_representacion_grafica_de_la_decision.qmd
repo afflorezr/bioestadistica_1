@@ -1,0 +1,100 @@
+## Representación gráfica de la decisión
+
+```{r}
+#| echo: false
+#| fig-width: 16
+#| fig-height: 7
+#| warning: false
+#| message: false
+
+x <- seq(-4, 4, length = 1000)
+y <- dnorm(x)
+
+z_crit <- -1.645
+z_cal <- -1.98
+
+plot(x, y,
+     type = "l",
+     lwd = 4,
+     col = "#1a3a6b",
+     las = 1,
+     xlab = "Estadístico Z",
+     ylab = "Densidad",
+     main = "Región crítica y decisión estadística",
+     cex.main = 1.4,
+     cex.lab = 1.2,
+     cex.axis = 1.1)
+
+# Región crítica
+xr <- seq(-4, z_crit, length = 400)
+yr <- dnorm(xr)
+
+polygon(
+  c(xr, rev(xr)),
+  c(rep(0, length(xr)), rev(yr)),
+  col = adjustcolor("#ef4444", alpha.f = 0.45),
+  border = NA
+)
+
+# Región de aceptación
+xa <- seq(z_crit, 4, length = 400)
+ya <- dnorm(xa)
+
+polygon(
+  c(xa, rev(xa)),
+  c(rep(0, length(xa)), rev(ya)),
+  col = adjustcolor("#22c55e", alpha.f = 0.35),
+  border = NA
+)
+
+# Curva nuevamente encima
+lines(x, y, lwd = 4, col = "#1a3a6b")
+
+# Línea crítica
+abline(v = z_crit,
+       col = "#dc2626",
+       lwd = 3,
+       lty = 2)
+
+# Línea estadístico calculado
+abline(v = z_cal,
+       col = "#2563eb",
+       lwd = 4)
+
+# Etiquetas
+text(z_crit, 0.14,
+     expression(Z[crit] == -1.645),
+     col = "#dc2626",
+     pos = 4,
+     cex = 1.1)
+
+text(z_cal, 0.07,
+     expression(Z[cal] == -1.98),
+     col = "#2563eb",
+     pos = 2,
+     cex = 1.1)
+
+# Texto regiones
+text(-2.8, 0.18,
+     "Región\nde rechazo",
+     col = "#991b1b",
+     cex = 1.1)
+
+text(1.5, 0.18,
+     "Región de aceptación",
+     col = "#166534",
+     cex = 1.1)
+
+# Leyenda
+legend(
+  "topright",
+  legend = c("Valor crítico", "Estadístico calculado"),
+  col = c("#dc2626", "#2563eb"),
+  lwd = c(3,4),
+  lty = c(2,1),
+  bty = "n",
+  cex = 1
+)
+```
+
+

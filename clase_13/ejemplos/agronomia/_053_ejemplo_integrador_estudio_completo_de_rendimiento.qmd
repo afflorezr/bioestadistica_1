@@ -1,0 +1,29 @@
+## Ejemplo integrador: estudio completo de rendimiento
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Estudio: rendimiento de maíz en el Tolima bajo dos sistemas de riego</div>
+<div class="block-body" style="font-size: 25px; line-height: 1.4;">
+Se seleccionan aleatoriamente 30 parcelas bajo riego por aspersión (A) y 25 bajo riego por goteo (G). Se mide el rendimiento (ton/ha). Se pide: IC para cada media, IC para la diferencia, verificación de supuestos y reporte técnico.
+</div>
+</div>
+
+```{r}
+#| echo: true
+set.seed(11)
+A <- round(rnorm(30, mean=6.2, sd=1.0), 2)
+G <- round(rnorm(25, mean=7.0, sd=0.9), 2)
+cat("Aspersión: media=", round(mean(A),2),
+    "  SE=", round(sd(A)/sqrt(30),3), "\n")
+cat("Goteo:     media=", round(mean(G),2),
+    "  SE=", round(sd(G)/sqrt(25),3), "\n")
+ic_A <- mean(A) + c(-1,1)*qt(0.975,29)*sd(A)/sqrt(30)
+ic_G <- mean(G) + c(-1,1)*qt(0.975,24)*sd(G)/sqrt(25)
+cat("IC 95% Aspersión:", round(ic_A,2), "\n")
+cat("IC 95% Goteo:    ", round(ic_G,2), "\n")
+Sp2 <- ((30-1)*var(A)+(25-1)*var(G))/(30+25-2)
+e_dif <- qt(0.975,53)*sqrt(Sp2*(1/30+1/25))
+dif   <- mean(G)-mean(A)
+cat("IC 95% diferencia (G-A):", round(c(dif-e_dif,dif+e_dif),2),"\n")
+```
+
+

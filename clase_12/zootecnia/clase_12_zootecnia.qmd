@@ -1,0 +1,136 @@
+---
+title: "Bioestadística, Zootecnia"
+subtitle: "Clase 12: Muestreo, Distribuciones Muestrales y Tamaño de Muestra"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: ../referencias.bib
+csl: ../ieee.csl
+output-file: clase_12_zootecnia.html
+format:
+  revealjs:
+    embed-resources: true
+    logo: ../images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../../assets/syntax-highlight.css, ../../assets/custom.css, ../../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="../../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
+      <script defer src="../../assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+{{< include ../contenido/_000_seccion.qmd >}}
+
+{{< include ../contenido/_001_contenido.qmd >}}
+
+{{< include ../contenido/_002_recorrido_estadistico_de_los_datos_a_la_inferencia.qmd >}}
+
+{{< include ../contenido/_003_muestreo_en_el_analisis_bioestadistico.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_004_por_que_muestrear.qmd >}}
+
+{{< include ../contenido/_005_conceptos_clave.qmd >}}
+
+{{< include ../contenido/_006_muestreo_con_reemplazo_y_sin_reemplazo.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_007_muestreo_probabilistico_y_no_probabilistico.qmd >}}
+
+{{< include ../contenido/_008_seccion.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_009_muestreo_aleatorio_simple.qmd >}}
+
+{{< include ../contenido/_010_inferencia_bajo_mas.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_011_muestreo_sistematico.qmd >}}
+
+{{< include ../contenido/_012_inferencia_bajo_muestreo_sistematico.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_013_muestreo_estratificado.qmd >}}
+
+{{< include ../contenido/_014_inferencia_bajo_muestreo_estratificado.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_015_muestreo_por_conglomerados.qmd >}}
+
+{{< include ../contenido/_016_inferencia_bajo_muestreo_por_conglomerados.qmd >}}
+
+{{< include ../contenido/_017_comparacion_de_metodos_de_muestreo.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_018_implementacion_en_r_tipos_de_muestreo.qmd >}}
+
+{{< include ../contenido/_019_seccion.qmd >}}
+
+{{< include ../contenido/_020_que_es_una_distribucion_muestral.qmd >}}
+
+{{< include ../contenido/_021_distribucion_muestral_de_la_media.qmd >}}
+
+{{< include ../contenido/_022_distribucion_muestral_de_la_proporcion.qmd >}}
+
+{{< include ../contenido/_023_sesgo_y_error_cuadratico_medio.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_024_simulacion_efecto_de_n_en_la_distribucion_muestral.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_025_ejemplo_distribucion_muestral_de_la_media.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_026_ejemplo_distribucion_muestral_de_la_proporcion.qmd >}}
+
+{{< include ../contenido/_027_seccion.qmd >}}
+
+{{< include ../contenido/_028_por_que_importa_el_tamano_de_muestra.qmd >}}
+
+{{< include ../contenido/_029_margen_de_error_e_intervalo_de_confianza.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_030_tamano_de_muestra_para_estimar_la_media.qmd >}}
+
+{{< include ../contenido/_031_tamano_de_muestra_para_estimar_una_proporcion.qmd >}}
+
+{{< include ../contenido/_032_factor_de_correccion_para_poblaciones_finitas.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_033_n_para_distintos_margenes_y_confianzas.qmd >}}
+
+{{< include ../contenido/_034_errores_comunes_en_muestreo_y_tamano_de_muestra.qmd >}}
+
+{{< include ../contenido/_035_seccion.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_036_por_que_necesitamos_estimadores.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_037_diferentes_muestras_resultados_diferentes.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_038_obtendriamos_el_mismo_resultado_con_otra_muestra.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_039_de_un_valor_puntual_a_un_rango_plausible.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_040_el_intervalo_en_tres_ejemplos_agricolas.qmd >}}
+
+{{< include ../contenido/_041_preguntas_que_guiaran_la_proxima_clase.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_042_taller_en_clase.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_043_taller_1_tipos_de_muestreo.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_044_taller_2_tamano_de_muestra.qmd >}}
+
+{{< include ../contenido/_045_resumen_de_la_clase_12.qmd >}}

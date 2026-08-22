@@ -1,0 +1,84 @@
+## ¿Cómo obtenemos la mejor recta?
+
+
+<div class="fragment fade-in" data-fragment-index="1">
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE,fig.width=18, fig.height=6}
+library(ggplot2)
+
+set.seed(123)
+
+x <- seq(1,20)
+
+y <- 5 + 1.2*x + rnorm(20,0,3)
+
+datos <- data.frame(x,y)
+
+ggplot(datos,aes(x,y)) +
+
+  geom_point(
+    size=3,
+    color="black"
+  ) +
+
+  geom_abline(
+    intercept=2,
+    slope=0.5,
+    color="#dc2626",
+    linewidth=1.5
+  ) +
+
+  geom_abline(
+    intercept=5,
+    slope=1.2,
+    color="#2563eb",
+    linewidth=1.8
+  ) +
+
+  geom_abline(
+    intercept=9,
+    slope=1.8,
+    color="#10b981",
+    linewidth=1.5
+  ) +
+
+  annotate(
+    "label",
+    x=17,
+    y=11,
+    label="Recta A",
+    fill="#fee2e2"
+  ) +
+
+  annotate(
+    "label",
+    x=17,
+    y=25,
+    label="Recta B",
+    fill="#dbeafe"
+  ) +
+
+  annotate(
+    "label",
+    x=12,
+    y=40,
+    label="Recta C",
+    fill="#dcfce7"
+  ) +
+
+  labs(
+    title="Múltiples rectas pueden ajustarse a los mismos datos",
+    subtitle="¿Cuál representa mejor la información observada?",
+    x="Variable explicativa (X)",
+    y="Variable respuesta (Y)"
+  ) +
+
+  theme_minimal(base_size=16)
+```
+
+</div>
+
+<div class="fragment fade-in" data-fragment-index="2" style=" margin-top:15px; padding:10px; background:#f0fdf4; border-left:6px solid #10b981; font-size:28px; text-align:center;">
+El <b>Método de los Mínimos Cuadrados Ordinarios (MCO)</b> permite identificar la recta que mejor se ajusta a los datos observados.
+</div>
+

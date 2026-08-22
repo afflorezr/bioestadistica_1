@@ -1,0 +1,59 @@
+## Análisis de varianza
+
+<div style="font-size:30px; text-align:justify; line-height:1.2;margin-top:30px;">
+La idea central del ANOVA es descomponer la <strong>variabilidad total</strong> de los datos en dos fuentes: la variabilidad <strong>entre</strong> tratamientos y la variabilidad <strong>dentro</strong> de cada tratamiento.
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:40px;">
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:18px; border-top:8px solid #1a3a6b;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1a3a6b;">Variabilidad entre tratamientos</div>
+<div style="font-size:28px; text-align:justify; line-height:1.4; margin-top:8px;">
+Diferencias entre las medias de los distintos tratamientos. Si es grande respecto a la variabilidad dentro, sugiere un efecto real del tratamiento.
+</div>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:18px; border-radius:18px; border-top:8px solid #1b4d2e;">
+<div style="font-size:25px; font-weight:bold; text-align:center; color:#1b4d2e;">Variabilidad dentro de tratamientos</div>
+<div style="font-size:28px; text-align:justify; line-height:1.4; margin-top:8px;">
+Diferencias entre observaciones que reciben el <strong>mismo</strong> tratamiento. Refleja el error experimental o aleatorio.
+</div>
+</div>
+
+</div>
+
+<div class="twocol">
+
+
+<div class="fragment fade-up" data-fragment-index="3">
+
+```{r}
+#| label: medias-vs-gran-media
+#| echo: false
+#| fig-height: 3
+library(ggplot2)
+medias_grupo <- aggregate(rentabilidad ~ trat, data = datos, FUN = mean)
+gran_media <- mean(datos$rentabilidad)
+
+ggplot(medias_grupo, aes(x = trat, y = rentabilidad)) +
+  geom_col(fill = "#dbeafe", color = "#1a3a6b", width = 0.6) +
+  geom_hline(yintercept = gran_media, color = "#b91c1c", linewidth = 1, linetype = "dashed") +
+  annotate("text", x = nrow(medias_grupo), y = gran_media + 1.5,
+           label = "Media general", color = "#b91c1c", size = 4) +
+  scale_y_continuous(limits = c(0, 45)) +
+  labs(x = NULL, y = "Rentabilidad promedio (millones/sucursal)",
+       title = "Medias de tratamiento y media general") +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b"))
+```
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:28px; text-align:justify;">
+Si la variabilidad <strong>entre</strong> tratamientos es mucho mayor que la variabilidad <strong>dentro</strong>, existe evidencia de que al menos un tratamiento difiere de los demás.
+</div>
+
+</div>
+

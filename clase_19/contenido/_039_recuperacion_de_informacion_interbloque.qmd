@@ -1,0 +1,21 @@
+## Recuperación de información interbloque
+
+<div style="font-size:25px; text-align:justify; line-height:1.4;">
+El análisis anterior (intrabloque) usa solo las comparaciones <strong>dentro</strong> de cada bloque. Sin embargo, si los efectos de bloque se tratan como <strong>aleatorios</strong>, es posible recuperar información adicional comparando los totales de bloque entre sí.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:14px; border-radius:14px; border-left:8px solid #1a3a6b; margin-top:14px; font-size:22px; text-align:justify;">
+La <strong>recuperación de información interbloque</strong> combina ambas fuentes de información (intra e interbloque) mediante un promedio ponderado, lo que aumenta la precisión de las estimaciones de los efectos de tratamiento.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#fff7e8; padding:12px; border-radius:14px; border-left:8px solid #d97706; margin-top:10px; font-size:21px; text-align:center;">
+Se utiliza cuando se desea exprimir la máxima información posible del experimento, especialmente cuando hay pocos bloques. Su derivación completa requiere álgebra de mínimos cuadrados generalizados y excede el alcance de este curso introductorio.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3"
+style="background-color:#f8fafc; padding:10px; border-radius:12px; border-left:8px solid #475569; margin-top:8px; font-size:20px; text-align:center;">
+En la práctica, software especializado (SAS PROC GLM, R con <code>lme4</code>) calcula automáticamente los estimadores combinados cuando se solicita el análisis con recuperación interbloque.
+</div>
+

@@ -1,0 +1,190 @@
+## Cuartiles de distribuciones asimétricas
+
+```{r}
+#| echo: false
+#| fig-width: 12
+#| fig-height: 5.2
+
+par(
+  mfrow = c(1,2),
+  mar = c(4.5,4.5,3,1),
+  family = "sans"
+)
+
+# =========================
+# Distribución Exponencial
+# =========================
+
+lambda <- 0.3
+
+x1 <- seq(0, 20, length = 600)
+fx1 <- dexp(x1, lambda)
+
+q_exp <- qexp(c(0.25, 0.50, 0.75), lambda)
+media_exp <- 1/lambda
+
+plot(
+  x1, fx1,
+  type = "n",
+  ylim = c(0, max(fx1)*1.15),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Cuartiles: Exponencial(0.3)",
+  cex.main = 1.3,
+  cex.lab = 1.1
+)
+
+grid(col = "gray90")
+
+polygon(
+  c(0, x1, max(x1)),
+  c(0, fx1, 0),
+  col = adjustcolor("#bfdbfe", alpha.f = 0.55),
+  border = NA
+)
+
+lines(
+  x1, fx1,
+  lwd = 4,
+  col = "#1e3a8a"
+)
+
+cols <- c("#f59e0b", "#166534", "#f59e0b")
+labs <- c("Q1", "Mediana", "Q3")
+
+for(i in 1:3){
+
+  abline(
+    v = q_exp[i],
+    col = cols[i],
+    lwd = 2.5,
+    lty = 2
+  )
+
+  points(
+    q_exp[i],
+    dexp(q_exp[i], lambda),
+    pch = 19,
+    cex = 1.3,
+    col = cols[i]
+  )
+}
+
+# Media
+abline(
+  v = media_exp,
+  col = "#991b1b",
+  lwd = 2.5,
+  lty = 3
+)
+
+text(
+  media_exp + 0.4,
+  max(fx1)*0.85,
+  "Media",
+  col = "#991b1b",
+  cex = 1,
+  font = 2
+)
+
+legend(
+  "topright",
+  legend = c("Q1", "Mediana", "Q3", "Media"),
+  col = c("#f59e0b", "#166534",
+          "#f59e0b", "#991b1b"),
+  lwd = c(2.5,2.5,2.5,2.5),
+  lty = c(2,2,2,3),
+  bty = "n",
+  cex = 0.95
+)
+
+# ====================
+# Distribución Gamma
+# ====================
+
+alpha <- 2
+beta <- 2
+
+x2 <- seq(0, 20, length = 600)
+fx2 <- dgamma(x2, alpha, scale = beta)
+
+q_gamma <- qgamma(c(0.25, 0.50, 0.75),
+                  alpha, scale = beta)
+
+media_gamma <- alpha * beta
+
+plot(
+  x2, fx2,
+  type = "n",
+  ylim = c(0, max(fx2)*1.15),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Cuartiles: Gamma(2,2)",
+  cex.main = 1.3,
+  cex.lab = 1.1
+)
+
+grid(col = "gray90")
+
+polygon(
+  c(0, x2, max(x2)),
+  c(0, fx2, 0),
+  col = adjustcolor("#bbf7d0", alpha.f = 0.6),
+  border = NA
+)
+
+lines(
+  x2, fx2,
+  lwd = 4,
+  col = "#166534"
+)
+
+cols2 <- c("#f59e0b", "#1e3a8a", "#f59e0b")
+
+for(i in 1:3){
+
+  abline(
+    v = q_gamma[i],
+    col = cols2[i],
+    lwd = 2.5,
+    lty = 2
+  )
+
+  points(
+    q_gamma[i],
+    dgamma(q_gamma[i], alpha, scale = beta),
+    pch = 19,
+    cex = 1.3,
+    col = cols2[i]
+  )
+}
+
+# Media
+abline(
+  v = media_gamma,
+  col = "#991b1b",
+  lwd = 2.5,
+  lty = 3
+)
+
+text(
+  media_gamma + 0.4,
+  max(fx2)*0.85,
+  "Media",
+  col = "#991b1b",
+  cex = 1,
+  font = 2
+)
+
+legend(
+  "topright",
+  legend = c("Q1", "Mediana", "Q3", "Media"),
+  col = c("#f59e0b", "#1e3a8a",
+          "#f59e0b", "#991b1b"),
+  lwd = c(2.5,2.5,2.5,2.5),
+  lty = c(2,2,2,3),
+  bty = "n",
+  cex = 0.95
+)
+```
+

@@ -1,0 +1,38 @@
+## FMP y FDA: fórmulas de la Distribución Poisson
+
+<div class="twocol" style="margin-top: 16px;">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Función de Masa de Probabilidad</div>
+<div class="block-body" style="font-size: 24px;">
+$$p(x) = P(X = x) = \frac{e^{-\lambda}\,\lambda^x}{x!}, \quad x = 0, 1, 2, \ldots$$
+
+<ul style="margin-top: 14px; line-height: 1.1;">
+<li>$\lambda > 0$: tasa promedio de ocurrencias.</li>
+<li>Cada valor tiene probabilidad estrictamente positiva.</li>
+<li>La suma de todas las probabilidades es 1: $\displaystyle\sum_{x=0}^{\infty} p(x) = 1$.</li>
+</ul>
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Función de Distribución Acumulada</div>
+<div class="block-body" style="font-size: 24px;">
+$$F(x) = P(X \leq x) = \sum_{k=0}^{\lfloor x \rfloor} \frac{e^{-\lambda}\,\lambda^k}{k!}$$
+
+<ul style="margin-top: 14px; line-height: 1.8;">
+<li>Función escalonada: sube en cada entero no negativo.</li>
+<li>El salto en $x = k$ es exactamente $p(k)$.</li>
+<li>$F(x) \to 1$ cuando $x \to \infty$.</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="3" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+No existe fórmula cerrada para $F(x)$: se calcula sumando términos de la FMP. En R: <code>dpois(x, λ)</code> para la FMP y <code>ppois(x, λ)</code> para la FDA.
+</div>
+</div>
+

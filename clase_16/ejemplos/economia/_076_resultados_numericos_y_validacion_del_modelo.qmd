@@ -1,0 +1,128 @@
+## Resultados Numéricos y Validación del Modelo
+
+<div style="
+display:grid;
+grid-template-columns:55% 45%;
+gap:10px;
+height:82%;
+">
+
+
+<!-- SUMMARY -->
+
+<div style="
+background:#1e293b;
+color:#e2e8f0;
+border-radius:10px;
+padding:8px;
+font-family:Consolas, monospace;
+font-size:0.52em;
+">
+
+
+<h5 style="color:white;margin:0 0 5px 0;">
+Summary del Modelo
+</h5>
+
+
+```{r}
+#| echo: false
+
+summary(modelo)
+
+```
+
+</div>
+
+
+
+<!-- PRUEBAS -->
+
+
+<div style="
+display:grid;
+grid-template-columns:1fr;
+gap:6px;
+">
+
+
+<div style="
+background:#f0fdf4;
+border-radius:10px;
+padding:7px;
+font-size:0.55em;
+">
+
+
+<b style="color:#166534;">
+Normalidad
+</b>
+
+
+```{r}
+#| echo: false
+
+shapiro.test(residuals(modelo))
+
+```
+
+</div>
+
+
+
+
+<div style="
+background:#fffbeb;
+border-radius:10px;
+padding:7px;
+font-size:0.55em;
+">
+
+
+<b style="color:#b45309;">
+Homocedasticidad
+</b>
+
+
+```{r}
+#| echo: false
+
+library(lmtest)
+
+bptest(modelo)
+
+```
+
+</div>
+
+
+
+
+<div style="
+background:#eff6ff;
+border-radius:10px;
+padding:7px;
+font-size:0.55em;
+">
+
+
+<b style="color:#1d4ed8;">
+Independencia
+</b>
+
+
+```{r}
+#| echo: false
+
+dwtest(modelo)
+
+```
+
+</div>
+
+
+</div>
+
+
+</div>
+

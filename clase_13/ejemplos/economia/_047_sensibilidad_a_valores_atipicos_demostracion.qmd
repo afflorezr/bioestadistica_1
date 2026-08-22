@@ -1,0 +1,36 @@
+## Sensibilidad a valores atípicos: demostración
+
+```{r}
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.0
+#| fig-align: center
+set.seed(8)
+x_normal  <- rnorm(20, mean=5, sd=0.8)
+x_outlier <- c(x_normal, 12.5)   # un outlier extremo
+
+par(mfrow=c(1,2), mar=c(4, 4, 3, 1), family="sans")
+
+# Sin outlier
+ic1 <- mean(x_normal) + c(-1,1)*qt(0.975,length(x_normal)-1)*
+       sd(x_normal)/sqrt(length(x_normal))
+boxplot(x_normal, horizontal=TRUE, col="#bbf7d0",
+        main=paste0("Sin outlier  IC: [",round(ic1[1],2),", ",round(ic1[2],2),"]"),
+        xlab="Rentabilidad (millones/sucursal)", cex.main=1.0)
+segments(ic1[1],1,ic1[2],1, col="#1e3a8a", lwd=3)
+points(mean(x_normal),1,pch=18,cex=2,col="#1e3a8a")
+
+# Con outlier
+ic2 <- mean(x_outlier) + c(-1,1)*qt(0.975,length(x_outlier)-1)*
+       sd(x_outlier)/sqrt(length(x_outlier))
+boxplot(x_outlier, horizontal=TRUE, col="#fad8d8",
+        main=paste0("Con outlier  IC: [",round(ic2[1],2),", ",round(ic2[2],2),"]"),
+        xlab="Rentabilidad (millones/sucursal)", cex.main=1.0)
+segments(ic2[1],1,ic2[2],1, col="#dc2626", lwd=3)
+points(mean(x_outlier),1,pch=18,cex=2,col="#dc2626")
+
+cat("Amplitud sin outlier:", round(diff(ic1),3), "\n")
+cat("Amplitud con outlier:", round(diff(ic2),3), "\n")
+```
+
+

@@ -1,0 +1,51 @@
+## Representación gráfica de la función de potencia
+
+<div style="font-size:26px;
+text-align:justify;
+line-height:1.6;
+background-color:#f4f8ff;
+padding:18px;
+border-left:6px solid #2b6cb0;
+border-radius:10px;">
+
+La función de potencia se representa como una curva creciente.
+
+A medida que el valor del parámetro se aleja de $(H_0)$, aumenta la probabilidad de rechazarla.
+
+</div>
+
+```{r, echo=FALSE, fig.width=30, fig.height=10}
+theta <- seq(0, 1, by = 0.1)
+
+power <- c(0.05, 0.10, 0.25, 0.50, 0.80,
+           0.95, 0.98, 0.995, 0.999, 1, 1)
+
+library(ggplot2)
+
+df <- data.frame(theta, power)
+
+ggplot(df, aes(theta, power)) +
+  geom_line(linewidth = 2, colour = "steelblue") +
+  geom_point(size = 4, colour = "steelblue") +
+  labs(
+    title = "Curva de función de potencia",
+    x = expression("Valor del parámetro ("*theta*")"),
+    y = "Potencia"
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, 0.2)
+  ) +
+  theme_minimal(base_size = 20) +
+  theme(
+    plot.title = element_text(
+      size = 28,
+      face = "bold",
+      hjust = 0.5
+    ),
+    axis.title = element_text(size = 25),
+    axis.text = element_text(size = 25)
+  )
+```
+
+

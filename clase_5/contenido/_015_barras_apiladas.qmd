@@ -1,0 +1,50 @@
+## Barras apiladas
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top:50px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Muestran la composición interna de cada grupo.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Son útiles cuando interesa comparar proporciones.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Conviene usar barras de igual altura cuando se comparan porcentajes.</li>
+</ul>
+<p class="fragment fade-in" data-fragment-index="5" style="font-size: 29px; text-align: justify;">
+Permiten ver rápidamente si cambia la distribución de una variable de acuerdo con la otra.
+</p>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="margin-top:50px;">
+
+```{r, echo=FALSE}
+library(ggplot2)
+# Datos
+datos <- data.frame(
+  Actividad = rep(c("Baja", "Media", "Alta"), each = 3),
+  Sueno = rep(c("Mala", "Regular", "Buena"), times = 3),
+  Frecuencia = c(18, 12, 6,
+                 10, 18, 14,
+                 4, 12, 26)
+)
+
+# Gráfico de barras apiladas
+ggplot(datos, aes(x = Actividad, y = Frecuencia, fill = Sueno)) +
+  geom_bar(stat = "identity") +
+  
+  scale_fill_manual(values = c("#d95f02", "#7570b3", "#1b9e77")) +
+  
+  labs(
+    title = "Distribución de la calidad del sueño según actividad física",
+    x = "Nivel de actividad física",
+    y = "Frecuencia",
+    fill = "Calidad del sueño"
+  ) +
+  
+  theme_minimal(base_size = 16) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    legend.position = "top"
+  )
+```
+
+</div>
+</div>
+

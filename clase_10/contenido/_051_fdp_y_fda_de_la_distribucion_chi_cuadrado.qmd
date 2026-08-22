@@ -1,0 +1,42 @@
+## FDP y FDA de la Distribución Chi-cuadrado
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+<div class="block-title">Distribución Chi-cuadrado $X \sim \chi^2(\nu)$</div>
+<div class="block-body" style="font-size: 27px; text-align: justify;">
+Surge como la suma de $\nu$ cuadrados de normales estándar independientes: $X = Z_1^2 + \cdots + Z_\nu^2$. Es un caso especial de $\text{Gamma}(\nu/2,\, 2)$.
+<span style="color:#6b7280; font-size:24px;">, Parámetro: $\nu$ grados de libertad. Soporte: $x \in (0, \infty)$.</span>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px;">
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2">
+<div class="block-title">Función de Densidad (FDP)</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+$$f(x) = \frac{x^{\nu/2-1}\,e^{-x/2}}{2^{\nu/2}\,\Gamma(\nu/2)}, \quad x > 0$$
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+Asimétrica a la derecha para $\nu$ pequeño. Se vuelve más simétrica al aumentar $\nu$.
+</p>
+</div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="3">
+<div class="block-title">Función de Distribución Acumulada (FDA)</div>
+<div class="block-body" style="font-size: 26px; text-align: center;">
+$$F(x) = \frac{\gamma(\nu/2,\; x/2)}{\Gamma(\nu/2)}, \quad x > 0$$
+<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+Función Gamma incompleta regularizada. Sin forma cerrada, se calcula con <code>pchisq()</code> en R.
+</p>
+</div>
+</div>
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
+<div class="block-body" style="font-size: 26px; text-align: center;">
+$P(X \leq x) = $ <code>pchisq(x, df)</code> &nbsp;·&nbsp;
+Caso especial: $\chi^2(\nu) = \text{Gamma}(\nu/2,\, 2)$ &nbsp;·&nbsp;
+Usada en pruebas de bondad de ajuste e inferencia de varianzas
+</div>
+</div>
+

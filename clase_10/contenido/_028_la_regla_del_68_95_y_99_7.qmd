@@ -1,0 +1,26 @@
+## La regla del 68%, 95% y 99.7%
+
+<div class="block-theorem fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Regla empírica de la Normal</div>
+  <div class="block-body">
+Para $X \sim N(\mu, \sigma^2)$:
+$$P(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0.6827$$
+$$P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) \approx 0.9545$$
+$$P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) \approx 0.9973$$
+  </div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="2" style="font-size:36px;">
+
+```{r}
+#| fig-width: 10
+#| fig-height: 4.5
+
+# Comando en R
+round(diff(pnorm(c(-1,1))), 4)    # Para ±1σ El área bajo la curva es de aproximadamente 68%
+round(diff(pnorm(c(-2,2))), 4)    # Para ±2σ El área bajo la curva es de aproximadamente 95%
+round(diff(pnorm(c(-3,3))), 4)    # Para ±3σ El área bajo la curva es de aproximadamente 99.7%
+```
+
+</div>
+

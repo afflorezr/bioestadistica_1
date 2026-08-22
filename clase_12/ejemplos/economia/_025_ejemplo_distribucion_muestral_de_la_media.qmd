@@ -1,0 +1,25 @@
+## Ejemplo: distribución muestral de la media
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Peso de productos, Antioquia</div>
+<div class="block-body" style="font-size: 27px;">
+El peso de productos Hass tiene $\mu = 280$ g y $\sigma = 35$ g. Se selecciona una muestra de $n = 49$ frutos. Calcule: (1) la distribución de $\bar{X}$, (2) $P(\bar{X} > 290)$.
+</div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2" style="margin-top: 14px;">
+<div class="block-title">Solución</div>
+<div class="block-body" style="font-size: 26px; line-height: 1.4;">
+
+Por el TLC: $\bar{X} \approx N\!\left(280,\; \dfrac{35^2}{49}\right) = N(280,\, 5^2)$
+
+$$P(\bar{X} > 290) = P\!\left(Z > \frac{290-280}{5}\right) = P(Z > 2) \approx 0.0228$$
+
+```{r}
+#| echo: true
+1 - pnorm(290, mean = 280, sd = 35/sqrt(49))
+```
+</div>
+</div>
+
+

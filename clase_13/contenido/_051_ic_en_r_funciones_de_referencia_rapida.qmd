@@ -1,0 +1,26 @@
+## IC en R: funciones de referencia rápida
+
+<div style="font-size: 24px; margin-top: 14px;">
+
+| Parámetro | Función en R | Argumentos clave |
+|:---|:---|:---|
+| Media ($\sigma$ desconocida) | `t.test(x, conf.level=0.95)` | `x`: vector de datos |
+| Media ($\sigma$ conocida) | `z.test(x, sigma.x=..., conf.level=0.95)` | paquete `BSDA` |
+| Proporción | `prop.test(x, n, conf.level=0.95)` | IC de Wilson por defecto |
+| Diferencia de medias | `t.test(x, y, var.equal=TRUE)` | dos vectores |
+| Medias pareadas | `t.test(x, y, paired=TRUE)` | orden importa |
+| Varianza | `var.test(x, y)` | razón de varianzas |
+| Bootstrap | `boot::boot()` + `boot.ci()` | paquete `boot` |
+
+</div>
+
+```{r}
+#| echo: true
+# Ejemplo integrado: t.test devuelve IC automáticamente
+x <- c(5.1,4.8,5.6,4.9,5.3,5.0,5.4,4.7,5.2,5.5)
+resultado <- t.test(x, conf.level = 0.95)
+cat("Media:", round(resultado$estimate, 3), "\n")
+cat("IC 95%:", round(resultado$conf.int, 3), "\n")
+```
+
+

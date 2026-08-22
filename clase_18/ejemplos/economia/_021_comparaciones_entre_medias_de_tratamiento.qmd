@@ -1,0 +1,49 @@
+## Comparaciones entre medias de tratamiento
+
+<div style="font-size:28px; text-align:justify; line-height:1.2;">
+Una vez que el **ANOVA** detecta diferencias significativas, surge la pregunta natural: <strong>¿cuáles tratamientos difieren entre sí?</strong> Para responderla se utilizan las comparaciones múltiples.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:8px; font-size:28px; text-align:justify;">
+Realizar muchas pruebas $t$ no planeadas infla la tasa de error global; por ello se requieren métodos que controlen el error conjunto.
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="font-size:28px; text-align:justify; line-height:1.2; margin-top:8px;">
+Una forma sencilla de comparar visualmente los tratamientos es graficar sus medias junto con un intervalo de confianza aproximado.
+</div>
+
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="3">
+
+```{r}
+#| label: comparacion-grafica
+#| echo: false
+#| fig-height: 3.2
+library(ggplot2)
+resumen_i <- aggregate(rentabilidad ~ trat, data = datos,
+                        FUN = function(x) c(media = mean(x), ee = sd(x)/sqrt(length(x))))
+resumen_i <- do.call(data.frame, resumen_i)
+
+ggplot(resumen_i, aes(x = trat, y = rentabilidad.media)) +
+  geom_point(color = "#1a3a6b", size = 3) +
+  geom_errorbar(aes(ymin = rentabilidad.media - 2*rentabilidad.ee,
+                     ymax = rentabilidad.media + 2*rentabilidad.ee),
+                width = 0.15, color = "#1a3a6b") +
+  scale_y_continuous(limits = c(25, 45)) +
+  labs(x = "Tratamiento", y = "Rentabilidad promedio (millones/sucursal)",
+       title = "Medias por tratamiento con error estándar") +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b", size = 13))
+```
+</div>
+
+<div class="fragment fade-up" data-fragment-index="4"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:6px; font-size:28px; text-align:justify;">
+Cuando los intervalos no se superponen, hay evidencia visual de diferencia; cuando sí se superponen, la diferencia es incierta y debe confirmarse formalmente.
+</div>
+</div>
+
+

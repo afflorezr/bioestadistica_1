@@ -1,0 +1,129 @@
+## Comparación Chebyshev vs Normal
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 5.2
+
+# Valores de k
+k <- seq(1.01, 5, length = 500)
+
+# Desigualdad de Chebyshev
+chebyshev <- 1 - 1/k^2
+
+# Probabilidad exacta en Normal
+normal_prob <- sapply(
+  k,
+  function(ki) diff(pnorm(c(-ki, ki)))
+)
+
+# Configuración gráfica
+par(
+  mar = c(4.5, 4.5, 3, 1),
+  family = "sans"
+)
+
+# Base del gráfico
+plot(
+  k, chebyshev,
+  type = "n",
+  ylim = c(0,1),
+  xlab = "Número de desviaciones estándar (k)",
+  ylab = "Probabilidad",
+  main = "Desigualdad de Chebyshev vs Distribución Normal",
+  cex.main = 1.35,
+  cex.lab = 1.15,
+  cex.axis = 1.05
+)
+
+# Cuadrícula
+grid(col = "gray90")
+
+# Área Chebyshev
+polygon(
+  c(k, rev(k)),
+  c(chebyshev, rep(0, length(k))),
+  col = adjustcolor("#fecaca", alpha.f = 0.45),
+  border = NA
+)
+
+# Área Normal
+polygon(
+  c(k, rev(k)),
+  c(normal_prob, rep(0, length(k))),
+  col = adjustcolor("#bfdbfe", alpha.f = 0.35),
+  border = NA
+)
+
+# Curvas
+lines(
+  k, chebyshev,
+  lwd = 4,
+  col = "#991b1b"
+)
+
+lines(
+  k, normal_prob,
+  lwd = 4,
+  col = "#1e3a8a",
+  lty = 2
+)
+
+# Líneas de referencia
+abline(
+  h = c(0.68, 0.95, 0.997),
+  col = "gray70",
+  lty = 3
+)
+
+# Etiquetas 68-95-99.7
+text(
+  x = 4.7,
+  y = c(0.68, 0.95, 0.997),
+  labels = c("68%", "95%", "99.7%"),
+  cex = 0.9,
+  col = "gray40",
+  pos = 3
+)
+
+# Puntos destacados
+k_pts <- c(2,3)
+
+points(
+  k_pts,
+  1 - 1/k_pts^2,
+  pch = 19,
+  cex = 1.4,
+  col = "#991b1b"
+)
+
+points(
+  k_pts,
+  sapply(k_pts,
+         function(ki) diff(pnorm(c(-ki, ki)))),
+  pch = 19,
+  cex = 1.4,
+  col = "#1e3a8a"
+)
+
+# Leyenda
+legend(
+  "bottomright",
+  legend = c(
+    "Chebyshev (cualquier distribución)",
+    "Distribución Normal"
+  ),
+  col = c("#991b1b", "#1e3a8a"),
+  lwd = 4,
+  lty = c(1,2),
+  pt.cex = 1.2,
+  bty = "n",
+  cex = 1
+)
+
+# Caja
+box(col = "gray40")
+```
+
+
+

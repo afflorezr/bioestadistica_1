@@ -1,0 +1,80 @@
+## Gráfico de la validación de los supuestos
+
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 16
+#| fig-height: 4.8
+#| fig-align: center
+#| out-width: "100%"
+
+library(ggplot2); library(patchwork)
+
+nitrogeno   <- c(40, 60, 80, 100, 120, 140, 160, 180)
+rendimiento <- c(4.2, 4.8, 5.3, 5.9, 6.4, 6.8, 7.3, 7.8)
+modelo <- lm(rendimiento ~ nitrogeno)
+
+df_diag <- data.frame(
+  ajustados = fitted(modelo),
+  residuos  = residuals(modelo),
+  std_res   = rstandard(modelo),
+  sqrt_std  = sqrt(abs(rstandard(modelo)))
+)
+
+tema_d <- theme_minimal(base_size = 16) +
+  theme(
+    plot.title       = element_text(face = "bold", hjust = 0.5,
+                                    size = 17, color = "#1a3a6b"),
+    plot.subtitle    = element_text(hjust = 0.5, size = 13,
+                                    color = "#64748b"),
+    axis.title       = element_text(size = 15, color = "#374151"),
+    axis.text        = element_text(size = 13, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border     = element_rect(color = "#cbd5e1", fill = NA,
+                                    linewidth = 0.5)
+  )
+
+p1 <- ggplot(df_diag, aes(ajustados, residuos)) +
+  geom_hline(yintercept = 0, linetype = "dashed",
+             color = "#b91c1c", linewidth = 1) +
+  geom_point(color = "#1a3a6b", size = 4, alpha = 0.85) +
+  geom_smooth(method = "loess", se = FALSE,
+              color = "#d97706", linewidth = 1.1) +
+  labs(title = "Residuos vs. Ajustados",
+       subtitle = "Evalúa: Linealidad",
+       x = "Valores ajustados", y = "Residuos") +
+  tema_d
+
+p2 <- ggplot(df_diag, aes(sample = std_res)) +
+  stat_qq(color = "#1a3a6b", size = 4, alpha = 0.85) +
+  stat_qq_line(color = "#b91c1c", linewidth = 1.1, linetype = "dashed") +
+  labs(title = "Q-Q Plot de residuos",
+       subtitle = "Evalúa: Normalidad",
+       x = "Cuantiles teóricos", y = "Cuantiles muestrales") +
+  tema_d
+
+p3 <- ggplot(df_diag, aes(ajustados, sqrt_std)) +
+  geom_point(color = "#1b4d2e", size = 4, alpha = 0.85) +
+  geom_smooth(method = "loess", se = FALSE,
+              color = "#d97706", linewidth = 1.1) +
+  labs(title = "Scale-Location",
+       subtitle = "Evalúa: Homocedasticidad",
+       x = "Valores ajustados",
+       y = expression(sqrt("|Residuos estand.|"))) +
+  tema_d
+
+p1 + p2 + p3
+```
+
+<div style="margin-top:15px;padding:12px;background:#f0fdf4;border-left:6px solid #16a34a;border-radius:10px;font-size:28px;text-align:justify;">
+<strong>Conclusión del diagnóstico:</strong> Los gráficos de residuos no muestran patrones sistemáticos importantes. Los residuos se distribuyen alrededor de cero, presentan un comportamiento aproximadamente normal y mantienen una dispersión relativamente constante.
+<br><br>
+Por lo tanto, existe evidencia gráfica de que los supuestos de 
+<strong>linealidad, normalidad e igualdad de varianzas (homocedasticidad)</strong>
+son razonablemente aceptables para el modelo ajustado.
+
+</div>
+

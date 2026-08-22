@@ -1,0 +1,48 @@
+## Paso 1: estadísticas descriptivas
+
+<div class="fragment fade-up" data-fragment-index="0" style="font-size:30px; text-align:justify; line-height:1.4; margin-bottom:20px;">
+Antes de calcular el ANOVA, es indispensable describir cada grupo: su media, su variabilidad y su tamaño muestral.
+</div>
+
+<table class="fragment fade-up" data-fragment-index="0" style="width:100%; font-size:24px; text-align:center; margin-top:20px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;">
+<th style="padding:8px;">Tratamiento</th>
+<th style="padding:8px;">$n_i$</th>
+<th style="padding:8px;">$\bar y_{i.}$</th>
+<th style="padding:8px;">$s_i$</th>
+</tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Control</td><td style="padding:8px;">6</td><td style="padding:8px;">30.07</td><td style="padding:8px;">1.18</td></tr>
+<tr><td style="padding:8px;">Proteico</td><td style="padding:8px;">6</td><td style="padding:8px;">32.07</td><td style="padding:8px;">1.69</td></tr>
+<tr style="background-color:#eef4fb;"><td style="padding:8px;">Orgánico</td><td style="padding:8px;">6</td><td style="padding:8px;">34.15</td><td style="padding:8px;">2.71</td></tr>
+<tr><td style="padding:8px;">Mineral</td><td style="padding:8px;">6</td><td style="padding:8px;">40.62</td><td style="padding:8px;">2.41</td></tr>
+</table>
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="1">
+
+```{r}
+#| label: boxplot-descriptivo
+#| echo: false
+#| fig-height: 3.2
+
+library(ggplot2)
+ggplot(datos, aes(x = trat, y = productividad, fill = trat)) +
+  geom_boxplot(width = 0.55, alpha = 0.85, color = "#1a3a6b", outlier.color = "#b91c1c") +
+  geom_jitter(width = 0.08, size = 1.8, color = "#1a3a6b", alpha = 0.6) +
+  scale_fill_manual(values = c("#cbd5e1", "#dbeafe", "#d6f0dd", "#fde68a")) +
+  labs(x = "Tratamiento", y = "Productividad (kg/animal)",
+       title = "Producción de leche por tratamiento") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b"))
+```
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:28px; text-align:justify;">
+Las medias muestrales difieren notablemente entre tratamientos, pero también hay variabilidad dentro de cada uno. El ANOVA cuantifica si esa diferencia es real o atribuible al azar.
+</div>
+
+</div>
+

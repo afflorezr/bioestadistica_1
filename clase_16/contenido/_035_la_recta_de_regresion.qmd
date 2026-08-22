@@ -1,0 +1,45 @@
+## La recta de regresión
+
+<div style="font-size:27px; line-height:1.5; text-align:justify; margin-bottom:8px;">
+
+<span class="fragment fade-in" data-fragment-index="1">
+Cuando los datos muestran una tendencia aproximadamente lineal, resulta útil resumir dicha relación mediante una <b>recta de regresión</b>, que representa el comportamiento promedio de la variable respuesta para distintos valores de la variable explicativa.
+</span>
+
+</div>
+
+<div class="fragment fade-in" data-fragment-index="2">
+
+```{r fig.width=18, fig.height=4.5, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+set.seed(123)
+x <- seq(1, 20)
+y <- 8 + 1.8 * x + rnorm(20, 0, 3)
+df <- data.frame(x = x, y = y)
+
+ggplot(df, aes(x, y)) +
+  geom_point(color = "#1a3a6b", size = 3.5, alpha = 0.85) +
+  geom_smooth(method = "lm", se = TRUE, color = "#b91c1c",
+              fill = "#fecaca", linewidth = 1.5, alpha = 0.2) +
+  labs(
+    title = "Nube de puntos y recta de regresión",
+    x = "Variable Explicativa (X)",
+    y = "Variable Respuesta (Y)"
+  ) +
+  theme_minimal(base_size = 17) +
+  theme(
+    plot.title   = element_text(face = "bold", hjust = 0.5, size = 19, color = "#1a3a6b"),
+    axis.title   = element_text(size = 16, color = "#374151"),
+    axis.text    = element_text(size = 14, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6)
+  )
+
+```
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top:10px; padding:14px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:28px;">
+La regresión lineal busca construir la recta que <b>mejor describa</b> la tendencia observada en la nube de puntos. La banda sombreada indica la incertidumbre de la estimación.
+</div>
+
+

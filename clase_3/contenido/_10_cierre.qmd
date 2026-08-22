@@ -1,0 +1,105 @@
+## ¿Cuándo usar cada medida?
+
+<div style="font-size: 26px; margin-top: 20px;">
+
+| Medida | Mejor cuando… | Evitar cuando… |
+|:---|:---|:---|
+| **Media** | Distribución simétrica, sin valores atípicos. | Hay valores extremos que distorsionan el promedio. |
+| **Mediana** | Distribución asimétrica o con atípicos. | Se necesita una medida algebraicamente tratable. |
+| **Moda** | Datos cualitativos o cuando interesa el valor más típico. | Los datos tienen pocas repeticiones (puede ser poco informativa). |
+
+</div>
+
+<div class="block-note fragment fade-up" data-fragment-index="1">
+  <div class="block-body">
+<p>En una distribución <strong>simétrica</strong> (como la normal): media = mediana = moda. Cuando hay <strong>sesgo positivo</strong>: media > mediana > moda. Cuando hay <strong>sesgo negativo</strong>: media < mediana < moda.</p>
+  </div>
+</div>
+
+## Efecto de los valores atípicos
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.5
+set.seed(1)
+sin_atipico <- c(rnorm(100, 50, 8))
+con_atipico <- c(sin_atipico, 202,200,150)
+
+par(mfrow = c(1,2), mar = c(4,4,2,1))
+hist(sin_atipico, col = "#bfdbfe", border = "white",
+     main = "Sin valor atípico", xlab = "Valor", cex.main = 1.2, xlim = c(20,160))
+abline(v = mean(sin_atipico),   col = "#1a3a6b", lwd = 3)
+abline(v = median(sin_atipico), col = "#1b4d2e", lwd = 3, lty = 2)
+legend("topright", c("Media","Mediana"), col = c("#1a3a6b","#1b4d2e"), lwd = 3, lty = c(1,2))
+
+hist(con_atipico, col = "#fecaca", border = "white",
+     main = "Con valor atípico (150)", xlab = "Valor", cex.main = 1.2, xlim = c(20,160))
+abline(v = mean(con_atipico),   col = "#7a1515", lwd = 3)
+abline(v = median(con_atipico), col = "#1b4d2e", lwd = 3, lty = 2)
+legend("topright", c("Media","Mediana"), col = c("#7a1515","#1b4d2e"), lwd = 3, lty = c(1,2))
+```
+
+<p class="fragment fade-up" style="font-size: 24px; text-align: center;" data-fragment-index="1">
+Un solo valor atípico puede desplazar significativamente la media, mientras la mediana permanece casi estable.
+</p>
+
+## Comparación de las tres medidas en R
+
+```{r}
+datos <- c(12,15,18,20,14,16,19,17,13,21,22,11,23,24,16,16)
+cat("Media   :", round(mean(datos), 2), "\n")
+cat("Mediana :", median(datos), "\n")
+tabla_moda <- table(datos)
+cat("Moda    :", names(tabla_moda)[which.max(tabla_moda)], "\n")
+```
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 3.5
+hist(datos, col="#bfdbfe", border="white", probability=TRUE,
+     main="Distribución de los datos", xlab="Valor", cex.main=1.2)
+abline(v=mean(datos),   col="#1a3a6b", lwd=3, lty=1)
+abline(v=median(datos), col="#1b4d2e", lwd=3, lty=2)
+legend("topright", c("Media","Mediana"), col=c("#1a3a6b","#1b4d2e"), lwd=3, lty=c(1,2), cex=1.1)
+```
+
+## Resumen de la clase
+
+<div class="twocol">
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+  <div class="block-title">Parte I</div>
+  <div class="block-body">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2"><strong>Tasa:</strong> razón entre magnitudes con unidades distintas (kg/ha, km/h).</li>
+<li class="fragment fade-up" data-fragment-index="3"><strong>Razón:</strong> comparación adimensional entre cantidades de la misma clase.</li>
+<li class="fragment fade-up" data-fragment-index="4"><strong>Proporción:</strong> igualdad entre dos razones; permite encontrar valores desconocidos con productos cruzados.</li>
+<li class="fragment fade-up" data-fragment-index="5"><strong>Porcentaje:</strong> proporción estadística en base 100.</li>
+</ul>
+  </div>
+</div>
+
+<div class="block-theorem fragment fade-up" data-fragment-index="6">
+  <div class="block-title">Parte II</div>
+  <div class="block-body" style="height:100%">
+<ul>
+<li class="fragment fade-up" data-fragment-index="7"><strong>Media $\bar{x}$:</strong> promedio; sensible a atípicos.</li>
+<li class="fragment fade-up" data-fragment-index="8"><strong>Mediana $Me$:</strong> valor central; robusta ante atípicos.</li>
+<li class="fragment fade-up" data-fragment-index="9"><strong>Moda $Mo$:</strong> valor más frecuente; única medida para datos cualitativos.</li>
+<li class="fragment fade-up" data-fragment-index="10">En distribuciones simétricas: $\bar{x} = Me = Mo$.</li>
+</ul>
+  </div>
+</div>
+
+</div>
+
+
+## Taller en clase {.center .middle}
+
+<div style="text-align: center; margin-top: 50px;">
+<p style="font-size: 42px; font-weight: bold; color: #1b4d2e;">Ejercicios para resolver en clase</p>
+<p style="font-size: 28px; color: #6b7280; margin-top: 20px;">Tasas, razones, proporciones y medidas de tendencia central</p>
+</div>
+

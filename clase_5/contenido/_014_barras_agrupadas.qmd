@@ -1,0 +1,49 @@
+## Barras agrupadas
+
+<div class="twocol">
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top:50px;">
+<ul>
+<li class="fragment fade-up" data-fragment-index="2" style="font-size: 28px;">Comparan categorías lado a lado.</li>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 28px;">Son útiles para contrastar frecuencias o porcentajes.</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 28px;">Facilitan ver diferencias entre grupos.</li>
+</ul>
+
+<p class="fragment fade-in" data-fragment-index="5" style="font-size: 29px; text-align: justify;">
+Por ejemplo, grafiquemos para cada nivel de actividad física las tres barras de sueño malo, regular y bueno.
+</p>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="6" style="margin-top:50px;">
+
+```{r, echo=FALSE}
+# Librerías
+library(ggplot2)
+
+# Datos
+datos <- data.frame(
+  Actividad = rep(c("Baja", "Media", "Alta"), each = 3),
+  Sueno = rep(c("Mala", "Regular", "Buena"), times = 3),
+  Frecuencia = c(18, 12, 6,
+                 10, 18, 14,
+                 4, 12, 26)
+)
+
+# Gráfico de barras agrupadas
+ggplot(datos, aes(x = Actividad, y = Frecuencia, fill = Sueno)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c("#d95f02", "#7570b3", "#1b9e77")) +
+  labs(
+    title = "Calidad de sueño según nivel de actividad física",
+    x = "Nivel de actividad física",
+    y = "Frecuencia",
+    fill = "Calidad del sueño"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    legend.position = "top"
+  )
+```
+</div>
+</div>
+

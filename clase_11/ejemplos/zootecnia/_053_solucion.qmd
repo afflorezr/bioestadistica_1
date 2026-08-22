@@ -1,0 +1,14 @@
+## Solución
+
+```{r}
+alpha <- 4; beta <- 7
+# E(X) y Var(X)
+cat("E(X)   =", alpha*beta, "días\n")
+cat("Var(X) =", alpha*beta^2, "días²\n")
+cat("sd(X)  =", round(sqrt(alpha*beta^2),2), "días\n")
+# Percentil 90
+cat("P90    =", round(qgamma(0.90, alpha, scale=beta), 2), "días\n")
+# P(X < 20)
+cat("P(X<20)=", round(pgamma(20, alpha, scale=beta), 4), "\n")
+```
+

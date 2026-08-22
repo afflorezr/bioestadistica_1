@@ -1,0 +1,59 @@
+## R: Distribución Normal
+
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+El peso de gulupa en gramos sigue una $N(\mu=85,\, \sigma=12)$. Calcule $P(X \leq 80)$, $P(X > 100)$, $P(X \geq 90)$ y $P(70 \leq X \leq 95)$.
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+
+<div class="scrollable-code" style="min-width: 0;">
+
+```{r}
+#| echo: true
+#| comment: ""
+#| class-source: scrollable-code
+mu <- 85; sigma <- 12
+
+# Menor o igual que 80
+pnorm(80, mu, sigma)
+
+# Estrictamente menor que 80 (igual para continua)
+pnorm(80, mu, sigma)
+
+# Mayor que 100
+pnorm(100, mu, sigma, lower.tail = FALSE)
+
+# Mayor o igual que 90 (igual para continua)
+pnorm(90, mu, sigma, lower.tail = FALSE)
+
+# Entre 70 y 95 (inclusive)
+pnorm(95, mu, sigma) - pnorm(70, mu, sigma)
+```
+</div>
+
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<strong><code>dnorm(x, mean, sd): </code></strong>
+<span style="color:#374151;font-size:24px">$f(x)$</span><br><br>
+
+<strong><code>pnorm(q, mean, sd):</code></strong>
+<span style="color:#374151;font-size:24px">$P(X \leq q)$</span><br><br>
+
+<strong><code>lower.tail = FALSE: </code></strong>
+<span style="color:#374151;font-size:24px">$P(X > q)$</span><br><br>
+
+<strong><code>pnorm(b) - pnorm(a): </code></strong>
+<span style="color:#374151;font-size:24px">$P(a \leq X \leq b)$</span><br><br>
+
+<div class="block-alert" style="margin-top: 8px;">
+<div class="block-title">Nota: variable continua</div>
+<div class="block-body" style="font-size: 21px;">
+$P(X = x) = 0$ siempre.<br>
+$P(X \leq q) = P(X < q)$
+</div>
+</div>
+</div>
+
+</div>
+

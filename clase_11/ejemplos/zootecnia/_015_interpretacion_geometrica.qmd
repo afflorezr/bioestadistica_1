@@ -1,0 +1,86 @@
+## Interpretación geométrica
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 5
+
+# Datos
+x <- seq(0, 12, length = 600)
+fx <- dgamma(x, shape = 3, scale = 1.5)
+
+# Esperanza
+mu_val <- 3 * 1.5
+
+# Márgenes más limpios
+par(
+  mar = c(4.5, 4.5, 3, 1),
+  family = "sans"
+)
+
+# Gráfico base
+plot(
+  x, fx,
+  type = "n",
+  ylim = c(0, max(fx) * 1.15),
+  xlab = "x",
+  ylab = "f(x)",
+  main = "Centro de masa de una distribución Gamma(3, 1.5)",
+  cex.main = 1.4,
+  cex.lab = 1.2,
+  cex.axis = 1.05
+)
+
+# Cuadrícula suave
+grid(
+  nx = NULL, ny = NULL,
+  col = "gray90",
+  lty = 1
+)
+
+# Área bajo la curva
+polygon(
+  c(0, x, max(x)),
+  c(0, fx, 0),
+  col = adjustcolor("#93c5fd", alpha.f = 0.55),
+  border = NA
+)
+
+# Curva Gamma
+lines(
+  x, fx,
+  lwd = 4,
+  col = "#1e3a8a"
+)
+
+# Línea de la esperanza
+abline(
+  v = mu_val,
+  col = "#991b1b",
+  lwd = 3,
+  lty = 2
+)
+
+# Punto en la media
+points(
+  mu_val,
+  dgamma(mu_val, shape = 3, scale = 1.5),
+  pch = 19,
+  cex = 1.5,
+  col = "#991b1b"
+)
+
+# Etiqueta elegante
+text(
+  mu_val + 0.5,
+  max(fx) * 0.82,
+  labels = expression(E(X) == 4.5),
+  col = "#991b1b",
+  cex = 1.25,
+  font = 2
+)
+
+# Caja alrededor del gráfico
+box(col = "gray40")
+```
+

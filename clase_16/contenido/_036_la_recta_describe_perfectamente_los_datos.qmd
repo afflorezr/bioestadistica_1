@@ -1,0 +1,35 @@
+## ¿La recta describe perfectamente los datos?
+
+<div style="margin-top:30px;font-size:28px; line-height:1.2; text-align:justify;">
+<p class="fragment fade-in" data-fragment-index="1">
+Aunque la recta resume la tendencia general de los datos, las observaciones individuales no suelen ubicarse exactamente sobre ella. Cada punto presenta una pequeña diferencia respecto al valor predicho por la recta.
+</p>
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3">
+
+```{r fig.width=18, fig.height=4.5, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+x <- c(1,2,3,4,5,6,7,8)
+y <- c(8,10,11,16,15,21,24,25)
+df <- data.frame(x = x, y = y)
+
+ggplot(df, aes(x, y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#b91c1c", linewidth = 1.6) +
+  geom_point(color = "#1a3a6b", size = 5, alpha = 0.9) +
+  labs(x = "Variable X", y = "Variable Y") +
+  theme_minimal(base_size = 18) +
+  theme(
+    axis.title   = element_text(size = 17, color = "#374151"),
+    axis.text    = element_text(size = 15, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6)
+  )
+```
+
+</div>
+
+<div class="fragment fade-in" data-fragment-index="4" style="margin-top:15px; padding:15px; background:#fefce8; border-left:6px solid #eab308; font-size:28px;">
+La recta representa una **tendencia promedio**, no una descripción exacta de cada observación.
+</div>
+

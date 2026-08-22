@@ -1,0 +1,21 @@
+## Gráfico de interacción tratamiento por bloque
+
+<div style="font-size:24px; text-align:justify; line-height:1.4; margin-bottom:6px;">
+El modelo aditivo del RCBD asume que el efecto del tratamiento es <strong>el mismo</strong> en todos los bloques (no hay interacción). Esto se verifica gráficamente con un gráfico de perfiles.
+</div>
+
+```{r}
+#| label: interaccion-industria
+#| echo: false
+#| fig-height: 3.4
+with(dat_industria, interaction.plot(empresa, estrategia, rend,
+     col = c("#1a3a6b","#1b4d2e","#d97706","#7c3aed"), lwd = 2,
+     xlab = "Empresa (bloque)", ylab = "Rentabilidad (millones/sucursal)",
+     trace.label = "Estrategia", main = "Perfiles de rentabilidad por empresa y estrategia"))
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fff7e8; padding:10px; border-radius:12px; border-left:8px solid #d97706; margin-top:6px; font-size:20px; text-align:center;">
+Las líneas son aproximadamente paralelas: no se observa un cruce sistemático, lo cual respalda el supuesto de aditividad. La <strong>prueba de Tukey para no aditividad</strong> permite formalizar esta verificación, contrastando $H_0:$ no hay interacción tratamiento-bloque.
+</div>
+

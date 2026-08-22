@@ -1,0 +1,202 @@
+---
+title: "Bioestadística, Agronomía"
+subtitle: "Clase 8: Teorema de Bayes"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: ../referencias.bib
+csl: ../ieee.csl
+output-file: clase_8_agronomia.html
+format:
+  revealjs:
+    embed-resources: true
+    logo: ../images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../../assets/syntax-highlight.css, ../../assets/custom.css, ../../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+{{< include ../contenido/_000_seccion.qmd >}}
+
+{{< include ../contenido/_001_clase_8.qmd >}}
+
+{{< include ../contenido/_002_contenido.qmd >}}
+
+{{< include ../contenido/_003_la_clase_anterior.qmd >}}
+
+{{< include ../contenido/_004_seccion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_005_el_problema_inverso.qmd >}}
+
+{{< include ../ejemplos/agronomia/_006_motivacion_una_prueba_diagnostica_positiva.qmd >}}
+
+{{< include ../contenido/_007_thomas_bayes_contexto_historico.qmd >}}
+
+{{< include ../contenido/_008_punto_de_partida_probabilidad_condicional.qmd >}}
+
+{{< include ../contenido/_009_derivacion_del_teorema_de_bayes.qmd >}}
+
+{{< include ../contenido/_010_sustitucion_con_la_ley_de_probabilidad_total.qmd >}}
+
+{{< include ../contenido/_011_el_teorema_de_bayes.qmd >}}
+
+{{< include ../contenido/_012_terminologia_bayesiana.qmd >}}
+
+{{< include ../contenido/_013_suma_de_probabilidades_a_posteriori.qmd >}}
+
+{{< include ../contenido/_014_dos_hipotesis_b_y_b_c.qmd >}}
+
+{{< include ../contenido/_015_forma_simplificada_caso_binario.qmd >}}
+
+{{< include ../contenido/_016_arbol_de_probabilidad.qmd >}}
+
+{{< include ../ejemplos/agronomia/_017_ejemplo_1_prueba_de_resistencia_en_cafe.qmd >}}
+
+{{< include ../ejemplos/agronomia/_018_datos.qmd >}}
+
+{{< include ../contenido/_019_arbol_de_probabilidades.qmd >}}
+
+{{< include ../ejemplos/agronomia/_020_solucion_paso_a_paso.qmd >}}
+
+{{< include ../ejemplos/agronomia/_021_interpretacion.qmd >}}
+
+{{< include ../contenido/_022_efecto_de_la_prevalencia_en_el_vpp.qmd >}}
+
+{{< include ../ejemplos/agronomia/_023_sensibilidad.qmd >}}
+
+{{< include ../contenido/_024_especificidad.qmd >}}
+
+{{< include ../contenido/_025_vpp_y_vpn.qmd >}}
+
+{{< include ../contenido/_026_tabla_de_contingencia_para_prueba_diagnostica.qmd >}}
+
+{{< include ../contenido/_027_relacion_entre_vpp_y_el_teorema_de_bayes.qmd >}}
+
+{{< include ../ejemplos/agronomia/_028_ejemplo_2_hongos_en_cultivo_de_maiz.qmd >}}
+
+{{< include ../ejemplos/agronomia/_029_interpretacion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_030_generalizacion_a_k_hipotesis.qmd >}}
+
+{{< include ../ejemplos/agronomia/_031_ejemplo_3_origen_del_lote_de_semillas_de_papa.qmd >}}
+
+{{< include ../ejemplos/agronomia/_032_solucion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_033_calculo_de_p_b_i_mid_a.qmd >}}
+
+{{< include ../ejemplos/agronomia/_034_interpretacion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_035_ejemplo_4_zonas_de_cultivo_de_arroz.qmd >}}
+
+{{< include ../ejemplos/agronomia/_036_solucion.qmd >}}
+
+{{< include ../contenido/_037_actualizacion_bayesiana_secuencial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_038_principio_fundamental_de_la_actualizacion_secuencial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_039_ejemplo_5_dos_pruebas_en_secuencia_sobre_un_cultivo.qmd >}}
+
+{{< include ../ejemplos/agronomia/_040_solucion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_041_ventaja_del_enfoque_bayesiano.qmd >}}
+
+{{< include ../ejemplos/agronomia/_042_razon_de_verosimilitudes.qmd >}}
+
+{{< include ../contenido/_043_seccion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_044_diagnostico_de_enfermedades_en_cultivos.qmd >}}
+
+{{< include ../ejemplos/agronomia/_045_control_de_calidad_en_lotes_de_semillas.qmd >}}
+
+{{< include ../ejemplos/agronomia/_046_estimacion_de_prevalencia_de_plagas_por_zona_climatica.qmd >}}
+
+{{< include ../ejemplos/agronomia/_047_seleccion_de_tratamientos_fitosanitarios.qmd >}}
+
+{{< include ../ejemplos/agronomia/_048_ensayos_y_experimentos_de_campo.qmd >}}
+
+{{< include ../ejemplos/agronomia/_049_limitaciones_del_teorema_de_bayes.qmd >}}
+
+{{< include ../contenido/_050_bayes_vs_frecuentismo.qmd >}}
+
+{{< include ../contenido/_051_formulas_y_conceptos_clave.qmd >}}
+
+{{< include ../ejemplos/agronomia/_052_esquema_general.qmd >}}
+
+{{< include ../ejemplos/agronomia/_053_conexion_teorema_de_bayes_con_distribuciones_de_probabilidad.qmd >}}
+
+{{< include ../contenido/_054_seccion.qmd >}}
+
+{{< include ../contenido/_055_motivacion_reglas_de_conteo.qmd >}}
+
+{{< include ../contenido/_056_principio_fundamental_del_conteo.qmd >}}
+
+{{< include ../ejemplos/agronomia/_057_ejemplo_6_variedad_riego_suelo.qmd >}}
+
+{{< include ../ejemplos/agronomia/_058_diagrama_de_arbol_variedad_riego.qmd >}}
+
+{{< include ../contenido/_059_permutaciones.qmd >}}
+
+{{< include ../ejemplos/agronomia/_060_ejemplo_7_ordenar_variedades_de_arroz.qmd >}}
+
+{{< include ../contenido/_061_permutaciones_de_r_elementos_tomados_de_n.qmd >}}
+
+{{< include ../ejemplos/agronomia/_062_ejemplo_8_asignacion_de_parcelas.qmd >}}
+
+{{< include ../contenido/_063_permutaciones_con_repeticion.qmd >}}
+
+{{< include ../ejemplos/agronomia/_064_ejemplo_9_organizar_plantas_en_hilera.qmd >}}
+
+{{< include ../contenido/_065_combinaciones.qmd >}}
+
+{{< include ../ejemplos/agronomia/_066_ejemplo_10_variedades_de_maiz.qmd >}}
+
+{{< include ../ejemplos/agronomia/_067_permutaciones_vs_combinaciones.qmd >}}
+
+{{< include ../contenido/_068_propiedades_del_coeficiente_binomial.qmd >}}
+
+{{< include ../ejemplos/agronomia/_069_combinaciones_aplicadas_a_probabilidad_clasica.qmd >}}
+
+{{< include ../ejemplos/agronomia/_070_ejemplo_11_muestrear_plantas_de_arroz.qmd >}}
+
+{{< include ../contenido/_071_tabla_comparativa_tres_enfoques_de_probabilidad.qmd >}}
+
+{{< include ../contenido/_072_resumen.qmd >}}
+
+{{< include ../ejemplos/agronomia/_073_ejemplo_semillas_de_cafe_con_conteo_y_probabilidad.qmd >}}
+
+{{< include ../ejemplos/agronomia/_074_ejemplo_probabilidad_con_principio_multiplicativo.qmd >}}
+
+{{< include ../contenido/_075_cuando_usar_cada_herramienta_de_conteo.qmd >}}
+
+{{< include ../ejemplos/agronomia/_076_ejercicio_de_repaso_verdadero_o_falso.qmd >}}
+
+{{< include ../ejemplos/agronomia/_077_aplicaciones_en_biologia_y_agronomia.qmd >}}
+
+{{< include ../contenido/_078_bibliografia_sugerida.qmd >}}

@@ -1,0 +1,38 @@
+## Inferencia sobre los coeficientes
+
+<p class="fragment fade-in" data-fragment-index="1" style="font-size:30px; text-align:justify; margin-bottom:18px; line-height:1.45;">
+Una vez ajustado el modelo, se evalúa si la variable explicativa tiene un efecto <strong>estadísticamente significativo</strong> sobre la variable respuesta mediante pruebas de hipótesis sobre los coeficientes.
+</p>
+
+<table class="fragment fade-in" data-fragment-index="2" style="width:100%; border-collapse:separate; border-spacing:14px; margin-top:0;">
+<thead>
+<tr>
+<th style="background:#1a3a6b; color:#fff; padding:13px 20px; font-size:28px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:50%;">🔬 Hipótesis</th>
+<th style="background:#1b4d2e; color:#fff; padding:13px 20px; font-size:28px; font-weight:700; text-align:center; border-radius:10px 10px 0 0; width:50%;">📐 Estadístico de prueba</th>
+</tr>
+</thead>
+<tbody>
+<tr style="vertical-align:top;">
+<td style="background:#dce9f7; padding:18px 24px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; margin:6px 0;">$H_0: \beta_1 = 0$</p>
+<p style="font-size:26px; margin:6px 0 14px;">$H_1: \beta_1 \neq 0$</p>
+<ul style="font-size:27px; color:#1e293b; line-height:1; text-align:left; margin:0; padding-left:22px;">
+<li><strong>$H_0$:</strong> No existe relación lineal.</li>
+<li><strong>$H_1$:</strong> Existe relación lineal entre $X$ e $Y$.</li>
+</ul>
+</td>
+<td style="background:#d6f0dd; padding:18px 24px; border-radius:0 0 10px 10px; text-align:center;">
+<p style="font-size:26px; margin:6px 0 14px;">$t = \dfrac{\hat{\beta}_1}{SE(\hat{\beta}_1)}$</p>
+<ul style="font-size:27px; color:#1e293b; line-height:1; text-align:left; margin:0; padding-left:22px;">
+<li>Cociente entre el efecto estimado y su incertidumbre.</li>
+<li>Sigue una distribución $t$ con $n-2$ grados de libertad.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p class="fragment fade-in" data-fragment-index="3" style="margin-top:16px; padding:13px 22px; background:#fef9c3; border-left:6px solid #b45309; border-radius:8px; font-size:28px; color:#1e293b;">
+<strong>Decisión:</strong> si $\small p< 0.05$ se rechaza $H_0$; la variable explicativa contribuye <strong>significativamente</strong> al modelo.
+</p>
+

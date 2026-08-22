@@ -1,0 +1,37 @@
+## Efecto de $\nu$ en la Distribución t de Student
+
+```{r}
+#| echo: false
+#| fig-width: 14
+#| fig-height: 5
+#| fig-align: center
+library(ggplot2)
+
+gls  <- c(1, 3, 10, 30)
+cols <- c("#7a1515","#e78c45","#1a3a6b","#1b4d2e")
+x    <- seq(-5, 5, length.out = 500)
+
+df_all <- do.call(rbind, lapply(seq_along(gls), function(i) {
+  data.frame(x = x, fx = dt(x, gls[i]),
+             nu = paste0("t(", gls[i], ")"))
+}))
+df_all <- rbind(df_all,
+  data.frame(x = x, fx = dnorm(x), nu = "N(0,1), referencia"))
+
+lvls <- c(paste0("t(", gls, ")"), "N(0,1), referencia")
+df_all$nu <- factor(df_all$nu, levels = lvls)
+cols_all  <- c(cols, "#9ca3af")
+
+ggplot(df_all, aes(x, fx, color = nu, linetype = nu)) +
+  geom_line(linewidth = 1.1) +
+  scale_color_manual(values = setNames(cols_all, lvls)) +
+  scale_linetype_manual(values = setNames(
+    c(rep("solid", 4), "dashed"), lvls)) +
+  labs(title = "FDP de t(ν) vs N(0,1): colas más pesadas para ν pequeño",
+       x = "t", y = "f(t)", color = NULL, linetype = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "right",
+        plot.title = element_text(face = "bold", color = "#1a3a6b", size = 16))
+```
+
+

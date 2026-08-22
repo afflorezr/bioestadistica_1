@@ -1,0 +1,53 @@
+## Estimación por mínimos cuadrados ordinarios
+
+<div class="block-definition fragment fade-up" data-fragment-index="1">
+
+<div class="block-body">
+<p style="font-size: 28px; text-align: justify;">
+El método de <strong>Mínimos Cuadrados Ordinarios (MCO)</strong> busca los valores de $\boldsymbol{\beta}$ que hacen que las predicciones del modelo estén lo más cerca posible de los valores observados, minimizando la suma de los errores al cuadrado:
+</p>
+<p style="font-size: 24px; text-align: center; margin: 10px 0;">
+$S(\boldsymbol{\beta}) = \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$
+</p>
+</div>
+</div>
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 10px;">Solución analítica</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+Se derivan las ecuaciones normales igualando las derivadas parciales a cero.
+</li>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+La solución en forma matricial es:
+</li>
+</ul>
+<p class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: center; margin: 8px 0;">
+$\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{Y}$
+</p>
+<ul>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+Esta solución es <strong>única</strong> siempre que $\mathbf{X}^\top\mathbf{X}$ sea invertible (no haya colinealidad perfecta).
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 26px; margin-bottom: 10px;">¿Qué obtenemos?</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px; text-align: justify;">
+<strong>Valores ajustados:</strong> $\hat{\mathbf{Y}} = \mathbf{X}\hat{\boldsymbol{\beta}}$, las predicciones del modelo.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px; text-align: justify;">
+<strong>Residuos:</strong> $\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}}$, la diferencia entre lo observado y lo predicho.
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 26px; text-align: justify;">
+Los residuos son clave para evaluar la calidad del ajuste y verificar los supuestos del modelo.
+</li>
+</ul>
+</div>
+
+</div>
+

@@ -1,0 +1,27 @@
+## Ejemplo: distribución muestral de la proporción
+
+<div class="block-example fragment fade-up" data-fragment-index="1">
+<div class="block-title">Prevalencia de incumplimiento comercial, Huila</div>
+<div class="block-body" style="font-size: 27px;">
+El 30% de los empresas en una región presenta incumplimiento ($p = 0.30$). Se seleccionan $n = 100$ empresas. Calcule $P(\hat{p} > 0.35)$.
+</div>
+</div>
+
+<div class="block-proof fragment fade-up" data-fragment-index="2" style="margin-top: 14px;">
+<div class="block-title">Solución</div>
+<div class="block-body" style="font-size: 26px; line-height: 1.4;">
+
+$\text{SE}(\hat{p}) = \sqrt{0.30 \times 0.70 / 100} = \sqrt{0.0021} \approx 0.0458$
+
+$$P(\hat{p} > 0.35) = P\!\left(Z > \frac{0.35 - 0.30}{0.0458}\right) = P(Z > 1.09) \approx 0.138$$
+
+```{r}
+#| echo: true
+p <- 0.30; n <- 100
+se <- sqrt(p*(1-p)/n)
+1 - pnorm(0.35, mean = p, sd = se)
+```
+</div>
+</div>
+
+

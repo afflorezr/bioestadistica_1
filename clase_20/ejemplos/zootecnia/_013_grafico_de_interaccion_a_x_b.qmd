@@ -1,0 +1,18 @@
+## Gráfico de interacción A x B
+
+```{r}
+#| label: grafico-interaccion
+#| echo: false
+#| fig-height: 3.4
+interaction.plot(datos$fert, datos$dieta, datos$productividad,
+                  col = c("#1a3a6b", "#1b4d2e", "#b91c1c"), lwd = 3,
+                  type = "b", pch = 19,
+                  xlab = "Nivel de suplementación", ylab = "Productividad promedio (kg/animal)",
+                  trace.label = "Dieta", main = "Gráfico de interacción Dieta x Suplementación")
+```
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#fdecec; padding:10px; border-radius:12px; border-left:8px solid #b91c1c; margin-top:6px; font-size:21px; text-align:center;">
+Las líneas <strong>no son paralelas</strong>: la pendiente de Dieta C es más pronunciada que la de Dieta A. Esto sugiere interacción entre los dos factores.
+</div>
+

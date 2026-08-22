@@ -1,0 +1,39 @@
+## Supuesto de normalidad
+
+<div style="margin-top:50px;font-size:30px; text-align:justify; line-height:1.2;">
+La normalidad de los residuos se evalúa con un gráfico de probabilidad normal (QQ-plot) y, de forma más formal, con la prueba de <strong>Shapiro-Wilk</strong>.
+</div>
+
+<div class="twocol">
+
+<div class="fragment fade-up" data-fragment-index="0">
+```{r}
+#| label: qqplot-residuos
+#| echo: false
+#| fig-height: 3.2
+library(ggplot2)
+ggplot(data.frame(resid = residuals(modelo)), aes(sample = resid)) +
+  stat_qq(color = "#1a3a6b", size = 1.8) +
+  stat_qq_line(color = "#b91c1c", linewidth = 1) +
+  labs(x = "Cuantiles teóricos", y = "Residuos",
+       title = "Gráfico de probabilidad normal de los residuos") +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b", size = 13))
+```
+</div>
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color:#eef4fb; border-left:6px solid #1a3a6b; border-radius:8px; padding:10px 14px; font-size:26px; line-height:1.4;">
+<strong style="color:#1a3a6b;">Prueba de Shapiro-Wilk:</strong>
+$$H_0: \text{los residuos siguen una distribución normal}$$
+$$W=0.934 \qquad \text{valor-p}=0.118$$
+</div>
+
+</div>
+
+
+
+<div class="fragment fade-up" data-fragment-index="2"
+style="background-color:#eef7ee; padding:10px; border-radius:12px; border-left:8px solid #1b4d2e; margin-top:8px; font-size:28px; text-align:center;">
+Como valor$-p =0.118>0.05$, no hay evidencia para rechazar la normalidad de los residuos: el supuesto se cumple razonablemente.
+</div>
+

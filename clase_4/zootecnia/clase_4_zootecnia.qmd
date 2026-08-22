@@ -1,0 +1,149 @@
+---
+title: "Bioestadística, Zootecnia"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: ../referencias.bib
+csl: ../ieee.csl
+output-file: clase_4_zootecnia.html
+format: 
+  revealjs:
+    #incremental: true
+    logo: ../images/logo_unal_3.png
+    #footer: "`emitanaka.org/slides/toronto2022`"
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../../assets/syntax-highlight.css, ../../assets/custom.css, ../../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="../../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
+      <script defer src="../../assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        // aplicar inmediatamente al cargar
+        updateLogoVisibility();
+        // y cada vez que se cambie de slide
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+
+---
+
+{{< include ../contenido/_000_seccion.qmd >}}
+
+{{< include ../contenido/_001_clase_4.qmd >}}
+
+{{< include ../contenido/_002_en_la_clase_pasada_hablamos_de.qmd >}}
+
+{{< include ../contenido/_003_en_esta_clase_vamos_a_hablar_de.qmd >}}
+
+{{< include ../contenido/_004_parte_i.qmd >}}
+
+{{< include ../contenido/_005_medidas_de_dispersion.qmd >}}
+
+{{< include ../contenido/_006_rango.qmd >}}
+
+{{< include ../contenido/_007_varianza.qmd >}}
+
+{{< include ../contenido/_008_tipos_de_varianza.qmd >}}
+
+{{< include ../contenido/_009_varianza_para_datos_agrupados.qmd >}}
+
+{{< include ../contenido/_010_desviacion_estandar.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_011_ejemplo_1_datos_poblacionales_no_agrupados.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_012_ejemplo_2_datos_muestrales_no_agrupados.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_013_ejemplo_3_varianza_con_datos_agrupados.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_014_ejemplo_3_solucion.qmd >}}
+
+{{< include ../contenido/_015_coeficiente_de_variacion.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_016_interpretacion_del_coeficiente_de_variacion.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_017_ejemplo_1.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_018_ejemplo_2.qmd >}}
+
+{{< include ../contenido/_019_forma_de_la_distribucion.qmd >}}
+
+{{< include ../contenido/_020_asimetria_concepto_y_tipos.qmd >}}
+
+{{< include ../contenido/_021_coeficiente_de_asimetria_de_pearson.qmd >}}
+
+{{< include ../contenido/_022_coeficiente_de_asimetria_momentual.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_023_ejemplo_coeficiente_de_asimetria.qmd >}}
+
+{{< include ../contenido/_024_curtosis_concepto_y_tipos.qmd >}}
+
+{{< include ../contenido/_025_coeficiente_de_curtosis.qmd >}}
+
+{{< include ../contenido/_026_asimetria_y_curtosis_en_r.qmd >}}
+
+{{< include ../contenido/_027_asimetria_curtosis_y_normalidad.qmd >}}
+
+{{< include ../contenido/_028_parte_ii.qmd >}}
+
+{{< include ../contenido/_029_medidas_de_posicion.qmd >}}
+
+{{< include ../contenido/_030_1_cuartiles.qmd >}}
+
+{{< include ../contenido/_031_formulas.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_032_ejemplos.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_033_ejemplo_cuartiles_con_datos_agrupados.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_034_ejemplo_cuartil_3.qmd >}}
+
+{{< include ../contenido/_035_rango_intercuartilico_iqr.qmd >}}
+
+{{< include ../contenido/_036_2_deciles.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_037_ejemplo_deciles.qmd >}}
+
+{{< include ../contenido/_038_3_percentiles.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_039_ejemplo_percentiles.qmd >}}
+
+{{< include ../contenido/_040_relacion_entre_cuartiles_deciles_y_percentiles.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_041_datos_atipicos.qmd >}}
+
+{{< include ../contenido/_042_tipos_de_datos_atipicos.qmd >}}
+
+{{< include ../contenido/_043_cuando_conservar_o_eliminar_un_dato_atipico.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_044_metodo_de_los_3_sigmas.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_045_prueba_de_grubbs.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_046_tratamiento_de_datos_atipicos.qmd >}}
+
+{{< include ../contenido/_047_grafico_de_caja_y_bigotes_boxplot.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_048_ejemplo_en_r_boxplot.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_049_taller_en_clase.qmd >}}
+
+{{< include ../ejemplos/zootecnia/_050_ejercicio_variabilidad_del_cultivo_de_cacao.qmd >}}

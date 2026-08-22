@@ -1,0 +1,28 @@
+## Asimetría y curtosis en R
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-height: 4.2
+#| message: false
+library(ggplot2)
+set.seed(42)
+
+datos <- c(80, 85, 90, 92, 95, 98, 180)
+df <- data.frame(precio = datos)
+
+ggplot(df, aes(x = precio)) +
+  geom_histogram(binwidth = 15, fill = "#dce9f7", color = "#1a3a6b", alpha = 0.85) +
+  geom_vline(xintercept = mean(datos), color = "#c0392b", linetype = "dashed", linewidth = 1.2) +
+  geom_vline(xintercept = median(datos), color = "#1b4d2e", linetype = "solid", linewidth = 1.2) +
+  annotate("text", x = mean(datos) + 3, y = 2.1,
+           label = paste0("Media = ", round(mean(datos), 1)),
+           color = "#c0392b", hjust = 0, size = 4.5) +
+  annotate("text", x = median(datos) - 3, y = 1.7,
+           label = paste0("Mediana = ", median(datos)),
+           color = "#1b4d2e", hjust = 1, size = 4.5) +
+  labs(title = "Precios de predios rurales: sesgo positivo",
+       x = "Precio (millones $)", y = "Frecuencia") +
+  theme_minimal(base_size = 14)
+```
+

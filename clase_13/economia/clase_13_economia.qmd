@@ -1,0 +1,164 @@
+---
+title: "Bioestadística, Economía"
+subtitle: "Clase 13: Estimadores e Intervalos de Confianza"
+author: " "
+institute: "Departamento de Estadı́stica, Sede Bogotá"
+bibliography: ../referencias.bib
+csl: ../ieee.csl
+output-file: clase_13_economia.html
+format:
+  revealjs:
+    embed-resources: true
+    logo: ../images/logo_unal_3.png
+    slide-number: true
+    title-slide: false
+    multiplex: true
+    theme: [simple, ../../assets/monash.scss]
+    show-slide-number: all
+    controls: true
+    width: 1280
+    height: 720
+    css: [../../assets/syntax-highlight.css, ../../assets/custom.css, ../../assets/pacman.css]
+    header-includes: |
+      <link rel="stylesheet" href="../../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
+      <script defer src="../../assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
+      <script>
+      window.addEventListener('load', function() {
+        if (typeof Reveal === 'undefined') return;
+        function updateLogoVisibility() {
+          if (typeof Reveal.getCurrentSlide !== 'function') return;
+          var logos = document.querySelectorAll('.reveal .slide-logo');
+          if (!logos.length) return;
+          var current = Reveal.getCurrentSlide();
+          var isTitle = current && current.id === 'title-slide';
+          logos.forEach(function(logo) {
+            logo.style.display = isTitle ? 'none' : '';
+          });
+        }
+        updateLogoVisibility();
+        Reveal.on('slidechanged', updateLogoVisibility);
+      });
+      </script>
+execute:
+  echo: true
+---
+
+{{< include ../contenido/_000_seccion.qmd >}}
+
+{{< include ../ejemplos/economia/_001_contenido.qmd >}}
+
+{{< include ../contenido/_002_seccion.qmd >}}
+
+{{< include ../contenido/_003_inferencia_estadistica_y_estimacion.qmd >}}
+
+{{< include ../ejemplos/economia/_004_estimadores_como_funciones_aleatorias_de_la_muestra.qmd >}}
+
+{{< include ../ejemplos/economia/_005_estimadores_clasicos_en_agronomia.qmd >}}
+
+{{< include ../contenido/_006_la_analogia_de_la_diana_sesgo_y_precision.qmd >}}
+
+{{< include ../contenido/_007_distribuciones_muestrales_de_estimadores.qmd >}}
+
+{{< include ../ejemplos/economia/_008_variabilidad_muestral_y_el_error_estandar.qmd >}}
+
+{{< include ../contenido/_009_propiedades_de_los_estimadores.qmd >}}
+
+{{< include ../contenido/_010_demostracion_insesgamiento_de_bar.qmd >}}
+
+{{< include ../contenido/_011_cuando_usar_z_y_cuando_usar_t.qmd >}}
+
+{{< include ../contenido/_012_comparacion_grafica_normal_vs_t_de_student.qmd >}}
+
+{{< include ../contenido/_013_insesgamiento_sesgo_y_error_cuadratico_medio.qmd >}}
+
+{{< include ../contenido/_014_consistencia_y_eficiencia_teorema_central_del_limite.qmd >}}
+
+{{< include ../ejemplos/economia/_015_consistencia_convergencia_visual_en_r.qmd >}}
+
+{{< include ../contenido/_016_seccion.qmd >}}
+
+{{< include ../contenido/_017_construccion_conceptual_del_intervalo_de_confianza.qmd >}}
+
+{{< include ../ejemplos/economia/_018_interpretacion_frecuentista_y_cobertura.qmd >}}
+
+{{< include ../ejemplos/economia/_019_cobertura_del_ic_simulacion_en_r.qmd >}}
+
+{{< include ../ejemplos/economia/_020_ic_para_la_media_sigma_conocida.qmd >}}
+
+{{< include ../ejemplos/economia/_021_ic_para_la_media_ejemplo_paso_a_paso.qmd >}}
+
+{{< include ../contenido/_022_ic_para_la_media_sigma_desconocida.qmd >}}
+
+{{< include ../contenido/_023_resumen_estimadores_e_ic_para_una_media.qmd >}}
+
+{{< include ../ejemplos/economia/_024_cuantas_observaciones_necesito.qmd >}}
+
+{{< include ../ejemplos/economia/_025_ic_para_diferencia_de_medias.qmd >}}
+
+{{< include ../ejemplos/economia/_026_ic_para_medias_pareadas.qmd >}}
+
+{{< include ../ejemplos/economia/_027_ic_para_una_proporcion.qmd >}}
+
+{{< include ../ejemplos/economia/_028_ic_de_wilson_proporciones_con_muestras_pequenas.qmd >}}
+
+{{< include ../ejemplos/economia/_029_ic_para_la_varianza_distribucion_chi_cuadrado.qmd >}}
+
+{{< include ../contenido/_030_tabla_resumen_ic_para_distintos_parametros.qmd >}}
+
+{{< include ../contenido/_031_nivel_de_confianza_significancia_y_margen_de_error.qmd >}}
+
+{{< include ../contenido/_032_seccion.qmd >}}
+
+{{< include ../ejemplos/economia/_033_factores_que_afectan_la_amplitud_del_ic.qmd >}}
+
+{{< include ../ejemplos/economia/_034_influencia_de_la_variabilidad_poblacional.qmd >}}
+
+{{< include ../contenido/_035_estrategias_para_reducir_la_amplitud_del_ic.qmd >}}
+
+{{< include ../ejemplos/economia/_036_relacion_entre_n_y_precision_del_ic.qmd >}}
+
+{{< include ../ejemplos/economia/_037_supuestos_de_inferencia_estadistica.qmd >}}
+
+{{< include ../ejemplos/economia/_038_verificacion_de_supuestos_en_r.qmd >}}
+
+{{< include ../contenido/_039_correccion_por_poblacion_finita_e_ic_bajo_disenos_complejos.qmd >}}
+
+{{< include ../contenido/_040_ic_bajo_muestreo_por_conglomerados.qmd >}}
+
+{{< include ../ejemplos/economia/_041_efecto_de_diseno_concepto_y_calculo.qmd >}}
+
+{{< include ../contenido/_042_comparacion_de_ics_entre_disenos_muestrales.qmd >}}
+
+{{< include ../contenido/_043_seccion.qmd >}}
+
+{{< include ../ejemplos/economia/_044_diferencia_entre_desviacion_estandar_y_error_estandar.qmd >}}
+
+{{< include ../ejemplos/economia/_045_errores_comunes_en_interpretacion_inferencial.qmd >}}
+
+{{< include ../contenido/_046_limitaciones_de_los_intervalos_clasicos.qmd >}}
+
+{{< include ../ejemplos/economia/_047_sensibilidad_a_valores_atipicos_demostracion.qmd >}}
+
+{{< include ../ejemplos/economia/_048_ic_con_transformaciones_variables_asimetricas.qmd >}}
+
+{{< include ../contenido/_049_cobertura_nominal_vs_real_y_bootstrap.qmd >}}
+
+{{< include ../ejemplos/economia/_050_aplicaciones_inferenciales_en_agronomia.qmd >}}
+
+{{< include ../contenido/_051_ic_en_r_funciones_de_referencia_rapida.qmd >}}
+
+{{< include ../ejemplos/economia/_052_reporte_tecnico_ejemplo_completo_en_formato_cientifico.qmd >}}
+
+{{< include ../ejemplos/economia/_053_ejemplo_integrador_estudio_completo_de_rendimiento.qmd >}}
+
+{{< include ../ejemplos/economia/_054_lectura_de_ics_en_la_literatura_agronomica.qmd >}}
+
+{{< include ../ejemplos/economia/_055_taller_en_clase.qmd >}}
+
+{{< include ../ejemplos/economia/_056_taller_1_propiedades_y_ic_para_la_media.qmd >}}
+
+{{< include ../ejemplos/economia/_057_taller_2_ic_para_proporcion.qmd >}}
+
+{{< include ../ejemplos/economia/_058_taller_3_ic_bajo_diseno_estratificado.qmd >}}
+
+{{< include ../contenido/_059_resumen_de_la_clase_13.qmd >}}

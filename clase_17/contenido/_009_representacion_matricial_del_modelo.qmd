@@ -1,0 +1,50 @@
+## Representación matricial del modelo
+
+<div class="fragment fade-up" data-fragment-index="1" style="background-color: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 12px 20px; margin-bottom: 10px;">
+<p style="font-size: 26px; text-align: center; margin: 0;">
+El modelo de regresión múltiple $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$ se puede descomponer matricialmente como:
+</p>
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2" style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 16px; margin-bottom: 10px; text-align: center; font-size: 50%;">
+$$\underbrace{\begin{pmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_n \end{pmatrix}}_{\mathbf{Y}} \;=\; \underbrace{\begin{pmatrix} 1 & X_{11} & X_{12} & \cdots & X_{1k} \\ 1 & X_{21} & X_{22} & \cdots & X_{2k} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & X_{n1} & X_{n2} & \cdots & X_{nk} \end{pmatrix}}_{\mathbf{X}} \;\underbrace{\begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_k \end{pmatrix}}_{\boldsymbol{\beta}} \;+\; \underbrace{\begin{pmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_n \end{pmatrix}}_{\boldsymbol{\varepsilon}}$$
+</div>
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="3" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
+<h4 style="color:#1b4d2e; font-size: 25px; margin-bottom: 10px;">Lectura de la expresión</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="4" style="font-size: 23px; text-align: justify;">
+Cada <strong>fila</strong> de $\mathbf{X}$ contiene los valores de los $k$ predictores para una observación.
+</li>
+<li class="fragment fade-up" data-fragment-index="5" style="font-size: 23px; text-align: justify;">
+La <strong>primera columna</strong> de $\mathbf{X}$ es de unos: esto genera el intercepto $\beta_0$ en el producto.
+</li>
+<li class="fragment fade-up" data-fragment-index="6" style="font-size: 23px; text-align: justify;">
+El producto $\mathbf{X}\boldsymbol{\beta}$ da el vector de <strong>valores predichos</strong> $\hat{\mathbf{Y}}$ para todas las observaciones.
+</li>
+<li class="fragment fade-up" data-fragment-index="7" style="font-size: 23px; text-align: justify;">
+El vector $\boldsymbol{\varepsilon}$ captura lo que el modelo <strong>no logra explicar</strong>.
+</li>
+</ul>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="8" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
+<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">¿Por qué esta notación?</h4>
+<ul>
+<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
+Resume las $n$ ecuaciones individuales en <strong>una sola expresión</strong> compacta y elegante.
+</li>
+<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+Facilita obtener la solución analítica por MCO: $\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{Y}$
+</li>
+<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px; text-align: justify;">
+Es exactamente lo que R resuelve internamente con la función <code>lm()</code>.
+</li>
+</ul>
+</div>
+
+</div>
+
+

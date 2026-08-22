@@ -1,0 +1,35 @@
+## Medias crudas y ajustadas: comercio
+
+```{r}
+#| label: boxplot-comercio
+#| echo: false
+#| fig-height: 3.2
+suppressMessages(library(agricolae))
+trts7 <- paste0("V",1:7)
+des <- agricolae::design.bib(trt=trts7, k=3, seed=303)
+book <- des$book
+names(book)[3] <- "trt"
+set.seed(404)
+mu3 <- 85
+tau_v <- c(0, 4, -3, 6, -5, 2, -1); names(tau_v) <- trts7
+block_eff <- rnorm(7, 0, 3); names(block_eff) <- as.character(unique(book$block))
+book$rend <- mu3 + tau_v[as.character(book$trt)] + block_eff[as.character(book$block)] + rnorm(nrow(book),0,2)
+book$rend <- round(book$rend,1)
+modelo_bibd <- aov(rend ~ block + trt, data = book)
+boxplot(rend ~ trt, data = book,
+        col = c("#dbeafe","#d6f0dd","#fde68a","#fecaca","#e9d5ff","#bbf7d0","#fed7aa"),
+        xlab = "Estrategia", ylab = "Rentabilidad (millones/sucursal)",
+        main = "Rentabilidad comercial por estrategia (BIBD)")
+```
+
+<table style="width:100%; font-size:19px; text-align:center; margin-top:6px; border-collapse:collapse;">
+<tr style="background-color:#1a3a6b; color:white;"><th>Estrategia</th><th>Media cruda</th><th>Media ajustada</th></tr>
+<tr style="background-color:#eef4fb;"><td>V1</td><td>87.10</td><td>86.71</td></tr>
+<tr><td>V2</td><td>90.73</td><td>88.60</td></tr>
+<tr style="background-color:#eef4fb;"><td>V3</td><td>79.17</td><td>79.80</td></tr>
+<tr><td>V4</td><td>93.90</td><td>91.66</td></tr>
+<tr style="background-color:#eef4fb;"><td>V5</td><td>77.23</td><td>79.74</td></tr>
+<tr><td>V6</td><td>86.73</td><td>88.37</td></tr>
+<tr style="background-color:#eef4fb;"><td>V7</td><td>82.33</td><td>82.31</td></tr>
+</table>
+

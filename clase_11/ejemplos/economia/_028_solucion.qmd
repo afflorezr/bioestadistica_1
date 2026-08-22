@@ -1,0 +1,20 @@
+## Solución
+
+```{r}
+# X ~ Poi(5)
+lambda <- 5
+k <- 0:30
+pk <- dpois(k, lambda)
+
+# E(X) manual
+EX <- sum(k * pk)
+# E(X^2)
+EX2 <- sum(k^2 * pk)
+# Var(X) = E(X^2) - [E(X)]^2
+VarX <- EX2 - EX^2
+
+cat("E(X)   =", round(EX, 4), "\n")
+cat("Var(X) =", round(VarX, 4), "\n")
+cat("sd(X)  =", round(sqrt(VarX), 4), "\n")
+```
+

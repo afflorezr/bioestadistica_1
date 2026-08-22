@@ -1,0 +1,25 @@
+## FDA de una variable discreta
+
+```{r}
+#| echo: false
+#| fig-width: 7
+#| fig-height: 4
+#| fig-align: center
+# FDA de Binomial(3, 0.5)
+x_vals <- 0:3
+probs   <- dbinom(x_vals, 3, 0.5)
+cdf     <- pbinom(x_vals, 3, 0.5)
+
+par(mfrow = c(1,2), mar = c(4,4,2,1))
+barplot(probs, names.arg = x_vals, col = "#3b82f6", border = NA,
+        main = "Función de masa (FMP)", xlab = "x", ylab = "P(X=x)",
+        cex.lab = 1.3, cex.main = 1.3)
+plot(stepfun(x_vals, c(0, cdf)), do.points = TRUE, pch = 19, col = "#1b4d2e",
+     main = "FDA F(x)", xlab = "x", ylab = "F(x)", xlim = c(-0.5, 3.5),
+     cex.lab = 1.3, cex.main = 1.3)
+```
+
+<p class="fragment fade-up" style="font-size: 26px; text-align: center; margin-top: 5px;" data-fragment-index="1">
+$X \sim \text{Binomial}(3, 0.5)$: número de éxitos en 3 lanzamientos de moneda.
+</p>
+

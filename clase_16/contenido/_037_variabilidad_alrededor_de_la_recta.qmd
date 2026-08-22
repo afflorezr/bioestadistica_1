@@ -1,0 +1,62 @@
+## Variabilidad alrededor de la recta
+
+<div style="font-size:28px; line-height:1.6; text-align:justify;">
+
+<p class="fragment fade-in" data-fragment-index="1">
+Las diferencias entre los valores observados y los valores representados por la recta reflejan la variabilidad presente en los datos.
+</p>
+
+<p class="fragment fade-in" data-fragment-index="2">
+Estas discrepancias pueden originarse por factores no observados, errores de medición o variabilidad natural del fenómeno estudiado.
+</p>
+
+</div>
+
+<div class="fragment fade-in" data-fragment-index="3">
+
+```{r fig.width=18, fig.height=4.8, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+set.seed(42)
+n <- 22
+x <- seq(1, 11, length.out = n)
+y <- 5 + 2.3 * x + rnorm(n, 0, 4.5)
+df <- data.frame(x = x, y = y)
+mod <- lm(y ~ x, data = df)
+df$yhat <- fitted(mod)
+df$residuo <- residuals(mod)
+df$color_res <- ifelse(df$residuo > 0, "positivo", "negativo")
+
+ggplot(df, aes(x, y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#b91c1c", linewidth = 1.8) +
+  geom_segment(aes(x = x, xend = x, y = yhat, yend = y, color = color_res),
+               linewidth = 1.3, linetype = "solid") +
+  geom_point(aes(y = yhat), shape = 18, color = "#b91c1c", size = 3.5) +
+  geom_point(color = "#1a3a6b", size = 4.5, alpha = 0.9) +
+  scale_color_manual(
+    values = c("positivo" = "#16a34a", "negativo" = "#d97706"),
+    labels = c("positivo" = "Residuo > 0  (obs. sobre la recta)",
+               "negativo" = "Residuo < 0  (obs. bajo la recta)"),
+    name = NULL
+  ) +
+  labs(x = "Variable X", y = "Variable Y") +
+  theme_minimal(base_size = 18) +
+  theme(
+    axis.title      = element_text(size = 17, color = "#374151"),
+    axis.text       = element_text(size = 15, color = "#374151"),
+    panel.grid.minor = element_blank(),
+    panel.border    = element_rect(color = "#cbd5e1", fill = NA, linewidth = 0.6),
+    legend.position = "top",
+    legend.text     = element_text(size = 15, color = "#374151")
+  )
+```
+
+</div>
+
+<div class="fragment fade-in"
+data-fragment-index="4"
+style="margin-top:15px; padding:15px; background:#eef6ff; border-left:6px solid #3b82f6; font-size:25px;">
+
+Las líneas punteadas representan las diferencias entre los valores observados y los valores estimados por la recta.
+
+</div>
+

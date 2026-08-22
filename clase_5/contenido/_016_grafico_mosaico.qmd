@@ -1,0 +1,51 @@
+## Gráfico mosaico
+
+<div class="twocol">
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1" style="margin-top:50px;">
+<p class="fragment fade-in" data-fragment-index="2" style="font-size: 29px; text-align: justify;">
+El gráfico mosaico representa las categorías de dos variables cualitativas usando rectángulos cuya <strong>área es proporcional a la frecuencia conjunta</strong>.
+</p>
+<div class="fragment fade-in" data-fragment-index="3" style="margin-top: 20px; font-size: 28px; text-align: justify;">
+Es especialmente útil para ver simultáneamente tamaño de grupos y composición interna.
+</div>
+</div>
+
+<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="4" style="margin-top:50px;">
+```{r, echo=FALSE}
+# Librerías
+library(ggplot2)
+
+# Datos
+datos <- data.frame(
+  Actividad = rep(c("Baja", "Media", "Alta"), each = 3),
+  Sueno = rep(c("Mala", "Regular", "Buena"), times = 3),
+  Frecuencia = c(18, 12, 6,
+                 10, 18, 14,
+                 4, 12, 26)
+)
+
+# Gráfico mosaico con ggplot
+ggplot(datos, aes(x = Actividad, y = Frecuencia, fill = Sueno)) +
+  geom_bar(stat = "identity", position = "fill", width = 1) +
+  
+  scale_fill_manual(values = c("#d95f02", "#7570b3", "#1b9e77")) +
+  
+  labs(
+    title = "Gráfico mosaico: Actividad física vs calidad del sueño",
+    x = "Actividad física",
+    y = "Proporción",
+    fill = "Calidad del sueño"
+  ) +
+  
+  theme_minimal(base_size = 16) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    legend.position = "top"
+  )
+```
+</div>
+</div>
+
+
+

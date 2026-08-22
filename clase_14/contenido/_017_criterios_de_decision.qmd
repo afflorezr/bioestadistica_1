@@ -1,0 +1,104 @@
+## Criterios de decisión
+
+<div class="fragment fade-up" data-fragment-index="1"
+style="background-color:#eef4fb; padding:18px; border-radius:16px; border-left:8px solid #1a3a6b;">
+
+<div style="font-size: 30px; margin-top: 10px; text-align: justify; line-height: 1.5;">
+Después de calcular el estadístico de prueba, es necesario establecer una **regla que permita decidir** si la hipótesis nula debe rechazarse o no.<br><br>
+La decisión estadística se toma comparando el **estadístico de prueba** con valores críticos obtenidos de una distribución de probabilidad. **Si el estadístico cae en la región crítica, se rechaza** $\small H_0$
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 6px;">
+
+<div class="fragment fade-up" data-fragment-index="1">
+
+```{r}
+#| echo: false
+#| fig-width: 3.8
+#| fig-height: 2.8
+#| fig-align: center
+
+library(ggplot2)
+x  <- seq(-4, 4, length = 800)
+df <- data.frame(x, y = dnorm(x))
+z  <- 1.96
+
+ggplot(df, aes(x, y)) +
+  geom_area(data = subset(df, x <= -z), fill = "#d97706", alpha = 0.75) +
+  geom_area(data = subset(df, x >=  z), fill = "#d97706", alpha = 0.75) +
+  geom_area(data = subset(df, x > -z & x < z), fill = "#dbeafe", alpha = 0.5) +
+  geom_line(linewidth = 1.1, color = "#1a3a6b") +
+  geom_vline(xintercept = c(-z, z), linetype = "dashed", linewidth = 0.8, color = "#374151") +
+  annotate("text", x = 0,    y = 0.22, label = "Aceptación", size = 3.2, color = "#1b4d2e", fontface = "bold") +
+  annotate("text", x = -3,   y = 0.04, label = "Rechazo",   size = 3,   color = "#7c2d12") +
+  annotate("text", x =  3,   y = 0.04, label = "Rechazo",   size = 3,   color = "#7c2d12") +
+  annotate("text", x = -z, y = 0.42, label = "-1.96", size = 2.8, color = "#374151", hjust = 1.1) +
+  annotate("text", x =  z, y = 0.42, label = " 1.96", size = 2.8, color = "#374151", hjust = -0.1) +
+  labs(title = expression(H[1]: mu != mu[0]), x = "Estadístico Z", y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b"),
+        panel.grid.minor = element_blank(), axis.text.y = element_blank())
+```
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="2">
+
+```{r}
+#| echo: false
+#| fig-width: 3.8
+#| fig-height: 2.8
+#| fig-align: center
+
+x  <- seq(-4, 4, length = 800)
+df <- data.frame(x, y = dnorm(x))
+z  <- 1.645
+
+ggplot(df, aes(x, y)) +
+  geom_area(data = subset(df, x >= z), fill = "#d97706", alpha = 0.75) +
+  geom_area(data = subset(df, x <  z), fill = "#dbeafe", alpha = 0.5) +
+  geom_line(linewidth = 1.1, color = "#1a3a6b") +
+  geom_vline(xintercept = z, linetype = "dashed", linewidth = 0.8, color = "#374151") +
+  annotate("text", x = -1,  y = 0.22, label = "Aceptación", size = 3.2, color = "#1b4d2e", fontface = "bold") +
+  annotate("text", x = 2.8, y = 0.04, label = "Rechazo",   size = 3,   color = "#7c2d12") +
+  annotate("text", x = z,   y = 0.42, label = " 1.645", size = 2.8, color = "#374151", hjust = -0.05) +
+  labs(title = expression(H[1]: mu > mu[0]), x = "Estadístico Z", y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b"),
+        panel.grid.minor = element_blank(), axis.text.y = element_blank())
+```
+
+</div>
+
+<div class="fragment fade-up" data-fragment-index="3">
+
+```{r}
+#| echo: false
+#| fig-width: 3.8
+#| fig-height: 2.8
+#| fig-align: center
+
+x  <- seq(-4, 4, length = 800)
+df <- data.frame(x, y = dnorm(x))
+z  <- -1.645
+
+ggplot(df, aes(x, y)) +
+  geom_area(data = subset(df, x <= z), fill = "#d97706", alpha = 0.75) +
+  geom_area(data = subset(df, x >  z), fill = "#dbeafe", alpha = 0.5) +
+  geom_line(linewidth = 1.1, color = "#1a3a6b") +
+  geom_vline(xintercept = z, linetype = "dashed", linewidth = 0.8, color = "#374151") +
+  annotate("text", x = 1,   y = 0.22, label = "Aceptación", size = 3.2, color = "#1b4d2e", fontface = "bold") +
+  annotate("text", x = -2.8, y = 0.04, label = "Rechazo",  size = 3,   color = "#7c2d12") +
+  annotate("text", x = z,   y = 0.42, label = "-1.645", size = 2.8, color = "#374151", hjust = 1.05) +
+  labs(title = expression(H[1]: mu < mu[0]), x = "Estadístico Z", y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, color = "#1a3a6b"),
+        panel.grid.minor = element_blank(), axis.text.y = element_blank())
+```
+
+</div>
+
+</div>
+
+

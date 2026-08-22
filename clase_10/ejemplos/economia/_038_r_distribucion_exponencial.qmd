@@ -1,0 +1,61 @@
+## R: Distribución Exponencial
+
+<div class="block-note" style="margin-bottom: 12px;">
+<div class="block-body" style="font-size: 26px; text-align: justify;">
+Tiempo en horas entre fallas de una bomba de financiación sigue una $\text{Exp}(\lambda=0.08)$. Calcule $P(X \leq 15)$, $P(X > 20)$, $P(X \geq 20)$ y $P(10 \leq X \leq 30)$.
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+
+<div class="scrollable-code" style="min-width: 0;">
+
+```{r}
+#| echo: true
+#| comment: ""
+#| class-source: scrollable-code
+lambda <- 0.08
+
+# Menor o igual que 15
+pexp(15, lambda)
+
+# Estrictamente menor que 15 (igual para continua)
+pexp(15, lambda)
+
+# Mayor que 20
+pexp(20, lambda, lower.tail = FALSE)
+
+# Mayor o igual que 20 (igual para continua)
+pexp(20, lambda, lower.tail = FALSE)
+
+# Entre 10 y 30 (inclusive)
+pexp(30, lambda) - pexp(10, lambda)
+```
+</div>
+
+<div class="card card--info" style="font-size: 23px; line-height: 1.9;">
+<strong><code>dexp(x, rate): </code></strong>
+<span style="color:#374151;font-size:24px">$f(x) = \lambda e^{-\lambda x}$</span><br><br>
+
+<strong><code>pexp(q, rate):</code></strong>
+<span style="color:#374151;font-size:24px">$P(X \leq q)$</span><br><br>
+
+<strong><code>lower.tail = FALSE: </code></strong>
+<span style="color:#374151;font-size:24px">$P(X > q)$</span><br><br>
+
+<strong><code>pexp(b) - pexp(a): </code></strong>
+<span style="color:#374151;font-size:24px">$P(a \leq X \leq b)$</span><br><br>
+
+<div class="block-alert" style="margin-top: 8px;">
+<div class="block-title">Nota: variable continua</div>
+<div class="block-body" style="font-size: 21px;">
+$P(X = x) = 0$ siempre.<br>
+$P(X \leq q) = P(X < q)$
+</div>
+</div>
+</div>
+
+</div>
+
+
+
