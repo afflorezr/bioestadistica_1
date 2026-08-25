@@ -2,7 +2,7 @@
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-body">
-<p style="font-size: 28px; text-align: justify;">
+<p class="text-justify" style="font-size: 28px;">
 Los supuestos se verifican analizando los <strong>residuos</strong> $\small e_i = Y_i - \hat{Y}_i$. En R, la función <code>plot(modelo)</code> genera 4 gráficos de diagnóstico que cubren los supuestos principales.
 </p>
 </div>
@@ -10,37 +10,37 @@ Los supuestos se verifican analizando los <strong>residuos</strong> $\small e_i 
 
 <div class="twocol">
 
-<div class="card fragment fade-up" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
-<h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 10px;">Gráficos clave</h4>
+<div class="card fragment fade-up accent-left-green pad-16-20" data-fragment-index="2">
+<h4 class="text-block-green mb-10" style="font-size: 26px;">Gráficos clave</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="3" style="font-size: 26px;">
 <strong>Residuos vs. ajustados:</strong> verifica linealidad y homocedasticidad. Se espera una nube sin patrón.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="4" style="font-size: 26px;">
 <strong>QQ-plot:</strong> verifica normalidad. Los puntos deben seguir la línea diagonal.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="5" style="font-size: 26px;">
 <strong>Scale-Location:</strong> verifica homocedasticidad. La línea roja debe ser aproximadamente horizontal.
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="6" style="font-size: 26px;">
 <strong>Residuos vs. Leverage:</strong> detecta observaciones que influyen demasiado en el ajuste del modelo.
 </li>
 </ul>
 </div>
 
-<div class="card fragment fade-up" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
-<h4 style="color:#1a3a6b; font-size: 26px; margin-bottom: 10px;">¿Qué buscar?</h4>
+<div class="card fragment fade-up accent-left-blue pad-16-20" data-fragment-index="7">
+<h4 class="text-block-blue mb-10" style="font-size: 26px;">¿Qué buscar?</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="8" style="font-size: 26px;">
 <strong>Curvatura</strong> en residuos vs. ajustados → falta de linealidad. Considerar transformaciones o términos cuadráticos.
 </li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="9" style="font-size: 26px;">
 <strong>Forma de embudo</strong> → heterocedasticidad. Los errores crecen con el valor predicho.
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="10" style="font-size: 26px;">
 <strong>Colas pesadas</strong> en el QQ-plot → los errores no son normales. Afecta las pruebas de inferencia.
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="11" style="font-size: 26px;">
 <strong>Puntos influyentes:</strong> una observación es influyente si al quitarla del modelo, los coeficientes cambian mucho. La <strong>distancia de Cook</strong> mide exactamente esto.
 </li>
 </ul>

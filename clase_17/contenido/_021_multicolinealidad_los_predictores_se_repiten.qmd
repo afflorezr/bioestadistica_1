@@ -3,7 +3,7 @@
 <div class="block-definition fragment fade-up" data-fragment-index="1">
   <div class="block-title" style="font-size: 28px;">¿Qué es y por qué importa?</div>
   <div class="block-body">
-  <p style="font-size: 28px; text-align: justify;">
+  <p class="text-justify" style="font-size: 28px;">
   La <strong>multicolinealidad</strong> ocurre cuando dos o más predictores están altamente correlacionados entre sí. El modelo sigue prediciendo bien en conjunto, pero <strong>no puede distinguir el efecto individual</strong> de cada predictor, lo que infla los errores estándar y hace que las pruebas t pierdan poder.
   </p>
   </div>
@@ -14,16 +14,16 @@
 <div class="card fragment fade-up" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 12px 16px;">
 <h4 style="color:#1b4d2e; font-size: 26px; margin-bottom: 6px;">¿Cómo detectarla?</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="3" style="font-size: 24px;">
 <strong>Paso 1, Matriz de correlaciones:</strong> correlaciones altas ($\small |r| > 0.7$–$0.8$) son una primera señal. En R: <code>cor(datos[, predictores])</code>.
 </li>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 24px; text-align: left; margin: 6px 0;">
+<li class="fragment fade-up text-left my-6" data-fragment-index="4" style="font-size: 24px;">
 <strong>Paso 2, VIF:</strong> $\;\text{VIF}_i = \dfrac{1}{1 - R^2_i}$
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="5" style="font-size: 24px;">
 $R^2_i$: $R^2$ de regresión de $X_i$ contra los demás predictores.
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="6" style="font-size: 24px;">
 <strong>VIF = 1:</strong> sin correlación. <strong>VIF &gt; 5:</strong> moderada. <strong>VIF &gt; 10:</strong> problemática.
 </li>
 </ul>
@@ -32,13 +32,13 @@ $R^2_i$: $R^2$ de regresión de $X_i$ contra los demás predictores.
 <div class="card fragment fade-up" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 12px 16px;">
 <h4 style="color:#1a3a6b; font-size: 22px; margin-bottom: 6px;">¿Qué hacer si existe?</h4>
 <ul>
-<li class="fragment fade-up" data-fragment-index="8" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="8" style="font-size: 26px;">
 <strong>Eliminar</strong> uno de los predictores redundantes.
 </li>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="9" style="font-size: 26px;">
 <strong>Combinar</strong> variables correlacionadas en un índice o componente.
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 26px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="10" style="font-size: 26px;">
 <strong>No ignorarla:</strong> un predictor puede parecer no significativo solo por la multicolinealidad, no porque no tenga efecto real.
 </li>
 </ul>

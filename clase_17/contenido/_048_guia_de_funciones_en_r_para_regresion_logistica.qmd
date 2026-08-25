@@ -3,7 +3,7 @@
 <div class="block-definition fragment fade-up" data-fragment-index="1">
   <div class="block-title" style="font-size: 28px;">Análisis completo paso a paso</div>
   <div class="block-body">
-  <p style="font-size: 28px; text-align: justify;">
+  <p class="text-justify" style="font-size: 28px;">
   Esta rutina cubre: ajuste del modelo, extracción de coeficientes, odds ratios, evaluación y diagnóstico. Los resultados se presentan con tablas para mantener la salida limpia y pedagógica.
   </p>
   </div>
@@ -21,41 +21,41 @@
 </tr>
 </thead>
 <tbody>
-<tr style="border-bottom: 1px solid #e2e8f0;">
-<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">1</td>
-<td style="padding: 8px 14px;"><strong>Ajuste</strong></td>
-<td style="padding: 8px 14px;"><code>glm(Y ~ X1 + X2, family = binomial(link = "logit"), data = datos)</code></td>
-<td style="padding: 8px 14px;">,</td>
+<tr class="bb-slate200">
+<td class="pad-8-14 text-center text-bold text-block-green">1</td>
+<td class="pad-8-14"><strong>Ajuste</strong></td>
+<td class="pad-8-14"><code>glm(Y ~ X1 + X2, family = binomial(link = "logit"), data = datos)</code></td>
+<td class="pad-8-14">,</td>
 </tr>
-<tr style="border-bottom: 1px solid #e2e8f0;">
-<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">2</td>
-<td style="padding: 8px 14px;"><strong>Resumen</strong></td>
-<td style="padding: 8px 14px;"><code>summary(modelo)</code>, <code>confint(modelo)</code></td>
-<td style="padding: 8px 14px;">,</td>
+<tr class="bb-slate200">
+<td class="pad-8-14 text-center text-bold text-block-green">2</td>
+<td class="pad-8-14"><strong>Resumen</strong></td>
+<td class="pad-8-14"><code>summary(modelo)</code>, <code>confint(modelo)</code></td>
+<td class="pad-8-14">,</td>
 </tr>
-<tr style="border-bottom: 1px solid #e2e8f0;">
-<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">3</td>
-<td style="padding: 8px 14px;"><strong>Odds ratios</strong></td>
-<td style="padding: 8px 14px;"><code>exp(coef(modelo))</code>, <code>exp(confint(modelo))</code></td>
-<td style="padding: 8px 14px;">,</td>
+<tr class="bb-slate200">
+<td class="pad-8-14 text-center text-bold text-block-green">3</td>
+<td class="pad-8-14"><strong>Odds ratios</strong></td>
+<td class="pad-8-14"><code>exp(coef(modelo))</code>, <code>exp(confint(modelo))</code></td>
+<td class="pad-8-14">,</td>
 </tr>
-<tr style="border-bottom: 1px solid #e2e8f0;">
-<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">4</td>
-<td style="padding: 8px 14px;"><strong>Multicolinealidad</strong></td>
-<td style="padding: 8px 14px;"><code>vif(modelo)</code></td>
-<td style="padding: 8px 14px;"><code>car</code></td>
+<tr class="bb-slate200">
+<td class="pad-8-14 text-center text-bold text-block-green">4</td>
+<td class="pad-8-14"><strong>Multicolinealidad</strong></td>
+<td class="pad-8-14"><code>vif(modelo)</code></td>
+<td class="pad-8-14"><code>car</code></td>
 </tr>
-<tr style="border-bottom: 1px solid #e2e8f0;">
-<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">5</td>
-<td style="padding: 8px 14px;"><strong>Comparación con el nulo</strong></td>
-<td style="padding: 8px 14px;"><code>anova(modelo_nulo, modelo, test = "Chisq")</code></td>
-<td style="padding: 8px 14px;">,</td>
+<tr class="bb-slate200">
+<td class="pad-8-14 text-center text-bold text-block-green">5</td>
+<td class="pad-8-14"><strong>Comparación con el nulo</strong></td>
+<td class="pad-8-14"><code>anova(modelo_nulo, modelo, test = "Chisq")</code></td>
+<td class="pad-8-14">,</td>
 </tr>
 <tr>
-<td style="padding: 8px 14px; text-align: center; font-weight: bold; color: #1b4d2e;">6</td>
-<td style="padding: 8px 14px;"><strong>Curva ROC y AUC</strong></td>
-<td style="padding: 8px 14px;"><code>roc(datos$Y, fitted(modelo))$auc</code></td>
-<td style="padding: 8px 14px;"><code>pROC</code></td>
+<td class="pad-8-14 text-center text-bold text-block-green">6</td>
+<td class="pad-8-14"><strong>Curva ROC y AUC</strong></td>
+<td class="pad-8-14"><code>roc(datos$Y, fitted(modelo))$auc</code></td>
+<td class="pad-8-14"><code>pROC</code></td>
 </tr>
 </tbody>
 </table>

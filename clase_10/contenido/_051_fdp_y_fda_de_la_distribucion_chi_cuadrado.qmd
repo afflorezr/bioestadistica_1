@@ -2,9 +2,9 @@
 
 <div class="block-definition fragment fade-up" data-fragment-index="1">
 <div class="block-title">Distribución Chi-cuadrado $X \sim \chi^2(\nu)$</div>
-<div class="block-body" style="font-size: 27px; text-align: justify;">
+<div class="block-body text-justify" style="font-size: 27px;">
 Surge como la suma de $\nu$ cuadrados de normales estándar independientes: $X = Z_1^2 + \cdots + Z_\nu^2$. Es un caso especial de $\text{Gamma}(\nu/2,\, 2)$.
-<span style="color:#6b7280; font-size:24px;">, Parámetro: $\nu$ grados de libertad. Soporte: $x \in (0, \infty)$.</span>
+<span class="text-gray" style="font-size: 24px;">, Parámetro: $\nu$ grados de libertad. Soporte: $x \in (0, \infty)$.</span>
 </div>
 </div>
 
@@ -12,9 +12,9 @@ Surge como la suma de $\nu$ cuadrados de normales estándar independientes: $X =
 
 <div class="block-theorem fragment fade-up" data-fragment-index="2">
 <div class="block-title">Función de Densidad (FDP)</div>
-<div class="block-body" style="font-size: 26px; text-align: center;">
+<div class="block-body text-center" style="font-size: 26px;">
 $$f(x) = \frac{x^{\nu/2-1}\,e^{-x/2}}{2^{\nu/2}\,\Gamma(\nu/2)}, \quad x > 0$$
-<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+<p class="text-slate mt-10" style="font-size: 23px;">
 Asimétrica a la derecha para $\nu$ pequeño. Se vuelve más simétrica al aumentar $\nu$.
 </p>
 </div>
@@ -22,9 +22,9 @@ Asimétrica a la derecha para $\nu$ pequeño. Se vuelve más simétrica al aumen
 
 <div class="block-theorem fragment fade-up" data-fragment-index="3">
 <div class="block-title">Función de Distribución Acumulada (FDA)</div>
-<div class="block-body" style="font-size: 26px; text-align: center;">
+<div class="block-body text-center" style="font-size: 26px;">
 $$F(x) = \frac{\gamma(\nu/2,\; x/2)}{\Gamma(\nu/2)}, \quad x > 0$$
-<p style="font-size: 23px; color: #374151; margin-top: 10px;">
+<p class="text-slate mt-10" style="font-size: 23px;">
 Función Gamma incompleta regularizada. Sin forma cerrada, se calcula con <code>pchisq()</code> en R.
 </p>
 </div>
@@ -32,8 +32,8 @@ Función Gamma incompleta regularizada. Sin forma cerrada, se calcula con <code>
 
 </div>
 
-<div class="block-note fragment fade-up" data-fragment-index="4" style="margin-top: 14px;">
-<div class="block-body" style="font-size: 26px; text-align: center;">
+<div class="block-note fragment fade-up mt-14" data-fragment-index="4">
+<div class="block-body text-center" style="font-size: 26px;">
 $P(X \leq x) = $ <code>pchisq(x, df)</code> &nbsp;·&nbsp;
 Caso especial: $\chi^2(\nu) = \text{Gamma}(\nu/2,\, 2)$ &nbsp;·&nbsp;
 Usada en pruebas de bondad de ajuste e inferencia de varianzas

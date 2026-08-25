@@ -3,7 +3,7 @@
 <div class="block-definition fragment fade-up" data-fragment-index="1">
   <div class="block-title" style="font-size: 28px;">¿Qué tan bien ajusta el modelo?</div>
   <div class="block-body">
-  <p style="font-size: 28px; text-align: justify;">
+  <p class="text-justify" style="font-size: 28px;">
   Una vez estimado el modelo, necesitamos medir <strong>qué proporción de la variabilidad de $Y$ logra explicar</strong>. Para esto usamos el coeficiente de determinación $\small R^2$ y su versión ajustada $\small R^2_{adj}$.
   </p>
   </div>
@@ -11,37 +11,37 @@
 
 <div class="twocol">
 
-<div class="card fragment fade-up" data-fragment-index="2" style="border-left: 4px solid #1b4d2e; padding: 16px 20px;">
-<h4 style="color:#1b4d2e; font-size: 24px; margin-bottom: 10px;">$R^2$ (R cuadrado)</h4>
-<p class="fragment fade-up" data-fragment-index="3" style="font-size: 22px; text-align: center; margin: 6px 0;">
+<div class="card fragment fade-up accent-left-green pad-16-20" data-fragment-index="2">
+<h4 class="text-block-green mb-10" style="font-size: 24px;">$R^2$ (R cuadrado)</h4>
+<p class="fragment fade-up text-center my-6" data-fragment-index="3" style="font-size: 22px;">
 $R^2 = 1 - \dfrac{SCR}{SCT} = \dfrac{SCE}{SCT}$
 </p>
 <ul>
-<li class="fragment fade-up" data-fragment-index="4" style="font-size: 25px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="4" style="font-size: 25px;">
 Mide la proporción de la variabilidad total de $Y$ que es explicada por el modelo. Va de 0 a 1.
 </li>
-<li class="fragment fade-up" data-fragment-index="5" style="font-size: 25px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="5" style="font-size: 25px;">
 <strong>Problema:</strong> siempre aumenta al agregar más predictores, aunque no aporten información real.
 </li>
-<li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="6" style="font-size: 25px;">
 Poco confiable para comparar modelos con diferente número de variables.
 </li>
 </ul>
 </div>
 
-<div class="card fragment fade-up" data-fragment-index="7" style="border-left: 4px solid #1a3a6b; padding: 16px 20px;">
-<h4 style="color:#1a3a6b; font-size: 24px; margin-bottom: 10px;">$R^2_{adj}$ (R cuadrado ajustado)</h4>
-<p class="fragment fade-up" data-fragment-index="8" style="font-size: 22px; text-align: center; margin: 6px 0;">
+<div class="card fragment fade-up accent-left-blue pad-16-20" data-fragment-index="7">
+<h4 class="text-block-blue mb-10" style="font-size: 24px;">$R^2_{adj}$ (R cuadrado ajustado)</h4>
+<p class="fragment fade-up text-center my-6" data-fragment-index="8" style="font-size: 22px;">
 $R^2_{adj} = 1 - \dfrac{SCR/(n-k-1)}{SCT/(n-1)}$
 </p>
 <ul>
-<li class="fragment fade-up" data-fragment-index="9" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="9" style="font-size: 24px;">
 <strong>Penaliza</strong> predictores que no mejoran el modelo: si una variable no aporta, el $R^2_{adj}$ puede <strong>disminuir</strong>.
 </li>
-<li class="fragment fade-up" data-fragment-index="10" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="10" style="font-size: 24px;">
 Tiene en cuenta el número de predictores ($k$) y el tamaño de muestra ($n$), corrigiendo la sobreestimación del $R^2$.
 </li>
-<li class="fragment fade-up" data-fragment-index="11" style="font-size: 24px; text-align: justify;">
+<li class="fragment fade-up text-justify" data-fragment-index="11" style="font-size: 24px;">
 Permite comparar modelos con diferente número de variables de forma justa.
 </li>
 </ul>
