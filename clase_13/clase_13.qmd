@@ -17,7 +17,7 @@ format:
     controls: true
     width: 1280
     height: 720
-    css: [../assets/syntax-highlight.css, ../assets/custom.css, ../assets/pacman.css]
+    css: [../assets/syntax-highlight.css, ../assets/custom.css]
     header-includes: |
       <link rel="stylesheet" href="../assets/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
       <script defer src="../assets/fontawesome-free-6.1.1-web/js/all.min.js"></script>
@@ -122,7 +122,7 @@ Como los $X_i$ son variables aleatorias, $\hat{\theta}$ también lo es: tiene su
 </div>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<div class="card fragment fade-up" data-fragment-index="2">
 <h4 style="font-size: 26px; color: #1a3a6b; margin-bottom: 8px;">Estimación puntual vs por intervalo</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;"><strong>Puntual:</strong> un único valor. $\bar{x} = 5.2$ ton/ha estima el rendimiento promedio de arroz en el Meta.</li>
@@ -566,7 +566,7 @@ $$P\!\left(\bar{X} - z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \leq \mu \leq \bar{X} +
 </div>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<div class="card fragment fade-up" data-fragment-index="2">
 <h4 style="font-size: 26px; color: #1a3a6b; margin-bottom: 8px;">Anatomía del IC</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px;"><strong>Centro:</strong> estimador puntual $\bar{x}$.</li>
@@ -1186,7 +1186,7 @@ $$n \propto \sigma^2 \quad \text{(para } e \text{ y } \alpha \text{ fijos)}$$
 </div>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<div class="card fragment fade-up" data-fragment-index="2">
 <h4 style="font-size: 26px; color: #1a3a6b; margin-bottom: 8px;">Estrategias para reducir $\sigma$</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;"><strong>Estratificación:</strong> dividir la población en grupos homogéneos y muestrear dentro de cada uno — reduce la varianza efectiva del estimador.</li>
@@ -1271,7 +1271,7 @@ ggplot(df_amp, aes(x = n, y = amp, color = conf)) +
 
 <div class="twocol" style="margin-top: 10px;">
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="1">
+<div class="card fragment fade-up" data-fragment-index="1">
 <h4 style="font-size: 26px; color: #1b4d2e; margin-bottom: 8px;">Supuestos del IC clásico</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="2" style="font-size: 25px; text-align: justify;"><strong>Independencia:</strong> las observaciones no se afectan entre sí. Se viola al muestrear plantas adyacentes sin modelar autocorrelación espacial.</li>
@@ -1280,7 +1280,7 @@ ggplot(df_amp, aes(x = n, y = amp, color = conf)) +
 </ul>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<div class="card fragment fade-up" data-fragment-index="5">
 <h4 style="font-size: 26px; color: #1a3a6b; margin-bottom: 8px;">Cobertura nominal vs real</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="6" style="font-size: 25px; text-align: justify;">Los ICs clásicos son <em>asintóticamente</em> válidos: su cobertura real converge a $1-\alpha$ cuando $n \to \infty$.</li>
@@ -1315,7 +1315,7 @@ shapiro.test(x)   # H0: normalidad; p < 0.05 → rechazar
 </div>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<div class="card fragment fade-up" data-fragment-index="2">
 <h4 style="font-size: 25px; color: #1b4d2e; margin-bottom: 8px;">¿Qué hacer si se violan los supuestos?</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 24px; text-align: justify;"><strong>Distribución no normal, n pequeño:</strong> usar transformación logarítmica o bootstrap.</li>
@@ -1409,7 +1409,7 @@ $$\text{DEFF} = \frac{\widehat{\text{Var}}_{\text{diseño}}(\bar{x})}{\widehat{\
 </div>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="2">
+<div class="card fragment fade-up" data-fragment-index="2">
 <h4 style="font-size: 26px; color: #1a3a6b; margin-bottom: 8px;">Uso del DEFF en práctica</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="3" style="font-size: 25px; text-align: justify;"><strong>Tamaño de muestra ajustado:</strong> $n_{\text{real}} = n_{\text{MAS}} \times \text{DEFF}$.</li>
@@ -1528,7 +1528,7 @@ Reconocer estos errores es tan importante como saber construir el IC.
 </div>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<div class="card fragment fade-up" data-fragment-index="5">
 <h4 style="font-size: 25px; color: #1a3a6b; margin-bottom: 8px;">Alternativas modernas</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px; text-align: justify;"><strong>Wilson / Agresti-Coull:</strong> para proporciones con mejor cobertura real.</li>
@@ -1798,7 +1798,7 @@ Verificar siempre: ¿qué nivel de confianza usaron? ¿$n$? ¿qué distribución
 </div>
 </div>
 
-<div class="card fragment fade-up crispdm-card--gray" data-fragment-index="5">
+<div class="card fragment fade-up" data-fragment-index="5">
 <h4 style="font-size: 25px; color: #1a3a6b; margin-bottom: 8px;">Interpretación en decisiones</h4>
 <ul>
 <li class="fragment fade-up" data-fragment-index="6" style="font-size: 24px; text-align: justify;"><strong>ICs que se solapan:</strong> no necesariamente implica que las medias no son diferentes — usar prueba formal.</li>
